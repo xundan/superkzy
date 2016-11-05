@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <title>筛选</title>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="weui.min.css">
+    <script type="text/javascript" src="jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+</head>
+<body>
+    <!--标题栏-->
+    <div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
+                    <span class="pull-left" style="">
+                        <a href="{:U('TradeSearch/trade_search')}">
+                            <img src="__PUBLIC__/home/images/goback.png" class="img-responsive" style="width: 15px;height: auto;margin-top: 60%">
+                        </a>
+                    </span>
+                    <span class="">
+                        <span class="" style="font-size: 2em;">筛 选</span>
+                    </span>
+    </div>
+    <!--清除浮动-->
+    <div class="clearfix"></div>
+    <!--筛选栏-->
+    <div class="container">
+        <form action="" method="" class="form-inline">
+            <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading1">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                                煤炭分类:
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading1">
+                        <div class="panel-body">
+                            <div class="btn-group btn-group-justified" data-toggle="buttons">
+                                <label class="btn btn-default">
+                                    <input type="checkbox" name="options" id="option1" autocomplete="off"> 动力煤
+                                </label>
+                                <label class="btn btn-default">
+                                    <input type="checkbox" name="options" id="option2" autocomplete="off"> 炼焦煤
+                                </label>
+                                <label class="btn btn-default">
+                                    <input type="checkbox" name="options" id="option3" autocomplete="off"> 焦炭
+                                </label>
+                                <label class="btn btn-default">
+                                    <input type="checkbox" name="options" id="option4" autocomplete="off"> 喷吹煤
+                                </label>
+                                <label class="btn btn-default">
+                                    <input type="checkbox" name="options" id="option5" autocomplete="off"> 煤泥
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading2">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse2" aria-expanded="true" aria-controls="collapse2">
+                                粒度:
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse2" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading2">
+                        <div class="panel-body">
+                            asdasdasdad
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="heading3">
+                        <h4 class="panel-title">
+                            <a data-toggle="collapse" href="#collapse3" aria-expanded="true" aria-controls="collapse3">
+                                热值区间
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse3" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading3">
+                        <div class="panel-body form-group">
+                            <div class="input-group" style="width: 40%;">
+                                <input type="text" class="form-control">
+                                <span class="input-group-addon">卡</span>
+                            </div>
+                            <div class="input-group" style="width: 40%;">
+                                <input type="text" class="form-control">
+                                <span class="input-group-addon">卡</span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="btn-group btn-group-justified">
+                <!--<div class="btn-group">-->
+                    <label class="btn btn-default">
+                        <input type="reset" name="" id="" autocomplete="off">
+                    </label>
+                    <label class="btn btn-default">
+                        <input type="submit" name="" id="" autocomplete="off">
+                    </label>
+            </div>
+        </form>
+    </div>
+</body>
+</html>

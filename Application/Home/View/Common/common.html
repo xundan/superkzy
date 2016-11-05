@@ -1,0 +1,19 @@
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script>
+        function showToast(text){
+//            $("#toast").children(div).eq(1).chiildren(p).html(text);
+            $('#text').html(text);
+            $("#toast").show();
+            setTimeout(function(){$("#toast").fadeOut(500)},500);
+        }
+    </script>
+    <div id="toast" style="display: none; z-index: 999">
+        <div class="weui_mask_transparent"></div>
+        <div class="weui_toast">
+            <i class="weui_icon_toast"></i>
+            <p class="weui_toast_content" id="text">已完成</p>
+        </div>
+    </div>

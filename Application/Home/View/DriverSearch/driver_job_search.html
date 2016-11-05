@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <title>司机找活</title>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="weui.min.css">
+    <script type="text/javascript" src="jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+</head>
+<body style="background-color: #efeff4">
+    <!--标题栏-->
+    <div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
+        <!--<div class="container text-center" style="">-->
+                <!--<div style="display: inline-block;height: 100%;vertical-align: middle"></div>-->
+                <span class="pull-left" style="">
+                        <!--<a class="glyphicon glyphicon-chevron-left"></a>-->
+                    <a href="#">
+                    <img src="__PUBLIC__/home/images/goback.png" class="img-responsive" style="width: 15px;height: auto;margin-top: 60%">
+                    </a>
+                </span>
+                <span class="">
+                    <span class="" style="font-size: 2em;margin-left: 15%">司机找活</span>
+                </span>
+                <span class="pull-right" style="">
+                    <a href="#" class="weui_btn weui_btn_mini weui_btn_default" style="border:1px solid white; ;color:white;background-color: transparent;text-decoration: none;margin-bottom: -45%">
+                        我的收藏
+                    </a>
+                </span>
+        <!--</div>-->
+    </div>
+    <!--清除浮动-->
+    <div class="clearfix"></div>
+    <!--导航标签-->
+    <div class="panel-title" style="margin:0;padding: 0;background-color: white">
+        <ul id="myTab" class="nav nav-pills" role="tablist" style="">
+            <li role="presentation" class="text-center active" style="width: 30%;">
+                <a href="#" class="" style="background-color: #a1a1a1;border-radius: 0">
+                    <strong style="">全 部</strong>
+                </a>
+            </li>
+            <li class="text-center" style="width: 25%;font-size: 1.7em">
+                <a href="#" style="height: 45px;padding:0;">
+                        <img src="__PUBLIC__/home/images/area_start_text.png" class="" style="width: 15px;height:50%">
+                    <span style=";color: black;">榆林</span>
+                </a>
+            </li>
+            <li class="" style="width: 18%">
+                <a href="#" class="" style="height: 45px;padding: 0;">
+                        <img src="__PUBLIC__/home/images/change.png" class="" style="width: 100%;height: 100%;">
+                </a>
+            </li>
+            <li class="text-center" style="width: 25%;font-size: 1.7em">
+                <a href="#" class="" style="height: 45px;padding: 0;">
+                    <span style=";color: black;">郑州</span>
+                    <img src="__PUBLIC__/home/images/area_end_text.png" class="" style="height: 20px">
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!--搜索框-->
+    <div class="bd">
+        <!--<a href="javascript:;" class="weui_btn weui_btn_primary">点击展现searchBar</a>-->
+        <div class="weui_search_bar" id="search_bar">
+            <form class="weui_search_outer">
+                <div class="weui_search_inner">
+                    <i class="weui_icon_search"></i>
+                    <input type="search" class="weui_search_input" id="search_input" placeholder="搜索" required/>
+                    <a href="javascript:" class="weui_icon_clear" id="search_clear"></a>
+                </div>
+                <label for="search_input" class="weui_search_text" id="search_text">
+                    <i class="weui_icon_search"></i>
+                    <span>搜索</span>
+                </label>
+            </form>
+            <a href="javascript:" class="weui_search_cancel" id="search_cancel">取消</a>
+        </div>
+        <div class="weui_cells weui_cells_access search_show" id="search_show">
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>实时搜索文本</p>
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>实时搜索文本</p>
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>实时搜索文本</p>
+                </div>
+            </div>
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p>实时搜索文本</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--订单展示栏-->
+    <div class="container">
+        <div class="weui_panel weui_panel_access" style="border-radius: 5px">
+            <div class="weui_media_box weui_media_appmsg" style="margin: 0;padding-left: 0;padding-right: 0">
+                <a href="#">
+                    <div class="weui_media_hd">
+                        <img src="__PUBLIC__/home/images/headimg_background.png" class="weui_media_appmsg_thumb">
+                    </div>
+                </a>
+                <div class="weui_media_bd">
+                    <a href="#">
+                        <h4 class="weui_media_title">{名字} <img src="__PUBLIC__/home/images/medal.png" style="width: 15px;height: 20px"></h4>
+                    </a>
+                    <p class="weui_media_desc">
+                        <img src="__PUBLIC__/home/images/area_start.png" style="width: 15px;height: 20px">
+                        {start}→{end}
+                        <img src="__PUBLIC__/home/images/area_end.png" style="width: 15px;height: 20px">
+                    </p>
+                </div>
+                <div class="weui_media_bd" style="margin-right: -20%">
+                    <a href="#" class="">
+                        <h4><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">
+                        <span style="">拨打电话</span></h4>
+                    </a>
+                    <div>
+                        <button class="btn btn-xs btn-default" style="padding-left: 20%;padding-right: 20%;border-color: #04bfc6;color: #04bfc6">
+                            收藏
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="panel-body" style="padding:0">-->
+                <table class="table table-condensed" style="margin: 0">
+                    <tbody>
+                        <tr>
+                            <td>
+                                发煤量:{}
+                            </td>
+                            <td>
+                                粒度:{}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                装车时间:{}
+                            </td>
+                            <td>
+                                发布时间:{}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            <!--</div>-->
+        </div>
+        <div class="weui_panel weui_panel_access">
+            <div class="weui_media_box weui_media_appmsg" style="width: 100%;margin: 0;padding-left: 0;padding-right: 0">
+                <a href="#">
+                    <div class="weui_media_hd">
+                        <img src="__PUBLIC__/home/images/headimg_background.png" class="weui_media_appmsg_thumb">
+                    </div>
+                </a>
+                <div class="weui_media_bd">
+                    <a href="#">
+                        <h4 class="weui_media_title">{名字} <img src="__PUBLIC__/home/images/medal.png" style="width: 15px;height: 20px"></h4>
+                    </a>
+                    <p class="weui_media_desc">
+                        <img src="__PUBLIC__/home/images/area_start.png" style="width: 15px;height: 20px">
+                        {start}→{end}
+                        <img src="__PUBLIC__/home/images/area_end.png" style="width: 15px;height: 20px">
+                    </p>
+                </div>
+                <div class="weui_media_bd" style="margin-right: -20%">
+                    <a href="#" class="">
+                        <h4><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">
+                            <span style="">拨打电话</span></h4>
+                    </a>
+                    <div>
+                        <button class="btn btn-xs btn-default" style="padding-left: 20%;padding-right: 20%">
+                            收藏
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $('#search_input').focus(function(){
+        var $weuiSearchBar = $('#search_bar');
+        $weuiSearchBar.addClass('weui_search_focusing');
+    });
+    $('#search_input').blur(function(){
+        var $weuiSearchBar = $('#search_bar');
+        $weuiSearchBar.removeClass('weui_search_focusing');
+        if ($(this).val()){
+            $('#search_text').hide();
+        } else {
+            $('#search_text').show();
+        }
+    });
+    $('#search_input').bind('input','#search_input',function(){
+        var $searchShow = $("#search_show");
+        if ($(this).val()) {
+            $searchShow.show();
+        } else {
+            $searchShow.hide();
+        }
+    });
+    $('#search_cancel').bind('touchend','#search_cancel',function(){
+        $("#search_show").hide();
+        $('#search_input').val('');
+    });
+    $('#search_clear').bind('touchend','#search_cancel',function(){
+        $("#search_show").hide();
+        $('#search_input').val('');
+    });
+</script>
+<script>
+    $('#myTab a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show')
+    })
+</script>
+</html>

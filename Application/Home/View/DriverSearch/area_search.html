@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <title>司机找活</title>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="weui.min.css">
+    <script type="text/javascript" src="jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+</head>
+<body style="background-color: #efeff4">
+<!--标题栏-->
+<div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
+                <span class="pull-left" style="">
+                    <a href="#">
+                        <img src="__PUBLIC__/home/images/goback.png" class="img-responsive" style="width: 15px;height: auto;margin-top: 60%">
+                    </a>
+                </span>
+                <span class="">
+                    <span class="" style="font-size: 2em;">地区搜索</span>
+                </span>
+</div>
+<!--清除浮动-->
+<div class="clearfix"></div>
+<!--搜索框-->
+<div class="bd">
+    <div class="weui_search_bar" id="search_bar">
+        <form class="weui_search_outer">
+            <div class="weui_search_inner">
+                <i class="weui_icon_search"></i>
+                <input type="search" class="weui_search_input" id="search_input" placeholder="搜索" required/>
+                <a href="javascript:" class="weui_icon_clear" id="search_clear"></a>
+            </div>
+            <label for="search_input" class="weui_search_text" id="search_text">
+                <i class="weui_icon_search"></i>
+                <span>搜索</span>
+            </label>
+        </form>
+        <a href="javascript:" class="weui_search_cancel" id="search_cancel">取消</a>
+    </div>
+    <div class="weui_cells weui_cells_access search_show" id="search_show">
+        <div class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>实时搜索文本</p>
+            </div>
+        </div>
+        <div class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>实时搜索文本</p>
+            </div>
+        </div>
+        <div class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>实时搜索文本</p>
+            </div>
+        </div>
+        <div class="weui_cell">
+            <div class="weui_cell_bd weui_cell_primary">
+                <p>实时搜索文本</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!--导航栏-->
+<ul id="myTab" class="weui_navbar" role="" style="position: inherit;margin-bottom: 0">
+    <li role="presentation" class="weui_navbar_item weui_bar_item_on" style="">
+        <a href="#lastarea" class="" data-toggle="tab" style="color: black;text-decoration: none">最近常用</a>
+    </li>
+    <li role="presentation" class="weui_navbar_item" style="">
+        <a href="#mostarea" data-toggle="tab" style="color: black;text-decoration: none">热点地区</a>
+    </li>
+    <li role="presentation" class="weui_navbar_item" style="">
+        <a href="#allarea" data-toggle="tab" style="color: black;text-decoration: none">地区列表</a>
+    </li>
+</ul>
+<!--<ul id="myTab" class="weui_navbar" role="" style="position: inherit;margin-bottom: 0;">-->
+    <!--<li role="presentation" class="weui_navbar_item weui_bar_item_on" style=";font-size: 1.2em">-->
+        <!--<a href="#car_need" class="" data-toggle="tab" style="color: black;text-decoration: none">发布求车</a>-->
+    <!--</li>-->
+    <!--<li role="presentation" class="weui_navbar_item" style=";font-size: 1.2em">-->
+        <!--<a href="#coal_sell" data-toggle="tab" style="color: black;text-decoration: none">发布供货</a>-->
+    <!--</li>-->
+    <!--<li role="presentation" class="weui_navbar_item" style=";font-size: 1.2em">-->
+        <!--<a href="#coal_buy" data-toggle="tab" style="color: black;text-decoration: none">发布求购</a>-->
+    <!--</li>-->
+<!--</ul>-->
+<div class="tab-content" style="background-color: white">
+    <div id="lastarea" class="tab-pane active">
+        <table class="table">
+            <tr>
+                <td>
+                    {area1}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {area2}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {area3}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="mostarea" class="tab-pane">
+        <table class="table">
+            <tr>
+                <td>
+                    {area3}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {area2}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    {area1}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div id="allarea" class="tab-pane" >
+        <div>
+            <table class="table table-condensed">
+                <tr>
+                    <td>
+                        <a href="">
+                            {area}
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <a href="">
+                        <td>
+                            {area}
+                        </td>
+                    </a>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="">
+                            {area}
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {area}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {area}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {area}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {area}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {area}
+                    </td>
+                </tr>
+            </table>
+            <div class="" style="float: right;position: fixed;right: 10px;top: 25%;">
+                <ul class="" style="list-style: none">
+                    <li>
+                        <a href="#">A</a>
+                    </li>
+                    <li>
+                        <a href="#">B</a>
+                    </li>
+                    <li>
+                        <a href="#">B</a>
+                    </li>
+                    <li>
+                        <a href="#">B</a>
+                    </li>
+                    <li>
+                        <a href="#">B</a>
+                    </li>
+                    <li>
+                        <a href="#">B</a>
+                    </li>
+                    <li>
+                        <a href="#">B</a>
+                    </li>
+                    <li>
+                        <a href="#">B</a>
+                    </li>
+                    <li>
+                        <a href="#">B</a>
+                    </li>
+                    <li>
+                        <a href="#">B</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    $('#search_input').focus(function(){
+        var $weuiSearchBar = $('#search_bar');
+        $weuiSearchBar.addClass('weui_search_focusing');
+    });
+    $('#search_input').blur(function(){
+        var $weuiSearchBar = $('#search_bar');
+        $weuiSearchBar.removeClass('weui_search_focusing');
+        if ($(this).val()){
+            $('#search_text').hide();
+        } else {
+            $('#search_text').show();
+        }
+    });
+    $('#search_input').bind('input','#search_input',function(){
+        var $searchShow = $("#search_show");
+        if ($(this).val()) {
+            $searchShow.show();
+        } else {
+            $searchShow.hide();
+        }
+    });
+    $('#search_cancel').bind('touchend','#search_cancel',function(){
+        $("#search_show").hide();
+        $('#search_input').val('');
+    });
+    $('#search_clear').bind('touchend','#search_cancel',function(){
+        $("#search_show").hide();
+        $('#search_input').val('');
+    });
+</script>
+<script>
+//    $('#myTab a').click(function (e) {
+//        e.preventDefault();
+//        $(this).tab('show')
+//    });
+    $('#myTab a').click(function (e) {
+//            e.preventDefault();
+    $(this).parent('li').siblings('li').removeClass('weui_bar_item_on');
+    $(this).parent('li').addClass('weui_bar_item_on');
+    $(this).tab('show')
+    });
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var b = e.target; //通过此参数可以获得激活的 tab 信息
+        console.log(b);
+//        e.relatedTarget // 激活之前的那一个 tab 的信息
+    })
+</script>
+</html>

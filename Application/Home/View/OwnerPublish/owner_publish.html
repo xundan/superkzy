@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <title></title>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/iscroll.js"></script>
+    <link type="text/css" rel="stylesheet" href="bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="weui.min.css">
+    <script type="text/javascript" src="jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+</head>
+<body style="">
+<!--标题栏-->
+<div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
+    <!--<div class="container text-center" style="">-->
+    <!--<div style="display: inline-block;height: 100%;vertical-align: middle"></div>-->
+        <span class="pull-left" style="">
+                <!--<a class="glyphicon glyphicon-chevron-left"></a>-->
+            <a href="#">
+                <img src="__PUBLIC__/home/images/goback.png" class="img-responsive" style="width: 15px;height: auto;margin-top: 40%">
+            </a>
+        </span>
+        <span class="">
+            <span class="" style="font-size: 1.5em;margin-left: 15%">发布信息</span>
+        </span>
+        <span class="pull-right" style="border-color: white">
+            <a href="#" class="btn btn-xs btn-default" style=";border:1px solid white; ;color:white;background-color: transparent;text-decoration: none;margin-bottom: -50%">
+                我的发布
+            </a>
+        </span>
+    <!--</div>-->
+</div>
+<!--清除浮动-->
+<div class="clearfix"></div>
+<!--导航标签-->
+<div class="panel-title" style="margin:0;padding: 0;background-color: white">
+    <ul id="myTab" class="weui_navbar" role="" style="position: inherit;margin-bottom: 0;">
+        <li role="presentation" class="weui_navbar_item weui_bar_item_on" style=";font-size: 1.2em">
+            <a href="#car_need" class="" data-toggle="tab" style="color: black;text-decoration: none">发布求车</a>
+        </li>
+        <li role="presentation" class="weui_navbar_item" style=";font-size: 1.2em">
+            <a href="#coal_sell" data-toggle="tab" style="color: black;text-decoration: none">发布供货</a>
+        </li>
+        <li role="presentation" class="weui_navbar_item" style=";font-size: 1.2em">
+            <a href="#coal_buy" data-toggle="tab" style="color: black;text-decoration: none">发布求购</a>
+        </li>
+    </ul>
+</div>
+<!--发布栏-->
+<div class="tab-content" style="">
+    <div id="car_need" class="tab-pane active" style="">
+        <form id="form_need_car" name="" class="" method="post" action="">
+            <table class="table table-responsive" style="border: 0">
+                <tr>
+                    <td>
+                        <div>
+                            <a href="#" style="text-decoration: none;color:black">
+                                &nbsp;发货地址
+                            <span class="pull-right">
+                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                            </span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                <img src="__PUBLIC__/home/images/area_start.png" class="" style="width: 10px">
+                            </span>
+                            <input id="" name="" class="form-control" placeholder="请填写详细信息" style="border-radius: 0;border: 0">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <a href="#" style="text-decoration: none;color:black">
+                                &nbsp;收货地址
+                            <span class="pull-right">
+                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                            </span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                <img src="__PUBLIC__/home/images/area_end.png" class="" style="width: 10px">
+                            </span>
+                            <input id="" name="" class="form-control" placeholder="请填写详细信息" style="border-radius: 0;border: 0">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                发煤量
+                            </span>
+                            <input id="" name="" class="form-control" placeholder="请输入吨数" style="border-radius: 0;border: 0">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                吨
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <a href="#" style="text-decoration: none;color:black">
+                                &nbsp;粒度
+                            <span class="pull-right">
+                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                            </span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                运费
+                            </span>
+                            <input id="" name="" class="form-control" placeholder="请输入运费" style="border-radius: 0;border: 0">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                元/吨
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                装车时间
+                            </span>
+                            <input type="date" id="" name="" class="form-control" placeholder="请输入装车时间" style="border-radius: 0;border: 0">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                装车费
+                            </span>
+                            <input id="" name="" class="form-control" placeholder="请输入装车费" style="border-radius: 0;border: 0">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                元
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                卸车费
+                            </span>
+                            <input id="" name="" class="form-control" placeholder="请输入卸车费" style="border-radius: 0;border: 0">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                元
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;vertical-align: middle;background-color: white">
+                                联系电话
+                                <!--<span style="font-size: 1.5em;color:red;vertical-align: middle">*</span>-->
+                                <img src="__PUBLIC__/home/images/necessary.png" class="" style="width: 7px">
+                            </span>
+                            <input id="" name="" class="form-control" placeholder="请输入联系方式" style="border-radius: 0;border: 0">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="">
+                        <div class="form-group " style="">
+                            <label>
+                                详细描述
+                            </label>
+                            <textarea id="" name="" class="form-control">
+                            </textarea>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" name="" id="" class="btn btn-group-justified" value="发&nbsp&nbsp&nbsp布" style="color:white;font-size: 2em;background-color: #fb3e1e">
+        </form>
+    </div>
+    <div id="coal_sell" class="tab-pane" style="">
+        <form id="form_sell" name="" class="" method="post" action="">
+            <table class="table table-responsive" style="border: 0">
+                <tr>
+                    <td>
+                        <div>
+                            <a data-toggle="collapse" href="#collapse_sell_coal_kind" aria-expanded="true" aria-controls="collaspe_sell_coal_kind" style="text-decoration: none;color:black">
+                                &nbsp;煤炭种类
+                            <span class="pull-right">
+                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                            </span>
+                            </a>
+                        </div>
+                        <div id="collapse_sell_coal_kind" class="collapse" role="tablist" aria-labelledby="headingOne">
+                            <volist name="coalKind" id="coalKind">
+                                <input type="button" id="" name="" class="btn btn-lg btn-default" value="{$coalKind['title']}">
+                            </volist>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <a href="#" style="text-decoration: none;color:black">
+                                &nbsp;品质
+                            <span class="pull-right">
+                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                            </span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <a href="#" style="text-decoration: none;color:black">
+                                &nbsp;粒度
+                            <span class="pull-right">
+                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                            </span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                供货公司
+                            </span>
+                            <input id="" name="" class="form-control" placeholder="请输入公司名称" style="border-radius: 0;border: 0">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <a href="#" style="text-decoration: none;color:black">
+                                &nbsp;产地
+                            <span class="pull-right">
+                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                            </span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                                <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                    价格
+                                </span>
+                            <input id="" name="" class="form-control" placeholder="请输入煤炭价格" style="border-radius: 0;border: 0">
+                                <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                    元/吨
+                                </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                吨数
+                            </span>
+                            <input id="" name="" class="form-control" placeholder="请输入煤炭吨数" style="border-radius: 0;border: 0">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                吨
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                热值(高位)
+                            </span>
+                            <input id="" name="" class="form-control" placeholder="请输入热值" style="border-radius: 0;border: 0">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                卡
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="">
+                        <a data-toggle="collapse" href="#collapse_detail" aria-expanded="true" aria-controls="collaspe_detail" style="text-decoration: none;color:black">
+                            <div>
+                            &nbsp;详细指标
+                            <span class="pull-right">
+                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                            </span>
+                            </div>
+                        </a>
+                        <div id="collapse_detail" class="collapse" role="tablist" aria-labelledby="headingOne">
+                            <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                热值(低位)
+                            </span>
+                                <input id="" name="" class="form-control" placeholder="" style="border-radius: 0;border: 0">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                卡
+                            </span>
+                            </div>
+                            <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                全水份
+                            </span>
+                                <input id="" name="" class="form-control" placeholder="" style="border-radius: 0;border: 0">
+                            </div>
+                            <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                灰份
+                            </span>
+                                <input id="" name="" class="form-control" placeholder="" style="border-radius: 0;border: 0">
+                            </div>
+                            <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                硫份
+                            </span>
+                                <input id="" name="" class="form-control" placeholder="" style="border-radius: 0;border: 0">
+                            </div>
+                            <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                挥发份
+                            </span>
+                                <input id="" name="" class="form-control" placeholder="" style="border-radius: 0;border: 0">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        有效期7天
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;vertical-align: middle;background-color: white">
+                                联系电话
+                                <!--<span style="font-size: 1.5em;color:red;vertical-align: middle">*</span>-->
+                                <img src="__PUBLIC__/home/images/necessary.png" class="" style="width: 7px">
+                            </span>
+                            <input id="" name="" class="form-control" placeholder="请输入联系方式" style="border-radius: 0;border: 0">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="">
+                        <div class="form-group " style="">
+                            <label>
+                                详细描述
+                            </label>
+                            <textarea id="" name="" class="form-control" cols="10" rows="5">
+                            </textarea>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" name="" id="" class="btn btn-group-justified" value="发&nbsp&nbsp&nbsp布" style="color:white;font-size: 2em;background-color: #fb3e1e">
+        </form>
+    </div>
+    <div id="coal_buy" class="tab-pane" style="">
+        <form id="form_buy" name="" class="" method="post" action="">
+            <table class="table table-responsive" style="border: 0">
+                <tr>
+                    <td>
+                        <div>
+                            <a href="#" style="text-decoration: none;color:black">
+                                &nbsp;煤炭种类
+                            <span class="pull-right">
+                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                            </span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <a href="#" style="text-decoration: none;color:black">
+                                &nbsp;品质
+                            <span class="pull-right">
+                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                            </span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <a href="#" style="text-decoration: none;color:black">
+                                &nbsp;粒度
+                            <span class="pull-right">
+                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                            </span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <a href="#" style="text-decoration: none;color:black">
+                                &nbsp;产地
+                            <span class="pull-right">
+                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                            </span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                热值(低位)
+                            </span>
+                            <input id="" name="" class="form-control" placeholder="请输入热值" style="border-radius: 0;border: 0">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                卡
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                吨数
+                            </span>
+                            <input id="" name="" class="form-control" placeholder="请输入煤炭吨数" style="border-radius: 0;border: 0">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                吨
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                期望价格
+                            </span>
+                            <input id="" name="" class="form-control" placeholder="最低价" style="text-align: center;width:40%;border-radius: 0;border: 0">
+                            <span class="" style="float:left;padding-top: 6px">&mdash;</span>
+                            <input id="" name="" class="form-control" placeholder="最高价" style="text-align: center;width:40%;border-radius: 0;border: 0">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                元
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div>
+                            <a href="#" style="text-decoration: none;color:black">
+                                &nbsp;付款方式
+                            <span class="pull-right">
+                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                            </span>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;vertical-align: middle;background-color: white">
+                                联系电话
+                                <!--<span style="font-size: 1.5em;color:red;vertical-align: middle">*</span>-->
+                                <img src="__PUBLIC__/home/images/necessary.png" class="" style="width: 7px">
+                            </span>
+                            <input id="" name="" class="form-control" placeholder="请输入联系方式" style="border-radius: 0;border: 0">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="">
+                        <div class="form-group " style="">
+                            <label>
+                                详细描述
+                            </label>
+                            <textarea id="" name="" class="form-control" cols="10" rows="5">
+                            </textarea>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" name="" id="" class="btn btn-group-justified" value="发&nbsp&nbsp&nbsp布" style="color:white;font-size: 2em;background-color: #fb3e1e">
+        </form>
+    </div>
+</div>
+
+
+
+</body>
+<!--导航功能-->
+<script>
+    $('#myTab a').click(function (e) {
+//            e.preventDefault();
+        $(this).parent('li').siblings('li').removeClass('weui_bar_item_on');
+        $(this).parent('li').addClass('weui_bar_item_on');
+        $(this).tab('show')
+    })
+</script>
+<script>
+</script>
+</html>

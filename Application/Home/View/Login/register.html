@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <title>注册验证</title>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="weui.min.css">
+    <script type="text/javascript" src="jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+</head>
+<body style="background-color: #04bfc6;">
+<include file="Common:common"/>
+    <div class="container">
+        <div class="page-header">
+            <div class="media text-center">
+                <img src="__PUBLIC__/home/images/logo.png" style="width: 60%"/>
+                <h1 class="" style="color:white;"><strong>超级矿资源</strong></h1>
+            </div>
+        </div>
+        <form action="" name="" method="post" role="form">
+            <div id="phone_input">
+                <div class="" style="position: relative">
+                    <input type="text" name="phone_number" id="phone_number" class="form-control input-lg" placeholder="请输入您的手机号" style="border-bottom-left-radius: 0;border-bottom-right-radius: 0">
+                    <span class="" style="position: absolute;right: 5px;top: 5px;bottom: 0;">
+                        <button type="button" name="" id="send_code" class="btn btn-info" data-loading-text="正在发送..."  data-complete-text="重新获取验证码" style="font-size: 1.5rem;width: 110px;padding-left: 2px;padding-right: 2px">
+                            获取验证码
+                        </button>
+                    </span>
+                </div>
+                <p class="help-block" style="display: none">请输入正确的手机号</p>
+            </div>
+
+            <div id="code_input" class="">
+                <input type="text" name="code" id="code" class="form-control input-lg" placeholder="请输入您的验证码" style="border-radius: 0px;">
+                <p class="help-block" style="display: none">请输入正确的验证码</p>
+            </div>
+            <div id="invite_code_input">
+                <input type="text" name="invite_code" id="invite_code" class="form-control input-lg" value="<?php echo $_GET['invitation_code'];?>" placeholder="请输入邀请人编码" style="border-top-left-radius: 0;border-top-right-radius: 0">
+                <p class="help-block" style="display: none">请输入正确的邀请人编码</p>
+            </div>
+            <div id="check" class="checkbox" style="margin-top: 10%;">
+                <label>
+                    <input type="checkbox" name="service" id="service" value="" checked>
+                    <a href="#" style="color:white">阅读并同意服务条款</a>
+                </label>
+            </div>
+            <!--<label class="btn btn-lg btn-group-justified" style="color:#04bfc6">-->
+            <input type="button" name="submit" id="submit" class="btn btn-lg btn-default btn-group-justified " value="立 即 注 册"  style="font-size: 20px;color:#04bfc6;">
+            <!--</label>-->
+        </form>
+    </div>
+</body>
+</html>
+<script>
+    $(function(){
+        //验证码按钮功能
+        $('#send_code').click(function () {
+//            var count = 60;
+//            var btn = $(this);
+//            btn.data('loading-text', count+'秒后重新发送');
+//            btn.button('loading');
+//            setTimeout(function () {
+//                btn.button('complete');count--;
+//            }, 1000);
+            var phone_number = $("input[name=phone_number]").val();
+            var time = 11;
+            var btn = $(this);
+            var timer;
+            url="{:U('Home/Login/randomCodeReg')}";
+            $.ajax({
+                type: "post",
+                data:{phone_number:phone_number},
+                url:url,
+                success:function(data){
+                    setTimeout(clearSession, 1000*60);
+                    timeCountDown();
+                    timer = setInterval(timeCountDown,1000);
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    alert("出现错误！！！");
+                }
+            });
+            function timeCountDown(){
+                if(time == 0){
+                    btn.button('complete');
+                    btn.addClass('btn-warning');
+                    clearInterval(timer);
+                    return false;
+                }
+                if(time < 10){
+                    btn.data('loading-text', '0'+time + '秒后再次发送');
+                    btn.button('loading');
+                    time--;
+                }
+                else{
+                    btn.data('loading-text', time + '秒后再次发送');
+                    btn.button('loading');
+                    time--;
+                }
+            }
+            //清除验证码的session
+            function clearSession(){
+                url="{:U('Home/Login/clearSession')}";
+                $.ajax({
+                    type: "get",
+                    url:url,
+                    success: function (data){
+                        //alert(data);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("出现错误！！！");
+                    }
+                });
+            }
+//            timeCountDown();
+//            var timer = setInterval(timeCountDown,1000);
+
+//            var btn = $(this);
+//            var time = 3;
+//            var i = setInterval(function(){
+//                if(time == 0){
+//                    btn.button('complete');
+//                    clearInterval(i);
+////                    return false;
+//                }
+//                btn.data('loading-text', time+'秒后再次发送');
+//                btn.button('loading');
+//                time--;
+//            },1000);
+        });
+
+        //是否接受服务条款
+        $('#service').click(function (){
+            if($('#submit').attr("disabled") == "disabled"){
+                $('#submit').removeAttr("disabled");
+//                return false;
+            }else{
+                $('#submit').attr('disabled',true);
+//                return false;
+            }
+        });
+
+        //注册提交功能
+        $('#submit').click(function(){
+//            if(!$('#service').prop("checked")){
+//                $('#submit').addClass('disabled');
+//            }
+//            else
+            if($('input[name=code]').val()==""){
+                $('#code_input').addClass('has-error');
+                $('#code_input').children('p').show();
+            }
+            else if($('input[name=phone_number]').val()==""){
+                $('#phone_input').addClass('has-error');
+                $('#phone_input').children('p').show();
+            }
+            else if($('input[name=phone_number]').val().length!=11){
+                showToast("请确认手机号位数");
+            }
+            else{
+                var phone_number = $('#phone_number').val();
+                var code = $('#code').val();
+                var invite_code = $('#invite_code').val();
+//                alert(phone_number);
+//                alert(code);return;
+                // alert(invitation_code);
+                url="__CONTROLLER__/register_do";
+                $.ajax({
+                    type:"post",
+                    url:url,
+                    data:{code:code,phone_number:phone_number,invite_code:invite_code},
+                    success:function(data){
+                        if(data!=""){
+                            var jsonObj=eval("("+data+")");
+                            if(jsonObj.status==1){
+//                                $("#succ").show();
+                                alert('wahaha');
+
+                            }else{
+                                showToast(jsonObj.msg);
+                            }
+                        }
+                        else{
+                            showToast('网络错误。');
+                        }
+                    },
+                    error:function(XMLHttpRequest,textStatus,errorThrown){
+                        //alert("出现错误！！！");
+                    }
+                });
+            }
+        });
+    })
+</script>
