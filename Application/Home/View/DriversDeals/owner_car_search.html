@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <title>司机找活</title>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="weui.min.css">
+    <script type="text/javascript" src="jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+    <style>
+        span#biaoti{
+            border-style: solid;
+            border-width: 1px;
+            border-radius:5px;
+            width :300px;/*为什么不起作用?????*/
+        }
+        label{
+            background-color: #e2e2e2;/*不起作用*/
+            margin:15px 10px;
+        }
+    </style>
+</head>
+<body style="background-color: #efeff4">
+<!--标题栏-->
+<div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
+    <!--<div class="container text-center" style="">-->
+    <!--<div style="display: inline-block;height: 100%;vertical-align: middle"></div>-->
+                <span class="pull-left" style="">
+                        <!--<a class="glyphicon glyphicon-chevron-left"></a>-->
+                    <a href="#">
+                        <img src="__PUBLIC__/home/images/goback.png" class="img-responsive" style="width: 15px;height: auto;margin-top: 60%">
+                    </a>
+                </span>
+                <!--<span class="">-->
+                    <!--<span class="" style="font-size: 2em;margin-left: -5%">-->
+                            <!--&lt;!&ndash;<a href="#" class="weui_btn weui_btn_bg weui_btn_default" style="border:1px solid white; ;color:white;background-color: transparent;text-decoration: none;margin-bottom: -45%">&ndash;&gt;-->
+                                <!--我的收藏-->
+                            <!--&lt;!&ndash;</a>&ndash;&gt;-->
+                    <!--</span>-->
+                <!--</span>-->
+    <span id="biaoti" class="text-center" style="font-size: 2em;">我的收藏</span>
+                <!--<span class="pull-right" style="">-->
+                    <!--<a href="#" class="weui_btn weui_btn_mini weui_btn_default" style="border:1px solid white; ;color:white;background-color: transparent;text-decoration: none;margin-bottom: -45%">-->
+                        <!--我的收藏-->
+                    <!--</a>-->
+                <!--</span>-->
+    <!--</div>-->
+</div>
+<!--清除浮动-->
+<div class="clearfix"></div>
+
+<!--列表刘旭写法-->
+<ul id="thelist" class="" style="list-style-type: none">
+    <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
+        <div class="text-right">
+            <a href="/superkzy/index.php/Home/OwnerOrder/owner_order_transport_detail.html" style="text-decoration: none;color:grey">
+                详情 >
+            </a>
+        </div>
+        <div class="">
+            <strong>车主名称：{}</strong>
+            <span class="pull-right"><strong>{cartype}/{capacity}</strong></span>
+        </div>
+        <div class="divider" style="border:1px solid darkgrey"></div>
+        <div class="text-center">
+            <img class="" src="/superkzy/Public/home/images/area_start.png" style="width: 12px;height: 15px;">
+            {}———{}
+            <img class="" src="/superkzy/Public/home/images/area_end.png" style="width: 12px;height: 15px;">
+        </div>
+        <div class="pull-right help-block">
+            接单时间:{}
+        </div>
+    </li>
+    <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
+        <div class="text-right">
+            <a href="/superkzy/index.php/Home/OwnerOrder/owner_order_detail.html" style="text-decoration: none;color:grey">
+                详情 >
+            </a>
+        </div>
+        <div class="">
+            <strong>车主名称：{}</strong>
+            <span class="pull-right"><strong>{cartype}/{capacity}</strong></span>
+        </div>
+        <ul class="nav nav-list">
+            <li class="divider"></li>
+        </ul>
+        <div class="divider" style="border:1px solid darkgrey"></div>
+        <div class="text-center">
+            <img class="" src="/superkzy/Public/home/images/area_start.png" style="width: 12px;height: 15px;">
+            {}———{}
+            <img class="" src="/superkzy/Public/home/images/area_end.png" style="width: 12px;height: 15px;">
+        </div>
+        <div class="pull-right">
+            接单时间:{}
+        </div>
+    </li>
+</ul>
+
+<!--订单展示栏-->
+<div class="container">
+    <div class="weui_panel weui_panel_access" style="border-radius: 5px">
+        <div class="weui_media_box weui_media_appmsg" style="margin: 0;padding-left: 0;padding-right: 0">
+            <div class="weui_media_bd">
+                  <p>货主名称:刘旭</p>
+                <!--<p class="weui_media_desc">-->
+                    <!--<img src="__PUBLIC__/home/images/area_start.png" style="width: 15px;height: 20px">-->
+                    <!--{start}→{end}-->
+                    <!--<img src="__PUBLIC__/home/images/area_end.png" style="width: 15px;height: 20px">-->
+                <!--</p>-->
+            </div>
+            <div class="weui_media_bd" style="margin-right: -20%">
+                    <p style="">货物数量:100吨</p>
+            </div>
+        </div>
+        <!--<div class="panel-body" style="padding:0">-->
+        <table class="table table-condensed" style="margin: 0">
+            <tbody>
+            <tr>
+                <td>
+                    <p class="weui_media_desc">
+                        <img src="__PUBLIC__/home/images/area_start.png" style="width: 15px;height: 20px">
+                        {start}→{end}
+                        <img src="__PUBLIC__/home/images/area_end.png" style="width: 15px;height: 20px">
+                    </p>
+                </td>
+                <td>
+                    吨数:{}
+                </td>
+            </tr>
+            <tr>
+                <td>
+
+                </td>
+                <td>
+                    接单时间:2016-09-09
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <!--</div>-->
+    </div>
+    <div class="weui_panel weui_panel_access">
+        <div class="weui_media_box weui_media_appmsg" style="width: 100%;margin: 0;padding-left: 0;padding-right: 0">
+            <a href="#">
+                <div class="weui_media_hd">
+                    <img src="__PUBLIC__/home/images/headimg_background.png" class="weui_media_appmsg_thumb">
+                </div>
+            </a>
+            <div class="weui_media_bd">
+                <a href="#">
+                    <h4 class="weui_media_title">{名字} <img src="__PUBLIC__/home/images/medal.png" style="width: 15px;height: 20px"></h4>
+                </a>
+                <p class="weui_media_desc">
+                    <img src="__PUBLIC__/home/images/area_start.png" style="width: 15px;height: 20px">
+                    {start}→{end}
+                    <img src="__PUBLIC__/home/images/area_end.png" style="width: 15px;height: 20px">
+                </p>
+            </div>
+            <div class="weui_media_bd" style="margin-right: -20%">
+                <a href="#" class="">
+                    <h4><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">
+                        <span style="">拨打电话</span></h4>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    $('#search_input').focus(function(){
+        var $weuiSearchBar = $('#search_bar');
+        $weuiSearchBar.addClass('weui_search_focusing');
+    });
+    $('#search_input').blur(function(){
+        var $weuiSearchBar = $('#search_bar');
+        $weuiSearchBar.removeClass('weui_search_focusing');
+        if ($(this).val()){
+            $('#search_text').hide();
+        } else {
+            $('#search_text').show();
+        }
+    });
+    $('#search_input').bind('input','#search_input',function(){
+        var $searchShow = $("#search_show");
+        if ($(this).val()) {
+            $searchShow.show();
+        } else {
+            $searchShow.hide();
+        }
+    });
+    $('#search_cancel').bind('touchend','#search_cancel',function(){
+        $("#search_show").hide();
+        $('#search_input').val('');
+    });
+    $('#search_clear').bind('touchend','#search_cancel',function(){
+        $("#search_show").hide();
+        $('#search_input').val('');
+    });
+</script>
+<script>
+    $('#myTab a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show')
+    })
+</script>
+</html>

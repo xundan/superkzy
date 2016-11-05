@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <title></title>
+    <link type="text/css"  rel="stylesheet" href="/superkzy/Public/home/css/bootstrap.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="/superkzy/Public/home/css/weui.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="/superkzy/Public/home/css/mycss.css"/>
+    <script type="text/javascript" src="/superkzy/Public/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="/superkzy/Public/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/superkzy/Public/home/js/iscroll.js"></script>
+    <link type="text/css" rel="stylesheet" href="bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="weui.min.css">
+    <script type="text/javascript" src="jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+</head>
+<body >
+<!--标题栏-->
+<div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
+    <!--<div class="container text-center" style="">-->
+    <!--<div style="display: inline-block;height: 100%;vertical-align: middle"></div>-->
+            <span class="pull-left" style="">
+                    <!--<a class="glyphicon glyphicon-chevron-left"></a>-->
+                <a href="/superkzy/index.php/Home/OwnerOrder/owner_order.html">
+                    <img src="/superkzy/Public/home/images/goback.png" class="img-responsive" style="width: 15px;height: auto;margin-top: 40%">
+                </a>
+            </span>
+            <span class="">
+                <span class="" style="font-size: 1.5em;">我的收藏</span>
+            </span>
+    <!--</div>-->
+</div>
+<!--清除浮动-->
+<div class="clearfix"></div>
+<!--订单展示栏-->
+<div class="container">
+    <div class="tab-content" style="">
+        <div id="transport" class="tab-pane active" style="background-color: #efeff4">
+            <ul id="thelist" class="" style="list-style-type: none">
+                <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
+                    <div class="weui_media_box weui_media_appmsg" style="margin: 0;padding-left: 0;padding-right: 0">
+                        <a href="#">
+                            <div class="weui_media_hd">
+                                <img src="/superkzy/Public/home/images/headimg_background.png" class="weui_media_appmsg_thumb">
+                            </div>
+                        </a>
+                        <div class="weui_media_bd">
+                            <a href="#">
+                                <h4 class="weui_media_title">{猪刚鬣} <img src="/superkzy/Public/home/images/medal.png" style="width: 15px;height: 20px"></h4>
+                            </a>
+                            <p class="weui_media_desc">
+                                {个人车主}
+                            </p>
+                        </div>
+                        <div class="weui_media_bd text-center" style="">
+                            <a href="tel:15153151316" class="">
+                                <h4><img src="/superkzy/Public/home/images/phone.png" class="" style="width: 20px">
+                                    <span style="">拨打电话</span></h4>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <!--<span style="width:40%;height: 0;border:1px #04bfc6 solid;float:left"></span>-->
+                        <!--&lt;!&ndash;<span style="text-decoration: line-through;text-line-through-color: #04bfc6">asdasdddasd</span>&ndash;&gt;-->
+                        <!--<span>订单详情</span>-->
+                        <!--&lt;!&ndash;<span style="text-decoration: line-through;text-line-through-color: #04bfc6">asdaaaasd</span>&ndash;&gt;-->
+                        <!--<span style="width:40%;height: 0;border:1px #04bfc6 solid;float:right"></span>-->
+                        <!--<span style="text-decoration: line-through;text-line-through-color: #04bfc6;color: #04bfc6">-->
+                        <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+                        <!--</span>-->
+                        <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;订单详情&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+                        <!--<span style="text-decoration: line-through;text-line-through-color: #04bfc6;color: #04bfc6">-->
+                        <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+                        <!--</span>-->
+                        <hr style="border-color: #04bfc6;width: 35%;display: inline-flex;float: left">
+                        <span class="" style=";color: #737373;line-height: 3em">&nbsp订单详情&nbsp</span>
+                        <hr style="border-color: #04bfc6;width: 35%;display: inline-flex;float:right">
+                    </div>
+                    <div>
+                        <table class="table table-responsive" style="margin-bottom: 0">
+                            <tbody>
+                            <tr>
+                                <div class="text-center">
+                                    <img class="" src="/superkzy/Public/home/images/area_start.png" style="width: 12px;height: 15px;">
+                                    {北京} ——→ {福建}
+                                    <img class="" src="/superkzy/Public/home/images/area_end.png" style="width: 12px;height: 15px;">
+                                </div>
+                            </tr>
+                            <tr>
+                                <td>
+                                    装货时间:{2016-09-11}
+                                </td>
+                                <td>
+                                    <button class="btn btn-xs btn-info" style="background-color: #04bfc6;width: 100%">撤销收藏</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <span class="pull-right help-block">接单时间:{2016-09-09}</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
