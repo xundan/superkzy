@@ -23,6 +23,12 @@ class LoginController extends ComController
         $this->display();
     }
 
+    public function register_no_invite(){
+        $user_info = $_SESSION['user_info']['role_id'];
+        $this->assign('user_info',$user_info);
+        $this->display();
+    }
+
     /*
      * 注册-发送验证码
      */

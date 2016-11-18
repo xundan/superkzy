@@ -18,6 +18,7 @@
     <script type="text/javascript" src="bootstrap.min.js"></script>
 </head>
 <body style="">
+<include file="Common:common"/>
 <!--标题栏-->
 <div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
     <!--<div class="container text-center" style="">-->
@@ -42,17 +43,23 @@
 <div class="clearfix"></div>
 <!--导航标签-->
 <div class="panel-title" style="margin:0;padding: 0;background-color: white">
-    <ul id="myTab" class="weui_navbar" role="" style="position: inherit;margin-bottom: 0;">
-        <li role="presentation" class="weui_navbar_item weui_bar_item_on" style=";font-size: 1.2em">
-            <a href="#car_need" class="" data-toggle="tab" style="color: black;text-decoration: none">发布求车</a>
-        </li>
-        <li role="presentation" class="weui_navbar_item" style=";font-size: 1.2em">
-            <a href="#coal_sell" data-toggle="tab" style="color: black;text-decoration: none">发布供货</a>
-        </li>
-        <li role="presentation" class="weui_navbar_item" style=";font-size: 1.2em">
-            <a href="#coal_buy" data-toggle="tab" style="color: black;text-decoration: none">发布求购</a>
-        </li>
-    </ul>
+    <div id="myTab" class="weui_navbar" role="" style="position: inherit;margin-bottom: 0;">
+        <a href="#car_need" class="weui_navbar_item weui_bar_item_on" data-toggle="tab" style="color: black;text-decoration: none">
+            <span role="presentation" class="" style=";font-size: 1.2em">
+                发布求车
+            </span>
+        </a>
+        <a href="#coal_sell" class="weui_navbar_item" data-toggle="tab" style="color: black;text-decoration: none">
+            <span role="presentation" class="" style=";font-size: 1.2em">
+                发布供货
+            </span>
+        </a>
+        <a href="#coal_buy" class="weui_navbar_item" data-toggle="tab" style="color: black;text-decoration: none">
+            <span role="presentation" class="" style=";font-size: 1.2em">
+                发布求购
+            </span>
+        </a>
+    </div>
 </div>
 <!--发布栏-->
 <div class="tab-content" style="">
@@ -61,14 +68,14 @@
             <table class="table table-responsive" style="border: 0">
                 <tr>
                     <td>
-                        <div>
-                            <a href="#" style="text-decoration: none;color:black">
+                        <a href="#" style="text-decoration: none;color:black">
+                            <div>
                                 &nbsp;发货地址
-                            <span class="pull-right">
+                                <span class="pull-right">
                                 <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
-                            </span>
-                            </a>
-                        </div>
+                                </span>
+                            </div>
+                        </a>
                     </td>
                 </tr>
                 <tr>
@@ -83,14 +90,14 @@
                 </tr>
                 <tr>
                     <td>
-                        <div>
-                            <a href="#" style="text-decoration: none;color:black">
+                        <a href="#" style="text-decoration: none;color:black">
+                            <div>
                                 &nbsp;收货地址
-                            <span class="pull-right">
+                                <span class="pull-right">
                                 <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
-                            </span>
-                            </a>
-                        </div>
+                                </span>
+                            </div>
+                        </a>
                     </td>
                 </tr>
                 <tr>
@@ -205,46 +212,65 @@
         </form>
     </div>
     <div id="coal_sell" class="tab-pane" style="">
-        <form id="form_sell" name="" class="" method="post" action="">
+        <form id="form_sell" name="form_sell" class="" method="post" action="">
             <table class="table table-responsive" style="border: 0">
                 <tr>
                     <td>
-                        <div>
-                            <a data-toggle="collapse" href="#collapse_sell_coal_kind" aria-expanded="true" aria-controls="collaspe_sell_coal_kind" style="text-decoration: none;color:black">
+                        <a data-toggle="collapse" href="#collapse_sell_coal_kind" aria-expanded="true" aria-controls="collapse_sell_coal_kind" style="text-decoration: none;color:black">
+                            <div>
                                 &nbsp;煤炭种类
-                            <span class="pull-right">
-                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
-                            </span>
-                            </a>
-                        </div>
-                        <div id="collapse_sell_coal_kind" class="collapse" role="tablist" aria-labelledby="headingOne">
+                                <span class="pull-right">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive" style="width: 20px">
+                                </span>
+                            </div>
+                        </a>
+                        <div id="collapse_sell_coal_kind" class="collapse" role="tablist" aria-labelledby="">
                             <volist name="coalKind" id="coalKind">
-                                <input type="button" id="" name="" class="btn btn-lg btn-default" value="{$coalKind['title']}">
+                                <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
+                                    <input type="radio" class="pull-left" name="option0_coal_kind" id="option0_coal_kind" autocomplete="off" value="{$coalKind['id']}"> {$coalKind['title']}
+                                    <!--<input type="hidden" name="coal_trait" id="" value="{$coalTrait['id']}">-->
+                                </label>
                             </volist>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <div>
-                            <a href="#" style="text-decoration: none;color:black">
+                        <a data-toggle="collapse" href="#collapse_sell_coal_trait" aria-expanded="true" aria-controls="collapse_sell_coal_trait" style="text-decoration: none;color:black">
+                            <div>
                                 &nbsp;品质
-                            <span class="pull-right">
-                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
-                            </span>
-                            </a>
+                                <span class="pull-right">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive" style="width: 20px">
+                                </span>
+                            </div>
+                        </a>
+                        <div id="collapse_sell_coal_trait" class="collapse" role="tablist" aria-labelledby="">
+                            <volist name="coalTrait" id="coalTrait">
+                                <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
+                                    <input type="radio" class="pull-left" name="option0_coal_trait" id="option0_coal_trait" autocomplete="off" value="{$coalTrait['id']}"> {$coalTrait['title']}
+                                    <!--<input type="hidden" name="coal_trait" id="" value="{$coalTrait['id']}">-->
+                                </label>
+                            </volist>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <div>
-                            <a href="#" style="text-decoration: none;color:black">
+                        <a data-toggle="collapse" href="#collapse_sell_coal_granularity" style="text-decoration: none;color:black">
+                            <div>
                                 &nbsp;粒度
-                            <span class="pull-right">
-                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
-                            </span>
-                            </a>
+                                <span class="pull-right">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive" style="width: 20px">
+                                </span>
+                            </div>
+                        </a>
+                        <div id="collapse_sell_coal_granularity" class="collapse" role="tablist" aria-labelledby="">
+                            <volist name="coalGranularity" id="coalGranularity">
+                                <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
+                                    <input type="radio" class="pull-left" name="option0_coal_granularity" id="option0_coal_granularity" autocomplete="off" value="{$coalGranularity['id']}"> {$coalGranularity['title']}
+                                    <!--<input type="hidden" name="coal_granularity" id="" value="{$coalGranularity['id']}">-->
+                                </label>
+                            </volist>
                         </div>
                     </td>
                 </tr>
@@ -254,20 +280,20 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 供货公司
                             </span>
-                            <input id="" name="" class="form-control" placeholder="请输入公司名称" style="border-radius: 0;border: 0">
+                            <input id="" name="supply_company" class="form-control" placeholder="请输入公司名称" style="border-radius: 0;border: 0">
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <div>
-                            <a href="#" style="text-decoration: none;color:black">
+                        <a href="#" style="text-decoration: none;color:black">
+                            <div>
                                 &nbsp;产地
-                            <span class="pull-right">
-                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
-                            </span>
-                            </a>
-                        </div>
+                                <span class="pull-right">
+                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                                </span>
+                            </div>
+                        </a>
                     </td>
                 </tr>
                 <tr>
@@ -276,7 +302,7 @@
                                 <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                     价格
                                 </span>
-                            <input id="" name="" class="form-control" placeholder="请输入煤炭价格" style="border-radius: 0;border: 0">
+                            <input id="" name="sell_price" class="form-control" placeholder="请输入煤炭价格" style="border-radius: 0;border: 0">
                                 <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                     元/吨
                                 </span>
@@ -289,7 +315,7 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 吨数
                             </span>
-                            <input id="" name="" class="form-control" placeholder="请输入煤炭吨数" style="border-radius: 0;border: 0">
+                            <input id="" name="sell_quantity" class="form-control" placeholder="请输入煤炭吨数" style="border-radius: 0;border: 0">
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 吨
                             </span>
@@ -302,7 +328,7 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 热值(高位)
                             </span>
-                            <input id="" name="" class="form-control" placeholder="请输入热值" style="border-radius: 0;border: 0">
+                            <input id="" name="sell_heat_value_max" class="form-control" placeholder="请输入热值" style="border-radius: 0;border: 0">
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 卡
                             </span>
@@ -311,47 +337,47 @@
                 </tr>
                 <tr>
                     <td style="">
-                        <a data-toggle="collapse" href="#collapse_detail" aria-expanded="true" aria-controls="collaspe_detail" style="text-decoration: none;color:black">
+                        <a data-toggle="collapse" href="#collapse_detail" aria-expanded="true" aria-controls="collapse_detail" style="text-decoration: none;color:black">
                             <div>
-                            &nbsp;详细指标
-                            <span class="pull-right">
-                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
-                            </span>
+                                &nbsp;详细指标
+                                <span class="pull-right">
+                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                                </span>
                             </div>
                         </a>
-                        <div id="collapse_detail" class="collapse" role="tablist" aria-labelledby="headingOne">
+                        <div id="collapse_detail" class="collapse" role="tablist" aria-labelledby="asd">
                             <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                热值(低位)
-                            </span>
-                                <input id="" name="" class="form-control" placeholder="" style="border-radius: 0;border: 0">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                卡
-                            </span>
+                                <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                    热值(低位)
+                                </span>
+                                    <input id="" name="sell_heat_value_min" class="form-control" placeholder="" style="border-radius: 0;border: 0">
+                                <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                    卡
+                                </span>
                             </div>
                             <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                全水份
-                            </span>
-                                <input id="" name="" class="form-control" placeholder="" style="border-radius: 0;border: 0">
+                                <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                    全水份
+                                </span>
+                                <input id="" name="water" class="form-control" placeholder="" style="border-radius: 0;border: 0">
                             </div>
                             <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                灰份
-                            </span>
-                                <input id="" name="" class="form-control" placeholder="" style="border-radius: 0;border: 0">
+                                <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                    灰份
+                                </span>
+                                <input id="" name="ash" class="form-control" placeholder="" style="border-radius: 0;border: 0">
                             </div>
                             <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                硫份
-                            </span>
-                                <input id="" name="" class="form-control" placeholder="" style="border-radius: 0;border: 0">
+                                <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                    硫份
+                                </span>
+                                <input id="" name="sulfur" class="form-control" placeholder="" style="border-radius: 0;border: 0">
                             </div>
                             <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                挥发份
-                            </span>
-                                <input id="" name="" class="form-control" placeholder="" style="border-radius: 0;border: 0">
+                                <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                    挥发份
+                                </span>
+                                <input id="" name="volatile" class="form-control" placeholder="" style="border-radius: 0;border: 0">
                             </div>
                         </div>
                     </td>
@@ -369,74 +395,83 @@
                                 <!--<span style="font-size: 1.5em;color:red;vertical-align: middle">*</span>-->
                                 <img src="__PUBLIC__/home/images/necessary.png" class="" style="width: 7px">
                             </span>
-                            <input id="" name="" class="form-control" placeholder="请输入联系方式" style="border-radius: 0;border: 0">
+                            <input id="" name="sell_phone" class="form-control" placeholder="请输入联系方式" style="border-radius: 0;border: 0">
                         </div>
                     </td>
                 </tr>
-                <tr>
+                <tr style="border:none">
                     <td style="">
-                        <div class="form-group " style="">
+                        <div class="form-group" style="">
                             <label>
                                 详细描述
                             </label>
-                            <textarea id="" name="" class="form-control" cols="10" rows="5">
-                            </textarea>
+                            <!--<div class="weui_cells weui_cells_form" style="border-color: black">-->
+                                <!--<div class="weui_cell">-->
+                                    <div class="weui_cell_bd weui_cell_primary">
+                                        <textarea class="weui_textarea" placeholder="请输入评论" rows="3"></textarea>
+                                    </div>
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<textarea id="" name="sell_content" class="weui_textarea" placeholder="请输入评论">-->
+                            <!--</textarea>-->
                         </div>
                     </td>
                 </tr>
             </table>
-            <input type="submit" name="" id="" class="btn btn-group-justified" value="发&nbsp&nbsp&nbsp布" style="color:white;font-size: 2em;background-color: #fb3e1e">
+            <input type="button" name="" id="" class="btn btn-group-justified" onclick="sell_sub()" value="发&nbsp&nbsp&nbsp布" style="color:white;font-size: 2em;background-color: #fb3e1e">
+            <div id="result"></div>
         </form>
+
     </div>
     <div id="coal_buy" class="tab-pane" style="">
         <form id="form_buy" name="" class="" method="post" action="">
             <table class="table table-responsive" style="border: 0">
                 <tr>
                     <td>
-                        <div>
-                            <a href="#" style="text-decoration: none;color:black">
+                        <a href="#" style="text-decoration: none;color:black">
+                            <div>
                                 &nbsp;煤炭种类
-                            <span class="pull-right">
-                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
-                            </span>
-                            </a>
-                        </div>
+                                <span class="pull-right">
+                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                                </span>
+                            </div>
+                        </a>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <div>
-                            <a href="#" style="text-decoration: none;color:black">
+                        <a href="#" style="text-decoration: none;color:black">
+                            <div>
                                 &nbsp;品质
-                            <span class="pull-right">
-                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
-                            </span>
-                            </a>
-                        </div>
+                                <span class="pull-right">
+                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                                </span>
+                            </div>
+                        </a>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <div>
-                            <a href="#" style="text-decoration: none;color:black">
+                        <a href="#" style="text-decoration: none;color:black">
+                            <div>
                                 &nbsp;粒度
-                            <span class="pull-right">
-                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
-                            </span>
-                            </a>
-                        </div>
+                                <span class="pull-right">
+                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                                </span>
+                            </div>
+                        </a>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <div>
-                            <a href="#" style="text-decoration: none;color:black">
+                        <a href="#" style="text-decoration: none;color:black">
+                            <div>
                                 &nbsp;产地
-                            <span class="pull-right">
-                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
-                            </span>
-                            </a>
-                        </div>
+                                <span class="pull-right">
+                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                                </span>
+                            </div>
+                        </a>
                     </td>
                 </tr>
                 <tr>
@@ -482,14 +517,14 @@
                 </tr>
                 <tr>
                     <td>
-                        <div>
-                            <a href="#" style="text-decoration: none;color:black">
+                        <a href="#" style="text-decoration: none;color:black">
+                            <div>
                                 &nbsp;付款方式
-                            <span class="pull-right">
-                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
-                            </span>
-                            </a>
-                        </div>
+                                <span class="pull-right">
+                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                                </span>
+                            </div>
+                        </a>
                     </td>
                 </tr>
                 <tr>
@@ -520,19 +555,114 @@
         </form>
     </div>
 </div>
-
-
-
 </body>
 <!--导航功能-->
 <script>
     $('#myTab a').click(function (e) {
 //            e.preventDefault();
-        $(this).parent('li').siblings('li').removeClass('weui_bar_item_on');
-        $(this).parent('li').addClass('weui_bar_item_on');
-        $(this).tab('show')
+//        $(this).parent('li').siblings('li').removeClass('weui_bar_item_on');
+//        $(this).parent('li').addClass('weui_bar_item_on');
+//        $(this).tab('show');
+        $(this).siblings('a').removeClass('weui_bar_item_on');
+        $(this).addClass('weui_bar_item_on');
+        $(this).tab('show');
     })
 </script>
+<!--actionsheet功能-->
 <script>
+    $('#showActionSheet').on('click',function(){
+        var mask = $('#mask');
+        var weuiActionsheet = $('#weui_actionsheet');
+        weuiActionsheet.addClass('weui_actionsheet_toggle');
+        mask.show()
+            .focus()//加focus是为了触发一次页面的重排(reflow or layout thrashing),使mask的transition动画得以正常触发
+            .addClass('weui_fade_toggle').one('click',function(){
+            hideActionSheet(weuiActionsheet,mask);
+        });
+        $('#actionsheet_cancel').one('click',function(){
+            hideActionSheet(weuiActionsheet,mask);
+        });
+        $('#asd').on('click',function(){
+            var a = $(this).html();
+            alert(a);
+            hideActionSheet(weuiActionsheet,mask);
+            $('#sell_coal_kind').html(a);
+        });
+        mask.unbind('transitionend').unbind('webkitTransitionEnd');
+
+        function hideActionSheet(weuiActionsheet,mask){
+            weuiActionsheet.removeClass('weui_actionsheet_toggle');
+            mask.removeClass('weui_fade_toggle');
+            mask.on('transitionend',function(){
+                mask.hide();
+            }).on('webkitTransitionEnd',function(){
+                mask.hide();
+            })
+        }
+    });
+</script>
+<!--表单提交输入检测-->
+<script>
+    function sell_sub(){
+////        alert(123);
+        var subData=$("#form_sell").serialize();
+//        console.log(subData);
+////        if($("#detail_area1").val()==""){
+////            tanchu("发货地址详情不能为空。");
+////            return;
+////        }
+////        if($("#detail_area2").val()==""){
+////            tanchu("收货地址详情不能为空。");
+////            return;
+////        }
+////        if($("#coal_quantity").val()==""){
+////            tanchu("发煤量不能为空。");
+////            return;
+////        }
+////        if($("#granularity_id_sendcar").val()==""){
+////            tanchu("煤炭粒度不能为空。");
+////            return;
+////        }
+////        if($("#phoneNum").val()==""){
+////            tanchu("发货人电话不能为空。");
+////            return;
+////        }
+////        if($("#save_phone").val()==""){
+////            tanchu("收货人电话不能为空。");
+////            return;
+////        }
+//
+//        var url="{:U('OwnerPublish/coal_sell_action')}";
+        var url='{:U("OwnerPublish/coal_sell_action","","")}';
+//        var url="{:U('coal_sell_action','','')}";
+//        var url='coal_sell_action';
+////        document.form_sell.action = url;
+//        document.form_sell.submit();
+        $.ajax({
+            type:"post",
+            url:url,
+            data:subData,
+            success:function(data){
+                console.log(123);
+
+//                console.log(data);
+//                $("#result").text(data);
+////                console.log(data);
+////                console.log(eval(data));
+////                            alert(subData);
+////                if(data!=""){
+////                    var jsonObj=eval("("+data+")");
+////                                console.log(data);
+////                    if(jsonObj.status){
+////                        $("#loadIndex").val(0);
+////                        $("#intact").show();
+////                    }else{
+////                        tanchu(jsonObj.msg);
+////                    }
+////                }
+            }
+        });
+    }
+
 </script>
 </html>
