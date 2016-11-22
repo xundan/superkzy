@@ -11,10 +11,10 @@
     <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="weui.min.css">
-    <script type="text/javascript" src="jquery-2.2.4.min.js"></script>
-    <script type="text/javascript" src="bootstrap.min.js"></script>
+    <!--<link type="text/css" rel="stylesheet" href="bootstrap.min.css">-->
+    <!--<link type="text/css" rel="stylesheet" href="weui.min.css">-->
+    <!--<script type="text/javascript" src="jquery-2.2.4.min.js"></script>-->
+    <!--<script type="text/javascript" src="bootstrap.min.js"></script>-->
 </head>
 <body style="background-color: #efeff4">
 <!--标题栏-->
@@ -81,26 +81,13 @@
         <a href="#allarea" data-toggle="tab" style="color: black;text-decoration: none">地区列表</a>
     </li>
 </ul>
-<!--<ul id="myTab" class="weui_navbar" role="" style="position: inherit;margin-bottom: 0;">-->
-    <!--<li role="presentation" class="weui_navbar_item weui_bar_item_on" style=";font-size: 1.2em">-->
-        <!--<a href="#car_need" class="" data-toggle="tab" style="color: black;text-decoration: none">发布求车</a>-->
-    <!--</li>-->
-    <!--<li role="presentation" class="weui_navbar_item" style=";font-size: 1.2em">-->
-        <!--<a href="#coal_sell" data-toggle="tab" style="color: black;text-decoration: none">发布供货</a>-->
-    <!--</li>-->
-    <!--<li role="presentation" class="weui_navbar_item" style=";font-size: 1.2em">-->
-        <!--<a href="#coal_buy" data-toggle="tab" style="color: black;text-decoration: none">发布求购</a>-->
-    <!--</li>-->
-<!--</ul>-->
+
 <div class="tab-content" style="background-color: white">
     <div id="lastarea" class="tab-pane active">
-        <volist name="result" id="result">
-            {$result.name}
-        </volist>
         <table class="table">
             <tr>
                 <td>
-                    {area1}
+                    {as}
                 </td>
             </tr>
             <tr>
@@ -138,92 +125,103 @@
         <div class="container">
             <span>&emsp;A</span>
             <volist name="result" id="result">
-            <table class="table table-condensed">
-                <tr>
-                    <td>
-                        <a href="">
-                            123{$result.name}
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <a href="">
+                <table class="table table-condensed" style="margin-bottom: 0">
+                    <tr>
                         <td>
-                            {area}
+                            <a href="" style="text-decoration: none;color:black;">
+                                <div>
+                                {$result.name}
+                                </div>
+                            </a>
                         </td>
-                    </a>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="">
-                            {area}
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        {area}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        {area}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        {area}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        {area}
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        {area}
-                    </td>
-                </tr>
-            </table>
+                    </tr>
+                </table>
             </volist>
         </div>
-            <div class="" style="float: right;position: fixed;right: 10px;top: 25%;">
-                <ul class="" style="list-style: none">
-                    <li>
-                        <a href="#">A</a>
-                    </li>
-                    <li>
-                        <a href="#">B</a>
-                    </li>
-                    <li>
-                        <a href="#">B</a>
-                    </li>
-                    <li>
-                        <a href="#">B</a>
-                    </li>
-                    <li>
-                        <a href="#">B</a>
-                    </li>
-                    <li>
-                        <a href="#">B</a>
-                    </li>
-                    <li>
-                        <a href="#">B</a>
-                    </li>
-                    <li>
-                        <a href="#">B</a>
-                    </li>
-                    <li>
-                        <a href="#">B</a>
-                    </li>
-                    <li>
-                        <a href="#">B</a>
-                    </li>
-                </ul>
-            </div>
+        <div class="" style="float: right;position: fixed;right: 10px;top: 25%;">
+            <ul class="" style="list-style: none">
+                <li>
+                    <a href="#">A</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+                <li>
+                    <a href="#">C</a>
+                </li>
+                <li>
+                    <a href="#">B</a>
+                </li>
+            </ul>
         </div>
     </div>
+</div>
 </div>
 </body>
 <script>
@@ -258,15 +256,15 @@
     });
 </script>
 <script>
-//    $('#myTab a').click(function (e) {
-//        e.preventDefault();
-//        $(this).tab('show')
-//    });
+    //    $('#myTab a').click(function (e) {
+    //        e.preventDefault();
+    //        $(this).tab('show')
+    //    });
     $('#myTab a').click(function (e) {
 //            e.preventDefault();
-    $(this).parent('li').siblings('li').removeClass('weui_bar_item_on');
-    $(this).parent('li').addClass('weui_bar_item_on');
-    $(this).tab('show')
+        $(this).parent('li').siblings('li').removeClass('weui_bar_item_on');
+        $(this).parent('li').addClass('weui_bar_item_on');
+        $(this).tab('show')
     });
     $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
         var b = e.target; //通过此参数可以获得激活的 tab 信息

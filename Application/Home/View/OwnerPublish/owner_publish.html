@@ -212,7 +212,7 @@
         </form>
     </div>
     <div id="coal_sell" class="tab-pane" style="">
-        <form id="form_sell" name="form_sell" class="" method="post" action="">
+        <form id="form_sell" name="form_sell" class="" method="post" action="{:U('OwnerPublish/coal_sell_action')}">
             <table class="table table-responsive" style="border: 0">
                 <tr>
                     <td>
@@ -280,7 +280,7 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 供货公司
                             </span>
-                            <input id="" name="supply_company" class="form-control" placeholder="请输入公司名称" style="border-radius: 0;border: 0">
+                            <input id="sell_supply_company" name="supply_company" class="form-control" placeholder="请输入公司名称" style="border-radius: 0;border: 0">
                         </div>
                     </td>
                 </tr>
@@ -302,7 +302,7 @@
                                 <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                     价格
                                 </span>
-                            <input id="" name="sell_price" class="form-control" placeholder="请输入煤炭价格" style="border-radius: 0;border: 0">
+                            <input type="number" id="" name="sell_price" class="form-control" placeholder="请输入煤炭价格" style="border-radius: 0;border: 0">
                                 <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                     元/吨
                                 </span>
@@ -315,7 +315,7 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 吨数
                             </span>
-                            <input id="" name="sell_quantity" class="form-control" placeholder="请输入煤炭吨数" style="border-radius: 0;border: 0">
+                            <input type="number" id="" name="sell_quantity" class="form-control" placeholder="请输入煤炭吨数" style="border-radius: 0;border: 0">
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 吨
                             </span>
@@ -328,7 +328,7 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 热值(高位)
                             </span>
-                            <input id="" name="sell_heat_value_max" class="form-control" placeholder="请输入热值" style="border-radius: 0;border: 0">
+                            <input type="number" id="" name="sell_heat_value_max" class="form-control" placeholder="请输入热值" style="border-radius: 0;border: 0">
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 卡
                             </span>
@@ -341,7 +341,7 @@
                             <div>
                                 &nbsp;详细指标
                                 <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-right img-responsive" style="width: 20px">
                                 </span>
                             </div>
                         </a>
@@ -350,7 +350,7 @@
                                 <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                     热值(低位)
                                 </span>
-                                    <input id="" name="sell_heat_value_min" class="form-control" placeholder="" style="border-radius: 0;border: 0">
+                                    <input type="number" id="" name="sell_heat_value_min" class="form-control" placeholder="" style="border-radius: 0;border: 0">
                                 <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                     卡
                                 </span>
@@ -396,6 +396,7 @@
                                 <img src="__PUBLIC__/home/images/necessary.png" class="" style="width: 7px">
                             </span>
                             <input id="" name="sell_phone" class="form-control" placeholder="请输入联系方式" style="border-radius: 0;border: 0">
+                            <span class="text-danger" id="sell_phone_alert"></span>
                         </div>
                     </td>
                 </tr>
@@ -405,15 +406,8 @@
                             <label>
                                 详细描述
                             </label>
-                            <!--<div class="weui_cells weui_cells_form" style="border-color: black">-->
-                                <!--<div class="weui_cell">-->
-                                    <div class="weui_cell_bd weui_cell_primary">
-                                        <textarea class="weui_textarea" placeholder="请输入评论" rows="3"></textarea>
-                                    </div>
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<textarea id="" name="sell_content" class="weui_textarea" placeholder="请输入评论">-->
-                            <!--</textarea>-->
+                            <textarea id="" name="sell_content" class="form-control" style="resize: none;"></textarea>
+                            <span class="text-danger" id="sell_content_alert"></span>
                         </div>
                     </td>
                 </tr>
@@ -603,34 +597,45 @@
 </script>
 <!--表单提交输入检测-->
 <script>
+    //获取焦点清空输入及错误信息
+    $('input[name=sell_phone]').focus(function(){
+        $(this).val('');
+        $('#sell_phone_alert').html('');
+    });
+    $('textarea[name=sell_content]').focus(function(){
+        $('#sell_content_alert').html('');
+    });
+    //热值高位必须为int型数字
+    $('input[name=sell_heat_value_max]').blur(function(){
+        var sell_heat_value_max = $(this).val().trim();
+        if(!sell_heat_value_max.match(/^(-?\d+)(\.\d+)?$/) && sell_heat_value_max){
+            $('#sell_content_alert').html('热值必须为数字');
+        }
+    });
+    $('input[name=sell_heat_value_max]').focus(function(){
+        $(this).val('');
+        $('#sell_content_alert').html('');
+    });
+
     function sell_sub(){
-////        alert(123);
+        //联系电话验证
+        var sell_phone = $('input[name=sell_phone]').val().trim();
+        if(!sell_phone){
+            $('#sell_phone_alert').html('联系电话不能为空');return;
+        }else if(sell_phone.length != 11 || !sell_phone.match(/^(-?\d+)(\.\d+)?$/)){
+            $('#sell_phone_alert').html('请输入正确的电话号码');return;
+        }
+        //判断content有无输入，content和煤炭信息不能同时为空
+        var sell_content = $('textarea[name="sell_content"]').val().trim();
+        var sell_coal_kind = $('input[name=option0_coal_kind]:checked').val();
+        var sell_coal_trait = $('input[name=option0_coal_trait]:checked').val();
+        var sell_coal_granularity = $('input[name=option0_coal_granlarity]:checked').val();
+        if(!sell_content && !sell_coal_kind && !sell_coal_trait && !sell_coal_granularity){
+            $('#sell_content_alert').html('详细描述与煤炭信息不能同时为空');return;
+        }
+        //ajax提交表单数据
         var subData=$("#form_sell").serialize();
 //        console.log(subData);
-////        if($("#detail_area1").val()==""){
-////            tanchu("发货地址详情不能为空。");
-////            return;
-////        }
-////        if($("#detail_area2").val()==""){
-////            tanchu("收货地址详情不能为空。");
-////            return;
-////        }
-////        if($("#coal_quantity").val()==""){
-////            tanchu("发煤量不能为空。");
-////            return;
-////        }
-////        if($("#granularity_id_sendcar").val()==""){
-////            tanchu("煤炭粒度不能为空。");
-////            return;
-////        }
-////        if($("#phoneNum").val()==""){
-////            tanchu("发货人电话不能为空。");
-////            return;
-////        }
-////        if($("#save_phone").val()==""){
-////            tanchu("收货人电话不能为空。");
-////            return;
-////        }
 //
 //        var url="{:U('OwnerPublish/coal_sell_action')}";
         var url='{:U("OwnerPublish/coal_sell_action","","")}';
@@ -644,6 +649,9 @@
             data:subData,
             success:function(data){
                 console.log(123);
+//                var jsonObj=eval("("+data+")");
+//                console.log(jsonObj.data);
+                console.log(data);
 
 //                console.log(data);
 //                $("#result").text(data);

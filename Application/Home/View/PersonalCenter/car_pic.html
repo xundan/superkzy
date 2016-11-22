@@ -40,7 +40,8 @@
     <form id="form_car_pic" name="form_car_pic" class="" method="post" action="" enctype="multipart/form-data">
         <div class="form-group col-sm-5 col-xs-5 text-center">
             <div class="weui_uploader_input_wrp">
-                <input class="weui_uploader_input" type="file" name="photo_front" accept="image/*" multiple>
+                <img id="photo_front_prew" class="weui_uploader_input" style="opacity: 1">
+                <input class="weui_uploader_input" type="file" name="photo_front" id="photo_front" accept="image/*" multiple>
             </div>
             <label>
                 点击上传正面照片
@@ -50,7 +51,8 @@
         </div>
         <div class="form-group col-sm-5 col-xs-5">
             <div class="weui_uploader_input_wrp">
-                <input class="weui_uploader_input" type="file" name="photo_back" accept="image/*" multiple>
+                <img id="photo_back_prew" class="weui_uploader_input" style="opacity: 1">
+                <input class="weui_uploader_input" type="file" name="photo_back" id="photo_back" accept="image/*">
             </div>
             <label>
                 点击上传后面照片
@@ -58,7 +60,8 @@
         </div>
         <div class="form-group col-sm-5 col-xs-5">
             <div class="weui_uploader_input_wrp">
-                <input class="weui_uploader_input" type="file" name="photo_right" accept="image/*" multiple>
+                <img id="photo_right_prew" class="weui_uploader_input" style="opacity: 1">
+                <input class="weui_uploader_input" type="file" name="photo_right" id="photo_right" accept="image/*">
             </div>
             <label>
                 点击上传右侧照片
@@ -68,7 +71,8 @@
         </div>
         <div class="form-group col-sm-5 col-xs-5">
             <div class="weui_uploader_input_wrp">
-                <input class="weui_uploader_input" type="file" name="photo_left" accept="image/*" multiple>
+                <img id="photo_left_prew" class="weui_uploader_input" style="opacity: 1">
+                <input class="weui_uploader_input" type="file" name="photo_left" id="photo_left" accept="image/*">
             </div>
             <label>
                 点击上传左侧照片
@@ -77,6 +81,8 @@
         <input type="button" name="" class="btn btn-group-justified " onclick="car_pic_sub()" value="上&nbsp&nbsp&nbsp传" style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e">
     </form>
 </div>
+<input type="file" id="file" onchange="handleFiles(this.files)"/>
+<div id="filecontent"></div>
 </body>
 <!--actionsheet功能-->
 <script>
@@ -110,5 +116,77 @@
             })
         }
     });
+</script>
+<script>
+    $("#photo_front").change(function(e) {
+        for (var i = 0; i < e.target.files.length; i++) {
+            var file = e.target.files.item(i);
+            var freader = new FileReader();
+            freader.readAsDataURL(file);
+            freader.onload = function(e) {
+                var src = e.target.result;
+                $("#photo_front_prew").attr("src",src);
+            }
+        }
+        a = e.target.files[1];
+        console.log(a.name);
+        console.log(file.name);
+        console.log(file.size);
+        console.log(file.lastModifiedDate);
+        console.log(file.type);
+    });
+    $("#photo_back").change(function(e) {
+        for (var i = 0; i < e.target.files.length; i++) {
+            var file = e.target.files.item(i);
+            var freader = new FileReader();
+            freader.readAsDataURL(file);
+            freader.onload = function(e) {
+                var src = e.target.result;
+                $("#photo_back_prew").attr("src",src);
+            }
+        }
+    });
+    $("#photo_right").change(function(e) {
+        for (var i = 0; i < e.target.files.length; i++) {
+            var file = e.target.files.item(i);
+            var freader = new FileReader();
+            freader.readAsDataURL(file);
+            freader.onload = function(e) {
+                var src = e.target.result;
+                $("#photo_right_prew").attr("src",src);
+            }
+        }
+    });
+    $("#photo_left").change(function(e) {
+        for (var i = 0; i < e.target.files.length; i++) {
+            var file = e.target.files.item(i);
+            var freader = new FileReader();
+            freader.readAsDataURL(file);
+            freader.onload = function(e) {
+                var src = e.target.result;
+                $("#photo_left_prew").attr("src",src);
+            }
+        }
+    });
+</script>
+<script>
+    function  handleFiles(files)
+    {
+        if(files.length)
+        {
+            var file = files[0];
+            var reader = new FileReader();
+            reader.onload = function()
+            {
+                document.getElementById("filecontent").innerHTML = this.result;
+            };
+            reader.readAsDataURL(file);
+        }
+        alert(file.name);
+        alert(file.size);
+        alert(file.lastModifiedDate);
+        alert(file.type);
+        alert(file.name);
+    }
 </script>
 </html>

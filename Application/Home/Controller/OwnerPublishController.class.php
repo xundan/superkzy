@@ -26,7 +26,7 @@ class OwnerPublishController extends ComController
     }
 
     public function coal_sell_action(){
-//        dump($_POST);
+        dump(json_encode($_POST['sell_content']));exit;
 //        $area_start = I('post.start_area','','strip_tags')?I('post.start_area','','strip_tags'):"";
 //        $area_end = I('post.start_area','','strip_tags')?I('post.start_area','','strip_tags'):"";
 //        $area_end = I('post.start_area','','strip_tags')?I('post.start_area','','strip_tags'):"";
@@ -55,7 +55,7 @@ class OwnerPublishController extends ComController
             $data['product_id'] = $presTemp['id'];
         }elseif($presTemp === false){
             $returnArr['status'] = 0;
-            $returnArr['msg'] = "查询炒作失败";
+            $returnArr['msg'] = "查询操作失败";
             echo json_encode($returnArr);
         }
 
