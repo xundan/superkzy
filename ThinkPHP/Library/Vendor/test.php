@@ -4,7 +4,8 @@ function sendCode($phone,$code)
     include "TopSdk.php";
     $c = new TopClient;
     $c->appkey = '23425802';
-    $c->secretKey = 'bfc7dd30439f8421c066cc9cdf40555a';
+    $c->secretKey = C('VERIFY_SECRETKEY');
+//    $c->secretKey = 'bfc7dd30439f8421c066cc9cdf40555a';
     $req = new AlibabaAliqinFcSmsNumSendRequest;
     $req->setExtend("123456");
     $req->setSmsType("normal");

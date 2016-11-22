@@ -241,13 +241,15 @@ function is_empty($arr=array()){
  * @param String table 表名称
  * @param String field 字段名称
  */
-function creatRandCode($table,$field){
+function createRandCode($table,$field){
     $randStr = str_shuffle('1234567890AJIEKSJSOJWlasdjfoiasdf');
     $rand = substr($randStr,0,6);
     $allModel=M($table);
+    $finalData = $rand;
     while($rand){
         $rs=$allModel->where(array($field=>$rand))->find();
         if(!empty($rs)){
+            $randStr = str_shuffle('1234567890AJIEKSJSOJWlasdjfoiasdf');
             $rand = substr($randStr,0,6);
         }else{
             $finalData=$rand;

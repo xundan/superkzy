@@ -41,7 +41,7 @@
                 <p class="help-block" style="display: none">请输入正确的验证码</p>
             </div>
             <div id="invite_code_input">
-                <input type="text" name="invite_code" id="invite_code" class="form-control input-lg" value="<?php echo $_GET['invitation_code'];?>" placeholder="请输入邀请人编码" style="border-top-left-radius: 0;border-top-right-radius: 0">
+                <input type="text" name="invite_code" id="invite_code" class="form-control input-lg" value="<?php echo $_GET['invitation_id'];?>" placeholder="请输入邀请人编码" style="border-top-left-radius: 0;border-top-right-radius: 0">
                 <p class="help-block" style="display: none">请输入正确的邀请人编码</p>
             </div>
             <div id="check" class="checkbox" style="margin-top: 10%;">
@@ -170,7 +170,7 @@
 //                alert(phone_number);
 //                alert(code);return;
                 // alert(invitation_code);
-                url="__CONTROLLER__/register_do";
+                url="{:U('Login/register_do','','')}";
                 $.ajax({
                     type:"post",
                     url:url,

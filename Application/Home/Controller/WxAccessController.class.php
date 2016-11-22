@@ -66,7 +66,7 @@ class WxAccessController
 
 
     private function save($userInfo){
-        $userModel=M("Users");
+        $userModel=M("User");
         $r=$userModel->where(array("open_id"=>$userInfo["openid"]))->find();
         if(!empty($r)){//验证用户是否注册
             $returnArr['status']=0;

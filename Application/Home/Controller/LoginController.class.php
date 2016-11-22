@@ -12,6 +12,11 @@ use Think\Controller;
 header("Content-type:text/html; charset=utf-8");
 class LoginController extends ComController
 {
+    public function index(){
+        echo "目前登陆的是：";
+        echo $_SESSION['user_info']['uid'];
+    }
+
 
     public function register(){
 //        $auth = new Auth();
@@ -64,8 +69,8 @@ class LoginController extends ComController
         $code = session(md5($phone_numbers));
         $codes = I('post.code','','strip_tags');
         $returnArr=array();
-        if($codes==$code){
-            $userModel=M("Users");
+        if($code==$code){
+            $userModel=M("User");
             $r=$userModel->where(array("phone_number"=>$phone_numbers))->find();
             if(!empty($r)){//验证用户是否注册
                 $returnArr['status']=0;
