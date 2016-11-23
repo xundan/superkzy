@@ -15,24 +15,6 @@ function getAge($year){
 }
 
 
-function sendCode($phone,$code)
-{
-    include "TopSdk.php";
-    $c = new TopClient;
-    $c->appkey = '23425802';
-    $c->secretKey = 'bfc7dd30439f8421c066cc9cdf40555a';
-    $req = new AlibabaAliqinFcSmsNumSendRequest;
-    $req->setExtend("123456");
-    $req->setSmsType("normal");
-    $req->setSmsFreeSignName('迅单网络');
-    $req->setSmsParam("{\"code\":\"$code\",\"product\":\"快煤网\"}");
-    $req->setRecNum("$phone");
-    $req->setSmsTemplateCode("SMS_12951206");
-    $resp = $c->execute($req);
-    dump($resp);
-    return $resp;
-}
-
 function sentToRemote($clients)
 {
     $url = 'http://app.trade.51kuaimei.com/asyn/SetUserInfoByCreate';

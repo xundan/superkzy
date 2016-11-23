@@ -69,7 +69,7 @@ class LoginController extends ComController
         $code = session(md5($phone_numbers));
         $codes = I('post.code','','strip_tags');
         $returnArr=array();
-        if($code==$code){
+        if($codes==$code){
             $userModel=M("User");
             $r=$userModel->where(array("phone_number"=>$phone_numbers))->find();
             if(!empty($r)){//验证用户是否注册

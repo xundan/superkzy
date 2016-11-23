@@ -15,4 +15,23 @@ function sendCode($phone,$code)
     $req->setSmsTemplateCode("SMS_12951206");
     $resp = $c->execute($req);
 }
+
+
+function sendCode_forKMW($phone,$code)
+{
+    include "TopSdk.php";
+    $c = new TopClient;
+    $c->appkey = '23425802';
+    $c->secretKey = C('VERIFY_SECRETKEY');
+
+    $req = new AlibabaAliqinFcSmsNumSendRequest;
+    $req->setExtend("123456");
+    $req->setSmsType("normal");
+    $req->setSmsFreeSignName('迅单网络');
+    $req->setSmsParam("{\"code\":\"$code\",\"product\":\"快煤网\"}");
+    $req->setRecNum("$phone");
+    $req->setSmsTemplateCode("SMS_12951206");
+    $resp = $c->execute($req);
+    return $resp;
+}
 ?>

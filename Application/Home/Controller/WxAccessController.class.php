@@ -7,9 +7,9 @@
  */
 
 namespace Home\Controller;
-
-
-class WxAccessController
+use Think\Controller;
+header("Content-type: text/html; charset=utf-8");
+class WxAccessController extends Controller
 {
 
     public function index()
@@ -21,14 +21,13 @@ class WxAccessController
             'appsecret' => C('WX_APPSECRET')
         );
         $weObj = new \Org\Util\Wechat($options);
-//        $weObj->valid();
-        echo "ChatRecord api works";
-        $uri=$weObj->getOauthRedirect("http://www.kuaimei56.com/index.php/Views/WeChatDemo/demo");
-        $this->success("hue",$uri);
+        $uri=$weObj->getOauthRedirect(C('ROOT_URL')."WxAccess/oauth");
+//        echo $uri;
+        $this->success("正在跳转",$uri);
+        //todo 可以把uri打印出来直接作为入口，不用注册两次weObj了
     }
 
-    public function demo(){
-//        $this->success("huehue","http://");
+    public function oauth(){
         $options = array(
             'token' => C('WX_TOKEN'),
             'encodingaeskey' => C('WX_ENCODINGAESKEY'),
@@ -36,7 +35,7 @@ class WxAccessController
             'appsecret' => C('WX_APPSECRET')
         );
         $weObj = new \Org\Util\Wechat($options);
-//        $weObj->valid();
+        // 获取用户授权后的信息
         $resultArr=$weObj->getOauthAccessToken();
 //        dump($weObj->getOauthAccessToken());
         /*array(5) {
@@ -60,40 +59,41 @@ class WxAccessController
   ["headimgurl"] => string(131) "http://wx.qlogo.cn/mmopen/0pygn8iaZdEcicRnOAlTtXy2ia1iaMTPIZTrOnSBJNwY6phBhPYk9MjLuicibnbpx45MOGvcoAN2rexMAL1hf4t0icFcUqAbLysPnBx/0"
   ["privilege"] => array(0) {}
         }*/
-        $this->save($userInfo);
+        $this->check_in($userInfo);
+        $this->goto_home();
     }
 
-
-
-    private function save($userInfo){
+    private function check_in($userInfo){
         $userModel=M("User");
         $r=$userModel->where(array("open_id"=>$userInfo["openid"]))->find();
-        if(!empty($r)){//验证用户是否注册
-            $returnArr['status']=0;
-            $returnArr['msg']="该手机号已经注册过。";
-            echo json_encode($returnArr);exit;
+        if(empty($r)){//验证用户是否注册
+            $data['open_id'] = $userInfo["openid"];
+            $data['user_name'] = $userInfo["nickname"];
+            $data['province'] = $userInfo["province"];
+            $data['city'] = $userInfo["city"];
+            $data['country'] = $userInfo["country"];
+            $data['sex'] = $userInfo["sex"];
+            $data['heading_url'] = $userInfo["headimgurl"];
+            $res = $userModel->add($data);
+            if($res){
+                $temp['open_id'] = $userInfo["openid"];
+                $user_r = $userModel->where($temp)->find();
+                session('user_info',$user_r);
+                session('role_id',$user_r['role_id']);
+            }
+        }else{
+            session('user_info',$r);
+            session('role_id',$r['role_id']);
         }
-        $data['open_id'] = $userInfo["openid"];
-        $data['user_name'] = $userInfo["nickname"];
-        $data['province'] = $userInfo["province"];
-        $data['city'] = $userInfo["city"];
-        $data['country'] = $userInfo["country"];
-        $data['sex'] = $userInfo["sex"];
-        $data['headimg_url'] = $userInfo["headimgurl"];
-        $res = $userModel->add($data);
-        if($res){
-            $returnArr['status']=1;
-            $returnArr['msg']="注册成功。";
-//            $tesp['phone_number'] = $phone_numbers;
-//            $res = $userModel->where($tesp)->find();
-//            $_SESSION['user_info'] = $res;
-//            $_SESSION['role_id'] = $res['role_id'];
-            echo jsonEcho($returnArr);exit;
+    }
+
+    public function goto_home()
+    {
+        // 跳转地址设置为默认主页，如果cookie里有上次浏览地址，就跳到上次浏览的地址
+        $target_url = "Homepage/homepage_client";
+        if(!empty($_COOKIE['last_url'])){
+            $target_url =  $_COOKIE['last_url'];
         }
-        else{
-            $returnArr['status']=0;
-            $returnArr['msg']="注册失败。";
-            echo jsonEcho($returnArr);exit;
-        }
+        $this->redirect($target_url,'页面跳转中...');
     }
 }

@@ -17,19 +17,6 @@ class LoginController extends Controller
         $this->display();
     }
 
-    public function send_code()
-    {
-        $phone = I("post.phone");
-        $code = "";
-        $code .= rand(0, 9);
-        $code .= rand(0, 9);
-        $code .= rand(0, 9);
-        $code .= rand(0, 9);
-        sendCode($phone, $code);
-        session('randomCode', $code);
-        session('phone', $phone);
-    }
-
 
     //注册表单体检处理页面
     public function register_do()
