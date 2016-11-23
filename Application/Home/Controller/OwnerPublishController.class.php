@@ -22,11 +22,14 @@ class OwnerPublishController extends ComController
         $this->assign('coalKind',$coalKind);
         $this->assign('coalTrait',$coalTrait);
         $this->assign('coalGranularity',$coalGranularity);
+        $curl = CONTROLLER_NAME.'/'.ACTION_NAME;
+        cookie('lasturl',$curl);
+        $this->assign('curl',$curl);
         $this->display();
     }
 
     public function coal_sell_action(){
-        dump(json_encode($_POST['sell_content']));exit;
+        dump(json_encode($_POST['sell_content']));
 //        $area_start = I('post.start_area','','strip_tags')?I('post.start_area','','strip_tags'):"";
 //        $area_end = I('post.start_area','','strip_tags')?I('post.start_area','','strip_tags'):"";
 //        $area_end = I('post.start_area','','strip_tags')?I('post.start_area','','strip_tags'):"";
@@ -79,7 +82,7 @@ class OwnerPublishController extends ComController
 //        $data['place_origin_id'] = '';    //TODO
         $data['supply_company'] = $subInfo['supply_company'];
         $data['quantity'] = $subInfo['sell_quantity'];
-        $data['content'] = $subInfo['content'];
+        $data['content'] = $subInfo['sell_content'];
         //content_all字段拼接用于查询
         $data['content_all'] = $subInfo['content'];
         //判断消息是否拆分
@@ -91,16 +94,16 @@ class OwnerPublishController extends ComController
             }
         }
         //对content_all字段进行MD5编码用于快速查重
-        $data['content_all_md5'] = md5($data['content_all']);
+//        $data['content_all_md5'] = md5($data['content_all']);
         //插入前查重
-        $mresTemp = M('messages')->where($data['content_all_md5'])->find();
-        if(!empty($mresTemp)){//重复
-            $returnArr['status'] = 2;
-            $returnArr['msg'] = "数据重复";
-            echo json_encode($returnArr);
-        }elseif($mresTemp === false){
-            echo '查询操作失败';
-        }else{
+//        $mresTemp = M('messages')->where($data['content_all_md5'])->find();
+//        if(!empty($mresTemp)){//重复
+//            $returnArr['status'] = 2;
+//            $returnArr['msg'] = "数据重复";
+//            echo json_encode($returnArr);exit;
+//        }elseif($mresTemp === false){
+//            echo '查询操作失败';exit;
+//        }else{
             //插入
             $mres = M('messages')->data($data)->add();
             if ($mres) {
@@ -114,7 +117,7 @@ class OwnerPublishController extends ComController
                 M("product")->delete($pres);
             }
         }
-    }
+//    }
 
 
 }

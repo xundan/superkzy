@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
     <!--<link rel="icon" href="../../favicon.ico">-->
@@ -12,6 +12,8 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/cookieStorage.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
     <link type="text/css" rel="stylesheet" href="bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="weui.min.css">
     <script type="text/javascript" src="jquery-2.2.4.min.js"></script>
@@ -68,14 +70,24 @@
             <table class="table table-responsive" style="border: 0">
                 <tr>
                     <td>
-                        <a href="#" style="text-decoration: none;color:black">
+                        <!--<a href="#" style="text-decoration: none;color:black">-->
+                            <!--<div>-->
+                                <!--&nbsp;发货地址-->
+                                <!--<span class="pull-right">-->
+                                    <!---->
+                                <!--<img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">-->
+                                <!--</span>-->
+                            <!--</div>-->
+                        <!--</a>-->
+                        <div onclick="get_area_start()" style=";color:black">
                             <div>
                                 &nbsp;发货地址
+                                <span id="area_start"></span>
                                 <span class="pull-right">
                                 <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
                                 </span>
                             </div>
-                        </a>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -125,13 +137,20 @@
                 </tr>
                 <tr>
                     <td>
-                        <div>
-                            <a href="#" style="text-decoration: none;color:black">
+                        <a data-toggle="collapse" href="#collapse_need_granularity" style="text-decoration: none;color:black">
+                            <div>
                                 &nbsp;粒度
-                            <span class="pull-right">
-                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
-                            </span>
-                            </a>
+                                <span class="pull-right">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive" style="width: 20px">
+                                </span>
+                            </div>
+                        </a>
+                        <div id="collapse_need_granularity" class="collapse" role="tablist" aria-labelledby="">
+                            <volist name="coalGranularity" id="need_coalGranularity">
+                                <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
+                                    <input type="radio" class="pull-left" name="option3_coal_granularity" id="" autocomplete="off" value="{$need_coalGranularity['id']}"> {$need_coalGranularity['title']}
+                                </label>
+                            </volist>
                         </div>
                     </td>
                 </tr>
@@ -192,7 +211,8 @@
                                 <!--<span style="font-size: 1.5em;color:red;vertical-align: middle">*</span>-->
                                 <img src="__PUBLIC__/home/images/necessary.png" class="" style="width: 7px">
                             </span>
-                            <input id="" name="" class="form-control" placeholder="请输入联系方式" style="border-radius: 0;border: 0">
+                            <input id="" name="need_phone" class="form-control" placeholder="请输入联系方式" style="border-radius: 0;border: 0">
+                            <span class="text-danger" id="need_phone_alert"></span>
                         </div>
                     </td>
                 </tr>
@@ -202,13 +222,13 @@
                             <label>
                                 详细描述
                             </label>
-                            <textarea id="" name="" class="form-control">
-                            </textarea>
+                            <textarea name="need_content" class="form-control" style="resize: none"></textarea>
+                            <span class="text-danger" id="need_content_alert"></span>
                         </div>
                     </td>
                 </tr>
             </table>
-            <input type="submit" name="" id="" class="btn btn-group-justified" value="发&nbsp&nbsp&nbsp布" style="color:white;font-size: 2em;background-color: #fb3e1e">
+            <input type="button" name="" class="btn btn-group-justified" onclick="need_sub()" value="发&nbsp&nbsp&nbsp布" style="color:white;font-size: 2em;background-color: #fb3e1e">
         </form>
     </div>
     <div id="coal_sell" class="tab-pane" style="">
@@ -225,10 +245,9 @@
                             </div>
                         </a>
                         <div id="collapse_sell_coal_kind" class="collapse" role="tablist" aria-labelledby="">
-                            <volist name="coalKind" id="coalKind">
+                            <volist name="coalKind" id="sell_coalKind">
                                 <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                    <input type="radio" class="pull-left" name="option0_coal_kind" id="option0_coal_kind" autocomplete="off" value="{$coalKind['id']}"> {$coalKind['title']}
-                                    <!--<input type="hidden" name="coal_trait" id="" value="{$coalTrait['id']}">-->
+                                    <input type="radio" class="pull-left" name="option0_coal_kind" id="" autocomplete="off" value="{$sell_coalKind['id']}"> {$sell_coalKind['title']}
                                 </label>
                             </volist>
                         </div>
@@ -245,10 +264,9 @@
                             </div>
                         </a>
                         <div id="collapse_sell_coal_trait" class="collapse" role="tablist" aria-labelledby="">
-                            <volist name="coalTrait" id="coalTrait">
+                            <volist name="coalTrait" id="sell_coalTrait">
                                 <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                    <input type="radio" class="pull-left" name="option0_coal_trait" id="option0_coal_trait" autocomplete="off" value="{$coalTrait['id']}"> {$coalTrait['title']}
-                                    <!--<input type="hidden" name="coal_trait" id="" value="{$coalTrait['id']}">-->
+                                    <input type="radio" class="pull-left" name="option0_coal_trait" id="" autocomplete="off" value="{$sell_coalTrait['id']}"> {$sell_coalTrait['title']}
                                 </label>
                             </volist>
                         </div>
@@ -265,10 +283,9 @@
                             </div>
                         </a>
                         <div id="collapse_sell_coal_granularity" class="collapse" role="tablist" aria-labelledby="">
-                            <volist name="coalGranularity" id="coalGranularity">
+                            <volist name="coalGranularity" id="sell_coalGranularity">
                                 <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                    <input type="radio" class="pull-left" name="option0_coal_granularity" id="option0_coal_granularity" autocomplete="off" value="{$coalGranularity['id']}"> {$coalGranularity['title']}
-                                    <!--<input type="hidden" name="coal_granularity" id="" value="{$coalGranularity['id']}">-->
+                                    <input type="radio" class="pull-left" name="option0_coal_granularity" id="" autocomplete="off" value="{$sell_coalGranularity['id']}"> {$sell_coalGranularity['title']}
                                 </label>
                             </volist>
                         </div>
@@ -328,7 +345,7 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 热值(高位)
                             </span>
-                            <input type="number" id="" name="sell_heat_value_max" class="form-control" placeholder="请输入热值" style="border-radius: 0;border: 0">
+                            <input type="" id="" name="sell_heat_value_max" class="form-control" placeholder="请输入热值" style="border-radius: 0;border: 0">
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 卡
                             </span>
@@ -422,38 +439,59 @@
             <table class="table table-responsive" style="border: 0">
                 <tr>
                     <td>
-                        <a href="#" style="text-decoration: none;color:black">
+                        <a data-toggle="collapse" href="#collapse_buy_coal_kind" aria-expanded="true" aria-controls="collapse_buy_coal_kind" style="text-decoration: none;color:black">
                             <div>
                                 &nbsp;煤炭种类
                                 <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive" style="width: 20px">
                                 </span>
                             </div>
                         </a>
+                        <div id="collapse_buy_coal_kind" class="collapse" role="tablist" aria-labelledby="">
+                            <volist name="coalKind" id="buy_coalKind">
+                                <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
+                                    <input type="radio" class="pull-left" name="option3_coal_kind" id="" autocomplete="off" value="{$buy_coalKind['id']}"> {$buy_coalKind['title']}
+                                </label>
+                            </volist>
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <a href="#" style="text-decoration: none;color:black">
+                        <a data-toggle="collapse" href="#collapse_buy_coal_trait" aria-expanded="true" aria-controls="collapse_buy_coal_trait" style="text-decoration: none;color:black">
                             <div>
                                 &nbsp;品质
                                 <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive" style="width: 20px">
                                 </span>
                             </div>
                         </a>
+                        <div id="collapse_buy_coal_trait" class="collapse" role="tablist" aria-labelledby="">
+                            <volist name="coalTrait" id="buy_coalTrait">
+                                <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
+                                    <input type="radio" class="pull-left" name="option3_coal_trait" id="" autocomplete="off" value="{$buy_coalTrait['id']}"> {$buy_coalTrait['title']}
+                                </label>
+                            </volist>
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <a href="#" style="text-decoration: none;color:black">
+                        <a data-toggle="collapse" href="#collapse_buy_coal_granularity" style="text-decoration: none;color:black">
                             <div>
                                 &nbsp;粒度
                                 <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive" style="width: 20px">
                                 </span>
                             </div>
                         </a>
+                        <div id="collapse_buy_coal_granularity" class="collapse" role="tablist" aria-labelledby="">
+                            <volist name="coalGranularity" id="buy_coalGranularity">
+                                <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
+                                    <input type="radio" class="pull-left" name="option3_coal_granularity" id="" autocomplete="off" value="{$buy_coalGranularity['id']}"> {$buy_coalGranularity['title']}
+                                </label>
+                            </volist>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -474,7 +512,7 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 热值(低位)
                             </span>
-                            <input id="" name="" class="form-control" placeholder="请输入热值" style="border-radius: 0;border: 0">
+                            <input id="" name="buy_heat_value_min" class="form-control" placeholder="请输入热值" style="border-radius: 0;border: 0">
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 卡
                             </span>
@@ -529,7 +567,8 @@
                                 <!--<span style="font-size: 1.5em;color:red;vertical-align: middle">*</span>-->
                                 <img src="__PUBLIC__/home/images/necessary.png" class="" style="width: 7px">
                             </span>
-                            <input id="" name="" class="form-control" placeholder="请输入联系方式" style="border-radius: 0;border: 0">
+                            <input id="" name="buy_phone" class="form-control" placeholder="请输入联系方式" style="border-radius: 0;border: 0">
+                            <span class="text-danger" id="buy_phone_alert"></span>
                         </div>
                     </td>
                 </tr>
@@ -539,13 +578,13 @@
                             <label>
                                 详细描述
                             </label>
-                            <textarea id="" name="" class="form-control" cols="10" rows="5">
-                            </textarea>
+                            <textarea id="" name="buy_content" class="form-control" style="resize: none"></textarea>
+                            <span class="text-danger" id="buy_content_alert"></span>
                         </div>
                     </td>
                 </tr>
             </table>
-            <input type="submit" name="" id="" class="btn btn-group-justified" value="发&nbsp&nbsp&nbsp布" style="color:white;font-size: 2em;background-color: #fb3e1e">
+            <input type="button" name="" id="" class="btn btn-group-justified" onclick="buy_sub()" value="发&nbsp&nbsp&nbsp布" style="color:white;font-size: 2em;background-color: #fb3e1e">
         </form>
     </div>
 </div>
@@ -561,6 +600,34 @@
         $(this).addClass('weui_bar_item_on');
         $(this).tab('show');
     })
+</script>
+<!--test-->
+<script>
+    $(function(){
+//        if(cookie('tag') == 1){
+            console.log(cookie('tag'));
+            var a = $('#coal_sell');
+        console.log(a);
+            a.siblings('a').removeClass('weui_bar_item_on');
+            a.addClass('weui_bar_item_on');
+            a.tab('show');
+        $('#area_start').html(cookie('asd'));
+//        }
+    });
+    function get_area_start(){
+//        window.localStorage.setItem('lasturl',);
+        var tempurl = "{:U('areaSearch/area_search')}?tag=1";
+//        alert(window.location.pathname);
+//        cookieStorage->setItem('asd','asd');
+//        alert(document.cookie);
+//        window.location.href= tempurl;
+        cookie('tag',1);
+//        var b = {$asdaaa};
+//        alert(b);
+
+//        $current_url = window.location.href;
+//        alert($current_url);
+    }
 </script>
 <!--actionsheet功能-->
 <script>
@@ -595,12 +662,58 @@
         }
     });
 </script>
-<!--表单提交输入检测-->
+<!--求车表单提交输入及检测-->
+<script>
+    //获取焦点清空输入及错误信息
+    $('input[name=need_phone]').focus(function(){
+        if($('#need_content_alert').html()){
+            $(this).val('');
+            $('#need_phone_alert').html('');
+        }
+    });
+    $('textarea[name=sell_content]').focus(function(){
+        $('#need_content_alert').html('');
+    });
+    function need_sub(){
+        //联系电话验证
+        var need_phone = $('input[name=need_phone]').val().trim();
+        if(!need_phone){
+            $('#need_phone_alert').html('联系电话不能为空');return;
+        }else if(need_phone.length != 11 || !need_phone.match(/^(-?\d+)(\.\d+)?$/)){
+            $('#need_phone_alert').html('请输入正确的电话号码');return;
+        }
+        //判断content有无输入，content和煤炭信息不能同时为空
+        var need_content = $('textarea[name="need_content"]').val().trim();
+        //TODO
+        if(!need_content){
+            $('#need_content_alert').html('详细描述与地址信息不能同时为空');return;
+        }
+        //ajax提交表单数据
+        var subData=$("#form_need_car").serialize();
+//        console.log(subData);
+//
+        var url="{:U('OwnerPublish/need_car_action')}";
+        $.ajax({
+            type:"post",
+            url:url,
+            data:subData,
+            success:function(data){
+                console.log(123);
+//                var jsonObj=eval("("+data+")");
+//                console.log(jsonObj.data);
+                console.log(data);
+            }
+        });
+    }
+</script>
+<!--供货表单提交输入及检测-->
 <script>
     //获取焦点清空输入及错误信息
     $('input[name=sell_phone]').focus(function(){
-        $(this).val('');
-        $('#sell_phone_alert').html('');
+        if($('#sell_content_alert').html()){
+            $(this).val('');
+            $('#sell_phone_alert').html('');
+        }
     });
     $('textarea[name=sell_content]').focus(function(){
         $('#sell_content_alert').html('');
@@ -613,10 +726,24 @@
         }
     });
     $('input[name=sell_heat_value_max]').focus(function(){
-        $(this).val('');
-        $('#sell_content_alert').html('');
+        if($('#sell_content_alert').html()){
+            $(this).val('');
+            $('#sell_content_alert').html('');
+        }
     });
-
+    //热值低位如果有值必须为int型数字
+    $('input[name=sell_heat_value_min]').blur(function(){
+        var sell_heat_value_min = $(this).val().trim();
+        if(!sell_heat_value_min.match(/^(-?\d+)(\.\d+)?$/) && sell_heat_value_min){
+            $('#sell_content_alert').html('热值必须为数字');
+        }
+    });
+    $('input[name=sell_heat_value_min]').focus(function(){
+        if($('#sell_content_alert').html()){
+            $(this).val('');
+            $('#sell_content_alert').html('');
+        }
+    });
     function sell_sub(){
         //联系电话验证
         var sell_phone = $('input[name=sell_phone]').val().trim();
@@ -637,8 +764,8 @@
         var subData=$("#form_sell").serialize();
 //        console.log(subData);
 //
-//        var url="{:U('OwnerPublish/coal_sell_action')}";
-        var url='{:U("OwnerPublish/coal_sell_action","","")}';
+        var url="{:U('OwnerPublish/coal_sell_action')}";
+//        var url='{:U("OwnerPublish/coal_sell_action","","")}';
 //        var url="{:U('coal_sell_action','','')}";
 //        var url='coal_sell_action';
 ////        document.form_sell.action = url;
@@ -652,25 +779,72 @@
 //                var jsonObj=eval("("+data+")");
 //                console.log(jsonObj.data);
                 console.log(data);
-
-//                console.log(data);
-//                $("#result").text(data);
-////                console.log(data);
-////                console.log(eval(data));
-////                            alert(subData);
-////                if(data!=""){
-////                    var jsonObj=eval("("+data+")");
-////                                console.log(data);
-////                    if(jsonObj.status){
-////                        $("#loadIndex").val(0);
-////                        $("#intact").show();
-////                    }else{
-////                        tanchu(jsonObj.msg);
-////                    }
-////                }
             }
         });
     }
-
+</script>
+<!--求购表单提交输入及检测-->
+<script>
+    //获取焦点清空输入及错误信息
+    $('input[name=buy_phone]').focus(function(){
+        if($('#sell_content_alert').html()){
+            $(this).val('');
+            $('#sell_phone_alert').html('');
+        }
+    });
+    $('textarea[name=buy_content]').focus(function(){
+        $('#buy_content_alert').html('');
+    });
+    //热值低位如果有值必须为int型数字
+    $('input[name=buy_heat_value_min]').blur(function(){
+        var buy_heat_value_min = $(this).val().trim();
+        if(!buy_heat_value_min.match(/^(-?\d+)(\.\d+)?$/) && sell_heat_value_min){
+            $('#buy_content_alert').html('热值必须为数字');
+        }
+    });
+    $('input[name=buy_heat_value_min]').focus(function(){
+        if($('#buy_content_alert').html()){
+            $(this).val('');
+            $('#buy_content_alert').html('');
+        }
+    });
+    function buy_sub(){
+        //联系电话验证
+        var buy_phone = $('input[name=buy_phone]').val().trim();
+        if(!buy_phone){
+            $('#buy_phone_alert').html('联系电话不能为空');return;
+        }else if(buy_phone.length != 11 || !buy_phone.match(/^(-?\d+)(\.\d+)?$/)){
+            $('#buy_phone_alert').html('请输入正确的电话号码');return;
+        }
+        //判断content有无输入，content和煤炭信息不能同时为空
+        var buy_content = $('textarea[name="buy_content"]').val().trim();
+        var buy_coal_kind = $('input[name=option3_coal_kind]:checked').val();
+        var buy_coal_trait = $('input[name=option3_coal_trait]:checked').val();
+        var buy_coal_granularity = $('input[name=option3_coal_granlarity]:checked').val();
+        if(!buy_content && !buy_coal_kind && !buy_coal_trait && !buy_coal_granularity){
+            $('#buy_content_alert').html('详细描述与煤炭信息不能同时为空');return;
+        }
+        //ajax提交表单数据
+        var subData=$("#form_buy").serialize();
+//        console.log(subData);
+//
+        var url="{:U('OwnerPublish/coal_buy_action')}";
+//        var url='{:U("OwnerPublish/coal_sell_action","","")}';
+//        var url="{:U('coal_sell_action','','')}";
+//        var url='coal_sell_action';
+////        document.form_sell.action = url;
+//        document.form_sell.submit();
+        $.ajax({
+            type:"post",
+            url:url,
+            data:subData,
+            success:function(data){
+                console.log(123);
+//                var jsonObj=eval("("+data+")");
+//                console.log(jsonObj.data);
+                console.log(data);
+            }
+        });
+    }
 </script>
 </html>

@@ -18,13 +18,13 @@ class AreaSearchController extends ComController
         //热点地区 is_hot字段判断
 
         //地区列表 默认A开始
+//        dump($_SESSION);
+//        dump($_COOKIE);
         $where['pinyin']  = array('like', 'A%');
-//        $where['pinyin']  = 'Beijing';
         $default_area = M('districts')->where($where)->select();
-//        dump($default_area);
         $result = $default_area;
-//        dump($result);
         $this->assign('result',$result);
         $this->display();
     }
+
 }
