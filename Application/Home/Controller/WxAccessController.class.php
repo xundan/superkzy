@@ -37,28 +37,10 @@ class WxAccessController extends Controller
         $weObj = new \Org\Util\Wechat($options);
         // 获取用户授权后的信息
         $resultArr=$weObj->getOauthAccessToken();
-//        dump($weObj->getOauthAccessToken());
-        /*array(5) {
-  ["access_token"] => string(107) "1QxYPUczGQ3ImL0OjYDpFxFySJnVZk_zRqb7m-wDsxwg6TcMWjaYsXtcwA-CH4E0sGQ5rIV4BUO3g0hyKOVs6LnmV1F98psRW59mYN6qsA8"
-  ["expires_in"] => int(7200)
-  ["refresh_token"] => string(107) "DiPlJSHk_2n-PkdL1gTIfTlC0rpsVzS5OAwFBZ4sQ7vaiYFBX1qXcxwJCqlDoRpCrxZa75FbXE8Dff4BJOgypDqZt50klQIqLoZhN7aFr-w"
-  ["openid"] => string(28) "o5DarwPJb6a2i9Iex1I2skl3ewtM"
-  ["scope"] => string(15) "snsapi_userinfo"
-}*/
+
         $resultArr["access_token"];
         $userInfo=$weObj->getOauthUserinfo($resultArr["access_token"],$resultArr["openid"]);
-//        dump($userInfo);
-        /*array(9) {
-  ["openid"] => string(28) "o5DarwPJb6a2i9Iex1I2skl3ewtM"
-  ["nickname"] => string(9) "荀辰龙"
-  ["sex"] => int(1)
-  ["language"] => string(5) "zh_CN"
-  ["city"] => string(7) "Haidian"
-  ["province"] => string(7) "Beijing"
-  ["country"] => string(2) "CN"
-  ["headimgurl"] => string(131) "http://wx.qlogo.cn/mmopen/0pygn8iaZdEcicRnOAlTtXy2ia1iaMTPIZTrOnSBJNwY6phBhPYk9MjLuicibnbpx45MOGvcoAN2rexMAL1hf4t0icFcUqAbLysPnBx/0"
-  ["privilege"] => array(0) {}
-        }*/
+
         $this->check_in($userInfo);
         $this->goto_home();
     }

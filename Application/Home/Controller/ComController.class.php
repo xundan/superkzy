@@ -10,21 +10,32 @@ namespace Home\Controller;
 use Think\Controller;
 class ComController extends Controller
 {
-//    public function _initialize(){
-//        if(!isset($_SESSION[C('USER_AUTH_KEY')])){
-//            //判断是否有uid
-//            $this->redirect("Login/login");
+    public function _initialize(){
+        $user = $_SESSION['user_info'];
+
+        //把当前路径放入cookie中
+        $module_name = CONTROLLER_NAME.'/'.ACTION_NAME;
+        cookie("last_url",$module_name);
+        if(!isset($user['uid'])){
+            //判断是否有uid，如果没有分两种情况
+            // 如果是本机测试，从数据库取uid=1的用户登录
+            // 否则请求微信授权登录
+            if(C('IS_LOCALHOST')==1){
+                $temp['uid'] = 1;
+                $user_r = M('User')->where($temp)->find();
+                session('user_info',$user_r);
+                session('role_id',$user_r['role_id']);
+            }else{
+                $this->redirect("WxAccess/index",'');
+            }
+        }
+        $Auth = new \Think\Auth();
+
+//        if(!$Auth->check($module_name,$user['uid'])){
+//            $this->error('没有权限访问本页面',$url);
 //        }
-//        $Auth = new \Think\Auth();
-//        $module_name = CONTROLLER_NAME.'/'.ACTION_NAME;
-//        if($_SESSION['uname']==C('ADMIN_AUTH_KEY')){
-//            //以用户名来判断是否是超级管理员，绕过验证，不用用户组来判断的原因是用户组有时候是中文  ，而且常删除或更改。
-//            return true;
-//        }
-//        if(!$Auth->check($module_name,$_SESSION[C('USER_AUTH_KEY')])){
-//            $this->error('没有权限');
-//        }
-//    }
+    }
+
     /**
      * 查询输入框输入内容整理
      * @param $str              输入字符串

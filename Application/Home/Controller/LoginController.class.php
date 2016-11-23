@@ -10,7 +10,7 @@ namespace Home\Controller;
 //use Think\Auth;
 use Think\Controller;
 header("Content-type:text/html; charset=utf-8");
-class LoginController extends ComController
+class LoginController extends Controller
 {
     public function index(){
         echo "目前登陆的是：";
