@@ -17,6 +17,8 @@ class DriverOrderController extends ComController
     }
 
     public function driver_order_detail(){
+        vendor("jssdk.signPackage");
+        $this->assign("signPackage",getSignPackage());
         $this->display();
     }
 

@@ -19,11 +19,15 @@ class OwnerOrderController extends ComController
 
     public function owner_order_transport_detail()
     {
+        vendor("jssdk.signPackage");
+        $this->assign("signPackage",getSignPackage());
         $this->display();
     }
 
     public function owner_order_trade_detail()
     {
+        vendor("jssdk.signPackage");
+        $this->assign("signPackage",getSignPackage());
         $this->display();
     }
 }
