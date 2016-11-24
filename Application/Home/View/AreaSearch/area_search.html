@@ -11,6 +11,7 @@
     <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
     <!--<link type="text/css" rel="stylesheet" href="bootstrap.min.css">-->
     <!--<link type="text/css" rel="stylesheet" href="weui.min.css">-->
     <!--<script type="text/javascript" src="jquery-2.2.4.min.js"></script>-->
@@ -20,7 +21,7 @@
 <!--标题栏-->
 <div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
                 <span class="pull-left" style="">
-                    <a href="#">
+                    <a href="">
                         <img src="__PUBLIC__/home/images/goback.png" class="img-responsive" style="width: 15px;height: auto;margin-top: 60%">
                     </a>
                 </span>
@@ -219,7 +220,7 @@
                 <table class="table table-condensed" style="margin-bottom: 0">
                     <tr>
                         <td>
-                            <a href="" style="text-decoration: none;color:black;">
+                            <a href="javascript:void(0)" name="all_area" style="text-decoration: none;color:black;">
                                 <div>
                                 {$result.name}
                                 </div>
@@ -230,7 +231,6 @@
             </volist>
         </div>
     </div>
-</div>
 </div>
 </body>
 <!--导航功能-->
@@ -284,12 +284,15 @@
 </script>
 <!--cookie-->
 <script>
-//    alert(document.cookie);
-//    document.cookie="asd=1 ,23";
-//    alert(document.cookie);
-    window.localStorage.setItem('start_area','asd;asdasd,asd;asd;wqe.asd asd;sad');
-    window.localStorage.setItem('start_area','123');
-    var a =window.localStorage.getItem('start_area');
-    console.log(a);
+    $('a[name=all_area]').click(function(){
+        var temp_area = $(this).children('div').html();
+        if(cookie('start_or_end') == 'start'){
+            cookie('area_start',temp_area);
+        }else if(cookie('start_or_end') == 'end'){
+            cookie('area_end',temp_area);
+        }
+        console.log(cookie('lasturl'));
+        $(this).attr('href',cookie('lasturl'));
+    });
 </script>
 </html>

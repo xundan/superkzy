@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <title></title>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/iscroll.js"></script>
+    <link type="text/css" rel="stylesheet" href="bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="weui.min.css">
+    <script type="text/javascript" src="jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+</head>
+<body>
+<!--标题栏-->
+<div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
+    <!--<div class="container text-center" style="">-->
+    <!--<div style="display: inline-block;height: 100%;vertical-align: middle"></div>-->
+        <span class="pull-left" style="">
+                <!--<a class="glyphicon glyphicon-chevron-left"></a>-->
+            <a href="#">
+                <img src="__PUBLIC__/home/images/goback.png" class="img-responsive" style="width: 15px;height: auto;margin-top: 40%">
+            </a>
+        </span>
+        <span class="">
+            <span class="" style="font-size: 1.5em;">我的发布</span>
+        </span>
+    <!--</div>-->
+</div>
+<!--清除浮动-->
+<div class="clearfix"></div>
+<!--订单展示栏-->
+<div class="container">
+    <div id="" class="tab-pane active" style="background-color: #efeff4">
+        <div id="wrapper">
+            <div id="scroller">
+                <div id="pullDown">
+                    <span class="pullDownIcon"></span>
+                    <span class="pullDownLabel">下拉刷新...</span>
+                </div>
+                <ul id="thelist" class="" style="list-style-type: none">
+                    <li class="weui_panel weui_panel_access" style="border-radius: 5px">
+                        <div class="weui_media_box weui_media_appmsg" style="margin: 0;padding-left: 0;padding-right: 0">
+                            <a href="#">
+                                <div class="weui_media_hd">
+                                    <img src="__PUBLIC__/home/images/headimg_background.png" class="weui_media_appmsg_thumb">
+                                </div>
+                            </a>
+                            <div class="weui_media_bd">
+                                <a href="#">
+                                    <h4 class="weui_media_title">{名字} <img src="__PUBLIC__/home/images/medal.png" style="width: 15px;height: 20px"></h4>
+                                </a>
+                                <p class="weui_media_desc">
+                                    <img src="__PUBLIC__/home/images/area_start.png" style="width: 15px;height: 20px">
+                                    {start}→{end}
+                                    <img src="__PUBLIC__/home/images/area_end.png" style="width: 15px;height: 20px">
+                                </p>
+                            </div>
+                            <div class="weui_media_bd" style="margin-right: -10%">
+                                <button class="btn btn-sm btn-default" style="width: 60%;border-color: #04bfc6;padding: 2px 10px;color: #04bfc6">
+                                    修改订单
+                                </button>
+                                <div>
+                                    <button class="btn btn-sm btn-default" style="width: 60%;border: none;color:grey">
+                                        撤销订单
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="panel-body" style="padding:0">-->
+                        <table class="table table-condensed" style="margin: 0">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    车辆类型:{}
+                                </td>
+                                <td>
+                                    载重吨数:{}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    有效时间:{}
+                                    <button class="btn btn-xs btn-default" style="color: grey">
+                                        续时
+                                    </button>
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="help-block pull-right">
+                            发布时间
+                        </div>
+                        <!--</div>-->
+                    </li>
+                    <li class="weui_panel weui_panel_access" style="border-radius: 5px">
+                        <div class="weui_media_box weui_media_appmsg" style="margin: 0;padding-left: 0;padding-right: 0">
+                            <a href="#">
+                                <div class="weui_media_hd">
+                                    <img src="__PUBLIC__/home/images/headimg_background.png" class="weui_media_appmsg_thumb">
+                                </div>
+                            </a>
+                            <div class="weui_media_bd">
+                                <a href="#">
+                                    <h4 class="weui_media_title">{名字} <img src="__PUBLIC__/home/images/medal.png" style="width: 15px;height: 20px"></h4>
+                                </a>
+                                <p class="weui_media_desc">
+                                    <img src="__PUBLIC__/home/images/area_start.png" style="width: 15px;height: 20px">
+                                    {start}→{end}
+                                    <img src="__PUBLIC__/home/images/area_end.png" style="width: 15px;height: 20px">
+                                </p>
+                            </div>
+                            <div class="weui_media_bd" style="margin-right: -10%">
+                                <button class="btn btn-sm btn-default" style="width: 60%;border-color: #04bfc6;padding: 2px 10px;color: #04bfc6">
+                                    修改订单
+                                </button>
+                                <div>
+                                    <button class="btn btn-sm btn-default" style="width: 60%;border: none;color:grey">
+                                        撤销订单
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="panel-body" style="padding:0">-->
+                        <table class="table table-condensed" style="margin: 0">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    车辆类型:{}
+                                </td>
+                                <td>
+                                    载重吨数:{}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    有效时间:{}
+                                    <button class="btn btn-xs btn-default" style="color: grey">
+                                        续时
+                                    </button>
+                                </td>
+                                <td>
+
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="help-block pull-right">
+                            发布时间
+                        </div>
+                        <!--</div>-->
+                    </li>
+                </ul>
+                <div id="pullUp">
+                    <span class="pullUpIcon"></span>
+                    <span class="pullUpLabel">上拉加载更多...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<script>
+</script>
+</html>

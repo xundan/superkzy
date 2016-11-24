@@ -46,17 +46,17 @@
 <!--导航标签-->
 <div class="panel-title" style="margin:0;padding: 0;background-color: white">
     <div id="myTab" class="weui_navbar" role="" style="position: inherit;margin-bottom: 0;">
-        <a href="#car_need" class="weui_navbar_item weui_bar_item_on" data-toggle="tab" style="color: black;text-decoration: none">
+        <a href="#car_need" name="car_need" class="weui_navbar_item weui_bar_item_on" data-toggle="tab" style="color: black;text-decoration: none">
             <span role="presentation" class="" style=";font-size: 1.2em">
                 发布求车
             </span>
         </a>
-        <a href="#coal_sell" class="weui_navbar_item" data-toggle="tab" style="color: black;text-decoration: none">
+        <a href="#coal_sell" name="coal_sell" class="weui_navbar_item" data-toggle="tab" style="color: black;text-decoration: none">
             <span role="presentation" class="" style=";font-size: 1.2em">
                 发布供货
             </span>
         </a>
-        <a href="#coal_buy" class="weui_navbar_item" data-toggle="tab" style="color: black;text-decoration: none">
+        <a href="#coal_buy" name="coal_buy" class="weui_navbar_item" data-toggle="tab" style="color: black;text-decoration: none">
             <span role="presentation" class="" style=";font-size: 1.2em">
                 发布求购
             </span>
@@ -79,10 +79,11 @@
                                 <!--</span>-->
                             <!--</div>-->
                         <!--</a>-->
-                        <div onclick="get_area_start()" style=";color:black">
+                        <div onclick="need_get_area_start()" style=";color:black">
                             <div>
                                 &nbsp;发货地址
-                                <span id="area_start"></span>
+                                <span id="need_area_start" style="margin-left:30%"></span>
+                                <input type="hidden" name="need_area_start">
                                 <span class="pull-right">
                                 <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
                                 </span>
@@ -96,21 +97,22 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 <img src="__PUBLIC__/home/images/area_start.png" class="" style="width: 10px">
                             </span>
-                            <input id="" name="" class="form-control" placeholder="请填写详细信息" style="border-radius: 0;border: 0">
+                            <input name="need_area_start_detail" class="form-control" placeholder="请填写详细信息" style="border-radius: 0;border: 0">
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        <a href="#" style="text-decoration: none;color:black">
+                        <div onclick="need_get_area_end()" style=";color:black">
                             <div>
                                 &nbsp;收货地址
+                                <span id="need_area_end" style="margin-left:30%"></span>
+                                <input type="hidden" name="need_area_end">
                                 <span class="pull-right">
                                 <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
                                 </span>
                             </div>
-                        </a>
-                    </td>
+                        </div>
                 </tr>
                 <tr>
                     <td style="padding: 0">
@@ -118,7 +120,7 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 <img src="__PUBLIC__/home/images/area_end.png" class="" style="width: 10px">
                             </span>
-                            <input id="" name="" class="form-control" placeholder="请填写详细信息" style="border-radius: 0;border: 0">
+                            <input name="need_area_end_detail" class="form-control" placeholder="请填写详细信息" style="border-radius: 0;border: 0">
                         </div>
                     </td>
                 </tr>
@@ -604,29 +606,46 @@
 <!--test-->
 <script>
     $(function(){
-//        if(cookie('tag') == 1){
+        if(cookie('tag') == 0){
             console.log(cookie('tag'));
-            var a = $('#coal_sell');
-        console.log(a);
+            var a = $('a[name=coal_sell]');
+            console.log(a);
             a.siblings('a').removeClass('weui_bar_item_on');
             a.addClass('weui_bar_item_on');
             a.tab('show');
-        $('#area_start').html(cookie('asd'));
-//        }
+//            $('#area_start').html(cookie('asd'));
+        }else if(cookie('tag') == 3){
+            $('#need_area_start').html(cookie('area_start'));
+            $('#need_area_end').html(cookie('area_end'));
+            $('input[name=need_area_start]').val(cookie('area_start'));
+            $('input[name=need_area_end]').val(cookie('area_end'));
+        }else if(cookie('tag') == 2){
+
+        }
     });
-    function get_area_start(){
-//        window.localStorage.setItem('lasturl',);
-        var tempurl = "{:U('areaSearch/area_search')}?tag=1";
+    function need_get_area_start(){
+        var goto_url = "{:U('areaSearch/area_search')}";
 //        alert(window.location.pathname);
 //        cookieStorage->setItem('asd','asd');
 //        alert(document.cookie);
-//        window.location.href= tempurl;
-        cookie('tag',1);
+        $current_url = window.location.href;
+        cookie('tag',3);
+        cookie('start_or_end','start');
+        cookie('lasturl',$current_url+'?tag=3');
+        window.location.href= goto_url;
 //        var b = {$asdaaa};
 //        alert(b);
 
 //        $current_url = window.location.href;
 //        alert($current_url);
+    }
+    function need_get_area_end(){
+        var goto_url = "{:U('areaSearch/area_search')}";
+        $current_url = window.location.href;
+        cookie('tag',3);
+        cookie('start_or_end','end');
+        cookie('lasturl',$current_url+'?tag=3');
+        window.location.href= goto_url;
     }
 </script>
 <!--actionsheet功能-->
@@ -676,6 +695,8 @@
     });
     function need_sub(){
         //联系电话验证
+        var area_start = $('input[name=need_area_start]').val();
+        console.log(area_start);return;
         var need_phone = $('input[name=need_phone]').val().trim();
         if(!need_phone){
             $('#need_phone_alert').html('联系电话不能为空');return;

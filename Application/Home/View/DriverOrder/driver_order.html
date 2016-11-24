@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <title></title>
+    <link type="text/css"  rel="stylesheet" href="/superkzy/Public/home/css/bootstrap.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="/superkzy/Public/home/css/weui.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="/superkzy/Public/home/css/mycss.css"/>
+    <script type="text/javascript" src="/superkzy/Public/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="/superkzy/Public/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/superkzy/Public/home/js/iscroll.js"></script>
+    <link type="text/css" rel="stylesheet" href="bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="weui.min.css">
+    <script type="text/javascript" src="jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+</head>
+<body style="background-color: #efeff4">
+<!--标题栏-->
+<div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
+    <!--<div class="container text-center" style="">-->
+    <!--<div style="display: inline-block;height: 100%;vertical-align: middle"></div>-->
+        <span class="pull-left" style="">
+                <!--<a class="glyphicon glyphicon-chevron-left"></a>-->
+            <a href="#">
+                <img src="/superkzy/Public/home/images/goback.png" class="img-responsive" style="width: 15px;height: auto;margin-top: 40%">
+            </a>
+        </span>
+        <span class="">
+            <span class="" style="font-size: 1.5em;">我的收藏</span>
+        </span>
+    <!--</div>-->
+</div>
+<!--清除浮动-->
+<div class="clearfix"></div>
+<!--订单展示栏-->
+<div class="container">
+    <div id="" class="tab-pane active" style="background-color: #efeff4">
+        <div id="wrapper">
+            <div id="scroller">
+                <div id="pullDown">
+                    <span class="pullDownIcon"></span>
+                    <span class="pullDownLabel">下拉刷新...</span>
+                </div>
+                <ul id="thelist" class="" style="list-style-type: none">
+                    <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
+                        <div class="text-right">
+                            <a href="/superkzy/index.php/Home/DriversFavorites/driver_favorite_detail.html" style="text-decoration: none;color:grey">
+                                详情 >
+                            </a>
+                        </div>
+                        <div class="">
+                            <strong>货主名称：{马兰拉}</strong>
+                            <span class="pull-right"><strong>货物数量：{100吨}</strong></span>
+                        </div>
+                        <div class="divider" style="border:1px solid darkgrey"></div>
+                        <div class="text-center">
+                            <img class="" src="/superkzy/Public/home/images/area_start.png" style="width: 12px;height: 15px;">
+                            {北京} ——→ {福建}
+                            <img class="" src="/superkzy/Public/home/images/area_end.png" style="width: 12px;height: 15px;">
+                        </div>
+                        <div class="pull-right help-block">
+                            接单时间:{2016-09-09}
+                        </div>
+                    </li>
+                    <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
+                        <div class="text-right">
+                            <a href="/superkzy/index.php/Home/DriversFavorites/driver_favorite_detail.html" style="text-decoration: none;color:grey">
+                                详情 >
+                            </a>
+                        </div>
+                        <div class="">
+                            <strong>货主名称：{拉马兰}</strong>
+                            <span class="pull-right"><strong>货物数量：{100吨}</strong></span>
+                        </div>
+                        <div class="divider" style="border:1px solid darkgrey"></div>
+                        <div class="text-center">
+                            <img class="" src="/superkzy/Public/home/images/area_start.png" style="width: 12px;height: 15px;">
+                            {兰州} ——→ {福建}
+                            <img class="" src="/superkzy/Public/home/images/area_end.png" style="width: 12px;height: 15px;">
+                        </div>
+                        <div class="pull-right help-block">
+                            接单时间:{2016-09-05}
+                        </div>
+                    </li>
+                    <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
+                        <div class="text-right">
+                            <a href="/superkzy/index.php/Home/DriversFavorites/driver_favorite_detail.html" style="text-decoration: none;color:grey">
+                                详情 >
+                            </a>
+                        </div>
+                        <div class="">
+                            <strong>货主名称：{兰拉马}</strong>
+                            <span class="pull-right"><strong>货物数量：{100吨}</strong></span>
+                        </div>
+                        <div class="divider" style="border:1px solid darkgrey"></div>
+                        <div class="text-center">
+                            <img class="" src="/superkzy/Public/home/images/area_start.png" style="width: 12px;height: 15px;">
+                            {呼和浩特} ——→ {赤峰}
+                            <img class="" src="/superkzy/Public/home/images/area_end.png" style="width: 12px;height: 15px;">
+                        </div>
+                        <div class="pull-right help-block">
+                            接单时间:{2016-08-31}
+                        </div>
+                    </li>
+                </ul>
+                <div id="pullUp">
+                    <span class="pullUpIcon"></span>
+                    <span class="pullUpLabel">上拉加载更多...</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+</script>
+</html>
