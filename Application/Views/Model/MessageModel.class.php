@@ -35,6 +35,7 @@ class MessageModel extends Model
         "owner",
         "sender_wx",
         "sender",
+        "deadline",
         '_pk'=>"id",
     );
 }

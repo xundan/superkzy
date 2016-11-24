@@ -13,6 +13,10 @@ class DistributeController extends RestController
 {
     public function index(){
         echo "distribute works";
+        $temp = D('Raw')->find(1);
+        echo $temp['send_time'];
+        echo "<br>";
+        echo $this->dateAfter($temp['send_time'],3);
     }
 
     public function create($recorder){
@@ -31,7 +35,7 @@ class DistributeController extends RestController
             "publisher_rid"=>null,
             "publish_time"=>null,
             "level"=>1,
-            "valid_time"=>1,
+            "valid_time"=>3,
             "via_type"=>2,
             "times_number"=>1,
             "type"=>null,
@@ -66,6 +70,8 @@ class DistributeController extends RestController
             $insert_trans["owner"]=$trans1["owner"];
             $insert_trans["sender_wx"]=$trans1["sender_wx"];
             $insert_trans["remark"]=$trans1['remark'];
+            // 算出message的有效期
+            $insert_trans["deadline"]=$this->dateAfter($trans1["send_time"],$insert_trans["valid_time"]);
 
             $content=$trans1['content'];
             $mode = '/([0-9]{11})|(\+86[0-9]{11})/'; //正则，必须写在反斜杠里面
@@ -92,5 +98,13 @@ class DistributeController extends RestController
         }
     }
 
-
+    /**
+     * @param $baseDate String time-string
+     * @param $interval int
+     * @return string
+     */
+    private function dateAfter($baseDate,$interval){
+        $time = strtotime($baseDate)+$interval * 86400;
+        return date("Y-m-d H:i:s", $time);
+    }
 }
