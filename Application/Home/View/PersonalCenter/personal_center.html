@@ -30,7 +30,7 @@
         <span class="" style="font-size: 1.5em;margin-left:-10px">个人中心</span>
     </span>
     <div>
-        <img src="__PUBLIC__/home/images/headimg.png" class="" style="width:20%">
+        <img src="{$user_info['heading_url']}" class="" style="width:20%">
     </div>
     <div align="center">
         <table class="">
@@ -39,7 +39,7 @@
                     用户名:
                 </td>
                 <td>
-                    {}
+                    {$user_info['user_name']}
                 </td>
             </tr>
             <tr>
@@ -47,7 +47,7 @@
                     &emsp;角色:
                 </td>
                 <td>
-                    {}
+                    {$user_role}
                     <button class="btn btn-xs btn-default" style="color:#04bfc6;border-radius: 10px">角色切换</button>
                 </td>
             </tr>
