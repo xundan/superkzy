@@ -26,7 +26,8 @@ class ComController extends Controller
                 session('user_info',$user_r);
                 session('role_id',$user_r['role_id']);
             }else{
-                $this->redirect("WxAccess/index",'');
+                // 授权并跳转到WxAccess/oauth
+                header('Location: '.C('REDIRECT_URL_BASE'));
             }
         }
         $Auth = new \Think\Auth();

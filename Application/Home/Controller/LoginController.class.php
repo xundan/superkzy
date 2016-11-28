@@ -12,9 +12,8 @@ use Think\Controller;
 header("Content-type:text/html; charset=utf-8");
 class LoginController extends Controller
 {
-    public function index(){
-        echo "目前登陆的是：";
-        echo $_SESSION['user_info']['uid'];
+    public function login(){
+        $this->display();
     }
 
 
