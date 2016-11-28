@@ -14,10 +14,10 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/cookieStorage.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
-    <link type="text/css" rel="stylesheet" href="bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="weui.min.css">
-    <script type="text/javascript" src="jquery-2.2.4.min.js"></script>
-    <script type="text/javascript" src="bootstrap.min.js"></script>
+    <!--<link type="text/css" rel="stylesheet" href="bootstrap.min.css">-->
+    <!--<link type="text/css" rel="stylesheet" href="weui.min.css">-->
+    <!--<script type="text/javascript" src="jquery-2.2.4.min.js"></script>-->
+    <!--<script type="text/javascript" src="bootstrap.min.js"></script>-->
 </head>
 <body style="">
 <include file="Common:common"/>
@@ -66,7 +66,7 @@
 <!--发布栏-->
 <div class="tab-content" style="">
     <div id="car_need" class="tab-pane active" style="">
-        <form id="form_need_car" name="" class="" method="post" action="">
+        <form id="form_need_car" name="" class="" method="post" action="{:U('OwnerPublish/need_car_action')}">
             <table class="table table-responsive" style="border: 0">
                 <tr>
                     <td>
@@ -230,7 +230,7 @@
                     </td>
                 </tr>
             </table>
-            <input type="button" name="" class="btn btn-group-justified" onclick="need_sub()" value="发&nbsp&nbsp&nbsp布" style="color:white;font-size: 2em;background-color: #fb3e1e">
+            <input type="submit" name="" class="btn btn-group-justified" onclick="" value="发&nbsp&nbsp&nbsp布" style="color:white;font-size: 2em;background-color: #fb3e1e">
         </form>
     </div>
     <div id="coal_sell" class="tab-pane" style="">
@@ -305,14 +305,16 @@
                 </tr>
                 <tr>
                     <td>
-                        <a href="#" style="text-decoration: none;color:black">
+                        <div onclick="sell_get_area_start()" style="text-decoration: none;color:black">
                             <div>
                                 &nbsp;产地
+                                <span id="sell_area_start" style="margin-left:30%"></span>
+                                <input type="hidden" name="sell_area_start">
                                 <span class="pull-right">
                                     <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
                                 </span>
                             </div>
-                        </a>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -498,14 +500,16 @@
                 </tr>
                 <tr>
                     <td>
-                        <a href="#" style="text-decoration: none;color:black">
+                        <div onclick="buy_get_area_start()" style="text-decoration: none;color:black">
                             <div>
                                 &nbsp;产地
+                                <span id="buy_area_start" style="margin-left:30%"></span>
+                                <input type="hidden" name="buy_area_start">
                                 <span class="pull-right">
                                     <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
                                 </span>
                             </div>
-                        </a>
+                        </div>
                     </td>
                 </tr>
                 <tr>
@@ -603,26 +607,36 @@
         $(this).tab('show');
     })
 </script>
-<!--test-->
+
+<!--载入时读取上次发布的信息-->
 <script>
     $(function(){
-        if(cookie('tag') == 0){
-            console.log(cookie('tag'));
+        if(cookie('tag') === 0){//避免为空或者false
             var a = $('a[name=coal_sell]');
-            console.log(a);
             a.siblings('a').removeClass('weui_bar_item_on');
             a.addClass('weui_bar_item_on');
             a.tab('show');
-//            $('#area_start').html(cookie('asd'));
+            $('#sell_area_start').html(cookie('area_start'));
+            $('input[name=sell_area_start]').val(cookie('area_start'));
         }else if(cookie('tag') == 3){
             $('#need_area_start').html(cookie('area_start'));
             $('#need_area_end').html(cookie('area_end'));
             $('input[name=need_area_start]').val(cookie('area_start'));
             $('input[name=need_area_end]').val(cookie('area_end'));
         }else if(cookie('tag') == 2){
-
+            var a = $('a[name=coal_buy]');
+            a.siblings('a').removeClass('weui_bar_item_on');
+            a.addClass('weui_bar_item_on');
+            a.tab('show');
+            $('#sell_area_start').html(cookie('area_start'));
+            $('input[name=buy_area_start]').val(cookie('area_start'));
         }
-    });
+    })
+</script>
+
+<!--选地址时跳转-->
+<script>
+    //求车
     function need_get_area_start(){
         var goto_url = "{:U('areaSearch/area_search')}";
 //        alert(window.location.pathname);
@@ -645,11 +659,30 @@
         $current_url = window.location.href;
         cookie('tag',3);
         cookie('start_or_end','end');
-        cookie('lasturl',$current_url+'?tag=3');
+        cookie('lasturl',$current_url);
+        window.location.href= goto_url;
+    }
+    //供货
+    function sell_get_area_start(){
+        var goto_url = "{:U('areaSearch/area_search')}";
+        $current_url = window.location.href;
+        cookie('tag',0);
+        cookie('start_or_end','start');
+        cookie('lasturl',$current_url);
+        window.location.href= goto_url;
+    }
+    //求购
+    function buy_get_area_start(){
+        var goto_url = "{:U('areaSearch/area_search')}";
+        $current_url = window.location.href;
+        cookie('tag',2);
+        cookie('start_or_end','start');
+        cookie('lasturl',$current_url);
         window.location.href= goto_url;
     }
 </script>
-<!--actionsheet功能-->
+
+<!--actionsheet功能(弃置)-->
 <script>
     $('#showActionSheet').on('click',function(){
         var mask = $('#mask');
@@ -682,6 +715,7 @@
         }
     });
 </script>
+
 <!--求车表单提交输入及检测-->
 <script>
     //获取焦点清空输入及错误信息
@@ -697,7 +731,8 @@
     function need_sub(){
         //联系电话验证
         var area_start = $('input[name=need_area_start]').val();
-        console.log(area_start);return;
+//        console.log(area_start);
+//        return;
         var need_phone = $('input[name=need_phone]').val().trim();
         if(!need_phone){
             $('#need_phone_alert').html('联系电话不能为空');return;
@@ -718,7 +753,10 @@
         $.ajax({
             type:"post",
             url:url,
-            data:subData,
+            datatype:'json',
+//            data:subData,
+            data:{start_area:area_start},
+
             success:function(data){
                 console.log(123);
 //                var jsonObj=eval("("+data+")");
@@ -728,6 +766,7 @@
         });
     }
 </script>
+
 <!--供货表单提交输入及检测-->
 <script>
     //获取焦点清空输入及错误信息
@@ -740,7 +779,7 @@
     $('textarea[name=sell_content]').focus(function(){
         $('#sell_content_alert').html('');
     });
-    //热值高位必须为int型数字
+    //热值高位如果有值必须为int型数字
     $('input[name=sell_heat_value_max]').blur(function(){
         var sell_heat_value_max = $(this).val().trim();
         if(!sell_heat_value_max.match(/^(-?\d+)(\.\d+)?$/) && sell_heat_value_max){
@@ -805,6 +844,7 @@
         });
     }
 </script>
+
 <!--求购表单提交输入及检测-->
 <script>
     //获取焦点清空输入及错误信息
@@ -869,4 +909,5 @@
         });
     }
 </script>
+
 </html>

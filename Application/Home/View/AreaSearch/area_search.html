@@ -107,21 +107,17 @@
 <div class="tab-content" style="background-color: white">
     <div id="lastarea" class="tab-pane active">
         <table class="table">
-            <tr>
-                <td>
-                    {as}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    {area2}
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    {area3}
-                </td>
-            </tr>
+            <volist name="lastarea" id="result">
+                <tr>
+                    <td>
+                        <a href="javascript:void(0)" name="last_area" style="text-decoration: none;color:black;">
+                            <div>
+                                {$result}
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+            </volist>
         </table>
     </div>
     <div id="mostarea" class="tab-pane">
@@ -664,27 +660,68 @@
         $('#search_input').val('');
     });
 </script>
-<!--cookie-->
+<!--cookie操作地址-->
 <script>
+    //所有地区选择
     $('a[name=all_area]').click(function(){
-//        console.log(cookie());return;
-        var temp_area = $(this).children('div').html();
-        if(cookie('start_or_end') == 'start'){
-            cookie('area_start',temp_area);
-        }else if(cookie('start_or_end') == 'end'){
-            cookie('area_end',temp_area);
+        var temp_area = $(this).children('div').html().trim();
+        var temp_area_js = encodeURIComponent(temp_area);
+        if(temp_area){
+            if(cookie('lastarea')){
+                cookie('lastarea',cookie('lastarea')+' '+temp_area_js);
+            }else{
+                cookie('lastarea',temp_area_js);
+            }
+            if(cookie('start_or_end') == 'start'){
+                cookie('area_start',temp_area);
+            }else if(cookie('start_or_end') == 'end'){
+                cookie('area_end',temp_area);
+            }
+//            console.log(decodeURI(cookie('lastarea')));
+//            console.log(cookie());
+            return;
+            $(this).attr('href',cookie('lasturl'));
         }
-        $(this).attr('href',cookie('lasturl'));
     });
+    //实时搜索选择
     $('a[name=real_time_area]').click(function(){
-        var temp_area = $(this).children('div').children('div').children('p').html();
-        if(cookie('start_or_end') == 'start'){
-            cookie('area_start',temp_area);
-        }else if(cookie('start_or_end') == 'end'){
-            cookie('area_end',temp_area);
-        }
+        var temp_area = $(this).children('div').children('div').children('p').html().trim();
+        var temp_area_js = encodeURIComponent(temp_area);
+        if(temp_area){
+            cookie('lastarea',null);return;
+            if(cookie('lastarea')){
+                cookie('lastarea',cookie('lastarea')+' '+temp_area_js);
+            }else{
+                cookie('lastarea',temp_area_js);
+            }
+            if(cookie('start_or_end') == 'start'){
+                cookie('area_start',temp_area);
+            }else if(cookie('start_or_end') == 'end'){
+                cookie('area_end',temp_area);
+            }
 //        console.log(cookie('lasturl'));
-        $(this).attr('href',cookie('lasturl'));
+            console.log(cookie());return;
+            $(this).attr('href',cookie('lasturl'));
+        }
+    });
+    //历史地区选择
+    $('a[name=last_area]').click(function(){
+        var temp_area = $(this).children('div').html().trim();
+        var temp_area_js = encodeURIComponent(temp_area);
+        if(temp_area){
+            cookie('lastarea',null);return;
+            if(cookie('lastarea')){
+                cookie('lastarea',cookie('lastarea')+' '+temp_area_js);
+            }else{
+                cookie('lastarea',temp_area_js);
+            }
+            if(cookie('start_or_end') == 'start'){
+                cookie('area_start',temp_area);
+            }else if(cookie('start_or_end') == 'end'){
+                cookie('area_end',temp_area);
+            }
+            $(this).attr('href',cookie('lasturl'));
+        }
     });
 </script>
 </html>

@@ -44,11 +44,20 @@ class TradeSearchController extends ComController
 //        $lastSql = M()->getLastSql();
 //        dump($lastSql);
 //        如果没有刷新或筛选条件为空则输出对应标签全部信息
-
-
-
         $this->display();
     }
+
+    public function message_filter(){
+        $coalKind = M('coal_kind')->select();
+        $coalTrait = M('coal_trait')->select();
+        $coalGranularity = M('coal_granularity')->select();
+        $this->assign('coalKind',$coalKind);
+        $this->assign('coalTrait',$coalTrait);
+        $this->assign('coalGranularity',$coalGranularity);
+        $this->display();
+    }
+
+
 //对字符串进行处理
     public function search_method(){
         $subInfo = I("post.","",'strip_tags');

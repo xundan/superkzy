@@ -14,13 +14,64 @@ class AreaSearchController extends ComController
 {
     public function area_search(){
         //最近常用地区 从cookie中读取
-//        cookie(lastarea)
+//        $lastarea_temp = $_COOKIE['lastarea'];
+//        dump($_COOKIE);
+//        dump($_COOKIE);
+//        dump(cookie('lastarea'));
+        $lastarea_temp = cookie('lastarea');
+//        dump($_COOKIE['lastarea']);
+        $lastarea_temp_php = urldecode($lastarea_temp);
+        $lastarea_temp_php = explode(' ',$lastarea_temp_php);
+
+//        dump($lastarea_temp_php);
+//
+//        dump(count($lastarea_temp_php));
+
+        //保证cookie长度为10
+        if(count($lastarea_temp_php) > 10){
+            $lastarea_temp_php = array_slice($lastarea_temp_php,-10);
+//            dump($new_lastarea);
+            $new_lastarea = implode(' ',$lastarea_temp_php);
+//            dump($new_lastarea);
+//            dump($new_lastarea);
+//            dump(urldecode($new_lastarea));
+            cookie('lastarea',urlencode($new_lastarea));
+//            cookie('lastarea',$new_lastarea);
+//            $_COOKIE['lastarea'] = urlencode($new_lastarea);
+//            $_COOKIE['lastarea'] = $new_lastarea;
+        }
+//        dump(cookie('lastarea'));
+//        dump($_COOKIE['lastarea']);
+
+        //倒序排列输出
+//        krsort($lastarea_temp_php,false);  //保留key
+        $lastarea = array_reverse($lastarea_temp_php);
+//
+//        dump($lastarea_temp_php);
+
+//        $lastarea = array();
+//        if($lastarea_temp_php){
+//            for($i=0;$i<10;$i++){
+//                if($lastarea_temp_php[$i]){
+//                    $lastarea[$i] = $lastarea_temp_php[$i];
+//                }else{
+//                    break;
+//                }
+//            }
+//        }
+        $this->assign('lastarea',$lastarea);
+
+        //热点地区 is_hot字段更新
+
+
         //热点地区 is_hot字段判断
         $where_hot['is_hot'] = 1;
         $where_hot['lever_type'] = array('gt',1);
         $result_hot = M('districts')->where($where_hot)->select();
+
         //所有地区列表 默认A开始 每个字母开头assign一下
-        $where['level_type'] = array('gt',1);   //二级地区
+//        $where['level_type'] = array('gt',1);   //二级地区
+        $where['level_type'] = array('eq',2);   //二级地区
 
         $where['pinyin']  = array('like', 'A%');
         $resultA = M('districts')->where($where)->select();
