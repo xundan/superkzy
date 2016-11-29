@@ -12,8 +12,23 @@ use Think\Controller;
 header("Content-type:text/html; charset=utf-8");
 class LoginController extends Controller
 {
-    public function login(){
+
+    public function upgrade(){
         $this->display();
+    }
+
+    public function upgrade_t2_to_t3(){
+        $this->display();
+    }
+
+    public function upgrade_t2_to_t3_do(){
+        echo "sth";
+        $option_number = I('post.option','','strip_tags');
+        $userModel = M("User");
+        $data['group_id'] = 2;
+        $data['role_id']=$option_number;
+        $userModel->save($data);
+        $this->redirect("Homepage/homepage_client");
     }
 
 
