@@ -66,7 +66,8 @@ class AreaSearchController extends ComController
 
         //热点地区 is_hot字段判断
         $where_hot['is_hot'] = 1;
-        $where_hot['lever_type'] = array('gt',1);
+//        $where_hot['lever_type'] = array('gt',1);
+        $where_hot['lever_type'] = array('eq',2);
         $result_hot = M('districts')->where($where_hot)->select();
 
         //所有地区列表 默认A开始 每个字母开头assign一下
@@ -183,7 +184,8 @@ class AreaSearchController extends ComController
     public function ajax_area_search($querystr)
     {
         $querystring = $this->arrange_input($querystr);
-        $where['level_type'] = array('gt',1);
+//        $where['level_type'] = array('gt',1);
+        $where['level_type'] = array('eq',2);
         if(preg_match('/^[a-zA-Z\s]+$/',$querystr)){
 //            echo '全部为英文或者字母！';
 //            $where['_string'] = '(pinyin_i like "%'.$querystring.'%") OR (pinyin like "%'.$querystring.'%")';

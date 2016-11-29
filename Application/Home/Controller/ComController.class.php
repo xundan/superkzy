@@ -65,23 +65,55 @@ class ComController extends Controller
     }
 
     /**
-     * 获取煤炭属性名
-     * @param $id       煤炭id
-     * @return $mix     煤炭属性名
+     * @param $id   煤炭id
+     * @return $mixed    煤炭属性
      */
     public function get_coal_kind_title($id){
-        $res = M('coal_kind')->find($id);
-        return $res->title;
+        $res = M('coal_kind')->field('title')->find($id);
+        return $res['title'];
     }
 
     public function get_coal_trait_title($id){
-        $res = M('coal_trait')->find($id);
-        return $res->title;
+        $res = M('coal_trait')->field('title')->find($id);
+        return $res['title'];
     }
 
     public function get_coal_granularity_title($id){
-        $res = M('coal_granularity')->find($id);
-        return $res->title;
+        $res = M('coal_granularity')->field('title')->find($id);
+        return $res['title'];
+    }
+
+    /**
+     * 获取地址id或地址名
+     * @param $str  地址名
+     * @return mixed    地址id
+     */
+    public function get_area_id($str){
+        $where['name'] = $str;
+        $id = M('districts')->field('id')->where($where)->find();
+        return $id['id'];
+    }
+
+    public function get_area_name($id){
+        $where['id'] = $id;
+        $name = M('districts')->field('name')->where($where)->find();
+        return $name['name'];
+    }
+
+    /**
+     * @param $id   付款方式id
+     * @return string   返回中文方式
+     */
+    public function get_pay_type_name($id){
+        if($id == 1){
+            return '预先付款';
+        }elseif($id == 2){
+            return '货到付款';
+        }elseif($id == 3){
+            return '电话沟通';
+        }else{
+            return 'error';
+        }
     }
 
 

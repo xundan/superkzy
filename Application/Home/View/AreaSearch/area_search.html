@@ -611,6 +611,7 @@
 ////        e.relatedTarget // 激活之前的那一个 tab 的信息
 //    })
 </script>
+
 <!--搜索框功能-->
 <script>
     $('#search_input').focus(function(){
@@ -642,7 +643,7 @@
 //                console. eval("("+data+")");
                 console.log(data);
                 jQuery.each(data,function(k,val){
-                    $('#search'+k).html(val.merger_name);
+                    $('#search'+k).html(val.name);
                 });
             }
             });
@@ -660,6 +661,7 @@
         $('#search_input').val('');
     });
 </script>
+
 <!--cookie操作地址-->
 <script>
     //所有地区选择
@@ -679,7 +681,7 @@
             }
 //            console.log(decodeURI(cookie('lastarea')));
 //            console.log(cookie());
-            return;
+//            return;
             $(this).attr('href',cookie('lasturl'));
         }
     });
@@ -688,7 +690,7 @@
         var temp_area = $(this).children('div').children('div').children('p').html().trim();
         var temp_area_js = encodeURIComponent(temp_area);
         if(temp_area){
-            cookie('lastarea',null);return;
+//            cookie('lastarea',null);return;
             if(cookie('lastarea')){
                 cookie('lastarea',cookie('lastarea')+' '+temp_area_js);
             }else{
@@ -700,7 +702,7 @@
                 cookie('area_end',temp_area);
             }
 //        console.log(cookie('lasturl'));
-            console.log(cookie());return;
+//            console.log(cookie());return;
             $(this).attr('href',cookie('lasturl'));
         }
     });
@@ -709,7 +711,7 @@
         var temp_area = $(this).children('div').html().trim();
         var temp_area_js = encodeURIComponent(temp_area);
         if(temp_area){
-            cookie('lastarea',null);return;
+//            cookie('lastarea',null);return;
             if(cookie('lastarea')){
                 cookie('lastarea',cookie('lastarea')+' '+temp_area_js);
             }else{
@@ -724,4 +726,5 @@
         }
     });
 </script>
+
 </html>

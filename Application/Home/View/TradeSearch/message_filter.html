@@ -90,7 +90,8 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-2">
-                                    ——
+                                    <!--——-->
+                                    &mdash;&mdash;
                                 </div>
                                 <div class="col-xs-5" style="padding-left: 0">
                                     <div class="input-group">
@@ -120,9 +121,9 @@
 <script>
     $(function(){
         //煤炭分类
-        var filter_kind_value = cookie('trade_search_filter_kind').split(',');
-        var filter_kind = $('input[name=filter_kind]');
         if(filter_kind_value){
+            var filter_kind_value = cookie('trade_search_filter_kind').split(',');
+            var filter_kind = $('input[name=filter_kind]');
             for(var i=0;i<filter_kind.length;i++){
                 for(var j=0;j<filter_kind_value.length;j++){
                     if(filter_kind[i].value == filter_kind_value[j]){
