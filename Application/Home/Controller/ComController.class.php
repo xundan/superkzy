@@ -54,14 +54,15 @@ class ComController extends Controller
      */
     public function set_deadline(){
         $userRoleId = $_SESSION['user_info']['role_id'];
-        $level = $_SESSION['user_info']['level'];
-        if($userRoleId==null){
+        $group_id = $_SESSION['user_info']['group_id'];
+        if($group_id==null){
             return strtotime('+3 day');
-        }else if($userRoleId==0){
+        }else if($group_id<4){
             return strtotime('+3 day');
-        }else if($userRoleId==1){
+        }else if($group_id==4){
             return strtotime('+7 day');
-        }
+        }else
+            return null;
     }
 
     /**

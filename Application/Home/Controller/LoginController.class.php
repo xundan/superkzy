@@ -23,12 +23,16 @@ class LoginController extends Controller
 
     public function upgrade_t2_to_t3_do(){
         echo "sth";
-        $option_number = I('post.option','','strip_tags');
-        $userModel = M("User");
+        $option_number = I('post.options','','trim,strip_tags');
         $data['group_id'] = 2;
-        $data['role_id']=$option_number;
-        $userModel->save($data);
-        $this->redirect("Homepage/homepage_client");
+        $data['role_id'] = $option_number;
+        $where['uid'] = $_SESSION['user_info']['uid'];
+        $res = M('user')->where($where)->save($data);
+        if($res){
+            $this->redirect("Homepage/homepage_client");
+        }else{
+            $this->error('升级失败或已经升级过');
+        }
     }
 
 

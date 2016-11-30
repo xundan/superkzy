@@ -622,12 +622,13 @@
 <!--载入时读取上次发布的信息-->
 <script>
     $(function(){
-        console.log(cookie('tag'));
-        console.log(cookie('start_or_end'));
-        console.log(cookie('area_start'));
-        console.log(cookie('area_end'));
-        console.log(cookie('trait'));
-        console.log(cookie('buy_method'));
+        console.log(cookie());
+//        console.log(cookie('tag'));
+//        console.log(cookie('start_or_end'));
+//        console.log(cookie('area_start'));
+//        console.log(cookie('area_end'));
+//        console.log(cookie('trait'));
+//        console.log(cookie('buy_method'));
         if(cookie('tag') == '0'){
             //发布供货
             //避免为空或者false
@@ -803,6 +804,48 @@
         cookie('start_or_end','start');
 //        cookie('lasturl',$current_url+'?tag=3');
         cookie('lasturl',$current_url);
+
+        //存表单数据并把其他tag置空
+        //获取表单数据
+        var area_start = $('input[name=need_area_start]').val().trim();
+        var area_start_detail = $('input[name=need_area_start_detail]').val().trim();
+        var area_end = $('input[name=need_area_end]').val().trim();
+        var area_end_detail = $('input[name=need_area_end_detail]').val().trim();
+        var quantity = $('input[name=need_quantity]').val().trim();
+        var granularity = $('input[name=option3_coal_granularity]:checked').val();
+        var price = $('input[name=need_price]').val().trim();
+        var loading_time = $('input[name=need_loading_time]').val().trim();
+        var loading_cost = $('input[name=need_loading_cost]').val().trim();
+        var unloading_cost = $('input[name=need_unloading_cost]').val().trim();
+        var phone = $('input[name=need_phone]').val().trim();
+        var content = $('textarea[name=need_content]').val().trim();
+        //表单数据存入cookie便于加载时显示
+        cookie('area_start',area_start);
+        cookie('area_start_detail',area_start_detail);
+        cookie('area_end',area_end);
+        cookie('area_end_detail',area_end_detail);
+        cookie('quantity',quantity);
+        cookie('granularity',granularity);
+        cookie('price',price);
+        cookie('loading_time',loading_time);
+        cookie('loading_cost',loading_cost);
+        cookie('unloading_cost',unloading_cost);
+//        cookie('phone',phone);
+        cookie('content',content);
+        //其他字段置为空
+        cookie('kind',null);
+        cookie('trait',null);
+        cookie('heat_max',null);
+        cookie('heat_min',null);
+        cookie('water',null);
+        cookie('ash',null);
+        cookie('sulfur',null);
+        cookie('volatile',null);
+        cookie('supply_company',null);
+        cookie('price_min',null);
+        cookie('buy_method',null);
+
+        //地址跳转
         window.location.href= goto_url;
 //        var b = {$asdaaa};
 //        alert(b);
@@ -816,6 +859,48 @@
         cookie('tag',3);
         cookie('start_or_end','end');
         cookie('lasturl',$current_url);
+
+        //存表单数据并把其他tag置空
+        //获取表单数据
+        var area_start = $('input[name=need_area_start]').val().trim();
+        var area_start_detail = $('input[name=need_area_start_detail]').val().trim();
+        var area_end = $('input[name=need_area_end]').val().trim();
+        var area_end_detail = $('input[name=need_area_end_detail]').val().trim();
+        var quantity = $('input[name=need_quantity]').val().trim();
+        var granularity = $('input[name=option3_coal_granularity]:checked').val();
+        var price = $('input[name=need_price]').val().trim();
+        var loading_time = $('input[name=need_loading_time]').val().trim();
+        var loading_cost = $('input[name=need_loading_cost]').val().trim();
+        var unloading_cost = $('input[name=need_unloading_cost]').val().trim();
+        var phone = $('input[name=need_phone]').val().trim();
+        var content = $('textarea[name=need_content]').val().trim();
+        //表单数据存入cookie便于加载时显示
+        cookie('area_start',area_start);
+        cookie('area_start_detail',area_start_detail);
+        cookie('area_end',area_end);
+        cookie('area_end_detail',area_end_detail);
+        cookie('quantity',quantity);
+        cookie('granularity',granularity);
+        cookie('price',price);
+        cookie('loading_time',loading_time);
+        cookie('loading_cost',loading_cost);
+        cookie('unloading_cost',unloading_cost);
+//        cookie('phone',phone);
+        cookie('content',content);
+        //其他字段置为空
+        cookie('kind',null);
+        cookie('trait',null);
+        cookie('heat_max',null);
+        cookie('heat_min',null);
+        cookie('water',null);
+        cookie('ash',null);
+        cookie('sulfur',null);
+        cookie('volatile',null);
+        cookie('supply_company',null);
+        cookie('price_min',null);
+        cookie('buy_method',null);
+
+        //地址跳转
         window.location.href= goto_url;
     }
     //供货
@@ -825,6 +910,51 @@
         cookie('tag','0');//直接写0与false冲突
         cookie('start_or_end','start');
         cookie('lasturl',$current_url);
+
+        //存表单数据并把其他tag置空
+        //获取表单数据
+        var kind = $('input[name=option0_coal_kind]:checked').val();
+        var trait = $('input[name=option0_coal_trait]:checked').val();
+        var granularity = $('input[name=option0_coal_granularity]:checked').val();
+        var supply_company = $('input[name=sell_supply_company]').val().trim();
+        var area_start = $('input[name=sell_area_start]').val().trim();
+        var price = $('input[name=sell_price]').val().trim();
+        var quantity = $('input[name=sell_quantity]').val().trim();
+        var heat_max = $('input[name=sell_heat_value_max]').val().trim();
+        var heat_min = $('input[name=sell_heat_value_min]').val().trim();
+        var water = $('input[name=water]').val().trim();
+        var ash = $('input[name=ash]').val().trim();
+        var sulfur = $('input[name=sulfur]').val().trim();
+        var volatile = $('input[name=volatile]').val().trim();
+        var phone = $('input[name=sell_phone]').val().trim();
+        var content = $('textarea[name=sell_content]').val().trim();
+        //表单数据存入cookie便于加载时显示
+        cookie('kind',kind);
+        cookie('trait',trait);
+        cookie('granularity',granularity);
+        cookie('supply_company',supply_company);
+        cookie('area_start',area_start);
+        cookie('price',price);
+        cookie('quantity',quantity);
+        cookie('heat_max',heat_max);
+        cookie('heat_min',heat_min);
+        cookie('water',water);
+        cookie('ash',ash);
+        cookie('sulfur',sulfur);
+        cookie('volatile',volatile);
+//        cookie('phone',phone);
+        cookie('content',content);
+        //其他字段置为空
+        cookie('area_start_detail',null);
+        cookie('area_end',null);
+        cookie('area_end_detail',null);
+        cookie('loading_time',null);
+        cookie('loading_cost',null);
+        cookie('unloading_cost',null);
+        cookie('price_min',null);
+        cookie('buy_method',null);
+
+        //地址跳转
         window.location.href= goto_url;
     }
     //求购
@@ -834,6 +964,46 @@
         cookie('tag',2);
         cookie('start_or_end','start');
         cookie('lasturl',$current_url);
+
+        //存表单数据并把其他tag置空
+        //获取表单数据
+        var kind = $('input[name=option2_coal_kind]:checked').val();
+        var trait = $('input[name=option2_coal_trait]:checked').val();
+        var granularity = $('input[name=option2_coal_granularity]:checked').val();
+        var area_start = $('input[name=buy_area_start]').val().trim();
+        var heat_min = $('input[name=buy_heat_value_min]').val().trim();
+        var quantity = $('input[name=buy_quantity]').val().trim();
+        var price_min = $('input[name=buy_price_min]').val().trim();
+        var price = $('input[name=buy_price_max]').val().trim();
+        var buy_method = $('input[name=buy_method]').val();
+        var phone = $('input[name=buy_phone]').val().trim();
+        var content = $('textarea[name=buy_content]').val().trim();
+        //表单数据存入cookie便于加载时显示
+        cookie('kind',kind);
+        cookie('trait',trait);
+        cookie('granularity',granularity);
+        cookie('area_start',area_start);
+        cookie('heat_min',heat_min);
+        cookie('quantity',quantity);
+        cookie('price_min',price_min);
+        cookie('price',price);
+        cookie('buy_method',buy_method);
+//        cookie('phone',phone);
+        cookie('content',content);
+        //其他字段置为空
+        cookie('area_start_detail',null);
+        cookie('area_end',null);
+        cookie('area_end_detail',null);
+        cookie('loading_time',null);
+        cookie('loading_cost',null);
+        cookie('unloading_cost',null);
+        cookie('heat_max',null);
+        cookie('water',null);
+        cookie('ash',null);
+        cookie('sulfur',null);
+        cookie('volatile',null);
+
+        //地址跳转
         window.location.href= goto_url;
     }
 </script>
@@ -1143,9 +1313,17 @@
             data:subData,
             success:function(data){
                 console.log(123);
+//                return;
                 var jsonObj=eval("("+data+")");
                 console.log(data);
                 console.log(jsonObj.msg);
+            },
+            error:function(XMLHttpRequest,textStatus,errorThrown){
+//                console.log(123456);
+//                console.log(XMLHttpRequest);
+//                console.log(textStatus);
+//                console.log(errorThrown);
+                alert('不可棱！！');
             }
         });
     }

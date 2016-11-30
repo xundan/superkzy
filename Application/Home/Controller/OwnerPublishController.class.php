@@ -58,8 +58,8 @@ class OwnerPublishController extends ComController
         $data['category'] = 3;  //求车为3
         $data['publisher_rid'] = $_SESSION['user_info']['uid'];
         $data['publish_time'] = time();
-//        $data['deadline'] = $this->set_deadline();  //TODO
-//        $data['valid_time'] = '';   //TODO
+        $data['deadline'] = $this->set_deadline();  //TODO
+        $data['valid_time'] = 3;   //TODO
 //        $data['times_number'] += 1; //TODO
 //        $data['record_time'] = time();  //TODO
 //        $data['updater_id'] = '';   //TODO
@@ -161,8 +161,8 @@ class OwnerPublishController extends ComController
         $data['category'] = 0;  //供货为0
         $data['publisher_rid'] = $_SESSION['user_info']['uid'];
         $data['publish_time'] = time();
-//        $data['deadline'] = $this->set_deadline();  //TODO
-//        $data['valid_time'] = '';   //TODO
+        $data['deadline'] = $this->set_deadline();  //TODO
+        $data['valid_time'] = 3;   //TODO
 //        $data['times_number'] += 1; //TODO
 //        $data['record_time'] = time();  //TODO
 //        $data['updater_id'] = '';   //TODO
@@ -257,8 +257,8 @@ class OwnerPublishController extends ComController
         $data['category'] = 2;  //求购为2
         $data['publisher_rid'] = $_SESSION['user_info']['uid'];
         $data['publish_time'] = time();
-//        $data['deadline'] = $this->set_deadline();  //TODO
-//        $data['valid_time'] = '';   //TODO
+        $data['deadline'] = $this->set_deadline();  //TODO
+        $data['valid_time'] = 3;   //TODO
 //        $data['times_number'] += 1; //TODO
 //        $data['record_time'] = time();  //TODO
 //        $data['updater_id'] = '';   //TODO

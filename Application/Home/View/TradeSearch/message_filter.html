@@ -121,7 +121,7 @@
 <script>
     $(function(){
         //煤炭分类
-        if(filter_kind_value){
+        if(cookie('trade_search_filter_kind')){
             var filter_kind_value = cookie('trade_search_filter_kind').split(',');
             var filter_kind = $('input[name=filter_kind]');
             for(var i=0;i<filter_kind.length;i++){
@@ -140,9 +140,9 @@
 //        }
 
         //粒度
-        var filter_granularity_value = cookie('trade_search_filter_granularity').split(',');
-        var filter_granularity = $('input[name=filter_granularity]');
-        if(filter_granularity_value){
+        if(cookie('trade_search_filter_granularity')){
+            var filter_granularity_value = cookie('trade_search_filter_granularity').split(',');
+            var filter_granularity = $('input[name=filter_granularity]');
             for(var i=0;i<filter_granularity.length;i++){
                 for(var j=0;j<filter_granularity_value.length;j++){
                     if(filter_granularity[i].value == filter_granularity_value[j]){
@@ -154,13 +154,15 @@
         }
 
         //热值
-        var filter_heat_min_value = cookie('trade_search_filter_heat_min');
-        if(filter_heat_min_value){
-            $('input[name=filter_heat_min]').val(filter_heat_min_value);
-        }
-        var filter_heat_max_value = cookie('trade_search_filter_heat_max');
-        if(filter_heat_max_value){
-            $('input[name=filter_heat_max]').val(filter_heat_max_value);
+        if(cookie('trade_search_filter_heat_min')){
+            var filter_heat_min_value = cookie('trade_search_filter_heat_min');
+            if(filter_heat_min_value){
+                $('input[name=filter_heat_min]').val(filter_heat_min_value);
+            }
+            var filter_heat_max_value = cookie('trade_search_filter_heat_max');
+            if(filter_heat_max_value){
+                $('input[name=filter_heat_max]').val(filter_heat_max_value);
+            }
         }
     })
 </script>
