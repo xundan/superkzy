@@ -53,7 +53,7 @@
 <!--发布栏-->
 <div class="tab-content" style="">
     <div id="owner_basic_data" class="tab-pane active" style="">
-        <form id="form_owner_basic_data" name="form_owner_basic_data" class="" method="post" action="">
+        <form id="form_owner_basic_data" name="form_owner_basic_data" class="" method="post" action="{:U('PersonalCenter/owner_data_do')}">
             <table class="table table-responsive" style="border: 0">
                 <tr>
                     <td>
@@ -76,7 +76,7 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 姓名
                             </span>
-                            <input id="" name="nickname" class="form-control" placeholder="请输入姓名" style="border-radius: 0;border: 0">
+                            <input id="nickname" name="nickname" class="form-control" placeholder="请输入姓名" style="border-radius: 0;border: 0">
                         </div>
                     </td>
                 </tr>
@@ -86,7 +86,7 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 电话
                             </span>
-                            <input id="" name="phone_numer" class="form-control" placeholder="请输入电话" style="border-radius: 0;border: 0">
+                            <input id="phone_number" name="phone_number" class="form-control" placeholder="请输入电话" style="border-radius: 0;border: 0">
                         </div>
                     </td>
                 </tr>
@@ -129,7 +129,7 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 公司名称
                             </span>
-                            <input id="" name="supply_company" class="form-control" placeholder="请输入您的矿、厂名称" style="border-radius: 0;border: 0">
+                            <input id="supply_company" name="supply_company" class="form-control" placeholder="请输入您的矿、厂名称" style="border-radius: 0;border: 0">
                         </div>
                     </td>
                 </tr>
@@ -151,7 +151,7 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 详细地址
                             </span>
-                            <input id="" name="area_detail" class="form-control" placeholder="请输入详细地址" style="border-radius: 0;border: 0">
+                            <input id="area_detail" name="area_detail" class="form-control" placeholder="请输入详细地址" style="border-radius: 0;border: 0">
                         </div>
                     </td>
                 </tr>
@@ -161,17 +161,17 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 邀请人
                             </span>
-                            <input id="" name="invite_id" class="form-control" placeholder="请输入邀请人编码" style="border-radius: 0;border: 0">
+                            <input id="invite_id" name="invite_id" class="form-control" placeholder="请输入邀请人编码" style="border-radius: 0;border: 0">
                         </div>
                     </td>
                 </tr>
             </table>
-            <input type="button" name="" id="" class="btn btn-group-justified " onclick="owner_basic_data_sub()" value="确&nbsp&nbsp&nbsp定" style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e">
+            <input type="submit" name="confirm_button" id="confirm_button" class="btn btn-group-justified " value="确&nbsp&nbsp&nbsp定" style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e">
             <div id="result"></div>
         </form>
     </div>
     <div id="owner_work_exp" class="tab-pane" style="">
-        <form id="form_owner_work_exp" name="form_owner_work_exp" class="" method="post" action="">
+        <form id="form_owner_work_exp" name="form_owner_work_exp" class="" method="post" action="{:U('PersonalCenter/owner_work_exp_do')}">
             <table class="table table-responsive" style="border: 0">
                 <tr>
                     <td style="padding: 0">
@@ -179,7 +179,7 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 行业类型
                             </span>
-                            <input id="" name="owner_work_type" class="form-control" placeholder="请输入行业类型" style="border-radius: 0;border: 0">
+                            <input id="owner_work_type" name="owner_work_type" class="form-control" placeholder="请输入行业类型" style="border-radius: 0;border: 0">
                         </div>
                     </td>
                 </tr>
@@ -189,7 +189,7 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 从业时间
                             </span>
-                            <input id="" name="work_time" class="form-control" placeholder="请输入从业时间" style="border-radius: 0;border: 0">
+                            <input id="work_time" name="work_time" class="form-control" placeholder="请输入从业时间" style="border-radius: 0;border: 0">
                         </div>
                     </td>
                 </tr>
@@ -199,7 +199,7 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 公司名称
                             </span>
-                            <input id="" name="company_name" class="form-control" placeholder="请输入您的公司名称" style="border-radius: 0;border: 0">
+                            <input id="company_name" name="company_name" class="form-control" placeholder="请输入您的公司名称" style="border-radius: 0;border: 0">
                         </div>
                     </td>
                 </tr>
@@ -209,7 +209,7 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 所属部门
                             </span>
-                            <input id="" name="owner_department" class="form-control" placeholder="请输入您的部门" style="border-radius: 0;border: 0">
+                            <input id="owner_department" name="owner_department" class="form-control" placeholder="请输入您的部门" style="border-radius: 0;border: 0">
                         </div>
                     </td>
                 </tr>
@@ -235,7 +235,7 @@
                     </td>
                 </tr>
             </table>
-            <input type="button" name="" class="btn btn-group-justified " onclick="owner_work_exp_sub()" value="确&nbsp&nbsp&nbsp定" style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e">
+            <input type="submit" name="confirm_button2" class="btn btn-group-justified " value="确&nbsp&nbsp&nbsp定" style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e">
         </form>
     </div>
 </div>

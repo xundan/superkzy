@@ -53,7 +53,7 @@
 <!--发布栏-->
 <div class="tab-content" style="">
     <div id="driver_basic_data" class="tab-pane active" style="">
-        <form id="form_driver_basic_data" name="form_driver_basic_data" class="" method="post" action="">
+        <form id="form_driver_basic_data" name="form_driver_basic_data" class="" method="post" action="{:U('PersonalCenter/driver_data_do')}">
             <table class="table table-responsive" style="border: 0">
                 <tr>
                     <td>
@@ -76,7 +76,7 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 姓名
                             </span>
-                            <input id="" name="nickname" class="form-control" placeholder="请输入姓名" style="border-radius: 0;border: 0">
+                            <input id="nickname" name="nickname" class="form-control" placeholder="请输入姓名" style="border-radius: 0;border: 0">
                         </div>
                     </td>
                 </tr>
@@ -88,7 +88,7 @@
                                 <!--<span style="font-size: 1.5em;color:red;vertical-align: middle">*</span>-->
                                 <img src="__PUBLIC__/home/images/necessary.png" class="" style="width: 7px">
                             </span>
-                            <input id="" name="phone_number" class="form-control" placeholder="请输入联系电话" style="border-radius: 0;border: 0">
+                            <input id="phone_number" name="phone_number" class="form-control" placeholder="请输入联系电话" style="border-radius: 0;border: 0">
                         </div>
                     </td>
                 </tr>
@@ -131,7 +131,7 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 驾驶证号
                             </span>
-                            <input name="driver_card" class="form-control" placeholder="请输入您的驾驶证号" style="border-radius: 0;border: 0">
+                            <input name="drive_card" class="form-control" placeholder="请输入您的驾驶证号" style="border-radius: 0;border: 0">
                         </div>
                     </td>
                 </tr>
@@ -181,13 +181,22 @@
                         </a>
                         <div id="collapse_car_tye" class="collapse" role="tablist" aria-labelledby="">
                             <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                <input type="radio" class="pull-left" name="sex" autocomplete="off" value="1"> &nbsp;男
+                                <input type="radio" class="pull-left" name="type_id" autocomplete="off" value="1"> &nbsp;平板
                             </label>
                             <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                <input type="radio" class="pull-left" name="sex" autocomplete="off" value="2"> &nbsp;女
+                                <input type="radio" class="pull-left" name="type_id" autocomplete="off" value="2"> &nbsp;栏板
                             </label>
                             <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                <input type="radio" class="pull-left" name="sex" autocomplete="off" value="0"> &nbsp;保密
+                                <input type="radio" class="pull-left" name="type_id" autocomplete="off" value="3"> &nbsp;厢式
+                            </label>
+                            <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
+                                <input type="radio" class="pull-left" name="type_id" autocomplete="off" value="4"> &nbsp;仓栅
+                            </label>
+                            <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
+                                <input type="radio" class="pull-left" name="type_id" autocomplete="off" value="5"> &nbsp;罐式
+                            </label>
+                            <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
+                                <input type="radio" class="pull-left" name="type_id" autocomplete="off" value="6"> &nbsp;自卸
                             </label>
                         </div>
                     </td>
@@ -218,11 +227,11 @@
                     </td>
                 </tr>
             </table>
-            <input type="button" name="" id="" class="btn btn-group-justified " onclick="driver_basic_data_sub()" value="确&nbsp&nbsp&nbsp定" style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e">
+            <input type="submit" name="" id="" class="btn btn-group-justified " value="确&nbsp&nbsp&nbsp定" style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e">
         </form>
     </div>
     <div id="driver_work_exp" class="tab-pane" style="">
-        <form id="form_driver_work_exp" name="form_driver_work_exp" class="" method="post" action="">
+        <form id="form_driver_work_exp" name="form_driver_work_exp" class="" method="post" action="{:U('PersonalCenter/driver_work_exp_do')}">
             <table class="table table-responsive" style="border: 0">
                 <tr>
                     <td>
@@ -248,7 +257,7 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 车辆购买时间
                             </span>
-                            <input type="date" name="buy_car_time" class="form-control" placeholder="请输入生日" style="border-radius: 0;border: 0">
+                            <input type="date" name="buy_car_time" class="form-control" placeholder="请输入购车时间" style="border-radius: 0;border: 0">
                         </div>
                     </td>
                 </tr>
@@ -264,7 +273,7 @@
                     </td>
                 </tr>
             </table>
-            <input type="button" name="" class="btn btn-group-justified " onclick="driver_work_exp_sub()" value="确&nbsp&nbsp&nbsp定" style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e">
+            <input type="submit" name="" class="btn btn-group-justified " value="确&nbsp&nbsp&nbsp定" style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e">
         </form>
     </div>
 </div>

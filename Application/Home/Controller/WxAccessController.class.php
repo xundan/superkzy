@@ -118,4 +118,28 @@ class WxAccessController extends Controller
             session('role_id', null);
         }
     }
+
+    public function create_menu()
+    {
+
+        $options = array(
+            'token' => C('WX_TOKEN'),
+            'encodingaeskey' => C('WX_ENCODINGAESKEY'),
+            'appid' => C('WX_APPID'),
+            'appsecret' => C('WX_APPSECRET')
+        );
+        $weObj = new \Org\Util\Wechat($options);
+        //获取菜单操作:
+        $menu = $weObj->getMenu();
+        //设置菜单
+        $newmenu = array(
+            "button" =>
+                array(
+//                    array('type' => 'click', 'name' => '最新消息', 'key' => 'MENU_KEY_NEWS'),
+//                    array('type' => 'view', 'name' => '我要搜索', 'url' => 'http://www.baidu.com'),
+                )
+        );
+//        $result = $weObj->createMenu($newmenu);
+        echo $weObj->deleteMenu();
+    }
 }
