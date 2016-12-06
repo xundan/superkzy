@@ -184,8 +184,8 @@ class AreaSearchController extends ComController
     public function ajax_area_search($querystr)
     {
         $querystring = $this->arrange_input($querystr);
-//        $where['level_type'] = array('gt',1);
-        $where['level_type'] = array('eq',2);
+        $where['level_type'] = array('gt',1);
+//        $where['level_type'] = array('eq',2);
         if(preg_match('/^[a-zA-Z\s]+$/',$querystr)){
 //            echo '全部为英文或者字母！';
 //            $where['_string'] = '(pinyin_i like "%'.$querystring.'%") OR (pinyin like "%'.$querystring.'%")';
@@ -194,17 +194,17 @@ class AreaSearchController extends ComController
             $map['pinyin'] = $querystring;
             $map['_logic'] = 'or';
             $where['_complex'] = $map;
+            $where['name'] = array('notlike','%区');
             $result = M('districts')->where($where)->limit(5)->select();
             count($result);
             echo json_encode($result);exit;
         }else{
 //            echo "有中文，或者数字，特殊符号存在！";
-            $where['name'] = array('like','%'.$querystring.'%');
+//            $where['merger_name'] = array('like','%'.$querystring.'%');
+            $where['name'] = array(array('like','%'.$querystring.'%'),array('notlike','%区'),'and');
             $result = M('districts')->where($where)->limit(5)->select();
             echo json_encode($result);exit;
-
         }
-
     }
 
 }

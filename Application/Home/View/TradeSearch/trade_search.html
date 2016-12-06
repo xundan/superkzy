@@ -12,12 +12,14 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll.js"></script>
-    <link type="text/css" rel="stylesheet" href="bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="weui.min.css">
-    <script type="text/javascript" src="jquery-2.2.4.min.js"></script>
-    <script type="text/javascript" src="bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
+    <!--<link type="text/css" rel="stylesheet" href="bootstrap.min.css">-->
+    <!--<link type="text/css" rel="stylesheet" href="weui.min.css">-->
+    <!--<script type="text/javascript" src="jquery-2.2.4.min.js"></script>-->
+    <!--<script type="text/javascript" src="bootstrap.min.js"></script>-->
 </head>
-<body style="background-color: #efeff4">
+<body style="">
+
     <!--标题栏-->
     <div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
         <!--<div class="container text-center" style="">-->
@@ -38,29 +40,32 @@
                     </span>
         <!--</div>-->
     </div>
+
     <!--清除浮动-->
     <div class="clearfix"></div>
+
     <!--导航标签-->
     <div class="panel-title" style="margin:0;padding: 0;background-color: white">
-        <ul id="myTab" class="weui_navbar" role="" style="position: inherit;margin-bottom: 0;">
-            <li role="presentation" class="weui_navbar_item weui_bar_item_on" style=";font-size: 1.2em">
-                <a href="#buy" class="" data-toggle="tab" style="color: black;text-decoration: none">求购信息</a>
-            </li>
-            <li role="presentation" class="weui_navbar_item" style=";font-size: 1.2em">
-                <a href="#sell" data-toggle="tab" style="color: black;text-decoration: none">供应信息</a>
-            </li>
-            <li role="presentation" class="weui_navbar_item" style="font-size: 1.2em">
-                <a href="{:U('TradeSearch/message_filter')}" style="color: black;text-decoration: none">
+        <div id="myTab" class="weui_navbar" role="" style="position: inherit;margin-bottom: 0;">
+            <a href="#buy" data-toggle="tab" class="weui_navbar_item weui_bar_item_on" style="color: black;text-decoration: none;font-size: 1.2em">
+                <span>求购信息</span>
+            </a>
+            <a href="#sell" data-toggle="tab" class="weui_navbar_item" style="color: black;text-decoration: none;font-size: 1.2em">
+                <span>供应信息</span>
+            </a>
+            <a href="{:U('TradeSearch/message_filter')}" class="weui_navbar_item" style="color: black;text-decoration: none;font-size: 1.2em">
+                <span>
                     筛选
                     <img src="__PUBLIC__/home/images/message_filter.png" style="width: 15px">
-                </a>
-            </li>
-        </ul>
+                </span>
+            </a>
+        </div>
     </div>
+
     <!--搜索框-->
     <div class="bd">
         <div class="weui_search_bar" id="search_bar">
-            <form id="form_search" action="{:U('TradeSearch/trade_search')}" method="post" class="weui_search_outer">
+            <form id="form_search" name="form_search" action="" method="" class="weui_search_outer">
                 <div class="weui_search_inner">
                     <i class="weui_icon_search"></i>
                     <input type="search" class="weui_search_input" name="search_input" id="search_input" placeholder="搜索" required >
@@ -70,37 +75,54 @@
                     <i class="weui_icon_search"></i>
                     <span>搜索</span>
                 </label>
+                <input type="hidden" name="select_category">
+                <input type="hidden" name="filter_kind">
+                <input type="hidden" name="filter_granularity">
+                <input type="hidden" name="filter_heat_min">
+                <input type="hidden" name="filter_heat_max">
+                <input type="text" style="display: none;">
             </form>
-            <a href="javascript:" class="weui_search_cancel" id="search_cancel">取消</a>
+            <a href="javascript:void(0)" class="weui_search_cancel" id="search_cancel">取消</a>
         </div>
-        <div class="weui_cells weui_cells_access search_show" id="search_show">
-            <div class="weui_cell">
-                <div class="weui_cell_bd weui_cell_primary">
-                    <p>实时搜索文本</p>
-                </div>
-            </div>
-            <div class="weui_cell">
-                <div class="weui_cell_bd weui_cell_primary">
-                    <p>实时搜索文本</p>
-                </div>
-            </div>
-            <div class="weui_cell">
-                <div class="weui_cell_bd weui_cell_primary">
-                    <p>实时搜索文本</p>
-                </div>
-            </div>
-            <div class="weui_cell">
-                <div class="weui_cell_bd weui_cell_primary">
-                    <p>实时搜索文本</p>
-                </div>
-            </div>
-        </div>
+        <!--<div class="weui_cells weui_cells_access search_show" id="search_show">-->
+            <!--<div class="weui_cell">-->
+                <!--<div class="weui_cell_bd weui_cell_primary">-->
+                    <!--<p>实时搜索文本</p>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="weui_cell">-->
+                <!--<div class="weui_cell_bd weui_cell_primary">-->
+                    <!--<p>实时搜索文本</p>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="weui_cell">-->
+                <!--<div class="weui_cell_bd weui_cell_primary">-->
+                    <!--<p>实时搜索文本</p>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="weui_cell">-->
+                <!--<div class="weui_cell_bd weui_cell_primary">-->
+                    <!--<p>实时搜索文本</p>-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
     </div>
+
+    <!--标签隐藏表单提交-->
+    <form name="tag_search">
+    <input type="hidden" name="select_category">
+    <input type="hidden" name="filter_kind">
+    <input type="hidden" name="filter_granularity">
+    <input type="hidden" name="filter_heat_min">
+    <input type="hidden" name="filter_heat_max">
+    <input type="hidden" name="search_input">
+    </form>
+
     <!--<input type="search" id="asd" onkeyup="search_enter(event)">-->
     <!--订单展示栏-->
     <div class="container">
         <div class="tab-content" style="">
-            <div id="buy" class="tab-pane active" style="background-color: #efeff4">
+            <div id="buy" class="tab-pane active" style="">
                 <div id="wrapper">
                     <div id="scroller">
                         <div id="pullDown">
@@ -108,6 +130,7 @@
                             <span class="pullDownLabel">下拉刷新...</span>
                         </div>
                         <ul id="thelist" class="" style="list-style-type: none">
+                            <volist name="list" id="order">
                             <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
                                 <div style="position: absolute;right: 0px;">
                                     <img src="__PUBLIC__/home/images/buy.png" width="50px">
@@ -124,7 +147,7 @@
                                         </a>
                                         <p class="weui_media_desc">
                                             <img src="__PUBLIC__/home/images/area_start.png" style="width: 10px;height: 15px">
-                                            {start}
+                                            {}
                                         </p>
                                     </div>
                                     <div class="weui_media_bd text-center" style="">
@@ -147,7 +170,7 @@
                                             煤炭种类:{}
                                         </td>
                                         <td>
-                                            {}元/吨
+                                            {$order['price']}元/吨
                                         </td>
                                     </tr>
                                     <tr>
@@ -155,7 +178,7 @@
                                             煤炭品质:{}
                                         </td>
                                         <td>
-                                            产地:{}
+                                            产地:{$order['area_start']}
                                         </td>
                                     </tr>
                                     <tr>
@@ -178,36 +201,7 @@
                                 </table>
                                 <!--</div>-->
                             </li>
-                            <li class="weui_panel weui_panel_access">
-                                <div class="weui_media_box weui_media_appmsg" style="width: 100%;margin: 0;padding-left: 0;padding-right: 0">
-                                    <a href="#">
-                                        <div class="weui_media_hd">
-                                            <img src="__PUBLIC__/home/images/headimg_background.png" class="weui_media_appmsg_thumb">
-                                        </div>
-                                    </a>
-                                    <div class="weui_media_bd">
-                                        <a href="#">
-                                            <h4 class="weui_media_title">{名字} <img src="__PUBLIC__/home/images/medal.png" style="width: 15px;height: 20px"></h4>
-                                        </a>
-                                        <p class="weui_media_desc">
-                                            <img src="__PUBLIC__/home/images/area_start.png" style="width: 15px;height: 20px">
-                                            {start}→{end}
-                                            <img src="__PUBLIC__/home/images/area_end.png" style="width: 15px;height: 20px">
-                                        </p>
-                                    </div>
-                                    <div class="weui_media_bd" style="margin-right: -20%">
-                                        <a href="#" class="">
-                                            <h4><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">
-                                                <span style="">拨打电话</span></h4>
-                                        </a>
-                                        <div>
-                                            <button class="btn btn-xs btn-default" style="padding-left: 20%;padding-right: 20%">
-                                                收藏
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
+                            </volist>
                         </ul>
                         <div id="pullUp">
                             <span class="pullUpIcon"></span>
@@ -323,6 +317,7 @@
         </div>
     </div>
 </body>
+
 <!--搜索框功能-->
 <script>
     $('#search_input').focus(function(){
@@ -338,27 +333,51 @@
             $('#search_text').show();
         }
     });
-    $('#search_input').bind('input','#search_input',function(){
-        var $searchShow = $("#search_show");
-        if($(this).val()){
-            $searchShow.show();
-        }else{
-            $searchShow.hide();
-        }
-    });
-//    $('#search_input').bind('keyup','#search_input',function(event){
-//        event = event || window.event;
-//        if(event.keyCode == 13){
-//            if($('#search_input').val() == ''){
-//                return false;
-//            }
-////            alert($('#search_input').val());
-////            alert($(this).val());
-////            window.location.href = 'url?keyword='+ $(this).val();
-//            document.form_search.action="{:U('TradeSearch/search_method')}";
-//            document.form_search.submit();
+//    $('#search_input').bind('input','#search_input',function(){
+//        var $searchShow = $("#search_show");
+//        if($(this).val()){
+//            $searchShow.show();
+//        }else{
+//            $searchShow.hide();
 //        }
 //    });
+    $('#search_input').bind('keyup','#search_input',function(event){
+        event = event || window.event;
+        if(event.keyCode == 13){
+//            alert(1234);
+            if($('#search_input').val() == ''){
+                return false;
+            }
+//            alert($('#search_input').val());
+//            alert($(this).val());
+//            window.location.href = 'url?keyword='+ $(this).val();
+
+            //将值传入hidden input提交
+            if(cookie('trade_search_filter_kind')){
+                $('input[name=filter_kind]').val(cookie('trade_search_filter_kind'));
+            }
+            if(cookie('trade_search_filter_granularity')){
+                $('input[name=filter_granularity]').val(cookie('trade_search_filter_granularity'));
+            }
+            if(cookie('trade_search_filter_heat_min')){
+                $('input[name=filter_heat_min]').val(cookie('trade_search_filter_heat_min'));
+            }
+            if(cookie('trade_search_filter_heat_max')){
+                $('input[name=filter_heat_max]').val(cookie('trade_search_filter_heat_max'));
+            }
+            if(cookie('search_tag')){
+                $('input[name=select_category]').val(cookie('search_tag'));
+            }
+
+            //将输入的值存入cookie
+            cookie('search_input',$('input[name=search_input]').val());
+
+            //提交表单
+            document.form_search.method = "post";
+            document.form_search.action = "{:U('TradeSearch/trade_search')}";
+            document.form_search.submit();
+        }
+    });
     $('#search_cancel').bind('touchend','#search_cancel',function(){
         $("#search_show").hide();
         $('#search_input').val('');
@@ -383,15 +402,106 @@
 //    };
 //    alert($('#search_input').val());
 </script>
+
 <!--导航功能-->
 <script>
     $('#myTab a').click(function (e) {
 //            e.preventDefault();
-            $(this).parent('li').siblings('li').removeClass('weui_bar_item_on');
-            $(this).parent('li').addClass('weui_bar_item_on');
-            $(this).tab('show')
+            $(this).siblings('a').removeClass('weui_bar_item_on');
+            $(this).addClass('weui_bar_item_on');
+            $(this).tab('show');
     })
 </script>
+
+<!--载入读取上次标签-->
+<script>
+    $(function(){
+        console.log('new');
+        if(cookie('search_tag') == '0'){
+            //供货信息
+            //避免为空或者false
+            //标签选中
+//            var a = $('#myTab a:eq(1)');
+//            a.siblings('a').removeClass('weui_bar_item_on');
+//            a.addClass('weui_bar_item_on');
+//            a.tab('show');
+            $('#myTab a:eq(1)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on');
+        }else{
+            //求购信息
+//            var a = $('#myTab a:eq(0)');
+//            a.siblings('a').removeClass('weui_bar_item_on');
+//            a.addClass('weui_bar_item_on');
+//            a.tab('show');
+            $('#myTab a:eq(0)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on');
+            cookie('search_tag','2');
+        }
+    });
+</script>
+
+<!--点击标签查询-->
+<script>
+    //点击求购信息标签
+    $('#myTab a:eq(0)').click(function(){
+        //存入所选标签入cookie
+        cookie('search_tag','2');
+        $('input[name=select_category]').val(cookie('search_tag'));
+        //点击标签只传标签值，相当于重置筛选条件
+//        $('input[name=filter_kind]').val(cookie('trade_search_filter_kind'));
+//        $('input[name=filter_granularity]').val(cookie('trade_search_filter_granularity'));
+//        $('input[name=filter_heat_min]').val(cookie('trade_search_filter_heat_min'));
+//        $('input[name=filter_heat_max]').val(cookie('trade_search_filter_heat_max'));
+//        $('input[name=search_input]').val(cookie('search_input'));
+        //重置筛选条件的cookie
+        cookie('search_input',null);
+        cookie('trade_search_filter_kind',null);
+        cookie('trade_search_filter_granularity',null);
+        cookie('trade_search_filter_heat_min',null);
+        cookie('trade_search_filter_heat_max',null);
+        //提交表单
+        document.tag_search.method = 'post';
+        document.tag_search.action = "{:U('TradeSearch/trade_search')}";
+        document.tag_search.submit();
+    });
+
+    //点击供应信息标签
+    $('#myTab a:eq(1)').click(function(){
+        //存入所选标签入cookie
+        cookie('search_tag','0');
+        $('input[name=select_category]').val(cookie('search_tag'));
+        //点击标签只传标签值，相当于重置筛选条件
+//        $('input[name=filter_kind]').val(cookie('trade_search_filter_kind'));
+//        $('input[name=filter_granularity]').val(cookie('trade_search_filter_granularity'));
+//        $('input[name=filter_heat_min]').val(cookie('trade_search_filter_heat_min'));
+//        $('input[name=filter_heat_max]').val(cookie('trade_search_filter_heat_max'));
+//        $('input[name=search_input]').val(cookie('search_input'));
+        //重置筛选条件的cookie
+        cookie('search_input',null);
+        cookie('trade_search_filter_kind',null);
+        cookie('trade_search_filter_granularity',null);
+        cookie('trade_search_filter_heat_min',null);
+        cookie('trade_search_filter_heat_max',null);
+        //提交表单
+        document.tag_search.method = 'post';
+        document.tag_search.action = "{:U('TradeSearch/trade_search')}";
+        document.tag_search.submit();
+    })
+</script>
+
+<!--搜索框输入查询-->
+<script>
+//    $('input[name=filter_kind]').val(cookie('trade_search_filter_kind'));
+//    $('input[name=filter_granularity]').val(cookie('trade_search_filter_granularity'));
+//    $('input[name=filter_heat_min]').val(cookie('trade_search_filter_heat_min'));
+//    $('input[name=filter_heat_max]').val(cookie('trade_search_filter_heat_max'));
+//    $('input[name=search_input]').val(cookie('search_input'));
+//    $('input[name=select_category]').val(cookie('select_category'));
+//    function search_submit(){
+//        alert(123);
+//    }
+
+
+</script>
+
 <!--滚动功能-->
 <script>
 //    var myScroll;
@@ -524,4 +634,5 @@
 //document.addEventListener('DOMContentLoaded',loaded,false);
 
 </script>
+
 </html>

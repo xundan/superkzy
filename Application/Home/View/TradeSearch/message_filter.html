@@ -12,28 +12,28 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
-    <link type="text/css" rel="stylesheet" href="bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="weui.min.css">
-    <script type="text/javascript" src="jquery-2.2.4.min.js"></script>
-    <script type="text/javascript" src="bootstrap.min.js"></script>
+    <!--<link type="text/css" rel="stylesheet" href="bootstrap.min.css">-->
+    <!--<link type="text/css" rel="stylesheet" href="weui.min.css">-->
+    <!--<script type="text/javascript" src="jquery-2.2.4.min.js"></script>-->
+    <!--<script type="text/javascript" src="bootstrap.min.js"></script>-->
 </head>
-<body>
+<body style="background: white">
     <!--标题栏-->
     <div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
-                    <span class="pull-left" style="">
-                        <a href="{:U('TradeSearch/trade_search')}">
-                            <img src="__PUBLIC__/home/images/goback.png" class="img-responsive" style="width: 15px;height: auto;margin-top: 60%">
-                        </a>
-                    </span>
-                    <span class="">
-                        <span class="" style="font-size: 2em;">筛 选</span>
-                    </span>
+        <span class="pull-left" style="">
+            <a href="{:U('TradeSearch/trade_search')}">
+                <img src="__PUBLIC__/home/images/goback.png" class="img-responsive" style="width: 15px;height: auto;margin-top: 60%">
+            </a>
+        </span>
+        <span class="">
+            <span class="" style="font-size: 2em;">筛 选</span>
+        </span>
     </div>
     <!--清除浮动-->
     <div class="clearfix"></div>
     <!--筛选栏-->
-    <div class="container">
-        <form action="" method="" class="form-inline">
+    <!--<div class="container">-->
+        <form name="filter" action="" method="post" class="form-inline">
             <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
                 <div class="panel panel-default">
                     <div class="panel-heading">
@@ -47,7 +47,7 @@
                         <div class="panel-body">
                             <volist name="coalKind" id="filter_coalKind">
                                 <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                    <input type="checkbox" class="pull-left" name="filter_kind" autocomplete="off" value="{$filter_coalKind['id']}"> {$filter_coalKind['title']}
+                                    <input type="checkbox" class="pull-left" name="filter_kind[]" autocomplete="off" value="{$filter_coalKind['id']}"> {$filter_coalKind['title']}
                                 </label>
                             </volist>
                         </div>
@@ -65,7 +65,7 @@
                         <div class="panel-body">
                             <volist name="coalGranularity" id="filter_coalGranularity">
                                 <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                    <input type="checkbox" class="pull-left" name="filter_granularity" id="" autocomplete="off" value="{$filter_coalGranularity['id']}"> {$filter_coalGranularity['title']}
+                                    <input type="checkbox" class="pull-left" name="filter_granularity[]" id="" autocomplete="off" value="{$filter_coalGranularity['id']}"> {$filter_coalGranularity['title']}
                                 </label>
                             </volist>
                         </div>
@@ -104,26 +104,32 @@
                     </div>
                 </div>
             </div>
-            <div class="btn-group btn-group-justified btn-group-sm">
-                <div class="btn-group">
-                    <input class="btn btn-default" type="reset" value="重&emsp;&emsp;置" style=";font-size: 1.3em;color:white;background-color: #fb3e1e">
+
+            <!--隐藏提交筛选条件-->
+            <input type="hidden" name="select_category">
+            <input type="hidden" name="search_input">
+
+            <div class="btn-group btn-group-justified btn-group-sm" style="">
+                <div class="btn-group" style="">
+                    <input class="btn btn-default" type="reset" value="重&emsp;&emsp;置" style="border: none;font-size: 1.3em;color:#fb3e1e;background-color: #ffe1dd">
                 </div>
                 <div class="btn-group">
-                    <a href="#" id="filter_submit" class="btn btn-default" style=";color:white;font-size: 1.3em;background-color: #fb3e1e">
+                    <a href="#" id="filter_submit" class="btn btn-default" style="border: none;color:white;font-size: 1.3em;background-color: #fb3e1e">
                     确&emsp;&emsp;认
                     </a>
                 </div>
             </div>
         </form>
-    </div>
+    <!--</div>-->
 </body>
 <!--载入时读取上次选的cookie-->
 <script>
     $(function(){
         //煤炭分类
         if(cookie('trade_search_filter_kind')){
+            console.log(cookie('trade_search_filter_kind'));
             var filter_kind_value = cookie('trade_search_filter_kind').split(',');
-            var filter_kind = $('input[name=filter_kind]');
+            var filter_kind = $('input[name="filter_kind[]"]');
             for(var i=0;i<filter_kind.length;i++){
                 for(var j=0;j<filter_kind_value.length;j++){
                     if(filter_kind[i].value == filter_kind_value[j]){
@@ -133,7 +139,7 @@
                 }
             }
         }
-        //TODO 速度更快
+//        TODO 速度更快
 //        for(var item in filter_kind_value){
 //            var temp = filter_kind_value[item]-1;
 //            filter_kind[temp].checked = true;
@@ -142,7 +148,7 @@
         //粒度
         if(cookie('trade_search_filter_granularity')){
             var filter_granularity_value = cookie('trade_search_filter_granularity').split(',');
-            var filter_granularity = $('input[name=filter_granularity]');
+            var filter_granularity = $('input[name="filter_granularity[]"]');
             for(var i=0;i<filter_granularity.length;i++){
                 for(var j=0;j<filter_granularity_value.length;j++){
                     if(filter_granularity[i].value == filter_granularity_value[j]){
@@ -156,13 +162,9 @@
         //热值
         if(cookie('trade_search_filter_heat_min')){
             var filter_heat_min_value = cookie('trade_search_filter_heat_min');
-            if(filter_heat_min_value){
-                $('input[name=filter_heat_min]').val(filter_heat_min_value);
-            }
+            $('input[name=filter_heat_min]').val(filter_heat_min_value);
             var filter_heat_max_value = cookie('trade_search_filter_heat_max');
-            if(filter_heat_max_value){
-                $('input[name=filter_heat_max]').val(filter_heat_max_value);
-            }
+            $('input[name=filter_heat_max]').val(filter_heat_max_value);
         }
     })
 </script>
@@ -205,22 +207,34 @@
         var filter_heat_max = $('input[name=filter_heat_max]').val();
         //检测输入合法性
 
-
         //筛选条件存入cookie
         var filter_kind = [];
         var filter_granularity = [];
-        $('input[name=filter_kind]:checked').each(function(){
+        $('input[name="filter_kind[]"]:checked').each(function(){
             filter_kind.push($(this).val());
         });
-        $('input[name=filter_granularity]:checked').each(function(){
+        $('input[name="filter_granularity[]"]:checked').each(function(){
             filter_granularity.push($(this).val());
         });
-
         cookie('trade_search_filter_kind',filter_kind);
         cookie('trade_search_filter_granularity',filter_granularity);
         cookie('trade_search_filter_heat_min',filter_heat_min);
         cookie('trade_search_filter_heat_max',filter_heat_max);
+
+        //提交前从cookie中读取其他筛选条件一并提交
+        //正常情况cookie('search_tag')肯定有值
+        $('input[name=select_category]').val(cookie('search_tag'));
+        if(cookie('search_input')){
+            $('input[name=search_input]').val(cookie('search_input'));
+        }
+
+        //提交
 //        window.location.href = "{:U('TradeSearch/trade_search')}";
+        document.filter.method = "post";
+        document.filter.action = "{:U('TradeSearch/trade_search')}";
+//        document.filter.action = "{:U('TradeSearch/trade_search')}?kind="+filter_kind+'&granularity='+filter_granularity
+//        +'&heat_min='+filter_heat_min+'&heat_max='+filter_heat_max;
+        document.filter.submit();
     });
 </script>
 

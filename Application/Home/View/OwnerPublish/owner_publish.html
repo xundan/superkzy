@@ -439,7 +439,7 @@
 
     </div>
     <div id="coal_buy" class="tab-pane" style="">
-        <form id="form_buy" name="" class="" method="post" action="">
+        <form id="form_buy" name="form_buy" class="" method="post" action="">
             <table class="table table-responsive" style="border: 0">
                 <tr>
                     <td>
@@ -564,6 +564,7 @@
                             </div>
                         </a>
                         <div id="collapse_buy_method" class="collapse" role="tablist" aria-labelledby="">
+                            <!--style="position: absolute;clip:rect(0,0,0,0)"-->
                             <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
                                 <input type="radio" class="pull-left" name="buy_method" autocomplete="off" value="1">预先付款
                             </label>
@@ -1327,6 +1328,14 @@
             }
         });
     }
+</script>
+
+<script>
+//    $('input[name=buy_method]').click(function(){
+//        console.log($(this).val());
+//        document.form_buy.action="{:U('Login/upgrade_t2_to_t3_do')}";
+//        document.form_buy.submit();
+//    })
 </script>
 
 </html>
