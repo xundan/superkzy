@@ -2,16 +2,18 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
     <!--<link rel="icon" href="../../favicon.ico">-->
-    <title></title>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <title>{$user_owner['user_name']}的个人主页</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
     <link type="text/css" rel="stylesheet" href="bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="weui.min.css">
     <script type="text/javascript" src="jquery-2.2.4.min.js"></script>
@@ -20,25 +22,23 @@
 <body style="">
 <!--标题栏-->
 <div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
-    <!--<div class="container text-center" style="">-->
-    <!--<div style="display: inline-block;height: 100%;vertical-align: middle"></div>-->
         <span class="pull-left" style="">
-                <!--<a class="glyphicon glyphicon-chevron-left"></a>-->
-            <a href="{:U('PersonalCenter/personal_center')}">
-                <img src="__PUBLIC__/home/images/goback.png" class="img-responsive" style="width: 15px;height: auto;margin-top: 40%">
+            <a href="{$last_url}">
+                <img src="__PUBLIC__/home/images/goback.png" class="img-responsive"
+                     style="width: 15px;height: auto;margin-top: 40%">
             </a>
         </span>
         <span class="">
-            <span class="" style="font-size: 1.5em;margin-left: -4%">完善资料</span>
+            <span class="" style="font-size: 1.5em;margin-left: -4%">查看资料</span>
         </span>
-    <!--</div>-->
 </div>
 <!--清除浮动-->
 <div class="clearfix"></div>
 <!--导航标签-->
 <div class="panel-title" style="margin:0;padding: 0;background-color: white">
     <div id="myTab" class="weui_navbar" role="" style="position: inherit;margin-bottom: 0;">
-        <a href="#owner_basic_data" class="weui_navbar_item weui_bar_item_on" data-toggle="tab" style="color: black;text-decoration: none">
+        <a href="#owner_basic_data" class="weui_navbar_item weui_bar_item_on" data-toggle="tab"
+           style="color: black;text-decoration: none">
             <span role="presentation" class="" style=";font-size: 1.2em">
                 基本信息
             </span>
@@ -53,125 +53,116 @@
 <!--发布栏-->
 <div class="tab-content" style="">
     <div id="owner_basic_data" class="tab-pane active" style="">
-        <form id="form_owner_basic_data" name="form_owner_basic_data" class="" method="post" action="{:U('PersonalCenter/owner_data_do')}">
-            <table class="table table-responsive" style="border: 0">
-                <tr>
-                    <td>
-                        <a href="#" aria-expanded="true" style="text-decoration: none;color:black">
-                            <div style="vertical-align: middle">
+        <table class="table table-responsive" style="border: 0">
+            <tr>
+                <td>
+                    <a href="#" aria-expanded="true" style="text-decoration: none;color:black">
+                        <div style="vertical-align: middle">
                                 <span>
-                                    <img src="__PUBLIC__/home/images/headimg_background.png" style="width: 50px">
+                                    <img src="{$user_owner['heading_url']}" style="width: 50px">
                                 </span>
-                                &nbsp;我的头像
-                                <!--<span class="pull-right" style="margin-top:3.5%">-->
-                                    <!--<img src="__PUBLIC__/home/images/goto.png" class="" style="width: 10px">-->
-                                <!--</span>-->
-                            </div>
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <div class="input-group" style="">
+                        </div>
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0">
+                    <div class="input-group" style="">
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 姓名
                             </span>
-                            <input id="nickname" name="nickname" class="form-control" placeholder="请输入姓名" style="border-radius: 0;border: 0">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <div class="input-group" style="">
+                        <input id="nickname" name="nickname" class="form-control" placeholder="未知"
+                               style="border-radius: 0;border: 0;background: white" value="{$user_owner['user_name']}"
+                               disabled="true"/>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0">
+                    <div class="input-group" style="">
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 电话
                             </span>
-                            <input id="phone_number" name="phone_number" class="form-control" placeholder="请输入电话" style="border-radius: 0;border: 0">
+                        <input id="phone_number" name="phone_number" class="form-control" placeholder="未知"
+                               style="border-radius: 0;border: 0;background: white"
+                               value="{$user_owner['phone_number']}"
+                               disabled="true">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a data-toggle="collapse" href="#collapse_sex" aria-expanded="true"
+                       aria-controls="collapse_sell_coal_trait" style="text-decoration: none;color:black">
+                        <div>
+                            &nbsp;性别&nbsp;&nbsp;
+                            <switch name="user_owner['sex']">
+                                <case value="0">保密</case>
+                                <case value="1">男</case>
+                                <case value="2">女</case>
+                                <default/>未知
+                            </switch>
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a data-toggle="collapse" href="#collapse_sex" aria-expanded="true" aria-controls="collapse_sell_coal_trait" style="text-decoration: none;color:black">
-                            <div>
-                                &nbsp;性别
-                                <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive" style="width: 20px">
-                                </span>
-                            </div>
-                        </a>
-                        <div id="collapse_sex" class="collapse" role="tablist" aria-labelledby="">
-                            <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                <input type="radio" class="pull-left" name="sex" autocomplete="off" value="1"> &nbsp;男
-                            </label>
-                            <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                <input type="radio" class="pull-left" name="sex" autocomplete="off" value="2"> &nbsp;女
-                            </label>
-                            <label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                <input type="radio" class="pull-left" name="sex" autocomplete="off" value="0"> &nbsp;保密
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <div class="input-group" style="">
+                    </a>
+
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0">
+                    <div class="input-group" style="">
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 生日
                             </span>
-                            <input type="date" name="birthday" class="form-control" placeholder="请输入生日" style="border-radius: 0;border: 0">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <div class="input-group" style="">
+                        <input type="date" name="birthday" class="form-control" placeholder="未知"
+                               style="border-radius: 0;border: 0;background: white" value="{$user_owner['birthday']}"
+                               disabled="true"/>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0">
+                    <div class="input-group" style="">
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 公司名称
                             </span>
-                            <input id="supply_company" name="supply_company" class="form-control" placeholder="请输入您的矿、厂名称" style="border-radius: 0;border: 0">
+                        <input id="supply_company" name="supply_company" class="form-control"
+                               placeholder="未知" style="border-radius: 0;border: 0;background: white"
+                               value="{$user_company['name']}" disabled="true">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="#" style="text-decoration: none;color:black">
+                        <div>
+                            &nbsp;所在地区&nbsp;&nbsp;&nbsp;&nbsp;{$user_district}
                         </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="#" style="text-decoration: none;color:black">
-                            <div>
-                                &nbsp;所在地区
-                                <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">
-                                </span>
-                            </div>
-                        </a>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <div class="input-group" style="">
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0">
+                    <div class="input-group" style="">
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 详细地址
                             </span>
-                            <input id="area_detail" name="area_detail" class="form-control" placeholder="请输入详细地址" style="border-radius: 0;border: 0">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                邀请人
-                            </span>
-                            <input id="invite_id" name="invite_id" class="form-control" placeholder="请输入邀请人编码" style="border-radius: 0;border: 0">
-                        </div>
-                    </td>
-                </tr>
-            </table>
-            <input type="submit" name="confirm_button" id="confirm_button" class="btn btn-group-justified " value="确&nbsp&nbsp&nbsp定" style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e">
-            <div id="result"></div>
-        </form>
+                        <input id="area_detail" name="area_detail" class="form-control" placeholder="未知"
+                               style="border-radius: 0;border: 0;background: white" value="{$user_owner['area_detail']}"
+                               disabled="true">
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <input type="button" name="confirm_button" id="confirm_button" class="btn btn-group-justified "
+               value="分&nbsp&nbsp&nbsp享"
+               style="margin-top:10%;color:white;font-size: 1.5em;background-color: #04bfc6" onclick="share()">
+
+        <div id="result"></div>
     </div>
     <div id="owner_work_exp" class="tab-pane" style="">
-        <form id="form_owner_work_exp" name="form_owner_work_exp" class="" method="post" action="{:U('PersonalCenter/owner_work_exp_do')}">
+        <form id="form_owner_work_exp" name="form_owner_work_exp" class="" method="post"
+              action="{:U('PersonalCenter/owner_work_exp_do')}">
             <table class="table table-responsive" style="border: 0">
                 <tr>
                     <td style="padding: 0">
@@ -179,7 +170,9 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 行业类型
                             </span>
-                            <input id="owner_work_type" name="owner_work_type" class="form-control" placeholder="请输入行业类型" style="border-radius: 0;border: 0">
+                            <input id="owner_work_type" name="owner_work_type" class="form-control"
+                                   placeholder="未知" style="border-radius: 0;border: 0;background: white" value="{$user_company['type']}"
+                                   disabled="true">
                         </div>
                     </td>
                 </tr>
@@ -189,7 +182,9 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 从业时间
                             </span>
-                            <input id="work_time" name="work_time" class="form-control" placeholder="请输入从业时间" style="border-radius: 0;border: 0">
+                            <input id="work_time" name="work_time" class="form-control" placeholder="未知"
+                                   style="border-radius: 0;border: 0;background: white" value="{$user_owner['work_time']}"
+                                   disabled="true">
                         </div>
                     </td>
                 </tr>
@@ -199,7 +194,9 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 公司名称
                             </span>
-                            <input id="company_name" name="company_name" class="form-control" placeholder="请输入您的公司名称" style="border-radius: 0;border: 0">
+                            <input id="company_name" name="company_name" class="form-control" placeholder="未知"
+                                   style="border-radius: 0;border: 0;background: white" value="{$user_company['name']}"
+                                   disabled="true">
                         </div>
                     </td>
                 </tr>
@@ -209,7 +206,9 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 所属部门
                             </span>
-                            <input id="owner_department" name="owner_department" class="form-control" placeholder="请输入您的部门" style="border-radius: 0;border: 0">
+                            <input id="owner_department" name="owner_department" class="form-control"
+                                   placeholder="未知" style="border-radius: 0;border: 0;background: white" value="{$user_owner['owner_department']}"
+                                   disabled="true">
                         </div>
                     </td>
                 </tr>
@@ -219,7 +218,9 @@
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 职位
                             </span>
-                            <input name="owner_position" class="form-control" placeholder="请输入您的职位" style="border-radius: 0;border: 0">
+                            <input name="owner_position" class="form-control" placeholder="未知"
+                                   style="border-radius: 0;border: 0;background: white" value="{$user_owner['owner_position']}"
+                                   disabled="true">
                         </div>
                     </td>
                 </tr>
@@ -229,13 +230,15 @@
                             <label>
                                 行业描述
                             </label>
-                            <textarea  name="work_description" class="form-control">
-                            </textarea>
+                            <p>{$user_owner['work_description']}</p>
                         </div>
                     </td>
                 </tr>
             </table>
-            <input type="submit" name="confirm_button2" class="btn btn-group-justified " value="确&nbsp&nbsp&nbsp定" style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e">
+            <input type="button" name="confirm_button" id="confirm_button2" class="btn btn-group-justified "
+                   value="分&nbsp&nbsp&nbsp享"
+                   style="margin-top:10%;color:white;font-size: 1.5em;background-color: #04bfc6" onclick="share()">
+
         </form>
     </div>
 </div>
@@ -252,37 +255,9 @@
         $(this).tab('show');
     })
 </script>
-<!--actionsheet功能-->
 <script>
-    $('#showActionSheet').on('click',function(){
-        var mask = $('#mask');
-        var weuiActionsheet = $('#weui_actionsheet');
-        weuiActionsheet.addClass('weui_actionsheet_toggle');
-        mask.show()
-                .focus()//加focus是为了触发一次页面的重排(reflow or layout thrashing),使mask的transition动画得以正常触发
-                .addClass('weui_fade_toggle').one('click',function(){
-            hideActionSheet(weuiActionsheet,mask);
-        });
-        $('#actionsheet_cancel').one('click',function(){
-            hideActionSheet(weuiActionsheet,mask);
-        });
-        $('#asd').on('click',function(){
-            var a = $(this).html();
-            alert(a);
-            hideActionSheet(weuiActionsheet,mask);
-            $('#sell_coal_kind').html(a);
-        });
-        mask.unbind('transitionend').unbind('webkitTransitionEnd');
-
-        function hideActionSheet(weuiActionsheet,mask){
-            weuiActionsheet.removeClass('weui_actionsheet_toggle');
-            mask.removeClass('weui_fade_toggle');
-            mask.on('transitionend',function(){
-                mask.hide();
-            }).on('webkitTransitionEnd',function(){
-                mask.hide();
-            })
-        }
-    });
+    function share(){
+        // todo
+    }
 </script>
 </html>

@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
     <!--<link rel="icon" href="../../favicon.ico">-->
-    <title></title>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <title>个人主页</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll.js"></script>
@@ -29,6 +30,7 @@
     <span class="">
         <span class="" style="font-size: 1.5em;margin-left:-10px">个人中心</span>
     </span>
+
     <div>
         <img src="{$user_info['heading_url']}" class="" style="width:20%">
     </div>
@@ -47,7 +49,12 @@
                     &emsp;角色:
                 </td>
                 <td>
-                    {$user_role}
+                    <switch name="user_role">
+                        <case value="0">游客</case>
+                        <case value="1">车主</case>
+                        <case value="2">货主</case>
+                        <default/>
+                    </switch>
                     <button class="btn btn-xs btn-default" style="color:#04bfc6;border-radius: 10px">角色切换</button>
                 </td>
             </tr>
@@ -55,22 +62,25 @@
     </div>
 </div>
 <!--认证栏-->
-    <ul class="weui_navbar" style="position: relative;margin: 0">
-        <li class="weui_navbar_item" style="vertical-align: middle">
-            <img src="__PUBLIC__/home/images/my_qualification.png" class="" style="width: 30px;height: 30px;">
-            <p style="margin:0;">我的认证</p>
-        </li >
-        <li class="weui_navbar_item">
-            <img src="__PUBLIC__/home/images/my_points.png" class="" style="width: 30px;height: 30px;">
-            <p style="margin:0;">我的积分</p>
-        </li>
-        <li class="weui_navbar_item">
-            <div>
-                <img src="__PUBLIC__/home/images/my_rate.png" class="" style="width: 30px;height: 30px;">
-                <p style="margin:0;">我的评级</p>
-            </div>
-        </li>
-    </ul>
+<ul class="weui_navbar" style="position: relative;margin: 0">
+    <li class="weui_navbar_item" style="vertical-align: middle">
+        <img src="__PUBLIC__/home/images/my_qualification.png" class="" style="width: 30px;height: 30px;">
+
+        <p style="margin:0;">我的认证</p>
+    </li>
+    <li class="weui_navbar_item">
+        <img src="__PUBLIC__/home/images/my_points.png" class="" style="width: 30px;height: 30px;">
+
+        <p style="margin:0;">我的积分</p>
+    </li>
+    <li class="weui_navbar_item">
+        <div>
+            <img src="__PUBLIC__/home/images/my_rate.png" class="" style="width: 30px;height: 30px;">
+
+            <p style="margin:0;">我的评级</p>
+        </div>
+    </li>
+</ul>
 <!--功能列表栏-->
 <div class="list-group">
     <a href="#" style="color:black;text-decoration: none">

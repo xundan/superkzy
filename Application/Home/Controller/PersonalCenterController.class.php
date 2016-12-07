@@ -14,51 +14,92 @@ header("Content-type: text/html; charset=utf-8");
 
 class PersonalCenterController extends ComController
 {
+    public function index()
+    {
+        $user_info = session('user_info');
+        var_dump($user_info);
+    }
+
     public function personal_center()
     {
+        // 一级页面，保存cookie
+        cookie("last_url", U('PersonalCenter/personal_center'));
+
         $user_info = $_SESSION['user_info'];
         $this->assign('user_info', $user_info);
-        $user_role = session('user_info')['role_id'] == null ? "游客" : session('user_info')['role_id'];
+        $user_role = session('user_info')['role_id'] ? session('user_info')['role_id'] : "0";
         $this->assign('user_role', $user_role);
+
         $this->display();
     }
 
-    public function owner_data()
+    public function owner_data($uid = null)
     {
-        $this->display();
+        if ($uid) {
+            // 如果路径里有uid
+            $temp['uid'] = $uid;
+
+            $user_owner = M('User')->where($temp)->find();
+            if ($user_owner) {
+                $this->assign('user_owner', $user_owner);
+                // 如果有公司信息，载入之
+                if ($user_owner['company_id']) {
+                    $user_company = M('Company')->where(array("id" => $user_owner['company_id']))->find();
+                    $this->assign('user_company', $user_company);
+                }
+                // 如果有地理信息，载入之
+                if ($user_owner['district_id']) {
+                    $user_district = M('Districts')->where(array("id" => $user_owner['district_id']))->find();
+                    $this->assign('user_district', $user_district['name']);
+                }
+                // 如果id是本人id，进入设置页面，否则进入展示页面
+                if ($uid == session('user_info')['uid']) {
+                    $this->display('owner_data_self');
+                } else {
+                    // 确保来源地，能够退回
+                    $this->assign('last_url', cookie('last_url'));
+                    $this->display();
+                }
+            } elseif ($user_owner === false) {
+                // TODO false说明查询出错，记录日志
+                $this->display("Public:500");
+
+            } else {
+                // TODO 查询为空，用户查到了不该到的地方，记日志
+                $this->display("Public:404");
+            }
+        } else {
+            // uid没有就跳转到自己的页面，为了可分享，路径必须含有uid
+            $user_info = session('user_info');
+            $this->redirect('PersonalCenter/owner_data', array('uid' => $user_info['uid']), 0, "");
+        }
     }
 
     public function owner_data_do()
     {
         //读取post数据
         $subInfo = I('post.', '', 'strip_tags,trim');
-        //回调数组
-        $returnArr = array();
-        //煤炭产品属性
         $user['uid'] = session('user_info')['uid'];
-        $user['nickname'] = $subInfo['nickname'];
-//        $user['phone_number'] = $subInfo['phone_number'];
+        $user['user_name'] = $subInfo['nickname'];
+        $user['phone_number'] = $subInfo['phone_number'];
         // TODO 改变电话需要验证
         $user['sex'] = $subInfo['sex'];
         $user['birthday'] = $subInfo['birthday'];
         $company['name'] = $subInfo['supply_company'];
         $user['company_id'] = $this->save_company($company);
         // TODO district回调还没做
-//        $user['district_id'] = 0;
+        $user['district_id'] = 0;
         $user['area_detail'] = $subInfo['area_detail'];
         $user['invite_id'] = $subInfo['invite_id'];
         //插入
         $mres = M('User')->save($user);
         if ($mres) {
-            $returnArr['status'] = 1;
-            $returnArr['msg'] = "修改成功";
-            echo json_encode($returnArr);
+            $this->success("修改成功","personal_center",3);
         } else {
-            $returnArr['status'] = 0;
-            $returnArr['msg'] = "修改失败";
-            echo json_encode($returnArr);
-            exit;
+            //todo log here
+            $this->display("Public:500");
         }
+//        echo $subInfo['birthday'];
     }
 
     public function owner_work_exp_do()
@@ -74,7 +115,7 @@ class PersonalCenterController extends ComController
         $user['owner_department'] = $subInfo['owner_department'];
         $user['owner_position'] = $subInfo['owner_position'];
         $user['work_description'] = $subInfo['work_description'];
-        $user['company_id']=$this->save_company($company);
+        $user['company_id'] = $this->save_company($company);
         //插入
         $mres = M('User')->save($user);
         if ($mres) {
@@ -91,26 +132,27 @@ class PersonalCenterController extends ComController
 
     private function save_company($company)
     {
-        $Comp=M('company');
+        $Comp = M('company');
         $res = $this->fetch_company($company);
-        if ($res){
+        if ($res) {
             // 目前$company只有name字段，如果有新字段增加，则放开下面注释
             // 同时fetch_company方法也要改
-            $Comp->where('id='.$res['id'])->save($company);
+            $Comp->where('id=' . $res['id'])->save($company);
             return $res['id'];
-        }else{
+        } else {
             // added是新插入字段的id
             $added = $Comp->add($company);
             return $added;
         }
     }
 
-    private function fetch_company($company){
-        $data['name']=$company['name'];
+    private function fetch_company($company)
+    {
+        $data['name'] = $company['name'];
         $res = M('Company')->where($data)->find();
-        if ($res){
+        if ($res) {
             return $res;
-        }else{
+        } else {
             // todo LOG HERE.
             return false;
         }
@@ -129,7 +171,7 @@ class PersonalCenterController extends ComController
         $returnArr = array();
         //煤炭产品属性
         $user['uid'] = session('user_info')['uid'];
-        $user['nickname'] = $subInfo['nickname'];
+        $user['user_name'] = $subInfo['nickname'];
 //        $user['phone_number'] = $subInfo['phone_number'];
         // TODO 改变电话需要验证
         $user['sex'] = $subInfo['sex'];
@@ -183,24 +225,25 @@ class PersonalCenterController extends ComController
 
     private function save_car($car)
     {
-        $Car_info=M('car_info');
+        $Car_info = M('car_info');
         $res = $this->fetch_car($car);
-        if ($res){
-            $Car_info->where('id='.$res['id'])->save($car);
+        if ($res) {
+            $Car_info->where('id=' . $res['id'])->save($car);
             return $res['id'];
-        }else{
+        } else {
             // added是新插入字段的id
             $added = $Car_info->add($car);
             return $added;
         }
     }
 
-    private function fetch_car($car){
-        $data['plate_number']=$car['plate_number'];
+    private function fetch_car($car)
+    {
+        $data['plate_number'] = $car['plate_number'];
         $res = M('car_info')->where($data)->find();
-        if ($res){
+        if ($res) {
             return $res;
-        }else{
+        } else {
             // todo LOG HERE.
             return false;
         }

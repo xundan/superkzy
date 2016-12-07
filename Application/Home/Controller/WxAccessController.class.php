@@ -100,6 +100,7 @@ class WxAccessController extends Controller
 
         $data['open_id'] = $userInfo["openid"];
         $data['user_name'] = $userInfo["nickname"];
+        $data['nickname'] = $userInfo["nickname"];
         $data['province'] = $userInfo["province"];
         $data['city'] = $userInfo["city"];
         $data['country'] = $userInfo["country"];
