@@ -195,9 +195,9 @@
                     </td>
                 </tr>
             </table>
-            <input type="submit" name="confirm_button" id="confirm_button" class="btn btn-group-justified "
+            <input type="button" name="confirm_button" id="confirm_button" class="btn btn-group-justified "
                    value="确&nbsp&nbsp&nbsp定"
-                   style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e">
+                   style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e" onclick="submit_basic_form()">
 
             <div id="result"></div>
         </form>
@@ -275,8 +275,8 @@
                     </td>
                 </tr>
             </table>
-            <input type="submit" name="confirm_button2" class="btn btn-group-justified " value="确&nbsp&nbsp&nbsp定"
-                   style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e">
+            <input type="button" name="confirm_button2" class="btn btn-group-justified " value="确&nbsp&nbsp&nbsp定"
+                   style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e" onclick="submit_exp_form()">
         </form>
     </div>
 </div>
@@ -294,7 +294,7 @@
     })
 </script>
 
-<!--载入时读取上次发布的信息-->
+<!--areaSearch跳转回来时读取cookie信息-->
 <script>
     $(function () {
 //        console.log(cookie());
@@ -341,5 +341,14 @@
         window.location.href = "{:U('areaSearch/area_search')}";
     }
 
+    function submit_basic_form(){
+        cookie('form_basic_data',null);
+        document.getElementById('form_owner_basic_data').submit();
+    }
+
+    function submit_exp_form(){
+        cookie('form_exp_data',null);
+        document.getElementById('form_owner_work_exp').submit();
+    }
 </script>
 </html>

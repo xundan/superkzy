@@ -92,10 +92,10 @@ class PersonalCenterController extends ComController
         $user['area_detail'] = $subInfo['area_detail'];
         $user['invite_id'] = $subInfo['invite_id'];
         //插入
-        $mres = M('User')->save($user);
-        if ($mres) {
-            $this->success("修改成功","personal_center",3);
-        } else {
+        $res = M('User')->save($user);
+        if ($res||$res===0) {
+            $this->success("修改成功", "personal_center", 3);
+        }else {
             //todo log here
             $this->display("Public:500");
         }
@@ -106,27 +106,22 @@ class PersonalCenterController extends ComController
     {
         //读取post数据
         $subInfo = I('post.', '', 'strip_tags,trim');
-        //回调数组
-        $returnArr = array();
         //煤炭产品属性
         $user['uid'] = session('user_info')['uid'];
         $company['name'] = $subInfo['company_name'];
+        $company['type'] = $subInfo['owner_work_type'];
         $user['work_time'] = $subInfo['work_time'];
         $user['owner_department'] = $subInfo['owner_department'];
         $user['owner_position'] = $subInfo['owner_position'];
         $user['work_description'] = $subInfo['work_description'];
         $user['company_id'] = $this->save_company($company);
         //插入
-        $mres = M('User')->save($user);
-        if ($mres) {
-            $returnArr['status'] = 1;
-            $returnArr['msg'] = "修改成功";
-            echo json_encode($returnArr);
+        $res = M('User')->save($user);
+        if ($res||$res===0) {
+            $this->success("修改成功", "personal_center", 3);
         } else {
-            $returnArr['status'] = 0;
-            $returnArr['msg'] = "修改失败";
-            echo json_encode($returnArr);
-            exit;
+            //todo log here
+            $this->display("Public:500");
         }
     }
 
@@ -167,9 +162,6 @@ class PersonalCenterController extends ComController
     {
         //读取post数据
         $subInfo = I('post.', '', 'strip_tags,trim');
-        //回调数组
-        $returnArr = array();
-        //煤炭产品属性
         $user['uid'] = session('user_info')['uid'];
         $user['user_name'] = $subInfo['nickname'];
 //        $user['phone_number'] = $subInfo['phone_number'];
@@ -183,16 +175,12 @@ class PersonalCenterController extends ComController
         $user['car_id'] = $this->save_car($car);
 //        $user['invite_id'] = $subInfo['invite_id'];
         //插入
-        $mres = M('User')->save($user);
-        if ($mres) {
-            $returnArr['status'] = 1;
-            $returnArr['msg'] = "修改成功";
-            echo json_encode($returnArr);
+        $res = M('User')->save($user);
+        if ($res||$res===0) {
+            $this->success("修改成功", "personal_center", 3);
         } else {
-            $returnArr['status'] = 0;
-            $returnArr['msg'] = "修改失败";
-            echo json_encode($returnArr);
-            exit;
+            //todo log here
+            $this->display("Public:500");
         }
     }
 
@@ -200,25 +188,18 @@ class PersonalCenterController extends ComController
     {
         //读取post数据
         $subInfo = I('post.', '', 'strip_tags,trim');
-        //回调数组
-        $returnArr = array();
-        //煤炭产品属性
         $user['uid'] = session('user_info')['uid'];
         $user['work_time_start'] = $subInfo['work_time_start'];
         $user['work_time_end'] = $subInfo['work_time_end'];
         $user['buy_car_time'] = $subInfo['buy_car_time'];
         $user['work_description'] = $subInfo['work_description'];
         //插入
-        $mres = M('User')->save($user);
-        if ($mres) {
-            $returnArr['status'] = 1;
-            $returnArr['msg'] = "修改成功";
-            echo json_encode($returnArr);
+        $res = M('User')->save($user);
+        if ($res||$res===0) {
+            $this->success("修改成功", "personal_center", 3);
         } else {
-            $returnArr['status'] = 0;
-            $returnArr['msg'] = "修改失败";
-            echo json_encode($returnArr);
-            exit;
+            //todo log here
+            $this->display("Public:500");
         }
     }
 
@@ -248,12 +229,4 @@ class PersonalCenterController extends ComController
             return false;
         }
     }
-
-
-//    public function demo(){
-//        $company['name']="hue2";
-//        var_dump(M('Company')->where($company)->find());
-////        echo $this->save_company($company);
-//        echo M('company')->add($company);
-//    }
 }

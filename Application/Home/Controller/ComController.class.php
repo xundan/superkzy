@@ -15,7 +15,7 @@ class ComController extends Controller
 
         //把当前路径放入cookie中
         $module_name = CONTROLLER_NAME.'/'.ACTION_NAME;
-        cookie("last_url",$module_name);
+//        cookie("last_url",$module_name);
         if(!isset($user['uid'])){
             //判断是否有uid，如果没有分两种情况
             // 如果是本机测试，从数据库取uid=1的用户登录
@@ -33,7 +33,7 @@ class ComController extends Controller
         $Auth = new \Think\Auth();
 
 //        if(!$Auth->check($module_name,$user['uid'])){
-//            $this->error('没有权限访问本页面',$url);
+//            $this->error('没有权限访问本页面',U('Login/register'));
 //        }
     }
 
