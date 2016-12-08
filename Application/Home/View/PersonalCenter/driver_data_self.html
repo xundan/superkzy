@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <title>我的个人主页</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/iscroll.js"></script>
+    <link type="text/css" rel="stylesheet" href="bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="weui.min.css">
+    <script type="text/javascript" src="jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="bootstrap.min.js"></script>
+</head>
+<body style="">
+<!--标题栏-->
+<div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
+    <!--<div class="container text-center" style="">-->
+    <!--<div style="display: inline-block;height: 100%;vertical-align: middle"></div>-->
+        <span class="pull-left" style="">
+                <!--<a class="glyphicon glyphicon-chevron-left"></a>-->
+            <a href="{:U('PersonalCenter/personal_center')}">
+                <img src="__PUBLIC__/home/images/goback.png" class="img-responsive"
+                     style="width: 15px;height: auto;margin-top: 40%">
+            </a>
+        </span>
+        <span class="">
+            <span class="" style="font-size: 1.5em;margin-left: -4%">完善资料</span>
+        </span>
+    <!--</div>-->
+</div>
+<!--清除浮动-->
+<div class="clearfix"></div>
+<!--导航标签-->
+<div class="panel-title" style="margin:0;padding: 0;background-color: white">
+    <div id="myTab" class="weui_navbar" role="" style="position: inherit;margin-bottom: 0;">
+        <a href="#driver_basic_data" class="weui_navbar_item weui_bar_item_on" data-toggle="tab"
+           style="color: black;text-decoration: none">
+            <span role="presentation" class="" style=";font-size: 1.2em">
+                基本信息
+            </span>
+        </a>
+        <a href="#driver_work_exp" class="weui_navbar_item" data-toggle="tab"
+           style="color: black;text-decoration: none">
+            <span role="presentation" class="" style=";font-size: 1.2em">
+                从业经验
+            </span>
+        </a>
+    </div>
+</div>
+<!--发布栏-->
+<div class="tab-content" style="">
+    <div id="driver_basic_data" class="tab-pane active" style="">
+        <form id="form_driver_basic_data" name="form_driver_basic_data" class="" method="post"
+              action="{:U('PersonalCenter/driver_data_do')}">
+            <table class="table table-responsive" style="border: 0">
+                <tr>
+                    <td>
+                        <a href="#" aria-expanded="true" style="text-decoration: none;color:black">
+                            <div style="vertical-align: middle">
+                                <span>
+                                    <if condition="$user_driver['heading_url']"><img
+                                            src="{$user_driver['heading_url']}"style="width: 50px">
+                                        <else/>
+                                        <img src="__PUBLIC__/home/images/headimg_background.png"
+                                             style="width: 50px">
+                                    </if>
+                                </span>
+                                &nbsp;我的头像
+                                <!--<span class="pull-right" style="margin-top:3.5%">-->
+                                <!--<img src="__PUBLIC__/home/images/goto.png" class="" style="width: 10px">-->
+                                <!--</span>-->
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                姓名
+                            </span>
+                            <input id="nickname" name="nickname" class="form-control" placeholder="请输入姓名"
+                                   style="border-radius: 0;border: 0" value="{$user_driver['user_name']}">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon"
+                                  style="border-radius: 0;border:0;vertical-align: middle;background-color: white">
+                                联系电话
+                                <!--<span style="font-size: 1.5em;color:red;vertical-align: middle">*</span>-->
+                                <!--<img src="__PUBLIC__/home/images/necessary.png" class="" style="width: 7px">-->
+                            </span>
+                            <input id="phone_number" name="phone_number" class="form-control" placeholder="请输入联系电话"
+                                   style="border-radius: 0;border: 0" onclick="phone_register()"
+                                   value="{$user_driver['phone_number']}">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a data-toggle="collapse" href="#collapse_sex" aria-expanded="true" aria-controls="collapse_sex"
+                           style="text-decoration: none;color:black">
+                            <div>
+                                &nbsp;性别
+                                <span class="pull-right">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive"
+                                         style="width: 20px">
+                                </span>
+                            </div>
+                        </a>
+
+                        <div id="collapse_sex" class="collapse" role="tablist" aria-labelledby="">
+                            <label class="btn btn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
+                                <input id="rdo1" type="radio" class="pull-left" name="sex" autocomplete="off" value="1"> &nbsp;男
+                            </label>
+                            <label class="btn btn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
+                                <input id="rdo2" type="radio" class="pull-left" name="sex" autocomplete="off" value="2"> &nbsp;女
+                            </label>
+                            <label class="btn btn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
+                                <input id="rdo0" type="radio" class="pull-left" name="sex" autocomplete="off" value="0"> &nbsp;保密
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                身份证号
+                            </span>
+                            <input name="id_card" class="form-control" placeholder="请输入您的身份证号"
+                                   style="border-radius: 0;border: 0" value="{$user_driver['id_card']}">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                驾驶证号
+                            </span>
+                            <input name="drive_card" class="form-control" placeholder="请输入您的驾驶证号"
+                                   style="border-radius: 0;border: 0" value="{$user_driver['drive_card']}">
+                        </div>
+                    </td>
+                </tr>
+                <!--<tr>-->
+                <!--<td>-->
+                <!--<a href="#" style="text-decoration: none;color:black">-->
+                <!--<div>-->
+                <!--&nbsp;上传驾驶证照片-->
+                <!--<span class="pull-right">-->
+                <!--<img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">-->
+                <!--</span>-->
+                <!--</div>-->
+                <!--</a>-->
+                <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--<td>-->
+                <!--<a href="#" style="text-decoration: none;color:black">-->
+                <!--<div>-->
+                <!--&nbsp;上传行驶证照片-->
+                <!--<span class="pull-right">-->
+                <!--<img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">-->
+                <!--</span>-->
+                <!--</div>-->
+                <!--</a>-->
+                <!--</td>-->
+                <!--</tr>-->
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                车牌号
+                            </span>
+                            <input name="plate_number" class="form-control" placeholder="请输入您的车牌号"
+                                   style="border-radius: 0;border: 0" value="{$user_car['plate_number']}">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a data-toggle="collapse" href="#collapse_car_type" aria-expanded="true"
+                           aria-controls="collapse_car_type" style="text-decoration: none;color:black">
+                            <div>
+                                &nbsp;车辆类型
+                                <span class="pull-right">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive"
+                                         style="width: 20px">
+                                </span>
+                            </div>
+                        </a>
+
+                        <div id="collapse_car_type" class="collapse" role="tablist" aria-labelledby="">
+                            <label class="btn btn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
+                                <input id="car_type_1" type="radio" class="pull-left" name="car_type" autocomplete="off" value="1">
+                                &nbsp;平板
+                            </label>
+                            <label class="btn btn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
+                                <input id="car_type_2" type="radio" class="pull-left" name="car_type" autocomplete="off" value="2">
+                                &nbsp;厢式
+                            </label>
+                            <label class="btn btn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
+                                <input id="car_type_3" type="radio" class="pull-left" name="car_type" autocomplete="off" value="3">
+                                &nbsp;高栏
+                            </label>
+                            <label class="btn btn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
+                                <input id="car_type_4" type="radio" class="pull-left" name="car_type" autocomplete="off" value="4">
+                                &nbsp;仓栅
+                            </label>
+                            <label class="btn btn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
+                                <input id="car_type_5" type="radio" class="pull-left" name="car_type" autocomplete="off" value="5">
+                                &nbsp;罐式
+                            </label>
+                            <label class="btn btn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
+                                <input id="car_type_6" type="radio" class="pull-left" name="car_type" autocomplete="off" value="6">
+                                &nbsp;自卸
+                            </label>
+                            <label class="btn btn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
+                                <input id="car_type_7" type="radio" class="pull-left" name="car_type" autocomplete="off" value="7">
+                                &nbsp;其他
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                核载吨数
+                            </span>
+                            <input name="carrying_capacity" class="form-control" placeholder="请输入车辆核载吨数"
+                                   style="border-radius: 0;border: 0" value="{$user_car['carrying_capacity']}">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                吨
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <!--<tr>-->
+                <!--<td>-->
+                <!--<a href="#" style="text-decoration: none;color:black">-->
+                <!--<div>-->
+                <!--&nbsp;上传验车照-->
+                <!--<span class="pull-right">-->
+                <!--<img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">-->
+                <!--</span>-->
+                <!--</div>-->
+                <!--</a>-->
+                <!--</td>-->
+                <!--</tr>-->
+            </table>
+            <input type="submit" name="" id="" class="btn btn-group-justified " value="确&nbsp&nbsp&nbsp定"
+                   style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e">
+        </form>
+    </div>
+    <div id="driver_work_exp" class="tab-pane" style="">
+        <form id="form_driver_work_exp" name="form_driver_work_exp" class="" method="post"
+              action="{:U('PersonalCenter/driver_work_exp_do')}">
+            <table class="table table-responsive" style="border: 0">
+                <tr>
+                    <td>
+                        &nbsp;从业时间
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0;align-items: center;justify-content: center">
+                        <div class="col-xs-5">
+                            <input class="form-control" type="date" name="work_time_start"
+                                   style="border-radius: 0;border: 0" placeholder="开始时间" value="{$user_driver['work_time_start']}">
+                        </div>
+                        <div class="col-xs-2" style="margin-top: 6px">
+                            <span>至</span>
+                        </div>
+                        <div class="col-xs-5">
+                            <input class="form-control" type="date" name="work_time_end"
+                                   style="border-radius: 0;border: 0" placeholder="结束时间" value="{$user_driver['work_time_end']}">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                车辆购买时间
+                            </span>
+                            <input type="date" name="buy_car_time" class="form-control" placeholder="请输入购车时间"
+                                   style="border-radius: 0;border: 0" value="{$user_driver['buy_car_time']}">
+                        </div>
+                    </td>
+                </tr>
+                <tr style="border:none">
+                    <td style="">
+                        <div class="form-group" style="">
+                            <label>
+                                行业描述
+                            </label>
+                            <textarea name="work_description" class="form-control">{$user_driver['work_description']}</textarea>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <input type="submit" name="" class="btn btn-group-justified " value="确&nbsp&nbsp&nbsp定"
+                   style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e">
+        </form>
+    </div>
+</div>
+</body>
+<!--导航功能-->
+<script>
+    $('#myTab a').click(function (e) {
+        $(this).siblings('a').removeClass('weui_bar_item_on');
+        $(this).addClass('weui_bar_item_on');
+        $(this).tab('show');
+    })
+</script>
+<script>
+    $(function(){
+        if ("{$user_driver['sex']}" == "1") {
+            $("#rdo1").attr("checked", "checked");
+        } else if ("{$user_driver['sex']}" == "2") {
+            $("#rdo2").attr("checked", "checked");
+        } else if ("{$user_driver['sex']}" == "0") {
+            $("#rdo0").attr("checked", "checked");
+        } else {
+            // 用户没选，什么都不做
+        }
+
+        if ("{$user_car['type_id']}" == "1") {
+            $("#car_type_1").attr("checked", "checked");
+        } else if ("{$user_car['type_id']}" == "2") {
+            $("#car_type_2").attr("checked", "checked");
+        } else if ("{$user_car['type_id']}" == "3") {
+            $("#car_type_3").attr("checked", "checked");
+        } else if ("{$user_car['type_id']}" == "4") {
+            $("#car_type_4").attr("checked", "checked");
+        } else if ("{$user_car['type_id']}" == "5") {
+            $("#car_type_5").attr("checked", "checked");
+        } else if ("{$user_car['type_id']}" == "6") {
+            $("#car_type_6").attr("checked", "checked");
+        } else if ("{$user_car['type_id']}" == "7") {
+            $("#car_type_7").attr("checked", "checked");
+        } else {
+            // 用户没选，什么都不做
+        }
+    })
+</script>
+</html>

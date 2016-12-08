@@ -297,7 +297,6 @@
 <!--areaSearch跳转回来时读取cookie信息-->
 <script>
     $(function () {
-//        console.log(cookie());
         // 组装已有数据
         // 地址
         $('#reside_area').html(cookie('area_start'));
@@ -307,8 +306,10 @@
             $("#rdo1").attr("checked", "checked");
         } else if ("{$user_owner['sex']}" == "2") {
             $("#rdo2").attr("checked", "checked");
-        } else {
+        } else if ("{$user_owner['sex']}" == "0") {
             $("#rdo0").attr("checked", "checked");
+        } else {
+            // 用户没选，什么都不做
         }
         // 基本信息
         if (cookie('form_basic_data')) {
@@ -335,6 +336,7 @@
 
     function get_area() {
         cookie('start_or_end', 'start');
+        alert(window.location.href);
         cookie('last_url', window.location.href);
         cookie('form_basic_data', JSON.stringify($("#form_owner_basic_data").serializeArray()));
         cookie('form_exp_data', JSON.stringify($("#form_owner_work_exp").serializeArray()));

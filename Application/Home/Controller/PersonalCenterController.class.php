@@ -16,10 +16,12 @@ class PersonalCenterController extends ComController
 {
     public function index()
     {
-        $user_info = session('user_info');
-        var_dump($user_info);
+        $this->redirect('PersonalCenter/personal_center');
     }
 
+    /**
+     * 个人资料主页
+     */
     public function personal_center()
     {
         // 一级页面，保存cookie
@@ -33,6 +35,12 @@ class PersonalCenterController extends ComController
         $this->display();
     }
 
+    /**
+     * 货主用户界面
+     * 如果uid为当前用户uid, 则界面是编辑界面，后退会跳回个人中心
+     * 如果uid为其他用户uid, 则界面是展示界面，记得在进入本页面前记录cookie，以便能回退至原界面
+     * @param null $uid 用户id
+     */
     public function owner_data($uid = null)
     {
         if ($uid) {
@@ -75,6 +83,9 @@ class PersonalCenterController extends ComController
         }
     }
 
+    /**
+     * 处理货主基本信息表单提交
+     */
     public function owner_data_do()
     {
         //读取post数据
@@ -87,21 +98,22 @@ class PersonalCenterController extends ComController
         $user['birthday'] = $subInfo['birthday'];
         $company['name'] = $subInfo['supply_company'];
         $user['company_id'] = $this->save_company($company);
-        // TODO district回调还没做
-        $user['district_id'] = 0;
+        $user['district_id'] = $this->get_area_id($subInfo['reside_area']);
         $user['area_detail'] = $subInfo['area_detail'];
         $user['invite_id'] = $subInfo['invite_id'];
         //插入
         $res = M('User')->save($user);
-        if ($res||$res===0) {
+        if ($res || $res === 0) {
             $this->success("修改成功", "personal_center", 3);
-        }else {
+        } else {
             //todo log here
             $this->display("Public:500");
         }
-//        echo $subInfo['birthday'];
     }
 
+    /**
+     * 处理货主从业经验表单提交
+     */
     public function owner_work_exp_do()
     {
         //读取post数据
@@ -117,7 +129,7 @@ class PersonalCenterController extends ComController
         $user['company_id'] = $this->save_company($company);
         //插入
         $res = M('User')->save($user);
-        if ($res||$res===0) {
+        if ($res || $res === 0) {
             $this->success("修改成功", "personal_center", 3);
         } else {
             //todo log here
@@ -153,9 +165,47 @@ class PersonalCenterController extends ComController
         }
     }
 
-    public function driver_data()
+    /**
+     * 司机用户界面
+     * 如果uid为当前用户uid, 则界面是编辑界面，后退会跳回个人中心
+     * 如果uid为其他用户uid, 则界面是展示界面，记得在进入本页面前记录cookie，以便能回退至原界面
+     * @param null $uid 用户id
+     */
+    public function driver_data($uid = null)
     {
-        $this->display();
+        if ($uid) {
+            // 如果路径里有uid
+            $temp['uid'] = $uid;
+
+            $user_driver = M('User')->where($temp)->find();
+            if ($user_driver) {
+                $this->assign('user_driver', $user_driver);
+                // 如果有车辆信息，载入之
+                if ($user_driver['car_id']) {
+                    $user_car = M('car_info')->where(array("id" => $user_driver['car_id']))->find();
+                    $this->assign('user_car', $user_car);
+                }
+                // 如果id是本人id，进入设置页面，否则进入展示页面
+                if ($uid == session('user_info')['uid']) {
+                    $this->display('driver_data_self');
+                } else {
+                    // 确保来源地，能够退回
+                    $this->assign('last_url', cookie('last_url'));
+                    $this->display();
+                }
+            } elseif ($user_driver === false) {
+                // TODO false说明查询出错，记录日志
+                $this->display("Public:500");
+
+            } else {
+                // TODO 查询为空，用户查到了不该到的地方，记日志
+                $this->display("Public:404");
+            }
+        } else {
+            // uid没有就跳转到自己的页面，为了可分享，路径必须含有uid
+            $user_info = session('user_info');
+            $this->redirect('PersonalCenter/driver_data', array('uid' => $user_info['uid']), 0, "");
+        }
     }
 
     public function driver_data_do()
@@ -164,19 +214,20 @@ class PersonalCenterController extends ComController
         $subInfo = I('post.', '', 'strip_tags,trim');
         $user['uid'] = session('user_info')['uid'];
         $user['user_name'] = $subInfo['nickname'];
-//        $user['phone_number'] = $subInfo['phone_number'];
+        $user['phone_number'] = $subInfo['phone_number'];
         // TODO 改变电话需要验证
         $user['sex'] = $subInfo['sex'];
         $user['id_card'] = $subInfo['id_card'];
         $user['drive_card'] = $subInfo['drive_card'];
         $car['plate_number'] = $subInfo['plate_number'];
-        $car['type_id'] = $subInfo['type_id'];
+        $car['type_id'] = $subInfo['car_type'];
+        $user['car_type_id'] = $subInfo['car_type'];
         $car['carrying_capacity'] = $subInfo['carrying_capacity'];
         $user['car_id'] = $this->save_car($car);
-//        $user['invite_id'] = $subInfo['invite_id'];
+        $user['invite_id'] = $subInfo['invite_id'];
         //插入
         $res = M('User')->save($user);
-        if ($res||$res===0) {
+        if ($res || $res === 0) {
             $this->success("修改成功", "personal_center", 3);
         } else {
             //todo log here
@@ -195,7 +246,7 @@ class PersonalCenterController extends ComController
         $user['work_description'] = $subInfo['work_description'];
         //插入
         $res = M('User')->save($user);
-        if ($res||$res===0) {
+        if ($res || $res === 0) {
             $this->success("修改成功", "personal_center", 3);
         } else {
             //todo log here
