@@ -21,7 +21,7 @@ class OwnerPublishController extends ComController
         $this->assign('coalGranularity',$coalGranularity);
 //        dump($_COOKIE);
         $curl = CONTROLLER_NAME.'/'.ACTION_NAME;
-        cookie('lasturl',$curl);
+        cookie('last_url',$curl);
         $this->assign('curl',$curl);
         $this->display();
     }

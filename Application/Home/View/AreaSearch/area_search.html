@@ -682,7 +682,7 @@
 //            console.log(decodeURI(cookie('lastarea')));
 //            console.log(cookie());
 //            return;
-            $(this).attr('href',cookie('lasturl'));
+            $(this).attr('href',cookie('last_url'));
         }
     });
     //实时搜索选择
@@ -701,9 +701,9 @@
             }else if(cookie('start_or_end') == 'end'){
                 cookie('area_end',temp_area);
             }
-//        console.log(cookie('lasturl'));
+//        console.log(cookie('last_url'));
 //            console.log(cookie());return;
-            $(this).attr('href',cookie('lasturl'));
+            $(this).attr('href',cookie('last_url'));
         }
     });
     //历史地区选择
@@ -722,7 +722,7 @@
             }else if(cookie('start_or_end') == 'end'){
                 cookie('area_end',temp_area);
             }
-            $(this).attr('href',cookie('lasturl'));
+            $(this).attr('href',cookie('last_url'));
         }
     });
 </script>
