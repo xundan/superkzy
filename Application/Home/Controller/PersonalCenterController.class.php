@@ -70,11 +70,11 @@ class PersonalCenterController extends ComController
                 }
             } elseif ($user_owner === false) {
                 // TODO false说明查询出错，记录日志
-                $this->display("Public:500");
+                $this->display("Common:500");
 
             } else {
                 // TODO 查询为空，用户查到了不该到的地方，记日志
-                $this->display("Public:404");
+                $this->display("Common:404");
             }
         } else {
             // uid没有就跳转到自己的页面，为了可分享，路径必须含有uid
@@ -107,7 +107,7 @@ class PersonalCenterController extends ComController
             $this->success("修改成功", "personal_center", 3);
         } else {
             //todo log here
-            $this->display("Public:500");
+            $this->display("Common:500");
         }
     }
 
@@ -133,7 +133,7 @@ class PersonalCenterController extends ComController
             $this->success("修改成功", "personal_center", 3);
         } else {
             //todo log here
-            $this->display("Public:500");
+            $this->display("Common:500");
         }
     }
 
@@ -195,11 +195,11 @@ class PersonalCenterController extends ComController
                 }
             } elseif ($user_driver === false) {
                 // TODO false说明查询出错，记录日志
-                $this->display("Public:500");
+                $this->display("Common:500");
 
             } else {
                 // TODO 查询为空，用户查到了不该到的地方，记日志
-                $this->display("Public:404");
+                $this->display("Common:404");
             }
         } else {
             // uid没有就跳转到自己的页面，为了可分享，路径必须含有uid
@@ -231,7 +231,7 @@ class PersonalCenterController extends ComController
             $this->success("修改成功", "personal_center", 3);
         } else {
             //todo log here
-            $this->display("Public:500");
+            $this->display("Common:500");
         }
     }
 
@@ -250,7 +250,7 @@ class PersonalCenterController extends ComController
             $this->success("修改成功", "personal_center", 3);
         } else {
             //todo log here
-            $this->display("Public:500");
+            $this->display("Common:500");
         }
     }
 
