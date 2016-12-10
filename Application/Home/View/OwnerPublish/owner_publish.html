@@ -630,7 +630,7 @@
 //        console.log(cookie('area_end'));
 //        console.log(cookie('trait'));
 //        console.log(cookie('buy_method'));
-        if(cookie('tag') == '0'){
+        if(cookie('tag') === '0'){
             //发布供货
             //避免为空或者false
             //标签选中
@@ -696,53 +696,7 @@
             if(cookie('content')){
                 $('textarea[name=sell_content]').val(cookie('content'));
             }
-        }else if(cookie('tag') == 3){
-            //发布求车
-            //发货地址
-            $('#need_area_start').html(cookie('area_start'));
-            $('input[name=need_area_start]').val(cookie('area_start'));
-            //发货详细地址
-            if(cookie('area_start_detail')){
-                $('input[name=need_area_start_detail]').val(cookie('area_start_detail'));
-            }
-            //收货地址
-            $('#need_area_end').html(cookie('area_end'));
-            $('input[name=need_area_end]').val(cookie('area_end'));
-            //收货详细地址
-            if(cookie('area_end_detail')){
-                $('input[name=need_area_end_detail]').val(cookie('area_end_detail'));
-            }
-            //发煤量
-            if(cookie('quantity')){
-                $('input[name=need_quantity]').val(cookie('quantity'));
-            }
-            //粒度
-            if(cookie('granularity')){
-                $('input[name=option3_coal_granularity]')[cookie('granularity')-1].checked = true;
-            }
-            //运费
-            if(cookie('price')){
-                $('input[name=need_price]').val(cookie('price'));
-            }
-            //装车时间
-            if(cookie('loading_time')){
-                $('input[name=need_loading_time]').val(cookie('loading_time'));
-            }
-            //装车费
-            if(cookie('loading_cost')){
-                $('input[name=need_loading_cost]').val(cookie('loading_cost'));
-            }
-            //卸车费
-            if(cookie('unloading_cost')){
-                $('input[name=need_unloading_cost]').val(cookie('unloading_cost'));
-            }
-            //联系电话
-//            $('input[name=need_phone]').val(cookie('phone'));
-            //详细描述
-            if(cookie('content')){
-                $('textarea[name=need_content]').val(cookie('content'));
-            }
-        }else if(cookie('tag') == 2) {
+        }else if(cookie('tag') == 2){
             //发布求购
             var a = $('a[name=coal_buy]');
             a.siblings('a').removeClass('weui_bar_item_on');
@@ -787,6 +741,54 @@
             //详细描述
             if(cookie('content')){
                 $('textarea[name=buy_content]').val(cookie('content'));
+            }
+        }else{
+            //if(cookie('tag') == 3)
+            //默认或为3都跳转到这
+            //发布求车
+            //发货地址
+            $('#need_area_start').html(cookie('area_start'));
+            $('input[name=need_area_start]').val(cookie('area_start'));
+            //发货详细地址
+            if (cookie('area_start_detail')) {
+                $('input[name=need_area_start_detail]').val(cookie('area_start_detail'));
+            }
+            //收货地址
+            $('#need_area_end').html(cookie('area_end'));
+            $('input[name=need_area_end]').val(cookie('area_end'));
+            //收货详细地址
+            if (cookie('area_end_detail')) {
+                $('input[name=need_area_end_detail]').val(cookie('area_end_detail'));
+            }
+            //发煤量
+            if (cookie('quantity')) {
+                $('input[name=need_quantity]').val(cookie('quantity'));
+            }
+            //粒度
+            if (cookie('granularity')) {
+                $('input[name=option3_coal_granularity]')[cookie('granularity') - 1].checked = true;
+            }
+            //运费
+            if (cookie('price')) {
+                $('input[name=need_price]').val(cookie('price'));
+            }
+            //装车时间
+            if (cookie('loading_time')) {
+                $('input[name=need_loading_time]').val(cookie('loading_time'));
+            }
+            //装车费
+            if (cookie('loading_cost')) {
+                $('input[name=need_loading_cost]').val(cookie('loading_cost'));
+            }
+            //卸车费
+            if (cookie('unloading_cost')) {
+                $('input[name=need_unloading_cost]').val(cookie('unloading_cost'));
+            }
+            //联系电话
+//            $('input[name=need_phone]').val(cookie('phone'));
+            //详细描述
+            if (cookie('content')) {
+                $('textarea[name=need_content]').val(cookie('content'));
             }
         }
     })

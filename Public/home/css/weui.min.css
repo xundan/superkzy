@@ -1175,9 +1175,10 @@ button.weui_btn_plain_default, input.weui_btn_plain_default {
     overflow: hidden
 }
 
-.weui_panel:first-child {
-    margin-top: 0
-}
+/*important for clone*/
+/*.weui_panel:first-child {*/
+    /*margin-top: 0*/
+/*}*/
 
 .weui_panel:before {
     top: 0;

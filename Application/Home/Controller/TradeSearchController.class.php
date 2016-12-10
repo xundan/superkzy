@@ -14,129 +14,145 @@ class TradeSearchController extends ComController
 {
     private $publicStr='';
     public function trade_search(){
-//        $chaxun = $this->search_method();
-//        $a = I('post.asd','','trim');
-//        echo $a;
-//        $str = '区';
-//        $where['detail_area_start'] = array('like','%'.$str.'%');
-//        $condition['detail_area_start'] = $chaxun;
-//        $res = M('messages')->where($where)->select();
-//        $temp = array('column_name','column_type');
-//        $queryString = $this->search_method();
-//        $publicStr = $this->search_method();
-//        search_method();
-//        $column = M('messages')->getDbFields();
-//        $publicStr[0] = 'a';
-//        $publicStr[1] = 'b';
-//        $publicStr[2] = 'c';
-//        $publicStr[3] = 'dd';
-//        foreach ($publicStr as $value) {
-//            foreach ($column as $item) {
-//                $condition[$item] = $value;
-//            }
-//        }
 
-//        dump($condition);
-//        $res = M('messages')->getBytitle('su_orders',2);
-//        $lastSql = M()->getLastSql();
-//        dump($lastSql);
-////        dump($_COOKIE);
-//        $str = "select * from ck_messages where origin = 0";
-//        $res = M()->query($str);
-//        dump($res);
-//        $lastSql = M()->getLastSql();
-//        dump($lastSql);
 //        如果没有刷新或筛选条件为空则输出对应标签全部信息
+
+        //将当前的页面存入cookie中last_url字段，方便跳回
+
+        //test search
+//        $a['aaa'] = 9999;
+//        $b = false;
+//        $c['name'] = '';
+//        if($c['name']){
+//            dump(1);
+//        }else{
+//            dump(2);
+//        }
+//        $lists = M('messages')->where($a)->order('record_time desc')->select();
+////        dump($lists);
+//        if(empty($lists)){
+//            dump(3);
+////            dump($lists);
+////            $this->assign('list',$lists);
+//        }else{
+//            dump(4);
+//        }
+//
+//        $page = '1';
+//        dump($page);
+//        $d = (int)$page;
+//        dump($d);
+//        $this->display();
+//        exit;
+//
 
         //查询数组
         $where=[];
-
-        //获取标签号判断是求购或供应
+        //查询起始位置
+        $beginStr = 0;
+        //获取所有post进来的数据
         $subInfo = I('post.','','trim,strip_tags');
 //        dump($subInfo);
-//        dump(cookie('trade_search_filter_kind'));
+        //获取标签号判断是求购或供应来拼接查询字段
         if(isset($subInfo['select_category'])){
-//            dump($subInfo);
-            if($subInfo['select_category'] == 2){
+            //如果标签有提交不为空
+            if ($subInfo['select_category'] == 2) {
+                //求购标签
                 $where['category'] = 2;
-                //筛选条件构成
-                if($subInfo['filter_kind'] || $subInfo['filter_granularity'] || $subInfo['filter_heat_min'] || $subInfo['filter_heat_max']){
-                    //去产品表里找符合条件的产品id
-//                    dump(2);
-                    if($subInfo['filter_kind']){
-                        $pro['kind_id'] = array('in',$subInfo['filter_kind']);
-                    }
-                    if($subInfo['filter_granularity']){
-                        $pro['granularity_id'] = array('in',$subInfo['filter_granularity']);
-                    }
-                    if($subInfo['filter_heat_min'] && $subInfo['filter_heat_max']){
-                        $pro['heat_value_min'] = array('egt',$subInfo['filter_heat_min']);
-                        $pro['heat_value_max'] = array('elt',$subInfo['filter_heat_max']);
-                    }elseif($subInfo['filter_heat_min']){
-                        $pro['heat_value_min'] = array('egt',$subInfo['filter_heat_min']);
-                    }elseif($subInfo['filter_heat_min']){
-                        $pro['heat_value_max'] = array('elt',$subInfo['filter_heat_max']);
-                    }
-                    $proResult = M('product')->where($pro)->field('id')->select();
-                    if($proResult){
-//                        dump($proResult);
-                        foreach($proResult as $item){
-                            $proID[] = $item['id'];
-                        }
-                        $where['product_id'] = array('in',$proID);
-                    }else{
-                        //查询失败
-                    }
-                }
-                //搜索框查询条件构成
-                if($subInfo['search_input']){
-                    $query = $this->search_method($subInfo['search_input']);
-//                    dump($query);
-                    $where['content_all'] = $query;
-//                    dump($where);
-                }
-
-                $lists = M('messages')->where($where)->select();
-//                $test = 353;
-//                $map['id'] = array('gt',$test);
-//                $lists = M('messages')->where($map)->field('id')->select();
-//                dump($lists);
-                if($lists){
-                    $this->assign('list',$lists);
-                }
-            }elseif($subInfo['select_category'] == 0){
+            } elseif ($subInfo['select_category'] == 0) {
+                //供应标签
                 $where['category'] = 0;
+            } else {
+                //其他值理论上没有，若有也置为2即求购
+                $where['category'] = 2;
+            }
+        }else{
+            //若select_category没有设置即为初始进入或刷新，标签则为求购
+            $where['category'] = 2;
+        }
+        //筛选条件拼接查询字段
+        if($subInfo['filter_kind'] || $subInfo['filter_granularity'] || $subInfo['filter_heat_min'] || $subInfo['filter_heat_max']){
+            //如果用户进行了筛选条件提交
+            //去产品表里找符合条件的产品id
+            if($subInfo['filter_kind']){
+                $product['kind_id'] = array('in',$subInfo['filter_kind']);
+            }else{
+            }
+            if($subInfo['filter_granularity']){
+                $product['granularity_id'] = array('in',$subInfo['filter_granularity']);
+            }else{
+            }
+            if($subInfo['filter_heat_min']){
+                $product['heat_value_min'] = array('egt',$subInfo['filter_heat_min']);
+            }else{
+            }
+            if($subInfo['filter_heat_max']){
+                $product['heat_value_max'] = array('elt',$subInfo['filter_heat_max']);
+            }else{
+            }
+            $productResult = M('product')->where($product)->field('id')->select();
+            if($productResult){
+                foreach($productResult as $item){
+                    $productId[] = $item['id'];
+                }
+                $where['product_id'] = array('in',$productId);
+            }elseif($productResult === false){
+                //数据库出错
+                $this->display('Common:505');
+            }else{
+                //查询结果为空
+                //TODO 提示为空并显示更多信息
+
             }
         }
-
-//        if($subInfo['search_input']){
-//            dump(4);
-//            dump($subInfo['search_input']);
-//        }
-//        else{
-//        }
-
-//        dump($where);
-//        $a = 0;
-        $b = 'cao';
-//        $a['id'] = array('in',$b);
-        $a['name'] = array(array('like','%'.$b.'%'),array('notlike','%区'),'and');
-//        dump($a);
-        $test = $subInfo['search_input'];
-        $test = explode(' ',$test);
-        foreach($test as $item){
-            $temp[] = array('like','%'.$item.'%');
+        //搜索框查询条件拼接
+        if($subInfo['search_input']){
+            //若搜索框输入有意义值不为空、null、false
+            $query = $this->search_method($subInfo['search_input']);
+            $where['content_all'] = $query;
         }
-//        dump($temp);
+        //滚动翻页
+        //判断当前页面
+        $page = '';
+        if($subInfo['page']){
+            $page = (int)$subInfo['page'];
+        }else{
+            $page = 1;
+        }
+        //$countRow 每次展示和刷新的条数，默认为10
+        $countRow = 5;
+        $beginStr=($page-1)*$countRow;
+        //查询数据库
+//        dump($subInfo);
+//        dump($page);
+//        dump($$subInfo['page']);
+//        dump($where);
+//        dump($beginStr);
+        $lists = M('messages')->where($where)->order('record_time desc')->limit($beginStr,5)->select();
+        if($lists){
+            //能取到数据,则将页数+1返回给前台
+            $next = $page+1;
+            $this->assign('list',$lists);
+            $this->assign('next_page',$next);
+        }elseif(empty($lists)){
+            //数据内容为空
+            $next = $page;
 
-        $tt['name'] =$temp;
-
-//        dump($tt);
-
-
-//        $c = M('messages')->where($b)->select();
-//        dump($c);
-
+        }elseif($lists === false){
+            //数据库出错
+            $this->display('Common:505');
+            exit;
+        }
+        if($subInfo['isAjax']){
+            //判断是否是ajax刷新请求
+            $returnT=array();
+            $returnT['next_page']=$next;
+            $returnT['data']=$lists;
+            $returnT['msg']='success';
+            $returnT['test']=$subInfo;
+            echo json_encode($returnT);
+            exit;
+        }
         $this->display();
     }
 
@@ -150,50 +166,15 @@ class TradeSearchController extends ComController
         $this->display();
     }
 
-    public function ajax_filter(){
-        $zzz = $_POST['heat_min'];
-        $this->publicStr = $zzz;
-//        return $zzz;
-    }
-
-
 //对字符串进行处理
     public function search_method($queryString){
         $tempStr = $this->arrange_input($queryString);
-        $tempStr = explode(" ",$tempStr);
-        foreach($tempStr as $item){
-            $query[] = array('like','%'.$item.'%');
+        $tempStr = explode(" ", $tempStr);
+        foreach ($tempStr as $item) {
+            $query[] = array('like', '%' . $item . '%');
         }
         return $query;
-
-//        dump($tempStr);
-        $tempStrSerialize = serialize($tempStr);
-//        dump($tempStrSerialize);
-        $str = 'asdasd';
-        $ta['name'] = 'wa';
-        $ta['token'] = 'bs';
-        $_SESSION['user_info'] = $ta;
-        cookie($_SESSION['user_info'],$tempStr,3600*24*365);
-        cookie('a',$tempStr,3600*24*365,'ck_');
-        cookie($str,$tempStr,3600*24*365);
-//        cookie($str,null);
-        $_COOKIE['d'] = unserialize($_COOKIE['d']);
-        cookie(null);
-//        dump($_COOKIE);
-        $queryString = "";
-        foreach($tempStr as $item){
-            $queryString .= " and like '".$item." '";
-        }
-        dump($queryString);
-        $publicStr = $tempStr;
-        $this->redirect('trade_search');
-//        return $tempStr;
-//        return $queryString;
     }
-//    查询数组
-//    public function query_array(){
-//        foreach
-//    }
 
 
 }
