@@ -19,6 +19,10 @@ class DriverOrderController extends ComController
         $this->display();
     }
 
+    /**
+     * 缓存数据
+     * @param null $id
+     */
     public function driver_order_detail($id = null)
     {
         vendor("jssdk.signPackage");
@@ -31,29 +35,14 @@ class DriverOrderController extends ComController
             $message = M('Messages')->where($temp)->find();
 
             if ($message) {
-                // 判断用户
                 $this->assign('message', $message);
-                if ($message['publisher_rid']) {
-                    $user = M('User')->where(array("uid" => $message['publisher_rid']))->find();
-                    $this->assign('user', $user);
-                } elseif($message['sender']) {
-                    // 用户来自微信，展示一个静态页面+广告，显示手机号码
-                    $this->display("user_from_wx");
-                }
+                // 判断用户
+                $this->assign_user($message);
                 // 判断地址
-                if ($message['area_start']) {
-                    $area_start = M('Districts')->where(array("id" => $message['area_start']))->find();
-                    $this->assign('area_start', $area_start);
-                }
-                if ($message['area_end']) {
-                    $area_end = M('Districts')->where(array("id" => $message['area_end']))->find();
-                    $this->assign('area_end', $area_end);
-                }
-                $this->display();
+                $this->assign_area($message);
             } elseif ($message === false) {
                 // TODO false说明查询出错，记录日志
                 $this->display("Common:500");
-
             } else {
                 // TODO 查询为空，用户查到了不该到的地方，记日志
                 $this->display("Common:404");
@@ -62,7 +51,39 @@ class DriverOrderController extends ComController
             // TODO 查询为空，用户查到了不该到的地方，记日志
             $this->display("Common:404");
         }
+        $this->display();
 
+    }
+
+    /**
+     * 判断并缓存用户数据
+     * @param $message
+     */
+    private function assign_user($message)
+    {
+        if ($message['publisher_rid']) {
+            $user = M('User')->where(array("uid" => $message['publisher_rid']))->find();
+            $this->assign('user', $user);
+        } elseif ($message['sender']) {
+            // 用户来自微信，展示一个静态页面+广告，显示手机号码
+            $this->display("user_from_wx");
+        }
+    }
+
+    /**
+     * 判断并缓存地址数据
+     * @param $message
+     */
+    private function assign_area($message)
+    {
+        if ($message['area_start']) {
+            $area_start = M('Districts')->where(array("id" => $message['area_start']))->find();
+            $this->assign('area_start', $area_start);
+        }
+        if ($message['area_end']) {
+            $area_end = M('Districts')->where(array("id" => $message['area_end']))->find();
+            $this->assign('area_end', $area_end);
+        }
     }
 
 }
