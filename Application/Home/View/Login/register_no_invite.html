@@ -9,10 +9,6 @@
     <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="weui.min.css">
-    <script type="text/javascript" src="jquery-2.2.4.min.js"></script>
-    <script type="text/javascript" src="bootstrap.min.js"></script>
 </head>
 <body style="background-color: #04bfc6;">
 <include file="Common:common"/>
@@ -46,9 +42,7 @@
                 <a href="#" style="color:white">阅读并同意服务条款</a>
             </label>
         </div>
-        <!--<label class="btn btn-lg btn-group-justified" style="color:#04bfc6">-->
         <input type="button" name="submit" id="submit" class="btn btn-lg btn-default btn-group-justified " value="立 即 注 册"  style="font-size: 20px;color:#04bfc6;">
-        <!--</label>-->
     </form>
 </div>
 </body>
@@ -57,15 +51,8 @@
     $(function(){
         //验证码按钮功能
         $('#send_code').click(function () {
-//            var count = 60;
-//            var btn = $(this);
-//            btn.data('loading-text', count+'秒后重新发送');
-//            btn.button('loading');
-//            setTimeout(function () {
-//                btn.button('complete');count--;
-//            }, 1000);
             var phone_number = $("input[name=phone_number]").val();
-            var time = 11;
+            var time = 60;
             var btn = $(this);
             var timer;
             url="{:U('Home/Login/randomCodeReg')}";
@@ -107,28 +94,12 @@
                     type: "get",
                     url:url,
                     success: function (data){
-                        //alert(data);
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         alert("出现错误！！！");
                     }
                 });
             }
-//            timeCountDown();
-//            var timer = setInterval(timeCountDown,1000);
-
-//            var btn = $(this);
-//            var time = 3;
-//            var i = setInterval(function(){
-//                if(time == 0){
-//                    btn.button('complete');
-//                    clearInterval(i);
-////                    return false;
-//                }
-//                btn.data('loading-text', time+'秒后再次发送');
-//                btn.button('loading');
-//                time--;
-//            },1000);
         });
 
         //是否接受服务条款
@@ -144,10 +115,6 @@
 
         //注册提交功能
         $('#submit').click(function(){
-//            if(!$('#service').prop("checked")){
-//                $('#submit').addClass('disabled');
-//            }
-//            else
             if($('input[name=code]').val()==""){
                 $('#code_input').addClass('has-error');
                 $('#code_input').children('p').show();
@@ -163,9 +130,6 @@
                 var phone_number = $('#phone_number').val();
                 var code = $('#code').val();
                 var invite_code = $('#invite_code').val();
-//                alert(phone_number);
-//                alert(code);return;
-                // alert(invitation_code);
                 url="__CONTROLLER__/register_do";
                 $.ajax({
                     type:"post",
@@ -175,9 +139,8 @@
                         if(data!=""){
                             var jsonObj=eval("("+data+")");
                             if(jsonObj.status==1){
-//                                $("#succ").show();
-                                alert('wahaha');
-
+//                                alert('wahaha');
+                                window.location.href="__CONTROLLER__/t5_upgrade_success";
                             }else{
                                 showToast(jsonObj.msg);
                             }
