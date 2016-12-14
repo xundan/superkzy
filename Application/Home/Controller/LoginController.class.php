@@ -26,7 +26,7 @@ class LoginController extends Controller
 
     /**
      * 没有随便逛逛选项
-     * @param int $phone 如果该值为1，升到t3后会直接在升t5
+     * @param int $phone 可以不写，如果该值为1，升到t3后会直接在升t5
      */
     public function upgrade_t2_to_t3($phone = 0)
     {
@@ -154,7 +154,7 @@ class LoginController extends Controller
     {
         $phone = I("post.phone_number");
         $randStr = str_shuffle('1234567890');
-        $str = substr($randStr, 0, 6);
+        $str = substr($randStr, 0, 4);
         session(md5($phone), $str);
         vendor("test");
         sendCode($phone, "'" . $str . "'");

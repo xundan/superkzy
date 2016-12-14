@@ -48,52 +48,78 @@
 </body>
 </html>
 <script>
-    $(function(){
+    $(function () {
+
+        // 前置验证，获取验证码按钮和注册按钮都用到 check_code如果是true就验证验证码，否则就不验证
+        function pre_check(check_code) {
+            if (check_code && ($('input[name=code]').val() == "")) {
+                $('#code_input').addClass('has-error');
+                $('#code_input').children('p').show();
+                return false;
+            }
+            else if ($('input[name=phone_number]').val() == "") {
+                $('#phone_input').addClass('has-error');
+                $('#phone_input').children('p').show();
+                return false;
+            }
+            else if ($('input[name=phone_number]').val().length != 11) {
+                showToast("请确认手机号位数");
+                return false;
+            } else {
+                return true;
+            }
+        }
+
         //验证码按钮功能
         $('#send_code').click(function () {
-            var phone_number = $("input[name=phone_number]").val();
-            var time = 60;
-            var btn = $(this);
-            var timer;
-            url="{:U('Home/Login/randomCodeReg')}";
-            $.ajax({
-                type: "post",
-                data:{phone_number:phone_number},
-                url:url,
-                success:function(data){
-                    setTimeout(clearSession, 1000*60);
-                    timeCountDown();
-                    timer = setInterval(timeCountDown,1000);
-                },
-                error: function(XMLHttpRequest, textStatus, errorThrown){
-                    alert("出现错误！！！");
-                }
-            });
-            function timeCountDown(){
-                if(time == 0){
-                    btn.button('complete');
-                    btn.addClass('btn-warning');
-                    clearInterval(timer);
-                    return false;
-                }
-                if(time < 10){
-                    btn.data('loading-text', '0'+time + '秒后再次发送');
-                    btn.button('loading');
-                    time--;
-                }
-                else{
-                    btn.data('loading-text', time + '秒后再次发送');
-                    btn.button('loading');
-                    time--;
+            if (pre_check(false)) {
+                clearSession();
+                var phone_number = $("input[name=phone_number]").val();
+                var time = 60;
+                var btn = $(this);
+                var timer;
+                url = "{:U('Home/Login/randomCodeReg')}";
+                $.ajax({
+                    type: "post",
+                    data: {phone_number: phone_number},
+                    url: url,
+                    success: function (data) {
+//                    setTimeout(clearSession, 1000*60);
+                        timeCountDown();
+                        timer = setInterval(timeCountDown, 1000);
+                    },
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        alert("出现错误！！！");
+                    }
+                });
+                function timeCountDown() {
+                    if (time == 0) {
+                        btn.button('complete');
+                        btn.addClass('btn-warning');
+                        clearInterval(timer);
+                        return false;
+                    }
+                    if (time < 10) {
+                        btn.data('loading-text', '0' + time + '秒后再次发送');
+                        btn.button('loading');
+                        time--;
+                    }
+                    else {
+                        btn.data('loading-text', time + '秒后再次发送');
+                        btn.button('loading');
+                        time--;
+                    }
                 }
             }
+
             //清除验证码的session
-            function clearSession(){
-                url="{:U('Home/Login/clearSession')}";
+            function clearSession() {
+                url = "{:U('Home/Login/clearSession')}";
                 $.ajax({
                     type: "get",
-                    url:url,
-                    success: function (data){
+                    url: url,
+                    success: function (data) {
+                        //alert(data);
                     },
                     error: function (XMLHttpRequest, textStatus, errorThrown) {
                         alert("出现错误！！！");
@@ -103,53 +129,44 @@
         });
 
         //是否接受服务条款
-        $('#service').click(function (){
-            if($('#submit').attr("disabled") == "disabled"){
+        $('#service').click(function () {
+            if ($('#submit').attr("disabled") == "disabled") {
                 $('#submit').removeAttr("disabled");
 //                return false;
-            }else{
-                $('#submit').attr('disabled',true);
+            } else {
+                $('#submit').attr('disabled', true);
 //                return false;
             }
         });
 
         //注册提交功能
-        $('#submit').click(function(){
-            if($('input[name=code]').val()==""){
-                $('#code_input').addClass('has-error');
-                $('#code_input').children('p').show();
-            }
-            else if($('input[name=phone_number]').val()==""){
-                $('#phone_input').addClass('has-error');
-                $('#phone_input').children('p').show();
-            }
-            else if($('input[name=phone_number]').val().length!=11){
-                showToast("请确认手机号位数");
-            }
-            else{
+        $('#submit').click(function () {
+            if (pre_check(true)) {
                 var phone_number = $('#phone_number').val();
                 var code = $('#code').val();
                 var invite_code = $('#invite_code').val();
-                url="__CONTROLLER__/register_do";
+                url = "__CONTROLLER__/register_do";
                 $.ajax({
-                    type:"post",
-                    url:url,
-                    data:{code:code,phone_number:phone_number,invite_code:invite_code},
-                    success:function(data){
-                        if(data!=""){
-                            var jsonObj=eval("("+data+")");
-                            if(jsonObj.status==1){
+                    type: "post",
+                    url: url,
+                    data: {code: code, phone_number: phone_number, invite_code: invite_code},
+                    success: function (data) {
+                        if (data != "") {
+                            var jsonObj = eval("(" + data + ")");
+                            if (jsonObj.status == 1) {
+//                                $("#succ").show();
 //                                alert('wahaha');
-                                window.location.href="__CONTROLLER__/t5_upgrade_success";
-                            }else{
+                                window.location.href = "__CONTROLLER__/t5_upgrade_success";
+
+                            } else {
                                 showToast(jsonObj.msg);
                             }
                         }
-                        else{
+                        else {
                             showToast('网络错误。');
                         }
                     },
-                    error:function(XMLHttpRequest,textStatus,errorThrown){
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
                         //alert("出现错误！！！");
                     }
                 });
