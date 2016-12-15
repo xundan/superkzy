@@ -9,7 +9,9 @@
 namespace Views\Model;
 
 
-class ChatRecordModel
+use Think\Model;
+
+class ChatRecordModel extends Model
 {
     protected $tableName = "chat_record";
 
