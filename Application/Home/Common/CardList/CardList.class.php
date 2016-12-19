@@ -10,7 +10,7 @@ namespace Home\Common\CardList;
 
 use Org\Util\ArrayList;
 
-class CardList extends ArrayList
+class CardList
 {
 
 }

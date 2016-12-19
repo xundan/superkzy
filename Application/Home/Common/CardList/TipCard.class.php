@@ -14,7 +14,6 @@ class TipCard extends Card
 
     protected $_tip = "";
 
-
     function __construct($tip)
     {
         $this->_tip = $tip;

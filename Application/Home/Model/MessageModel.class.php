@@ -16,11 +16,14 @@ class MessageModel extends Model
 
     protected $fields=array( //辅助模型识别字段，不会影响查询，会影响增改
         "id",
-        "user_id",
-        "msg_id",
-        "record_time",
+        "title",
+        "area_start",
+        "detail_area_start",
         "invalid_id",
         '_pk'=>"id",
     );
 
+    public function findWhere($where){
+        return $this;
+    }
 }
