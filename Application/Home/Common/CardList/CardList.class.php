@@ -12,5 +12,8 @@ use Org\Util\ArrayList;
 
 class CardList
 {
+    public function toJSON(){
+        return "";
+    }
 
 }
