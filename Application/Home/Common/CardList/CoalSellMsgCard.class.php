@@ -9,7 +9,7 @@
 namespace Home\Common\CardList;
 
 
-class SellCard extends MsgCard
+class CoalSellMsgCard extends MsgCard
 {
     function toLi()
     {

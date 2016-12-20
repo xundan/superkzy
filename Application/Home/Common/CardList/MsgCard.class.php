@@ -18,20 +18,7 @@ class MsgCard extends Card
         $this->_message = $message;
     }
 
-    /**
-     * 针对一个message数组，拼装并返回一个对应的MsgCard数组
-     * @param $messages
-     * @return array
-     */
-    function createMsgCardArray($messages)
-    {
-        $resultArray = array();
-        foreach ($messages as $message) {
-            $msgCard = new MsgCard($message);
-            array_push($resultArray, $msgCard);
-        }
-        return $resultArray;
-    }
+
 
     function getTitle()
     {
@@ -56,14 +43,9 @@ class MsgCard extends Card
             $li_str = "<li>" . $message['content'] . "</li>";
         } else {
             if ($message['category'] == 0) { // 供应
-                $li_str = "<li>" . $this->_message['content'] . "</li>";
-                $li_str = "";
             } elseif ($message['category'] == 1) { // 司机找活
-                $li_str = "<li>" . $this->_message['content'] . "</li>";
             } elseif ($this->_message['category'] == 2) { // 求购
-                $li_str = "";
             } elseif ($this->_message['category'] == 3) { // 找车
-                $li_str = "<li>" . $this->_message['content'] . "</li>";
             } else {
                 // todo log here.
             }

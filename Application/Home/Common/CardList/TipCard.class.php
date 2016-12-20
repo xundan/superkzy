@@ -21,11 +21,11 @@ class TipCard extends Card
 
     function getTitle()
     {
-        return $this->_tip;
+        return $this->_tip['title'];
     }
 
     function toLi()
     {
-        return "<li>".$this->_tip."</li>";
+        return "<li>".$this->_tip['content']."</li>";
     }
 }
