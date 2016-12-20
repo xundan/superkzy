@@ -14,6 +14,8 @@ use Org\Util\ArrayList;
 class WhereConditions
 {
     private $_whereConditions = null;
+    private $_page = 1;
+    private $_asc = "record_time desc";
 
     function __construct($whereCond = null)
     {
@@ -152,6 +154,44 @@ class WhereConditions
         unset($this->_whereConditions[$column]);
         return $result;
     }
+
+    /**
+     * @return int
+     */
+    public function getPage()
+    {
+        return $this->_page;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAsc()
+    {
+        return $this->_asc;
+    }
+
+    /**
+     * @param string $asc
+     */
+    public function setAsc($asc)
+    {
+        $this->_asc = $asc;
+    }
+
+    /**
+     * @param int $page
+     */
+    public function setPage($page)
+    {
+        $this->_page = $page;
+    }
+
+
+
+
+
+
 
 
 }
