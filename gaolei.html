@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>特定字符串删除</title>
+</head>
+<body style="font-family: 微软雅黑">
+<div id="text_input" style="text-align: center" align="center">
+    <div style="height: 40px"></div>
+    <label for="origin">源文本</label><textarea id="origin" name="origin" style="width: 100%; height: 400px"></textarea>
+    <br>
+
+    <p></p>
+    <label for="keyword">要删除的关键字，请用英文逗号隔开</label><textarea id="keyword" name="keyword"
+                                                           style="width: 100%; height: 50px"></textarea>
+    <br>
+
+    <p></p>
+
+    <div style="text-align: center" align="center">
+        <input type="button" value="替换" onclick="text_format()"
+               style="width: 200px; height: 30px;margin: auto;font-size: 1em">
+    </div>
+
+    <p></p>
+
+    <!--<div style="text-align: center" align="center">-->
+        <!--<input type="button" value="全选" onclick="text_copy()"-->
+               <!--style="width: 200px; height: 30px;margin: auto;font-size: 1em">-->
+    <!--</div>-->
+</div>
+<p> </p>
+<div id="text_show" style="width: 90%">
+</div>
+
+<script>
+
+    //\?,\s,\[[^\[\]]+\],☆,★,■,□,零点起价格调整,\d+日,\d+号,\d+月,\d+年,《,》
+    document.getElementById("keyword").value = "\\\?,\\s,\\\[[^\\\[\\\]]+\\\],☆,★,■,□,零点起价格调整,\\d+日,\\d+号,\\d+月,\\d+年,《,》,—————";
+
+    function text_format() {
+        var key_word = document.getElementById("keyword").value;
+        var origin = document.getElementById("origin").value;
+        var key_words = key_word.split(',');
+        var count = key_words.length;
+        for (var i = 0; i < count; i++) {
+            origin = origin.replace(eval("/" + key_words[i] + "/g"), '');
+//            console.log("[" + key_words[i] + "]->" + origin);
+        }
+        origin = origin.replace(eval("/【供应】/g"), '<br><br><b style="color:brown">【供应】</b>');
+        origin = origin.replace(eval("/【求购】/g"), '<br><br><b style="color:brown">【求购】</b>');
+        origin = origin.replace(eval("/【找车】/g"), '<br><br><b style="color:brown">【找车】</b>');
+        origin = origin.replace(eval("/【其它】/g"), '<br><br><b style="color:brown">【其它】</b>');
+        origin = origin.replace(eval("/(1[0-9]{10})/g"), '$1 ');
+//        console.log("[" + key_words[i] + "]->" + origin);
+        var show_div = document.getElementById("text_show");
+        show_div.innerHTML = origin;
+    }
+
+    function text_copy() {
+//        var reg = /\[[^\[\]]+\]/g; //删除所有［］
+//        var reg = /\s/g;
+//        var str = "123 4 56";
+//        str = str.replace(reg,"");
+//        console.log("[" + reg + "]->" + str);
+
+        // 全选文本
+    }
+
+</script>
+</body>
+</html>

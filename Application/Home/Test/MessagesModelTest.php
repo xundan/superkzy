@@ -1,0 +1,37 @@
+<?php
+
+/**
+ * Created by PhpStorm.
+ * User: CLEVO
+ * Date: 2016/12/21
+ * Time: 16:22
+ */
+class MessagesModelTest extends PHPUnit_Framework_TestCase
+{
+
+
+    static public function setupBeforeClass()
+    {
+        // 下面四行代码模拟出一个应用实例, 每一行都很关键, 需正确设置参数
+        $app = new \Think\PhpunitHelper();
+        $app->setMVC('kuaimei56.com','Home','Index');
+        $app->setTestConfig(['DB_NAME'=>'test_db', 'DB_HOST'=>'127.0.0.1',]); // 一定要设置一个测试用的数据库,避免测试过程破坏生产数据
+        $app->start();
+    }
+
+    /**
+     * 模型类方法测试示例
+     */
+    public function testGetMessageContent()
+    {
+        $Model = new \Home\Model\MessagesModel();
+        $message  = $Model->getMessageAttr();
+        $this->assertEquals('社会主义精神文明建设',$message);
+        $message  = $Model->getMessageAttr(317);
+        $this->assertEquals('有人用吗？',$message);
+        $message  = $Model->getMessageAttr(2,"area_start");
+        $this->assertEquals('3',$message);
+    }
+
+
+}

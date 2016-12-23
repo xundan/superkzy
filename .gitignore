@@ -18,3 +18,5 @@ access_token.php
 access_token.json
 *.zip
 invite_qrcode/
+vendor/
+composer.lock

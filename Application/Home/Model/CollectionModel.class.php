@@ -34,7 +34,7 @@ class CollectionModel extends Model
     public function add_c($user_id, $msg_id){
         $exist = $this->where(array("user_id"=>$user_id, "msg_id"=>$msg_id))->find();
         if ($exist){
-            $exist["invalid_id"] = 1;
+            $exist["invalid_id"] = 0;
             $this->save($exist);
         }else{
             $this->add(array("user_id"=>$user_id, "msg_id"=>$msg_id,"invalid_id"=>1));
@@ -51,9 +51,18 @@ class CollectionModel extends Model
     public function del_c($user_id, $msg_id){
         $exist = $this->where(array("user_id"=>$user_id, "msg_id"=>$msg_id))->find();
         if ($exist){
-            $exist["invalid_id"] = 0;
+            $exist["invalid_id"] = 1;
             $this->save($exist);
         }
         return 2;
+    }
+
+    public function getCollectionById($user_id){
+        $id_result = $this->field("msg_id")->where(array("user_id"=>$user_id,"invalid_id"=>0))->select();
+        $ids = array();
+        foreach ($id_result as $id_row){
+            array_push($ids,$id_row["msg_id"]);
+        }
+        return $ids;
     }
 }

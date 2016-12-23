@@ -44,16 +44,18 @@ class WhereConditions
      * @param string $bool_operator 如果之前该字段有条件，与之前条件的关系AND,OR,XOR
      * @return array object 键值表
      */
-    function pushCond($column, $operator, $val, $bool_operator = "AND")
+    public function pushCond($column, $operator, $val, $bool_operator = "AND")
     {
+        if (!$operator) return false;
+        if (!$val) return false;//sql会报错，所以直接返回
         if ($bool_operator == "AND" || $bool_operator == "OR" || $bool_operator == "XOR") {
-            if ($this->getV($column)) {
+            if ($this->getV($column)) { // 先判断之前对column有没有约束
                 $new_val = array();
-                array_push($new_val, $this->getV($column));
-                array_push($new_val, array($operator, $val));
-                array_push($new_val, $bool_operator);
-                return $this->_whereConditions[$column] = $new_val;
-            } else {
+                array_push($new_val, $this->getV($column)); // 旧约束
+                array_push($new_val, array($operator, $val)); // 新约束
+                array_push($new_val, $bool_operator); // 约束之间的逻辑运算
+                return $this->_whereConditions[$column] = $new_val; //
+            } else { // 没有约束，就直接添加约束
                 return $this->_whereConditions[$column] = array($operator, $val);
             }
         } else {
@@ -186,12 +188,6 @@ class WhereConditions
     {
         $this->_page = $page;
     }
-
-
-
-
-
-
 
 
 }

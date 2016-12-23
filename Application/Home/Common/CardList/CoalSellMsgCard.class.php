@@ -14,6 +14,7 @@ class CoalSellMsgCard extends MsgCard
     function toLi()
     {
         $message = $this->_message;
+
         $personal_page = $this->getPersonalUrl();
         if ($message['is_formatted']) { // 如果用户按照标准格式填写
             $li_str = "<li class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">

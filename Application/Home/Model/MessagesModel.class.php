@@ -26,14 +26,27 @@ class MessagesModel extends Model
 
     private $_message = null;
 
+    public function getMessageAttr($id = 1, $attr = "content"){
+        $msg =  $this->find($id);
+        return $msg[$attr];
+    }
+
     public function findWhere(WhereConditions $cond)
     {
-        $countRow = 10;//常量
+        $countRow = C("DEFAULT_ROW");//常量
         $page = $cond->getPage();
         $asc = $cond->getAsc();
         $beginStr = ($page - 1) * $countRow;
-        $this->_message = $this->where($cond->getWhereConditions())->limit($beginStr, $countRow)->orderby($asc)->select();
+        $this->_message = $this->where($cond->getWhereConditions())->limit($beginStr, $countRow)->order($asc)->select();
         return $this->_message;
+    }
+
+    public function toAll($message){
+        $message = $this->toProduct($message);
+        $message = $this->toUser($message);
+        $message = $this->toDistrictStart($message);
+        $message = $this->toDistrictEnd($message);
+        return $message;
     }
 
     public function toUser($message){
