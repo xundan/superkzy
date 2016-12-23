@@ -29,7 +29,7 @@ class CardList
         foreach ($messages as $message) {
             if ($message['type'] == 'plain') { // 是微信来源
                 $msgCard = new MsgCard($message);
-            } elseif ($message['type'] == 'super') { // 是网站来源
+            } elseif ($message['type'] == '') { // 是网站来源
                 if ($message['category'] == 0) { // 供应
                     $msgCard = new CoalSellMsgCard($message);
                 } elseif ($message['category'] == 1) { // 司机找活
@@ -56,12 +56,15 @@ class CardList
         return $this->_array;
     }
 
-    public function toLi(){
-        $li_str = "";
+    public function toLiArray(){
+        $li_str_array = array();
         foreach($this->_array as $obj){
-            $li_str .= $obj->toLi();
+            if ($obj instanceof Card){
+                $li_str = $obj->toLi();
+                array_push($li_str_array,$li_str);
+            }
         }
-        return $li_str;
+        return $li_str_array;
     }
 
     public function toJSON()

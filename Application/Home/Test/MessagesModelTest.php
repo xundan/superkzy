@@ -20,7 +20,7 @@ class MessagesModelTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * 模型类方法测试示例
+     * 获取单个小消息
      */
     public function testGetMessageContent()
     {
@@ -32,6 +32,7 @@ class MessagesModelTest extends PHPUnit_Framework_TestCase
         $message  = $Model->getMessageAttr(2,"area_start");
         $this->assertEquals('3',$message);
     }
+
 
 
 }

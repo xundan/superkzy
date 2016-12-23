@@ -15,14 +15,15 @@ class MessagesModel extends Model
 {
 //    protected $tableName = "messages";// 不用写表前缀
 
-    protected $fields = array( //辅助模型识别字段，不会影响查询，会影响增改
-        "id",
-        "title",
-        "area_start",
-        "detail_area_start",
-        "invalid_id",
-        '_pk' => "id",
-    );
+//    protected $fields = array( //辅助模型识别字段，不会影响查询，会影响增改
+//        "id",
+//        "title",
+//        "area_start",
+//        "detail_area_start",
+//        "publisher_rid",
+//        "invalid_id",
+//        '_pk' => "id",
+//    );
 
     private $_message = null;
 
@@ -189,4 +190,6 @@ class MessagesModel extends Model
             }
         }
     }
+
+
 }

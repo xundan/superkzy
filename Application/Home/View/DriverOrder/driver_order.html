@@ -45,66 +45,9 @@
                     <span class="pullDownLabel">下拉刷新...</span>
                 </div>
                 <ul id="thelist" class="" style="list-style-type: none">
-                    <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
-                        <div class="text-right">
-                            <a href="/superkzy/index.php/Home/DriversFavorites/driver_favorite_detail.html" style="text-decoration: none;color:grey">
-                                详情 >
-                            </a>
-                        </div>
-                        <div class="">
-                            <strong>货主名称：{马兰拉}</strong>
-                            <span class="pull-right"><strong>货物数量：{100吨}</strong></span>
-                        </div>
-                        <div class="divider" style="border:1px solid darkgrey"></div>
-                        <div class="text-center">
-                            <img class="" src="__PUBLIC__/home/images/area_start.png" style="width: 12px;height: 15px;">
-                            {北京} ——→ {福建}
-                            <img class="" src="__PUBLIC__/home/images/area_end.png" style="width: 12px;height: 15px;">
-                        </div>
-                        <div class="pull-right help-block">
-                            接单时间:{2016-09-09}
-                        </div>
-                    </li>
-                    <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
-                        <div class="text-right">
-                            <a href="/superkzy/index.php/Home/DriversFavorites/driver_favorite_detail.html" style="text-decoration: none;color:grey">
-                                详情 >
-                            </a>
-                        </div>
-                        <div class="">
-                            <strong>货主名称：{拉马兰}</strong>
-                            <span class="pull-right"><strong>货物数量：{100吨}</strong></span>
-                        </div>
-                        <div class="divider" style="border:1px solid darkgrey"></div>
-                        <div class="text-center">
-                            <img class="" src="__PUBLIC__/home/images/area_start.png" style="width: 12px;height: 15px;">
-                            {兰州} ——→ {福建}
-                            <img class="" src="__PUBLIC__/home/images/area_end.png" style="width: 12px;height: 15px;">
-                        </div>
-                        <div class="pull-right help-block">
-                            接单时间:{2016-09-05}
-                        </div>
-                    </li>
-                    <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
-                        <div class="text-right">
-                            <a href="/superkzy/index.php/Home/DriversFavorites/driver_favorite_detail.html" style="text-decoration: none;color:grey">
-                                详情 >
-                            </a>
-                        </div>
-                        <div class="">
-                            <strong>货主名称：{兰拉马}</strong>
-                            <span class="pull-right"><strong>货物数量：{100吨}</strong></span>
-                        </div>
-                        <div class="divider" style="border:1px solid darkgrey"></div>
-                        <div class="text-center">
-                            <img class="" src="__PUBLIC__/home/images/area_start.png" style="width: 12px;height: 15px;">
-                            {呼和浩特} ——→ {赤峰}
-                            <img class="" src="__PUBLIC__/home/images/area_end.png" style="width: 12px;height: 15px;">
-                        </div>
-                        <div class="pull-right help-block">
-                            接单时间:{2016-08-31}
-                        </div>
-                    </li>
+                <volist name="li_array" id = "vo">
+                    {$vo}
+                </volist>
                 </ul>
                 <div id="pullUp">
                     <span class="pullUpIcon"></span>
