@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <title>客服</title>
+</head>
+<include file="Common:common"/>
+<body style="background-color: white">
+<div class="container" style="margin-top: 5%">
+    <form name="form_feedback" id="form_feedback" method="post" action="{:U('Feedback/feedback_sub')}" style="background-color: white">
+        <div class="form-group" style="">
+            <label>
+                意见反馈:
+            </label>
+            <textarea name="feedback" rows="3" class="form-control" style="resize: none" placeholder="&emsp;您对我们的平台有什么建议，或者使用中遇到的问题都可以给我们留言，我们将全力为您解决"></textarea>
+            <label>
+                联系方式：QQ/微信/电话
+            </label>
+            <input type="text" name="contact" class="form-control" placeholder="为了更好的为您服务，建议您留下联系方式" style="">
+            <div class="text-center">
+                <input name="submit_123" type="button" class="btn btn-default" onclick="feedback_sub()" value="提&emsp;交" style="font-size: 1.2em;font-weight: 900;border: none;padding-bottom: 1%;padding-top:0;margin-top: 3%;width: 40%;color:white;background-color: #fb3e1e">
+            </div>
+        </div>
+    </form>
+    <div class="text-center" style="background-color: white">
+        <img src="__PUBLIC__/home/images/custom_service_qrcode.jpg" style="height: auto;width: 50%;">
+        <p style="color:#737373">扫一扫添加客服微信</p>
+    </div>
+    <div class="text-center" style="background-color: white">
+        <p style="margin: 0;">
+            <span style=";color:#04bfc6;font-size: 1.8em;font-weight: 900;">|</span>
+            <span style=";font-size: 1.5em;">运营总监：<a href="tel:182-6541-4989" style="text-decoration: none;color:black">182-6541-4989</a></span>
+        </p>
+        <p>
+            <span style="color:#04bfc6;font-size: 1.8em;font-weight: 900;">|</span>
+            <span style="font-size: 1.5em;">市场总监：<a href="tel:139-6903-6976" style="text-decoration: none;color:black">139-6903-6976</a></span>
+        </p>
+    </div>
+    <div style="margin: 0 auto;border: 1px #04bfc6 solid;background-color: white;width: 80%">
+        <p style="margin-bottom: 0;line-height: 2em">&emsp;您在超级矿资源有任何问题，可以添加我们的微信客服，或者直接致电我们的热线。我们将竭力为您解决</p>
+    </div>
+</div>
+</body>
+
+<script>
+    function feedback_sub(){
+        var temp = $('textarea[name=feedback]').val().trim();
+        if(temp == ''){
+            showToast('没有输入');
+            return;
+        }
+
+        var subData=$("#form_feedback").serialize();
+//        console.log(subData);
+        var url="{:U('Feedback/feedback_action')}";
+        $.ajax({
+            type:"post",
+            url:url,
+            data:subData,
+            success:function(data){
+                console.log(123);
+
+//                $('input[name=submit_123]').val(23);
+//                return;
+                var jsonObj=eval("("+data+")");
+//                console.log(data);
+//                console.log(jsonObj.msg);
+                showToast(jsonObj.msg);
+            },
+            error:function(XMLHttpRequest,textStatus,errorThrown){
+//                console.log(123456);
+//                console.log(XMLHttpRequest);
+//                console.log(textStatus);
+//                console.log(errorThrown);
+                alert('不可棱！！');
+            }
+        });
+
+    }
+</script>
+
+
+
+</html>

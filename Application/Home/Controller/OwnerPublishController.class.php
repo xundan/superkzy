@@ -66,6 +66,7 @@ class OwnerPublishController extends ComController
 //        $data['place_origin_id'] = '';    //TODO
         $data['price'] = $subInfo['need_price'];
         $data['loading_time'] = $subInfo['loading_time'];
+        $data['car_quantity'] = $subInfo['need_car_quantity'];
         $data['quantity'] = $subInfo['need_quantity'];
         $data['loading_cost'] = $subInfo['loading_cost'];
         $data['unloading_cost'] = $subInfo['unloading_cost'];
