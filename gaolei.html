@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>特定字符串删除</title>
+    <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
 </head>
 <body style="font-family: 微软雅黑">
 <div id="text_input" style="text-align: center" align="center">
+
+    <div style="text-align: center" align="center">
+        <input type="button" value="获取" onclick="get_yesterday_msg()"
+               style="width: 200px; height: 30px;margin: auto;font-size: 1em">
+    </div>
+    <p></p>
+    <div style="text-align: center" align="center">
+        <label>获取昨天到今天
+            <input id="hour" value="8">点整的整天记录
+        </label>
+    </div>
+    <p></p>
     <div style="height: 40px"></div>
     <label for="origin">源文本</label><textarea id="origin" name="origin" style="width: 100%; height: 400px"></textarea>
     <br>
@@ -36,7 +49,7 @@
 <script>
 
     //\?,\s,\[[^\[\]]+\],☆,★,■,□,零点起价格调整,\d+日,\d+号,\d+月,\d+年,《,》
-    document.getElementById("keyword").value = "\\\?,\\s,\\\[[^\\\[\\\]]+\\\],☆,★,■,□,零点起价格调整,\\d+日,\\d+号,\\d+月,\\d+年,《,》,—————";
+    document.getElementById("keyword").value = "\\\?,\\s,\\\[[^\\\[\\\]]+\\\],☆,★,■,□,零点起价格调整,\\d+日,\\d+号,\\d+月,\\d+年,《,》,—————,☜,☞";
 
     function text_format() {
         var key_word = document.getElementById("keyword").value;
@@ -55,6 +68,28 @@
 //        console.log("[" + key_words[i] + "]->" + origin);
         var show_div = document.getElementById("text_show");
         show_div.innerHTML = origin;
+    }
+
+    function get_yesterday_msg() {
+
+        var hour = parseInt($("#hour").val());
+        // 获取今天早上和昨天早上8:30的秒数
+        var date2 = new Date();
+        date2.setHours(hour);
+        date2.setMinutes(0);
+        date2.setSeconds(0);
+        var time2 = parseInt(date2.getTime()/1000);
+        var time1 = time2 - 24*60*60;
+        console.log(time2);
+
+        $.ajax({
+            type : "GET",  //提交方式
+            url : "http://www.kuaimei56.com/index.php/Views/PullMessages/allByTime?date1="+time1+"&date2="+time2,//路径
+//            url : "http://localhost/superkzy/index.php/Views/PullMessages/allByTime?date1="+time1+"&date2="+time2,//路径
+            success : function(result) {//返回数据根据结果进行相应的处理
+                $("#origin").text(result.message);
+            }
+        });
     }
 
     function text_copy() {
