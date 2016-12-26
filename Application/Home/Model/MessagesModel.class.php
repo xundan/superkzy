@@ -9,26 +9,110 @@
 namespace Home\Model;
 
 use Home\Common\CardList\WhereConditions;
+use Think\Controller;
+use Think\Exception;
+use Think\Log;
 use Think\Model;
 
 class MessagesModel extends Model
 {
 //    protected $tableName = "messages";// 不用写表前缀
 
+    private $_message = null;
+
 //    protected $fields = array( //辅助模型识别字段，不会影响查询，会影响增改
 //        "id",
 //        "title",
 //        "area_start",
 //        "detail_area_start",
-//        "publisher_rid",
 //        "invalid_id",
 //        '_pk' => "id",
 //    );
 
-    private $_message = null;
+    //自动验证
+    protected $_validate = array(
+        array('phone_number', 'require', '手机号不能为空', 0),
+        array('phone_number', '/^\\d{11}$/', '请填写正确的手机号', 0, 'regex'),
+//        array('loading_time','time(),time()+11111111' ,'请填写正确的time',0,'expire'),
+//        array('verify','require','验证码必须！'), //默认情况下用正则进行验证
+//        array('name','','帐号名称已经存在！',0,'unique',1), // 在新增的时候验证name字段是否唯一
+//        array('value',array(1,2,3),'值的范围不正确！',2,'in'), // 当值不为空的时候判断是否在一个范围内
+//        array('repassword','password','确认密码不正确',0,'confirm'), // 验证确认密码是否和密码一致
+//        array('password','checkPwd','密码格式不正确',0,'function'), // 自定义函数验证密码格式   );
+    );
 
-    public function getMessageAttr($id = 1, $attr = "content"){
-        $msg =  $this->find($id);
+    //自动完成
+    protected $_auto = array(
+        array('deadline', 'set_deadline', '1', 'function'),    //插入时设置截止日期
+        array('content_all', 'join_content', '3', 'callback'),    //新增和编辑的时候拼接表单数据
+        array('publish_time', 'time', '1', 'function'),
+        array('area_start', 'get_area_id', '1', 'function'),
+        array('area_end', 'get_area_id', '1', 'function'),
+        array('short_allocate', 'short_allocate', '1', 'callback'),
+    );
+
+    public function short_allocate()
+    {
+        $short_allocate = I('post.short_allocate', '', 'strip_tags,trim');
+        if ($short_allocate) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
+    public function join_content()
+    {
+        $subInfo = I('post.', '', 'strip_tags,trim');
+        $data['content_all'] = json_encode($subInfo, JSON_UNESCAPED_UNICODE);
+        return $data['content_all'];
+    }
+
+    public function addInto()
+    {
+        $subInfo = I('post.', '', 'strip_tags,trim');
+        $data = $subInfo;
+        if (!$subInfo['area_start'] && !$subInfo['area_end'] && !$subInfo['kind'] && !$subInfo['trait'] && !$subInfo['granularity']) {
+            $data['formatted'] = 0;
+        } else {
+            $data['formatted'] = 1;
+        }
+        $data['publisher_rid'] = $_SESSION['user_info']['uid'];
+        $data['valid_time'] = 3;
+        $data['times_number'] += 1;
+        $Msg = D('messages');
+        if ($Msg->create($data)) {
+            $result = $Msg->add();
+            if ($result) {
+                // 如果主键是自动增长型 成功后返回值就是最新插入的值
+                $returnArr['status'] = 1;
+                $returnArr['msg'] = "发布成功";
+                echo json_encode($returnArr);
+            } elseif ($result === false) {
+                //todo 数据库错误
+//                $this->display('Common:403');
+            } else {
+                //todo 重复数据，未改变数据库
+//                $this->display('Common:403');
+            }
+        } else {
+            //验证没通过
+//            exit($Msg->getError());
+            $returnArr['status'] = 2;
+            $returnArr['msg'] = $Msg->getError();
+            echo json_encode($returnArr);
+//            throw new Exception;
+//            $this->display('Common:403');
+        }
+    }
+
+//    public function getError(){
+//
+//    }
+
+    public function getMessageAttr($id = 1, $attr = "content")
+    {
+        $msg = $this->find($id);
         return $msg[$attr];
     }
 
@@ -42,7 +126,8 @@ class MessagesModel extends Model
         return $this->_message;
     }
 
-    public function toAll($message){
+    public function toAll($message)
+    {
         $message = $this->toProduct($message);
         $message = $this->toUser($message);
         $message = $this->toDistrictStart($message);
@@ -50,53 +135,58 @@ class MessagesModel extends Model
         return $message;
     }
 
-    public function toUser($message){
+    public function toUser($message)
+    {
         $where['uid'] = $message['publisher_rid'];
         $user = M('user')->where($where)->find();
-        if($user){
-            $message['user']=$user;
-        }elseif($user === false){
+        if ($user) {
+            $message['user'] = $user;
+        } elseif ($user === false) {
             //todo 数据库出错
-        }else{
+        } else {
             //todo 数据为空
         }
         return $message;
     }
 
-    public function toProduct($message){
+    public function toProduct($message)
+    {
+        $message['product'] = null;
         $where['id'] = $message['product_id'];
         $product = M('product')->where($where)->find();
-        if($product){
-            $message['product']= $product;
-        }elseif($product === false){
+        if ($product) {
+            $message['product'] = $product;
+        } elseif ($product === false) {
             //todo 数据库出错
-        }else{
+        } else {
             //todo 数据为空
         }
         return $message;
     }
 
-    public function toDistrictStart($message){
+    public function toDistrictStart($message)
+    {
         $where['id'] = $message['area_start'];
         $district = M('districts')->where($where)->find();
-        if($district){
-            $message['district_start']= $district;
-        }elseif($district === false){
+        if ($district) {
+            $message['district_start'] = $district;
+        } elseif ($district === false) {
             //todo 数据库出错
-        }else{
+        } else {
             //todo 数据为空
         }
         return $message;
     }
 
-    public function toDistrictEnd($message){
+    public function toDistrictEnd($message)
+    {
         $where['id'] = $message['area_end'];
         $district = M('districts')->where($where)->find();
-        if($district){
-            $message['district_end']= $district;
-        }elseif($district === false){
+        if ($district) {
+            $message['district_end'] = $district;
+        } elseif ($district === false) {
             //todo 数据库出错
-        }else{
+        } else {
             //todo 数据为空
         }
         return $message;
@@ -118,17 +208,17 @@ class MessagesModel extends Model
                 $new_message['city'] = $this->_message['user']['city'];
                 //煤炭信息
                 $this->toProduct($this->_message);
-                $new_message['coal_kind_name']= $this->_message['product']['kind'];
-                $new_message['coal_trait_name']= $this->_message['product']['trait'];
-                $new_message['coal_granularity_name']= $this->_message['product']['granularity'];
+                $new_message['coal_kind_name'] = $this->_message['product']['kind'];
+                $new_message['coal_trait_name'] = $this->_message['product']['trait'];
+                $new_message['coal_granularity_name'] = $this->_message['product']['granularity'];
                 //消息信息
                 $this->toDistrictStart($this->_message);
                 $new_message['area_start'] = $this->_message['district_start']['name'];
                 $new_message['phone_number'] = $this->_message['phone_number'];
                 $new_message['price'] = $this->_message['price'];
                 $new_message['quantity'] = $this->_message['quantity'];
-                $new_message['deadline'] = date('Y-m-d H:i:s',$this->_message['deadline']);
-                $new_message['publish_time'] = date('Y-m-d H:i:s',$this->_message['publish_time']);
+                $new_message['deadline'] = date('Y-m-d H:i:s', $this->_message['deadline']);
+                $new_message['publish_time'] = date('Y-m-d H:i:s', $this->_message['publish_time']);
 
             } elseif ($this->_message['category'] == 1) { //司机找活
                 //用户信息
@@ -137,7 +227,7 @@ class MessagesModel extends Model
                 $new_message['headimg_url'] = $this->_message['user']['headimg_url'];
                 //煤炭信息
                 $this->toProduct($this->_message);
-                $new_message['coal_granularity_name']= $this->_message['product']['granularity'];
+                $new_message['coal_granularity_name'] = $this->_message['product']['granularity'];
                 //消息信息
                 $new_message['phone_number'] = $this->_message['phone_number'];
                 $this->toDistrictStart($this->_message);
@@ -145,9 +235,9 @@ class MessagesModel extends Model
                 $this->toDistrictEnd($this->_message);
                 $new_message['area_end'] = $this->_message['district_end']['name'];
                 $new_message['quantity'] = $this->_message['quantity'];
-                $new_message['loading_time'] = date('Y-m-d H:i:s',$this->_message['loading_time']);
-                $new_message['deadline'] = date('Y-m-d H:i:s',$this->_message['deadline']);
-                $new_message['publish_time'] = date('Y-m-d H:i:s',$this->_message['publish_time']);
+                $new_message['loading_time'] = date('Y-m-d H:i:s', $this->_message['loading_time']);
+                $new_message['deadline'] = date('Y-m-d H:i:s', $this->_message['deadline']);
+                $new_message['publish_time'] = date('Y-m-d H:i:s', $this->_message['publish_time']);
 
             } elseif ($this->_message['category'] == 2) { //求购
                 //用户信息
@@ -157,17 +247,17 @@ class MessagesModel extends Model
                 $new_message['city'] = $this->_message['user']['city'];
                 //煤炭信息
                 $this->toProduct($this->_message);
-                $new_message['coal_kind_name']= $this->_message['product']['kind'];
-                $new_message['coal_trait_name']= $this->_message['product']['trait'];
-                $new_message['coal_granularity_name']= $this->_message['product']['granularity'];
+                $new_message['coal_kind_name'] = $this->_message['product']['kind'];
+                $new_message['coal_trait_name'] = $this->_message['product']['trait'];
+                $new_message['coal_granularity_name'] = $this->_message['product']['granularity'];
                 //消息信息
                 $this->toDistrictStart($this->_message);
                 $new_message['area_start'] = $this->_message['district_start']['name'];
                 $new_message['phone_number'] = $this->_message['phone_number'];
                 $new_message['price'] = $this->_message['price'];
                 $new_message['quantity'] = $this->_message['quantity'];
-                $new_message['deadline'] = date('Y-m-d H:i:s',$this->_message['deadline']);
-                $new_message['publish_time'] = date('Y-m-d H:i:s',$this->_message['publish_time']);
+                $new_message['deadline'] = date('Y-m-d H:i:s', $this->_message['deadline']);
+                $new_message['publish_time'] = date('Y-m-d H:i:s', $this->_message['publish_time']);
 
             } elseif ($this->_message['category'] == 3) { //货源找车
                 //用户信息
@@ -176,7 +266,7 @@ class MessagesModel extends Model
                 $new_message['headimg_url'] = $this->_message['user']['headimg_url'];
                 //煤炭信息
                 $this->toProduct($this->_message);
-                $new_message['coal_granularity_name']= $this->_message['product']['granularity'];
+                $new_message['coal_granularity_name'] = $this->_message['product']['granularity'];
                 //消息信息
                 $new_message['phone_number'] = $this->_message['phone_number'];
                 $this->toDistrictStart($this->_message);
@@ -184,12 +274,10 @@ class MessagesModel extends Model
                 $this->toDistrictEnd($this->_message);
                 $new_message['area_end'] = $this->_message['district_end']['name'];
                 $new_message['quantity'] = $this->_message['quantity'];
-                $new_message['loading_time'] = date('Y-m-d H:i:s',$this->_message['loading_time']);
-                $new_message['deadline'] = date('Y-m-d H:i:s',$this->_message['deadline']);
-                $new_message['publish_time'] = date('Y-m-d H:i:s',$this->_message['publish_time']);
+                $new_message['loading_time'] = date('Y-m-d H:i:s', $this->_message['loading_time']);
+                $new_message['deadline'] = date('Y-m-d H:i:s', $this->_message['deadline']);
+                $new_message['publish_time'] = date('Y-m-d H:i:s', $this->_message['publish_time']);
             }
         }
     }
-
-
 }
