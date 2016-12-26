@@ -11,11 +11,6 @@ require_once('C:/wamp/www/superkzy/Application/Home/Common/CardList/WhereConditi
 class WhereConditionsTest extends PHPUnit_Framework_TestCase
 {
 
-    public function testEmpty()
-    {
-        $whereConditions = new \Home\Common\CardList\TipCard();
-//        $this->assertEmpty(($whereConditions->getWhereConditions());
-    }
 
     public function testPush()
     {

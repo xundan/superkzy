@@ -16,7 +16,7 @@ class IndexControllerTest extends PHPUnit_Framework_TestCase
         self::$app = new \Think\PhpunitHelper();
         self::$app->setMVC('kuaimei56.com','Home','Index');
         self::$app->setTestConfig(['DB_NAME'=>'test_db', 'DB_HOST'=>'127.0.0.1',]); // 一定要设置一个测试用的数据库,避免测试过程破坏生产数据
-        self::$app->start();
+//        self::$app->start();
     }
 
     /**
