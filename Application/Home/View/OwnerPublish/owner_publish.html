@@ -1312,15 +1312,15 @@
 <!--车源表单提交输入及检测-->
 <script>
     //获取焦点清空输入及错误信息
-        $('#give_phone_number').focus(function () {
-            if ($('#give_phone_alert').html()) {
-                $(this).val('');
-                $('#give_phone_alert').html('');
-            }
-        });
-        $('#give_content').focus(function () {
-            $('#give_content_alert').html('');
-        });
+    $('#give_phone_number').focus(function () {
+        if ($('#give_phone_alert').html()) {
+            $(this).val('');
+            $('#give_phone_alert').html('');
+        }
+    });
+    $('#give_content').focus(function () {
+        $('#give_content_alert').html('');
+    });
     function give_sub() {
         var short_allocate = $('input[name=short_allocate]:checked').val();
         console.log(short_allocate);
@@ -1335,17 +1335,20 @@
         cookie('coal_buy', null);
         //联系电话验证
         var phone = $('#give_phone_number').val().trim();
-        if(!phone){
-            $('#give_phone_alert').html('联系电话不能为空');return;
-        }else if(phone.length != 11 || !phone.match(/^(-?\d+)(\.\d+)?$/)){
-            $('#give_phone_alert').html('请输入正确的电话号码');return;
+        if (!phone) {
+            $('#give_phone_alert').html('联系电话不能为空');
+            return;
+        } else if (phone.length != 11 || !phone.match(/^(-?\d+)(\.\d+)?$/)) {
+            $('#give_phone_alert').html('请输入正确的电话号码');
+            return;
         }
         //判断content有无输入，content和煤炭信息不能同时为空
         var area_start = $('#give_area_start').val().trim();
         var area_end = $('#give_area_end').val().trim();
         var content = $('#give_content').val().trim();
-        if(!content && !area_start && !area_end){
-            $('#give_content_alert').html('详细描述与地址信息不能同时为空');return;
+        if (!content && !area_start && !area_end) {
+            $('#give_content_alert').html('详细描述与地址信息不能同时为空');
+            return;
         }
         //ajax提交表单数据
         var subData = $("#form_give").serialize();
@@ -1414,9 +1417,9 @@
         }
         //装车时间判断 弱需求
         var loading_time = $('#need_loading_time').val();
-        var loading_timestamp =new Date(loading_time.replace(/-/g,'/')).getTime();
+        var loading_timestamp = new Date(loading_time.replace(/-/g, '/')).getTime();
         var now_time = new Date().getTime();
-        if(loading_timestamp < now_time){
+        if (loading_timestamp < now_time) {
             $('#need_content_alert').html('装车时间过期');
             return;
         }

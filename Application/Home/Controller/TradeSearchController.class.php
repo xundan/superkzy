@@ -8,12 +8,31 @@
 
 namespace Home\Controller;
 use Think\Controller;
+use Home\Common\CardList\CoalBuyMsgCard;
 header("Content-type: text/html; charset=utf-8");
 
 class TradeSearchController extends ComController
 {
     private $publicStr='';
     public function trade_search(){
+        $message['title']="123";
+        $message['content']="alksdjf;lasdjkf;laksdfl;kjasdlkfjlas;df";
+        $message['user_name']="xuncl";
+        $message['phone_number']="12341234123";
+        $message['category']=2;
+        $message['in_collection']="已收藏";
+        $message['coal_type_name']="喷吹煤";
+        $message['price']="1234";
+        $message['coal_trait_name']="无烟煤";
+        $message['area_start']="北京";
+        $message['coal_granularity']="块煤";
+        $message['quantity']="20000";
+        $message['publish_time']="2000/2/2";
+
+        $msg_card = new CoalBuyMsgCard($message);
+        $this->assign("li",$msg_card->toLi());
+
+
 
 //        如果没有刷新或筛选条件为空则输出对应标签全部信息
 
@@ -47,7 +66,7 @@ class TradeSearchController extends ComController
 //
 
         //查询数组
-        $where=[];
+        $where = array();
         //查询起始位置
         $beginStr = 0;
         //获取所有post进来的数据
@@ -157,12 +176,12 @@ class TradeSearchController extends ComController
     }
 
     public function message_filter(){
-        $coalKind = M('coal_kind')->select();
-        $coalTrait = M('coal_trait')->select();
-        $coalGranularity = M('coal_granularity')->select();
-        $this->assign('coalKind',$coalKind);
-        $this->assign('coalTrait',$coalTrait);
-        $this->assign('coalGranularity',$coalGranularity);
+//        $coalKind = M('coal_kind')->select();
+//        $coalTrait = M('coal_trait')->select();
+//        $coalGranularity = M('coal_granularity')->select();
+//        $this->assign('coalKind',$coalKind);
+//        $this->assign('coalTrait',$coalTrait);
+//        $this->assign('coalGranularity',$coalGranularity);
         $this->display();
     }
 

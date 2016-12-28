@@ -12,7 +12,6 @@
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="__PUBLIC__/home/js/iscroll.js"></script>
 </head>
 <body>
 <!--标题栏-->
@@ -62,49 +61,83 @@
                                 <h4><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">
                                     <span style="">拨打电话</span></h4>
                             </a>
+                            <button class="btn btn-xs btn-info" style="background-color: #04bfc6;width: 70%">
+                                撤销收藏
+                            </button>
                         </div>
                     </div>
-                    <div class="">
-                        <!--<span style="width:40%;height: 0;border:1px #04bfc6 solid;float:left"></span>-->
-                        <!--&lt;!&ndash;<span style="text-decoration: line-through;text-line-through-color: #04bfc6">asdasdddasd</span>&ndash;&gt;-->
-                        <!--<span>订单详情</span>-->
-                        <!--&lt;!&ndash;<span style="text-decoration: line-through;text-line-through-color: #04bfc6">asdaaaasd</span>&ndash;&gt;-->
-                        <!--<span style="width:40%;height: 0;border:1px #04bfc6 solid;float:right"></span>-->
-                        <!--<span style="text-decoration: line-through;text-line-through-color: #04bfc6;color: #04bfc6">-->
-                        <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-                        <!--</span>-->
-                        <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;订单详情&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-                        <!--<span style="text-decoration: line-through;text-line-through-color: #04bfc6;color: #04bfc6">-->
-                        <!--&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
-                        <!--</span>-->
+                    <div class="text-center">
                         <hr style="border-color: #04bfc6;width: 35%;display: inline-flex;float: left">
                         <span class="" style=";color: #737373;line-height: 3em">&nbsp订单详情&nbsp</span>
                         <hr style="border-color: #04bfc6;width: 35%;display: inline-flex;float:right">
                     </div>
                     <div>
-                        <table class="table table-responsive" style="margin-bottom: 0">
+                        <table class="table table-responsive" style="border: none;margin-bottom: 0">
                             <tbody>
-                            <tr>
-                                <td>
-                                    煤炭种类:{$coal_kind_title}
-                                </td>
-                                <td>
-                                    供货公司:{$product['supply_company']}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    煤炭产地:{$place_origin_name}
-                                </td>
-                                <td>
-                                    <button class="btn btn-xs btn-info" style="background-color: #04bfc6;width: 100%">
-                                        撤销收藏
-                                    </button>
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td style="border: none">
+                                        煤炭种类:{$coal_kind_title}
+                                    </td>
+                                    <td style="border: none">
+                                        产地:
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none">
+                                        煤炭品质:{$coal_trait_title}
+                                    </td>
+                                    <td style="border: none">
+                                        价格:
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none">
+                                        煤炭粒度:{$coal_granularity_title}
+                                    </td>
+                                    <td style="border: none">
+                                        吨数:
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none">
+                                        煤炭热值(高位):
+                                    </td>
+                                    <td style="border: none">
+                                        供货公司:{$product['supply_company']}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none">
+                                        详细指标:
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none">
+                                        煤炭热值(低位):
+                                    </td>
+                                    <td style="border: none">
+                                        全水份:
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none">
+                                        灰分:
+                                    </td>
+                                    <td style="border: none">
+                                        硫份:
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="border: none">
+                                        挥发份:
+                                    </td>
+                                    <td style="border: none">
+                                        有效期:7天
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
-                        <span class="pull-right help-block">发布时间:{$message['publish_time']|date="Y-m-d",###}</span>
+                        <span class="pull-right help-block" style="font-size: 12px">发布时间:{$message['publish_time']|date="Y-m-d",###}</span>
                     </div>
                 </li>
             </ul>

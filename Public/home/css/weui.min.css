@@ -782,8 +782,11 @@ button.weui_btn_plain_default, input.weui_btn_plain_default {
 }
 
 .weui_switch:checked {
-    border-color: #04be02;
-    background-color: #04be02
+    /*border-color: #04be02;*/
+    /*background-color: #04be02*/
+    border-color: #04bfc6;
+    background-color: #04bfc6
+
 }
 
 .weui_switch:checked:before {

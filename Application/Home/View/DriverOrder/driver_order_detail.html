@@ -12,7 +12,6 @@
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="__PUBLIC__/home/js/iscroll.js"></script>
 </head>
 <body>
 <!--标题栏-->
@@ -24,7 +23,7 @@
         </a>
     </span>
     <span class="">
-        <span class="" style="font-size: 1.5em;">我的收藏</span>
+        <span class="" style="font-size: 1.5em;">订单详情</span>
     </span>
 </div>
 <!--清除浮动-->
@@ -52,9 +51,8 @@
                                     src="__PUBLIC__/home/images/medal.png"
                                     style="width: 15px;height: 20px"></h4>
                         </a>
-
                         <p class="weui_media_desc">
-                            车主
+                            货主
                         </p>
                     </div>
                     <div class="weui_media_bd text-center" style="">
@@ -62,6 +60,9 @@
                             <h4><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">
                                 <span style="">拨打电话</span></h4>
                         </a>
+                        <button class="btn btn-xs btn-info" style="background-color: #04bfc6;width: 70%"
+                                onclick="collection_switch()">撤销收藏
+                        </button>
                     </div>
                 </div>
                 <div class="text-center">
@@ -81,31 +82,48 @@
                     <span class="" style=";color: #737373;line-height: 3em">&nbsp订单详情&nbsp</span>
                     <hr style="border-color: #04bfc6;width: 35%;display: inline-flex;float:right">
                 </div>
+                <div class="text-center">
+                    <img class="" src="__PUBLIC__/home/images/area_start.png"
+                         style="width: 12px;height: 15px;">
+                    {$area_start['name']}{$message['detail_area_start']} ——> {$area_end['name']}{$message['detail_area_end']}
+                    <img class="" src="__PUBLIC__/home/images/area_end.png"
+                         style="width: 12px;height: 15px;">
+                </div>
                 <div>
-                    <table class="table table-responsive" style="margin-bottom: 0">
+                    <table class="table table-responsive" style="margin-bottom: 0;border: none">
                         <tbody>
-                        <tr>
-                            <div class="text-center">
-                                <img class="" src="__PUBLIC__/home/images/area_start.png"
-                                     style="width: 12px;height: 15px;">
-                                {$area_start['name']}{$message['detail_area_start']} ——→ {$area_end['name']}{$message['detail_area_end']}
-                                <img class="" src="__PUBLIC__/home/images/area_end.png"
-                                     style="width: 12px;height: 15px;">
-                            </div>
-                        </tr>
-                        <tr>
-                            <td>
-                                装货时间:{$message['loading_time']|date="Y-m-d",###}
-                            </td>
-                            <td>
-                                <button class="btn btn-xs btn-info" style="background-color: #04bfc6;width: 100%"
-                                        onclick="collection_switch()">撤销收藏
-                                </button>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td style="border: none">
+                                    车辆数量:
+                                </td>
+                                <td style="border: none">
+                                    粒度:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: none">
+                                    发煤量:
+                                </td>
+                                <td style="border: none">
+                                    装车时间:{$message['loading_time']|date="Y-m-d",###}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: none">
+                                    运费:
+                                </td>
+                                <td style="border: none">
+                                    装车费用:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: none">
+                                    卸车费用:
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
-                    <span class="pull-right help-block">接单时间:{$message['publish_time']|date="Y-m-d",###}</span>
+                    <span class="pull-right help-block" style="font-size: 12px">发布时间:{$message['publish_time']|date="Y-m-d",###}</span>
                 </div>
             </li>
         </ul>

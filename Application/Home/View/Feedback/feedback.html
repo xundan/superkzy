@@ -13,14 +13,28 @@
 </head>
 <include file="Common:common"/>
 <body style="background-color: white">
-<div class="container" style="margin-top: 5%">
+<!--标题栏-->
+<div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
+        <span class="pull-left" style="">
+            <a href="#">
+                <img src="__PUBLIC__/home/images/goback.png" class="img-responsive"
+                     style="width: 15px;height: auto;margin-top: 40%">
+            </a>
+        </span>
+        <span class="">
+            <span class="" style="font-size: 1.5em;">客 服</span>
+        </span>
+</div>
+<!--清除浮动-->
+<div class="clearfix"></div>
+<div class="container" style="margin-top: 3%">
     <form name="form_feedback" id="form_feedback" method="post" action="{:U('Feedback/feedback_sub')}" style="background-color: white">
         <div class="form-group" style="">
             <label>
                 意见反馈:
             </label>
             <textarea name="feedback" rows="3" class="form-control" style="resize: none" placeholder="&emsp;您对我们的平台有什么建议，或者使用中遇到的问题都可以给我们留言，我们将全力为您解决"></textarea>
-            <label>
+            <label style="margin-top: 1%">
                 联系方式：QQ/微信/电话
             </label>
             <input type="text" name="contact" class="form-control" placeholder="为了更好的为您服务，建议您留下联系方式" style="">

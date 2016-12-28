@@ -88,11 +88,8 @@ class MessagesModel extends Model
                 $returnArr['status'] = 1;
                 $returnArr['msg'] = "发布成功";
                 echo json_encode($returnArr);
-            } elseif ($result === false) {
-                //todo 数据库错误
-//                $this->display('Common:403');
             } else {
-                //todo 重复数据，未改变数据库
+                //todo 数据库错误
 //                $this->display('Common:403');
             }
         } else {
