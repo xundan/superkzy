@@ -18,9 +18,10 @@ class DriverOrderController extends ComController
 {
     public function driver_order()
     {
-        $uid = session('uid');
+        $uid = session('user_info')['uid'];
+//        dump($uid);
         $whereCond = new WhereConditions();
-        $whereCond->pushCond("publisher_rid", "eq", "2");
+        $whereCond->pushCond("id", "in", D('collection')->getCollectionById($uid));
         $messages = D('messages')->findWhere($whereCond);
 //        dump($messages);
         $cards = new CardList($messages);
