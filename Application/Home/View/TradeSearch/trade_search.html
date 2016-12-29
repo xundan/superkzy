@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
     <!--<link rel="icon" href="../../favicon.ico">-->
-    <title></title>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <title>买卖查询</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
@@ -20,266 +21,317 @@
 </head>
 <body style="">
 
-    <!--标题栏-->
-    <div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
-        <!--<div class="container text-center" style="">-->
-        <!--<div style="display: inline-block;height: 100%;vertical-align: middle"></div>-->
-                    <span class="pull-left" style="">
-                            <!--<a class="glyphicon glyphicon-chevron-left"></a>-->
-                        <a href="#">
-                            <img src="__PUBLIC__/home/images/goback.png" class="img-responsive" style="width: 15px;height: auto;margin-top: 40%">
-                        </a>
-                    </span>
-                    <span class="">
-                        <span class="" style="font-size: 1.5em;margin-left: 15%">买卖查询</span>
-                    </span>
-                    <span class="pull-right" style="border-color: white">
-                        <a href="#" class="btn btn-xs btn-default" style=";border:1px solid white; ;color:white;background-color: transparent;text-decoration: none;margin-bottom: -50%">
-                            我的收藏
-                        </a>
-                    </span>
-        <!--</div>-->
-    </div>
+<!--标题栏-->
+<!--<div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">-->
+<!--&lt;!&ndash;<div class="container text-center" style="">&ndash;&gt;-->
+<!--&lt;!&ndash;<div style="display: inline-block;height: 100%;vertical-align: middle"></div>&ndash;&gt;-->
+<!--<span class="pull-left" style="">-->
+<!--&lt;!&ndash;<a class="glyphicon glyphicon-chevron-left"></a>&ndash;&gt;-->
+<!--<a href="#">-->
+<!--<img src="__PUBLIC__/home/images/goback.png" class="img-responsive"-->
+<!--style="width: 15px;height: auto;margin-top: 40%">-->
+<!--</a>-->
+<!--</span>-->
+<!--<span class="">-->
+<!--<span class="" style="font-size: 1.5em;margin-left: 15%">买卖查询</span>-->
+<!--</span>-->
+<!--<span class="pull-right" style="border-color: white">-->
+<!--<a href="#" class="btn btn-xs btn-default"-->
+<!--style=";border:1px solid white; ;color:white;background-color: transparent;text-decoration: none;margin-bottom: -50%">-->
+<!--我的收藏-->
+<!--</a>-->
+<!--</span>-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</div>-->
 
-    <!--清除浮动-->
-    <div class="clearfix"></div>
+<!--清除浮动-->
+<div class="clearfix"></div>
 
-    <!--导航标签-->
-    <div class="panel-title" style="margin:0;padding: 0;background-color: white">
-        <div id="myTab" class="weui_navbar" role="" style="position: inherit;margin-bottom: 0;">
-            <a href="#buy" data-toggle="tab" class="weui_navbar_item weui_bar_item_on" style="color: black;text-decoration: none;font-size: 1.2em">
-                <span>求购信息</span>
-            </a>
-            <a href="#sell" data-toggle="tab" class="weui_navbar_item" style="color: black;text-decoration: none;font-size: 1.2em">
-                <span>供应信息</span>
-            </a>
-            <a href="{:U('TradeSearch/message_filter')}" class="weui_navbar_item" style="color: black;text-decoration: none;font-size: 1.2em">
+<!--导航标签-->
+<div class="panel-title" style=";margin:0;padding: 0;background-color: white;display: block">
+    <div id="myTab" class="weui_navbar" style=";margin-bottom: 0;">
+        <a href="#buy" data-toggle="tab" class="weui_navbar_item weui_bar_item_on"
+           style="color: black;text-decoration: none;font-size: 1.2em">
+            <span>求购信息</span>
+        </a>
+        <a href="#sell" data-toggle="tab" class="weui_navbar_item"
+           style="color: black;text-decoration: none;font-size: 1.2em">
+            <span>供应信息</span>
+        </a>
+        <a href="{:U('TradeSearch/message_filter')}" class="weui_navbar_item"
+           style="color: black;text-decoration: none;font-size: 1.2em">
                 <span>
                     筛选
                     <img src="__PUBLIC__/home/images/message_filter.png" style="width: 15px">
                 </span>
-            </a>
-        </div>
+        </a>
     </div>
-
-    <!--搜索框-->
-    <div class="bd">
-        <div class="weui_search_bar" id="search_bar">
-            <form id="form_search" name="form_search" action="" method="" class="weui_search_outer">
-                <div class="weui_search_inner">
-                    <i class="weui_icon_search"></i>
-                    <input type="search" class="weui_search_input" name="search_input" id="search_input" placeholder="搜索" required >
-                    <a href="javascript:" class="weui_icon_clear" id="search_clear"></a>
-                </div>
-                <label for="search_input" class="weui_search_text" id="search_text">
-                    <i class="weui_icon_search"></i>
-                    <span>搜索</span>
-                </label>
-                <input type="hidden" name="select_category">
-                <input type="hidden" name="filter_kind">
-                <input type="hidden" name="filter_granularity">
-                <input type="hidden" name="filter_heat_min">
-                <input type="hidden" name="filter_heat_max">
-                <input type="text" style="display: none;">
-            </form>
-            <a href="javascript:void(0)" class="weui_search_cancel" id="search_cancel">取消</a>
-        </div>
-        <!--<div class="weui_cells weui_cells_access search_show" id="search_show">-->
-            <!--<div class="weui_cell">-->
-                <!--<div class="weui_cell_bd weui_cell_primary">-->
-                    <!--<p>实时搜索文本</p>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="weui_cell">-->
-                <!--<div class="weui_cell_bd weui_cell_primary">-->
-                    <!--<p>实时搜索文本</p>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="weui_cell">-->
-                <!--<div class="weui_cell_bd weui_cell_primary">-->
-                    <!--<p>实时搜索文本</p>-->
-                <!--</div>-->
-            <!--</div>-->
-            <!--<div class="weui_cell">-->
-                <!--<div class="weui_cell_bd weui_cell_primary">-->
-                    <!--<p>实时搜索文本</p>-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    </div>
-    <!--<p id="show" style="display: none">234</p>-->
-    <!--标签隐藏表单提交-->
-    <form name="tag_search" id="tag_search">
-        <input type="hidden" name="select_category">
-        <input type="hidden" name="filter_kind">
-        <input type="hidden" name="filter_granularity">
-        <input type="hidden" name="filter_heat_min">
-        <input type="hidden" name="filter_heat_max">
-        <input type="hidden" name="search_input">
-        <input type="hidden" name="page" id="page" value="{$next_page}">
-    </form>
-    <!--<input type="search" id="asd" onkeyup="search_enter(event)">-->
-    <!--订单展示栏-->
-    <div class="tab-content" style="margin-left: 2.5%;">
-        <div id="buy" class="tab-pane active" style="">
-            <div id="wrapper">
-                <div id="scroller">
-                    <div id="pullDown">
-                        <span class="pullDownIcon" style="float: left"></span>
-                        <span class="pullDownLabel" style="margin-left: -48px">下拉刷新...</span>
-                    </div>
-                    <ul id="thelist" class="" style="margin-top: 40px;list-style-type: none">
-                        {$li}
-                        {$li}
-                        {$li}
-                        {$li}
-                        {$li}
-                        {$li}
-                        {$li}
-                        {$li}
-                        {$li}
-                        {$li}
-                        {$li}
-                        {$li}
-                        <!--<span id="insert_point"></span>-->
-                        <!--<div style="display: none">-->
-                            <!--<li id="buy_clone" class="weui_panel weui_panel_access" style=";border-radius: 5px">-->
-                                <!--<div style="position: absolute;right: 0px;">-->
-                                    <!--<img src="__PUBLIC__/home/images/buy.png" width="50px">-->
-                                <!--</div>-->
-                                <!--<div class="weui_media_box weui_media_appmsg" style="margin: 0;padding-left: 0;padding-right: 0">-->
-                                    <!--<a href="#">-->
-                                        <!--<div class="weui_media_hd">-->
-                                            <!--<img src="__PUBLIC__/home/images/headimg_background.png" class="weui_media_appmsg_thumb">-->
-                                        <!--</div>-->
-                                    <!--</a>-->
-                                    <!--<div class="weui_media_bd">-->
-                                        <!--<a href="#">-->
-                                            <!--<h4 class="weui_media_title">{名字} <img src="__PUBLIC__/home/images/medal.png" style="width: 15px;height: 20px"></h4>-->
-                                        <!--</a>-->
-                                        <!--<p class="weui_media_desc">-->
-                                            <!--<img src="__PUBLIC__/home/images/area_start.png" style="width: 10px;height: 15px">-->
-                                            <!--{}-->
-                                        <!--</p>-->
-                                    <!--</div>-->
-                                    <!--<div class="weui_media_bd text-center" style="">-->
-                                        <!--<a href="tel:15153151316" class="">-->
-                                            <!--<h4>-->
-                                                <!--<img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">-->
-                                                <!--<span style="">拨打电话</span>-->
-                                            <!--</h4>-->
-                                        <!--</a>-->
-                                        <!--<div>-->
-                                            <!--<button class="btn btn-xs btn-default" style="padding-left: 20%;padding-right: 20%;border-color: #04bfc6;color: #04bfc6">-->
-                                                <!--收藏-->
-                                            <!--</button>-->
-                                        <!--</div>-->
-                                    <!--</div>-->
-                                <!--</div>-->
-                                <!--&lt;!&ndash;<div class="panel-body" style="padding:0">&ndash;&gt;-->
-                                <!--<table class="table table-condensed" style="margin: 0">-->
-                                    <!--<tbody>-->
-                                    <!--<tr>-->
-                                        <!--<td>-->
-                                            <!--煤炭种类:{}-->
-                                        <!--</td>-->
-                                        <!--<td>-->
-                                            <!--{$order['price']}元/吨-->
-                                        <!--</td>-->
-                                    <!--</tr>-->
-                                    <!--<tr>-->
-                                        <!--<td>-->
-                                            <!--煤炭品质:{}-->
-                                        <!--</td>-->
-                                        <!--<td>-->
-                                            <!--产地:{$order['area_start']}-->
-                                        <!--</td>-->
-                                    <!--</tr>-->
-                                    <!--<tr>-->
-                                        <!--<td>-->
-                                            <!--煤炭粒度:{}-->
-                                        <!--</td>-->
-                                        <!--<td>-->
-                                            <!--吨数:{}-->
-                                        <!--</td>-->
-                                    <!--</tr>-->
-                                    <!--<tr>-->
-                                        <!--<td>-->
-                                            <!--有效时间:{}-->
-                                        <!--</td>-->
-                                        <!--<td>-->
-                                            <!--发布时间:{}-->
-                                        <!--</td>-->
-                                    <!--</tr>-->
-                                    <!--</tbody>-->
-                                <!--</table>-->
-                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                            <!--</li>-->
-                        <!--</div>-->
-                    </ul>
-                    <div id="pullUp">
-                        <span class="pullUpIcon"></span>
-                        <span class="pullUpLabel" style="margin-left: -48px">上拉加载更多...</span>
-                    </div>
-                </div>
+</div>
+<button class="btn btn-default" style="margin-top: 30%;position: fixed;position: absolute;z-index: 2">123123123</button>
+<!--搜索框-->
+<div class="bd" style="margin-top: 43px">
+    <div class="weui_search_bar" id="search_bar">
+        <form id="form_search" name="form_search" action="" method="" class="weui_search_outer">
+            <div class="weui_search_inner">
+                <i class="weui_icon_search"></i>
+                <input type="search" class="weui_search_input" name="search_input" id="search_input" placeholder="搜索"
+                       required>
+                <a href="javascript:" class="weui_icon_clear" id="search_clear"></a>
             </div>
+            <label for="search_input" class="weui_search_text" id="search_text">
+                <i class="weui_icon_search"></i>
+                <span>搜索</span>
+            </label>
+            <input type="hidden" name="select_category">
+            <input type="hidden" name="filter_kind">
+            <input type="hidden" name="filter_granularity">
+            <input type="hidden" name="filter_heat_min">
+            <input type="hidden" name="filter_heat_max">
+            <input type="text" style="display: none;">
+        </form>
+        <a href="javascript:void(0)" class="weui_search_cancel" id="search_cancel">取消</a>
+    </div>
+    <!--<div class="weui_cells weui_cells_access search_show" id="search_show">-->
+    <!--<div class="weui_cell">-->
+    <!--<div class="weui_cell_bd weui_cell_primary">-->
+    <!--<p>实时搜索文本</p>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="weui_cell">-->
+    <!--<div class="weui_cell_bd weui_cell_primary">-->
+    <!--<p>实时搜索文本</p>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="weui_cell">-->
+    <!--<div class="weui_cell_bd weui_cell_primary">-->
+    <!--<p>实时搜索文本</p>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--<div class="weui_cell">-->
+    <!--<div class="weui_cell_bd weui_cell_primary">-->
+    <!--<p>实时搜索文本</p>-->
+    <!--</div>-->
+    <!--</div>-->
+    <!--</div>-->
+</div>
+<!--标签隐藏表单提交-->
+<form name="tag_search" id="tag_search">
+    <input type="hidden" name="select_category">
+    <input type="hidden" name="filter_kind">
+    <input type="hidden" name="filter_granularity">
+    <input type="hidden" name="filter_heat_min">
+    <input type="hidden" name="filter_heat_max">
+    <input type="hidden" name="search_input">
+    <input type="hidden" name="page" id="page" value="{$next_page}">
+</form>
+<!--订单展示栏-->
+<div id="wrapper" style="top: 52px;margin-left: 2.5%;">
+    <div id="scroller">
+        <div id="pullDown">
+            <span class="pullDownIcon" style="float: left"></span>
+            <span class="pullDownLabel" style="margin-left: -48px">下拉刷新...</span>
         </div>
-        <div id="sell" class="tab-pane" style="background-color: #efeff4">
-            <div id="wrapper2">
-                <div id="scroller2">
-                    <div id="pullDown2">
-                        <span class="pullDownIcon" style="float: left"></span>
-                        <span class="pullDownLabel" style="margin-left: -48px">下拉刷新...</span>
-                    </div>
-                    <ul id="thelist2" class="" style="margin-top: 40px;list-style-type: none">
-                    {$li}
-                    {$li}
-                    {$li}
-                    {$li}
-                    {$li}
-                    {$li}
-                    {$li}
-                    {$li}
-                    {$li}
-                    </ul>
-                    <div id="pullUp2">
-                        <span class="pullUpIcon"></span>
-                        <span class="pullUpLabel" style="margin-left: -48px">上拉加载更多...</span>
-                    </div>
-                </div>
-            </div>
+        <div class="tab-content">
+            <ul id="buy" class="tab-pane active" style="margin-top: 40px;list-style-type: none">
+                {$li}
+                {$li}
+                {$li}
+                {$li}
+                <span id="buy_insert"></span>
+                <!--<span id="insert_point"></span>-->
+                <!--<div style="display: none">-->
+                <!--<li id="buy_clone" class="weui_panel weui_panel_access" style=";border-radius: 5px">-->
+                <!--<div style="position: absolute;right: 0px;">-->
+                <!--<img src="__PUBLIC__/home/images/buy.png" width="50px">-->
+                <!--</div>-->
+                <!--<div class="weui_media_box weui_media_appmsg" style="margin: 0;padding-left: 0;padding-right: 0">-->
+                <!--<a href="#">-->
+                <!--<div class="weui_media_hd">-->
+                <!--<img src="__PUBLIC__/home/images/headimg_background.png" class="weui_media_appmsg_thumb">-->
+                <!--</div>-->
+                <!--</a>-->
+                <!--<div class="weui_media_bd">-->
+                <!--<a href="#">-->
+                <!--<h4 class="weui_media_title">{名字} <img src="__PUBLIC__/home/images/medal.png" style="width: 15px;height: 20px"></h4>-->
+                <!--</a>-->
+                <!--<p class="weui_media_desc">-->
+                <!--<img src="__PUBLIC__/home/images/area_start.png" style="width: 10px;height: 15px">-->
+                <!--{}-->
+                <!--</p>-->
+                <!--</div>-->
+                <!--<div class="weui_media_bd text-center" style="">-->
+                <!--<a href="tel:15153151316" class="">-->
+                <!--<h4>-->
+                <!--<img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">-->
+                <!--<span style="">拨打电话</span>-->
+                <!--</h4>-->
+                <!--</a>-->
+                <!--<div>-->
+                <!--<button class="btn btn-xs btn-default" style="padding-left: 20%;padding-right: 20%;border-color: #04bfc6;color: #04bfc6">-->
+                <!--收藏-->
+                <!--</button>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--&lt;!&ndash;<div class="panel-body" style="padding:0">&ndash;&gt;-->
+                <!--<table class="table table-condensed" style="margin: 0">-->
+                <!--<tbody>-->
+                <!--<tr>-->
+                <!--<td>-->
+                <!--煤炭种类:{}-->
+                <!--</td>-->
+                <!--<td>-->
+                <!--{$order['price']}元/吨-->
+                <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--<td>-->
+                <!--煤炭品质:{}-->
+                <!--</td>-->
+                <!--<td>-->
+                <!--产地:{$order['area_start']}-->
+                <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--<td>-->
+                <!--煤炭粒度:{}-->
+                <!--</td>-->
+                <!--<td>-->
+                <!--吨数:{}-->
+                <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--<td>-->
+                <!--有效时间:{}-->
+                <!--</td>-->
+                <!--<td>-->
+                <!--发布时间:{}-->
+                <!--</td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+                <!--</table>-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--</li>-->
+                <!--</div>-->
+            </ul>
+            <ul id="sell" class="tab-pane" style="margin-top: 40px;list-style-type: none">
+                {$li}
+                {$li}
+                {$li}
+                <span id="sell_insert"></span>
+                <!--<span id="insert_point"></span>-->
+                <!--<div style="display: none">-->
+                <!--<li id="buy_clone" class="weui_panel weui_panel_access" style=";border-radius: 5px">-->
+                <!--<div style="position: absolute;right: 0px;">-->
+                <!--<img src="__PUBLIC__/home/images/buy.png" width="50px">-->
+                <!--</div>-->
+                <!--<div class="weui_media_box weui_media_appmsg" style="margin: 0;padding-left: 0;padding-right: 0">-->
+                <!--<a href="#">-->
+                <!--<div class="weui_media_hd">-->
+                <!--<img src="__PUBLIC__/home/images/headimg_background.png" class="weui_media_appmsg_thumb">-->
+                <!--</div>-->
+                <!--</a>-->
+                <!--<div class="weui_media_bd">-->
+                <!--<a href="#">-->
+                <!--<h4 class="weui_media_title">{名字} <img src="__PUBLIC__/home/images/medal.png" style="width: 15px;height: 20px"></h4>-->
+                <!--</a>-->
+                <!--<p class="weui_media_desc">-->
+                <!--<img src="__PUBLIC__/home/images/area_start.png" style="width: 10px;height: 15px">-->
+                <!--{}-->
+                <!--</p>-->
+                <!--</div>-->
+                <!--<div class="weui_media_bd text-center" style="">-->
+                <!--<a href="tel:15153151316" class="">-->
+                <!--<h4>-->
+                <!--<img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">-->
+                <!--<span style="">拨打电话</span>-->
+                <!--</h4>-->
+                <!--</a>-->
+                <!--<div>-->
+                <!--<button class="btn btn-xs btn-default" style="padding-left: 20%;padding-right: 20%;border-color: #04bfc6;color: #04bfc6">-->
+                <!--收藏-->
+                <!--</button>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--&lt;!&ndash;<div class="panel-body" style="padding:0">&ndash;&gt;-->
+                <!--<table class="table table-condensed" style="margin: 0">-->
+                <!--<tbody>-->
+                <!--<tr>-->
+                <!--<td>-->
+                <!--煤炭种类:{}-->
+                <!--</td>-->
+                <!--<td>-->
+                <!--{$order['price']}元/吨-->
+                <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--<td>-->
+                <!--煤炭品质:{}-->
+                <!--</td>-->
+                <!--<td>-->
+                <!--产地:{$order['area_start']}-->
+                <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--<td>-->
+                <!--煤炭粒度:{}-->
+                <!--</td>-->
+                <!--<td>-->
+                <!--吨数:{}-->
+                <!--</td>-->
+                <!--</tr>-->
+                <!--<tr>-->
+                <!--<td>-->
+                <!--有效时间:{}-->
+                <!--</td>-->
+                <!--<td>-->
+                <!--发布时间:{}-->
+                <!--</td>-->
+                <!--</tr>-->
+                <!--</tbody>-->
+                <!--</table>-->
+                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                <!--</li>-->
+                <!--</div>-->
+            </ul>
+        </div>
+        <div id="pullUp">
+            <span class="pullUpIcon"></span>
+            <span class="pullUpLabel" style="margin-left: -48px">上拉加载更多...</span>
         </div>
     </div>
+</div>
 </body>
 
 <!--搜索框功能-->
 <script>
-    $('#search_input').focus(function(){
+    $('#search_input').focus(function () {
         var $weuiSearchBar = $('#search_bar');
         $weuiSearchBar.addClass('weui_search_focusing');
     });
-    $('#search_input').blur(function(){
+    $('#search_input').blur(function () {
         var $weuiSearchBar = $('#search_bar');
         $weuiSearchBar.removeClass('weui_search_focusing');
-        if($(this).val()){
+        if ($(this).val()) {
             $('#search_text').hide();
-        }else{
+        } else {
             $('#search_text').show();
         }
     });
-//    $('#search_input').bind('input','#search_input',function(){
-//        var $searchShow = $("#search_show");
-//        if($(this).val()){
-//            $searchShow.show();
-//        }else{
-//            $searchShow.hide();
-//        }
-//    });
-    $('#search_input').bind('keyup','#search_input',function(event){
+    //    $('#search_input').bind('input','#search_input',function(){
+    //        var $searchShow = $("#search_show");
+    //        if($(this).val()){
+    //            $searchShow.show();
+    //        }else{
+    //            $searchShow.hide();
+    //        }
+    //    });
+    $('#search_input').bind('keyup', '#search_input', function (event) {
         event = event || window.event;
-        if(event.keyCode == 13){
+        if (event.keyCode == 13) {
 //            alert(1234);
-            if($('#search_input').val() == ''){
+            if ($('#search_input').val() == '') {
                 return false;
             }
 //            alert($('#search_input').val());
@@ -287,25 +339,25 @@
 //            window.location.href = 'url?keyword='+ $(this).val();
 
             //将值传入hidden input提交
-            if(cookie('trade_search_filter_kind')){
+            if (cookie('trade_search_filter_kind')) {
                 $('input[name=filter_kind]').val(cookie('trade_search_filter_kind'));
             }
-            if(cookie('trade_search_filter_granularity')){
+            if (cookie('trade_search_filter_granularity')) {
                 $('input[name=filter_granularity]').val(cookie('trade_search_filter_granularity'));
             }
-            if(cookie('trade_search_filter_heat_min')){
+            if (cookie('trade_search_filter_heat_min')) {
                 $('input[name=filter_heat_min]').val(cookie('trade_search_filter_heat_min'));
             }
-            if(cookie('trade_search_filter_heat_max')){
+            if (cookie('trade_search_filter_heat_max')) {
                 $('input[name=filter_heat_max]').val(cookie('trade_search_filter_heat_max'));
             }
-            if(cookie('search_tag')){
+            if (cookie('search_tag')) {
                 $('input[name=select_category]').val(cookie('search_tag'));
             }
 
             //将输入的值存入cookie
 //            cookie('search_input',$('input[name=search_input]').val());
-            cookie('search_input',$(this).val());
+            cookie('search_input', $(this).val());
 
             //提交表单
             document.form_search.method = "post";
@@ -313,50 +365,50 @@
             document.form_search.submit();
         }
     });
-    $('#search_cancel').bind('touchend','#search_cancel',function(){
+    $('#search_cancel').bind('touchend', '#search_cancel', function () {
         $("#search_show").hide();
         $('#search_input').val('');
     });
-    $('#search_clear').bind('touchend','#search_cancel',function(){
+    $('#search_clear').bind('touchend', '#search_cancel', function () {
         $("#search_show").hide();
         $('#search_input').val('');
     });
-//    function search_enter(event){
-//        event = event || window.event;
-////        alert(3);
-//        if(event.keyCode == 13){
-//            if($('#search_input').val() == ''){
-//                alert(123);
-//                return false;
-//            }
-//            console.log($('#search_input').val());
-//            alert(1);
-////            alert($(this).val());
-////            window.location.href = 'url?keyword='+ $(this).val();
-//        }
-//    };
-//    alert($('#search_input').val());
+    //    function search_enter(event){
+    //        event = event || window.event;
+    ////        alert(3);
+    //        if(event.keyCode == 13){
+    //            if($('#search_input').val() == ''){
+    //                alert(123);
+    //                return false;
+    //            }
+    //            console.log($('#search_input').val());
+    //            alert(1);
+    ////            alert($(this).val());
+    ////            window.location.href = 'url?keyword='+ $(this).val();
+    //        }
+    //    };
+    //    alert($('#search_input').val());
 </script>
 
 <!--导航功能-->
 <script>
     $('#myTab a').click(function (e) {
 //            e.preventDefault();
-            $(this).siblings('a').removeClass('weui_bar_item_on');
-            $(this).addClass('weui_bar_item_on');
-            $(this).tab('show');
+        $(this).siblings('a').removeClass('weui_bar_item_on');
+        $(this).addClass('weui_bar_item_on');
+        $(this).tab('show');
     })
 </script>
 
 <!--载入读取上次标签-->
 <script>
-    $(function(){
+    $(function () {
         var now = new Date();
         console.log(now.toLocaleString());
         console.log('new');
         console.log($('#buy').hasClass('active'));
         console.log($('#page').val());
-        if(cookie('search_tag') === '0'){
+        if (cookie('search_tag') === '0') {
             //供货信息
             //避免为空或者false
             //标签选中
@@ -364,18 +416,18 @@
 //            a.siblings('a').removeClass('weui_bar_item_on');
 //            a.addClass('weui_bar_item_on');
 //            a.tab('show');
-            if(cookie('search_input')){
+            if (cookie('search_input')) {
                 $('#search_input').html(cookie('search_input'));
             }
             $('#myTab a:eq(1)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on');
-        }else{
+        } else {
             //求购信息
 //            var a = $('#myTab a:eq(0)');
 //            a.siblings('a').removeClass('weui_bar_item_on');
 //            a.addClass('weui_bar_item_on');
 //            a.tab('show');
             $('#myTab a:eq(0)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on');
-            cookie('search_tag','2');
+            cookie('search_tag', '2');
         }
     });
 </script>
@@ -383,9 +435,9 @@
 <!--点击标签查询-->
 <script>
     //点击求购信息标签
-    $('#myTab a:eq(0)').click(function(){
+    $('#myTab a:eq(0)').click(function () {
         //存入所选标签入cookie
-        cookie('search_tag','2');
+        cookie('search_tag', '2');
         $('input[name=select_category]').val(cookie('search_tag'));
         $('input[name=page]').val(1);
         //点击标签只传标签值，相当于重置筛选条件
@@ -395,11 +447,11 @@
 //        $('input[name=filter_heat_max]').val(cookie('trade_search_filter_heat_max'));
 //        $('input[name=search_input]').val(cookie('search_input'));
         //重置筛选条件的cookie
-        cookie('search_input',null);
-        cookie('trade_search_filter_kind',null);
-        cookie('trade_search_filter_granularity',null);
-        cookie('trade_search_filter_heat_min',null);
-        cookie('trade_search_filter_heat_max',null);
+        cookie('search_input', null);
+        cookie('trade_search_filter_kind', null);
+        cookie('trade_search_filter_granularity', null);
+        cookie('trade_search_filter_heat_min', null);
+        cookie('trade_search_filter_heat_max', null);
         //提交表单
         document.tag_search.method = 'post';
         document.tag_search.action = "{:U('TradeSearch/trade_search')}";
@@ -407,9 +459,9 @@
     });
 
     //点击供应信息标签
-    $('#myTab a:eq(1)').click(function(){
+    $('#myTab a:eq(1)').click(function () {
         //存入所选标签入cookie
-        cookie('search_tag','0');
+        cookie('search_tag', '0');
         $('input[name=select_category]').val(cookie('search_tag'));
         $('input[name=page]').val(1);
         //点击标签只传标签值，相当于重置筛选条件
@@ -419,11 +471,11 @@
 //        $('input[name=filter_heat_max]').val(cookie('trade_search_filter_heat_max'));
 //        $('input[name=search_input]').val(cookie('search_input'));
         //重置筛选条件的cookie
-        cookie('search_input',null);
-        cookie('trade_search_filter_kind',null);
-        cookie('trade_search_filter_granularity',null);
-        cookie('trade_search_filter_heat_min',null);
-        cookie('trade_search_filter_heat_max',null);
+        cookie('search_input', null);
+        cookie('trade_search_filter_kind', null);
+        cookie('trade_search_filter_granularity', null);
+        cookie('trade_search_filter_heat_min', null);
+        cookie('trade_search_filter_heat_max', null);
         //提交表单
         document.tag_search.method = 'post';
         document.tag_search.action = "{:U('TradeSearch/trade_search')}";
@@ -433,32 +485,32 @@
 
 <!--滚动功能-->
 <script>
-//    var myScroll;
-//    myScroll = new IScroll('#wrapper',{
-//        probeType: 3,
-//        mouseWheel: true
-//    });
-//    function loaded(){
-//        myScroll = new IScroll('#wrapper');
-//    }
-//    console.dir(myScroll.options);
+    //    var myScroll;
+    //    myScroll = new IScroll('#wrapper',{
+    //        probeType: 3,
+    //        mouseWheel: true
+    //    });
+    //    function loaded(){
+    //        myScroll = new IScroll('#wrapper');
+    //    }
+    //    console.dir(myScroll.options);
 
-//var myScroll,pullDownEl,pullDownOffset,pullUpEl,pullUpOffset,generatedCount = 0;
-var myScroll,pullDownEl,pullDownOffset,pullUpEl,pullUpOffset;
-var time_now,update_time;
+    //var myScroll,pullDownEl,pullDownOffset,pullUpEl,pullUpOffset,generatedCount = 0;
+    var myScroll, pullDownEl, pullDownOffset, pullUpEl, pullUpOffset;
+    var time_now, update_time;
 
-var myScroll2,pullDownEl2,pullDownOffset2,pullUpEl2,pullUpOffset2;
-var time_now2,update_time2;
+    var myScroll2, pullDownEl2, pullDownOffset2, pullUpEl2, pullUpOffset2;
+    var time_now2, update_time2;
 
 
-//
-/**下拉刷新 （自定义实现此方法）
- *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
- */
-function pullDownAction(){
-    console.log('down');
-    location.reload();
-    myScroll.refresh();
+    //
+    /**下拉刷新 （自定义实现此方法）
+     *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
+     */
+    function pullDownAction() {
+        console.log('down');
+        location.reload();
+        myScroll.refresh();
 //    return;
 //    return;
 //    setTimeout(function(){
@@ -485,98 +537,99 @@ function pullDownAction(){
 //        });
 //        myScroll.refresh();//数据加载完成后，调用界面更新方法  Remember to refresh when contents are loaded (ie: on ajax completion)
 //    },1000);  // <-- Simulate network congestion, remove setTimeout from production!
-}
-/**滚动翻页 （自定义实现此方法）
- *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
- */
-function pullUpAction(){
-    console.log('up');
-    var page = $('#page').val();
-    console.log(page);
+    }
+    /**滚动翻页 （自定义实现此方法）
+     *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
+     */
+    function pullUpAction() {
+        console.log('up');
+        var page = $('#page').val();
+        console.log(page);
 //    myScroll.refresh();
 //    return;
-    setTimeout(function (){
+        setTimeout(function () {
 //        var el,li,i;
 //        el = document.getElementById('thelist');
-        var post = $('#tag_search').serialize();
-        //==========================================
-        $.ajax({
-            type: "post",
-            url: "{:U('TradeSearch/trade_search')}",
-            data: {isAjax:1,page:page,condition:post},
+            var post = $('#tag_search').serialize();
+            //==========================================
+            $.ajax({
+                type: "post",
+                url: "{:U('TradeSearch/trade_search')}",
+                data: {isAjax: 1, page: page, condition: post},
 //            dataType: "json",
-            success: function(data){
-                console.log('success');
-//                console.log(data);
-//                var json = data;
-//                $(json).each(function(){
-//                    li = document.createElement('li');
-//                    //  li.innerText = 'Generated row ' + (++generatedCount);
-//                    li.innerHTML = '<img src="' + this.src + '"/>';
-//                    el.insertBefore(li,el.childNodes[0]);
-//                })
-                var jsonObj=eval("("+data+")");
-                console.log(jsonObj.test);
-//                return;
-//                var jsonObj=data;
-//                console.log(jsonObj.data);
-//                return;
-                    jQuery.each(jsonObj.data, function(k, val){
-                        var tempObj=$("#buy_clone").clone(true);
+                success: function (data) {
+                    console.log('success');
+                    if (cookie('search_tag') === '0') {
+                        li = document.createElement('li');
+                        li.innerText = 'Generated row sell';
+                        el = document.getElementById('sell_insert');
+                        el.insertBefore(li, el.childNodes[0]);
+                    } else {
+                        li = document.createElement('li');
+                        li.innerText = 'Generated row 1';
+                        el = document.getElementById('buy_insert');
+                        el.insertBefore(li, el.childNodes[0]);
+//                        el.insertAdjacentHTML(li,el.childNodes[0]);
+                    }
+                    var jsonObj = eval("(" + data + ")");
+                    console.log(jsonObj.test);
+                    jQuery.each(jsonObj.data, function (k, val) {
+                        var tempObj = $("#buy_clone").clone(true);
 //                        tempObj.children("li").children("table").children("tbody").children("tr").eq(1).children("td").eq(1).html("产地"+val.area_start);
-                        tempObj.children("table").children("tbody").children("tr").eq(1).children("td").eq(1).html("产地"+val.area_start);
+                        tempObj.children("table").children("tbody").children("tr").eq(1).children("td").eq(1).html("产地" + val.area_start);
                         tempObj.appendTo("#insert_point");
                     });
                     $("#page").val(jsonObj.next_page);
-                myScroll.refresh();
-            }
-        });
-        //============================================
-        myScroll.refresh(); // 数据加载完成后，调用界面更新方法 Remember to refresh when contents are loaded (ie: on ajax completion)
-    },1000); // <-- Simulate network congestion, remove setTimeout from production!
-}
-/**
- * 初始化iScroll控件
- */
-function loaded(){
-    pullDownEl = document.getElementById('pullDown');
-    pullDownOffset = pullDownEl.offsetHeight;
-    pullUpEl = document.getElementById('pullUp');
-    pullUpOffset = pullUpEl.offsetHeight;
-    console.log(pullDownOffset);
-    console.log(pullUpOffset);
-    myScroll = new iScroll('wrapper',{
+                    myScroll.refresh();
+                }
+            });
+            //============================================
+            myScroll.refresh(); // 数据加载完成后，调用界面更新方法 Remember to refresh when contents are loaded (ie: on ajax completion)
+        }, 1000); // <-- Simulate network congestion, remove setTimeout from production!
+    }
+    /**
+     * 初始化iScroll控件
+     */
+    function loaded() {
+        pullDownEl = document.getElementById('pullDown');
+        pullDownOffset = pullDownEl.offsetHeight;
+        pullUpEl = document.getElementById('pullUp');
+        pullUpOffset = pullUpEl.offsetHeight;
+        console.log(pullDownOffset);
+        console.log(pullUpOffset);
+        setTimeout(function () {
+            myScroll = new iScroll('wrapper', {
 //        scrollbarClass: 'myScrollbar', /* 重要样式 */
-        useTransition: true,
-        topOffset: pullDownOffset,
+                useTransition: true,
+                topOffset: pullDownOffset,
 //        probeType: 3,
 //        mouseWheel: false,
-        scrollbars: true,
+                scrollbars: true,
 //        disableMouse: false,
 //        disablePointer: false,
-        //点击事件
-        click: false,
-        taps: false,
+                //点击事件
+                click: false,
+                taps: false,
 //        tap: true,
-        preventDefault: false,//（把这句加上去哦）
-        preventDefaultException: {tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|A)$/},
-        onRefresh: function(){
-            console.log('refresh');
-            if(pullDownEl.className.match('loading')){
-                pullDownEl.className = '';
-                pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+                preventDefault: false,//（把这句加上去哦）
+                preventDefaultException: {tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|A)$/},
+                onRefresh: function () {
+                    console.log('refresh');
+                    if (pullDownEl.className.match('loading')) {
+                        pullDownEl.className = '';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
 //                pullDownEl.querySelector('.pullDownLabel').innerHTML = '数据更新时间：' + update_time+'下拉刷新';
-            }else if(pullUpEl.className.match('loading')){
-                pullUpEl.className = '';
-                pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
-            }
-            document.getElementById("pullUp").style.display="none";
-            time_now = new Date();
-            update_time = time_now.toLocaleString();
+                    } else if (pullUpEl.className.match('loading')) {
+                        pullUpEl.className = '';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+                    }
+                    document.getElementById("pullUp").style.display = "none";
+                    time_now = new Date();
+                    update_time = time_now.toLocaleString();
 //            document.getElementById("show").innerHTML="onRefresh: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
 
-        },
-        onScrollMove: function(){
+                },
+                onScrollMove: function () {
 //            document.getElementById("show").innerHTML="onScrollMove: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
 
 //            if(this.y > 5 && !pullDownEl.className.match('flip')){
@@ -598,157 +651,60 @@ function loaded(){
 //                this.maxScrollY = pullUpOffset;
 //            }
 
-            if (this.y > 0) {
-                pullDownEl.className = 'flip';
-                pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...</br>'+'最后更新时间：'+update_time;
-                this.minScrollY = 0;
-            }
-            if (this.y < 0 && pullDownEl.className.match('flip')) {
-                pullDownEl.className = '';
-                pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
-                this.minScrollY = -pullDownOffset;
-            }
+                    if (this.y > 0) {
+                        pullDownEl.className = 'flip';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...</br>' + '最后更新时间：' + update_time;
+                        this.minScrollY = 0;
+                    }
+                    if (this.y < 0 && pullDownEl.className.match('flip')) {
+                        pullDownEl.className = '';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+                        this.minScrollY = -pullDownOffset;
+                    }
 
-            if ( this.scrollerH < this.wrapperH && this.y < (this.minScrollY-pullUpOffset) || this.scrollerH > this.wrapperH && this.y < (this.maxScrollY - pullUpOffset) ) {
-                document.getElementById("pullUp").style.display="";
-                pullUpEl.className = 'flip';
-                pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...</br>'+'最后更新时间：'+update_time;
-            }
-            if (this.scrollerH < this.wrapperH && this.y > (this.minScrollY-pullUpOffset) && pullUpEl.className.match('flip') || this.scrollerH > this.wrapperH && this.y > (this.maxScrollY - pullUpOffset) && pullUpEl.className.match('flip')) {
-                document.getElementById("pullUp").style.display="none";
-                pullUpEl.className = '';
-                pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
-            }
+                    if (this.scrollerH < this.wrapperH && this.y < (this.minScrollY - pullUpOffset) || this.scrollerH > this.wrapperH && this.y < (this.maxScrollY - pullUpOffset)) {
+                        document.getElementById("pullUp").style.display = "";
+                        pullUpEl.className = 'flip';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...</br>' + '最后更新时间：' + update_time;
+                    }
+                    if (this.scrollerH < this.wrapperH && this.y > (this.minScrollY - pullUpOffset) && pullUpEl.className.match('flip') || this.scrollerH > this.wrapperH && this.y > (this.maxScrollY - pullUpOffset) && pullUpEl.className.match('flip')) {
+                        document.getElementById("pullUp").style.display = "none";
+                        pullUpEl.className = '';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+                    }
 
-        },
-        onScrollEnd: function(){
+                },
+                onScrollEnd: function () {
 //            document.getElementById("show").innerHTML="onScrollEnd: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
-            if(pullDownEl.className.match('flip')){
-                pullDownEl.className = 'loading';
-                pullDownEl.querySelector('.pullDownLabel').innerHTML = '加载中...';
-                pullDownAction(); // Execute custom function (ajax call?)
-            }else if(pullUpEl.className.match('flip')){
-                pullUpEl.className = 'loading';
-                pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载中...';
-                pullUpAction(); // Execute custom function (ajax call?)
-            }
-        }
-    });
-    console.dir(myScroll.options);
+                    if (pullDownEl.className.match('flip')) {
+                        pullDownEl.className = 'loading';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '加载中...';
+                        pullDownAction(); // Execute custom function (ajax call?)
+                    } else if (pullUpEl.className.match('flip')) {
+                        pullUpEl.className = 'loading';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载中...';
+                        pullUpAction(); // Execute custom function (ajax call?)
+                    }
+                }
+            });
+            console.dir(myScroll.options);
+        }, 100);
 //    setTimeout(function(){
 //        document.getElementById('wrapper').style.left = '0';
 //    },800);
+    }
+    //初始化绑定iScroll控件
+    document.addEventListener('touchmove', function (e) {
+        e.preventDefault();
+    }, false);
+    document.addEventListener('DOMContentLoaded', loaded, false);
+    //    window.onload = loaded();
 
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    pullDownEl2 = document.getElementById('pullDown2');
-    pullDownOffset2 = pullDownEl2.offsetHeight;
-    pullUpEl2 = document.getElementById('pullUp2');
-    pullUpOffset2 = pullUpEl2.offsetHeight;
-    myScroll2 = new iScroll('wrapper2',{
-//        scrollbarClass: 'myScrollbar', /* 重要样式 */
-        useTransition: true,
-        topOffset: pullDownOffset2,
-//        probeType: 3,
-//        mouseWheel: false,
-        scrollbars: true,
-//        disableMouse: false,
-//        disablePointer: false,
-        //点击事件
-        click: false,
-        taps: false,
-//        tap: true,
-        preventDefault: false,//（把这句加上去哦）
-        preventDefaultException: {tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|A)$/},
-        onRefresh: function(){
-            console.log('refresh');
-            if(pullDownEl2.className.match('loading')){
-                pullDownEl2.className = '';
-                pullDownEl2.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
-//                pullDownEl.querySelector('.pullDownLabel').innerHTML = '数据更新时间：' + update_time+'下拉刷新';
-            }else if(pullUpEl2.className.match('loading')){
-                pullUpEl2.className = '';
-                pullUpEl2.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
-            }
-            document.getElementById("pullUp").style.display="none";
-            time_now2 = new Date();
-            update_time2 = time_now2.toLocaleString();
-//            document.getElementById("show").innerHTML="onRefresh: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
-
-        },
-        onScrollMove: function(){
-//            document.getElementById("show").innerHTML="onScrollMove: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
-
-//            if(this.y > 5 && !pullDownEl.className.match('flip')){
-//                pullDownEl.className = 'flip';
-//                pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...';
-//                //pullDownEl.querySelector('.pullDownLabel').innerHTML = '数据更新时间：' + updateDatetime;
-//                this.minScrollY = 0;
-//            }else if(this.y < 5 && pullDownEl.className.match('flip')){
-//                pullDownEl.className = '';
-//                pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
-//                this.minScrollY = -pullDownOffset;
-//            }else if(this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')){
-//                pullUpEl.className = 'flip';
-//                pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...';
-//                this.maxScrollY = this.maxScrollY;
-//            }else if(this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')){
-//                pullUpEl.className = '';
-//                pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
-//                this.maxScrollY = pullUpOffset;
-//            }
-
-            if (this.y > 0) {
-                pullDownEl2.className = 'flip';
-                pullDownEl2.querySelector('.pullDownLabel').innerHTML = '松手开始更新...</br>'+'最后更新时间：'+update_time2;
-                this.minScrollY = 0;
-            }
-            if (this.y < 0 && pullDownEl2.className.match('flip')) {
-                pullDownEl2.className = '';
-                pullDownEl2.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
-                this.minScrollY = -pullDownOffset2;
-            }
-
-            if ( this.scrollerH < this.wrapperH && this.y < (this.minScrollY-pullUpOffset2) || this.scrollerH > this.wrapperH && this.y < (this.maxScrollY - pullUpOffset2) ) {
-                document.getElementById("pullUp").style.display="";
-                pullUpEl2.className = 'flip';
-                pullUpEl2.querySelector('.pullUpLabel').innerHTML = '松手开始更新...</br>'+'最后更新时间：'+update_time2;
-            }
-            if (this.scrollerH < this.wrapperH && this.y > (this.minScrollY-pullUpOffset2) && pullUpEl2.className.match('flip') || this.scrollerH > this.wrapperH && this.y > (this.maxScrollY - pullUpOffset2) && pullUpEl2.className.match('flip')) {
-                document.getElementById("pullUp").style.display="none";
-                pullUpEl2.className = '';
-                pullUpEl2.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
-            }
-
-        },
-        onScrollEnd: function(){
-//            document.getElementById("show").innerHTML="onScrollEnd: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
-            if(pullDownEl2.className.match('flip')){
-                pullDownEl2.className = 'loading';
-                pullDownEl2.querySelector('.pullDownLabel').innerHTML = '加载中...';
-                pullDownAction(); // Execute custom function (ajax call?)
-            }else if(pullUpEl2.className.match('flip')){
-                pullUpEl2.className = 'loading';
-                pullUpEl2.querySelector('.pullUpLabel').innerHTML = '加载中...';
-                pullUpAction(); // Execute custom function (ajax call?)
-            }
-        }
-    });
-
-
-
-
-}
-//初始化绑定iScroll控件
-document.addEventListener('touchmove',function(e){
-    e.preventDefault();
-},false);
-document.addEventListener('DOMContentLoaded',loaded,false);
-//    window.onload = loaded();
+    //    window.addEventListener(load,loaded,false);
 
 </script>
 <script>
-    function qqqwww(){
+    function qqqwww() {
         console.log(123);
     }
 </script>

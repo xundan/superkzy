@@ -2,191 +2,498 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
     <!--<link rel="icon" href="../../favicon.ico">-->
-    <title></title>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <title>我的收藏</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="__PUBLIC__/home/js/iscroll.js"></script>
-    <link type="text/css" rel="stylesheet" href="bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="weui.min.css">
-    <script type="text/javascript" src="jquery-2.2.4.min.js"></script>
-    <script type="text/javascript" src="bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
+    <!--<link type="text/css" rel="stylesheet" href="bootstrap.min.css">-->
+    <!--<link type="text/css" rel="stylesheet" href="weui.min.css">-->
+    <!--<script type="text/javascript" src="jquery-2.2.4.min.js"></script>-->
+    <!--<script type="text/javascript" src="bootstrap.min.js"></script>-->
 </head>
 <body>
-    <!--标题栏-->
-    <div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
-        <!--<div class="container text-center" style="">-->
-        <!--<div style="display: inline-block;height: 100%;vertical-align: middle"></div>-->
-        <span class="pull-left" style="">
-                <!--<a class="glyphicon glyphicon-chevron-left"></a>-->
-            <a href="#">
-                <img src="__PUBLIC__/home/images/goback.png" class="img-responsive" style="width: 15px;height: auto;margin-top: 40%">
-            </a>
-        </span>
-        <span class="">
-            <span class="" style="font-size: 1.5em;">我的收藏</span>
-        </span>
-        <!--</div>-->
+<!--标题栏-->
+<!--<div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">-->
+    <!--&lt;!&ndash;<div class="container text-center" style="">&ndash;&gt;-->
+    <!--&lt;!&ndash;<div style="display: inline-block;height: 100%;vertical-align: middle"></div>&ndash;&gt;-->
+        <!--<span class="pull-left" style="">-->
+                <!--&lt;!&ndash;<a class="glyphicon glyphicon-chevron-left"></a>&ndash;&gt;-->
+            <!--<a href="#">-->
+                <!--<img src="__PUBLIC__/home/images/goback.png" class="img-responsive"-->
+                     <!--style="width: 15px;height: auto;margin-top: 40%">-->
+            <!--</a>-->
+        <!--</span>-->
+        <!--<span class="">-->
+            <!--<span class="" style="font-size: 1.5em;">我的收藏</span>-->
+        <!--</span>-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</div>-->
+
+<!--清除浮动-->
+<div class="clearfix"></div>
+
+<!--导航标签-->
+<div class="panel-title" style="margin:0;padding: 0;background-color: white">
+    <div id="myTab" class="weui_navbar" style=";margin-bottom: 0;">
+        <a href="#transport" data-toggle="tab" class="weui_navbar_item weui_bar_item_on"
+           style="color: black;text-decoration: none;font-size: 1.2em">
+            <span>运输订单</span>
+        </a>
+        <a href="#trade" data-toggle="tab" class="weui_navbar_item"
+           style="color: black;text-decoration: none;font-size: 1.2em">
+            <span>交易订单</span>
+        </a>
     </div>
-    <!--清除浮动-->
-    <div class="clearfix"></div>
-    <!--导航标签-->
-    <div class="panel-title" style="margin:0;padding: 0;background-color: white">
-        <ul id="myTab" class="weui_navbar" role="" style="position: inherit;margin-bottom: 0;">
-            <li role="presentation" class="weui_navbar_item weui_bar_item_on" style=";font-size: 1.2em">
-                <a href="#transport" class="" data-toggle="tab" style="color: black;text-decoration: none">运输订单</a>
-            </li>
-            <li role="presentation" class="weui_navbar_item" style=";font-size: 1.2em">
-                <a href="#trade" data-toggle="tab" style="color: black;text-decoration: none">交易订单</a>
-            </li>
-        </ul>
-    </div>
-    <!--订单展示栏-->
-    <div class="container">
-        <div class="tab-content" style="">
-            <div id="transport" class="tab-pane active" style="background-color: #efeff4">
-                <div id="wrapper">
-                    <div id="scroller">
-                        <div id="pullDown">
-                            <span class="pullDownIcon"></span>
-                            <span class="pullDownLabel">下拉刷新...</span>
-                        </div>
-                        <ul id="thelist" class="" style="list-style-type: none">
-                            <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
-                                <div class="text-right">
-                                    <a href="{:U('OwnerOrder/owner_order_transport_detail')}" style="text-decoration: none;color:grey">
-                                        详情 >
-                                    </a>
-                                </div>
-                                <div class="">
-                                        <strong>车主名称：{}</strong>
-                                        <span class="pull-right"><strong>{cartype}/{capacity}</strong></span>
-                                </div>
-                                <div class="divider" style="border:1px solid darkgrey"></div>
-                                <div class="text-center">
-                                    <img class="" src="__PUBLIC__/home/images/area_start.png" style="width: 12px;height: 15px;">
-                                    {}———{}
-                                    <img class="" src="__PUBLIC__/home/images/area_end.png" style="width: 12px;height: 15px;">
-                                </div>
-                                <div class="pull-right help-block">
-                                    接单时间:{}
-                                </div>
-                            </li>
-                            <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
-                                <div class="text-right">
-                                    <a href="{:U('OwnerOrder/owner_order_detail')}" style="text-decoration: none;color:grey">
-                                        详情 >
-                                    </a>
-                                </div>
-                                <div class="">
-                                        <strong>车主名称：{}</strong>
-                                        <span class="pull-right"><strong>{cartype}/{capacity}</strong></span>
-                                </div>
-                                <ul class="nav nav-list">
-                                    <li class="divider"></li>
-                                </ul>
-                                <div class="divider" style="border:1px solid darkgrey"></div>
-                                <div class="text-center">
-                                    <img class="" src="__PUBLIC__/home/images/area_start.png" style="width: 12px;height: 15px;">
-                                    {}———{}
-                                    <img class="" src="__PUBLIC__/home/images/area_end.png" style="width: 12px;height: 15px;">
-                                </div>
-                                <div class="pull-right">
-                                    接单时间:{}
-                                </div>
-                            </li>
-                        </ul>
-                        <div id="pullUp">
-                            <span class="pullUpIcon"></span>
-                            <span class="pullUpLabel">上拉加载更多...</span>
-                        </div>
-                    </div>
-                </div>
+</div>
+
+<!--标签隐藏表单提交-->
+<form name="tag_search" id="tag_search">
+    <input type="hidden" name="select_category">
+    <input type="hidden" name="page" id="page" value="{$next_page}">
+</form>
+
+<!--订单展示栏-->
+    <div id="wrapper" style="top: 10px;margin-left: 2.5%">
+        <div id="scroller">
+            <div id="pullDown">
+                <span class="pullDownIcon"></span>
+                <span class="pullDownLabel" style="margin-left: -48px">下拉刷新...</span>
             </div>
-            <div id="trade" class="tab-pane" style="background-color: #efeff4">
-                <ul id="thelist2" class="" style="list-style-type: none">
-                    <li class="weui_panel weui_panel_access" style="border-radius: 5px">
-                        <div style="position: absolute;right: 0px;">
-                            <img src="__PUBLIC__/home/images/sell.png" width="50px">
-                        </div>
-                        <div class="weui_media_box weui_media_appmsg" style="margin: 0;padding-left: 0;padding-right: 0">
-                            <a href="#">
-                                <div class="weui_media_hd">
-                                    <img src="__PUBLIC__/home/images/headimg_background.png" class="weui_media_appmsg_thumb">
-                                </div>
-                            </a>
-                            <div class="weui_media_bd">
-                                <a href="#">
-                                    <h4 class="weui_media_title">{名字} <img src="__PUBLIC__/home/images/medal.png" style="width: 15px;height: 20px"></h4>
-                                </a>
-                                <p class="weui_media_desc">
-                                    <img src="__PUBLIC__/home/images/area_start.png" style="width: 15px;height: 20px">
-                                    {start}
-                                </p>
-                            </div>
-                            <div class="weui_media_bd" style="">
-                                <div class="text-right">
-                                    <a href="{:U('OwnerOrder/owner_order_trade_detail')}" style="text-decoration: none;color:grey">
-                                        详情 >
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <!--<div class="panel-body" style="padding:0">-->
-                        <table class="table-responsive" style="margin: 0">
-                            <tbody>
-                            <tr>
-                                <td>
-                                    煤炭种类:{}
-                                </td>
-                                <td>
-                                    {}元/吨
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    煤炭品质:{}
-                                </td>
-                                <td>
-                                    产地:{}
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    煤炭粒度:{}
-                                </td>
-                                <td>
-                                    吨数:{}吨
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <div class="pull-right help-block">
+            <div class="tab-content" style="">
+                <ul id="transport" class="tab-pane active" style="margin-top: 40px;list-style-type: none">
+                <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
+                    <div class="text-right">
+                        <a href="{:U('OwnerOrder/owner_order_transport_detail')}"
+                           style="text-decoration: none;color:grey">
+                            详情 >
+                        </a>
+                    </div>
+                    <div class="">
+                        <strong>车主名称：{}</strong>
+                        <span class="pull-right"><strong>{cartype}/{capacity}</strong></span>
+                    </div>
+                    <div class="divider" style="border:1px solid darkgrey"></div>
+                    <div class="text-center">
+                        <img class="" src="__PUBLIC__/home/images/area_start.png"
+                             style="width: 12px;height: 15px;">
+                        {}———{}
+                        <img class="" src="__PUBLIC__/home/images/area_end.png"
+                             style="width: 12px;height: 15px;">
+                    </div>
+                    <div class="pull-right help-block">
                         接单时间:{}
+                    </div>
+                </li>
+                <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
+                    <div class="text-right">
+                        <a href="{:U('OwnerOrder/owner_order_detail')}"
+                           style="text-decoration: none;color:grey">
+                            详情 >
+                        </a>
+                    </div>
+                    <div class="">
+                        <strong>车主名称：{}</strong>
+                        <span class="pull-right"><strong>{cartype}/{capacity}</strong></span>
+                    </div>
+                    <ul class="nav nav-list">
+                        <li class="divider"></li>
+                    </ul>
+                    <div class="divider" style="border:1px solid darkgrey"></div>
+                    <div class="text-center">
+                        <img class="" src="__PUBLIC__/home/images/area_start.png"
+                             style="width: 12px;height: 15px;">
+                        {}———{}
+                        <img class="" src="__PUBLIC__/home/images/area_end.png"
+                             style="width: 12px;height: 15px;">
+                    </div>
+                    <div class="pull-right">
+                        接单时间:{}
+                    </div>
+                </li>
+            </ul>
+                <ul id="trade" class="tab-pane" style="margin-top: 40px;list-style-type: none">
+                    <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
+                        <div class="text-right">
+                            <a href="{:U('OwnerOrder/owner_order_transport_detail')}"
+                               style="text-decoration: none;color:grey">
+                                详情 >
+                            </a>
                         </div>
-                        <!--</div>-->
+                        <div class="">
+                            <strong>车主名称：{}</strong>
+                            <span class="pull-right"><strong>{cartype}/{capacity}</strong></span>
+                        </div>
+                        <div class="divider" style="border:1px solid darkgrey"></div>
+                        <div class="text-center">
+                            <img class="" src="__PUBLIC__/home/images/area_start.png"
+                                 style="width: 12px;height: 15px;">
+                            {}———{}
+                            <img class="" src="__PUBLIC__/home/images/area_end.png"
+                                 style="width: 12px;height: 15px;">
+                        </div>
+                        <div class="pull-right help-block">
+                            接单时间:{}
+                        </div>
+                    </li>
+                    <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
+                        <div class="text-right">
+                            <a href="{:U('OwnerOrder/owner_order_transport_detail')}"
+                               style="text-decoration: none;color:grey">
+                                详情 >
+                            </a>
+                        </div>
+                        <div class="">
+                            <strong>车主名称：{}</strong>
+                            <span class="pull-right"><strong>{cartype}/{capacity}</strong></span>
+                        </div>
+                        <div class="divider" style="border:1px solid darkgrey"></div>
+                        <div class="text-center">
+                            <img class="" src="__PUBLIC__/home/images/area_start.png"
+                                 style="width: 12px;height: 15px;">
+                            {}———{}
+                            <img class="" src="__PUBLIC__/home/images/area_end.png"
+                                 style="width: 12px;height: 15px;">
+                        </div>
+                        <div class="pull-right help-block">
+                            接单时间:{}
+                        </div>
+                    </li>
+                    <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
+                        <div class="text-right">
+                            <a href="{:U('OwnerOrder/owner_order_transport_detail')}"
+                               style="text-decoration: none;color:grey">
+                                详情 >
+                            </a>
+                        </div>
+                        <div class="">
+                            <strong>车主名称：{}</strong>
+                            <span class="pull-right"><strong>{cartype}/{capacity}</strong></span>
+                        </div>
+                        <div class="divider" style="border:1px solid darkgrey"></div>
+                        <div class="text-center">
+                            <img class="" src="__PUBLIC__/home/images/area_start.png"
+                                 style="width: 12px;height: 15px;">
+                            {}———{}
+                            <img class="" src="__PUBLIC__/home/images/area_end.png"
+                                 style="width: 12px;height: 15px;">
+                        </div>
+                        <div class="pull-right help-block">
+                            接单时间:{}
+                        </div>
+                    </li>
+                    <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
+                        <div class="text-right">
+                            <a href="{:U('OwnerOrder/owner_order_transport_detail')}"
+                               style="text-decoration: none;color:grey">
+                                详情 >
+                            </a>
+                        </div>
+                        <div class="">
+                            <strong>车主名称：{}</strong>
+                            <span class="pull-right"><strong>{cartype}/{capacity}</strong></span>
+                        </div>
+                        <div class="divider" style="border:1px solid darkgrey"></div>
+                        <div class="text-center">
+                            <img class="" src="__PUBLIC__/home/images/area_start.png"
+                                 style="width: 12px;height: 15px;">
+                            {}———{}
+                            <img class="" src="__PUBLIC__/home/images/area_end.png"
+                                 style="width: 12px;height: 15px;">
+                        </div>
+                        <div class="pull-right help-block">
+                            接单时间:{}
+                        </div>
+                    </li>
+                    <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
+                        <div class="text-right">
+                            <a href="{:U('OwnerOrder/owner_order_transport_detail')}"
+                               style="text-decoration: none;color:grey">
+                                详情 >
+                            </a>
+                        </div>
+                        <div class="">
+                            <strong>车主名称：{}</strong>
+                            <span class="pull-right"><strong>{cartype}/{capacity}</strong></span>
+                        </div>
+                        <div class="divider" style="border:1px solid darkgrey"></div>
+                        <div class="text-center">
+                            <img class="" src="__PUBLIC__/home/images/area_start.png"
+                                 style="width: 12px;height: 15px;">
+                            {}———{}
+                            <img class="" src="__PUBLIC__/home/images/area_end.png"
+                                 style="width: 12px;height: 15px;">
+                        </div>
+                        <div class="pull-right help-block">
+                            接单时间:{}
+                        </div>
                     </li>
                 </ul>
             </div>
+            <div id="pullUp">
+                <span class="pullUpIcon"></span>
+                <span class="pullUpLabel" style="margin-left: -48px">上拉加载更多...</span>
+            </div>
         </div>
     </div>
-
-
 </body>
+
 <!--导航功能-->
 <script>
     $('#myTab a').click(function (e) {
 //            e.preventDefault();
-        $(this).parent('li').siblings('li').removeClass('weui_bar_item_on');
-        $(this).parent('li').addClass('weui_bar_item_on');
+        $(this).siblings('a').removeClass('weui_bar_item_on');
+        $(this).addClass('weui_bar_item_on');
         $(this).tab('show')
     })
 </script>
+
+<!--载入读取上次标签-->
 <script>
+    $(function () {
+        var now = new Date();
+        if (cookie('search_tag') == '运输订单') {
+            //运输订单
+            //避免为空或者false
+            //标签选中
+            $('#myTab a:eq(0)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on');
+        } else {
+            //交易订单
+            $('#myTab a:eq(1)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on');
+        }
+    });
+</script>
+
+<!--点击标签查询-->
+<script>
+    //点击运输订单标签
+    $('#myTab a:eq(0)').click(function () {
+        //存入所选标签入cookie
+        cookie('search_tag', '运输订单');
+        $('input[name=select_category]').val(cookie('search_tag'));
+        $('input[name=page]').val(1);
+        //提交表单
+        document.tag_search.method = 'post';
+        document.tag_search.action = "{:U('OwnerOrder/owner_order')}";
+        document.tag_search.submit();
+    });
+
+    //点击供应信息标签
+    $('#myTab a:eq(1)').click(function () {
+        //存入所选标签入cookie
+        cookie('search_tag', '交易订单');
+        $('input[name=select_category]').val(cookie('search_tag'));
+        $('input[name=page]').val(1);
+        //提交表单
+        document.tag_search.method = 'post';
+        document.tag_search.action = "{:U('OwnerOrder/owner_order')}";
+        document.tag_search.submit();
+    })
+</script>
+
+
+<!--滚动功能-->
+<script>
+    //    var myScroll;
+    //    myScroll = new IScroll('#wrapper',{
+    //        probeType: 3,
+    //        mouseWheel: true
+    //    });
+    //    function loaded(){
+    //        myScroll = new IScroll('#wrapper');
+    //    }
+    //    console.dir(myScroll.options);
+
+    //var myScroll,pullDownEl,pullDownOffset,pullUpEl,pullUpOffset,generatedCount = 0;
+    var myScroll, pullDownEl, pullDownOffset, pullUpEl, pullUpOffset;
+    var time_now, update_time;
+
+//    var myScroll2, pullDownEl2, pullDownOffset2, pullUpEl2, pullUpOffset2;
+//    var time_now2, update_time2;
+
+    //
+    /**下拉刷新 （自定义实现此方法）
+     *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
+     */
+    function pullDownAction() {
+        console.log('down');
+        location.reload();
+        myScroll.refresh();
+//    return;
+//    return;
+//    setTimeout(function(){
+//        var el,li,i;
+//        el = document.getElementById('thelist');
+////        console.log('downrefresh');
+////        window.location.reload();
+//        //==========================================
+//        $.ajax({
+//            type: "POST",
+//            url: "{:U('TradeSearch/trade_search')}",
+//            data: {isAjax:1,page: page},
+////            dataType: "json",
+//            success:function(data){
+////                var json = data;
+////                $(json).each(function(){
+////                    li = document.createElement('li');
+////                    // li.innerText = 'Generated row ' + (++generatedCount);
+////                    li.innerHTML = '<img src="' + this.src + '"/>';
+////                    el.insertBefore(li,el.childNodes[0]);
+////                })
+////                alert(1);
+//            }
+//        });
+//        myScroll.refresh();//数据加载完成后，调用界面更新方法  Remember to refresh when contents are loaded (ie: on ajax completion)
+//    },1000);  // <-- Simulate network congestion, remove setTimeout from production!
+    }
+    /**滚动翻页 （自定义实现此方法）
+     *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
+     */
+    function pullUpAction() {
+        console.log('up');
+        var page = $('#page').val();
+        console.log(page);
+//    myScroll.refresh();
+//    return;
+        setTimeout(function () {
+//        var el,li,i;
+//        el = document.getElementById('thelist');
+            var post = $('#tag_search').serialize();
+            //==========================================
+            $.ajax({
+                type: "post",
+                url: "{:U('TradeSearch/trade_search')}",
+                data: {isAjax: 1, page: page, condition: post},
+//            dataType: "json",
+                success: function (data) {
+                    console.log('success');
+//                console.log(data);
+//                var json = data;
+//                $(json).each(function(){
+//                    li = document.createElement('li');
+//                    //  li.innerText = 'Generated row ' + (++generatedCount);
+//                    li.innerHTML = '<img src="' + this.src + '"/>';
+//                    el.insertBefore(li,el.childNodes[0]);
+//                })
+                    var jsonObj = eval("(" + data + ")");
+                    console.log(jsonObj.test);
+//                return;
+//                var jsonObj=data;
+//                console.log(jsonObj.data);
+//                return;
+                    jQuery.each(jsonObj.data, function (k, val) {
+                        var tempObj = $("#buy_clone").clone(true);
+//                        tempObj.children("li").children("table").children("tbody").children("tr").eq(1).children("td").eq(1).html("产地"+val.area_start);
+                        tempObj.children("table").children("tbody").children("tr").eq(1).children("td").eq(1).html("产地" + val.area_start);
+                        tempObj.appendTo("#insert_point");
+                    });
+                    $("#page").val(jsonObj.next_page);
+                    myScroll.refresh();
+                }
+            });
+            //============================================
+            myScroll.refresh(); // 数据加载完成后，调用界面更新方法 Remember to refresh when contents are loaded (ie: on ajax completion)
+        }, 1000); // <-- Simulate network congestion, remove setTimeout from production!
+    }
+    /**
+     * 初始化iScroll控件
+     */
+    function loaded() {
+        pullDownEl = document.getElementById('pullDown');
+        pullDownOffset = pullDownEl.offsetHeight;
+        pullUpEl = document.getElementById('pullUp');
+        pullUpOffset = pullUpEl.offsetHeight;
+        console.log(pullDownOffset);
+        console.log(pullUpOffset);
+        myScroll = new iScroll('wrapper', {
+//        scrollbarClass: 'myScrollbar', /* 重要样式 */
+            useTransition: true,
+            topOffset: pullDownOffset,
+//        probeType: 3,
+//        mouseWheel: false,
+            scrollbars: true,
+//        disableMouse: false,
+//        disablePointer: false,
+            //点击事件
+//            click: false,
+//            taps: false,
+//        tap: true,
+            preventDefault: false,//（把这句加上去哦）
+            preventDefaultException: {tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|A)$/},
+            onRefresh: function () {
+                console.log('refresh');
+                if (pullDownEl.className.match('loading')) {
+                    pullDownEl.className = '';
+                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+//                pullDownEl.querySelector('.pullDownLabel').innerHTML = '数据更新时间：' + update_time+'下拉刷新';
+                } else if (pullUpEl.className.match('loading')) {
+                    pullUpEl.className = '';
+                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+                }
+                document.getElementById("pullUp").style.display = "none";
+                time_now = new Date();
+                update_time = time_now.toLocaleString();
+//            document.getElementById("show").innerHTML="onRefresh: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
+
+            },
+            onScrollMove: function () {
+//            document.getElementById("show").innerHTML="onScrollMove: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
+
+                if (this.y > 0) {
+                    pullDownEl.className = 'flip';
+                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...</br>' + '最后更新时间：' + update_time;
+                    this.minScrollY = 0;
+                }
+                if (this.y < 0 && pullDownEl.className.match('flip')) {
+                    pullDownEl.className = '';
+                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+                    this.minScrollY = -pullDownOffset;
+                }
+
+                if (this.scrollerH < this.wrapperH && this.y < (this.minScrollY - pullUpOffset) || this.scrollerH > this.wrapperH && this.y < (this.maxScrollY - pullUpOffset)) {
+                    document.getElementById("pullUp").style.display = "";
+                    pullUpEl.className = 'flip';
+                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...</br>' + '最后更新时间：' + update_time;
+                }
+                if (this.scrollerH < this.wrapperH && this.y > (this.minScrollY - pullUpOffset) && pullUpEl.className.match('flip') || this.scrollerH > this.wrapperH && this.y > (this.maxScrollY - pullUpOffset) && pullUpEl.className.match('flip')) {
+                    document.getElementById("pullUp").style.display = "none";
+                    pullUpEl.className = '';
+                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+                }
+
+            },
+            onScrollEnd: function () {
+//            document.getElementById("show").innerHTML="onScrollEnd: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
+                if (pullDownEl.className.match('flip')) {
+                    pullDownEl.className = 'loading';
+                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '加载中...';
+                    pullDownAction(); // Execute custom function (ajax call?)
+                } else if (pullUpEl.className.match('flip')) {
+                    pullUpEl.className = 'loading';
+                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载中...';
+                    pullUpAction(); // Execute custom function (ajax call?)
+                }
+            }
+        });
+        console.dir(myScroll.options);
+//    setTimeout(function(){
+//        document.getElementById('wrapper').style.left = '0';
+//    },800);
+
+    }
+    //初始化绑定iScroll控件
+    document.addEventListener('touchmove', function (e) {
+        e.preventDefault();
+    }, false);
+    document.addEventListener('DOMContentLoaded', loaded, false);
+    //    window.onload = loaded();
+
 </script>
 </html>
