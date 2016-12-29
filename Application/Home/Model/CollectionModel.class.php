@@ -15,13 +15,13 @@ class CollectionModel extends Model
 {
     protected $tableName = "collection";// 不用写表前缀
 
-    protected $fields=array( //辅助模型识别字段，不会影响查询，会影响增改
+    protected $fields = array( //辅助模型识别字段，不会影响查询，会影响增改
         "id",
         "user_id",
         "msg_id",
         "record_time",
         "invalid_id",
-        '_pk'=>"id",
+        '_pk' => "id",
     );
 
 
@@ -31,13 +31,14 @@ class CollectionModel extends Model
      * @param $msg_id
      * @return int
      */
-    public function add_c($user_id, $msg_id){
-        $exist = $this->where(array("user_id"=>$user_id, "msg_id"=>$msg_id))->find();
-        if ($exist){
+    public function add_c($user_id, $msg_id)
+    {
+        $exist = $this->where(array("user_id" => $user_id, "msg_id" => $msg_id))->find();
+        if ($exist) {
             $exist["invalid_id"] = 0;
             $this->save($exist);
-        }else{
-            $this->add(array("user_id"=>$user_id, "msg_id"=>$msg_id,"invalid_id"=>1));
+        } else {
+            $this->add(array("user_id" => $user_id, "msg_id" => $msg_id, "invalid_id" => 0));
         }
         return 1;
     }
@@ -48,20 +49,22 @@ class CollectionModel extends Model
      * @param $msg_id
      * @return int
      */
-    public function del_c($user_id, $msg_id){
-        $exist = $this->where(array("user_id"=>$user_id, "msg_id"=>$msg_id))->find();
-        if ($exist){
+    public function del_c($user_id, $msg_id)
+    {
+        $exist = $this->where(array("user_id" => $user_id, "msg_id" => $msg_id))->find();
+        if ($exist) {
             $exist["invalid_id"] = 1;
             $this->save($exist);
         }
         return 2;
     }
 
-    public function getCollectionById($user_id){
-        $id_result = $this->field("msg_id")->where(array("user_id"=>$user_id,"invalid_id"=>0))->select();
+    public function getCollectionById($user_id)
+    {
+        $id_result = $this->field("msg_id")->where(array("user_id" => $user_id, "invalid_id" => 0))->select();
         $ids = array();
-        foreach ($id_result as $id_row){
-            array_push($ids,$id_row["msg_id"]);
+        foreach ($id_result as $id_row) {
+            array_push($ids, $id_row["msg_id"]);
         }
         return $ids;
     }

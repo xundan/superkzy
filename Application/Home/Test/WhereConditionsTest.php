@@ -14,7 +14,7 @@ class WhereConditionsTest extends PHPUnit_Framework_TestCase
 
     public function testPush()
     {
-        $whereConditions = new \Home\Common\CardList\WhereConditions();
+            $whereConditions = new \Home\Common\CardList\WhereConditions();
 
         $this->assertEquals(false, $whereConditions->pushCond("a", "b", "c", "d"));
         $this->assertEquals(0, count($whereConditions->getWhereConditions()));
@@ -67,6 +67,10 @@ class WhereConditionsTest extends PHPUnit_Framework_TestCase
 
     public function testToSql()
     {
+
+    }
+
+    public function testPage(){
 
     }
 }

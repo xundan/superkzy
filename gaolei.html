@@ -7,18 +7,24 @@
 </head>
 <body style="font-family: 微软雅黑">
 <div id="text_input" style="text-align: center" align="center">
-
+    <div style="text-align: center" align="center">
+        <label>昨天
+            <input id="yesterday" value="8">点
+        </label>
+    </div>
+    <p></p>
+    <div style="text-align: center" align="center">
+        <label>今天
+            <input id="today" value="8">点
+        </label>
+    </div>
+    <p></p>
     <div style="text-align: center" align="center">
         <input type="button" value="获取" onclick="get_yesterday_msg()"
                style="width: 200px; height: 30px;margin: auto;font-size: 1em">
     </div>
     <p></p>
-    <div style="text-align: center" align="center">
-        <label>获取昨天到今天
-            <input id="hour" value="8">点整的整天记录
-        </label>
-    </div>
-    <p></p>
+
     <div style="height: 40px"></div>
     <label for="origin">源文本</label><textarea id="origin" name="origin" style="width: 100%; height: 400px"></textarea>
     <br>
@@ -72,15 +78,22 @@
 
     function get_yesterday_msg() {
 
-        var hour = parseInt($("#hour").val());
-        // 获取今天早上和昨天早上8:30的秒数
+        var today = parseInt($("#today").val());
         var date2 = new Date();
-        date2.setHours(hour);
+        date2.setHours(today);
         date2.setMinutes(0);
         date2.setSeconds(0);
         var time2 = parseInt(date2.getTime()/1000);
-        var time1 = time2 - 24*60*60;
-        console.log(time2);
+
+        var yesterday = parseInt($("#yesterday").val());
+        var date1 = new Date();
+        date1.setHours(yesterday);
+        date1.setMinutes(0);
+        date1.setSeconds(0);
+        var time1 = parseInt(date1.getTime()/1000);
+        time1 = time1 - 24*60*60;
+//        console.log(date1);
+//        console.log(date2);
 
         $.ajax({
             type : "GET",  //提交方式

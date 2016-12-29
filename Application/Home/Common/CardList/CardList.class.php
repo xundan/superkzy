@@ -30,15 +30,15 @@ class CardList
             if ($message['type'] == 'plain') { // 是微信来源
                 $msgCard = new MsgCard($message);
             } elseif ($message['type'] == '') { // 是网站来源
-                if ($message['category'] == 0) { // 供应
+                if ($message['category'] == '供应') { // 供应
                     $msgCard = new CoalSellMsgCard($message);
-                } elseif ($message['category'] == 1) { // 司机找活
+                } elseif ($message['category'] == '其他') { // 司机找活
                     $msgCard = new CarGiveMsgCard($message);
 
-                } elseif ($message['category'] == 2) { // 求购
+                } elseif ($message['category'] == '求购') { // 求购
                     $msgCard = new CoalBuyMsgCard($message);
 
-                } elseif ($message['category'] == 3) { // 找车
+                } elseif ($message['category'] == '找车') { // 找车
                     $msgCard = new CarNeedMsgCard($message);
 
                 } else {
@@ -70,5 +70,15 @@ class CardList
     public function toJSON()
     {
         return "";
+    }
+
+    /**
+     * 添加一个结尾标识
+     */
+    public function addEnd(){
+        $tip['type'] = "tips";
+        $tip['title'] = "结束";
+        $tip['content'] = "没有更多的信息了。";
+        array_push($this->_array, new TipCard($tip));
     }
 }

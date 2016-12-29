@@ -36,6 +36,10 @@ class WhereConditions
         return json_encode($this->getWhereConditions());
     }
 
+    static function parseJson($json){
+        return new WhereConditions(json_decode($json));
+    }
+
     /**
      * 添加运算的where条件，添加的顺序决定pushCond的顺序，尽量后加先要解除约束的条件
      * @param $column string 字段名

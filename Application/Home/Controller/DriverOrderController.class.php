@@ -10,25 +10,52 @@ namespace Home\Controller;
 
 use Home\Common\CardList\CardList;
 use Home\Common\CardList\WhereConditions;
+use Home\Model\MessagesModel;
+use Home\Model\CollectionModel;
 use Think\Controller;
 
-header("Content-type: text/html; charset=utf-8");
 
 class DriverOrderController extends ComController
 {
+    /**
+     * 展示司机的发布历史界面
+     */
     public function driver_order()
     {
-        $uid = session('user_info')['uid'];
-//        dump($uid);
-        $whereCond = new WhereConditions();
-        $whereCond->pushCond("id", "in", D('collection')->getCollectionById($uid));
-        $messages = D('messages')->findWhere($whereCond);
-//        dump($messages);
-        $cards = new CardList($messages);
-        $this->assign("li_array",$cards->toLiArray());
-//        dump($cards->toLiArray());
+
+        $Collection = new CollectionModel();
+
+        $Collection->add_c(1,1);
+        $Collection->add_c(1,2);
+        $Collection->add_c(1,3);
+        $Collection->add_c(1,4);
+        $Collection->add_c(1,5);
+        $Collection->add_c(1,6);
+        $Collection->add_c(1,7);
+        $Collection->add_c(1,8);
+        $Collection->add_c(1,9);
+        $Collection->add_c(1,10);
+        $Collection->add_c(1,11);
+
+        $data = $this->getOrderByPage(1);
+        $this->assign("li_array", $data["li_array"]);
+        $this->assign("EOA", $data["EOA"]);
+//        var_dump($data["li_array"]);
+
         $this->display();
     }
+
+    /**
+     * @param $page int 需要加载的页数
+     */
+    public function driver_order_more()
+    {
+        $page = I('post.page','','trim,strip_tags');
+        $data = $this->getOrderByPage($page);
+        echo json_encode($data);
+        return;
+    }
+
 
     /**
      * 缓存数据
@@ -95,6 +122,45 @@ class DriverOrderController extends ComController
             $area_end = M('Districts')->where(array("id" => $message['area_end']))->find();
             $this->assign('area_end', $area_end);
         }
+    }
+
+    /**
+     * 根据页数去数据库取得相应的消息数组
+     * @param $page int 页数
+     * @return mixed 信息数组
+     */
+    private function getMessagesByPage($page)
+    {
+        $Msg = new MessagesModel();
+        $uid = session('user_info')['uid'];
+//        dump($uid);
+        $whereCond = new WhereConditions();
+        $whereCond->setPage($page);
+        $whereCond->pushCond("id", "in", D('collection')->getCollectionById($uid));
+        $messages = $Msg->findWhere($whereCond);
+        return $messages;
+    }
+
+    /**
+     * 获取返回数据
+     * @param $page int 页数
+     * @return mixed 返回数据
+     */
+    private function getOrderByPage($page)
+    {
+        $data["msg"] = "success";
+        $messages = $this->getMessagesByPage($page);
+
+        $counts = count($messages);
+        $cards = new CardList($messages);
+        if ($counts < C('DEFAULT_ROW')) {
+            $data["EOA"] = $counts;
+            $cards->addEnd();
+        } else {
+            $data["EOA"] = -1;
+        }
+        $data["li_array"] = $cards->toLiArray();
+        return $data;
     }
 
 }

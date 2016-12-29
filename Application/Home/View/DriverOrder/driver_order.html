@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
     <!--<link rel="icon" href="../../favicon.ico">-->
     <title>我的收藏</title>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
@@ -20,18 +21,18 @@
 <body style="background-color: #efeff4">
 <!--标题栏-->
 <!--<div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">-->
-    <!--&lt;!&ndash;<div class="container text-center" style="">&ndash;&gt;-->
-    <!--&lt;!&ndash;<div style="display: inline-block;height: 100%;vertical-align: middle"></div>&ndash;&gt;-->
-        <!--<span class="pull-left" style="">-->
-                <!--&lt;!&ndash;<a class="glyphicon glyphicon-chevron-left"></a>&ndash;&gt;-->
-            <!--<a href="#">-->
-                <!--<img src="__PUBLIC__/home/images/goback.png" class="img-responsive" style="width: 15px;height: auto;margin-top: 40%">-->
-            <!--</a>-->
-        <!--</span>-->
-        <!--<span class="">-->
-            <!--<span class="" style="font-size: 1.5em;">我的收藏</span>-->
-        <!--</span>-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--&lt;!&ndash;<div class="container text-center" style="">&ndash;&gt;-->
+<!--&lt;!&ndash;<div style="display: inline-block;height: 100%;vertical-align: middle"></div>&ndash;&gt;-->
+<!--<span class="pull-left" style="">-->
+<!--&lt;!&ndash;<a class="glyphicon glyphicon-chevron-left"></a>&ndash;&gt;-->
+<!--<a href="#">-->
+<!--<img src="__PUBLIC__/home/images/goback.png" class="img-responsive" style="width: 15px;height: auto;margin-top: 40%">-->
+<!--</a>-->
+<!--</span>-->
+<!--<span class="">-->
+<!--<span class="" style="font-size: 1.5em;">我的收藏</span>-->
+<!--</span>-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
 <!--</div>-->
 
 <!--清除浮动-->
@@ -40,7 +41,7 @@
 <!--标签隐藏表单提交-->
 <form name="tag_search" id="tag_search">
     <input type="hidden" name="select_category">
-    <input type="hidden" name="page" id="page" value="{$next_page}">
+    <input type="hidden" name="page" id="page" value="1">
 </form>
 
 <!--订单展示栏-->
@@ -53,9 +54,10 @@
                     <span class="pullDownLabel" style="margin-left: -48px">下拉刷新...</span>
                 </div>
                 <ul id="thelist" class="" style="margin-top: 40px;list-style-type: none">
-                <volist name="li_array" id = "vo">
-                    {$vo}
-                </volist>
+                    <volist name="li_array" id="vo">
+                        {$vo}
+                    </volist>
+                    <span id="insert_point"></span>
                 </ul>
                 <div id="pullUp">
                     <span class="pullUpIcon"></span>
@@ -81,97 +83,60 @@
     //    console.dir(myScroll.options);
 
     //var myScroll,pullDownEl,pullDownOffset,pullUpEl,pullUpOffset,generatedCount = 0;
-    var myScroll,pullDownEl,pullDownOffset,pullUpEl,pullUpOffset;
-    var time_now,update_time;
+    var myScroll, pullDownEl, pullDownOffset, pullUpEl, pullUpOffset;
+    var time_now, update_time;
 
     //
     /**下拉刷新 （自定义实现此方法）
      *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
      */
-    function pullDownAction(){
+    function pullDownAction() {
         console.log('down');
         location.reload();
         myScroll.refresh();
-//    return;
-//    return;
-//    setTimeout(function(){
-//        var el,li,i;
-//        el = document.getElementById('thelist');
-////        console.log('downrefresh');
-////        window.location.reload();
-//        //==========================================
-//        $.ajax({
-//            type: "POST",
-//            url: "{:U('TradeSearch/trade_search')}",
-//            data: {isAjax:1,page: page},
-////            dataType: "json",
-//            success:function(data){
-////                var json = data;
-////                $(json).each(function(){
-////                    li = document.createElement('li');
-////                    // li.innerText = 'Generated row ' + (++generatedCount);
-////                    li.innerHTML = '<img src="' + this.src + '"/>';
-////                    el.insertBefore(li,el.childNodes[0]);
-////                })
-////                alert(1);
-//            }
-//        });
-//        myScroll.refresh();//数据加载完成后，调用界面更新方法  Remember to refresh when contents are loaded (ie: on ajax completion)
-//    },1000);  // <-- Simulate network congestion, remove setTimeout from production!
     }
     /**滚动翻页 （自定义实现此方法）
      *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
      */
-    function pullUpAction(){
+    function pullUpAction() {
         console.log('up');
         var page = $('#page').val();
+        page++;
+
         console.log(page);
-//    myScroll.refresh();
-//    return;
-        setTimeout(function (){
-//        var el,li,i;
-//        el = document.getElementById('thelist');
+        setTimeout(function () {
             var post = $('#tag_search').serialize();
             //==========================================
             $.ajax({
                 type: "post",
-                url: "{:U('TradeSearch/trade_search')}",
-                data: {isAjax:1,page:page,condition:post},
-//            dataType: "json",
-                success: function(data){
+                url: "{:U('DriverOrder/driver_order_more')}",
+                data: {isAjax: 1, page: page, condition: post},
+                success: function (data) {
                     console.log('success');
-//                console.log(data);
-//                var json = data;
-//                $(json).each(function(){
-//                    li = document.createElement('li');
-//                    //  li.innerText = 'Generated row ' + (++generatedCount);
-//                    li.innerHTML = '<img src="' + this.src + '"/>';
-//                    el.insertBefore(li,el.childNodes[0]);
-//                })
-                    var jsonObj=eval("("+data+")");
-                    console.log(jsonObj.test);
-//                return;
-//                var jsonObj=data;
-//                console.log(jsonObj.data);
-//                return;
-                    jQuery.each(jsonObj.data, function(k, val){
-                        var tempObj=$("#buy_clone").clone(true);
-//                        tempObj.children("li").children("table").children("tbody").children("tr").eq(1).children("td").eq(1).html("产地"+val.area_start);
-                        tempObj.children("table").children("tbody").children("tr").eq(1).children("td").eq(1).html("产地"+val.area_start);
-                        tempObj.appendTo("#insert_point");
+                    var jsonObj = eval("(" + data + ")");
+                    console.log(jsonObj);
+                    jQuery.each(jsonObj.li_array, function (k, val) {
+                        console.log(val);
+//                        temp2 = $('#thelist');
+//                        temp2 = $('#insert_point');
+//                        temp2.insertAfter(val,temp2);
+                        li = document.createElement('li');
+                        li.innerHTML = val;
+                        document.getElementById('thelist').appendChild(li);
+//                        temp2.appendChild(val);
                     });
-                    $("#page").val(jsonObj.next_page);
+                    $("#page").val(page);
                     myScroll.refresh();
                 }
             });
             //============================================
             myScroll.refresh(); // 数据加载完成后，调用界面更新方法 Remember to refresh when contents are loaded (ie: on ajax completion)
-        },1000); // <-- Simulate network congestion, remove setTimeout from production!
+        }, 1000); // <-- Simulate network congestion, remove setTimeout from production!
     }
     /**
      * 初始化iScroll控件
      */
-    function loaded(){
+    function loaded() {
         pullDownEl = document.getElementById('pullDown');
         pullDownOffset = pullDownEl.offsetHeight;
         pullUpEl = document.getElementById('pullUp');
@@ -275,10 +240,10 @@
 //    },800);
     }
     //初始化绑定iScroll控件
-    document.addEventListener('touchmove',function(e){
+    document.addEventListener('touchmove', function (e) {
         e.preventDefault();
-    },false);
-    document.addEventListener('DOMContentLoaded',loaded,false);
+    }, false);
+    document.addEventListener('DOMContentLoaded', loaded, false);
     //    window.onload = loaded();
 
 </script>

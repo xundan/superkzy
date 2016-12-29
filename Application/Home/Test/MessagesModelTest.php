@@ -26,11 +26,11 @@ class MessagesModelTest extends PHPUnit_Framework_TestCase
     {
         $Model = new \Home\Model\MessagesModel();
         $message = $Model->getMessageAttr();
-        $this->assertEquals('社会主义精神文明建设', $message);
-        $message = $Model->getMessageAttr(317);
-        $this->assertEquals('有人用吗？', $message);
+        $this->assertEquals('随时有车', $message);
+        $message = $Model->getMessageAttr(9);
+        $this->assertEquals('给我电话', $message);
         $message = $Model->getMessageAttr(2, "area_start");
-        $this->assertEquals('3', $message);
+        $this->assertEquals('230100', $message);
     }
 
     public function testToUser()
@@ -42,9 +42,9 @@ class MessagesModelTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("张三新", $msg["user"]["user_name"]);
 
 //        $msg = null;
-        $msg = $Model->find(4); // 这条msg对应的用户不存在
-        $msg = $Model->toUser($msg);
-        $this->assertEquals(false, isset($msg["user"]));
+//        $msg = $Model->find(4); // 这条msg对应的用户不存在
+//        $msg = $Model->toUser($msg);
+//        $this->assertEquals(false, isset($msg["user"]));
     }
 
     public function testToDistrict(){
@@ -52,10 +52,10 @@ class MessagesModelTest extends PHPUnit_Framework_TestCase
         $msg = $Model->find(1);
         $msg = $Model->toDistrictStart($msg);
         $msg = $Model->toDistrictEnd($msg);
-        $this->assertEquals(110111, $msg["district_start"]["id"]);
-        $this->assertEquals("房山区", $msg["district_start"]["name"]);
-        $this->assertEquals(140827, $msg["district_end"]["id"]);
-        $this->assertEquals("垣曲县", $msg["district_end"]["name"]);
+        $this->assertEquals(152900, $msg["district_start"]["id"]);
+        $this->assertEquals("阿拉善盟", $msg["district_start"]["name"]);
+        $this->assertEquals(370100, $msg["district_end"]["id"]);
+        $this->assertEquals("济南市", $msg["district_end"]["name"]);
     }
 
 }
