@@ -13,6 +13,7 @@ use Home\Common\CardList\CardList;
 use Home\Common\CardList\WhereConditions;
 use Home\Model\MessagesModel;
 use Home\Model\CollectionModel;
+
 header("Content-type: text/html; charset=utf-8");
 
 class OwnerOrderController extends ComController
@@ -21,27 +22,29 @@ class OwnerOrderController extends ComController
     {
         $Collection = new CollectionModel();
 
-        $Collection->add_c(1,1);
-        $Collection->add_c(1,2);
-        $Collection->add_c(1,3);
-        $Collection->add_c(1,4);
-        $Collection->add_c(1,5);
-        $Collection->add_c(1,6);
-        $Collection->add_c(1,7);
-        $Collection->add_c(1,8);
-        $Collection->add_c(1,9);
-        $Collection->add_c(1,10);
-        $Collection->add_c(1,11);
-        $Collection->add_c(1,30);
-        $Collection->add_c(1,31);
-        $Collection->add_c(1,32);
-        $Collection->add_c(1,33);
-        $Collection->add_c(1,34);
-        $Collection->add_c(1,35);
-        $Collection->add_c(1,36);
+        $Collection->add_c(1, 1);
+        $Collection->add_c(1, 2);
+        $Collection->add_c(1, 3);
+        $Collection->add_c(1, 4);
+        $Collection->add_c(1, 5);
+        $Collection->add_c(1, 6);
+        $Collection->add_c(1, 7);
+        $Collection->add_c(1, 8);
+        $Collection->add_c(1, 9);
+        $Collection->add_c(1, 10);
+        $Collection->add_c(1, 11);
+        $Collection->add_c(1, 30);
+        $Collection->add_c(1, 31);
+        $Collection->add_c(1, 32);
+        $Collection->add_c(1, 33);
+        $Collection->add_c(1, 34);
+        $Collection->add_c(1, 35);
+        $Collection->add_c(1, 36);
 
-        $data = $this->getOrderByPage(1);
-        $this->assign("li_array", $data["li_array"]);
+        $data = $this->getOrderByPage(1, "trade");
+        $this->assign("trade_li_array", $data["li_array"]);
+        $data = $this->getOrderByPage(1, "transport");
+        $this->assign("transport_li_array", $data["li_array"]);
         $this->assign("EOA", $data["EOA"]);
         $this->display();
     }
@@ -51,8 +54,9 @@ class OwnerOrderController extends ComController
      */
     public function owner_order_more()
     {
-        $page = I('post.page','','trim,strip_tags');
-        $data = $this->getOrderByPage($page);
+        $page = I('post.page', '', 'trim,strip_tags');
+        $category = I('post.select_category', '', 'trim,strip_tags');
+        $data = $this->getOrderByPage($page, $category);
         echo json_encode($data);
         return;
     }
@@ -157,9 +161,10 @@ class OwnerOrderController extends ComController
     /**
      * 根据页数去数据库取得相应的消息数组
      * @param $page int 页数
+     * @param $category string "trade","transport"
      * @return mixed 信息数组
      */
-    private function getMessagesByPage($page)
+    private function getMessagesByPage($page, $category)
     {
         $Msg = new MessagesModel();
         $uid = session('user_info')['uid'];
@@ -167,6 +172,11 @@ class OwnerOrderController extends ComController
         $whereCond = new WhereConditions();
         $whereCond->setPage($page);
         $whereCond->pushCond("id", "in", D('collection')->getCollectionById($uid));
+        if ($category == "trade") {
+            $whereCond->pushCond("category", "in", array("求购", "供应"));
+        } else if($category == "transport") {
+            $whereCond->pushCond("category", "in", array("找车", "其他"));
+        } else {}
         $messages = $Msg->findWhere($whereCond);
         return $messages;
     }
@@ -174,12 +184,13 @@ class OwnerOrderController extends ComController
     /**
      * 获取返回数据
      * @param $page int 页数
+     * @param $category string "trade","transport"
      * @return mixed 返回数据
      */
-    private function getOrderByPage($page)
+    private function getOrderByPage($page, $category)
     {
         $data["msg"] = "success";
-        $messages = $this->getMessagesByPage($page);
+        $messages = $this->getMessagesByPage($page, $category);
 
         $counts = count($messages);
         $cards = new CardList($messages);
@@ -190,6 +201,7 @@ class OwnerOrderController extends ComController
             $data["EOA"] = -1;
         }
         $data["li_array"] = $cards->toLiArray();
+        $data["category"] = $category;
         return $data;
     }
 }
