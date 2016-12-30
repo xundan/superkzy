@@ -9,6 +9,8 @@
 namespace Home\Common\CardList;
 
 
+use Home\Model\MessagesModel;
+
 class MsgCard extends Card
 {
     protected $_message = null;
@@ -42,10 +44,10 @@ class MsgCard extends Card
         if ($message['type'] == 'plain') { // R
             $li_str = "<li>" . $message['content'] . "</li>";
         } else {
-            if ($message['category'] == 0) { // 供应
-            } elseif ($message['category'] == 1) { // 司机找活
-            } elseif ($this->_message['category'] == 2) { // 求购
-            } elseif ($this->_message['category'] == 3) { // 找车
+            if ($message['category'] == '供应') { // 供应
+            } elseif ($message['category'] == '其他') { // 司机找活
+            } elseif ($this->_message['category'] == '求购') { // 求购
+            } elseif ($this->_message['category'] == '找车') { // 找车
             } else {
                 // todo log here.
             }
@@ -60,9 +62,13 @@ class MsgCard extends Card
         return str_replace("__PUBLIC__", $real_public_str, $str);
     }
 
+    /**
+     * 需要先在buildUpMessage()里toUser()
+     * @return string
+     */
     protected function getPersonalUrl()
     {
-        $role_id = $this->_message['role_id'];
+        $role_id = $this->_message['user']['role_id'];
         $personal_page = "";
         if ($role_id == 1) {
             $personal_page = U('PersonalCenter/driver_data', array('uid' => $this->_message['uid']));
@@ -76,5 +82,11 @@ class MsgCard extends Card
     protected function getOrderDetailUrl(){
         // 返回一个静态文件
         return __ROOT__.'/Public/home/OrderFromWX.html';
+    }
+
+    protected function buildUpMessage(){
+        $Msg = new MessagesModel();
+        $this->_message = $Msg->toAll($this->_message);
+        return $this->_message;
     }
 }

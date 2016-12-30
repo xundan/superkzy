@@ -16,29 +16,14 @@ use Think\Model;
 
 class MessagesModel extends Model
 {
-//    protected $tableName = "messages";// 不用写表前缀
 
     private $_message = null;
 
-//    protected $fields = array( //辅助模型识别字段，不会影响查询，会影响增改
-//        "id",
-//        "title",
-//        "area_start",
-//        "detail_area_start",
-//        "invalid_id",
-//        '_pk' => "id",
-//    );
 
     //自动验证
     protected $_validate = array(
         array('phone_number', 'require', '手机号不能为空', 0),
         array('phone_number', '/^\\d{11}$/', '请填写正确的手机号', 0, 'regex'),
-//        array('loading_time','time(),time()+11111111' ,'请填写正确的time',0,'expire'),
-//        array('verify','require','验证码必须！'), //默认情况下用正则进行验证
-//        array('name','','帐号名称已经存在！',0,'unique',1), // 在新增的时候验证name字段是否唯一
-//        array('value',array(1,2,3),'值的范围不正确！',2,'in'), // 当值不为空的时候判断是否在一个范围内
-//        array('repassword','password','确认密码不正确',0,'confirm'), // 验证确认密码是否和密码一致
-//        array('password','checkPwd','密码格式不正确',0,'function'), // 自定义函数验证密码格式   );
     );
 
     //自动完成
@@ -103,9 +88,6 @@ class MessagesModel extends Model
         }
     }
 
-//    public function getError(){
-//
-//    }
 
     public function getMessageAttr($id = 1, $attr = "content")
     {
@@ -125,10 +107,10 @@ class MessagesModel extends Model
 
     public function toAll($message)
     {
-        $message = $this->toProduct($message);
         $message = $this->toUser($message);
         $message = $this->toDistrictStart($message);
         $message = $this->toDistrictEnd($message);
+        $message = $this->toCollection($message, $message['user']['uid']);
         return $message;
     }
 
@@ -146,20 +128,6 @@ class MessagesModel extends Model
         return $message;
     }
 
-    public function toProduct($message)
-    {
-        $message['product'] = null;
-        $where['id'] = $message['product_id'];
-        $product = M('product')->where($where)->find();
-        if ($product) {
-            $message['product'] = $product;
-        } elseif ($product === false) {
-            //todo 数据库出错
-        } else {
-            //todo 数据为空
-        }
-        return $message;
-    }
 
     public function toDistrictStart($message)
     {
@@ -184,6 +152,26 @@ class MessagesModel extends Model
         } elseif ($district === false) {
             //todo 数据库出错
         } else {
+            //todo 数据为空
+        }
+        return $message;
+    }
+
+    public function toCollection($message, $uid)
+    {
+        $where['msg_id'] = $message['id'];
+        $where['user_id'] = $uid;
+        $in_collection = M('collection')->where($where)->find();
+        if ($in_collection) {
+            if ($in_collection['invalid_id']==0){
+                $message['in_collection'] = "已收藏";
+            }else{
+                $message['in_collection'] = "收藏";
+            }
+        } elseif ($in_collection === false) {
+            //todo 数据库出错
+        } else {
+            $message['in_collection'] = "收藏";
             //todo 数据为空
         }
         return $message;

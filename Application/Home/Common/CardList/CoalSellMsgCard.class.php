@@ -16,7 +16,7 @@ class CoalSellMsgCard extends MsgCard
         $message = $this->_message;
 
         $personal_page = $this->getPersonalUrl();
-        if ($message['is_formatted']) { // 如果用户按照标准格式填写
+        if ($message['formatted']) { // 如果用户按照标准格式填写
             $li_str = "<li class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
 <div style=\"position: absolute;right: 0px;\"><img src=\"__PUBLIC__/home/images/sell.png\" width=\"50px\"></div>
 <div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">

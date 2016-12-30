@@ -58,4 +58,11 @@ class MessagesModelTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("济南市", $msg["district_end"]["name"]);
     }
 
+    public function testToCollection(){
+        $Model = new \Home\Model\MessagesModel();
+        $msg = $Model->find(1);
+        $msg = $Model->toCollection($msg,2);
+        $this->assertEquals("收藏", $msg["in_collection"]);
+    }
+
 }
