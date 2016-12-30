@@ -12,6 +12,10 @@ header("Content-type: text/html; charset=utf-8");
 
 class HomepageController extends ComController
 {
+    public function homepage(){
+        $this->display();
+    }
+
     public function homepage_visitor(){
         $this->display();
     }
