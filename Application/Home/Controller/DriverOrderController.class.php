@@ -36,6 +36,13 @@ class DriverOrderController extends ComController
         $Collection->add_c(1,9);
         $Collection->add_c(1,10);
         $Collection->add_c(1,11);
+        $Collection->add_c(1,30);
+        $Collection->add_c(1,31);
+        $Collection->add_c(1,32);
+        $Collection->add_c(1,33);
+        $Collection->add_c(1,34);
+        $Collection->add_c(1,35);
+        $Collection->add_c(1,36);
 
         $data = $this->getOrderByPage(1);
         $this->assign("li_array", $data["li_array"]);

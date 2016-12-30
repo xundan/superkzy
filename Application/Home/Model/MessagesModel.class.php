@@ -101,6 +101,15 @@ class MessagesModel extends Model
         $page = $cond->getPage();
         $asc = $cond->getAsc();
         $beginStr = ($page - 1) * $countRow;
+        $this->_message = $this->where($cond->getWhereConditions())->where('invalid_id=0')->limit($beginStr, $countRow)->order($asc)->select();
+        return $this->_message;
+    }
+    public function findWhereExtra(WhereConditions $cond)
+    {
+        $countRow = C("DEFAULT_ROW");//常量
+        $page = $cond->getPage();
+        $asc = $cond->getAsc();
+        $beginStr = ($page - 1) * $countRow;
         $this->_message = $this->where($cond->getWhereConditions())->limit($beginStr, $countRow)->order($asc)->select();
         return $this->_message;
     }
@@ -138,7 +147,8 @@ class MessagesModel extends Model
         } elseif ($district === false) {
             //todo 数据库出错
         } else {
-            //todo 数据为空
+            $district['name'] = '空';
+            $message['district_start'] = $district;
         }
         return $message;
     }
@@ -152,7 +162,8 @@ class MessagesModel extends Model
         } elseif ($district === false) {
             //todo 数据库出错
         } else {
-            //todo 数据为空
+            $district['name'] = '空';
+            $message['district_end'] = $district;
         }
         return $message;
     }

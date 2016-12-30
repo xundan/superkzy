@@ -19,6 +19,7 @@ class CoalBuyMsgCard extends MsgCard
         $message = $this->buildUpMessage();
 
         $personal_page = $this->getPersonalUrl();
+        $publish_date = date("Y-m-d", $message['publish_time']);
         if ($message['formatted']) { // 如果用户按照标准格式填写
             $li_str = "<li class=\"weui_panel weui_panel_access\" style=\";border-radius: 5px\">
 <div style=\"position: absolute;right: 0px;\">
@@ -34,7 +35,7 @@ class CoalBuyMsgCard extends MsgCard
         <a href=\"{$personal_page}\">
             <h4 class=\"weui_media_title\">{$message['user']['user_name']}<img src=\"__PUBLIC__/home/images/medal.png\" style=\"width: 15px;height: 20px\"></h4>
         </a>
-        <p class=\"weui_media_desc\"><img src=\"__PUBLIC__/home/images/area_start.png\" style=\"width: 10px;height: 15px\">" . $message["user"]["city"] . "</p>
+        <p class=\"weui_media_desc\"><img src=\"__PUBLIC__/home/images/area_start.png\" style=\"width: 10px;height: 15px\">" . $message['user']['city'] . "</p>
     </div>
     <div class=\"weui_media_bd text-center\" style=\"\">
         <a href=\"tel:{$message['phone_number']}\" class=\"\">
@@ -56,7 +57,7 @@ class CoalBuyMsgCard extends MsgCard
     </tr>
     <tr>
         <td>煤炭品质:{$message['trait']}</td>
-        <td>产地:{$message["district_start"]["name"]}</td>
+        <td>产地:{$message['district_start']['name']}</td>
     </tr>
     <tr>
         <td>煤炭粒度:{$message['granularity']}</td>
@@ -95,7 +96,7 @@ class CoalBuyMsgCard extends MsgCard
         </div>
     </div>
 </div>
-<div>{$message['content']}</div><div class='pull-right'>发布时间:{$message['publish_time']}</div>
+<div>{$message['content']}</div><div class='pull-right'>发布时间:{$publish_date}</div>
 </li>
   ";
         }

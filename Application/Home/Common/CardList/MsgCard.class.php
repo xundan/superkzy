@@ -89,4 +89,5 @@ class MsgCard extends Card
         $this->_message = $Msg->toAll($this->_message);
         return $this->_message;
     }
+
 }

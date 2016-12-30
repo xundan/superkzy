@@ -30,22 +30,22 @@ class DriverOrderControllerTest extends PHPUnit_Framework_TestCase
         $Message = new \Home\Model\MessagesModel();
         $whereConditions = new \Home\Common\CardList\WhereConditions();
 
-        $Collection->add_c(1,1);
-        $Collection->add_c(1,2);
-        $Collection->add_c(1,3);
-        $Collection->add_c(1,4);
-        $Collection->add_c(1,5);
-        $Collection->add_c(1,6);
-        $Collection->add_c(1,7);
-        $Collection->add_c(1,8);
-        $Collection->add_c(1,9);
-        $Collection->add_c(1,10);
-        $Collection->add_c(1,11);
-        $Collection->add_c(1,12);
-        $Collection->add_c(1,13);
-        $Collection->add_c(1,14);
+        $Collection->add_c(2,1);
+        $Collection->add_c(2,2);
+        $Collection->add_c(2,3);
+        $Collection->add_c(2,4);
+        $Collection->add_c(2,5);
+        $Collection->add_c(2,6);
+        $Collection->add_c(2,7);
+        $Collection->add_c(2,8);
+        $Collection->add_c(2,9);
+        $Collection->add_c(2,10);
+        $Collection->add_c(2,11);
+        $Collection->add_c(2,12);
+        $Collection->add_c(2,13);
+        $Collection->add_c(2,14);
 
-        $whereConditions->pushCond("id", "in", $Collection->getCollectionById(1));
+        $whereConditions->pushCond("id", "in", $Collection->getCollectionById(2));
         $messages = $Message->findWhere($whereConditions);
         $this->assertEquals(C('DEFAULT_ROW'), count($messages));
 
@@ -65,19 +65,19 @@ class DriverOrderControllerTest extends PHPUnit_Framework_TestCase
 //        $this->assertEquals('123',$output);
 
         // tear down
-        $Collection->del_c(1,1);
-        $Collection->del_c(1,2);
-        $Collection->del_c(1,3);
-        $Collection->del_c(1,4);
-        $Collection->del_c(1,5);
-        $Collection->del_c(1,6);
-        $Collection->del_c(1,7);
-        $Collection->del_c(1,8);
-        $Collection->del_c(1,9);
-        $Collection->del_c(1,10);
-        $Collection->del_c(1,11);
-        $Collection->del_c(1,12);
-        $Collection->del_c(1,13);
-        $Collection->del_c(1,14);
+        $Collection->del_c(2,1);
+        $Collection->del_c(2,2);
+        $Collection->del_c(2,3);
+        $Collection->del_c(2,4);
+        $Collection->del_c(2,5);
+        $Collection->del_c(2,6);
+        $Collection->del_c(2,7);
+        $Collection->del_c(2,8);
+        $Collection->del_c(2,9);
+        $Collection->del_c(2,10);
+        $Collection->del_c(2,11);
+        $Collection->del_c(2,12);
+        $Collection->del_c(2,13);
+        $Collection->del_c(2,14);
     }
 }

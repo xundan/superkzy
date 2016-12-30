@@ -28,38 +28,42 @@ class CollectionModelTest extends PHPUnit_Framework_TestCase
         $Message = new \Home\Model\MessagesModel();
         $whereConditions = new \Home\Common\CardList\WhereConditions();
 
-        $Model->del_c(1, 1);
-        $Model->del_c(1, 2);
-        $Model->del_c(1, 3);
-        $Model->del_c(1, 4);
-        $Model->del_c(1, 5);
-        $Model->del_c(1, 6);
-        $Model->del_c(1, 7);
-        $Model->del_c(1, 8);
-        $Model->del_c(1, 9);
-        $Model->del_c(1, 10);
-        $Model->del_c(1, 11);
+        $Model->del_c(2, 1);
+        $Model->del_c(2, 2);
+        $Model->del_c(2, 3);
+        $Model->del_c(2, 4);
+        $Model->del_c(2, 5);
+        $Model->del_c(2, 6);
+        $Model->del_c(2, 7);
+        $Model->del_c(2, 8);
+        $Model->del_c(2, 9);
+        $Model->del_c(2, 10);
+        $Model->del_c(2, 11);
+        $Model->del_c(2, 12);
+        $Model->del_c(2, 13);
+        $Model->del_c(2, 14);
+
 
         // 如果数据不干净，先把db_test.ck_collection truncate掉
 
-        $Model->add_c(1, 1);
-        $this->assertEquals([1], $Model->getCollectionById(1));
+        $Model->add_c(2, 1);
+        $this->assertEquals([1], $Model->getCollectionById(2));
         // 查重
-        $Model->add_c(1, 1);
-        $this->assertEquals([1], $Model->getCollectionById(1));
+        $Model->add_c(2, 1);
+        $this->assertEquals([1], $Model->getCollectionById(2));
         // 删除
-        $Model->del_c(1, 1);
-        $this->assertEquals([], $Model->getCollectionById(1));
+        $Model->del_c(2, 1);
+        $this->assertEquals([], $Model->getCollectionById(2));
         // 重复删除
-        $Model->del_c(1, 1);
-        $this->assertEquals([], $Model->getCollectionById(1));
+        $Model->del_c(2, 1);
+        $this->assertEquals([], $Model->getCollectionById(2));
 
         // 多次添加
-        $Model->add_c(1, 1);
-        $this->assertEquals([1], $Model->getCollectionById(1));
-        $Model->add_c(1, 2);
-        $this->assertEquals([1, 2], $Model->getCollectionById(1));
-        $whereConditions->pushCond("id", "in", $Model->getCollectionById(1));
+        $Model->add_c(2, 1);
+        $this->assertEquals([1], $Model->getCollectionById(2));
+        $Model->add_c(2, 2);
+        $this->assertEquals([1, 2], $Model->getCollectionById(2));
+        $whereConditions->pushCond("id", "in", $Model->getCollectionById(2));
         $messages = $Message->findWhere($whereConditions);
         $this->assertEquals(2, count($messages));
 
@@ -67,31 +71,37 @@ class CollectionModelTest extends PHPUnit_Framework_TestCase
         $whereConditions->popCond("id");
 
         // 多次添加
-        $Model->add_c(1, 1);
-        $Model->add_c(1, 2);
-        $Model->add_c(1, 3);
-        $Model->add_c(1, 4);
-        $Model->add_c(1, 5);
-        $Model->add_c(1, 6);
-        $Model->add_c(1, 7);
-        $Model->add_c(1, 8);
-        $Model->add_c(1, 9);
-        $Model->add_c(1, 10);
-        $Model->add_c(1, 11);
-        $this->assertEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], $Model->getCollectionById(1));
-        $whereConditions->pushCond("id", "in", $Model->getCollectionById(1));
+        $Model->add_c(2, 1);
+        $Model->add_c(2, 2);
+        $Model->add_c(2, 3);
+        $Model->add_c(2, 4);
+        $Model->add_c(2, 5);
+        $Model->add_c(2, 6);
+        $Model->add_c(2, 7);
+        $Model->add_c(2, 8);
+        $Model->add_c(2, 9);
+        $Model->add_c(2, 10);
+        $Model->add_c(2, 11);
+        $Model->add_c(2, 12);
+        $Model->add_c(2, 13);
+        $Model->add_c(2, 14);
+        $this->assertEquals([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14], $Model->getCollectionById(2));
+        $whereConditions->pushCond("id", "in", $Model->getCollectionById(2));
         $messages = $Message->findWhere($whereConditions);
         $this->assertEquals(C("DEFAULT_ROW"), count($messages)); // 只会取出10条
-        $Model->del_c(1, 1);
-        $Model->del_c(1, 2);
-        $Model->del_c(1, 3);
-        $Model->del_c(1, 4);
-        $Model->del_c(1, 5);
-        $Model->del_c(1, 6);
-        $Model->del_c(1, 7);
-        $Model->del_c(1, 8);
-        $Model->del_c(1, 9);
-        $Model->del_c(1, 10);
-        $Model->del_c(1, 11);
+        $Model->del_c(2, 1);
+        $Model->del_c(2, 2);
+        $Model->del_c(2, 3);
+        $Model->del_c(2, 4);
+        $Model->del_c(2, 5);
+        $Model->del_c(2, 6);
+        $Model->del_c(2, 7);
+        $Model->del_c(2, 8);
+        $Model->del_c(2, 9);
+        $Model->del_c(2, 10);
+        $Model->del_c(2, 11);
+        $Model->add_c(2, 12);
+        $Model->add_c(2, 13);
+        $Model->add_c(2, 14);
     }
 }

@@ -56,6 +56,12 @@ class MessagesModelTest extends PHPUnit_Framework_TestCase
         $this->assertEquals("阿拉善盟", $msg["district_start"]["name"]);
         $this->assertEquals(370100, $msg["district_end"]["id"]);
         $this->assertEquals("济南市", $msg["district_end"]["name"]);
+
+        $msg = $Model->find(6);
+        $msg = $Model->toDistrictStart($msg);
+        $msg = $Model->toDistrictEnd($msg);
+        $this->assertEquals("洛阳市", $msg["district_start"]["name"]);
+        $this->assertEquals("空", $msg["district_end"]["name"]);
     }
 
     public function testToCollection(){
@@ -63,6 +69,9 @@ class MessagesModelTest extends PHPUnit_Framework_TestCase
         $msg = $Model->find(1);
         $msg = $Model->toCollection($msg,2);
         $this->assertEquals("收藏", $msg["in_collection"]);
+
+//        $msg = $Model->toCollection($msg,1);
+//        $this->assertEquals("已收藏", $msg["in_collection"]);
     }
 
 }
