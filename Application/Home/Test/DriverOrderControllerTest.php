@@ -59,6 +59,12 @@ class DriverOrderControllerTest extends PHPUnit_Framework_TestCase
             $messages = $Message->findWhere($newWhereCond);
         }
         $this->assertEquals(4, count($messages));
+        $whereConditions->updateExist($messages);
+        $this->assertEquals('{"conditions":"{\"id\":[\"in\",[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"11\",\"12\",\"13\",\"14\"]]}","page":1,"asc":"record_time desc","exists":["4","3","2","1"],"last_count":-1}', $whereConditions->toJson());
+        $whereConditions->resetExist();
+        $this->assertEquals('{"conditions":"{\"id\":[\"in\",[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"11\",\"12\",\"13\",\"14\"]]}","page":1,"asc":"record_time desc","exists":[],"last_count":-1}', $whereConditions->toJson());
+
+
 
 //
 //        $output = $this->execAction('driver_order_more',array(2,));

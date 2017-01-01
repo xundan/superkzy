@@ -13,18 +13,28 @@ use Org\Util\ArrayList;
 
 class WhereConditions
 {
-    private $_whereConditions = null;
+    private $_whereConditions = array();
     private $_page = 1;
     private $_asc = "record_time desc";
+    private $_exist_arr = array();
+    private $_last_count = -1;
 
-    function __construct($whereCond = null)
+
+    function __construct($whereCond = null, $page = null, $asc = null, $exist_arr = null, $last_count = -1)
     {
-        if (!$whereCond) {
-//            $this->_whereConditions = array("'1'"=>array('eq',"1"));
-            $this->_whereConditions = array();
-        } else {
+        if ($whereCond) {
             $this->_whereConditions = $whereCond;
         }
+        if ($page) {
+            $this->_page = $page;
+        }
+        if ($asc) {
+            $this->_asc = $asc;
+        }
+        if ($exist_arr) {
+            $this->_exist_arr = $exist_arr;
+        }
+        $this->_last_count = $last_count;
     }
 
     /**
@@ -33,11 +43,18 @@ class WhereConditions
      */
     function toJson()
     {
-        return json_encode($this->getWhereConditions());
+        $data['conditions'] = json_encode($this->_whereConditions);
+        $data['page'] = $this->_page;
+        $data['asc'] = $this->_asc;
+        $data['exists'] = $this->_exist_arr;
+        $data['last_count'] = $this->_last_count;
+        return json_encode($data);
     }
 
-    static function parseJson($json){
-        return new WhereConditions(json_decode($json));
+    static function parseJson($json)
+    {
+        $data = json_decode($json, true);
+        return new WhereConditions(json_decode($data['conditions'], true), $data['page'], $data['asc'], $data['exists'], $data['last_count']);
     }
 
     /**
@@ -161,6 +178,30 @@ class WhereConditions
         return $result;
     }
 
+    public function preSQL()
+    {
+        $eoa = $this->getLastCount();
+
+        if ($eoa < 0) { // 说明上次拉取的是全额的消息
+            $this->ascPage();
+        } else { // 否则退一格约束
+            $this->resetPage();
+            $this->popCond();
+        }
+    }
+
+    public function postSQL($messages)
+    {
+        $this->updateExist($messages);
+        $counts = count($messages);
+        if ($counts < C('DEFAULT_ROW')) { // 说明已经到查询极限了
+            $this->_last_count = $counts;
+        } else { // 说明是满的
+            $this->_last_count = -1;
+        }
+        return $this->getLastCount();
+    }
+
     /**
      * @return int
      */
@@ -193,5 +234,74 @@ class WhereConditions
         $this->_page = $page;
     }
 
+    /**
+     */
+    public function resetPage()
+    {
+        $this->_page = 1;
+    }
 
+    /**
+     */
+    public function ascPage()
+    {
+        $this->_page = $this->_page + 1;
+    }
+
+    /**
+     * 记录已经查出那些数组
+     * @param $messages mixed 查询出来的数组
+     */
+    public function updateExist($messages)
+    {
+        foreach ($messages as $message) {
+            array_push($this->_exist_arr, $message["id"]);
+        }
+    }
+
+    public function getExist()
+    {
+        return $this->_exist_arr;
+    }
+
+    public function resetExist()
+    {
+        $this->_exist_arr = array();
+    }
+
+    /**
+     * @return int
+     */
+    public function getLastCount()
+    {
+        return $this->_last_count;
+    }
+
+    /**
+     */
+    public function resetLastCount()
+    {
+        $this->_last_count = -1;
+    }
+
+    /**
+     * @param int $last_count
+     */
+    public function setLastCount($last_count)
+    {
+        $this->_last_count = $last_count;
+    }
+
+    public function isLastCountFull()
+    {
+        return ($this->_last_count == -1);
+    }
+
+    public function isExhausted(){
+        if (count($this->_whereConditions) == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

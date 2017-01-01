@@ -104,6 +104,34 @@ class MessagesModel extends Model
         $this->_message = $this->where($cond->getWhereConditions())->where('invalid_id=0')->limit($beginStr, $countRow)->order($asc)->select();
         return $this->_message;
     }
+
+
+    /**
+     * 历史和收藏不能使用这个方法！
+     * $existWhere 会覆盖掉 $cond里的 "id in" 条件，要特别注意
+     * @param WhereConditions $cond
+     * @param int $count
+     * @return mixed 获取的消息列表
+     */
+    public function findWhereWithoutExist(WhereConditions $cond, $count)
+    {
+
+        $countRow = (C("DEFAULT_ROW")-$count);//常量
+        $page = $cond->getPage();
+        $asc = $cond->getAsc();
+        $existWhere["id"] = array('not in',$cond->getExist());
+
+        // $existWhere 会覆盖掉 $cond里的 "id in" 条件，特别注意。
+        $beginStr = ($page - 1) * $countRow;
+        $this->_message = $this->where($cond->getWhereConditions())->where('invalid_id=0')->where($existWhere)->limit($beginStr, $countRow)->order($asc)->select();
+        return $this->_message;
+    }
+
+    /**
+     * 允许返回失效（invalid_id>0）的查询
+     * @param WhereConditions $cond
+     * @return null
+     */
     public function findWhereExtra(WhereConditions $cond)
     {
         $countRow = C("DEFAULT_ROW");//常量

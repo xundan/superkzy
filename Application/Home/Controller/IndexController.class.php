@@ -15,7 +15,8 @@ class IndexController extends Controller
         echo '123';
 
 //        $a = new WhereConditions(null);
-//        $a->pushCond("id","lt","101");
+//        $a->pushCond("area_start","eq","榆林");
+//        $a->pushCond("area_end","eq","郑州");
 //        $a->pushCond("id","gt","5");
 //        echo $a->toJson();
 //        $Msg = D('messages');
