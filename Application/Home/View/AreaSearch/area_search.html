@@ -18,19 +18,6 @@
     <!--<script type="text/javascript" src="bootstrap.min.js"></script>-->
 </head>
 <body style="background-color: #efeff4">
-<!--标题栏-->
-<div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
-                <span class="pull-left" style="">
-                    <a href="">
-                        <img src="__PUBLIC__/home/images/goback.png" class="img-responsive" style="width: 15px;height: auto;margin-top: 60%">
-                    </a>
-                </span>
-                <span class="">
-                    <span class="" style="font-size: 2em;">地区搜索</span>
-                </span>
-</div>
-<!--清除浮动-->
-<div class="clearfix"></div>
 <!--搜索框-->
 <div class="bd">
     <div class="weui_search_bar" id="search_bar">
@@ -52,6 +39,7 @@
             <div class="weui_cell" >
                 <div class="weui_cell_bd weui_cell_primary">
                     <p id="search0" style="margin-bottom: 0">实时搜索文本</p>
+                    <div id="search0_id" style="display: none"></div>
                 </div>
             </div>
         </a>
@@ -59,6 +47,7 @@
             <div class="weui_cell" >
                 <div class="weui_cell_bd weui_cell_primary">
                     <p id="search1" style="margin-bottom: 0">实时搜索文本</p>
+                    <div id="search1_id" style="display: none"></div>
                 </div>
             </div>
         </a>
@@ -66,6 +55,7 @@
             <div class="weui_cell" >
                 <div class="weui_cell_bd weui_cell_primary">
                     <p id="search2" style="margin-bottom: 0">实时搜索文本</p>
+                    <div id="search2_id" style="display: none"></div>
                 </div>
             </div>
         </a>
@@ -73,6 +63,7 @@
             <div class="weui_cell" >
                 <div class="weui_cell_bd weui_cell_primary">
                     <p id="search3" style="margin-bottom: 0">实时搜索文本</p>
+                    <div id="search3_id" style="display: none"></div>
                 </div>
             </div>
         </a>
@@ -80,6 +71,7 @@
             <div class="weui_cell" >
                 <div class="weui_cell_bd weui_cell_primary">
                     <p id="search4" style="margin-bottom: 0">实时搜索文本</p>
+                    <div id="search4_id" style="display: none"></div>
                 </div>
             </div>
         </a>
@@ -107,12 +99,15 @@
 <div class="tab-content" style="background-color: white">
     <div id="lastarea" class="tab-pane active">
         <table class="table">
-            <volist name="lastarea" id="result">
+            <volist name="last_area" id="result">
                 <tr>
                     <td>
                         <a href="javascript:void(0)" name="last_area" style="text-decoration: none;color:black;">
                             <div>
-                                {$result}
+                                {$result->name}
+                            </div>
+                            <div style="display: none">
+                                {$result->id}
                             </div>
                         </a>
                     </td>
@@ -235,6 +230,12 @@
                                 <div>
                                 {$result.name}
                                 </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
+                                </div>
                             </a>
                         </td>
                     </tr>
@@ -248,6 +249,12 @@
                             <a href="javascript:void(0)" name="all_area" style="text-decoration: none;color:black;">
                                 <div>
                                     {$result.name}
+                                </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
                                 </div>
                             </a>
                         </td>
@@ -263,6 +270,12 @@
                                 <div>
                                     {$result.name}
                                 </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
+                                </div>
                             </a>
                         </td>
                     </tr>
@@ -276,6 +289,12 @@
                             <a href="javascript:void(0)" name="all_area" style="text-decoration: none;color:black;">
                                 <div>
                                     {$result.name}
+                                </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
                                 </div>
                             </a>
                         </td>
@@ -291,6 +310,12 @@
                                 <div>
                                     {$result.name}
                                 </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
+                                </div>
                             </a>
                         </td>
                     </tr>
@@ -304,6 +329,12 @@
                             <a href="javascript:void(0)" name="all_area" style="text-decoration: none;color:black;">
                                 <div>
                                     {$result.name}
+                                </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
                                 </div>
                             </a>
                         </td>
@@ -319,6 +350,12 @@
                                 <div>
                                     {$result.name}
                                 </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
+                                </div>
                             </a>
                         </td>
                     </tr>
@@ -332,6 +369,12 @@
                             <a href="javascript:void(0)" name="all_area" style="text-decoration: none;color:black;">
                                 <div>
                                     {$result.name}
+                                </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
                                 </div>
                             </a>
                         </td>
@@ -347,6 +390,12 @@
                                 <div>
                                     {$result.name}
                                 </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
+                                </div>
                             </a>
                         </td>
                     </tr>
@@ -361,6 +410,12 @@
                                 <div>
                                     {$result.name}
                                 </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
+                                </div>
                             </a>
                         </td>
                     </tr>
@@ -374,6 +429,12 @@
                             <a href="javascript:void(0)" name="all_area" style="text-decoration: none;color:black;">
                                 <div>
                                     {$result.name}
+                                </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
                                 </div>
                             </a>
                         </td>
@@ -404,6 +465,12 @@
                                     {$result.name}
                                 </div>
                             </a>
+                            <div style="display: none">
+                                {$result.id}
+                            </div>
+                            <div style="display: none">
+                                {$result|json_encode}
+                            </div>
                         </td>
                     </tr>
                 </table>
@@ -416,6 +483,12 @@
                             <a href="javascript:void(0)" name="all_area" style="text-decoration: none;color:black;">
                                 <div>
                                     {$result.name}
+                                </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
                                 </div>
                             </a>
                         </td>
@@ -431,6 +504,12 @@
                                 <div>
                                     {$result.name}
                                 </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
+                                </div>
                             </a>
                         </td>
                     </tr>
@@ -444,6 +523,12 @@
                             <a href="javascript:void(0)" name="all_area" style="text-decoration: none;color:black;">
                                 <div>
                                     {$result.name}
+                                </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
                                 </div>
                             </a>
                         </td>
@@ -459,6 +544,12 @@
                                 <div>
                                     {$result.name}
                                 </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
+                                </div>
                             </a>
                         </td>
                     </tr>
@@ -472,6 +563,12 @@
                             <a href="javascript:void(0)" name="all_area" style="text-decoration: none;color:black;">
                                 <div>
                                     {$result.name}
+                                </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
                                 </div>
                             </a>
                         </td>
@@ -487,6 +584,12 @@
                                 <div>
                                     {$result.name}
                                 </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
+                                </div>
                             </a>
                         </td>
                     </tr>
@@ -500,6 +603,12 @@
                             <a href="javascript:void(0)" name="all_area" style="text-decoration: none;color:black;">
                                 <div>
                                     {$result.name}
+                                </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
                                 </div>
                             </a>
                         </td>
@@ -515,6 +624,12 @@
                                 <div>
                                     {$result.name}
                                 </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
+                                </div>
                             </a>
                         </td>
                     </tr>
@@ -528,6 +643,12 @@
                             <a href="javascript:void(0)" name="all_area" style="text-decoration: none;color:black;">
                                 <div>
                                     {$result.name}
+                                </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
                                 </div>
                             </a>
                         </td>
@@ -543,6 +664,12 @@
                                 <div>
                                     {$result.name}
                                 </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
+                                </div>
                             </a>
                         </td>
                     </tr>
@@ -556,6 +683,12 @@
                             <a href="javascript:void(0)" name="all_area" style="text-decoration: none;color:black;">
                                 <div>
                                     {$result.name}
+                                </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
                                 </div>
                             </a>
                         </td>
@@ -571,6 +704,12 @@
                                 <div>
                                     {$result.name}
                                 </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
+                                </div>
                             </a>
                         </td>
                     </tr>
@@ -585,6 +724,12 @@
                                 <div>
                                     {$result.name}
                                 </div>
+                                <div style="display: none">
+                                    {$result.id}
+                                </div>
+                                <div style="display: none">
+                                    {$result|json_encode}
+                                </div>
                             </a>
                         </td>
                     </tr>
@@ -593,7 +738,9 @@
         </div>
     </div>
 </div>
+
 </body>
+
 <!--导航功能-->
 <script>
     $('#myTab a').click(function (e) {
@@ -644,6 +791,7 @@
                 console.log(data);
                 jQuery.each(data,function(k,val){
                     $('#search'+k).html(val.name);
+                    $('#search'+k+'_id').html(val.id);
                 });
             }
             });
@@ -662,65 +810,110 @@
     });
 </script>
 
+<script>
+    $(function(){
+        console.log(cookie());
+    })
+</script>
+
 <!--cookie操作地址-->
 <script>
     //所有地区选择
     $('a[name=all_area]').click(function(){
+//        cookie('last_area',null);return;
         var temp_area = $(this).children('div').html().trim();
+        var temp_area_id = $(this).children('div').eq(1).html().trim();
         var temp_area_js = encodeURIComponent(temp_area);
+        var temp = {id:temp_area_id,name:temp_area_js};
+//        console.log(temp);
         if(temp_area){
-            if(cookie('lastarea')){
-                cookie('lastarea',cookie('lastarea')+' '+temp_area_js);
+            if(cookie('last_area')){
+                var a = JSON.parse(cookie('last_area'));
+                for(var i=0; i<a.length; i++) {
+                    if(temp_area_id == a[i].id) {
+                        a.splice(i, 1);
+                        break;
+                    }
+                }
+                a.push(temp);
+                cookie('last_area',JSON.stringify(a));
             }else{
-                cookie('lastarea',temp_area_js);
+                var b = [];
+                b.push(temp);
+                cookie('last_area',JSON.stringify(b));
             }
             if(cookie('start_or_end') == 'start'){
                 cookie('area_start',temp_area);
+                cookie('area_start_id',temp_area_id);
             }else if(cookie('start_or_end') == 'end'){
                 cookie('area_end',temp_area);
+                cookie('area_end_id',temp_area_id);
             }
-//            console.log(decodeURI(cookie('lastarea')));
-//            console.log(cookie());
-//            return;
             $(this).attr('href',cookie('last_url'));
         }
+        else{}
     });
     //实时搜索选择
     $('a[name=real_time_area]').click(function(){
         var temp_area = $(this).children('div').children('div').children('p').html().trim();
+        var temp_area_id = $(this).children('div').children('div').children('div').html().trim();
         var temp_area_js = encodeURIComponent(temp_area);
+        var temp = {id:temp_area_id,name:temp_area_js};
         if(temp_area){
-//            cookie('lastarea',null);return;
-            if(cookie('lastarea')){
-                cookie('lastarea',cookie('lastarea')+' '+temp_area_js);
+            if(cookie('last_area')){
+                var a = JSON.parse(cookie('last_area'));
+                for(var i=0; i<a.length; i++) {
+                    if(temp_area_id == a[i].id) {
+                        a.splice(i, 1);
+                        break;
+                    }
+                }
+                a.push(temp);
+                cookie('last_area',JSON.stringify(a));
             }else{
-                cookie('lastarea',temp_area_js);
+                var b = [];
+                b.push(temp);
+                cookie('last_area',JSON.stringify(b));
             }
             if(cookie('start_or_end') == 'start'){
                 cookie('area_start',temp_area);
+                cookie('area_start_id',temp_area_id);
             }else if(cookie('start_or_end') == 'end'){
                 cookie('area_end',temp_area);
+                cookie('area_end_id',temp_area_id);
             }
-//        console.log(cookie('last_url'));
-//            console.log(cookie());return;
             $(this).attr('href',cookie('last_url'));
         }
     });
     //历史地区选择
     $('a[name=last_area]').click(function(){
         var temp_area = $(this).children('div').html().trim();
+        var temp_area_id = $(this).children('div').eq(1).html().trim();
         var temp_area_js = encodeURIComponent(temp_area);
+        var temp = {id:temp_area_id,name:temp_area_js};
         if(temp_area){
 //            cookie('lastarea',null);return;
-            if(cookie('lastarea')){
-                cookie('lastarea',cookie('lastarea')+' '+temp_area_js);
+            if(cookie('last_area')){
+                var a = JSON.parse(cookie('last_area'));
+                for(var i=0; i<a.length; i++) {
+                    if(temp_area_id == a[i].id) {
+                        a.splice(i, 1);
+                        break;
+                    }
+                }
+                a.push(temp);
+                cookie('last_area',JSON.stringify(a));
             }else{
-                cookie('lastarea',temp_area_js);
+                var b = [];
+                b.push(temp);
+                cookie('last_area',JSON.stringify(b));
             }
             if(cookie('start_or_end') == 'start'){
                 cookie('area_start',temp_area);
+                cookie('area_start_id',temp_area_id);
             }else if(cookie('start_or_end') == 'end'){
                 cookie('area_end',temp_area);
+                cookie('area_end_id',temp_area_id);
             }
             $(this).attr('href',cookie('last_url'));
         }

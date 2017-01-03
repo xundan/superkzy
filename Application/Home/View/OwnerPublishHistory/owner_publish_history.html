@@ -2,13 +2,14 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
     <!--<link rel="icon" href="../../favicon.ico">-->
-    <title>我的发布</title>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <title>我的收藏</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
@@ -19,6 +20,23 @@
     <!--<script type="text/javascript" src="bootstrap.min.js"></script>-->
 </head>
 <body>
+<!--标题栏-->
+<!--<div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">-->
+<!--&lt;!&ndash;<div class="container text-center" style="">&ndash;&gt;-->
+<!--&lt;!&ndash;<div style="display: inline-block;height: 100%;vertical-align: middle"></div>&ndash;&gt;-->
+<!--<span class="pull-left" style="">-->
+<!--&lt;!&ndash;<a class="glyphicon glyphicon-chevron-left"></a>&ndash;&gt;-->
+<!--<a href="#">-->
+<!--<img src="__PUBLIC__/home/images/goback.png" class="img-responsive"-->
+<!--style="width: 15px;height: auto;margin-top: 40%">-->
+<!--</a>-->
+<!--</span>-->
+<!--<span class="">-->
+<!--<span class="" style="font-size: 1.5em;">我的收藏</span>-->
+<!--</span>-->
+<!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</div>-->
+
 <!--清除浮动-->
 <div class="clearfix"></div>
 
@@ -38,8 +56,8 @@
 
 <!--标签隐藏表单提交-->
 <form name="tag_search" id="tag_search">
-    <input type="hidden" name="select_category">
-    <input type="hidden" name="page" id="page" value="{$next_page}">
+    <input type="hidden" name="select_category" id="select_category">
+    <input type="hidden" name="page" id="page" value="1">
 </form>
 
 <!--订单展示栏-->
@@ -51,172 +69,14 @@
         </div>
         <div class="tab-content" style="">
             <ul id="transport" class="tab-pane active" style="margin-top: 40px;list-style-type: none">
-                <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
-                    <div class="text-right">
-                        <a href="{:U('OwnerOrder/owner_order_transport_detail')}"
-                           style="text-decoration: none;color:grey">
-                            详情 >
-                        </a>
-                    </div>
-                    <div class="">
-                        <strong>车主名称：{}</strong>
-                        <span class="pull-right"><strong>{cartype}/{capacity}</strong></span>
-                    </div>
-                    <div class="divider" style="border:1px solid darkgrey"></div>
-                    <div class="text-center">
-                        <img class="" src="__PUBLIC__/home/images/area_start.png"
-                             style="width: 12px;height: 15px;">
-                        {}———{}
-                        <img class="" src="__PUBLIC__/home/images/area_end.png"
-                             style="width: 12px;height: 15px;">
-                    </div>
-                    <div class="pull-right help-block">
-                        接单时间:{}
-                    </div>
-                </li>
-                <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
-                    <div class="text-right">
-                        <a href="{:U('OwnerOrder/owner_order_detail')}"
-                           style="text-decoration: none;color:grey">
-                            详情 >
-                        </a>
-                    </div>
-                    <div class="">
-                        <strong>车主名称：{}</strong>
-                        <span class="pull-right"><strong>{cartype}/{capacity}</strong></span>
-                    </div>
-                    <ul class="nav nav-list">
-                        <li class="divider"></li>
-                    </ul>
-                    <div class="divider" style="border:1px solid darkgrey"></div>
-                    <div class="text-center">
-                        <img class="" src="__PUBLIC__/home/images/area_start.png"
-                             style="width: 12px;height: 15px;">
-                        {}———{}
-                        <img class="" src="__PUBLIC__/home/images/area_end.png"
-                             style="width: 12px;height: 15px;">
-                    </div>
-                    <div class="pull-right">
-                        接单时间:{}
-                    </div>
-                </li>
+                <volist name="transport_li_array" id="vo">
+                    {$vo}
+                </volist>
             </ul>
             <ul id="trade" class="tab-pane" style="margin-top: 40px;list-style-type: none">
-                <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
-                    <div class="text-right">
-                        <a href="{:U('OwnerOrder/owner_order_transport_detail')}"
-                           style="text-decoration: none;color:grey">
-                            详情 >
-                        </a>
-                    </div>
-                    <div class="">
-                        <strong>车主名称：{}</strong>
-                        <span class="pull-right"><strong>{cartype}/{capacity}</strong></span>
-                    </div>
-                    <div class="divider" style="border:1px solid darkgrey"></div>
-                    <div class="text-center">
-                        <img class="" src="__PUBLIC__/home/images/area_start.png"
-                             style="width: 12px;height: 15px;">
-                        {}———{}
-                        <img class="" src="__PUBLIC__/home/images/area_end.png"
-                             style="width: 12px;height: 15px;">
-                    </div>
-                    <div class="pull-right help-block">
-                        接单时间:{}
-                    </div>
-                </li>
-                <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
-                    <div class="text-right">
-                        <a href="{:U('OwnerOrder/owner_order_transport_detail')}"
-                           style="text-decoration: none;color:grey">
-                            详情 >
-                        </a>
-                    </div>
-                    <div class="">
-                        <strong>车主名称：{}</strong>
-                        <span class="pull-right"><strong>{cartype}/{capacity}</strong></span>
-                    </div>
-                    <div class="divider" style="border:1px solid darkgrey"></div>
-                    <div class="text-center">
-                        <img class="" src="__PUBLIC__/home/images/area_start.png"
-                             style="width: 12px;height: 15px;">
-                        {}———{}
-                        <img class="" src="__PUBLIC__/home/images/area_end.png"
-                             style="width: 12px;height: 15px;">
-                    </div>
-                    <div class="pull-right help-block">
-                        接单时间:{}
-                    </div>
-                </li>
-                <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
-                    <div class="text-right">
-                        <a href="{:U('OwnerOrder/owner_order_transport_detail')}"
-                           style="text-decoration: none;color:grey">
-                            详情 >
-                        </a>
-                    </div>
-                    <div class="">
-                        <strong>车主名称：{}</strong>
-                        <span class="pull-right"><strong>{cartype}/{capacity}</strong></span>
-                    </div>
-                    <div class="divider" style="border:1px solid darkgrey"></div>
-                    <div class="text-center">
-                        <img class="" src="__PUBLIC__/home/images/area_start.png"
-                             style="width: 12px;height: 15px;">
-                        {}———{}
-                        <img class="" src="__PUBLIC__/home/images/area_end.png"
-                             style="width: 12px;height: 15px;">
-                    </div>
-                    <div class="pull-right help-block">
-                        接单时间:{}
-                    </div>
-                </li>
-                <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
-                    <div class="text-right">
-                        <a href="{:U('OwnerOrder/owner_order_transport_detail')}"
-                           style="text-decoration: none;color:grey">
-                            详情 >
-                        </a>
-                    </div>
-                    <div class="">
-                        <strong>车主名称：{}</strong>
-                        <span class="pull-right"><strong>{cartype}/{capacity}</strong></span>
-                    </div>
-                    <div class="divider" style="border:1px solid darkgrey"></div>
-                    <div class="text-center">
-                        <img class="" src="__PUBLIC__/home/images/area_start.png"
-                             style="width: 12px;height: 15px;">
-                        {}———{}
-                        <img class="" src="__PUBLIC__/home/images/area_end.png"
-                             style="width: 12px;height: 15px;">
-                    </div>
-                    <div class="pull-right help-block">
-                        接单时间:{}
-                    </div>
-                </li>
-                <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
-                    <div class="text-right">
-                        <a href="{:U('OwnerOrder/owner_order_transport_detail')}"
-                           style="text-decoration: none;color:grey">
-                            详情 >
-                        </a>
-                    </div>
-                    <div class="">
-                        <strong>车主名称：{}</strong>
-                        <span class="pull-right"><strong>{cartype}/{capacity}</strong></span>
-                    </div>
-                    <div class="divider" style="border:1px solid darkgrey"></div>
-                    <div class="text-center">
-                        <img class="" src="__PUBLIC__/home/images/area_start.png"
-                             style="width: 12px;height: 15px;">
-                        {}———{}
-                        <img class="" src="__PUBLIC__/home/images/area_end.png"
-                             style="width: 12px;height: 15px;">
-                    </div>
-                    <div class="pull-right help-block">
-                        接单时间:{}
-                    </div>
-                </li>
+                <volist name="trade_li_array" id="vo">
+                    {$vo}
+                </volist>
             </ul>
         </div>
         <div id="pullUp">
@@ -241,16 +101,19 @@
 <!--载入读取上次标签-->
 <script>
     $(function () {
-        var now = new Date();
-        if (cookie('search_tag') == '运输订单') {
+        $('input[name=select_category]').val(cookie('search_tag'));
+        if (cookie('search_tag') == 'transport') {
             //运输订单
             //避免为空或者false
             //标签选中
             $('#myTab a:eq(0)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on');
-        } else {
+        } else if(cookie('search_tag') == 'trade'){
             //交易订单
             $('#myTab a:eq(1)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on');
+        } else{
+            cookie('search_tag','transport');
         }
+        console.log($('input[name=select_category]').val());
     });
 </script>
 
@@ -259,8 +122,9 @@
     //点击运输订单标签
     $('#myTab a:eq(0)').click(function () {
         //存入所选标签入cookie
-        cookie('search_tag', '运输订单');
+        cookie('search_tag', 'transport');
         $('input[name=select_category]').val(cookie('search_tag'));
+        console.log($('input[name=select_category]').val());
         $('input[name=page]').val(1);
         //提交表单
         document.tag_search.method = 'post';
@@ -271,7 +135,7 @@
     //点击供应信息标签
     $('#myTab a:eq(1)').click(function () {
         //存入所选标签入cookie
-        cookie('search_tag', '交易订单');
+        cookie('search_tag', 'trade');
         $('input[name=select_category]').val(cookie('search_tag'));
         $('input[name=page]').val(1);
         //提交表单
@@ -283,22 +147,9 @@
 
 <!--滚动功能-->
 <script>
-    //    var myScroll;
-    //    myScroll = new IScroll('#wrapper',{
-    //        probeType: 3,
-    //        mouseWheel: true
-    //    });
-    //    function loaded(){
-    //        myScroll = new IScroll('#wrapper');
-    //    }
-    //    console.dir(myScroll.options);
-
-    //var myScroll,pullDownEl,pullDownOffset,pullUpEl,pullUpOffset,generatedCount = 0;
     var myScroll, pullDownEl, pullDownOffset, pullUpEl, pullUpOffset;
     var time_now, update_time;
 
-    //    var myScroll2, pullDownEl2, pullDownOffset2, pullUpEl2, pullUpOffset2;
-    //    var time_now2, update_time2;
 
     //
     /**下拉刷新 （自定义实现此方法）
@@ -307,32 +158,7 @@
     function pullDownAction() {
         console.log('down');
         location.reload();
-        myScroll.refresh();
-//    return;
-//    return;
-//    setTimeout(function(){
-//        var el,li,i;
-//        el = document.getElementById('thelist');
-////        console.log('downrefresh');
-////        window.location.reload();
-//        //==========================================
-//        $.ajax({
-//            type: "POST",
-//            url: "{:U('TradeSearch/trade_search')}",
-//            data: {isAjax:1,page: page},
-////            dataType: "json",
-//            success:function(data){
-////                var json = data;
-////                $(json).each(function(){
-////                    li = document.createElement('li');
-////                    // li.innerText = 'Generated row ' + (++generatedCount);
-////                    li.innerHTML = '<img src="' + this.src + '"/>';
-////                    el.insertBefore(li,el.childNodes[0]);
-////                })
-////                alert(1);
-//            }
-//        });
-//        myScroll.refresh();//数据加载完成后，调用界面更新方法  Remember to refresh when contents are loaded (ie: on ajax completion)
+        myScroll.refresh();//数据加载完成后，调用界面更新方法  Remember to refresh when contents are loaded (ie: on ajax completion)
 //    },1000);  // <-- Simulate network congestion, remove setTimeout from production!
     }
     /**滚动翻页 （自定义实现此方法）
@@ -341,42 +167,36 @@
     function pullUpAction() {
         console.log('up');
         var page = $('#page').val();
-        console.log(page);
-//    myScroll.refresh();
-//    return;
+        var request_page = parseInt(page)+1;
+        var select_category = $('#select_category').val();
         setTimeout(function () {
-//        var el,li,i;
-//        el = document.getElementById('thelist');
-            var post = $('#tag_search').serialize();
             //==========================================
             $.ajax({
                 type: "post",
-                url: "{:U('TradeSearch/trade_search')}",
-                data: {isAjax: 1, page: page, condition: post},
-//            dataType: "json",
+                url: "{:U('OwnerPublishHistory/owner_publish_history_more')}",
+                data: {page:request_page,select_category:select_category},
                 success: function (data) {
                     console.log('success');
-//                console.log(data);
-//                var json = data;
-//                $(json).each(function(){
-//                    li = document.createElement('li');
-//                    //  li.innerText = 'Generated row ' + (++generatedCount);
-//                    li.innerHTML = '<img src="' + this.src + '"/>';
-//                    el.insertBefore(li,el.childNodes[0]);
-//                })
                     var jsonObj = eval("(" + data + ")");
-                    console.log(jsonObj.test);
-//                return;
-//                var jsonObj=data;
-//                console.log(jsonObj.data);
-//                return;
-                    jQuery.each(jsonObj.data, function (k, val) {
-                        var tempObj = $("#buy_clone").clone(true);
-//                        tempObj.children("li").children("table").children("tbody").children("tr").eq(1).children("td").eq(1).html("产地"+val.area_start);
-                        tempObj.children("table").children("tbody").children("tr").eq(1).children("td").eq(1).html("产地" + val.area_start);
-                        tempObj.appendTo("#insert_point");
-                    });
-                    $("#page").val(jsonObj.next_page);
+                    console.log(jsonObj);
+//                    return;
+                    if(jsonObj.msg == 'success'){
+                        page++;
+                        $('#page').val(page);
+                        jQuery.each(jsonObj.li_array, function (k, val) {
+                            var li = document.createElement('li');
+                            li.innerHTML = val;
+                            console.log(cookie('search_tag'));
+                            if(cookie('search_tag') == 'transport'){
+                                document.getElementById('transport').appendChild(li);
+                            }
+                            else if(cookie('search_tag') == 'trade'){
+                                document.getElementById('trade').appendChild(li);
+                            }
+                            else {}
+                        });
+                    }
+                    else{}
                     myScroll.refresh();
                 }
             });
@@ -392,8 +212,8 @@
         pullDownOffset = pullDownEl.offsetHeight;
         pullUpEl = document.getElementById('pullUp');
         pullUpOffset = pullUpEl.offsetHeight;
-        console.log(pullDownOffset);
-        console.log(pullUpOffset);
+//        console.log(pullDownOffset);
+//        console.log(pullUpOffset);
         setTimeout(function () {
             myScroll = new iScroll('wrapper', {
 //        scrollbarClass: 'myScrollbar', /* 重要样式 */
@@ -428,25 +248,6 @@
                 },
                 onScrollMove: function () {
 //            document.getElementById("show").innerHTML="onScrollMove: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
-
-//            if(this.y > 5 && !pullDownEl.className.match('flip')){
-//                pullDownEl.className = 'flip';
-//                pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...';
-//                //pullDownEl.querySelector('.pullDownLabel').innerHTML = '数据更新时间：' + updateDatetime;
-//                this.minScrollY = 0;
-//            }else if(this.y < 5 && pullDownEl.className.match('flip')){
-//                pullDownEl.className = '';
-//                pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
-//                this.minScrollY = -pullDownOffset;
-//            }else if(this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')){
-//                pullUpEl.className = 'flip';
-//                pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...';
-//                this.maxScrollY = this.maxScrollY;
-//            }else if(this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')){
-//                pullUpEl.className = '';
-//                pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
-//                this.maxScrollY = pullUpOffset;
-//            }
 
                     if (this.y > 0) {
                         pullDownEl.className = 'flip';

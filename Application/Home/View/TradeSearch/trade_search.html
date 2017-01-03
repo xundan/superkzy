@@ -20,33 +20,6 @@
     <!--<script type="text/javascript" src="bootstrap.min.js"></script>-->
 </head>
 <body style="">
-
-<!--标题栏-->
-<!--<div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">-->
-<!--&lt;!&ndash;<div class="container text-center" style="">&ndash;&gt;-->
-<!--&lt;!&ndash;<div style="display: inline-block;height: 100%;vertical-align: middle"></div>&ndash;&gt;-->
-<!--<span class="pull-left" style="">-->
-<!--&lt;!&ndash;<a class="glyphicon glyphicon-chevron-left"></a>&ndash;&gt;-->
-<!--<a href="#">-->
-<!--<img src="__PUBLIC__/home/images/goback.png" class="img-responsive"-->
-<!--style="width: 15px;height: auto;margin-top: 40%">-->
-<!--</a>-->
-<!--</span>-->
-<!--<span class="">-->
-<!--<span class="" style="font-size: 1.5em;margin-left: 15%">买卖查询</span>-->
-<!--</span>-->
-<!--<span class="pull-right" style="border-color: white">-->
-<!--<a href="#" class="btn btn-xs btn-default"-->
-<!--style=";border:1px solid white; ;color:white;background-color: transparent;text-decoration: none;margin-bottom: -50%">-->
-<!--我的收藏-->
-<!--</a>-->
-<!--</span>-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--</div>-->
-
-<!--清除浮动-->
-<div class="clearfix"></div>
-
 <!--导航标签-->
 <div class="panel-title" style=";margin:0;padding: 0;background-color: white;display: block">
     <div id="myTab" class="weui_navbar" style=";margin-bottom: 0;">
@@ -91,28 +64,6 @@
         </form>
         <a href="javascript:void(0)" class="weui_search_cancel" id="search_cancel">取消</a>
     </div>
-    <!--<div class="weui_cells weui_cells_access search_show" id="search_show">-->
-    <!--<div class="weui_cell">-->
-    <!--<div class="weui_cell_bd weui_cell_primary">-->
-    <!--<p>实时搜索文本</p>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="weui_cell">-->
-    <!--<div class="weui_cell_bd weui_cell_primary">-->
-    <!--<p>实时搜索文本</p>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="weui_cell">-->
-    <!--<div class="weui_cell_bd weui_cell_primary">-->
-    <!--<p>实时搜索文本</p>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--<div class="weui_cell">-->
-    <!--<div class="weui_cell_bd weui_cell_primary">-->
-    <!--<p>实时搜索文本</p>-->
-    <!--</div>-->
-    <!--</div>-->
-    <!--</div>-->
 </div>
 <!--标签隐藏表单提交-->
 <form name="tag_search" id="tag_search">
@@ -138,162 +89,12 @@
                 {$li}
                 {$li}
                 <span id="buy_insert"></span>
-                <!--<span id="insert_point"></span>-->
-                <!--<div style="display: none">-->
-                <!--<li id="buy_clone" class="weui_panel weui_panel_access" style=";border-radius: 5px">-->
-                <!--<div style="position: absolute;right: 0px;">-->
-                <!--<img src="__PUBLIC__/home/images/buy.png" width="50px">-->
-                <!--</div>-->
-                <!--<div class="weui_media_box weui_media_appmsg" style="margin: 0;padding-left: 0;padding-right: 0">-->
-                <!--<a href="#">-->
-                <!--<div class="weui_media_hd">-->
-                <!--<img src="__PUBLIC__/home/images/headimg_background.png" class="weui_media_appmsg_thumb">-->
-                <!--</div>-->
-                <!--</a>-->
-                <!--<div class="weui_media_bd">-->
-                <!--<a href="#">-->
-                <!--<h4 class="weui_media_title">{名字} <img src="__PUBLIC__/home/images/medal.png" style="width: 15px;height: 20px"></h4>-->
-                <!--</a>-->
-                <!--<p class="weui_media_desc">-->
-                <!--<img src="__PUBLIC__/home/images/area_start.png" style="width: 10px;height: 15px">-->
-                <!--{}-->
-                <!--</p>-->
-                <!--</div>-->
-                <!--<div class="weui_media_bd text-center" style="">-->
-                <!--<a href="tel:15153151316" class="">-->
-                <!--<h4>-->
-                <!--<img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">-->
-                <!--<span style="">拨打电话</span>-->
-                <!--</h4>-->
-                <!--</a>-->
-                <!--<div>-->
-                <!--<button class="btn btn-xs btn-default" style="padding-left: 20%;padding-right: 20%;border-color: #04bfc6;color: #04bfc6">-->
-                <!--收藏-->
-                <!--</button>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--&lt;!&ndash;<div class="panel-body" style="padding:0">&ndash;&gt;-->
-                <!--<table class="table table-condensed" style="margin: 0">-->
-                <!--<tbody>-->
-                <!--<tr>-->
-                <!--<td>-->
-                <!--煤炭种类:{}-->
-                <!--</td>-->
-                <!--<td>-->
-                <!--{$order['price']}元/吨-->
-                <!--</td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                <!--<td>-->
-                <!--煤炭品质:{}-->
-                <!--</td>-->
-                <!--<td>-->
-                <!--产地:{$order['area_start']}-->
-                <!--</td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                <!--<td>-->
-                <!--煤炭粒度:{}-->
-                <!--</td>-->
-                <!--<td>-->
-                <!--吨数:{}-->
-                <!--</td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                <!--<td>-->
-                <!--有效时间:{}-->
-                <!--</td>-->
-                <!--<td>-->
-                <!--发布时间:{}-->
-                <!--</td>-->
-                <!--</tr>-->
-                <!--</tbody>-->
-                <!--</table>-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--</li>-->
-                <!--</div>-->
             </ul>
             <ul id="sell" class="tab-pane" style="margin-top: 40px;list-style-type: none">
                 {$li}
                 {$li}
                 {$li}
                 <span id="sell_insert"></span>
-                <!--<span id="insert_point"></span>-->
-                <!--<div style="display: none">-->
-                <!--<li id="buy_clone" class="weui_panel weui_panel_access" style=";border-radius: 5px">-->
-                <!--<div style="position: absolute;right: 0px;">-->
-                <!--<img src="__PUBLIC__/home/images/buy.png" width="50px">-->
-                <!--</div>-->
-                <!--<div class="weui_media_box weui_media_appmsg" style="margin: 0;padding-left: 0;padding-right: 0">-->
-                <!--<a href="#">-->
-                <!--<div class="weui_media_hd">-->
-                <!--<img src="__PUBLIC__/home/images/headimg_background.png" class="weui_media_appmsg_thumb">-->
-                <!--</div>-->
-                <!--</a>-->
-                <!--<div class="weui_media_bd">-->
-                <!--<a href="#">-->
-                <!--<h4 class="weui_media_title">{名字} <img src="__PUBLIC__/home/images/medal.png" style="width: 15px;height: 20px"></h4>-->
-                <!--</a>-->
-                <!--<p class="weui_media_desc">-->
-                <!--<img src="__PUBLIC__/home/images/area_start.png" style="width: 10px;height: 15px">-->
-                <!--{}-->
-                <!--</p>-->
-                <!--</div>-->
-                <!--<div class="weui_media_bd text-center" style="">-->
-                <!--<a href="tel:15153151316" class="">-->
-                <!--<h4>-->
-                <!--<img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">-->
-                <!--<span style="">拨打电话</span>-->
-                <!--</h4>-->
-                <!--</a>-->
-                <!--<div>-->
-                <!--<button class="btn btn-xs btn-default" style="padding-left: 20%;padding-right: 20%;border-color: #04bfc6;color: #04bfc6">-->
-                <!--收藏-->
-                <!--</button>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--</div>-->
-                <!--&lt;!&ndash;<div class="panel-body" style="padding:0">&ndash;&gt;-->
-                <!--<table class="table table-condensed" style="margin: 0">-->
-                <!--<tbody>-->
-                <!--<tr>-->
-                <!--<td>-->
-                <!--煤炭种类:{}-->
-                <!--</td>-->
-                <!--<td>-->
-                <!--{$order['price']}元/吨-->
-                <!--</td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                <!--<td>-->
-                <!--煤炭品质:{}-->
-                <!--</td>-->
-                <!--<td>-->
-                <!--产地:{$order['area_start']}-->
-                <!--</td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                <!--<td>-->
-                <!--煤炭粒度:{}-->
-                <!--</td>-->
-                <!--<td>-->
-                <!--吨数:{}-->
-                <!--</td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                <!--<td>-->
-                <!--有效时间:{}-->
-                <!--</td>-->
-                <!--<td>-->
-                <!--发布时间:{}-->
-                <!--</td>-->
-                <!--</tr>-->
-                <!--</tbody>-->
-                <!--</table>-->
-                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                <!--</li>-->
-                <!--</div>-->
             </ul>
         </div>
         <div id="pullUp">
@@ -356,7 +157,6 @@
             }
 
             //将输入的值存入cookie
-//            cookie('search_input',$('input[name=search_input]').val());
             cookie('search_input', $(this).val());
 
             //提交表单

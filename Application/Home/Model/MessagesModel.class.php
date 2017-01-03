@@ -31,8 +31,8 @@ class MessagesModel extends Model
         array('deadline', 'set_deadline', '1', 'function'),    //插入时设置截止日期
         array('content_all', 'join_content', '3', 'callback'),    //新增和编辑的时候拼接表单数据
         array('publish_time', 'time', '1', 'function'),
-        array('area_start', 'get_area_id', '1', 'function'),
-        array('area_end', 'get_area_id', '1', 'function'),
+//        array('area_start', 'get_area_id', '1', 'function'),
+//        array('area_end', 'get_area_id', '1', 'function'),
         array('short_allocate', 'short_allocate', '1', 'callback'),
     );
 

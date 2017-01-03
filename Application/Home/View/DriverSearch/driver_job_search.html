@@ -2,231 +2,421 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
     <!--<link rel="icon" href="../../favicon.ico">-->
     <title>司机找活</title>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="weui.min.css">
-    <script type="text/javascript" src="jquery-2.2.4.min.js"></script>
-    <script type="text/javascript" src="bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
 </head>
 <body style="background-color: #efeff4">
-    <!--标题栏-->
-    <div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
-        <!--<div class="container text-center" style="">-->
-                <!--<div style="display: inline-block;height: 100%;vertical-align: middle"></div>-->
-                <span class="pull-left" style="">
-                        <!--<a class="glyphicon glyphicon-chevron-left"></a>-->
-                    <a href="#">
-                    <img src="__PUBLIC__/home/images/goback.png" class="img-responsive" style="width: 15px;height: auto;margin-top: 60%">
-                    </a>
-                </span>
-                <span class="">
-                    <span class="" style="font-size: 2em;margin-left: 15%">司机找活</span>
-                </span>
-                <span class="pull-right" style="">
-                    <a href="#" class="weui_btn weui_btn_mini weui_btn_default" style="border:1px solid white; ;color:white;background-color: transparent;text-decoration: none;margin-bottom: -45%">
-                        我的收藏
-                    </a>
-                </span>
-        <!--</div>-->
+<!--导航标签-->
+<div class="panel-title" style=";margin:0;padding: 0;background-color: white;display: block">
+    <div id="myTab" class="weui_navbar" style=";margin-bottom: 0;">
+        <a href="#all" data-toggle="tab" class="weui_navbar_item weui_bar_item_on"
+           style="color: black;text-decoration: none;font-size: 1.2em;width:30%">
+            <span>全&emsp;部</span>
+        </a>
+        <a href="#search" class="text-center" data-toggle="tab"
+           style=";color: black;text-decoration: none;font-size: 1em;width:27%;padding: 5px 0;">
+            <img src="__PUBLIC__/home/images/area_start_text.png" class="" style="height: 20px">
+            <span id="area_start_html">榆林</span>
+
+            <div id="area_start" style="display: none"></div>
+        </a>
+        <a href="#search" id="area_change" data-toggle="tab" class="text-center"
+           style=";color: black;text-decoration: none;font-size: 1.2em;width: 20%">
+            <img src="__PUBLIC__/home/images/change.png" class="" style="width: 55px;padding-top: 4px">
+        </a>
+        <a href="#search" data-toggle="tab" class="weui_navbar_item"
+           style=";color: black;text-decoration: none;font-size: 1em">
+            <span id="area_end_html">郑州</span>
+            <img src="__PUBLIC__/home/images/area_end_text.png" class="" style="height: 20px">
+
+            <div id="area_end" style="display: none"></div>
+        </a>
     </div>
-    <!--清除浮动-->
-    <div class="clearfix"></div>
-    <!--导航标签-->
-    <div class="panel-title" style="margin:0;padding: 0;background-color: white">
-        <ul id="myTab" class="nav nav-pills" role="tablist" style="">
-            <li role="presentation" class="text-center active" style="width: 30%;">
-                <a href="#" class="" style="background-color: #a1a1a1;border-radius: 0">
-                    <strong style="">全 部</strong>
-                </a>
-            </li>
-            <li class="text-center" style="width: 25%;font-size: 1.7em">
-                <a href="#" style="height: 45px;padding:0;">
-                        <img src="__PUBLIC__/home/images/area_start_text.png" class="" style="width: 15px;height:50%">
-                    <span style=";color: black;">榆林</span>
-                </a>
-            </li>
-            <li class="" style="width: 18%">
-                <a href="#" class="" style="height: 45px;padding: 0;">
-                        <img src="__PUBLIC__/home/images/change.png" class="" style="width: 100%;height: 100%;">
-                </a>
-            </li>
-            <li class="text-center" style="width: 25%;font-size: 1.7em">
-                <a href="#" class="" style="height: 45px;padding: 0;">
-                    <span style=";color: black;">郑州</span>
-                    <img src="__PUBLIC__/home/images/area_end_text.png" class="" style="height: 20px">
-                </a>
-            </li>
-        </ul>
+</div>
+<!--搜索框-->
+<div class="bd" style="margin-top: 43px">
+    <!--<a href="javascript:;" class="weui_btn weui_btn_primary">点击展现searchBar</a>-->
+    <div class="weui_search_bar" id="search_bar">
+        <form class="weui_search_outer">
+            <div class="weui_search_inner">
+                <i class="weui_icon_search"></i>
+                <input type="search" class="weui_search_input" id="search_input" placeholder="搜索" required/>
+                <a href="javascript:" class="weui_icon_clear" id="search_clear"></a>
+            </div>
+            <label for="search_input" class="weui_search_text" id="search_text">
+                <i class="weui_icon_search"></i>
+                <span>搜索</span>
+            </label>
+            <input type="text" style="display: none">
+        </form>
+        <a href="javascript:" class="weui_search_cancel" id="search_cancel">取消</a>
     </div>
-    <!--搜索框-->
-    <div class="bd">
-        <!--<a href="javascript:;" class="weui_btn weui_btn_primary">点击展现searchBar</a>-->
-        <div class="weui_search_bar" id="search_bar">
-            <form class="weui_search_outer">
-                <div class="weui_search_inner">
-                    <i class="weui_icon_search"></i>
-                    <input type="search" class="weui_search_input" id="search_input" placeholder="搜索" required/>
-                    <a href="javascript:" class="weui_icon_clear" id="search_clear"></a>
-                </div>
-                <label for="search_input" class="weui_search_text" id="search_text">
-                    <i class="weui_icon_search"></i>
-                    <span>搜索</span>
-                </label>
-            </form>
-            <a href="javascript:" class="weui_search_cancel" id="search_cancel">取消</a>
+</div>
+<!--标签隐藏表单提交-->
+<form name="tag_search" id="tag_search">
+    <input type="hidden" name="select_category">
+    <input type="hidden" name="search_input">
+    <input type="hidden" name="area_start">
+    <input type="hidden" name="area_end">
+    <input type="hidden" name="page" id="page" value="1">
+</form>
+<!--订单展示栏-->
+<div id="wrapper" style="top: 52px;margin-left: 2.5%;">
+    <div id="scroller">
+        <div id="pullDown">
+            <span class="pullDownIcon" style="float: left"></span>
+            <span class="pullDownLabel" style="margin-left: -48px">下拉刷新...</span>
         </div>
-        <div class="weui_cells weui_cells_access search_show" id="search_show">
-            <div class="weui_cell">
-                <div class="weui_cell_bd weui_cell_primary">
-                    <p>实时搜索文本</p>
-                </div>
-            </div>
-            <div class="weui_cell">
-                <div class="weui_cell_bd weui_cell_primary">
-                    <p>实时搜索文本</p>
-                </div>
-            </div>
-            <div class="weui_cell">
-                <div class="weui_cell_bd weui_cell_primary">
-                    <p>实时搜索文本</p>
-                </div>
-            </div>
-            <div class="weui_cell">
-                <div class="weui_cell_bd weui_cell_primary">
-                    <p>实时搜索文本</p>
-                </div>
-            </div>
+        <div class="tab-content">
+            <ul id="all" class="tab-pane active" style="margin-top: 40px;list-style-type: none">
+                all msg
+                {$li}
+                <span id="buy_insert"></span>
+            </ul>
+            <ul id="search" class="tab-pane" style="margin-top: 40px;list-style-type: none">
+                searched msg
+                {$li}
+                <span id="sell_insert"></span>
+            </ul>
+        </div>
+        <div id="pullUp">
+            <span class="pullUpIcon"></span>
+            <span class="pullUpLabel" style="margin-left: -48px">上拉加载更多...</span>
         </div>
     </div>
-    <!--订单展示栏-->
-    <div class="container">
-        <div class="weui_panel weui_panel_access" style="border-radius: 5px">
-            <div class="weui_media_box weui_media_appmsg" style="margin: 0;padding-left: 0;padding-right: 0">
-                <a href="#">
-                    <div class="weui_media_hd">
-                        <img src="__PUBLIC__/home/images/headimg_background.png" class="weui_media_appmsg_thumb">
-                    </div>
-                </a>
-                <div class="weui_media_bd">
-                    <a href="#">
-                        <h4 class="weui_media_title">{名字} <img src="__PUBLIC__/home/images/medal.png" style="width: 15px;height: 20px"></h4>
-                    </a>
-                    <p class="weui_media_desc">
-                        <img src="__PUBLIC__/home/images/area_start.png" style="width: 15px;height: 20px">
-                        {start}→{end}
-                        <img src="__PUBLIC__/home/images/area_end.png" style="width: 15px;height: 20px">
-                    </p>
-                </div>
-                <div class="weui_media_bd" style="margin-right: -20%">
-                    <a href="#" class="">
-                        <h4><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">
-                        <span style="">拨打电话</span></h4>
-                    </a>
-                    <div>
-                        <button class="btn btn-xs btn-default" style="padding-left: 20%;padding-right: 20%;border-color: #04bfc6;color: #04bfc6">
-                            收藏
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <!--<div class="panel-body" style="padding:0">-->
-                <table class="table table-condensed" style="margin: 0">
-                    <tbody>
-                        <tr>
-                            <td>
-                                发煤量:{}
-                            </td>
-                            <td>
-                                粒度:{}
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                装车时间:{}
-                            </td>
-                            <td>
-                                发布时间:{}
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            <!--</div>-->
-        </div>
-        <div class="weui_panel weui_panel_access">
-            <div class="weui_media_box weui_media_appmsg" style="width: 100%;margin: 0;padding-left: 0;padding-right: 0">
-                <a href="#">
-                    <div class="weui_media_hd">
-                        <img src="__PUBLIC__/home/images/headimg_background.png" class="weui_media_appmsg_thumb">
-                    </div>
-                </a>
-                <div class="weui_media_bd">
-                    <a href="#">
-                        <h4 class="weui_media_title">{名字} <img src="__PUBLIC__/home/images/medal.png" style="width: 15px;height: 20px"></h4>
-                    </a>
-                    <p class="weui_media_desc">
-                        <img src="__PUBLIC__/home/images/area_start.png" style="width: 15px;height: 20px">
-                        {start}→{end}
-                        <img src="__PUBLIC__/home/images/area_end.png" style="width: 15px;height: 20px">
-                    </p>
-                </div>
-                <div class="weui_media_bd" style="margin-right: -20%">
-                    <a href="#" class="">
-                        <h4><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">
-                            <span style="">拨打电话</span></h4>
-                    </a>
-                    <div>
-                        <button class="btn btn-xs btn-default" style="padding-left: 20%;padding-right: 20%">
-                            收藏
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+</div>
 </body>
+<!--搜索框功能-->
 <script>
-    $('#search_input').focus(function(){
+    $('#search_input').focus(function () {
         var $weuiSearchBar = $('#search_bar');
         $weuiSearchBar.addClass('weui_search_focusing');
     });
-    $('#search_input').blur(function(){
+    $('#search_input').blur(function () {
         var $weuiSearchBar = $('#search_bar');
         $weuiSearchBar.removeClass('weui_search_focusing');
-        if ($(this).val()){
+        if ($(this).val()) {
             $('#search_text').hide();
         } else {
             $('#search_text').show();
         }
     });
-    $('#search_input').bind('input','#search_input',function(){
-        var $searchShow = $("#search_show");
-        if ($(this).val()) {
-            $searchShow.show();
-        } else {
-            $searchShow.hide();
+    $('#search_input').bind('keyup', '#search_input', function (event) {
+        event = event || window.event;
+        if (event.keyCode == 13) {
+            if ($('#search_input').val() == '') {
+                return false;
+            }
+            //将输入的值存入cookie
+            $('input[name=search_input]').val($(this).val());
+            if(cookie('search_tag') == '找车'){
+                cookie('search_input_need', $(this).val());
+            }
+            else{
+                cookie('search_input_all', $(this).val());
+            }
+            //提交表单
+            document.tag_search.method = "post";
+            document.tag_search.action = "{:U('DriverSearch/driver_job_search')}";
+            document.tag_search.submit();
         }
     });
-    $('#search_cancel').bind('touchend','#search_cancel',function(){
+    $('#search_cancel').bind('touchend', '#search_cancel', function () {
         $("#search_show").hide();
         $('#search_input').val('');
     });
-    $('#search_clear').bind('touchend','#search_cancel',function(){
+    $('#search_clear').bind('touchend', '#search_cancel', function () {
         $("#search_show").hide();
         $('#search_input').val('');
     });
 </script>
+<!--导航功能-->
 <script>
-    $('#myTab a').click(function (e) {
-        e.preventDefault();
+    $('#myTab a').eq(0).click(function (e) {
+        $(this).siblings('a').removeClass('weui_bar_item_on');
+        $(this).addClass('weui_bar_item_on');
         $(this).tab('show')
     })
+</script>
+<!--载入读取上次标签-->
+<script>
+    $(function () {
+//        cookie(null);return;
+        console.log(cookie());
+        if (cookie('search_tag') == '找车') {
+            //信息查询
+            $('#myTab a:eq(0)').removeClass('weui_bar_item_on').siblings('a').addClass('weui_bar_item_on weui_bar_item_on_extra').tab('show');
+            $('#area_start_html').html(cookie('area_start'));
+            $('#area_end_html').html(cookie('area_end'));
+            if(cookie('search_input_need')){
+                $('#search_text').html(cookie('search_input_need'));
+            }
+            $('input[name=select_category]').val(cookie('search_tag'));
+            $('input[name=search_input]').val(cookie('search_input_need'));
+            $('input[name=area_start]').val(cookie('area_start_id'));
+            $('input[name=area_end]').val(cookie('area_end_id'));
+        }
+        else {
+            //全部信息
+            $('#myTab a:eq(0)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on weui_bar_item_on_extra');
+            if(cookie('area_start')){
+                $('#area_start_html').html(cookie('area_start'));
+                $('input[name=area_start]').val(cookie('area_start_id'));
+            }
+            else{
+                $('#area_start_html').html('榆林');
+                $('input[name=area_start]').val(610800);
+                cookie('area_start','榆林');
+                cookie('area_start_id',610800);
+            }
+            if(cookie('area_end')){
+                $('#area_end_html').html(cookie('area_end'));
+                $('input[name=area_end]').val(cookie('area_end_id'));
+            }
+            else{
+                $('#area_end_html').html('郑州');
+                $('input[name=area_end]').val(410100);
+                cookie('area_end','郑州');
+                cookie('area_end_id',410100);
+            }
+            if(cookie('search_input_all')){
+                $('#search_text').html(cookie('search_input_all'));
+            }
+            $('input[name=select_category]').val(cookie('search_tag'));
+            $('input[name=search_input]').val(cookie('search_input_all'));
+            $('input[name=area_start]').val(cookie('area_start_id'));
+            $('input[name=area_end]').val(cookie('area_end_id'));
+        }
+        var a = $('#tag_search').serialize();
+        console.log(a);
+    });
+</script>
+<!--点击标签查询-->
+<script>
+    //点击全部标签
+    $('#myTab a:eq(0)').click(function () {
+        //存入所选标签入cookie
+        cookie('search_tag', 'all');
+        $('input[name=select_category]').val(cookie('search_tag'));
+        //重置筛选条件的cookie
+        cookie('search_input_all', null);
+        //提交表单
+        document.tag_search.method = 'post';
+        document.tag_search.action = "{:U('DriverSearch/driver_job_search')}";
+        document.tag_search.submit();
+    });
+    //点击地址选择标签
+    //起始地
+    $('#myTab a:eq(1)').click(function () {
+        var goto_url = "{:U('areaSearch/area_search')}";
+        var current_url = window.location.href;
+        cookie('search_tag', '找车');
+        cookie('start_or_end', 'start');
+        cookie('last_url', current_url);
+        //地址跳转
+        window.location.href = goto_url;
+    });
+    //地址互换
+    $('#myTab a:eq(2)').click(function () {
+        var current_url = window.location.href;
+        cookie('search_tag', '找车');
+        var area_start = cookie('area_start');
+        var area_start_id = cookie('area_start_id');
+        var area_end = cookie('area_end');
+        var area_end_id = cookie('area_end_id');
+        cookie('area_start',area_end);
+        cookie('area_start_id',area_end_id);
+        cookie('area_end',area_start);
+        cookie('area_end_id',area_start_id);
+        //表单填写
+        $('input[name=select_category]').val(cookie('search_tag'));
+        $('input[name=search_input]').val(cookie('search_input_need'));
+        $('input[name=area_start]').val(cookie('area_start_id'));
+        $('input[name=area_end]').val(cookie('area_end_id'));
+
+//        //地址跳转
+//        window.location.href = current_url;
+
+        //提交表单
+        document.tag_search.method = 'post';
+        document.tag_search.action = "{:U('DriverSearch/driver_job_search')}";
+        document.tag_search.submit();
+    });
+    //目的地
+    $('#myTab a:eq(3)').click(function () {
+        var goto_url = "{:U('areaSearch/area_search')}";
+        var current_url = window.location.href;
+        cookie('search_tag', '找车');
+        cookie('start_or_end', 'end');
+        cookie('last_url', current_url);
+        //地址跳转
+        window.location.href = goto_url;
+    })
+</script>
+<!--滚动功能-->
+<script>
+    var myScroll, pullDownEl, pullDownOffset, pullUpEl, pullUpOffset;
+    var time_now, update_time;
+    /**下拉刷新 （自定义实现此方法）
+     *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
+     */
+    function pullDownAction() {
+        console.log('down');
+        location.reload();
+        myScroll.refresh();//数据加载完成后，调用界面更新方法  Remember to refresh when contents are loaded (ie: on ajax completion)
+//    },1000);  // <-- Simulate network congestion, remove setTimeout from production!
+    }
+    /**滚动翻页 （自定义实现此方法）
+     *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
+     */
+    function pullUpAction() {
+        setTimeout(function () {
+            console.log('up');
+            var page = $('#page').val();
+            var request_page = parseInt(page) + 1;
+            var select_category = $('#select_category').val();
+            console.log(page);
+            console.log(request_page);
+
+            //==========================================
+            $.ajax({
+                type: "post",
+                url: "{:U('OwnerOrder/owner_order_more')}",
+                data: {page: request_page, select_category: select_category},
+                success: function (data) {
+                    console.log('success');
+                    var jsonObj = eval("(" + data + ")");
+                    console.log(jsonObj);
+//                    return;
+                    if (jsonObj.msg == 'success') {
+                        page++;
+                        $('#page').val(page);
+                        jQuery.each(jsonObj.li_array, function (k, val) {
+                            var li = document.createElement('li');
+                            li.innerHTML = val;
+                            console.log(cookie('search_tag'));
+                            if (cookie('search_tag') == 'transport') {
+                                document.getElementById('transport').appendChild(li);
+                            }
+                            else if (cookie('search_tag') == 'trade') {
+                                document.getElementById('trade').appendChild(li);
+                            }
+                            else {
+                            }
+                        });
+                    }
+                    else {
+                    }
+                    myScroll.refresh();
+                }
+            });
+            //============================================
+            myScroll.refresh(); // 数据加载完成后，调用界面更新方法 Remember to refresh when contents are loaded (ie: on ajax completion)
+        }, 1000); // <-- Simulate network congestion, remove setTimeout from production!
+    }
+    /**
+     * 初始化iScroll控件
+     */
+    function loaded() {
+        pullDownEl = document.getElementById('pullDown');
+        pullDownOffset = pullDownEl.offsetHeight;
+        pullUpEl = document.getElementById('pullUp');
+        pullUpOffset = pullUpEl.offsetHeight;
+//        console.log(pullDownOffset);
+//        console.log(pullUpOffset);
+        setTimeout(function () {
+            myScroll = new iScroll('wrapper', {
+//        scrollbarClass: 'myScrollbar', /* 重要样式 */
+                useTransition: true,
+                topOffset: pullDownOffset,
+//        probeType: 3,
+//        mouseWheel: false,
+                scrollbars: true,
+//                vScrollbar:false,
+//        disableMouse: false,
+//        disablePointer: false,
+                //点击事件
+                click: false,
+                taps: false,
+//        tap: true,
+                preventDefault: false,//（把这句加上去哦）
+                preventDefaultException: {tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|A)$/},
+                onRefresh: function () {
+                    console.log('refresh');
+                    if (pullDownEl.className.match('loading')) {
+                        pullDownEl.className = '';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+//                pullDownEl.querySelector('.pullDownLabel').innerHTML = '数据更新时间：' + update_time+'下拉刷新';
+                    } else if (pullUpEl.className.match('loading')) {
+                        pullUpEl.className = '';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+                    }
+                    document.getElementById("pullUp").style.display = "none";
+                    time_now = new Date();
+                    update_time = time_now.toLocaleString();
+//            document.getElementById("show").innerHTML="onRefresh: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
+
+                },
+                onScrollMove: function () {
+//            document.getElementById("show").innerHTML="onScrollMove: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
+                    if (this.y > 0) {
+                        pullDownEl.className = 'flip';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...</br>' + '最后更新时间：' + update_time;
+                        this.minScrollY = 0;
+                    }
+                    if (this.y < 0 && pullDownEl.className.match('flip')) {
+                        pullDownEl.className = '';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+                        this.minScrollY = -pullDownOffset;
+                    }
+
+                    if (this.scrollerH < this.wrapperH && this.y < (this.minScrollY - pullUpOffset) || this.scrollerH > this.wrapperH && this.y < (this.maxScrollY - pullUpOffset)) {
+                        document.getElementById("pullUp").style.display = "";
+                        pullUpEl.className = 'flip';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...</br>' + '最后更新时间：' + update_time;
+                    }
+                    if (this.scrollerH < this.wrapperH && this.y > (this.minScrollY - pullUpOffset) && pullUpEl.className.match('flip') || this.scrollerH > this.wrapperH && this.y > (this.maxScrollY - pullUpOffset) && pullUpEl.className.match('flip')) {
+                        document.getElementById("pullUp").style.display = "none";
+                        pullUpEl.className = '';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+                    }
+                },
+                onScrollEnd: function () {
+//            document.getElementById("show").innerHTML="onScrollEnd: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
+                    if (pullDownEl.className.match('flip')) {
+                        pullDownEl.className = 'loading';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '加载中...';
+                        pullDownAction(); // Execute custom function (ajax call?)
+                    } else if (pullUpEl.className.match('flip')) {
+                        pullUpEl.className = 'loading';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载中...';
+                        pullUpAction(); // Execute custom function (ajax call?)
+                    }
+                }
+            });
+            console.dir(myScroll.options);
+        }, 100);
+//    setTimeout(function(){
+//        document.getElementById('wrapper').style.left = '0';
+//    },800);
+
+    }
+    //初始化绑定iScroll控件
+    document.addEventListener('touchmove', function (e) {
+        e.preventDefault();
+    }, false);
+    document.addEventListener('DOMContentLoaded', loaded, false);
+    //    window.onload = loaded();
+
 </script>
 </html>

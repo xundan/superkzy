@@ -8,58 +8,27 @@
 
 namespace Home\Controller;
 use Think\Controller;
+use Home\Common\CardList\WhereConditions;
+use Home\Model\MessagesModel;
 header("Content-type: text/html; charset=utf-8");
 
 class AreaSearchController extends ComController
 {
     public function area_search(){
         //最近常用地区 从cookie中读取
-//        $lastarea_temp = $_COOKIE['lastarea'];
-//        dump($_COOKIE);
-//        dump($_COOKIE);
-//        dump(cookie('lastarea'));
-        $lastarea_temp = cookie('lastarea');
-//        dump($_COOKIE['lastarea']);
-        $lastarea_temp_php = urldecode($lastarea_temp);
-        $lastarea_temp_php = explode(' ',$lastarea_temp_php);
-
-//        dump($lastarea_temp_php);
-//
-//        dump(count($lastarea_temp_php));
-
-        //保证cookie长度为10
-        if(count($lastarea_temp_php) > 10){
-            $lastarea_temp_php = array_slice($lastarea_temp_php,-10);
-//            dump($new_lastarea);
-            $new_lastarea = implode(' ',$lastarea_temp_php);
-//            dump($new_lastarea);
-//            dump($new_lastarea);
-//            dump(urldecode($new_lastarea));
-            cookie('lastarea',urlencode($new_lastarea));
-//            cookie('lastarea',$new_lastarea);
-//            $_COOKIE['lastarea'] = urlencode($new_lastarea);
-//            $_COOKIE['lastarea'] = $new_lastarea;
+        $last_area_temp = cookie('last_area');
+        $last_area_temp_php = json_decode($last_area_temp);
+        foreach($last_area_temp_php as $item){
+            $item->name = urldecode($item->name);
         }
-//        dump(cookie('lastarea'));
-//        dump($_COOKIE['lastarea']);
-
-        //倒序排列输出
+        //保证cookie长度为10
+        if(count($last_area_temp_php) > 10){
+            $last_area_temp_php = array_slice($last_area_temp_php,-10);
+        }
+//        倒序排列输出
 //        krsort($lastarea_temp_php,false);  //保留key
-        $lastarea = array_reverse($lastarea_temp_php);
-//
-//        dump($lastarea_temp_php);
-
-//        $lastarea = array();
-//        if($lastarea_temp_php){
-//            for($i=0;$i<10;$i++){
-//                if($lastarea_temp_php[$i]){
-//                    $lastarea[$i] = $lastarea_temp_php[$i];
-//                }else{
-//                    break;
-//                }
-//            }
-//        }
-        $this->assign('lastarea',$lastarea);
+        $last_area = array_reverse($last_area_temp_php);
+        $this->assign('last_area',$last_area);
 
         //热点地区 is_hot字段更新
 

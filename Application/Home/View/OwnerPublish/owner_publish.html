@@ -21,27 +21,27 @@
 <body>
 <include file="Common:common"/>
 <!--标题栏-->
-<div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
-    <!--<div class="container text-center" style="">-->
-    <!--<div style="display: inline-block;height: 100%;vertical-align: middle"></div>-->
-        <span class="pull-left" style="">
-                <!--<a class="glyphicon glyphicon-chevron-left"></a>-->
-            <a href="#">
-                <img src="__PUBLIC__/home/images/goback.png" class="img-responsive"
-                     style="width: 15px;height: auto;margin-top: 40%">
-            </a>
-        </span>
-        <span class="">
-            <span class="" style="font-size: 1.5em;margin-left: 15%">发布信息</span>
-        </span>
-        <span class="pull-right" style="border-color: white">
-            <a href="#" class="btn btn-xs btn-default"
-               style=";border:1px solid white; ;color:white;background-color: transparent;text-decoration: none;margin-bottom: -50%">
-                我的发布
-            </a>
-        </span>
-    <!--</div>-->
-</div>
+<!--<div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">-->
+    <!--&lt;!&ndash;<div class="container text-center" style="">&ndash;&gt;-->
+    <!--&lt;!&ndash;<div style="display: inline-block;height: 100%;vertical-align: middle"></div>&ndash;&gt;-->
+        <!--<span class="pull-left" style="">-->
+                <!--&lt;!&ndash;<a class="glyphicon glyphicon-chevron-left"></a>&ndash;&gt;-->
+            <!--<a href="#">-->
+                <!--<img src="__PUBLIC__/home/images/goback.png" class="img-responsive"-->
+                     <!--style="width: 15px;height: auto;margin-top: 40%">-->
+            <!--</a>-->
+        <!--</span>-->
+        <!--<span class="">-->
+            <!--<span class="" style="font-size: 1.5em;margin-left: 15%">发布信息</span>-->
+        <!--</span>-->
+        <!--<span class="pull-right" style="border-color: white">-->
+            <!--<a href="#" class="btn btn-xs btn-default"-->
+               <!--style=";border:1px solid white; ;color:white;background-color: transparent;text-decoration: none;margin-bottom: -50%">-->
+                <!--我的发布-->
+            <!--</a>-->
+        <!--</span>-->
+    <!--&lt;!&ndash;</div>&ndash;&gt;-->
+<!--</div>-->
 <!--清除浮动-->
 <div class="clearfix"></div>
 <!--导航标签-->
@@ -255,7 +255,7 @@
         </form>
     </div>
     <div id="car_need" class="tab-pane active" style="">
-        <form id="form_need" name="" class="" method="post" action="{:U('OwnerPublish/need_car_action')}">
+        <form id="form_need" name="" class="" method="post" action="">
             <input type="hidden" name="category" id="need_category" value="找车">
             <table class="table table-responsive" style="border: 0">
                 <tr>
@@ -456,7 +456,7 @@
         </form>
     </div>
     <div id="coal_sell" class="tab-pane" style="">
-        <form id="form_sell" name="form_sell" class="" method="post" action="{:U('OwnerPublish/coal_sell_action')}">
+        <form id="form_sell" name="form_sell" class="" method="post" action="">
             <input type="hidden" name="category" id="sell_category" value="供应">
             <table class="table table-responsive" style="border: 0">
                 <tr>
@@ -1037,7 +1037,8 @@
                     else if (val.name == 'area_start') { //产地
                         val.value = cookie('area_start');
                         $('#sell_area_start_html').html(val.value);
-                        $('#sell_area_start').val(val.value);
+//                        $('#sell_area_start').val(val.value);
+                        $('#sell_area_start').val(cookie('area_start_id'));
                     }
                     else {
                         $("#sell_" + val.name).val(val.value);
@@ -1076,7 +1077,8 @@
                     else if (val.name == 'area_start') { //产地
                         val.value = cookie('area_start');
                         $('#buy_area_start_html').html(val.value);
-                        $('#buy_area_start').val(val.value);
+//                        $('#buy_area_start').val(val.value);
+                        $('#buy_area_start').val(cookie('area_start_id'));
                     }
                     else if (val.name == 'car_type') {  //车辆类型
                         var car_type = $(":radio[name=car_type][value='" + val.value + "']");
@@ -1099,7 +1101,7 @@
 //                console.log(cookie('coal_buy'));
             }
         }
-        else if (cookie('tag') == '求车') {
+        else if (cookie('tag') == '找车') {
             //发布求车
             var a = $('a[name=car_need]');
             a.siblings('a').removeClass('weui_bar_item_on');
@@ -1113,11 +1115,13 @@
                         val.value = cookie('area_start');
                         $('#need_area_start_html').html(val.value);
                         $('#need_area_start').val(val.value);
+                        $('#need_area_start').val(cookie('area_start_id'));
                     }
                     else if (val.name == 'area_end') {  //目的地址
                         val.value = cookie('area_end');
                         $('#need_area_end_html').html(val.value);
-                        $('#need_area_end').val(val.value);
+//                        $('#need_area_end').val(val.value);
+                        $('#need_area_end').val(cookie('area_end_id'));
                     }
                     else if (val.name == 'granularity') {   //粒度
                         var granularity = $(":radio[name=granularity][value='" + val.value + "']");
@@ -1144,12 +1148,14 @@
                     if (val.name == 'area_start') { //出发地址
                         val.value = cookie('area_start');
                         $('#give_area_start_html').html(val.value);
-                        $('#give_area_start').val(val.value);
+//                        $('#give_area_start').val(val.value);
+                        $('#give_area_start').val(cookie('area_start_id'));
                     }
                     else if (val.name == 'area_end') {  //目的地址
                         val.value = cookie('area_end');
                         $('#give_area_end_html').html(val.value);
-                        $('#give_area_end').val(val.value);
+//                        $('#give_area_end').val(val.value);
+                        $('#give_area_end').val(cookie('area_end_id'));
                     }
                     else if (val.name == 'car_type') {  //车辆类型
                         var car_type = $(":radio[name=car_type][value='" + val.value + "']");
@@ -1172,7 +1178,7 @@
     function give_get_area_start() {
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
-        cookie('tag', '车源');
+        cookie('tag', '其他');
         cookie('start_or_end', 'start');
         cookie('last_url', current_url);
 
@@ -1188,7 +1194,7 @@
     function give_get_area_end() {
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
-        cookie('tag', '车源');
+        cookie('tag', '其他');
         cookie('start_or_end', 'end');
         cookie('last_url', current_url);
 
@@ -1204,11 +1210,11 @@
         window.location.href = goto_url;
     }
 
-    //求车
+    //找车
     function need_get_area_start() {
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
-        cookie('tag', '求车');
+        cookie('tag', '找车');
         cookie('start_or_end', 'start');
         cookie('last_url', current_url);
 
@@ -1224,7 +1230,7 @@
     function need_get_area_end() {
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
-        cookie('tag', '求车');
+        cookie('tag', '找车');
         cookie('start_or_end', 'end');
         cookie('last_url', current_url);
 
@@ -1273,40 +1279,6 @@
         //地址跳转
         window.location.href = goto_url;
     }
-</script>
-
-<!--actionsheet功能(弃置)-->
-<script>
-    $('#showActionSheet').on('click', function () {
-        var mask = $('#mask');
-        var weuiActionsheet = $('#weui_actionsheet');
-        weuiActionsheet.addClass('weui_actionsheet_toggle');
-        mask.show()
-                .focus()//加focus是为了触发一次页面的重排(reflow or layout thrashing),使mask的transition动画得以正常触发
-                .addClass('weui_fade_toggle').one('click', function () {
-            hideActionSheet(weuiActionsheet, mask);
-        });
-        $('#actionsheet_cancel').one('click', function () {
-            hideActionSheet(weuiActionsheet, mask);
-        });
-        $('#asd').on('click', function () {
-            var a = $(this).html();
-            alert(a);
-            hideActionSheet(weuiActionsheet, mask);
-            $('#sell_coal_kind').html(a);
-        });
-        mask.unbind('transitionend').unbind('webkitTransitionEnd');
-
-        function hideActionSheet(weuiActionsheet, mask) {
-            weuiActionsheet.removeClass('weui_actionsheet_toggle');
-            mask.removeClass('weui_fade_toggle');
-            mask.on('transitionend', function () {
-                mask.hide();
-            }).on('webkitTransitionEnd', function () {
-                mask.hide();
-            })
-        }
-    });
 </script>
 
 <!--车源表单提交输入及检测-->
