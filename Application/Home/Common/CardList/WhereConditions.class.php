@@ -9,18 +9,18 @@
 namespace Home\Common\CardList;
 
 
-use Org\Util\ArrayList;
-
 class WhereConditions
 {
+    const FULL = -1;
+    const INIT = -2;
     private $_whereConditions = array();
     private $_page = 1;
     private $_asc = "record_time desc";
     private $_exist_arr = array();
-    private $_last_count = -1;
+    private $_last_count = self::INIT;
 
 
-    function __construct($whereCond = null, $page = null, $asc = null, $exist_arr = null, $last_count = -1)
+    function __construct($whereCond = null, $page = null, $asc = null, $exist_arr = null, $last_count = self::INIT)
     {
         if ($whereCond) {
             $this->_whereConditions = $whereCond;
@@ -68,7 +68,7 @@ class WhereConditions
     public function pushCond($column, $operator, $val, $bool_operator = "AND")
     {
         if (!$operator) return false;
-        if (!$val) return false;//sql会报错，所以直接返回
+        if ($val === null) return false;//sql会报错，所以直接返回
         if ($bool_operator == "AND" || $bool_operator == "OR" || $bool_operator == "XOR") {
             if ($this->getV($column)) { // 先判断之前对column有没有约束
                 $new_val = array();
@@ -178,26 +178,38 @@ class WhereConditions
         return $result;
     }
 
+    /**
+     * 在MessagesModel->findWhereWithoutExist()前调用，进行退格检查与处理。
+     * @return bool whereCond是否进行了退格
+     */
     public function preSQL()
     {
-        $eoa = $this->getLastCount();
-
-        if ($eoa < 0) { // 说明上次拉取的是全额的消息
+        if ($this->getLastCount() == self::FULL) { // 说明上次拉取的是全额的消息
             $this->ascPage();
+            return false;
+        } else if ($this->getLastCount() == self::INIT) {
+            return false;
         } else { // 否则退一格约束
             $this->resetPage();
             $this->popCond();
+            return true;
         }
     }
 
-    public function postSQL($messages)
+    /**
+     * 完成一次查询后对WhereCondition进行处理
+     * @param $messages mixed 需要在下次查询中排除的信息
+     * @param $card_counts int 本次查询有没有满额，没有满额下次要退格约束（见上面的preSQL()），
+     *                      （之所以没有messages的数量代替，是因为$card_counts里面还会包含TipsCard的数量。)
+     * @return int
+     */
+    public function postSQL($messages, $card_counts)
     {
         $this->updateExist($messages);
-        $counts = count($messages);
-        if ($counts < C('DEFAULT_ROW')) { // 说明已经到查询极限了
-            $this->_last_count = $counts;
+        if ($card_counts < C('DEFAULT_ROW')) { // 说明已经到查询极限了
+            $this->setLastCount($card_counts);
         } else { // 说明是满的
-            $this->_last_count = -1;
+            $this->setLastCount(self::FULL);
         }
         return $this->getLastCount();
     }
@@ -281,7 +293,7 @@ class WhereConditions
      */
     public function resetLastCount()
     {
-        $this->_last_count = -1;
+        $this->_last_count = self::FULL;
     }
 
     /**
@@ -294,14 +306,50 @@ class WhereConditions
 
     public function isLastCountFull()
     {
-        return ($this->_last_count == -1);
+        return ($this->_last_count == self::FULL);
     }
 
-    public function isExhausted(){
-        if (count($this->_whereConditions) == 0){
+    public function isExhausted()
+    {
+        if (count($this->_whereConditions) == 0) {
             return true;
-        }else{
+        } else {
             return false;
         }
+    }
+
+    public function pushSearchCond($column, $val)
+    {
+        if (!$val) return false;//sql会报错，所以直接返回
+        $query = $this->search_method($val);
+        if (count($query)) {
+            return $this->_whereConditions[$column] = $query;
+        } else {
+            return false;
+        }
+    }
+
+    //对字符串进行处理
+    private function search_method($queryString)
+    {
+        $tempStr = $this->arrange_input($queryString);
+        $tempStr = explode(" ", $tempStr);
+        $query = array();
+        foreach ($tempStr as $item) {
+            $query[] = array('like', '%' . $item . '%');
+        }
+        return $query;
+    }
+
+    /**
+     * 查询输入框输入内容整理
+     * @param $str string       输入字符串
+     * @return mixed|string     拆分数组
+     */
+    private function arrange_input($str)
+    {
+        $tempStr = trim($str);
+        $tempStr = preg_replace("/\\s{1,}/", " ", $tempStr);
+        return $tempStr;
     }
 }

@@ -22,8 +22,17 @@ class DriverSearchController extends ComController
         $Msg = new MessagesModel();
         $post = I('post.', '', 'trim,strip_tags');
         if ($post) {
-            $whereCondJson = $post['where_cond_json'];
-            $whereCond = WhereConditions::parseJson($whereCondJson);
+            $areaStart = $post['area_start'];
+            $areaEnd = $post['area_end'];
+            $searchInput = $post['search_input'];
+            $searchTag = $post['search_tag'];
+            $whereCond = new WhereConditions();
+            if ($searchTag == "all") {
+                $whereCond->pushCond("category", "eq", "求车");
+                $whereCond->pushCond("category", "like", "%$searchInput%");
+
+            }
+//            $whereCond = WhereConditions::parseJson($whereCondJson);
         } elseif (cookie('where_cond_json')) {
             $whereCondJson = cookie('where_cond_json');
             $whereCond = WhereConditions::parseJson($whereCondJson);
@@ -55,7 +64,7 @@ class DriverSearchController extends ComController
         $post = I('post.', '', 'trim,strip_tags');
         $whereCondJson = $post['where_cond_json'];
         $whereCond = WhereConditions::parseJson($whereCondJson);
-        $data = $this->getOrderWithoutExist($whereCond);
+        $data = $this->getOrderWithoutExist($whereCond, $post['stage']);
         $data['page'] = $post['page']; // 把page送回去，作为校验
         echo json_encode($data);
         return;
@@ -77,45 +86,57 @@ class DriverSearchController extends ComController
         $whereCond->pushCond("area_start", "like", "61%");
         $whereCond->pushCond("area_end", "like", "41%");
 
-        cookie();
+        cookie("where_cond_json", $whereCond->toJson());
     }
 
-    /**
-     * 根据页数去数据库取得相应的消息数组
-     * @param $whereCond mixed 查询条件
-     * @return mixed 信息数组
-     */
-    private function getMessagesWithoutExist(WhereConditions $whereCond)
-    {
-        $Msg = new MessagesModel();
-        $messages = null;
-        $count = 0;
-        do {
-            $whereCond->preSQL();
-            $messages = $Msg->findWhereWithoutExist($whereCond,$count);
-            $whereCond->postSQL($messages);
-        } while (count($messages)>=C('DEFAULT_ROW')||$whereCond->isExhausted());
-
-
-        return $messages;
-    }
 
     /**
-     * 获取返回数据
+     * 获取返回数据，保证每次都获取十个卡片，包括tips
      * @param $whereCond mixed 查询条件
+     * @param $stage int 当前卡片列表的状态：精确、模糊、其他、结束
      * @return mixed 返回数据
      */
-    private function getOrderWithoutExist(WhereConditions $whereCond)
+    private function getOrderWithoutExist(WhereConditions $whereCond, $stage)
     {
-        $data["msg"] = "success";
-        $messages = $this->getMessagesWithoutExist($whereCond);
-        $cards = new CardList($messages);
-        if (!$whereCond->isLastCountFull()) {
-            $cards->addEnd();
+        if ($stage < CardList::END) { // 如果是结束阶段就不执行下面代码了
+            $Msg = new MessagesModel();
+            $cards = new CardList(array());
+            $cards->setStage($stage);
+            $count = 0; // 记录目前卡片的数量
+            do {
+                $isPopped = $whereCond->preSQL();
+                if(($count < C('DEFAULT_ROW'))&&$isPopped&&$cards->atAccurate()){// 如果是第一次退格约束
+                    $cards->addSimilar();
+                    $count++;
+                    if ($count>=C('DEFAULT_ROW')) break;
+                }
+                if(($count < C('DEFAULT_ROW'))&&$whereCond->isExhausted()&&$cards->atSimilar()){// 如果条件退完
+                    $cards->addOther();
+                    $count++;
+                    if ($count>=C('DEFAULT_ROW')) break;
+                }
+                $temp_messages = $Msg->findWhereWithoutExist($whereCond, $count);
+                $count += count($temp_messages);
+                $cards->appendMessage($temp_messages);
+                if ($cards->atOther()&&($count < C('DEFAULT_ROW'))){ //其他查询也不能满足，说明查到底了
+                    $cards->addEnd();
+                    $count++;
+                    if ($count>=C('DEFAULT_ROW')) break;
+                }
+                $whereCond->postSQL($temp_messages, $count);
+            } while ($count >= C('DEFAULT_ROW') || $cards->atEnd());
+            // 把$whereCond送到前台
+            $data["msg"] = "success";
+            $data['where_cond_json'] = $whereCond->toJson();
+            $data["li_array"] = $cards->toLiArray();
+            $data["stage"] = $cards->getStage();
+        } else {
+            $data["msg"] = "success";
+            $data['where_cond_json'] = $whereCond->toJson();
+            $data["li_array"] = "";
+            $data["stage"] = $stage;
         }
-        // 把$whereCond送到前台
-        $data['where_cond_json'] = $whereCond->toJson();
-        $data["li_array"] = $cards->toLiArray();
+
         return $data;
     }
 

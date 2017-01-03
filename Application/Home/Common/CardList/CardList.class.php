@@ -12,6 +12,11 @@ class CardList
 {
 
     protected $_array = null;
+    const ACCURATE = 0;
+    const SIMILAR = 1;
+    const OTHER = 2;
+    const END = 3;
+    protected $_stage = self::ACCURATE; //0:精确 1:模糊 2:其他 3:最后
 
     function __construct($messages)
     {
@@ -52,6 +57,13 @@ class CardList
         return $resultArray;
     }
 
+    /**
+     * @param $messages mixed 需要合并的信息
+     */
+    public function appendMessage($messages){
+        $this->_array = array_merge($this->_array, $this->createMsgCardArray($messages));
+    }
+
     public function getObjectArray(){
         return $this->_array;
     }
@@ -71,7 +83,26 @@ class CardList
     {
         return "";
     }
-
+    /**
+     * 添加一个结尾标识
+     */
+    public function addSimilar(){
+        $tip['type'] = "tips";
+        $tip['title'] = "模糊结果";
+        $tip['content'] = "没有更多的精确消息，现在为您显示近似的消息。";
+        array_push($this->_array, new TipCard($tip));
+        $this->_stage = self::SIMILAR;
+    }
+    /**
+     * 添加一个结尾标识
+     */
+    public function addOther(){
+        $tip['type'] = "tips";
+        $tip['title'] = "其他结果";
+        $tip['content'] = "没有更多的近似消息，下面为你展示其他推荐消息。";
+        array_push($this->_array, new TipCard($tip));
+        $this->_stage = self::OTHER;
+    }
     /**
      * 添加一个结尾标识
      */
@@ -80,5 +111,66 @@ class CardList
         $tip['title'] = "结束";
         $tip['content'] = "没有更多的信息了。";
         array_push($this->_array, new TipCard($tip));
+        $this->_stage = self::END;
     }
+
+
+    /**
+     * @return int
+     */
+    public function getStage()
+    {
+        return $this->_stage;
+    }
+
+    /**
+     * @param int $stage
+     */
+    public function setStage($stage)
+    {
+        $this->_stage = $stage;
+    }
+
+    /**
+     * @return bool 返回现在CardList的状态是不是精确查询
+     */
+    public function atAccurate(){
+        if ($this->_stage == self::ACCURATE){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    /**
+     * @return bool 返回现在CardList的状态是不是模糊查询
+     */
+    public function atSimilar(){
+        if ($this->_stage == self::SIMILAR){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    /**
+     * @return bool 返回现在CardList的状态是不是其他查询
+     */
+    public function atOther(){
+        if ($this->_stage == self::OTHER){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    /**
+     * @return bool 返回现在CardList的状态是不是结束
+     */
+    public function atEnd(){
+        if ($this->_stage == self::END){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }

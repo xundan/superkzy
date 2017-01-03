@@ -105,6 +105,17 @@ class MessagesModel extends Model
         return $this->_message;
     }
 
+    /**
+     * 用来方便测试
+     * @param WhereConditions $cond
+     * @return string
+     */
+    public function findWhereToSql(WhereConditions $cond)
+    {
+        $this->findWhere($cond);
+        return $this->getLastSql();
+    }
+
 
     /**
      * 历史和收藏不能使用这个方法！
@@ -116,15 +127,33 @@ class MessagesModel extends Model
     public function findWhereWithoutExist(WhereConditions $cond, $count)
     {
 
-        $countRow = (C("DEFAULT_ROW")-$count);//常量
+        $countRow = (C("DEFAULT_ROW") - $count);//常量
+        if ($countRow <= 0) return false;
         $page = $cond->getPage();
         $asc = $cond->getAsc();
-        $existWhere["id"] = array('not in',$cond->getExist());
+        $existWhere["id"] = array('not in', $cond->getExist());
 
         // $existWhere 会覆盖掉 $cond里的 "id in" 条件，特别注意。
         $beginStr = ($page - 1) * $countRow;
-        $this->_message = $this->where($cond->getWhereConditions())->where('invalid_id=0')->where($existWhere)->limit($beginStr, $countRow)->order($asc)->select();
+        if (count($cond->getExist()) == 0) {
+            $this->_message = $this->where($cond->getWhereConditions())->where('`invalid_id`=0')->limit($beginStr, $countRow)->order($asc)->select();
+        } else {
+            $this->_message = $this->where($cond->getWhereConditions())->where('`invalid_id`=0')->where($existWhere)->limit($beginStr, $countRow)->order($asc)->select();
+        }
         return $this->_message;
+    }
+
+
+    /**
+     * 用来方便测试2
+     * @param WhereConditions $cond
+     * @return string
+     */
+    public function findWhereWithoutExistToSql(WhereConditions $cond, $count)
+    {
+        $result = $this->findWhereWithoutExist($cond, $count);
+        if ($result === false) return false;
+        return $this->getLastSql();
     }
 
     /**
@@ -202,9 +231,9 @@ class MessagesModel extends Model
         $where['user_id'] = $uid;
         $in_collection = M('collection')->where($where)->find();
         if ($in_collection) {
-            if ($in_collection['invalid_id']==0){
+            if ($in_collection['invalid_id'] == 0) {
                 $message['in_collection'] = "已收藏";
-            }else{
+            } else {
                 $message['in_collection'] = "收藏";
             }
         } elseif ($in_collection === false) {

@@ -16,7 +16,7 @@ class MessagesModelTest extends PHPUnit_Framework_TestCase
         $app = new \Think\PhpunitHelper();
         $app->setMVC('kuaimei56.com', 'Home', 'Index');
         $app->setTestConfig(['DB_NAME' => 'test_db', 'DB_HOST' => '127.0.0.1',]); // 一定要设置一个测试用的数据库,避免测试过程破坏生产数据
-//        $app->start();
+        $app->start();
     }
 
     /**
@@ -73,5 +73,39 @@ class MessagesModelTest extends PHPUnit_Framework_TestCase
 //        $msg = $Model->toCollection($msg,1);
 //        $this->assertEquals("已收藏", $msg["in_collection"]);
     }
+
+    public function testFindWhereToSql(){
+        $Model = new \Home\Model\MessagesModel();
+        $whereConditions = new \Home\Common\CardList\WhereConditions();
+        $whereConditions->pushSearchCond("content","a 你好\t123 \n c");
+        $this->assertEquals('SELECT * FROM `ck_messages` WHERE ( `content` LIKE \'%a%\' AND `content` LIKE \'%你好%\' AND `content` LIKE \'%123%\' AND `content` LIKE \'%c%\'  ) AND ( invalid_id=0 ) ORDER BY record_time desc LIMIT 0,10  ', $Model->findWhereToSql($whereConditions));
+        $whereConditions->pushCond("id", "eq", "1");
+        $whereConditions->pushCond("id", "like", "%0");
+        $whereConditions->pushCond("category", "like", "age");
+        $this->assertEquals('SELECT * FROM `ck_messages` WHERE ( `content` LIKE \'%a%\' AND `content` LIKE \'%你好%\' AND `content` LIKE \'%123%\' AND `content` LIKE \'%c%\'  ) AND ( `id` = \'1\' AND `id` LIKE \'%0\'  ) AND `category` LIKE \'age\' AND ( invalid_id=0 ) ORDER BY record_time desc LIMIT 0,10  ', $Model->findWhereToSql($whereConditions));
+        $whereConditions->pushCond("name", "like", "age"); // 并没有name字段，所以没有变化
+        $this->assertEquals('SELECT * FROM `ck_messages` WHERE ( `content` LIKE \'%a%\' AND `content` LIKE \'%你好%\' AND `content` LIKE \'%123%\' AND `content` LIKE \'%c%\'  ) AND ( `id` = \'1\' AND `id` LIKE \'%0\'  ) AND `category` LIKE \'age\' AND ( invalid_id=0 ) ORDER BY record_time desc LIMIT 0,10  ', $Model->findWhereToSql($whereConditions));
+        $whereConditions->pushSearchCond("content","again");
+        $this->assertEquals('SELECT * FROM `ck_messages` WHERE ( `content` LIKE \'%again%\'  ) AND ( `id` = \'1\' AND `id` LIKE \'%0\'  ) AND `category` LIKE \'age\' AND ( invalid_id=0 ) ORDER BY record_time desc LIMIT 0,10  ', $Model->findWhereToSql($whereConditions));
+        $whereConditions->ascPage();
+        $this->assertEquals('SELECT * FROM `ck_messages` WHERE ( `content` LIKE \'%again%\'  ) AND ( `id` = \'1\' AND `id` LIKE \'%0\'  ) AND `category` LIKE \'age\' AND ( invalid_id=0 ) ORDER BY record_time desc LIMIT 10,10  ', $Model->findWhereToSql($whereConditions));
+        $whereConditions->setLastCount(5);
+        $this->assertEquals('SELECT * FROM `ck_messages` WHERE ( `content` LIKE \'%again%\'  ) AND ( `id` = \'1\' AND `id` LIKE \'%0\'  ) AND `category` LIKE \'age\' AND ( invalid_id=0 ) ORDER BY record_time desc LIMIT 10,10  ', $Model->findWhereToSql($whereConditions));
+    }
+
+    public function testFindWhereWithoutExistToSql(){
+        $Model = new \Home\Model\MessagesModel();
+        $whereConditions = new \Home\Common\CardList\WhereConditions();
+        $whereConditions->pushCond("id", "eq", "1");
+        $whereConditions->updateExist($Model->findWhereWithoutExist($whereConditions,0));
+        $whereConditions->popCond("id");
+
+        $whereConditions->pushSearchCond("content","好消息 ");
+        $this->assertEquals('SELECT * FROM `ck_messages` WHERE ( `content` LIKE \'%好消息%\'  ) AND ( `invalid_id`=0 ) AND `id` NOT IN (\'1\') ORDER BY record_time desc LIMIT 0,10  ', $Model->findWhereWithoutExistToSql($whereConditions,0));
+        $this->assertEquals('SELECT * FROM `ck_messages` WHERE ( `content` LIKE \'%好消息%\'  ) AND ( `invalid_id`=0 ) AND `id` NOT IN (\'1\') ORDER BY record_time desc LIMIT 0,7  ', $Model->findWhereWithoutExistToSql($whereConditions,3));
+        $this->assertEquals(false, $Model->findWhereWithoutExistToSql($whereConditions,10));
+        $this->assertEquals(false, $Model->findWhereWithoutExistToSql($whereConditions,13));
+    }
+
 
 }
