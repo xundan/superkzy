@@ -102,29 +102,24 @@ class DriverSearchController extends ComController
             $Msg = new MessagesModel();
             $cards = new CardList(array());
             $cards->setStage($stage);
-            $count = 0; // 记录目前卡片的数量
             do {
                 $isPopped = $whereCond->preSQL();
-                if(($count < C('DEFAULT_ROW'))&&$isPopped&&$cards->atAccurate()){// 如果是第一次退格约束
+                if($cards->notFull()&&$isPopped&&$cards->atAccurate()){// 如果是第一次退格约束
                     $cards->addSimilar();
-                    $count++;
-                    if ($count>=C('DEFAULT_ROW')) break;
+                    if ($cards->isFull()) break;
                 }
-                if(($count < C('DEFAULT_ROW'))&&$whereCond->isExhausted()&&$cards->atSimilar()){// 如果条件退完
+                if($cards->notFull()&&$whereCond->isExhausted()&&$cards->atSimilar()){// 如果条件退完
                     $cards->addOther();
-                    $count++;
-                    if ($count>=C('DEFAULT_ROW')) break;
+                    if ($cards->isFull()) break;
                 }
-                $temp_messages = $Msg->findWhereWithoutExist($whereCond, $count);
-                $count += count($temp_messages);
+                $temp_messages = $Msg->findWhereWithoutExist($whereCond, $cards->getCount());
                 $cards->appendMessage($temp_messages);
-                if ($cards->atOther()&&($count < C('DEFAULT_ROW'))){ //其他查询也不能满足，说明查到底了
+                if ($cards->atOther()&&$cards->notFull()){ //其他查询也不能满足，说明查到底了
                     $cards->addEnd();
-                    $count++;
-                    if ($count>=C('DEFAULT_ROW')) break;
+                    break;
                 }
-                $whereCond->postSQL($temp_messages, $count);
-            } while ($count >= C('DEFAULT_ROW') || $cards->atEnd());
+                $whereCond->postSQL($temp_messages, $cards->getCount());
+            } while ($cards->isFull() || $cards->atEnd());
             // 把$whereCond送到前台
             $data["msg"] = "success";
             $data['where_cond_json'] = $whereCond->toJson();

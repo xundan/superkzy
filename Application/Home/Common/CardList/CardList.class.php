@@ -173,4 +173,15 @@ class CardList
         }
     }
 
+    public function getCount(){
+        return count($this->_array);
+    }
+
+    public function notFull(){
+        return count($this->_array)<C('DEFAULT_ROW');
+    }
+
+    public function isFull(){
+        return count($this->_array)>=C('DEFAULT_ROW');
+    }
 }

@@ -16,7 +16,7 @@ class MessagesModelTest extends PHPUnit_Framework_TestCase
         $app = new \Think\PhpunitHelper();
         $app->setMVC('kuaimei56.com', 'Home', 'Index');
         $app->setTestConfig(['DB_NAME' => 'test_db', 'DB_HOST' => '127.0.0.1',]); // 一定要设置一个测试用的数据库,避免测试过程破坏生产数据
-        $app->start();
+//        $app->start();
     }
 
     /**
