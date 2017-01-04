@@ -118,13 +118,14 @@ class MessagesModel extends Model
 
 
     /**
-     * 历史和收藏不能使用这个方法！
+     * 查询界面专用方法，历史和收藏不能使用这个方法！
      * $existWhere 会覆盖掉 $cond里的 "id in" 条件，要特别注意
      * @param WhereConditions $cond
      * @param int $count
+     * @param string $category
      * @return mixed 获取的消息列表
      */
-    public function findWhereWithoutExist(WhereConditions $cond, $count)
+    public function findWhereWithoutExist(WhereConditions $cond, $count, $category)
     {
 
         $countRow = (C("DEFAULT_ROW") - $count);//常量
@@ -136,9 +137,9 @@ class MessagesModel extends Model
         // $existWhere 会覆盖掉 $cond里的 "id in" 条件，特别注意。
         $beginStr = ($page - 1) * $countRow;
         if (count($cond->getExist()) == 0) {
-            $this->_message = $this->where($cond->getWhereConditions())->where('`invalid_id`=0')->limit($beginStr, $countRow)->order($asc)->select();
+            $this->_message = $this->where($cond->getWhereConditions())->where('`invalid_id`=0 AND category=\'' . $category . '\'')->limit($beginStr, $countRow)->order($asc)->select();
         } else {
-            $this->_message = $this->where($cond->getWhereConditions())->where('`invalid_id`=0')->where($existWhere)->limit($beginStr, $countRow)->order($asc)->select();
+            $this->_message = $this->where($cond->getWhereConditions())->where('`invalid_id`=0 AND category=\'' . $category . '\'')->where($existWhere)->limit($beginStr, $countRow)->order($asc)->select();
         }
         return $this->_message;
     }
@@ -147,11 +148,13 @@ class MessagesModel extends Model
     /**
      * 用来方便测试2
      * @param WhereConditions $cond
+     * @param int $count
+     * @param string $category
      * @return string
      */
-    public function findWhereWithoutExistToSql(WhereConditions $cond, $count)
+    public function findWhereWithoutExistToSql(WhereConditions $cond, $count, $category)
     {
-        $result = $this->findWhereWithoutExist($cond, $count);
+        $result = $this->findWhereWithoutExist($cond, $count, $category);
         if ($result === false) return false;
         return $this->getLastSql();
     }

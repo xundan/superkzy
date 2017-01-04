@@ -19,40 +19,14 @@ class DriverSearchController extends ComController
 {
     public function driver_job_search()
     {
-        $Msg = new MessagesModel();
-        $post = I('post.', '', 'trim,strip_tags');
-        if ($post) {
-            $areaStart = $post['area_start'];
-            $areaEnd = $post['area_end'];
-            $searchInput = $post['search_input'];
-            $searchTag = $post['search_tag'];
-            $whereCond = new WhereConditions();
-            if ($searchTag == "all") {
-                $whereCond->pushCond("category", "eq", "求车");
-                $whereCond->pushCond("category", "like", "%$searchInput%");
+        $input = $this->acquireInput();
 
-            }
-//            $whereCond = WhereConditions::parseJson($whereCondJson);
-        } elseif (cookie('where_cond_json')) {
-            $whereCondJson = cookie('where_cond_json');
-            $whereCond = WhereConditions::parseJson($whereCondJson);
-        } else {
-            // 默认值
-            $whereCond = new WhereConditions();
-            $whereCond->pushCond("area_start", "eq", "610800");
-            $whereCond->pushCond("area_end", "eq", "410100");
-            $whereCond->pushCond("area_start", "like", "6108%");
-            $whereCond->pushCond("area_end", "like", "4101%");
-            $whereCond->pushCond("area_start", "like", "61%");
-            $whereCond->pushCond("area_end", "like", "41%");
-        }
+        $whereCond = $this->createNewWhereConditions($input);
 
+        $data = $this->getOrderWithoutExist($whereCond,0);
+        $data['page'] = 1; // 把page送回去，作为校验
 
-        $messages = $Msg->findWhere($whereCond);
-
-        $cards = new CardList($messages);
-        $this->assign("li_array", $cards->toLiArray());
-        $this->assign("where_cond_json", json_encode($whereCond));
+        $this->assign("data", $data);
         $this->display();
     }
 
@@ -112,7 +86,7 @@ class DriverSearchController extends ComController
                     $cards->addOther();
                     if ($cards->isFull()) break;
                 }
-                $temp_messages = $Msg->findWhereWithoutExist($whereCond, $cards->getCount());
+                $temp_messages = $Msg->findWhereWithoutExist($whereCond, $cards->getCount(),"求车");
                 $cards->appendMessage($temp_messages);
                 if ($cards->atOther()&&$cards->notFull()){ //其他查询也不能满足，说明查到底了
                     $cards->addEnd();
@@ -133,6 +107,53 @@ class DriverSearchController extends ComController
         }
 
         return $data;
+    }
+
+    /**
+     * @return mixed
+     */
+    private function acquireInput()
+    {
+        $post = I('post.', '', 'trim,strip_tags');
+        if ($post) {
+            $input['areaStart'] = $post['area_start'];
+            $input['areaEnd'] = $post['area_end'];
+            $input['searchInput'] = $post['search_input'];
+            $input['searchTag'] = $post['search_tag'];
+            return $input;
+        } elseif (cookie('search_tag')) {
+            $input['areaStart'] = cookie('area_start_id');
+            $input['areaEnd'] = cookie('area_end_id');
+            $input['searchTag'] = cookie('search_tag');
+            $input['searchInput'] = cookie('search_input');
+            return $input;
+        } else {
+            $input['areaStart'] = "610800";
+            $input['areaEnd'] = "410100";
+            $input['searchInput'] = "";
+            $input['searchTag'] = "all";
+            return $input;
+        }
+    }
+
+    /**
+     * @param $input
+     * @return WhereConditions
+     */
+    private function createNewWhereConditions($input)
+    {
+        $whereCond = new WhereConditions();
+        if ($input['searchTag'] == "all") {
+            $whereCond->pushSearchCond("content_all", $input['searchInput']);
+            return $whereCond;
+        } else {
+            $whereCond->pushSearchCond("content_all", $input['searchInput']);
+            $whereCond->pushCond("area_start", "like", substr($input['areaStart'], 0, 2) . "%");
+            $whereCond->pushCond("area_end", "like", substr($input['areaEnd'], 0, 2) . "%");
+            $whereCond->pushCond("area_start", "eq", $input['areaStart']);
+            $whereCond->pushCond("area_end", "eq", $input['areaEnd']);
+            return $whereCond;
+        }
     }
 
 }

@@ -67,7 +67,7 @@ class MessagesModelTest extends PHPUnit_Framework_TestCase
     public function testToCollection(){
         $Model = new \Home\Model\MessagesModel();
         $msg = $Model->find(1);
-        $msg = $Model->toCollection($msg,2);
+        $msg = $Model->toCollection($msg,3);
         $this->assertEquals("收藏", $msg["in_collection"]);
 
 //        $msg = $Model->toCollection($msg,1);
@@ -97,14 +97,39 @@ class MessagesModelTest extends PHPUnit_Framework_TestCase
         $Model = new \Home\Model\MessagesModel();
         $whereConditions = new \Home\Common\CardList\WhereConditions();
         $whereConditions->pushCond("id", "eq", "1");
-        $whereConditions->updateExist($Model->findWhereWithoutExist($whereConditions,0));
+        $whereConditions->updateExist($Model->findWhere($whereConditions));
         $whereConditions->popCond("id");
 
         $whereConditions->pushSearchCond("content","好消息 ");
-        $this->assertEquals('SELECT * FROM `ck_messages` WHERE ( `content` LIKE \'%好消息%\'  ) AND ( `invalid_id`=0 ) AND `id` NOT IN (\'1\') ORDER BY record_time desc LIMIT 0,10  ', $Model->findWhereWithoutExistToSql($whereConditions,0));
-        $this->assertEquals('SELECT * FROM `ck_messages` WHERE ( `content` LIKE \'%好消息%\'  ) AND ( `invalid_id`=0 ) AND `id` NOT IN (\'1\') ORDER BY record_time desc LIMIT 0,7  ', $Model->findWhereWithoutExistToSql($whereConditions,3));
-        $this->assertEquals(false, $Model->findWhereWithoutExistToSql($whereConditions,10));
-        $this->assertEquals(false, $Model->findWhereWithoutExistToSql($whereConditions,13));
+        $this->assertEquals('SELECT * FROM `ck_messages` WHERE ( `content` LIKE \'%好消息%\'  ) AND ( `invalid_id`=0 AND category=\'求车\' ) AND `id` NOT IN (\'1\') ORDER BY record_time desc LIMIT 0,10  ', $Model->findWhereWithoutExistToSql($whereConditions,0,"求车"));
+        $this->assertEquals('SELECT * FROM `ck_messages` WHERE ( `content` LIKE \'%好消息%\'  ) AND ( `invalid_id`=0 AND category=\'求车\' ) AND `id` NOT IN (\'1\') ORDER BY record_time desc LIMIT 0,7  ', $Model->findWhereWithoutExistToSql($whereConditions,3,"求车"));
+        $this->assertEquals(false, $Model->findWhereWithoutExistToSql($whereConditions,10,"求车"));
+        $this->assertEquals(false, $Model->findWhereWithoutExistToSql($whereConditions,13,"求车"));
+
+        $whereConditions->popCond("content");
+        $whereConditions->pushCond("area_start", "like", "61%");
+        $whereConditions->pushCond("area_end", "like", "41%");
+        $whereConditions->pushCond("area_start", "eq", "610800");
+        $whereConditions->pushCond("area_end", "eq", "410100");
+        $this->assertEquals('{"conditions":"{\"area_start\":[[\"like\",\"61%\"],[\"eq\",\"610800\"],\"AND\"],\"area_end\":[[\"like\",\"41%\"],[\"eq\",\"410100\"],\"AND\"]}","page":1,"asc":"record_time desc","exists":["1"],"last_count":-2}',$whereConditions->toJson());
+        $this->assertEquals("SELECT * FROM `ck_messages` WHERE ( `area_start` LIKE '61%' AND `area_start` = '610800'  ) AND ( `area_end` LIKE '41%' AND `area_end` = '410100'  ) AND ( `invalid_id`=0 AND category='求车' ) AND `id` NOT IN ('1') ORDER BY record_time desc LIMIT 0,10  ", $Model->findWhereWithoutExistToSql($whereConditions,0,"求车"));
+
+        $whereConditions->popCond();
+        $this->assertEquals('{"conditions":"{\"area_start\":[[\"like\",\"61%\"],[\"eq\",\"610800\"],\"AND\"],\"area_end\":[\"like\",\"41%\"]}","page":1,"asc":"record_time desc","exists":["1"],"last_count":-2}',$whereConditions->toJson());
+        $this->assertEquals("SELECT * FROM `ck_messages` WHERE ( `area_start` LIKE '61%' AND `area_start` = '610800'  ) AND `area_end` LIKE '41%' AND ( `invalid_id`=0 AND category='求车' ) AND `id` NOT IN ('1') ORDER BY record_time desc LIMIT 0,10  ", $Model->findWhereWithoutExistToSql($whereConditions,0,"求车"));
+
+        $whereConditions->popCond();
+        $this->assertEquals('{"conditions":"{\"area_start\":[\"like\",\"61%\"],\"area_end\":[\"like\",\"41%\"]}","page":1,"asc":"record_time desc","exists":["1"],"last_count":-2}',$whereConditions->toJson());
+
+        $whereConditions->popCond();
+        $this->assertEquals('{"conditions":"{\"area_start\":[\"like\",\"61%\"]}","page":1,"asc":"record_time desc","exists":["1"],"last_count":-2}',$whereConditions->toJson());
+
+        $whereConditions->popCond();
+        $this->assertEquals('{"conditions":"[]","page":1,"asc":"record_time desc","exists":["1"],"last_count":-2}',$whereConditions->toJson());
+        $this->assertEquals(true, $whereConditions->isExhausted());
+
+//        $this->assertEquals("61",substr("612345",0,2));
+
     }
 
 

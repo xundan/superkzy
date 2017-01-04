@@ -60,6 +60,9 @@ class WhereConditionsTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('{"conditions":"{\"id\":[[[\"eq\",\"1\"],[\"eq\",\"2\"],\"OR\"],[\"like\",\"\'%0\'\"],\"AND\"]}","page":1,"asc":"record_time desc","exists":[],"last_count":-2}',$whereConditions2->toJson());
 
         $whereConditions2->popCond();
+        $this->assertEquals('{"conditions":"{\"id\":[[\"eq\",\"1\"],[\"eq\",\"2\"],\"OR\"]}","page":1,"asc":"record_time desc","exists":[],"last_count":-2}',$whereConditions2->toJson());
+
+        $whereConditions2->popCond();
         $this->assertEquals('{"conditions":"[]","page":1,"asc":"record_time desc","exists":[],"last_count":-2}',$whereConditions2->toJson());
 
 

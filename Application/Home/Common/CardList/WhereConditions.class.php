@@ -67,6 +67,7 @@ class WhereConditions
      */
     public function pushCond($column, $operator, $val, $bool_operator = "AND")
     {
+        if (!$column) return false;
         if (!$operator) return false;
         if ($val === null) return false;//sql会报错，所以直接返回
         if ($bool_operator == "AND" || $bool_operator == "OR" || $bool_operator == "XOR") {
@@ -97,7 +98,22 @@ class WhereConditions
                 // $column对应值为空，释放掉这一对键值
                 unset($this->_whereConditions[$column]);
                 return 0;
-            } else {// column对应值是数组且不为空
+            } else {
+
+                // 对area_start 和 area_end 的特殊处理，使其交替弹出
+                if ($column == "area_start" || $column == "area_end") {
+                    if ($column == "area_start") {
+                        $other = "area_end";
+                    } else {
+                        $other = "area_start";
+                    }
+                    $val2 = $this->getV($other);
+                    if (count($val) == 2 && count($val2) == 3)
+                        return $this->popCond($other);
+                }
+
+                // pop 逻辑
+                // column对应值是数组且不为空
                 if (count($val) == 2) { // 如果深度为1
                     return $this->popTopLevelCond($column);
                 } elseif (count($val) == 3) { // 如果深度大于1
@@ -122,9 +138,7 @@ class WhereConditions
                 return 0;
             } else { // 如果有条件，pop出最后一条
                 $key = array_pop($keys);
-                $deleted_cond = $this->_whereConditions[$key];
-                unset($this->_whereConditions[$key]);
-                return $deleted_cond;
+                return $this->popCond($key);
             }
         }
     }
@@ -320,8 +334,9 @@ class WhereConditions
 
     public function pushSearchCond($column, $val)
     {
-        if (!$val) return false;//sql会报错，所以直接返回
-        $query = $this->search_method($val);
+        $real_var = trim($val);
+        if (!$real_var) return false;//sql会报错，所以直接返回
+        $query = $this->search_method($real_var);
         if (count($query)) {
             return $this->_whereConditions[$column] = $query;
         } else {
