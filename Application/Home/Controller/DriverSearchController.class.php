@@ -87,7 +87,7 @@ class DriverSearchController extends ComController
                     $cards->addOther();
                     if ($cards->isFull()) break;
                 }
-                $temp_messages = $Msg->findWhereWithoutExist($whereCond, $cards->getCount(),"求车");
+                $temp_messages = $Msg->findWhereWithoutExist($whereCond, $cards->getCount(),"找车");
                 $cards->appendMessage($temp_messages);
                 if ($cards->atOther()&&$cards->notFull()){ //其他查询也不能满足，说明查到底了
                     $cards->addEnd();

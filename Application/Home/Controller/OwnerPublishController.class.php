@@ -72,7 +72,7 @@ class OwnerPublishController extends ComController
 //            }
 //        }
 //        //消息属性
-//        $data['category'] = 3;  //求车为3
+//        $data['category'] = 3;  //找车为3
 //        $data['publisher_rid'] = $_SESSION['user_info']['uid'];
 //        $data['publish_time'] = time();
 //        $data['deadline'] = $this->set_deadline();  //TODO

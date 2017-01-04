@@ -101,10 +101,10 @@ class MessagesModelTest extends PHPUnit_Framework_TestCase
         $whereConditions->popCond("id");
 
         $whereConditions->pushSearchCond("content","好消息 ");
-        $this->assertEquals('SELECT * FROM `ck_messages` WHERE ( `content` LIKE \'%好消息%\'  ) AND ( `invalid_id`=0 AND category=\'求车\' ) AND `id` NOT IN (\'1\') ORDER BY record_time desc LIMIT 0,10  ', $Model->findWhereWithoutExistToSql($whereConditions,0,"求车"));
-        $this->assertEquals('SELECT * FROM `ck_messages` WHERE ( `content` LIKE \'%好消息%\'  ) AND ( `invalid_id`=0 AND category=\'求车\' ) AND `id` NOT IN (\'1\') ORDER BY record_time desc LIMIT 0,7  ', $Model->findWhereWithoutExistToSql($whereConditions,3,"求车"));
-        $this->assertEquals(false, $Model->findWhereWithoutExistToSql($whereConditions,10,"求车"));
-        $this->assertEquals(false, $Model->findWhereWithoutExistToSql($whereConditions,13,"求车"));
+        $this->assertEquals('SELECT * FROM `ck_messages` WHERE ( `content` LIKE \'%好消息%\'  ) AND ( `invalid_id`=0 AND category=\'找车\' ) AND `id` NOT IN (\'1\') ORDER BY record_time desc LIMIT 0,10  ', $Model->findWhereWithoutExistToSql($whereConditions,0,"找车"));
+        $this->assertEquals('SELECT * FROM `ck_messages` WHERE ( `content` LIKE \'%好消息%\'  ) AND ( `invalid_id`=0 AND category=\'找车\' ) AND `id` NOT IN (\'1\') ORDER BY record_time desc LIMIT 0,7  ', $Model->findWhereWithoutExistToSql($whereConditions,3,"找车"));
+        $this->assertEquals(false, $Model->findWhereWithoutExistToSql($whereConditions,10,"找车"));
+        $this->assertEquals(false, $Model->findWhereWithoutExistToSql($whereConditions,13,"找车"));
 
         $whereConditions->popCond("content");
         $whereConditions->pushCond("area_start", "like", "61%");
@@ -112,11 +112,11 @@ class MessagesModelTest extends PHPUnit_Framework_TestCase
         $whereConditions->pushCond("area_start", "eq", "610800");
         $whereConditions->pushCond("area_end", "eq", "410100");
         $this->assertEquals('{"conditions":"{\"area_start\":[[\"like\",\"61%\"],[\"eq\",\"610800\"],\"AND\"],\"area_end\":[[\"like\",\"41%\"],[\"eq\",\"410100\"],\"AND\"]}","page":1,"asc":"record_time desc","exists":["1"],"last_count":-2}',$whereConditions->toJson());
-        $this->assertEquals("SELECT * FROM `ck_messages` WHERE ( `area_start` LIKE '61%' AND `area_start` = '610800'  ) AND ( `area_end` LIKE '41%' AND `area_end` = '410100'  ) AND ( `invalid_id`=0 AND category='求车' ) AND `id` NOT IN ('1') ORDER BY record_time desc LIMIT 0,10  ", $Model->findWhereWithoutExistToSql($whereConditions,0,"求车"));
+        $this->assertEquals("SELECT * FROM `ck_messages` WHERE ( `area_start` LIKE '61%' AND `area_start` = '610800'  ) AND ( `area_end` LIKE '41%' AND `area_end` = '410100'  ) AND ( `invalid_id`=0 AND category='找车' ) AND `id` NOT IN ('1') ORDER BY record_time desc LIMIT 0,10  ", $Model->findWhereWithoutExistToSql($whereConditions,0,"找车"));
 
         $whereConditions->popCond();
         $this->assertEquals('{"conditions":"{\"area_start\":[[\"like\",\"61%\"],[\"eq\",\"610800\"],\"AND\"],\"area_end\":[\"like\",\"41%\"]}","page":1,"asc":"record_time desc","exists":["1"],"last_count":-2}',$whereConditions->toJson());
-        $this->assertEquals("SELECT * FROM `ck_messages` WHERE ( `area_start` LIKE '61%' AND `area_start` = '610800'  ) AND `area_end` LIKE '41%' AND ( `invalid_id`=0 AND category='求车' ) AND `id` NOT IN ('1') ORDER BY record_time desc LIMIT 0,10  ", $Model->findWhereWithoutExistToSql($whereConditions,0,"求车"));
+        $this->assertEquals("SELECT * FROM `ck_messages` WHERE ( `area_start` LIKE '61%' AND `area_start` = '610800'  ) AND `area_end` LIKE '41%' AND ( `invalid_id`=0 AND category='找车' ) AND `id` NOT IN ('1') ORDER BY record_time desc LIMIT 0,10  ", $Model->findWhereWithoutExistToSql($whereConditions,0,"找车"));
 
         $whereConditions->popCond();
         $this->assertEquals('{"conditions":"{\"area_start\":[\"like\",\"61%\"],\"area_end\":[\"like\",\"41%\"]}","page":1,"asc":"record_time desc","exists":["1"],"last_count":-2}',$whereConditions->toJson());
