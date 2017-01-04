@@ -69,8 +69,8 @@
     <input type="hidden" name="area_start">
     <input type="hidden" name="area_end">
     <input type="hidden" name="page" id="page" value="1">
-    <input type="hidden" name="where_cond_json" value="{$where_cond_json}">
-    <input type="hidden" name="stage" value="{$stage}">
+    <input type="hidden" name="where_cond_json" id="where_cond_json" value="{$where_cond_json}">
+    <input type="hidden" name="stage" id="stage" value="{$stage}">
 </form>
 <!--订单展示栏-->
 <div id="wrapper" style="top: 52px;margin-left: 2.5%;">
@@ -301,10 +301,13 @@
     function pullUpAction() {
         setTimeout(function () {
             console.log('up');
+            var a = $('#tag_search').serialize();
+            console.log(a);
+            console.log($('#where_cond_json').val());
+            console.log($('#stage').val());
             var page = $('#page').val();
             var request_page = parseInt(page) + 1;
             var select_category = $('#select_category').val();
-//            var where_cond_json = cookie('where_cond_json');
             var where_cond_json = $('#where_cond_json').val();
             var stage = $('#stage').val();
             console.log(page);
