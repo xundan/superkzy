@@ -80,13 +80,15 @@
         <div class="tab-content">
             <ul id="all" class="tab-pane active" style="margin-top: 40px;list-style-type: none">
                 all msg
-                {$li}
-                <span id="buy_insert"></span>
+                <volist name="li_array" id="vo">
+                    {$vo}
+                </volist>
             </ul>
             <ul id="search" class="tab-pane" style="margin-top: 40px;list-style-type: none">
                 searched msg
-                {$li}
-                <span id="sell_insert"></span>
+                <volist name="li_array" id="vo">
+                    {$vo}
+                </volist>
             </ul>
         </div>
         <div id="pullUp">
@@ -120,10 +122,10 @@
             //将输入的值存入cookie
             $('input[name=search_input]').val($(this).val());
             if(cookie('search_tag') == '找车'){
-                cookie('search_input_need', $(this).val());
+                cookie('search_input', $(this).val());
             }
             else{
-                cookie('search_input_all', $(this).val());
+                cookie('search_input', $(this).val());
             }
             //提交表单
             document.tag_search.method = "post";
@@ -132,9 +134,20 @@
         }
     });
     $('#search_cancel').bind('touchend', '#search_cancel', function () {
+        alert(123);
         $("#search_show").hide();
         $('#search_input').val('');
     });
+//    $('#search_cancel').click(function(){
+//        alert(123);
+//        $("#search_show").hide();
+//        $('#search_input').val('');
+//    });
+//    $('#search_cancel').bind('click', '#search_cancel', function () {
+//        alert(123);
+//        $("#search_show").hide();
+//        $('#search_input').val('');
+//    });
     $('#search_clear').bind('touchend', '#search_cancel', function () {
         $("#search_show").hide();
         $('#search_input').val('');
@@ -158,17 +171,14 @@
             $('#myTab a:eq(0)').removeClass('weui_bar_item_on').siblings('a').addClass('weui_bar_item_on weui_bar_item_on_extra').tab('show');
             $('#area_start_html').html(cookie('area_start'));
             $('#area_end_html').html(cookie('area_end'));
-            if(cookie('search_input_need')){
-                $('#search_text').html(cookie('search_input_need'));
+            if(cookie('search_input')){
+                $('#search_text').html(cookie('search_input'));
             }
-            $('input[name=select_category]').val(cookie('search_tag'));
-            $('input[name=search_input]').val(cookie('search_input_need'));
-            $('input[name=area_start]').val(cookie('area_start_id'));
-            $('input[name=area_end]').val(cookie('area_end_id'));
         }
         else {
             //全部信息
             $('#myTab a:eq(0)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on weui_bar_item_on_extra');
+            cookie('search_tag','all');
             if(cookie('area_start')){
                 $('#area_start_html').html(cookie('area_start'));
                 $('input[name=area_start]').val(cookie('area_start_id'));
@@ -189,13 +199,22 @@
                 cookie('area_end','郑州');
                 cookie('area_end_id',410100);
             }
-            if(cookie('search_input_all')){
-                $('#search_text').html(cookie('search_input_all'));
+            if(cookie('search_input')){
+                $('#search_text').html(cookie('search_input'));
             }
+        }
+        //是否提交表单
+        if(cookie('need_post')){
+            cookie('need_post',false);
             $('input[name=select_category]').val(cookie('search_tag'));
-            $('input[name=search_input]').val(cookie('search_input_all'));
+            $('input[name=search_input]').val(cookie('search_input'));
             $('input[name=area_start]').val(cookie('area_start_id'));
             $('input[name=area_end]').val(cookie('area_end_id'));
+            //提交表单
+            document.tag_search.method = 'post';
+            document.tag_search.action = "{:U('DriverSearch/driver_job_search')}";
+            document.tag_search.submit();
+        }else{
         }
         var a = $('#tag_search').serialize();
         console.log(a);
@@ -209,7 +228,7 @@
         cookie('search_tag', 'all');
         $('input[name=select_category]').val(cookie('search_tag'));
         //重置筛选条件的cookie
-        cookie('search_input_all', null);
+        cookie('search_input', null);
         //提交表单
         document.tag_search.method = 'post';
         document.tag_search.action = "{:U('DriverSearch/driver_job_search')}";
@@ -240,10 +259,9 @@
         cookie('area_end_id',area_start_id);
         //表单填写
         $('input[name=select_category]').val(cookie('search_tag'));
-        $('input[name=search_input]').val(cookie('search_input_need'));
+        $('input[name=search_input]').val(cookie('search_input'));
         $('input[name=area_start]').val(cookie('area_start_id'));
         $('input[name=area_end]').val(cookie('area_end_id'));
-
 //        //地址跳转
 //        window.location.href = current_url;
 
