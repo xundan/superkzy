@@ -199,7 +199,7 @@ class WhereConditions
     public function preSQL()
     {
         if ($this->getLastCount() == self::FULL) { // 说明上次拉取的是全额的消息
-            $this->ascPage();
+//            $this->ascPage();   // 已经用了exists数组排除已有数据，不用增长页数了
             return false;
         } else if ($this->getLastCount() == self::INIT) {
             $this->resetLastCount();

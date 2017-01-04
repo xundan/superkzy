@@ -84,7 +84,7 @@ class CardList
         return "";
     }
     /**
-     * 添加一个结尾标识
+     * 添加一个模糊标识
      */
     public function addSimilar(){
         $tip['type'] = "tips";
@@ -94,7 +94,7 @@ class CardList
         $this->_stage = self::SIMILAR;
     }
     /**
-     * 添加一个结尾标识
+     * 添加一个其他标识
      */
     public function addOther(){
         $tip['type'] = "tips";

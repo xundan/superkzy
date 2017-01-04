@@ -11,10 +11,10 @@ use Think\Controller;
 class ComController extends Controller
 {
     public function _initialize(){
-        $user = $_SESSION['user_info'];
+        $user = session('user_info');
 
         //把当前路径放入cookie中
-        $module_name = CONTROLLER_NAME.'/'.ACTION_NAME;
+//        $module_name = CONTROLLER_NAME.'/'.ACTION_NAME;
 //        cookie("last_url",$module_name);
         if(!isset($user['uid'])){
             //判断是否有uid，如果没有分两种情况

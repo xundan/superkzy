@@ -13,7 +13,6 @@ use Home\Common\CardList\WhereConditions;
 use Home\Model\MessagesModel;
 use Think\Controller;
 
-header("Content-type: text/html; charset=utf-8");
 
 class DriverSearchController extends ComController
 {
@@ -71,32 +70,44 @@ class DriverSearchController extends ComController
      * @param $stage int 当前卡片列表的状态：精确、模糊、其他、结束
      * @return mixed 返回数据
      */
-    private function getOrderWithoutExist(WhereConditions $whereCond, $stage)
+    public function getOrderWithoutExist(WhereConditions $whereCond, $stage)
     {
         if ($stage < CardList::END) { // 如果是结束阶段就不执行下面代码了
             $Msg = new MessagesModel();
             $cards = new CardList(array());
             $cards->setStage($stage);
+            $count = "0";
             do {
                 $isPopped = $whereCond->preSQL();
                 if($cards->notFull()&&$isPopped&&$cards->atAccurate()){// 如果是第一次退格约束
+                    $count.="1";
                     $cards->addSimilar();
-                    if ($cards->isFull()) break;
+                    if ($cards->isFull()){
+                        $count.="b";
+                        break;
+                    }
                 }
                 if($cards->notFull()&&$whereCond->isExhausted()&&$cards->atSimilar()){// 如果条件退完
+                    $count.="2";
                     $cards->addOther();
-                    if ($cards->isFull()) break;
+                    if ($cards->isFull()){
+                        $count.="c";
+                        break;
+                    }
                 }
                 $temp_messages = $Msg->findWhereWithoutExist($whereCond, $cards->getCount(),"找车");
                 $cards->appendMessage($temp_messages);
                 if ($cards->atOther()&&$cards->notFull()){ //其他查询也不能满足，说明查到底了
+                    $count.="3";
+                    $count.="d[".$cards->getCount()."]";
                     $cards->addEnd();
                     break;
                 }
                 $whereCond->postSQL($temp_messages, $cards->getCount());
+                $count.="a[".$cards->getCount()."]";
             } while (!($cards->isFull() || $cards->atEnd()));
             // 把$whereCond送到前台
-            $data["msg"] = "success";
+            $data["msg"] = "".$count;
             $data['where_cond_json'] = $whereCond->toJson();
             $data["li_array"] = $cards->toLiArray();
             $data["stage"] = $cards->getStage();

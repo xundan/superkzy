@@ -71,9 +71,9 @@ class MsgCard extends Card
         $role_id = $this->_message['user']['role_id'];
         $personal_page = "";
         if ($role_id == 1) {
-            $personal_page = U('PersonalCenter/driver_data', array('uid' => $this->_message['uid']));
+            $personal_page = U('PersonalCenter/driver_data', array('uid' => $this->_message['publisher_rid']));
         } elseif ($role_id == 2) {
-            $personal_page = U('PersonalCenter/owner_data', array('uid' => $this->_message['uid']));
+            $personal_page = U('PersonalCenter/owner_data', array('uid' => $this->_message['publisher_rid']));
         } else {
         }
         return $personal_page;

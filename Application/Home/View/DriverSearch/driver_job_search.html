@@ -347,7 +347,7 @@
                     var jsonObj = eval("(" + data + ")");
                     console.log(jsonObj);
 //                    return;
-                    if (jsonObj.msg == 'success') {
+                    if (jsonObj.msg) {
                         page++;
                         $('#page').val(page);
                         $('#where_cond_json').html(jsonObj.where_cond_json);
