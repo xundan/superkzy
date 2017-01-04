@@ -69,9 +69,17 @@
     <input type="hidden" name="area_start">
     <input type="hidden" name="area_end">
     <input type="hidden" name="page" id="page" value="1">
-    <input type="hidden" name="where_cond_json" id="where_cond_json" value="{$where_cond_json}">
-    <input type="hidden" name="stage" id="stage" value="{$stage}">
+    <!--<input type="hidden" name="where_cond_json" id="where_cond_json">{$where_cond_json}</input>-->
+    <!--<input type="hidden" name="stage" id="stage" value="{$stage}">-->
 </form>
+<div style="display: none">
+    <div id="where_cond_json">
+        {$where_cond_json}
+    </div>
+    <div id="stage">
+        {$stage}
+    </div>
+</div>
 <!--订单展示栏-->
 <div id="wrapper" style="top: 52px;margin-left: 2.5%;">
     <div id="scroller">
@@ -130,23 +138,31 @@
             document.tag_search.submit();
         }
     });
-    $('#search_cancel').bind('touchend', '#search_cancel', function () {
+    //    $('#search_cancel').bind('touchend', '#search_cancel', function () {
+    //        alert(123);
+    //        $("#search_show").hide();
+    //        $('#search_input').val('');
+    //    });
+    $('#search_cancel').bind('touchend', function () {
         alert(123);
-        $("#search_show").hide();
         $('#search_input').val('');
     });
-//    $('#search_cancel').click(function(){
-//        alert(123);
-//        $("#search_show").hide();
-//        $('#search_input').val('');
-//    });
-//    $('#search_cancel').bind('click', '#search_cancel', function () {
-//        alert(123);
-//        $("#search_show").hide();
-//        $('#search_input').val('');
-//    });
-    $('#search_clear').bind('touchend', '#search_cancel', function () {
-        $("#search_show").hide();
+    //    $('#search_cancel').click(function(){
+    //        alert(123);
+    //        $("#search_show").hide();
+    //        $('#search_input').val('');
+    //    });
+    //    $('#search_cancel').bind('click', '#search_cancel', function () {
+    //        alert(123);
+    //        $("#search_show").hide();
+    //        $('#search_input').val('');
+    //    });
+    //    $('#search_clear').bind('touchend', '#search_cancel', function () {
+    //        $("#search_show").hide();
+    //        $('#search_input').val('');
+    //    });
+    $('#search_clear').bind('click', function () {
+        $(this).stopPropagation();
         $('#search_input').val('');
     });
 </script>
@@ -168,41 +184,41 @@
             $('#myTab a:eq(0)').removeClass('weui_bar_item_on').siblings('a').addClass('weui_bar_item_on weui_bar_item_on_extra').tab('show');
             $('#area_start_html').html(cookie('area_start'));
             $('#area_end_html').html(cookie('area_end'));
-            if(cookie('search_input')){
+            if (cookie('search_input')) {
                 $('#search_text').html(cookie('search_input'));
             }
         }
         else {
             //全部信息
             $('#myTab a:eq(0)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on weui_bar_item_on_extra');
-            cookie('search_tag','all');
-            if(cookie('area_start')){
+            cookie('search_tag', 'all');
+            if (cookie('area_start')) {
                 $('#area_start_html').html(cookie('area_start'));
                 $('input[name=area_start]').val(cookie('area_start_id'));
             }
-            else{
+            else {
                 $('#area_start_html').html('榆林');
                 $('input[name=area_start]').val(610800);
-                cookie('area_start','榆林');
-                cookie('area_start_id',610800);
+                cookie('area_start', '榆林');
+                cookie('area_start_id', 610800);
             }
-            if(cookie('area_end')){
+            if (cookie('area_end')) {
                 $('#area_end_html').html(cookie('area_end'));
                 $('input[name=area_end]').val(cookie('area_end_id'));
             }
-            else{
+            else {
                 $('#area_end_html').html('郑州');
                 $('input[name=area_end]').val(410100);
-                cookie('area_end','郑州');
-                cookie('area_end_id',410100);
+                cookie('area_end', '郑州');
+                cookie('area_end_id', 410100);
             }
-            if(cookie('search_input')){
+            if (cookie('search_input')) {
                 $('#search_text').html(cookie('search_input'));
             }
         }
         //是否提交表单
-        if(cookie('need_post')){
-            cookie('need_post',false);
+        if (cookie('need_post')) {
+            cookie('need_post', false);
             $('input[name=select_category]').val(cookie('search_tag'));
             $('input[name=search_input]').val(cookie('search_input'));
             $('input[name=area_start]').val(cookie('area_start_id'));
@@ -211,14 +227,16 @@
             document.tag_search.method = 'post';
             document.tag_search.action = "{:U('DriverSearch/driver_job_search')}";
             document.tag_search.submit();
-        }else{
+        } else {
         }
 //        $('input[name=select_category]').val(cookie('search_tag'));
 //        $('input[name=search_input]').val(cookie('search_input'));
 //        $('input[name=area_start]').val(cookie('area_start_id'));
 //        $('input[name=area_end]').val(cookie('area_end_id'));
-        var a = $('#tag_search').serialize();
-        console.log(a);
+//        var a = $('#tag_search').serialize();
+//        console.log(a);
+//        console.log($('#where_cond_json').html());
+//        console.log($('#stage').html());
     });
 </script>
 <!--点击标签查询-->
@@ -254,10 +272,10 @@
         var area_start_id = cookie('area_start_id');
         var area_end = cookie('area_end');
         var area_end_id = cookie('area_end_id');
-        cookie('area_start',area_end);
-        cookie('area_start_id',area_end_id);
-        cookie('area_end',area_start);
-        cookie('area_end_id',area_start_id);
+        cookie('area_start', area_end);
+        cookie('area_start_id', area_end_id);
+        cookie('area_end', area_start);
+        cookie('area_end_id', area_start_id);
         //表单填写
         $('input[name=select_category]').val(cookie('search_tag'));
         $('input[name=search_input]').val(cookie('search_input'));
@@ -265,7 +283,8 @@
         $('input[name=area_end]').val(cookie('area_end_id'));
 //        //地址跳转
 //        window.location.href = current_url;
-
+        var a = $('#tag_search').serialize();
+        alert(a);
         //提交表单
         document.tag_search.method = 'post';
         document.tag_search.action = "{:U('DriverSearch/driver_job_search')}";
@@ -303,13 +322,13 @@
             console.log('up');
             var a = $('#tag_search').serialize();
             console.log(a);
-            console.log($('#where_cond_json').val());
-            console.log($('#stage').val());
             var page = $('#page').val();
             var request_page = parseInt(page) + 1;
             var select_category = $('#select_category').val();
-            var where_cond_json = $('#where_cond_json').val();
-            var stage = $('#stage').val();
+            var where_cond_json = $('#where_cond_json').html().trim();
+            var stage = $('#stage').html().trim();
+            console.log(where_cond_json);
+            console.log(stage);
             console.log(page);
             console.log(request_page);
 
@@ -317,7 +336,12 @@
             $.ajax({
                 type: "post",
                 url: "{:U('DriverSearch/driver_job_search_more')}",
-                data: {page: request_page, select_category: select_category,where_cond_json: where_cond_json,stage:stage},
+                data: {
+                    page: request_page,
+                    select_category: select_category,
+                    where_cond_json: where_cond_json,
+                    stage: stage
+                },
                 success: function (data) {
                     console.log('success');
                     var jsonObj = eval("(" + data + ")");
@@ -326,8 +350,8 @@
                     if (jsonObj.msg == 'success') {
                         page++;
                         $('#page').val(page);
-                        $('#where_cond_json').val(jsonObj.where_cond_json);
-                        $('#stage').val(jsonObj.stage);
+                        $('#where_cond_json').html(jsonObj.where_cond_json);
+                        $('#stage').html(jsonObj.stage);
                         jQuery.each(jsonObj.li_array, function (k, val) {
                             var li = document.createElement('li');
                             li.innerHTML = val;
