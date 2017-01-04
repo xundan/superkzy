@@ -94,7 +94,7 @@ class DriverSearchController extends ComController
                     break;
                 }
                 $whereCond->postSQL($temp_messages, $cards->getCount());
-            } while ($cards->isFull() || $cards->atEnd());
+            } while (!($cards->isFull() || $cards->atEnd()));
             // 把$whereCond送到前台
             $data["msg"] = "success";
             $data['where_cond_json'] = $whereCond->toJson();
@@ -120,13 +120,13 @@ class DriverSearchController extends ComController
             $input['areaStart'] = $post['area_start'];
             $input['areaEnd'] = $post['area_end'];
             $input['searchInput'] = $post['search_input'];
-            $input['searchTag'] = $post['search_tag'];
+            $input['searchTag'] = $post['select_category'];
             return $input;
         } elseif (cookie('search_tag')) {
             $input['areaStart'] = cookie('area_start_id');
             $input['areaEnd'] = cookie('area_end_id');
-            $input['searchTag'] = cookie('search_tag');
             $input['searchInput'] = cookie('search_input');
+            $input['searchTag'] = cookie('search_tag');
             return $input;
         } else {
             $input['areaStart'] = "610800";
