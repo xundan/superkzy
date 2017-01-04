@@ -202,6 +202,7 @@ class WhereConditions
             $this->ascPage();
             return false;
         } else if ($this->getLastCount() == self::INIT) {
+            $this->resetLastCount();
             return false;
         } else { // 否则退一格约束
             $this->resetPage();
