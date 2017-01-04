@@ -24,9 +24,10 @@ class DriverSearchController extends ComController
         $whereCond = $this->createNewWhereConditions($input);
 
         $data = $this->getOrderWithoutExist($whereCond,0);
-        $data['page'] = 1; // 把page送回去，作为校验
 
-        $this->assign("data", $data);
+        $this->assign("li_array", $data['li_array']);
+        $this->assign("where_cond_json", $data['where_cond_json']);
+        $this->assign("stage", $data['stage']);
         $this->display();
     }
 
