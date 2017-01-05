@@ -23,6 +23,7 @@ class TradeSearchController extends SearchController
         $this->assign("li_array", $data['li_array']);
         $this->assign("where_cond_json", $data['where_cond_json']);
         $this->assign("stage", $data['stage']);
+//        echo $data['msg'];
         $this->display();
     }
 
@@ -35,7 +36,7 @@ class TradeSearchController extends SearchController
         $post = I('post.', '', 'trim,strip_tags');
         $whereCondJson = $post['where_cond_json'];
         $whereCond = WhereConditions::parseJson($whereCondJson);
-        $data = $this->getOrderWithoutExist($whereCond, $post['stage'],"其他");
+        $data = $this->getOrderWithoutExist($whereCond, $post['stage'],$post['select_category']);
         $data['page'] = $post['page']; // 把page送回去，作为校验
         echo json_encode($data);
         return;
@@ -52,8 +53,8 @@ class TradeSearchController extends SearchController
         $whereCond->pushSearchCond("content_all", $input['searchInput']);
         $whereCond->pushCond("kind","in",$input['filter_kind']);
         $whereCond->pushCond("granularity","in",$input['filter_granularity']);
-        $whereCond->pushCond("heat_value_min","not lt",$input['filter_heat_min']);
-        $whereCond->pushCond("heat_value_max","not gt",$input['filter_heat_max']);
+        $whereCond->pushCond("heat_value_min","egt",$input['filter_heat_min']);
+        $whereCond->pushCond("heat_value_max","elt",$input['filter_heat_max']);
 
         return $whereCond;
     }

@@ -69,7 +69,7 @@ class WhereConditions
     {
         if (!$column) return false;
         if (!$operator) return false;
-        if ($val === null) return false;//sql会报错，所以直接返回
+        if ($val === null || $val === '') return false;//sql会报错，所以直接返回
         if ($bool_operator == "AND" || $bool_operator == "OR" || $bool_operator == "XOR") {
             if ($this->getV($column)) { // 先判断之前对column有没有约束
                 $new_val = array();

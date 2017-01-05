@@ -12,6 +12,7 @@ use Home\Common\CardList\CardList;
 use Home\Common\CardList\WhereConditions;
 use Home\Model\MessagesModel;
 use Think\Controller;
+use Think\Log;
 
 abstract class SearchController extends ComController
 {
@@ -60,6 +61,7 @@ abstract class SearchController extends ComController
                 $whereCond->postSQL($temp_messages, $cards->getCount());
                 $count.="a[".$cards->getCount()."]";
             } while (!($cards->isFull() || $cards->atEnd()));
+            Log::record("search msg:".$count, Log::DEBUG);
             // 把$whereCond送到前台
             $data["msg"] = "".$count;
             $data['where_cond_json'] = $whereCond->toJson();
