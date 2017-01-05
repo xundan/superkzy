@@ -18,24 +18,9 @@
     <!--<script type="text/javascript" src="jquery-2.2.4.min.js"></script>-->
     <!--<script type="text/javascript" src="bootstrap.min.js"></script>-->
 </head>
-<body style="background: white">
-<!--标题栏-->
-<div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
-        <span class="pull-left" style="">
-            <a href="{:U('TradeSearch/trade_search')}">
-                <img src="__PUBLIC__/home/images/goback.png" class="img-responsive"
-                     style="width: 15px;height: auto;margin-top: 40%">
-            </a>
-        </span>
-        <span class="">
-            <span class="" style="font-size: 1.5em;">筛 选</span>
-        </span>
-</div>
-<!--清除浮动-->
-<div class="clearfix"></div>
 <!--筛选栏-->
 <!--<div class="container">-->
-<form name="filter" action="" method="post" class="form-inline">
+<form name="filter" id="filter" action="" method="post" class="form-inline">
     <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
         <div class="panel panel-default">
             <div class="panel-heading">
@@ -48,11 +33,6 @@
             </div>
             <div id="collapse1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading1">
                 <div class="panel-body">
-                    <!--<volist name="coalKind" id="filter_coalKind">-->
-                    <!--<label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">-->
-                    <!--<input type="checkbox" class="pull-left" name="filter_kind[]" autocomplete="off" value="{$filter_coalKind['id']}"> {$filter_coalKind['title']}-->
-                    <!--</label>-->
-                    <!--</volist>-->
                     <label class="mybtn mybtn-default"
                            style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 5px">
                         <input type="checkbox" class="pull-left" style="opacity: 0" name="filter_kind[]" id="buy_kind1"
@@ -97,11 +77,6 @@
             </div>
             <div id="collapse2" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading2">
                 <div class="panel-body">
-                    <!--<volist name="coalGranularity" id="filter_coalGranularity">-->
-                    <!--<label class="btn btn-default" style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">-->
-                    <!--<input type="checkbox" class="pull-left" name="filter_granularity[]" id="" autocomplete="off" value="{$filter_coalGranularity['id']}"> {$filter_coalGranularity['title']}-->
-                    <!--</label>-->
-                    <!--</volist>-->
                     <label class="mybtn mybtn-default"
                            style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
                         <input type="checkbox" class="pull-left" style="opacity: 0" name="filter_granularity[]"
@@ -199,11 +174,12 @@
                 for (var j = 0; j < filter_kind_value.length; j++) {
                     if (filter_kind[i].value == filter_kind_value[j]) {
                         filter_kind[i].checked = true;
-                        break
+                        break;
                     }
                 }
             }
         }
+        $('input[name="filter_kind[]"]:checked').parent('label').addClass('myactive');
 //        TODO 速度更快
 //        for(var item in filter_kind_value){
 //            var temp = filter_kind_value[item]-1;
@@ -223,7 +199,7 @@
                 }
             }
         }
-
+        $('input[name="filter_granularity[]"]:checked').parent('label').addClass('myactive');
         //热值
         if (cookie('trade_search_filter_heat_min')) {
             var filter_heat_min_value = cookie('trade_search_filter_heat_min');
@@ -234,35 +210,20 @@
     })
 </script>
 
-<!--输入非法提示-->
+<!--输入非法提示重置-->
 <script>
-    //    //热值低位如果有值必须为int型数字
-    //    $('input[name=filter_heat_min]').blur(function () {
-    //        var filter_heat_min_value = $(this).val().trim();
-    //        if (!filter_heat_min_value.match(/^(-?\d+)(\.\d+)?$/) && filter_heat_min_value) {
-    //            $('#filter_heat_alert').html('热值必须为数字');
-    ////            return false;
-    //        }
-    //    });
-    //    $('input[name=filter_heat_min]').focus(function () {
-    //        if ($('#filter_heat_alert').html()) {
-    //            $(this).val('');
-    //            $('#filter_heat_alert').html('');
-    //        }
-    //    });
-    //    //热值高位如果有值必须为int型数字
-    //    $('input[name=filter_heat_max]').blur(function () {
-    //        var filter_heat_max_value = $(this).val().trim();
-    //        if (!filter_heat_max_value.match(/^(-?\d+)(\.\d+)?$/) && filter_heat_max_value) {
-    //            $('#filter_heat_alert').html('热值必须为数字');
-    //        }
-    //    });
-    //    $('input[name=filter_heat_max]').focus(function () {
-    //        if ($('#filter_heat_alert').html()) {
-    //            $(this).val('');
-    //            $('#filter_heat_alert').html('');
-    //        }
-    //    });
+        $('input[name=filter_heat_min]').focus(function () {
+            if ($('#filter_heat_alert').html()) {
+                $(this).val('');
+                $('#filter_heat_alert').html('');
+            }
+        });
+        $('input[name=filter_heat_max]').focus(function () {
+            if ($('#filter_heat_alert').html()) {
+                $(this).val('');
+                $('#filter_heat_alert').html('');
+            }
+        });
 </script>
 
 <!--重置按钮重置选中样式-->
@@ -279,7 +240,7 @@
         var filter_heat_max = $('input[name=filter_heat_max]').val().trim();
         //检测输入合法性 高位热值不小于低位热值
         if (filter_heat_max) {
-            if (filter_heat_max < filter_heat_min) {
+            if (parseInt(filter_heat_max) < parseInt(filter_heat_min)) {
                 $('#filter_heat_alert').html('热值区间不正确！');
                 return false;
             }
@@ -304,13 +265,11 @@
         if (cookie('search_input')) {
             $('input[name=search_input]').val(cookie('search_input'));
         }
-
+        console.log($('#filter').serialize());
         //提交
-//        window.location.href = "{:U('TradeSearch/trade_search')}";
         document.filter.method = "post";
         document.filter.action = "{:U('TradeSearch/trade_search')}";
-//        document.filter.action = "{:U('TradeSearch/trade_search')}?kind="+filter_kind+'&granularity='+filter_granularity
-//        +'&heat_min='+filter_heat_min+'&heat_max='+filter_heat_max;
+//        document.filter.action = "{:U('TradeSearch/test_input')}";
         document.filter.submit();
     });
 </script>

@@ -40,26 +40,23 @@
         </a>
     </div>
 </div>
-<button class="btn btn-default" style="margin-top: 30%;position: fixed;position: absolute;z-index: 2">123123123</button>
+<button class="btn btn-default"
+        style="background-color: #04bfc6;color:white;right: 0;top: 80%;position: fixed;position: absolute;z-index: 2">
+    我的收藏
+</button>
 <!--搜索框-->
 <div class="bd" style="margin-top: 43px">
     <div class="weui_search_bar" id="search_bar">
         <form id="form_search" name="form_search" action="" method="" class="weui_search_outer">
             <div class="weui_search_inner">
                 <i class="weui_icon_search"></i>
-                <input type="search" class="weui_search_input" name="search_input" id="search_input" placeholder="搜索"
-                       required>
+                <input type="search" class="weui_search_input" name="search_input" id="search_input" placeholder="搜索">
                 <a href="javascript:" class="weui_icon_clear" id="search_clear"></a>
             </div>
             <label for="search_input" class="weui_search_text" id="search_text">
                 <i class="weui_icon_search"></i>
                 <span>搜索</span>
             </label>
-            <input type="hidden" name="select_category">
-            <input type="hidden" name="filter_kind">
-            <input type="hidden" name="filter_granularity">
-            <input type="hidden" name="filter_heat_min">
-            <input type="hidden" name="filter_heat_max">
             <input type="text" style="display: none;">
         </form>
         <a href="javascript:void(0)" class="weui_search_cancel" id="search_cancel">取消</a>
@@ -73,8 +70,16 @@
     <input type="hidden" name="filter_heat_min">
     <input type="hidden" name="filter_heat_max">
     <input type="hidden" name="search_input">
-    <input type="hidden" name="page" id="page" value="{$next_page}">
+    <input type="hidden" name="page" id="page" value="1">
 </form>
+<div style="display: none">
+    <div id="where_cond_json">
+        {$where_cond_json}
+    </div>
+    <div id="stage">
+        {$stage}
+    </div>
+</div>
 <!--订单展示栏-->
 <div id="wrapper" style="top: 52px;margin-left: 2.5%;">
     <div id="scroller">
@@ -84,17 +89,14 @@
         </div>
         <div class="tab-content">
             <ul id="buy" class="tab-pane active" style="margin-top: 40px;list-style-type: none">
-                {$li}
-                {$li}
-                {$li}
-                {$li}
-                <span id="buy_insert"></span>
+                <volist name="li_array" id="vo">
+                    {$vo}
+                </volist>
             </ul>
             <ul id="sell" class="tab-pane" style="margin-top: 40px;list-style-type: none">
-                {$li}
-                {$li}
-                {$li}
-                <span id="sell_insert"></span>
+                <volist name="li_array" id="vo">
+                    {$vo}
+                </volist>
             </ul>
         </div>
         <div id="pullUp">
@@ -110,6 +112,9 @@
     $('#search_input').focus(function () {
         var $weuiSearchBar = $('#search_bar');
         $weuiSearchBar.addClass('weui_search_focusing');
+        if (cookie('search_input')) {
+            $(this).val(cookie('search_input'));
+        }
     });
     $('#search_input').blur(function () {
         var $weuiSearchBar = $('#search_bar');
@@ -131,14 +136,14 @@
     $('#search_input').bind('keyup', '#search_input', function (event) {
         event = event || window.event;
         if (event.keyCode == 13) {
-//            alert(1234);
-            if ($('#search_input').val() == '') {
-                return false;
+//            //将输入的值存入cookie
+            if($(this).val().trim() == ''){
+                cookie('search_input',null);
+                $('input[name=search_input]').val('');
+            }else{
+                $('input[name=search_input]').val($(this).val().trim());
+                cookie('search_input', $(this).val().trim());
             }
-//            alert($('#search_input').val());
-//            alert($(this).val());
-//            window.location.href = 'url?keyword='+ $(this).val();
-
             //将值传入hidden input提交
             if (cookie('trade_search_filter_kind')) {
                 $('input[name=filter_kind]').val(cookie('trade_search_filter_kind'));
@@ -160,9 +165,9 @@
             cookie('search_input', $(this).val());
 
             //提交表单
-            document.form_search.method = "post";
-            document.form_search.action = "{:U('TradeSearch/trade_search')}";
-            document.form_search.submit();
+            document.tag_search.method = "post";
+            document.tag_search.action = "{:U('TradeSearch/trade_search')}";
+            document.tag_search.submit();
         }
     });
     $('#search_cancel').bind('touchend', '#search_cancel', function () {
@@ -203,31 +208,21 @@
 <!--载入读取上次标签-->
 <script>
     $(function () {
+        console.log($('#where_cond_json').html());
+        console.log($('#stage').html());
         var now = new Date();
         console.log(now.toLocaleString());
-        console.log('new');
-        console.log($('#buy').hasClass('active'));
-        console.log($('#page').val());
-        if (cookie('search_tag') === '0') {
+        if (cookie('search_tag') == '供应') {
             //供货信息
-            //避免为空或者false
-            //标签选中
-//            var a = $('#myTab a:eq(1)');
-//            a.siblings('a').removeClass('weui_bar_item_on');
-//            a.addClass('weui_bar_item_on');
-//            a.tab('show');
-            if (cookie('search_input')) {
-                $('#search_input').html(cookie('search_input'));
-            }
             $('#myTab a:eq(1)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on');
         } else {
             //求购信息
-//            var a = $('#myTab a:eq(0)');
-//            a.siblings('a').removeClass('weui_bar_item_on');
-//            a.addClass('weui_bar_item_on');
-//            a.tab('show');
             $('#myTab a:eq(0)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on');
-            cookie('search_tag', '2');
+            cookie('search_tag', '求购');
+        }
+        //载入搜索框内容
+        if (cookie('search_input')) {
+            $('#search_text').html(cookie('search_input'));
         }
     });
 </script>
@@ -237,21 +232,35 @@
     //点击求购信息标签
     $('#myTab a:eq(0)').click(function () {
         //存入所选标签入cookie
-        cookie('search_tag', '2');
+        cookie('search_tag', '求购');
         $('input[name=select_category]').val(cookie('search_tag'));
         $('input[name=page]').val(1);
         //点击标签只传标签值，相当于重置筛选条件
-//        $('input[name=filter_kind]').val(cookie('trade_search_filter_kind'));
-//        $('input[name=filter_granularity]').val(cookie('trade_search_filter_granularity'));
-//        $('input[name=filter_heat_min]').val(cookie('trade_search_filter_heat_min'));
-//        $('input[name=filter_heat_max]').val(cookie('trade_search_filter_heat_max'));
-//        $('input[name=search_input]').val(cookie('search_input'));
+        //将值传入hidden input提交
+        if (cookie('trade_search_filter_kind')) {
+            $('input[name=filter_kind]').val(cookie('trade_search_filter_kind'));
+        }
+        if (cookie('trade_search_filter_granularity')) {
+            $('input[name=filter_granularity]').val(cookie('trade_search_filter_granularity'));
+        }
+        if (cookie('trade_search_filter_heat_min')) {
+            $('input[name=filter_heat_min]').val(cookie('trade_search_filter_heat_min'));
+        }
+        if (cookie('trade_search_filter_heat_max')) {
+            $('input[name=filter_heat_max]').val(cookie('trade_search_filter_heat_max'));
+        }
+        if (cookie('search_tag')) {
+            $('input[name=select_category]').val(cookie('search_tag'));
+        }
+        if (cookie('search_input')) {
+            $('input[name=search_input]').val(cookie('search_input'));
+        }
         //重置筛选条件的cookie
-        cookie('search_input', null);
-        cookie('trade_search_filter_kind', null);
-        cookie('trade_search_filter_granularity', null);
-        cookie('trade_search_filter_heat_min', null);
-        cookie('trade_search_filter_heat_max', null);
+//        cookie('search_input', null);
+//        cookie('trade_search_filter_kind', null);
+//        cookie('trade_search_filter_granularity', null);
+//        cookie('trade_search_filter_heat_min', null);
+//        cookie('trade_search_filter_heat_max', null);
         //提交表单
         document.tag_search.method = 'post';
         document.tag_search.action = "{:U('TradeSearch/trade_search')}";
@@ -261,21 +270,35 @@
     //点击供应信息标签
     $('#myTab a:eq(1)').click(function () {
         //存入所选标签入cookie
-        cookie('search_tag', '0');
+        cookie('search_tag', '供应');
         $('input[name=select_category]').val(cookie('search_tag'));
         $('input[name=page]').val(1);
         //点击标签只传标签值，相当于重置筛选条件
-//        $('input[name=filter_kind]').val(cookie('trade_search_filter_kind'));
-//        $('input[name=filter_granularity]').val(cookie('trade_search_filter_granularity'));
-//        $('input[name=filter_heat_min]').val(cookie('trade_search_filter_heat_min'));
-//        $('input[name=filter_heat_max]').val(cookie('trade_search_filter_heat_max'));
-//        $('input[name=search_input]').val(cookie('search_input'));
+        //将值传入hidden input提交
+        if (cookie('trade_search_filter_kind')) {
+            $('input[name=filter_kind]').val(cookie('trade_search_filter_kind'));
+        }
+        if (cookie('trade_search_filter_granularity')) {
+            $('input[name=filter_granularity]').val(cookie('trade_search_filter_granularity'));
+        }
+        if (cookie('trade_search_filter_heat_min')) {
+            $('input[name=filter_heat_min]').val(cookie('trade_search_filter_heat_min'));
+        }
+        if (cookie('trade_search_filter_heat_max')) {
+            $('input[name=filter_heat_max]').val(cookie('trade_search_filter_heat_max'));
+        }
+        if (cookie('search_tag')) {
+            $('input[name=select_category]').val(cookie('search_tag'));
+        }
+        if (cookie('search_input')) {
+            $('input[name=search_input]').val(cookie('search_input'));
+        }
         //重置筛选条件的cookie
-        cookie('search_input', null);
-        cookie('trade_search_filter_kind', null);
-        cookie('trade_search_filter_granularity', null);
-        cookie('trade_search_filter_heat_min', null);
-        cookie('trade_search_filter_heat_max', null);
+//        cookie('search_input', null);
+//        cookie('trade_search_filter_kind', null);
+//        cookie('trade_search_filter_granularity', null);
+//        cookie('trade_search_filter_heat_min', null);
+//        cookie('trade_search_filter_heat_max', null);
         //提交表单
         document.tag_search.method = 'post';
         document.tag_search.action = "{:U('TradeSearch/trade_search')}";
@@ -285,25 +308,8 @@
 
 <!--滚动功能-->
 <script>
-    //    var myScroll;
-    //    myScroll = new IScroll('#wrapper',{
-    //        probeType: 3,
-    //        mouseWheel: true
-    //    });
-    //    function loaded(){
-    //        myScroll = new IScroll('#wrapper');
-    //    }
-    //    console.dir(myScroll.options);
-
-    //var myScroll,pullDownEl,pullDownOffset,pullUpEl,pullUpOffset,generatedCount = 0;
     var myScroll, pullDownEl, pullDownOffset, pullUpEl, pullUpOffset;
     var time_now, update_time;
-
-    var myScroll2, pullDownEl2, pullDownOffset2, pullUpEl2, pullUpOffset2;
-    var time_now2, update_time2;
-
-
-    //
     /**下拉刷新 （自定义实现此方法）
      *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
      */
@@ -311,75 +317,60 @@
         console.log('down');
         location.reload();
         myScroll.refresh();
-//    return;
-//    return;
-//    setTimeout(function(){
-//        var el,li,i;
-//        el = document.getElementById('thelist');
-////        console.log('downrefresh');
-////        window.location.reload();
-//        //==========================================
-//        $.ajax({
-//            type: "POST",
-//            url: "{:U('TradeSearch/trade_search')}",
-//            data: {isAjax:1,page: page},
-////            dataType: "json",
-//            success:function(data){
-////                var json = data;
-////                $(json).each(function(){
-////                    li = document.createElement('li');
-////                    // li.innerText = 'Generated row ' + (++generatedCount);
-////                    li.innerHTML = '<img src="' + this.src + '"/>';
-////                    el.insertBefore(li,el.childNodes[0]);
-////                })
-////                alert(1);
-//            }
-//        });
-//        myScroll.refresh();//数据加载完成后，调用界面更新方法  Remember to refresh when contents are loaded (ie: on ajax completion)
-//    },1000);  // <-- Simulate network congestion, remove setTimeout from production!
     }
     /**滚动翻页 （自定义实现此方法）
      *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
      */
     function pullUpAction() {
-        console.log('up');
-        var page = $('#page').val();
-        console.log(page);
-//    myScroll.refresh();
-//    return;
         setTimeout(function () {
-//        var el,li,i;
-//        el = document.getElementById('thelist');
-            var post = $('#tag_search').serialize();
+            console.log('up');
+            var a = $('#tag_search').serialize();
+            console.log(a);
+            var page = $('#page').val();
+            var request_page = parseInt(page) + 1;
+            var select_category = $('#select_category').val();
+            var where_cond_json = $('#where_cond_json').html().trim();
+            var stage = $('#stage').html().trim();
+            console.log(where_cond_json);
+            console.log(stage);
+            console.log(page);
+            console.log(request_page);
             //==========================================
             $.ajax({
                 type: "post",
-                url: "{:U('TradeSearch/trade_search')}",
-                data: {isAjax: 1, page: page, condition: post},
-//            dataType: "json",
+                url: "{:U('TradeSearch/trade_search_more')}",
+                data: {
+                    page: request_page,
+                    select_category: select_category,
+                    where_cond_json: where_cond_json,
+                    stage: stage
+                },
                 success: function (data) {
                     console.log('success');
-                    if (cookie('search_tag') === '0') {
-                        li = document.createElement('li');
-                        li.innerText = 'Generated row sell';
-                        el = document.getElementById('sell_insert');
-                        el.insertBefore(li, el.childNodes[0]);
-                    } else {
-                        li = document.createElement('li');
-                        li.innerText = 'Generated row 1';
-                        el = document.getElementById('buy_insert');
-                        el.insertBefore(li, el.childNodes[0]);
-//                        el.insertAdjacentHTML(li,el.childNodes[0]);
-                    }
                     var jsonObj = eval("(" + data + ")");
-                    console.log(jsonObj.test);
-                    jQuery.each(jsonObj.data, function (k, val) {
-                        var tempObj = $("#buy_clone").clone(true);
-//                        tempObj.children("li").children("table").children("tbody").children("tr").eq(1).children("td").eq(1).html("产地"+val.area_start);
-                        tempObj.children("table").children("tbody").children("tr").eq(1).children("td").eq(1).html("产地" + val.area_start);
-                        tempObj.appendTo("#insert_point");
-                    });
-                    $("#page").val(jsonObj.next_page);
+                    console.log(jsonObj);
+//                    return;
+                    if (jsonObj.msg) {
+                        page++;
+                        $('#page').val(page);
+                        $('#where_cond_json').html(jsonObj.where_cond_json);
+                        $('#stage').html(jsonObj.stage);
+                        jQuery.each(jsonObj.li_array, function (k, val) {
+                            var li = document.createElement('li');
+                            li.innerHTML = val;
+                            console.log(cookie('search_tag'));
+                            if (cookie('search_tag') == '求购') {
+                                document.getElementById('buy').appendChild(li);
+                            }
+                            else if (cookie('search_tag') == '供应') {
+                                document.getElementById('sell').appendChild(li);
+                            }
+                            else {
+                            }
+                        });
+                    }
+                    else {
+                    }
                     myScroll.refresh();
                 }
             });

@@ -101,7 +101,6 @@
 <!--载入读取上次标签-->
 <script>
     $(function () {
-        $('input[name=select_category]').val(cookie('search_tag'));
         if (cookie('search_tag') == 'transport') {
             //运输订单
             //避免为空或者false
@@ -113,6 +112,7 @@
         } else {
             cookie('search_tag', 'transport');
         }
+        $('input[name=select_category]').val(cookie('search_tag'));
         console.log($('input[name=select_category]').val());
     });
 </script>

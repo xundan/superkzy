@@ -44,7 +44,8 @@
     </div>
 </div>
 <!--我的收藏-->
-<a href="{:U('OwnerOrder/owner_order')}" class="btn btn-default" style="background-color: #04bfc6;color: white;right: 0;top: 80%;position: fixed;position: absolute;z-index: 2">我的收藏</a>
+<a href="{:U('OwnerOrder/owner_order')}" class="btn btn-default"
+   style="background-color: #04bfc6;color: white;right: 0;top: 80%;position: fixed;position: absolute;z-index: 2">我的收藏</a>
 <!--搜索框-->
 <div class="bd" style="margin-top: 43px">
     <!--<a href="javascript:;" class="weui_btn weui_btn_primary">点击展现searchBar</a>-->
@@ -52,7 +53,7 @@
         <form class="weui_search_outer">
             <div class="weui_search_inner">
                 <i class="weui_icon_search"></i>
-                <input type="search" class="weui_search_input" id="search_input" placeholder="搜索" required/>
+                <input type="search" class="weui_search_input" id="search_input" placeholder="搜索"/>
                 <a href="javascript:" class="weui_icon_clear" id="search_clear"></a>
             </div>
             <label for="search_input" class="weui_search_text" id="search_text">
@@ -71,8 +72,6 @@
     <input type="hidden" name="area_start">
     <input type="hidden" name="area_end">
     <input type="hidden" name="page" id="page" value="1">
-    <!--<input type="hidden" name="where_cond_json" id="where_cond_json">{$where_cond_json}</input>-->
-    <!--<input type="hidden" name="stage" id="stage" value="{$stage}">-->
 </form>
 <div style="display: none">
     <div id="where_cond_json">
@@ -113,6 +112,9 @@
     $('#search_input').focus(function () {
         var $weuiSearchBar = $('#search_bar');
         $weuiSearchBar.addClass('weui_search_focusing');
+        if (cookie('search_input')) {
+            $(this).val(cookie('search_input'));
+        }
     });
     $('#search_input').blur(function () {
         var $weuiSearchBar = $('#search_bar');
@@ -126,18 +128,20 @@
     $('#search_input').bind('keyup', '#search_input', function (event) {
         event = event || window.event;
         if (event.keyCode == 13) {
-            if ($('#search_input').val() == '') {
-                return false;
-            }
             //将输入的值存入cookie
-            $('input[name=search_input]').val($(this).val());
-            cookie('search_input', $(this).val());
+            if ($(this).val().trim() == '') {
+                cookie('search_input', null);
+                $('input[name=search_input]').val('');
+            } else {
+                $('input[name=search_input]').val($(this).val().trim());
+                cookie('search_input', $(this).val().trim());
+            }
             $('input[name=select_category]').val(cookie('search_tag'));
             $('input[name=area_start]').val(cookie('area_start_id'));
             $('input[name=area_end]').val(cookie('area_end_id'));
             //提交表单
             document.tag_search.method = "post";
-            document.tag_search.action = "{:U('DriverSearch/driver_job_search')}";
+            document.tag_search.action = "{:U('OwnerSearch/owner_car_search')}";
             document.tag_search.submit();
         }
     });
@@ -187,9 +191,6 @@
             $('#myTab a:eq(0)').removeClass('weui_bar_item_on').siblings('a').addClass('weui_bar_item_on weui_bar_item_on_extra').tab('show');
             $('#area_start_html').html(cookie('area_start'));
             $('#area_end_html').html(cookie('area_end'));
-            if (cookie('search_input')) {
-                $('#search_text').html(cookie('search_input'));
-            }
         }
         else {
             //全部信息
@@ -215,9 +216,10 @@
                 cookie('area_end', '郑州');
                 cookie('area_end_id', 410100);
             }
-            if (cookie('search_input')) {
-                $('#search_text').html(cookie('search_input'));
-            }
+        }
+        //载入搜索框内容
+        if (cookie('search_input')) {
+            $('#search_text').html(cookie('search_input'));
         }
         //是否提交表单
         if (cookie('need_post')) {
@@ -226,9 +228,9 @@
 //            $('input[name=search_input]').val(cookie('search_input'));
             $('input[name=area_start]').val(cookie('area_start_id'));
             $('input[name=area_end]').val(cookie('area_end_id'));
-            if(cookie('search_input')){
+            if (cookie('search_input')) {
                 $('input[name=search_input]').val(cookie('search_input'));
-            }else{
+            } else {
                 $('input[name=search_input]').val('');
             }
             //提交表单
@@ -280,9 +282,9 @@
         cookie('area_end', area_start);
         cookie('area_end_id', area_start_id);
         //表单填写
-        if(cookie('search_input')){
+        if (cookie('search_input')) {
             $('input[name=search_input]').val(cookie('search_input'));
-        }else{
+        } else {
             $('input[name=search_input]').val('');
         }
 //        $('input[name=search_input]').val(cookie(''));
