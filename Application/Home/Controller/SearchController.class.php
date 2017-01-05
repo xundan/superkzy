@@ -75,11 +75,4 @@ abstract class SearchController extends ComController
         return $data;
     }
 
-
-    /**
-     * 根据输入条件组装WhereCondition
-     * @return WhereConditions
-     */
-    abstract function createNewWhereConditions();
-
 }

@@ -20,26 +20,6 @@ class OwnerOrderController extends ComController
 {
     public function owner_order()
     {
-        $Collection = new CollectionModel();
-
-        $Collection->add_c(1, 1);
-        $Collection->add_c(1, 2);
-        $Collection->add_c(1, 3);
-        $Collection->add_c(1, 4);
-        $Collection->add_c(1, 5);
-        $Collection->add_c(1, 6);
-        $Collection->add_c(1, 7);
-        $Collection->add_c(1, 8);
-        $Collection->add_c(1, 9);
-        $Collection->add_c(1, 10);
-        $Collection->add_c(1, 11);
-        $Collection->add_c(1, 30);
-        $Collection->add_c(1, 31);
-        $Collection->add_c(1, 32);
-        $Collection->add_c(1, 33);
-        $Collection->add_c(1, 34);
-        $Collection->add_c(1, 35);
-        $Collection->add_c(1, 36);
 
         $data = $this->getOrderByPage(1, "trade");
         $this->assign("trade_li_array", $data["li_array"]);
@@ -49,9 +29,6 @@ class OwnerOrderController extends ComController
         $this->display();
     }
 
-    /**
-     * @param $page int 需要加载的页数
-     */
     public function owner_order_more()
     {
         $page = I('post.page', '', 'trim,strip_tags');
