@@ -43,6 +43,8 @@
         </a>
     </div>
 </div>
+<!--我的收藏-->
+<a href="{:U('OwnerOrder/owner_order')}" class="btn btn-default" style="background-color: #04bfc6;color: white;right: 0;top: 80%;position: fixed;position: absolute;z-index: 2">我的收藏</a>
 <!--搜索框-->
 <div class="bd" style="margin-top: 43px">
     <!--<a href="javascript:;" class="weui_btn weui_btn_primary">点击展现searchBar</a>-->
@@ -89,13 +91,11 @@
         </div>
         <div class="tab-content">
             <ul id="all" class="tab-pane active" style="margin-top: 40px;list-style-type: none">
-                all msg
                 <volist name="li_array" id="vo">
                     {$vo}
                 </volist>
             </ul>
             <ul id="search" class="tab-pane" style="margin-top: 40px;list-style-type: none">
-                searched msg
                 <volist name="li_array" id="vo">
                     {$vo}
                 </volist>
@@ -132,6 +132,9 @@
             //将输入的值存入cookie
             $('input[name=search_input]').val($(this).val());
             cookie('search_input', $(this).val());
+            $('input[name=select_category]').val(cookie('search_tag'));
+            $('input[name=area_start]').val(cookie('area_start_id'));
+            $('input[name=area_end]').val(cookie('area_end_id'));
             //提交表单
             document.tag_search.method = "post";
             document.tag_search.action = "{:U('DriverSearch/driver_job_search')}";
@@ -220,20 +223,20 @@
         if (cookie('need_post')) {
             cookie('need_post', false);
             $('input[name=select_category]').val(cookie('search_tag'));
-            $('input[name=search_input]').val(cookie('search_input'));
+//            $('input[name=search_input]').val(cookie('search_input'));
             $('input[name=area_start]').val(cookie('area_start_id'));
             $('input[name=area_end]').val(cookie('area_end_id'));
+            if(cookie('search_input')){
+                $('input[name=search_input]').val(cookie('search_input'));
+            }else{
+                $('input[name=search_input]').val('');
+            }
             //提交表单
             document.tag_search.method = 'post';
             document.tag_search.action = "{:U('DriverSearch/driver_job_search')}";
             document.tag_search.submit();
         } else {
         }
-//        $('input[name=select_category]').val(cookie('search_tag'));
-//        $('input[name=search_input]').val(cookie('search_input'));
-//        $('input[name=area_start]').val(cookie('area_start_id'));
-//        $('input[name=area_end]').val(cookie('area_end_id'));
-//        var a = $('#tag_search').serialize();
 //        console.log(a);
 //        console.log($('#where_cond_json').html());
 //        console.log($('#stage').html());
@@ -277,8 +280,13 @@
         cookie('area_end', area_start);
         cookie('area_end_id', area_start_id);
         //表单填写
+        if(cookie('search_input')){
+            $('input[name=search_input]').val(cookie('search_input'));
+        }else{
+            $('input[name=search_input]').val('');
+        }
+//        $('input[name=search_input]').val(cookie(''));
         $('input[name=select_category]').val(cookie('search_tag'));
-        $('input[name=search_input]').val(cookie('search_input'));
         $('input[name=area_start]').val(cookie('area_start_id'));
         $('input[name=area_end]').val(cookie('area_end_id'));
 //        //地址跳转
@@ -359,7 +367,7 @@
                             if (cookie('search_tag') == 'all') {
                                 document.getElementById('all').appendChild(li);
                             }
-                            else if (cookie('search_tag') == 'search') {
+                            else if (cookie('search_tag') == '找车') {
                                 document.getElementById('search').appendChild(li);
                             }
                             else {

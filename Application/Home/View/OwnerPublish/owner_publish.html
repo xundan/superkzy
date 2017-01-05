@@ -44,6 +44,7 @@
 <!--</div>-->
 <!--清除浮动-->
 <div class="clearfix"></div>
+<button class="btn btn-default" style="right: 0;top: 80%;position: fixed;position: absolute;z-index: 2">我的发布</button>
 <!--导航标签-->
 <div class="panel-title" style="margin:0;padding: 0;background-color: white">
     <div id="myTab" class="weui_navbar" role="" style="position: inherit;margin-bottom: 0;">
@@ -86,6 +87,7 @@
                                 &nbsp;出发地址
                                 <span id="give_area_start_html" style="margin-left:30%"></span>
                                 <input type="hidden" id="give_area_start" name="area_start">
+                                <input type="hidden" id="give_area_start_name" name="area_start_name">
                                 <span class="pull-right">
                                     <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive"
                                          style="width: 10px">
@@ -112,6 +114,7 @@
                                 &nbsp;目的地址
                                 <span id="give_area_end_html" style="margin-left:30%"></span>
                                 <input type="hidden" id="give_area_end" name="area_end">
+                                <input type="hidden" id="give_area_end_name" name="area_end_name">
                                 <span class="pull-right">
                                     <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive"
                                          style="width: 10px">
@@ -265,6 +268,7 @@
                                 &nbsp;发货地址
                                 <span id="need_area_start_html" style="margin-left:30%"></span>
                                 <input type="hidden" id="need_area_start" name="area_start">
+                                <input type="hidden" id="need_area_start_name" name="area_start_name">
                                 <span class="pull-right">
                                     <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive"
                                          style="width: 10px">
@@ -291,6 +295,7 @@
                                 &nbsp;收货地址
                                 <span id="need_area_end_html" style="margin-left:30%"></span>
                                 <input type="hidden" id="need_area_end" name="area_end">
+                                <input type="hidden" id="need_area_end_name" name="area_end_name">
                                 <span class="pull-right">
                                 <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive"
                                      style="width: 10px">
@@ -588,6 +593,7 @@
                                 &nbsp;产地
                                 <span id="sell_area_start_html" style="margin-left:30%"></span>
                                 <input type="hidden" name="area_start" id="sell_area_start">
+                                <input type="hidden" name="area_start_name" id="sell_area_start_name">
                                 <span class="pull-right">
                                     <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive"
                                          style="width: 10px">
@@ -860,6 +866,7 @@
                                 &nbsp;产地
                                 <span id="buy_area_start_html" style="margin-left:30%"></span>
                                 <input type="hidden" name="area_start" id="buy_area_start">
+                                <input type="hidden" name="area_start_name" id="buy_area_start_name">
                                 <span class="pull-right">
                                     <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive"
                                          style="width: 10px">
@@ -974,7 +981,7 @@
                 </tr>
             </table>
             <input type="button" class="btn btn-group-justified" onclick="buy_sub()" value="发&nbsp&nbsp&nbsp布"
-                   style="color:white;font-size: 2em;background-color: #fb3e1e">
+                   style="color:white;font-size: 2em;background-color: #fb3e1e;bottom: 0;">
         </form>
     </div>
 </div>
@@ -1040,6 +1047,9 @@
 //                        $('#sell_area_start').val(val.value);
                         $('#sell_area_start').val(cookie('area_start_id'));
                     }
+                    else if (val.name == 'area_start_name') { //产地名
+                        $('#sell_area_start_name').val(cookie('area_start'));
+                    }
                     else {
                         $("#sell_" + val.name).val(val.value);
                     }
@@ -1080,6 +1090,9 @@
 //                        $('#buy_area_start').val(val.value);
                         $('#buy_area_start').val(cookie('area_start_id'));
                     }
+                    else if (val.name == 'area_start_name') { //产地名
+                        $('#buy_area_start_name').val(cookie('area_start'));
+                    }
                     else if (val.name == 'car_type') {  //车辆类型
                         var car_type = $(":radio[name=car_type][value='" + val.value + "']");
                         car_type.prop("checked", "checked");
@@ -1117,11 +1130,17 @@
                         $('#need_area_start').val(val.value);
                         $('#need_area_start').val(cookie('area_start_id'));
                     }
+                    else if (val.name == 'area_start_name') { //出发地址名
+                        $('#need_area_start_name').val(cookie('area_start'));
+                    }
                     else if (val.name == 'area_end') {  //目的地址
                         val.value = cookie('area_end');
                         $('#need_area_end_html').html(val.value);
 //                        $('#need_area_end').val(val.value);
                         $('#need_area_end').val(cookie('area_end_id'));
+                    }
+                    else if (val.name == 'area_end_name') { //目的地址名
+                        $('#need_area_end_name').val(cookie('area_end'));
                     }
                     else if (val.name == 'granularity') {   //粒度
                         var granularity = $(":radio[name=granularity][value='" + val.value + "']");
@@ -1151,11 +1170,17 @@
 //                        $('#give_area_start').val(val.value);
                         $('#give_area_start').val(cookie('area_start_id'));
                     }
+                    else if (val.name == 'area_start_name') { //出发地址名
+                        $('#give_area_start_name').val(cookie('area_start'));
+                    }
                     else if (val.name == 'area_end') {  //目的地址
                         val.value = cookie('area_end');
                         $('#give_area_end_html').html(val.value);
 //                        $('#give_area_end').val(val.value);
                         $('#give_area_end').val(cookie('area_end_id'));
+                    }
+                    else if (val.name == 'area_end_name') { //目的地址名
+                        $('#give_area_end_name').val(cookie('area_end'));
                     }
                     else if (val.name == 'car_type') {  //车辆类型
                         var car_type = $(":radio[name=car_type][value='" + val.value + "']");
