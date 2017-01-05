@@ -171,7 +171,7 @@
             console.log('up');
             var page = $('#page').val();
             var request_page = parseInt(page) + 1;
-            var select_category = $('#select_category').val();
+            var select_category = cookie('search_tag');
             console.log(page);
             console.log(request_page);
 

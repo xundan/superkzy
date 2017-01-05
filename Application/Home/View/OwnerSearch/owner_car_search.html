@@ -334,7 +334,7 @@
             console.log(a);
             var page = $('#page').val();
             var request_page = parseInt(page) + 1;
-            var select_category = $('#select_category').val();
+            var select_category = cookie('search_tag');
             var where_cond_json = $('#where_cond_json').html().trim();
             var stage = $('#stage').html().trim();
             console.log(where_cond_json);
