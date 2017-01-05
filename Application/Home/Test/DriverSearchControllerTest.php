@@ -23,7 +23,7 @@ class DriverSearchControllerTest extends PHPUnit_Framework_TestCase
     public function testIndex()
     {
         $Model = new \Home\Model\MessagesModel();
-        $Controller = new \Home\Controller\DriverSearchController();
+//        $Controller = new \Home\Controller\DriverSearchController();
         $wc = \Home\Common\CardList\WhereConditions::parseJson('{"conditions":"[]","page":1,"asc":"record_time desc","exists":["42","35","34","31","30","29","28","27"],"last_count":-1}');
         $this->assertEquals("SELECT * FROM `ck_messages` WHERE ( `invalid_id`=0 AND category='找车' ) AND `id` NOT IN ('42','35','34','31','30','29','28','27') ORDER BY record_time desc LIMIT 0,8  ", $Model->findWhereWithoutExistToSql($wc, 2, "找车"));
 

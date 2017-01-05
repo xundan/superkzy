@@ -21,9 +21,10 @@ abstract class SearchController extends ComController
      * 获取返回数据，保证每次都获取十个卡片，包括tips
      * @param $whereCond mixed 查询条件
      * @param $stage int 当前卡片列表的状态：精确、模糊、其他、结束
+     * @param $category string 找车、其他、供应、求购
      * @return mixed 返回数据
      */
-    public function getOrderWithoutExist(WhereConditions $whereCond, $stage)
+    public function getOrderWithoutExist(WhereConditions $whereCond, $stage, $category)
     {
         if ($stage < CardList::END) { // 如果是结束阶段就不执行下面代码了
             $Msg = new MessagesModel();
@@ -48,7 +49,7 @@ abstract class SearchController extends ComController
                         break;
                     }
                 }
-                $temp_messages = $Msg->findWhereWithoutExist($whereCond, $cards->getCount(),"找车");
+                $temp_messages = $Msg->findWhereWithoutExist($whereCond, $cards->getCount(),$category);
                 $cards->appendMessage($temp_messages);
                 if ($cards->atOther()&&$cards->notFull()){ //其他查询也不能满足，说明查到底了
                     $count.="3";

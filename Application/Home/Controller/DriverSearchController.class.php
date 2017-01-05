@@ -18,7 +18,7 @@ class DriverSearchController extends SearchController
     {
         $whereCond = $this->createNewWhereConditions();
 
-        $data = $this->getOrderWithoutExist($whereCond,0);
+        $data = $this->getOrderWithoutExist($whereCond,0,"找车");
 
         $this->assign("li_array", $data['li_array']);
         $this->assign("where_cond_json", $data['where_cond_json']);
@@ -34,7 +34,7 @@ class DriverSearchController extends SearchController
         $post = I('post.', '', 'trim,strip_tags');
         $whereCondJson = $post['where_cond_json'];
         $whereCond = WhereConditions::parseJson($whereCondJson);
-        $data = $this->getOrderWithoutExist($whereCond, $post['stage']);
+        $data = $this->getOrderWithoutExist($whereCond, $post['stage'],"找车");
         $data['page'] = $post['page']; // 把page送回去，作为校验
         echo json_encode($data);
         return;

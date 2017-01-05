@@ -65,6 +65,7 @@ class DistributeController extends RestController
             // 生成新的消息表数据
             $insert_trans["title"]=$trans1["rid"];
             $insert_trans["content"]=$trans1["content"];
+            $insert_trans["content_all"]=$trans1["content"];
             $insert_trans["sender"]=$trans1["sender"];
             $insert_trans["type"]=$trans1["type"];
             $insert_trans["owner"]=$trans1["owner"];
