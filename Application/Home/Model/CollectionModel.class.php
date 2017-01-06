@@ -36,9 +36,11 @@ class CollectionModel extends Model
         $exist = $this->where(array("user_id" => $user_id, "msg_id" => $msg_id))->find();
         if ($exist) {
             $exist["invalid_id"] = 0;
-            $this->save($exist);
+            $temp = $this->save($exist);
+            if ($temp===false) return 0;
         } else {
-            $this->add(array("user_id" => $user_id, "msg_id" => $msg_id, "invalid_id" => 0));
+            $temp = $this->add(array("user_id" => $user_id, "msg_id" => $msg_id, "invalid_id" => 0));
+            if ($temp===false) return 0;
         }
         return 1;
     }
@@ -54,9 +56,10 @@ class CollectionModel extends Model
         $exist = $this->where(array("user_id" => $user_id, "msg_id" => $msg_id))->find();
         if ($exist) {
             $exist["invalid_id"] = 1;
-            $this->save($exist);
+            $temp = $this->save($exist);
+            if ($temp===false) return 0;
         }
-        return 2;
+        return 1;
     }
 
     public function getCollectionById($user_id)
