@@ -12,7 +12,6 @@
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="__PUBLIC__/home/js/iscroll.js"></script>
 </head>
 
 <body style="background-color: white">
@@ -175,7 +174,7 @@
                 </a>
             </td>
             <td class="text-center">
-                <a href="" style="text-decoration: none;color: white">
+                <a href="{:U('OwnerPublishHistory/owner_publish_history')}" style="text-decoration: none;color: white">
                     <div>
                         <img src="__PUBLIC__/home/images/my_publish.png" style="width: 30px;height: 30px;">
 
@@ -195,7 +194,7 @@
                 </a>
             </td>
             <td class="text-center">
-                <a href="" style="text-decoration: none;color: white">
+                <a href="" onclick="more()" style="text-decoration: none;color: white">
                     <div>
                         <img src="__PUBLIC__/home/images/more.png" style="width: 30px;height: 30px;">
 
@@ -210,5 +209,8 @@
 
 </body>
 <script>
+    function more(){
+        alert('更多功能将在后续版本加入，尽情期待哦！')
+    }
 </script>
 </html>
