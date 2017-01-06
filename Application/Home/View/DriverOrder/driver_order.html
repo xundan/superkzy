@@ -13,10 +13,6 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
-    <link type="text/css" rel="stylesheet" href="bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="weui.min.css">
-    <script type="text/javascript" src="jquery-2.2.4.min.js"></script>
-    <script type="text/javascript" src="bootstrap.min.js"></script>
 </head>
 <body style="background-color: #efeff4">
 <!--标题栏-->
@@ -72,17 +68,6 @@
 
 <!--滚动功能-->
 <script>
-    //    var myScroll;
-    //    myScroll = new IScroll('#wrapper',{
-    //        probeType: 3,
-    //        mouseWheel: true
-    //    });
-    //    function loaded(){
-    //        myScroll = new IScroll('#wrapper');
-    //    }
-    //    console.dir(myScroll.options);
-
-    //var myScroll,pullDownEl,pullDownOffset,pullUpEl,pullUpOffset,generatedCount = 0;
     var myScroll, pullDownEl, pullDownOffset, pullUpEl, pullUpOffset;
     var time_now, update_time;
 
@@ -178,24 +163,6 @@
                 onScrollMove: function () {
 //            document.getElementById("show").innerHTML="onScrollMove: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
 
-//            if(this.y > 5 && !pullDownEl.className.match('flip')){
-//                pullDownEl.className = 'flip';
-//                pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...';
-//                //pullDownEl.querySelector('.pullDownLabel').innerHTML = '数据更新时间：' + updateDatetime;
-//                this.minScrollY = 0;
-//            }else if(this.y < 5 && pullDownEl.className.match('flip')){
-//                pullDownEl.className = '';
-//                pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
-//                this.minScrollY = -pullDownOffset;
-//            }else if(this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')){
-//                pullUpEl.className = 'flip';
-//                pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...';
-//                this.maxScrollY = this.maxScrollY;
-//            }else if(this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')){
-//                pullUpEl.className = '';
-//                pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
-//                this.maxScrollY = pullUpOffset;
-//            }
 
                     if (this.y > 0) {
                         pullDownEl.className = 'flip';

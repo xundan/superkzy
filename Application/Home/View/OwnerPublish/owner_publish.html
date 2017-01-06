@@ -13,38 +13,12 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
-    <!--<link type="text/css" rel="stylesheet" href="bootstrap.min.css">-->
-    <!--<link type="text/css" rel="stylesheet" href="weui.min.css">-->
-    <!--<script type="text/javascript" src="jquery-2.2.4.min.js"></script>-->
-    <!--<script type="text/javascript" src="bootstrap.min.js"></script>-->
 </head>
 <body>
 <include file="Common:common"/>
-<!--标题栏-->
-<!--<div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">-->
-    <!--&lt;!&ndash;<div class="container text-center" style="">&ndash;&gt;-->
-    <!--&lt;!&ndash;<div style="display: inline-block;height: 100%;vertical-align: middle"></div>&ndash;&gt;-->
-        <!--<span class="pull-left" style="">-->
-                <!--&lt;!&ndash;<a class="glyphicon glyphicon-chevron-left"></a>&ndash;&gt;-->
-            <!--<a href="#">-->
-                <!--<img src="__PUBLIC__/home/images/goback.png" class="img-responsive"-->
-                     <!--style="width: 15px;height: auto;margin-top: 40%">-->
-            <!--</a>-->
-        <!--</span>-->
-        <!--<span class="">-->
-            <!--<span class="" style="font-size: 1.5em;margin-left: 15%">发布信息</span>-->
-        <!--</span>-->
-        <!--<span class="pull-right" style="border-color: white">-->
-            <!--<a href="#" class="btn btn-xs btn-default"-->
-               <!--style=";border:1px solid white; ;color:white;background-color: transparent;text-decoration: none;margin-bottom: -50%">-->
-                <!--我的发布-->
-            <!--</a>-->
-        <!--</span>-->
-    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--</div>-->
-<!--清除浮动-->
-<div class="clearfix"></div>
-<button class="btn btn-default" style="right: 0;top: 80%;position: fixed;position: absolute;z-index: 2">我的发布</button>
+<!--我的发布-->
+<a href="{:U('OwnerPublishHistory/owner_publish_history')}" class="btn btn-default"
+   style="background-color: #04bfc6;color: white;right: 0;top: 80%;position: fixed;position: absolute;z-index: 2">我的发布</a>
 <!--导航标签-->
 <div class="panel-title" style="margin:0;padding: 0;background-color: white">
     <div id="myTab" class="weui_navbar" role="" style="position: inherit;margin-bottom: 0;">

@@ -14,10 +14,6 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
-    <!--<link type="text/css" rel="stylesheet" href="bootstrap.min.css">-->
-    <!--<link type="text/css" rel="stylesheet" href="weui.min.css">-->
-    <!--<script type="text/javascript" src="jquery-2.2.4.min.js"></script>-->
-    <!--<script type="text/javascript" src="bootstrap.min.js"></script>-->
 </head>
 <body style="">
 <!--导航标签-->
@@ -40,10 +36,9 @@
         </a>
     </div>
 </div>
-<button class="btn btn-default"
-        style="background-color: #04bfc6;color:white;right: 0;top: 80%;position: fixed;position: absolute;z-index: 2">
-    我的收藏
-</button>
+<!--我的收藏-->
+<a href="{:U('OwnerOrder/owner_order')}" class="btn btn-default"
+   style="background-color: #04bfc6;color: white;right: 0;top: 80%;position: fixed;position: absolute;z-index: 2">我的收藏</a>
 <!--搜索框-->
 <div class="bd" style="margin-top: 43px">
     <div class="weui_search_bar" id="search_bar">
@@ -137,10 +132,10 @@
         event = event || window.event;
         if (event.keyCode == 13) {
 //            //将输入的值存入cookie
-            if($(this).val().trim() == ''){
-                cookie('search_input',null);
+            if ($(this).val().trim() == '') {
+                cookie('search_input', null);
                 $('input[name=search_input]').val('');
-            }else{
+            } else {
                 $('input[name=search_input]').val($(this).val().trim());
                 cookie('search_input', $(this).val().trim());
             }
@@ -495,9 +490,28 @@
     //    window.addEventListener(load,loaded,false);
 
 </script>
+<!--撤销收藏-->
 <script>
-    function qqqwww() {
-        console.log(123);
+    function collection_switch(obj, id) {
+        if ($(obj).html() == '已收藏') {
+            $(obj).addClass('disabled');
+            $(obj).prop('disabled', true);
+            return false;
+        }
+        var url = "{:U('Collection/add')}";
+        $.ajax({
+            type: "post",
+            url: url,
+            data: {id: id},
+            success: function (data) {
+                if (data) {
+                    $(obj).html('已收藏');
+                    $(obj).addClass('disabled');
+                    $(obj).prop('disabled', true);
+                } else {
+                }
+            }
+        });
     }
 </script>
 </html>

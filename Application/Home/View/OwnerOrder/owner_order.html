@@ -14,32 +14,8 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
-    <!--<link type="text/css" rel="stylesheet" href="bootstrap.min.css">-->
-    <!--<link type="text/css" rel="stylesheet" href="weui.min.css">-->
-    <!--<script type="text/javascript" src="jquery-2.2.4.min.js"></script>-->
-    <!--<script type="text/javascript" src="bootstrap.min.js"></script>-->
 </head>
 <body>
-<!--标题栏-->
-<!--<div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">-->
-<!--&lt;!&ndash;<div class="container text-center" style="">&ndash;&gt;-->
-<!--&lt;!&ndash;<div style="display: inline-block;height: 100%;vertical-align: middle"></div>&ndash;&gt;-->
-<!--<span class="pull-left" style="">-->
-<!--&lt;!&ndash;<a class="glyphicon glyphicon-chevron-left"></a>&ndash;&gt;-->
-<!--<a href="#">-->
-<!--<img src="__PUBLIC__/home/images/goback.png" class="img-responsive"-->
-<!--style="width: 15px;height: auto;margin-top: 40%">-->
-<!--</a>-->
-<!--</span>-->
-<!--<span class="">-->
-<!--<span class="" style="font-size: 1.5em;">我的收藏</span>-->
-<!--</span>-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->
-<!--</div>-->
-
-<!--清除浮动-->
-<div class="clearfix"></div>
-
 <!--导航标签-->
 <div class="panel-title" style="margin:0;padding: 0;background-color: white">
     <div id="myTab" class="weui_navbar" style=";margin-bottom: 0;">
@@ -306,5 +282,28 @@
     //    window.onload = loaded();
 
 </script>
-
+<!--撤销收藏-->
+<script>
+    function collection_switch(obj, id) {
+        if ($(obj).html() == '已收藏') {
+            $(obj).addClass('disabled');
+            $(obj).prop('disabled', true);
+            return false;
+        }
+        var url = "{:U('Collection/add')}";
+        $.ajax({
+            type: "post",
+            url: url,
+            data: {id: id},
+            success: function (data) {
+                if (data) {
+                    $(obj).html('已收藏');
+                    $(obj).addClass('disabled');
+                    $(obj).prop('disabled', true);
+                } else {
+                }
+            }
+        });
+    }
+</script>
 </html>

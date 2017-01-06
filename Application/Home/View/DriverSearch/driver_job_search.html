@@ -485,4 +485,29 @@
     //    window.onload = loaded();
 
 </script>
+
+<!--撤销收藏-->
+<script>
+    function collection_switch(obj, id) {
+        if ($(obj).html() == '已收藏') {
+            $(obj).addClass('disabled');
+            $(obj).prop('disabled', true);
+            return false;
+        }
+        var url = "{:U('Collection/add')}";
+        $.ajax({
+            type: "post",
+            url: url,
+            data: {id: id},
+            success: function (data) {
+                if (data) {
+                    $(obj).html('已收藏');
+                    $(obj).addClass('disabled');
+                    $(obj).prop('disabled', true);
+                } else {
+                }
+            }
+        });
+    }
+</script>
 </html>

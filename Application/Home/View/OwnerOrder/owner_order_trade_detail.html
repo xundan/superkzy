@@ -6,7 +6,7 @@
           content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
     <!--<link rel="icon" href="../../favicon.ico">-->
-    <title>{$message['title']}</title>
+    <title>订单详情</title>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
@@ -14,21 +14,10 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
 </head>
 <body>
-<!--标题栏-->
-<div class="panel-heading text-center" style="background-color: #04bfc6;color:white;margin-bottom: 0;">
-    <span class="pull-left" style="">
-        <a href="{:U('OwnerOrder/owner_order')}">
-            <img src="__PUBLIC__/home/images/goback.png" class="img-responsive"
-                 style="width: 15px;height: auto;margin-top: 40%">
-        </a>
-    </span>
-    <span class="">
-        <span class="" style="font-size: 1.5em;">订单详情</span>
-    </span>
-</div>
-<!--清除浮动-->
-<div class="clearfix"></div>
 <!--订单展示栏-->
+<div id="msg_id" style="display: none">
+    {$message['id']}
+</div>
 <div class="container">
     <div class="tab-content" style="">
         <div id="transport" class="tab-pane active" style="background-color: #efeff4">
@@ -38,7 +27,8 @@
                         <a href="{:U('PersonalCenter/owner_data',array('uid'=>$user['uid']))}">
                             <div class="weui_media_hd">
                                 <if condition="$user['heading_url']"><img
-                                        src="{$user['heading_url']}" style="width: 50px" class="weui_media_appmsg_thumb">
+                                        src="{$user['heading_url']}" style="width: 50px"
+                                        class="weui_media_appmsg_thumb">
                                     <else/>
                                     <img src="__PUBLIC__/home/images/headimg_background.png" style="width: 50px"
                                          class="weui_media_appmsg_thumb">
@@ -48,8 +38,9 @@
 
                         <div class="weui_media_bd">
                             <a href="{:U('PersonalCenter/owner_data',array('uid'=>$user['uid']))}">
-                                <h4 class="weui_media_title">{$user['user_name']}<img src="__PUBLIC__/home/images/medal.png"
-                                                                       style="width: 15px;height: 20px"></h4>
+                                <h4 class="weui_media_title">{$user['user_name']}<img
+                                        src="__PUBLIC__/home/images/medal.png"
+                                        style="width: 15px;height: 20px"></h4>
                             </a>
 
                             <p class="weui_media_desc">
@@ -61,7 +52,8 @@
                                 <h4><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">
                                     <span style="">拨打电话</span></h4>
                             </a>
-                            <button class="btn btn-xs btn-info" style="background-color: #04bfc6;width: 70%">
+                            <button class="btn btn-xs btn-info" style="background-color: #04bfc6;width: 70%"
+                                    onclick="collection_switch(this,{$message['id']})">
                                 撤销收藏
                             </button>
                         </div>
@@ -74,67 +66,67 @@
                     <div>
                         <table class="table table-responsive" style="border: none;margin-bottom: 0">
                             <tbody>
-                                <tr>
-                                    <td style="border: none">
-                                        煤炭种类:{$coal_kind_title}
-                                    </td>
-                                    <td style="border: none">
-                                        产地:
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border: none">
-                                        煤炭品质:{$coal_trait_title}
-                                    </td>
-                                    <td style="border: none">
-                                        价格:
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border: none">
-                                        煤炭粒度:{$coal_granularity_title}
-                                    </td>
-                                    <td style="border: none">
-                                        吨数:
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border: none">
-                                        煤炭热值(高位):
-                                    </td>
-                                    <td style="border: none">
-                                        供货公司:{$product['supply_company']}
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border: none">
-                                        详细指标:
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border: none">
-                                        煤炭热值(低位):
-                                    </td>
-                                    <td style="border: none">
-                                        全水份:
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border: none">
-                                        灰分:
-                                    </td>
-                                    <td style="border: none">
-                                        硫份:
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td style="border: none">
-                                        挥发份:
-                                    </td>
-                                    <td style="border: none">
-                                        有效期:7天
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td style="border: none">
+                                    煤炭种类:{$coal_kind_title}
+                                </td>
+                                <td style="border: none">
+                                    产地:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: none">
+                                    煤炭品质:{$coal_trait_title}
+                                </td>
+                                <td style="border: none">
+                                    价格:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: none">
+                                    煤炭粒度:{$coal_granularity_title}
+                                </td>
+                                <td style="border: none">
+                                    吨数:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: none">
+                                    煤炭热值(高位):
+                                </td>
+                                <td style="border: none">
+                                    供货公司:{$product['supply_company']}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: none">
+                                    详细指标:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: none">
+                                    煤炭热值(低位):
+                                </td>
+                                <td style="border: none">
+                                    全水份:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: none">
+                                    灰分:
+                                </td>
+                                <td style="border: none">
+                                    硫份:
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: none">
+                                    挥发份:
+                                </td>
+                                <td style="border: none">
+                                    有效期:7天
+                                </td>
+                            </tr>
                             </tbody>
                         </table>
                         <span class="pull-right help-block" style="font-size: 12px">发布时间:{$message['publish_time']|date="Y-m-d",###}</span>
@@ -145,6 +137,26 @@
     </div>
 </div>
 </body>
+<script>
+    function collection_switch(obj, id) {
+        var url = "{:U('Collection/del')}";
+//        var msg_id = $('#msg_id').html().trim();
+        $.ajax({
+            type: "post",
+            url: url,
+            data: {id: id},
+            success: function (data) {
+                if (data) {
+                    $(obj).html('已撤销');
+                    $(obj).addClass('disabled');
+                    $(obj).prop('disabled', true);
+                } else {
+                }
+            }
+        });
+    }
+
+</script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
     wx.config({
