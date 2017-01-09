@@ -31,6 +31,12 @@ class PersonalCenterController extends ComController
         $this->assign('user_info', $user_info);
         $user_role = session('user_info')['role_id'] ? session('user_info')['role_id'] : "0";
         $this->assign('user_role', $user_role);
+        if ($user_role == 1) {
+            $this->assign("user_url",U('PersonalCenter/driver_data', array('uid' => $user_info['uid'])));
+        } elseif ($user_role == 2) {
+            $this->assign("user_url",U('PersonalCenter/owner_data', array('uid' => $user_info['uid'])));
+        } else {
+        }
 
         $this->display();
     }

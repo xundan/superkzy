@@ -34,7 +34,7 @@ class CardList
         foreach ($messages as $message) {
             if ($message['type'] == 'plain') { // 是微信来源
                 $msgCard = new MsgCard($message);
-            } elseif ($message['type'] == '') { // 是网站来源
+            } elseif ($message['type'] == 'web') { // 是网站来源
                 if ($message['category'] == '供应') { // 供应
                     $msgCard = new CoalSellMsgCard($message);
                 } elseif ($message['category'] == '其他') { // 司机找活

@@ -148,7 +148,9 @@ class OwnerOrderController extends ComController
 //        dump($uid);
         $whereCond = new WhereConditions();
         $whereCond->setPage($page);
-        $whereCond->pushCond("id", "in", D('collection')->getCollectionById($uid));
+        $arr = D('collection')->getCollectionById($uid);
+        array_push($arr,-1); // 防止in后的数组为空报错
+        $whereCond->pushCond("id", "in", $arr);
         if ($category == "trade") {
             $whereCond->pushCond("category", "in", array("求购", "供应"));
         } else if($category == "transport") {
