@@ -86,7 +86,13 @@ class MsgCard extends Card
 
     protected function buildUpMessage(){
         $Msg = new MessagesModel();
-        $this->_message = $Msg->toAll($this->_message);
+        $this->_message = $Msg->toAll($this->_message, session("user_info")['uid']);
+        return $this->_message;
+    }
+
+    protected function buildCollection(){
+        $Msg = new MessagesModel();
+        $this->_message = $Msg->toCollection($this->_message, session("user_info")['uid']);
         return $this->_message;
     }
 

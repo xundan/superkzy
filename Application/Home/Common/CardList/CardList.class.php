@@ -33,7 +33,20 @@ class CardList
         $resultArray = array();
         foreach ($messages as $message) {
             if ($message['type'] == 'plain') { // 是微信来源
-                $msgCard = new MsgCard($message);
+                if ($message['category'] == '供应') { // 供应
+                    $msgCard = new WxCoalSellMsgCard($message);
+                } elseif ($message['category'] == '其他') { // 司机找活
+                    $msgCard = new WxCarGiveMsgCard($message);
+
+                } elseif ($message['category'] == '求购') { // 求购
+                    $msgCard = new WxCoalBuyMsgCard($message);
+
+                } elseif ($message['category'] == '找车') { // 找车
+                    $msgCard = new WxCarNeedMsgCard($message);
+
+                } else {
+                    $msgCard = new MsgCard($message);
+                }
             } elseif ($message['type'] == 'web') { // 是网站来源
                 if ($message['category'] == '供应') { // 供应
                     $msgCard = new CoalSellMsgCard($message);

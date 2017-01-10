@@ -176,12 +176,12 @@ class MessagesModel extends Model
         return $this->_message;
     }
 
-    public function toAll($message)
+    public function toAll($message,$current_user)
     {
         $message = $this->toUser($message);
         $message = $this->toDistrictStart($message);
         $message = $this->toDistrictEnd($message);
-        $message = $this->toCollection($message, $message['user']['uid']);
+        $message = $this->toCollection($message, $current_user);
         return $message;
     }
 

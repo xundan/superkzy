@@ -62,8 +62,7 @@ class RawController extends RestController
                     $sender_wx = $object2['sender_wx'];
                     $owner = $object2['owner'];
                     date_default_timezone_set('PRC');
-                    $title = date('y-m-d_h:i', time());
-                    $title .= "@";
+                    $title = date('y-m-d_H:i', time());
                     $title .= $owner;
 
                     $insert = $this->createRaw($title, $content, $owner, $sender, $sender_wx);
