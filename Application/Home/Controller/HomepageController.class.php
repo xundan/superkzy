@@ -7,12 +7,17 @@
  */
 
 namespace Home\Controller;
+use Home\Model\MessagesModel;
 use Think\Controller;
 header("Content-type: text/html; charset=utf-8");
 
 class HomepageController extends ComController
 {
     public function homepage(){
+        $Msg = new MessagesModel();
+        $this->assign('todayCount',$Msg->todayCount());
+        $this->assign('todayTrade',$Msg->todayTradeCount());
+        $this->assign('todayTrans',$Msg->todayTransportCount());
         $this->display();
     }
 
