@@ -206,6 +206,7 @@
         console.log($('#where_cond_json').html());
         console.log($('#stage').html());
         var now = new Date();
+        console.log(cookie('search_tag'));
         console.log(now.toLocaleString());
         if (cookie('search_tag') == '供应') {
             //供货信息
@@ -257,9 +258,62 @@
 //        cookie('trade_search_filter_heat_min', null);
 //        cookie('trade_search_filter_heat_max', null);
         //提交表单
-        document.tag_search.method = 'post';
-        document.tag_search.action = "{:U('TradeSearch/trade_search')}";
-        document.tag_search.submit();
+//        document.tag_search.method = 'post';
+//        document.tag_search.action = "{:U('TradeSearch/trade_search')}";
+//        document.tag_search.submit();
+
+        var search_input = cookie('search_input') ? cookie('search_input') : '';
+        var select_category = cookie('search_tag');
+        var filter_kind = cookie('trade_search_filter_kind') ? cookie('trade_search_filter_kind') : '';
+        var filter_granularity = cookie('trade_search_filter_granularity') ? cookie('trade_search_filter_granularity') : '';
+        var filter_heat_min = cookie('trade_search_filter_heat_min') ? cookie('trade_search_filter_heat_min') : '';
+        var filter_heat_max = cookie('trade_search_filter_heat_max') ? cookie('trade_search_filter_heat_max') : '';
+        $.ajax({
+            type: "post",
+            url: "{:U('TradeSearch/trade_search')}",
+            data: {
+                isAjax: 1,
+                search_input: search_input,
+                select_category: select_category,
+                filter_kind: filter_kind,
+                filter_granularity: filter_granularity,
+                filter_heat_min: filter_heat_min,
+                filter_heat_max: filter_heat_max
+            },
+            success: function (data) {
+                console.log('success');
+//                console.log(data);
+//                return;
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+//                    return;
+                if (jsonObj.msg) {
+                    if (cookie('search_tag') == '求购') {
+                        document.getElementById('buy').innerHTML = '';
+                    }
+                    else if (cookie('search_tag') == '供应') {
+                        document.getElementById('sell').innerHTML = '';
+                    }
+                    jQuery.each(jsonObj.li_array, function (k, val) {
+                        var li = document.createElement('li');
+                        li.innerHTML = val;
+                        console.log(cookie('search_tag'));
+                        if (cookie('search_tag') == '求购') {
+                            document.getElementById('buy').appendChild(li);
+                        }
+                        else if (cookie('search_tag') == '供应') {
+                            document.getElementById('sell').appendChild(li);
+                        }
+                        else {
+                        }
+                    });
+                }
+                else {
+                }
+                myScroll.refresh();
+            }
+        });
+        myScroll.refresh();
     });
 
     //点击供应信息标签
@@ -295,9 +349,61 @@
 //        cookie('trade_search_filter_heat_min', null);
 //        cookie('trade_search_filter_heat_max', null);
         //提交表单
-        document.tag_search.method = 'post';
-        document.tag_search.action = "{:U('TradeSearch/trade_search')}";
-        document.tag_search.submit();
+//        document.tag_search.method = 'post';
+//        document.tag_search.action = "{:U('TradeSearch/trade_search')}";
+//        document.tag_search.submit();
+        var search_input = cookie('search_input') ? cookie('search_input') : '';
+        var select_category = cookie('search_tag');
+        var filter_kind = cookie('trade_search_filter_kind') ? cookie('trade_search_filter_kind') : '';
+        var filter_granularity = cookie('trade_search_filter_granularity') ? cookie('trade_search_filter_granularity') : '';
+        var filter_heat_min = cookie('trade_search_filter_heat_min') ? cookie('trade_search_filter_heat_min') : '';
+        var filter_heat_max = cookie('trade_search_filter_heat_max') ? cookie('trade_search_filter_heat_max') : '';
+        $.ajax({
+            type: "post",
+            url: "{:U('TradeSearch/trade_search')}",
+            data: {
+                isAjax: 1,
+                search_input: search_input,
+                select_category: select_category,
+                filter_kind: filter_kind,
+                filter_granularity: filter_granularity,
+                filter_heat_min: filter_heat_min,
+                filter_heat_max: filter_heat_max
+            },
+            success: function (data) {
+                console.log('success');
+//                console.log(data);
+//                return;
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+//                    return;
+                if (jsonObj.msg) {
+                    if (cookie('search_tag') == '求购') {
+                        document.getElementById('buy').innerHTML = '';
+                    }
+                    else if (cookie('search_tag') == '供应') {
+                        document.getElementById('sell').innerHTML = '';
+                    }
+                    jQuery.each(jsonObj.li_array, function (k, val) {
+                        var li = document.createElement('li');
+                        li.innerHTML = val;
+                        console.log(cookie('search_tag'));
+                        if (cookie('search_tag') == '求购') {
+                            document.getElementById('buy').appendChild(li);
+                        }
+                        else if (cookie('search_tag') == '供应') {
+                            document.getElementById('sell').appendChild(li);
+                        }
+                        else {
+                        }
+                    });
+                }
+                else {
+                }
+                myScroll.refresh();
+            }
+        });
+        myScroll.refresh();
     })
 </script>
 
@@ -310,7 +416,59 @@
      */
     function pullDownAction() {
         console.log('down');
-        location.reload();
+//        location.reload();
+        var subData = $('#tag_search').serialize();
+        var search_input = cookie('search_input') ? cookie('search_input') : '';
+        var select_category = cookie('search_tag');
+        var filter_kind = cookie('trade_search_filter_kind') ? cookie('trade_search_filter_kind') : '';
+        var filter_granularity = cookie('trade_search_filter_granularity') ? cookie('trade_search_filter_granularity') : '';
+        var filter_heat_min = cookie('trade_search_filter_heat_min') ? cookie('trade_search_filter_heat_min') : '';
+        var filter_heat_max = cookie('trade_search_filter_heat_max') ? cookie('trade_search_filter_heat_max') : '';
+        $.ajax({
+            type: "post",
+            url: "{:U('TradeSearch/trade_search')}",
+            data: {
+                isAjax: 1,
+                search_input: search_input,
+                select_category: select_category,
+                filter_kind: filter_kind,
+                filter_granularity: filter_granularity,
+                filter_heat_min: filter_heat_min,
+                filter_heat_max: filter_heat_max
+            },
+            success: function (data) {
+                console.log('success');
+//                console.log(data);
+//                return;
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+//                    return;
+                if (jsonObj.msg) {
+                    if (cookie('search_tag') == '求购') {
+                        document.getElementById('buy').innerHTML = '';
+                    }
+                    else if (cookie('search_tag') == '供应') {
+                        document.getElementById('sell').innerHTML = '';
+                    }
+                    jQuery.each(jsonObj.li_array, function (k, val) {
+                        var li = document.createElement('li');
+                        li.innerHTML = val;
+                        console.log(cookie('search_tag'));
+                        if (cookie('search_tag') == '求购') {
+                            document.getElementById('buy').appendChild(li);
+                        }
+                        else if (cookie('search_tag') == '供应') {
+                            document.getElementById('sell').appendChild(li);
+                        }
+                        else {
+                        }
+                    });
+                }
+                else {
+                }
+                myScroll.refresh();
+            }
+        });
         myScroll.refresh();
     }
     /**滚动翻页 （自定义实现此方法）
@@ -319,8 +477,8 @@
     function pullUpAction() {
         setTimeout(function () {
             console.log('up');
-            var a = $('#tag_search').serialize();
-            console.log(a);
+//            var a = $('#tag_search').serialize();
+//            console.log(a);
             var page = $('#page').val();
             var request_page = parseInt(page) + 1;
             var select_category = cookie('search_tag');
@@ -418,26 +576,6 @@
                 },
                 onScrollMove: function () {
 //            document.getElementById("show").innerHTML="onScrollMove: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
-
-//            if(this.y > 5 && !pullDownEl.className.match('flip')){
-//                pullDownEl.className = 'flip';
-//                pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...';
-//                //pullDownEl.querySelector('.pullDownLabel').innerHTML = '数据更新时间：' + updateDatetime;
-//                this.minScrollY = 0;
-//            }else if(this.y < 5 && pullDownEl.className.match('flip')){
-//                pullDownEl.className = '';
-//                pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
-//                this.minScrollY = -pullDownOffset;
-//            }else if(this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')){
-//                pullUpEl.className = 'flip';
-//                pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...';
-//                this.maxScrollY = this.maxScrollY;
-//            }else if(this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')){
-//                pullUpEl.className = '';
-//                pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
-//                this.maxScrollY = pullUpOffset;
-//            }
-
                     if (this.y > 0) {
                         pullDownEl.className = 'flip';
                         pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...</br>' + '最后更新时间：' + update_time;
@@ -481,9 +619,9 @@
 //    },800);
     }
     //初始化绑定iScroll控件
-    document.addEventListener('touchmove', function (e) {
-        e.preventDefault();
-    }, false);
+    //    document.addEventListener('touchmove', function (e) {
+    //        e.preventDefault();
+    //    }, false);
     document.addEventListener('DOMContentLoaded', loaded, false);
     //    window.onload = loaded();
 

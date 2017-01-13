@@ -23,7 +23,10 @@ class TradeSearchController extends SearchController
         $this->assign("li_array", $data['li_array']);
         $this->assign("where_cond_json", $data['where_cond_json']);
         $this->assign("stage", $data['stage']);
-//        echo $data['msg'];
+        if(I('post.isAjax', '', 'trim,strip_tags')){
+            echo json_encode($data);
+            return;
+        }
         $this->display();
     }
 

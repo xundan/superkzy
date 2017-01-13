@@ -6,11 +6,24 @@
             $("#toast").show();
             setTimeout(function(){$("#toast").fadeOut(500)},500);
         }
+        function showToast2(text){
+//            $("#toast").children(div).eq(1).chiildren(p).html(text);
+            $('#text2').html(text);
+            $("#toast2").show();
+            setTimeout(function(){$("#toast2").fadeOut(500)},500);
+        }
     </script>
     <div id="toast" style="display: none; z-index: 999">
         <div class="weui_mask_transparent"></div>
         <div class="weui_toast">
-            <i class="weui_icon_toast"></i>
+            <!--<i class="weui_icon_toast"></i>-->
             <p class="weui_toast_content" id="text">已完成</p>
+        </div>
+    </div>
+    <div id="toast2" style="display: none; z-index: 999;">
+        <div class="weui_mask_transparent"></div>
+        <div class="weui_toast" style="width:11.6em;left:43%">
+            <!--<i class="weui_icon_toast"></i>-->
+            <p class="weui_toast_content" style="margin-top: 1.3em;font-size: 1.2em" id="text2">已完成</p>
         </div>
     </div>

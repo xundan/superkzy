@@ -131,92 +131,92 @@
         </table>
     </div>
     <div id="allarea" class="tab-pane" >
-        <div class="" style="float: right;position: fixed;right: 3px;font-size: .8em;line-height: 12px">
+        <div class="" id="slider_nav" style="margin-top: 12px;float: right;position: fixed;right: 10px;font-size: .8em;line-height: 14px">
             <ul class="" style="list-style: none">
                 <li>
-                    <a href="#A">A</a>
+                    <a href="#A" id="nav0">A</a>
                 </li>
                 <li>
-                    <a href="#B">B</a>
+                    <a href="#B" id="nav1">B</a>
                 </li>
                 <li>
-                    <a href="#C">C</a>
+                    <a href="#C" id="nav2">C</a>
                 </li>
                 <li>
-                    <a href="#D">D</a>
+                    <a href="#D" id="nav3">D</a>
                 </li>
                 <li>
-                    <a href="#E">E</a>
+                    <a href="#E" id="nav4">E</a>
                 </li>
                 <li>
-                    <a href="#F">F</a>
+                    <a href="#F" id="nav5">F</a>
                 </li>
                 <li>
-                    <a href="#G">G</a>
+                    <a href="#G" id="nav6">G</a>
                 </li>
                 <li>
-                    <a href="#H">H</a>
+                    <a href="#H" id="nav7">H</a>
                 </li>
                 <li>
-                    <a href="#I">I</a>
+                    <a href="#I" id="nav8">I</a>
                 </li>
                 <li>
-                    <a href="#J">J</a>
+                    <a href="#J" id="nav9">J</a>
                 </li>
                 <li>
-                    <a href="#K">K</a>
+                    <a href="#K" id="nav10">K</a>
                 </li>
                 <li>
-                    <a href="#L">L</a>
+                    <a href="#L" id="nav11">L</a>
                 </li>
                 <li>
-                    <a href="#M">M</a>
+                    <a href="#M" id="nav12">M</a>
                 </li>
                 <li>
-                    <a href="#N">N</a>
+                    <a href="#N" id="nav13">N</a>
                 </li>
                 <li>
-                    <a href="#O">O</a>
+                    <a href="#O" id="nav14">O</a>
                 </li>
                 <li>
-                    <a href="#P">P</a>
+                    <a href="#P" id="nav15">P</a>
                 </li>
                 <li>
-                    <a href="#Q">Q</a>
+                    <a href="#Q" id="nav16">Q</a>
                 </li>
                 <li>
-                    <a href="#R">R</a>
+                    <a href="#R" id="nav17">R</a>
                 </li>
                 <li>
-                    <a href="#S">S</a>
+                    <a href="#S" id="nav18">S</a>
                 </li>
                 <li>
-                    <a href="#T">T</a>
+                    <a href="#T" id="nav19">T</a>
                 </li>
                 <li>
-                    <a href="#U">U</a>
+                    <a href="#U" id="nav20">U</a>
                 </li>
                 <li>
-                    <a href="#V">V</a>
+                    <a href="#V" id="nav21">V</a>
                 </li>
                 <li>
-                    <a href="#W">W</a>
+                    <a href="#W" id="nav22">W</a>
                 </li>
                 <li>
-                    <a href="#X">X</a>
+                    <a href="#X" id="nav23">X</a>
                 </li>
                 <li>
-                    <a href="#Y">Y</a>
+                    <a href="#Y" id="nav24">Y</a>
                 </li>
                 <li>
-                    <a href="#Z">Z</a>
+                    <a href="#Z" id="nav25">Z</a>
                 </li>
                 <li>
-                    <a href="#">#</a>
+                    <a href="#" id="nav26">#</a>
                 </li>
             </ul>
         </div>
-        <div class="container">
+        <div class="container" style="padding-right: 15%">
             <span id="A">&emsp;A</span>
             <volist name="resultA" id="result">
                 <table class="table table-condensed" style="margin-bottom: 0">
@@ -734,7 +734,8 @@
         </div>
     </div>
 </div>
-
+<button id="aaa">123</button>
+<button id="bbb">12</button>
 </body>
 
 <!--导航功能-->
@@ -807,9 +808,50 @@
 </script>
 
 <script>
-    $(function(){
-        console.log(cookie());
-    })
+    $('#slider_nav').bind('touchstart',function(e){
+//        var a = $('#slider_nav').offsetHeight;
+//        var a = document.getElementById('slider_nav').originalEvent.changedTouches[0].pageY;
+//        var a = document.getElementById('slider_nav').offsetTop;
+//        console.log(a);
+//        return;
+        e.preventDefault = true;
+        event.preventDefault = true;
+
+        document.getElementById('slider_nav').style.backgroundColor = '#eee';
+//        console.log(document.getElementById('slider_nav'));
+//        startX = e.originalEvent.changedTouches[0].pageX;
+//        startY = e.originalEvent.changedTouches[0].pageY;
+//        console.log('startX:'+startX+' startY:'+startY);
+    }).bind('touchmove',function(e){
+        start_nav = document.getElementById('slider_nav').offsetTop;
+        endY = e.originalEvent.changedTouches[0].clientY;
+        distanceY = endY-start_nav;
+//        console.log(distanceY);
+        i = Math.floor(distanceY/14);
+//        console.log(i);
+//        return;
+        document.getElementById('nav'+i).click();
+//        b = $('#slider_nav').children('ul').children('li').eq(i).children('a');
+//        b.click();
+//        console.log(b);
+//        endX = e.originalEvent.changedTouches[0].pageX;
+//        endY = e.originalEvent.changedTouches[0].pageY;
+//        console.log('startX:'+startX+' startY:'+startY);
+//        console.log('endX:'+endX+' endY:'+endY);
+//        distanceX = endX-startX;
+//        distanceY = endY-startY;
+//        console.log('distanceX:'+distanceX+' distanceY:'+distanceY);
+////        $('#slider_nav').children('ul').children('li').eq(5).children('a').click();
+////        $('#eeee').click();
+//        ee = document.getElementById('eeeee');
+//        ee.click();
+    }).bind('touchend',function(e){
+        document.getElementById('slider_nav').style.backgroundColor = '';
+//        alert(123);
+//        $('#eeeee').click();
+//        href = document.getElementById('eeeee').href;
+//        window.open(href);
+    });
 </script>
 
 <!--cookie操作地址-->
@@ -919,4 +961,19 @@
     });
 </script>
 
+<script>
+    $('#aaa').click(function(){
+//        alert(123);
+//        $('#slider_nav').children('ul').children('li').eq(5).children('a').click();
+//        $('#bbb').click();
+        $('#eeee').href();
+
+    });
+    $('#bbb').click(function(){
+        alert(123);
+    });
+    $(function(){
+        event.preventDefault = false;
+    })
+</script>
 </html>

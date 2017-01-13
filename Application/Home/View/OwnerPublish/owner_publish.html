@@ -55,15 +55,19 @@
             <input type="hidden" name="category" id="give_category" value="其他">
             <table class="table table-responsive" style="border: 0">
                 <tr>
-                    <td>
-                        <div onclick="give_get_area_start()" style=";color:black">
-                            <div>
-                                &nbsp;出发地址
-                                <span id="give_area_start_html" style="margin-left:30%"></span>
+                    <td style="padding: 0">
+                        <div onclick="give_get_area_start()" style="background-color: white;color:black">
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">出发地址</span>
+                                </span>
+                                <span id="give_area_start_html" style="border: 0" class="form-control"></span>
                                 <input type="hidden" id="give_area_start" name="area_start">
                                 <input type="hidden" id="give_area_start_name" name="area_start_name">
-                                <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive"
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
                                          style="width: 10px">
                                 </span>
                             </div>
@@ -71,26 +75,31 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="padding: 0">
-                        <div class="input-group" style="">
-                        <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                            <img src="__PUBLIC__/home/images/area_start.png" class="" style="width: 10px">
+                    <td style="padding: 0;">
+                        <div class="input-group" style="width: 100%">
+                        <span class="input-group-addon"
+                              style="width: 25%;border-radius: 0;border:0;background-color: white">
+                            <img src="__PUBLIC__/home/images/area_start.png" class="pull-left" style="width: 10px">
                         </span>
                             <input id="give_detail_area_start" name="detail_area_start" class="form-control"
-                                   placeholder="请填写详细信息" style="border-radius: 0;border: 0">
+                                   placeholder="请填写详细信息" style=";border-radius: 0;border: 0">
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <div onclick="give_get_area_end()" style=";color:black">
-                            <div>
-                                &nbsp;目的地址
-                                <span id="give_area_end_html" style="margin-left:30%"></span>
+                    <td style="padding: 0">
+                        <div onclick="give_get_area_end()" style="background-color: white;color:black">
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">目的地址</span>
+                                </span>
+                                <span id="give_area_end_html" style="border: 0" class="form-control"></span>
                                 <input type="hidden" id="give_area_end" name="area_end">
                                 <input type="hidden" id="give_area_end_name" name="area_end_name">
-                                <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive"
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
                                          style="width: 10px">
                                 </span>
                             </div>
@@ -99,9 +108,10 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                <img src="__PUBLIC__/home/images/area_end.png" class="" style="width: 10px">
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <img src="__PUBLIC__/home/images/area_end.png" class="pull-left" style="width: 10px">
                             </span>
                             <input id="give_detail_area_end" name="detail_area_end" class="form-control"
                                    placeholder="请填写详细信息" style="border-radius: 0;border: 0">
@@ -110,9 +120,10 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                装车时间
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">装车时间</span>
                             </span>
                             <input type="date" id="give_loading_time" name="loading_time" class="form-control"
                                    placeholder="请输入装车时间" style="border-radius: 0;border: 0">
@@ -120,27 +131,32 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="padding: 0">
-                        <div class="input-group" style="background-color: white">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                短途调配
+                    <td style="padding: 0;">
+                        <div class="input-group" style="background-color: white;width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">短途调配</span>
                             </span>
 
                             <div class="weui_cell_ft">
-                                <input id="give_short_allocate" name="short_allocate" class="weui_switch"
+                                <input id="give_short_allocate" name="short_allocate" class="weui_switch" style=""
                                        type="checkbox" checked>
                             </div>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td style="padding: 0">
                         <a data-toggle="collapse" href="#collapse_give_car_type"
                            style="text-decoration: none;color:black">
-                            <div>
-                                &nbsp;车辆类型
-                                <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive"
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">车辆类型</span>
+                                </span>
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
                                          style="width: 20px">
                                 </span>
                             </div>
@@ -148,38 +164,38 @@
 
                         <div id="collapse_give_car_type" class="collapse" role="tablist" aria-labelledby="">
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input id="give_car_type1" name="car_type" type="radio" style="opacity: 0;"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="give_car_type1" name="car_type" type="radio" style="display: none;"
                                        class="pull-left" autocomplete="off" value="平板">平 板
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input id="give_car_type2" name="car_type" type="radio" style="opacity: 0;"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="give_car_type2" name="car_type" type="radio" style="display: none;"
                                        class="pull-left" autocomplete="off" value="厢式">厢 式
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input id="give_car_type3" name="car_type" type="radio" style="opacity: 0;"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="give_car_type3" name="car_type" type="radio" style="display: none;"
                                        class="pull-left" autocomplete="off" value="高栏">高 栏
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input id="give_car_type4" name="car_type" type="radio" style="opacity: 0;"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="give_car_type4" name="car_type" type="radio" style="display: none;"
                                        class="pull-left" autocomplete="off" value="仓栅">仓 栅
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input id="give_car_type5" name="car_type" type="radio" style="opacity: 0;"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="give_car_type5" name="car_type" type="radio" style="display: none;"
                                        class="pull-left" autocomplete="off" value="罐式">罐 式
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input id="give_car_type6" name="car_type" type="radio" style="opacity: 0;"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="give_car_type6" name="car_type" type="radio" style="display: none;"
                                        class="pull-left" autocomplete="off" value="自卸">自 卸
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input id="give_car_type7" name="car_type" type="radio" style="opacity: 0;"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="give_car_type7" name="car_type" type="radio" style="display: none;"
                                        class="pull-left" autocomplete="off" value="其他">其 他
                             </label>
                         </div>
@@ -187,9 +203,10 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                核载吨数
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">核载吨数</span>
                             </span>
                             <input type="number" id="give_car_capacity" name="car_capacity" class="form-control"
                                    placeholder="请输入吨数" style="border-radius: 0;border: 0">
@@ -201,12 +218,12 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
+                        <div class="input-group" style="width: 100%">
                             <span class="input-group-addon"
-                                  style="border-radius: 0;border:0;vertical-align: middle;background-color: white">
-                                联系电话
-                                <!--<span style="font-size: 1.5em;color:red;vertical-align: middle">*</span>-->
-                                <img src="__PUBLIC__/home/images/necessary.png" class="" style="width: 7px">
+                                  style="width: 25%;border-radius: 0;border:0;vertical-align: middle;background-color: white">
+                                <span class="pull-left">联系电话</span>
+                                <img src="__PUBLIC__/home/images/necessary.png" class=""
+                                     style="width: 7px;margin-top: -2px;">
                             </span>
                             <input id="give_phone_number" name="phone_number" class="form-control" placeholder="请输入联系方式"
                                    style="border-radius: 0;border: 0">
@@ -216,8 +233,8 @@
                 </tr>
                 <tr>
                     <td style="">
-                        <div class="form-group " style="">
-                            <label>
+                        <div class="form-group" style="">
+                            <label for="give_content" style="color:#555;margin-left: 3px">
                                 详细描述
                             </label>
                             <textarea id="give_content" name="content" class="form-control"
@@ -227,8 +244,10 @@
                     </td>
                 </tr>
             </table>
-            <input type="button" name="" id="" class="btn btn-group-justified" onclick="give_sub()"
-                   value="发&nbsp&nbsp&nbsp布" style="color:white;font-size: 2em;background-color: #fb3e1e">
+            <div class="text-center">
+                <input type="button" class="btn btn-default" onclick="give_sub()" value="发&nbsp&nbsp&nbsp布"
+                       style="text-align: center;width:96%; color:white;font-size: 1.5em;background-color: #fb3e1e;bottom: 0;">
+            </div>
         </form>
     </div>
     <div id="car_need" class="tab-pane active" style="">
@@ -236,15 +255,19 @@
             <input type="hidden" name="category" id="need_category" value="找车">
             <table class="table table-responsive" style="border: 0">
                 <tr>
-                    <td>
-                        <div onclick="need_get_area_start()" style=";color:black">
-                            <div>
-                                &nbsp;发货地址
-                                <span id="need_area_start_html" style="margin-left:30%"></span>
+                    <td style="padding: 0">
+                        <div onclick="need_get_area_start()" style="background-color: white;color:black">
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">发货地址</span>
+                                </span>
+                                <span id="need_area_start_html" style="border: 0" class="form-control"></span>
                                 <input type="hidden" id="need_area_start" name="area_start">
                                 <input type="hidden" id="need_area_start_name" name="area_start_name">
-                                <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive"
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
                                          style="width: 10px">
                                 </span>
                             </div>
@@ -253,9 +276,10 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                <img src="__PUBLIC__/home/images/area_start.png" class="" style="width: 10px">
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <img src="__PUBLIC__/home/images/area_start.png" class="pull-left" style="width: 10px">
                             </span>
                             <input id="need_detail_area_start" name="detail_area_start" class="form-control"
                                    placeholder="请填写详细信息" style="border-radius: 0;border: 0">
@@ -263,16 +287,20 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <div onclick="need_get_area_end()" style=";color:black">
-                            <div>
-                                &nbsp;收货地址
-                                <span id="need_area_end_html" style="margin-left:30%"></span>
+                    <td style="padding: 0">
+                        <div onclick="need_get_area_end()" style="background-color: white;color:black">
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">收货地址</span>
+                                </span>
+                                <span id="need_area_end_html" style="border: 0" class="form-control"></span>
                                 <input type="hidden" id="need_area_end" name="area_end">
                                 <input type="hidden" id="need_area_end_name" name="area_end_name">
-                                <span class="pull-right">
-                                <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive"
-                                     style="width: 10px">
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
+                                         style="width: 10px">
                                 </span>
                             </div>
                         </div>
@@ -280,9 +308,10 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                <img src="__PUBLIC__/home/images/area_end.png" class="" style="width: 10px">
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <img src="__PUBLIC__/home/images/area_end.png" class="pull-left" style="width: 10px">
                             </span>
                             <input id="need_detail_area_end" name="detail_area_end" class="form-control"
                                    placeholder="请填写详细信息" style="border-radius: 0;border: 0">
@@ -291,9 +320,10 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                车辆数量
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">车辆数量</span>
                             </span>
                             <input id="need_car_quantity" name="car_quantity" class="form-control"
                                    placeholder="请输入所需车辆数量" style="border-radius: 0;border: 0">
@@ -305,9 +335,10 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                发煤量
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">发煤量</span>
                             </span>
                             <input id="need_quantity" name="quantity" class="form-control" placeholder="请输入吨数"
                                    style="border-radius: 0;border: 0">
@@ -318,13 +349,17 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td style="padding: 0">
                         <a data-toggle="collapse" href="#collapse_need_granularity"
                            style="text-decoration: none;color:black">
-                            <div>
-                                &nbsp;粒度
-                                <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive"
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">粒度</span>
+                                </span>
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
                                          style="width: 20px">
                                 </span>
                             </div>
@@ -332,18 +367,18 @@
 
                         <div id="collapse_need_granularity" class="collapse" role="tablist" aria-labelledby="">
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="granularity"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input type="radio" class="pull-left" style="display: none" name="granularity"
                                        id="need_granularity1" autocomplete="off" value="原煤"> 原 煤
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="granularity"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input type="radio" class="pull-left" style="display: none" name="granularity"
                                        id="need_granularity2" autocomplete="off" value="块煤"> 块 煤
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="granularity"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input type="radio" class="pull-left" style="display: none" name="granularity"
                                        id="need_granularity3" autocomplete="off" value="沫煤"> 沫 煤
                             </label>
                         </div>
@@ -351,9 +386,10 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                运费
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">运费</span>
                             </span>
                             <input id="need_price" name="price" class="form-control" placeholder="请输入运费"
                                    style="border-radius: 0;border: 0">
@@ -365,9 +401,10 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                装车时间
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">装车时间</span>
                             </span>
                             <input type="date" id="need_loading_time" name="loading_time" class="form-control"
                                    placeholder="请输入装车时间" style="border-radius: 0;border: 0">
@@ -376,9 +413,10 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                装车费
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">装车费</span>
                             </span>
                             <input id="need_loading_cost" name="loading_cost" class="form-control" placeholder="请输入装车费"
                                    style="border-radius: 0;border: 0">
@@ -390,9 +428,10 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                卸车费
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">卸车费</span>
                             </span>
                             <input id="need_unloading_cost" name="unloading_cost" class="form-control"
                                    placeholder="请输入卸车费" style="border-radius: 0;border: 0">
@@ -404,12 +443,13 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
+                        <div class="input-group" style="width: 100%">
                             <span class="input-group-addon"
-                                  style="border-radius: 0;border:0;vertical-align: middle;background-color: white">
-                                联系电话
+                                  style="width: 25%;border-radius: 0;border:0;vertical-align: middle;background-color: white">
+                                <span class="pull-left">联系电话</span>
                                 <!--<span style="font-size: 1.5em;color:red;vertical-align: middle">*</span>-->
-                                <img src="__PUBLIC__/home/images/necessary.png" class="" style="width: 7px">
+                                <img src="__PUBLIC__/home/images/necessary.png" class=""
+                                     style="width: 7px;margin-top: -2px;">
                             </span>
                             <input type="number" id="need_phone_number" name="phone_number" class="form-control"
                                    placeholder="请输入联系方式" style="border-radius: 0;border: 0">
@@ -420,7 +460,7 @@
                 <tr>
                     <td style="">
                         <div class="form-group " style="">
-                            <label>
+                            <label for="need_content" style="color:#555;margin-left: 3px">
                                 详细描述
                             </label>
                             <textarea id="need_content" name="content" class="form-control"
@@ -430,8 +470,10 @@
                     </td>
                 </tr>
             </table>
-            <input type="button" name="" class="btn btn-group-justified" onclick="need_sub()" value="发&nbsp&nbsp&nbsp布"
-                   style="color:white;font-size: 2em;background-color: #fb3e1e">
+            <div class="text-center">
+                <input type="button" class="btn btn-default" onclick="need_sub()" value="发&nbsp&nbsp&nbsp布"
+                       style="text-align: center;width:96%; color:white;font-size: 1.5em;background-color: #fb3e1e;bottom: 0;">
+            </div>
         </form>
     </div>
     <div id="coal_sell" class="tab-pane" style="">
@@ -439,13 +481,17 @@
             <input type="hidden" name="category" id="sell_category" value="供应">
             <table class="table table-responsive" style="border: 0">
                 <tr>
-                    <td>
+                    <td style="padding: 0">
                         <a data-toggle="collapse" href="#collapse_sell_coal_kind" aria-expanded="true"
                            aria-controls="collapse_sell_coal_kind" style="text-decoration: none;color:black">
-                            <div>
-                                &nbsp;煤炭种类
-                                <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive"
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">煤炭种类</span>
+                                </span>
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
                                          style="width: 20px">
                                 </span>
                             </div>
@@ -453,46 +499,50 @@
 
                         <div id="collapse_sell_coal_kind" class="collapse" role="tablist" aria-labelledby="">
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 5px">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="kind" id="sell_kind1"
-                                       autocomplete="off" value="动力煤"> 动 力 煤
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input type="radio" class="pull-left" style="display: none" name="kind" id="sell_kind1"
+                                       autocomplete="off" value="动力煤"> 动力煤
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 5px">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="kind" id="sell_kind2"
-                                       autocomplete="off" value="喷吹煤"> 喷 吹 煤
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input type="radio" class="pull-left" style="display: none" name="kind" id="sell_kind2"
+                                       autocomplete="off" value="喷吹煤"> 喷吹煤
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 5px">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="kind" id="sell_kind3"
-                                       autocomplete="off" value="炼焦煤"> 炼 焦 煤
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input type="radio" class="pull-left" style="display: none" name="kind" id="sell_kind3"
+                                       autocomplete="off" value="炼焦煤"> 炼焦煤
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="kind" id="sell_kind4"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input type="radio" class="pull-left" style="display: none" name="kind" id="sell_kind4"
                                        autocomplete="off" value="焦炭"> 焦 炭
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="kind" id="sell_kind5"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input type="radio" class="pull-left" style="display: none" name="kind" id="sell_kind5"
                                        autocomplete="off" value="气煤"> 气 煤
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="kind" id="sell_kind6"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input type="radio" class="pull-left" style="display: none" name="kind" id="sell_kind6"
                                        autocomplete="off" value="煤泥"> 煤 泥
                             </label>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td style="padding: 0">
                         <a data-toggle="collapse" href="#collapse_sell_coal_trait" aria-expanded="true"
                            aria-controls="collapse_sell_coal_trait" style="text-decoration: none;color:black">
-                            <div>
-                                &nbsp;品质
-                                <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive"
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">品质</span>
+                                </span>
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
                                          style="width: 20px">
                                 </span>
                             </div>
@@ -500,31 +550,38 @@
 
                         <div id="collapse_sell_coal_trait" class="collapse" role="tablist" aria-labelledby="">
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 5px">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="trait" id="sell_trait1"
-                                       autocomplete="off" value="无烟煤"> 无 烟 煤
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
+                                <input type="radio" class="pull-left" style="display: none" name="trait"
+                                       id="sell_trait1"
+                                       autocomplete="off" value="无烟煤"> 无烟煤
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 5px">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="trait" id="sell_trait2"
-                                       autocomplete="off" value="水洗煤"> 水 洗 煤
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
+                                <input type="radio" class="pull-left" style="display: none" name="trait"
+                                       id="sell_trait2"
+                                       autocomplete="off" value="水洗煤"> 水洗煤
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 5px">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="trait" id="sell_trait3"
-                                       autocomplete="off" value="普通煤"> 普 通 煤
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
+                                <input type="radio" class="pull-left" style="display: none" name="trait"
+                                       id="sell_trait3"
+                                       autocomplete="off" value="普通煤"> 普通煤
                             </label>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td style="padding: 0">
                         <a data-toggle="collapse" href="#collapse_sell_coal_granularity"
                            style="text-decoration: none;color:black">
-                            <div>
-                                &nbsp;粒度
-                                <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive"
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">粒度</span>
+                                </span>
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
                                          style="width: 20px">
                                 </span>
                             </div>
@@ -532,18 +589,18 @@
 
                         <div id="collapse_sell_coal_granularity" class="collapse" role="tablist" aria-labelledby="">
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="granularity"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input type="radio" class="pull-left" style="display: none" name="granularity"
                                        id="sell_granularity1" autocomplete="off" value="原煤"> 原 煤
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="granularity"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input type="radio" class="pull-left" style="display: none" name="granularity"
                                        id="sell_granularity2" autocomplete="off" value="块煤"> 块 煤
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="granularity"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input type="radio" class="pull-left" style="display: none" name="granularity"
                                        id="sell_granularity3" autocomplete="off" value="沫煤"> 沫 煤
                             </label>
                         </div>
@@ -551,9 +608,10 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                供货公司
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">供货公司</span>
                             </span>
                             <input name="supply_company" id="sell_supply_company" class="form-control"
                                    placeholder="请输入公司名称" style="border-radius: 0;border: 0">
@@ -561,15 +619,19 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td style="padding: 0">
                         <div onclick="sell_get_area_start()" style="text-decoration: none;color:black">
-                            <div>
-                                &nbsp;产地
-                                <span id="sell_area_start_html" style="margin-left:30%"></span>
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">产地</span>
+                                </span>
+                                <span id="sell_area_start_html" style="border: 0" class="form-control"></span>
                                 <input type="hidden" name="area_start" id="sell_area_start">
                                 <input type="hidden" name="area_start_name" id="sell_area_start_name">
-                                <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive"
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
                                          style="width: 10px">
                                 </span>
                             </div>
@@ -578,11 +640,11 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
+                        <div class="input-group" style="width: 100%">
                                 <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    价格
-                                </span>
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">价格</span>
+                            </span>
                             <input type="number" name="price" id="sell_price" class="form-control" placeholder="请输入煤炭价格"
                                    style="border-radius: 0;border: 0">
                                 <span class="input-group-addon"
@@ -594,9 +656,10 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                吨数
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">吨数</span>
                             </span>
                             <input type="number" name="quantity" id="sell_quantity" class="form-control"
                                    placeholder="请输入煤炭吨数" style="border-radius: 0;border: 0">
@@ -608,9 +671,10 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                热值(高位)
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">热值(高位)</span>
                             </span>
                             <input type="number" name="heat_value_max" id="sell_heat_value_max" class="form-control"
                                    placeholder="请输入热值" style="border-radius: 0;border: 0">
@@ -621,79 +685,84 @@
                     </td>
                 </tr>
                 <tr>
-                    <td style="">
+                    <td style="padding: 0">
                         <a data-toggle="collapse" href="#collapse_detail" aria-expanded="true"
                            aria-controls="collapse_detail" style="text-decoration: none;color:black">
-                            <div>
-                                &nbsp;详细指标
-                                <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-right img-responsive"
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">详细指标</span>
+                                </span>
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
                                          style="width: 20px">
                                 </span>
                             </div>
                         </a>
 
                         <div id="collapse_detail" class="collapse" role="tablist" aria-labelledby="asd">
-                            <div class="input-group" style="">
+                            <div class="input-group" style="width: 100%">
                                 <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    热值(低位)
+                                      style="width: 25%;border-radius: 0;border:0;border-top: 1px #ccc solid;background-color: white">
+                                    <span class="pull-left">热值(低位)</span>
                                 </span>
                                 <input type="number" name="heat_value_min" id="sell_heat_value_min" class="form-control"
-                                       placeholder="" style="border-radius: 0;border: 0">
+                                       placeholder="请输入低位热值" style="border-radius: 0;border: 0">
                                 <span class="input-group-addon"
                                       style="border-radius: 0;border:0;background-color: white">
                                     卡
                                 </span>
                             </div>
-                            <div class="input-group" style="">
+                            <div class="input-group" style="width: 100%">
                                 <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    全水份
+                                      style="width: 25%;border-radius: 0;border:0;border-top: 1px #ccc solid;background-color: white">
+                                    <span class="pull-left">全水份</span>
                                 </span>
-                                <input id="water" name="water" class="form-control" placeholder=""
+                                <input id="water" name="water" class="form-control" placeholder="请输入全水份"
                                        style="border-radius: 0;border: 0">
                             </div>
-                            <div class="input-group" style="">
+                            <div class="input-group" style="width: 100%">
                                 <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    灰份
+                                      style="width: 25%;border-radius: 0;border:0;border-top: 1px #ccc solid;background-color: white">
+                                    <span class="pull-left">灰份</span>
                                 </span>
-                                <input id="ash" name="ash" class="form-control" placeholder=""
+                                <input id="ash" name="ash" class="form-control" placeholder="请输入灰份"
                                        style="border-radius: 0;border: 0">
                             </div>
-                            <div class="input-group" style="">
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    硫份
+                            <div class="input-group" style="width: 100%">
+                               <span class="input-group-addon"
+                                     style="width: 25%;border-radius: 0;border:0;border-top: 1px #ccc solid;background-color: white">
+                                    <span class="pull-left">硫份</span>
                                 </span>
-                                <input id="sulfur" name="sulfur" class="form-control" placeholder=""
+                                <input id="sulfur" name="sulfur" class="form-control" placeholder="请输入硫份"
                                        style="border-radius: 0;border: 0">
                             </div>
-                            <div class="input-group" style="">
+                            <div class="input-group" style="width: 100%">
                                 <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    挥发份
+                                      style="width: 25%;border-radius: 0;border:0;border-top: 1px #ccc solid;background-color: white">
+                                    <span class="pull-left">挥发份</span>
                                 </span>
-                                <input id="volatile" name="volatile" class="form-control" placeholder=""
+                                <input id="volatile" name="volatile" class="form-control" placeholder="请输入挥发份"
                                        style="border-radius: 0;border: 0">
                             </div>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td class="text-center">
+                    <td class="text-center" style="background-color: white">
                         有效期7天
                     </td>
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
+                        <div class="input-group" style="width: 100%">
                             <span class="input-group-addon"
-                                  style="border-radius: 0;border:0;vertical-align: middle;background-color: white">
-                                联系电话
+                                  style="width: 25%;border-radius: 0;border:0;vertical-align: middle;background-color: white">
+                                <span class="pull-left">联系电话</span>
                                 <!--<span style="font-size: 1.5em;color:red;vertical-align: middle">*</span>-->
-                                <img src="__PUBLIC__/home/images/necessary.png" class="" style="width: 7px">
+                                <img src="__PUBLIC__/home/images/necessary.png" class=""
+                                     style="width: 7px;margin-top: -2px;">
                             </span>
                             <input type="number" name="phone_number" id="sell_phone_number" class="form-control"
                                    placeholder="请输入联系方式" style="border-radius: 0;border: 0">
@@ -704,7 +773,7 @@
                 <tr style="border:none">
                     <td style="">
                         <div class="form-group" style="">
-                            <label>
+                            <label for="sell_content" style="color:#555;margin-left: 3px">
                                 详细描述
                             </label>
                             <textarea name="content" id="sell_content" class="form-control"
@@ -714,8 +783,10 @@
                     </td>
                 </tr>
             </table>
-            <input type="button" class="btn btn-group-justified" onclick="sell_sub()" value="发&nbsp&nbsp&nbsp布"
-                   style="color:white;font-size: 2em;background-color: #fb3e1e">
+            <div class="text-center">
+                <input type="button" class="btn btn-default" onclick="sell_sub()" value="发&nbsp&nbsp&nbsp布"
+                       style="text-align: center;width:96%; color:white;font-size: 1.5em;background-color: #fb3e1e;bottom: 0;">
+            </div>
         </form>
     </div>
     <div id="coal_buy" class="tab-pane" style="">
@@ -723,13 +794,17 @@
             <input type="hidden" name="category" id="buy_category" value="求购">
             <table class="table table-responsive" style="border: 0">
                 <tr>
-                    <td>
+                    <td style="padding: 0">
                         <a data-toggle="collapse" href="#collapse_buy_coal_kind" aria-expanded="true"
                            aria-controls="collapse_buy_coal_kind" style="text-decoration: none;color:black">
-                            <div>
-                                &nbsp;煤炭种类
-                                <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive"
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">煤炭种类</span>
+                                </span>
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
                                          style="width: 20px">
                                 </span>
                             </div>
@@ -737,46 +812,50 @@
 
                         <div id="collapse_buy_coal_kind" class="collapse" role="tablist" aria-labelledby="">
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 5px">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="kind" id="buy_kind1"
-                                       autocomplete="off" value="动力煤"> 动 力 煤
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
+                                <input type="radio" class="pull-left" style="display: none;" name="kind" id="buy_kind1"
+                                       autocomplete="off" value="动力煤"> 动力煤
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 5px">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="kind" id="buy_kind2"
-                                       autocomplete="off" value="喷吹煤"> 喷 吹 煤
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
+                                <input type="radio" class="pull-left" style="display: none;" name="kind" id="buy_kind2"
+                                       autocomplete="off" value="喷吹煤"> 喷吹煤
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 5px">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="kind" id="buy_kind3"
-                                       autocomplete="off" value="炼焦煤"> 炼 焦 煤
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
+                                <input type="radio" class="pull-left" style="display: none;" name="kind" id="buy_kind3"
+                                       autocomplete="off" value="炼焦煤"> 炼焦煤
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="kind" id="buy_kind4"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
+                                <input type="radio" class="pull-left" style="display: none;" name="kind" id="buy_kind4"
                                        autocomplete="off" value="焦炭"> 焦 炭
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="kind" id="buy_kind5"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
+                                <input type="radio" class="pull-left" style="display: none;" name="kind" id="buy_kind5"
                                        autocomplete="off" value="气煤"> 气 煤
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="kind" id="buy_kind6"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
+                                <input type="radio" class="pull-left" style="display: none;" name="kind" id="buy_kind6"
                                        autocomplete="off" value="煤泥"> 煤 泥
                             </label>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td style="padding: 0">
                         <a data-toggle="collapse" href="#collapse_buy_coal_trait" aria-expanded="true"
                            aria-controls="collapse_buy_coal_trait" style="text-decoration: none;color:black">
-                            <div>
-                                &nbsp;品质
-                                <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive"
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">品质</span>
+                                </span>
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
                                          style="width: 20px">
                                 </span>
                             </div>
@@ -784,31 +863,35 @@
 
                         <div id="collapse_buy_coal_trait" class="collapse" role="tablist" aria-labelledby="">
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 5px">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="trait" id="buy_trait1"
-                                       autocomplete="off" value="无烟煤"> 无 烟 煤
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
+                                <input type="radio" class="pull-left" style="display: none" name="trait" id="buy_trait1"
+                                       autocomplete="off" value="无烟煤"> 无烟煤
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 5px">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="trait" id="buy_trait2"
-                                       autocomplete="off" value="水洗煤"> 水 洗 煤
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
+                                <input type="radio" class="pull-left" style="display: none" name="trait" id="buy_trait2"
+                                       autocomplete="off" value="水洗煤"> 水洗煤
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 5px">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="trait" id="buy_trait3"
-                                       autocomplete="off" value="普通煤"> 普 通 煤
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
+                                <input type="radio" class="pull-left" style="display: none" name="trait" id="buy_trait3"
+                                       autocomplete="off" value="普通煤"> 普通煤
                             </label>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td style="padding: 0">
                         <a data-toggle="collapse" href="#collapse_buy_coal_granularity"
                            style="text-decoration: none;color:black">
-                            <div>
-                                &nbsp;粒度
-                                <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive"
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">粒度</span>
+                                </span>
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
                                          style="width: 20px">
                                 </span>
                             </div>
@@ -816,33 +899,37 @@
 
                         <div id="collapse_buy_coal_granularity" class="collapse" role="tablist" aria-labelledby="">
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="granularity"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
+                                <input type="radio" class="pull-left" style="display: none" name="granularity"
                                        id="buy_granularity1" autocomplete="off" value="原煤"> 原 煤
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="granularity"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
+                                <input type="radio" class="pull-left" style="display: none" name="granularity"
                                        id="buy_granularity2" autocomplete="off" value="块煤"> 块 煤
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;">
-                                <input type="radio" class="pull-left" style="opacity: 0" name="granularity"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
+                                <input type="radio" class="pull-left" style="display: none" name="granularity"
                                        id="buy_granularity3" autocomplete="off" value="沫煤"> 沫 煤
                             </label>
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <div onclick="buy_get_area_start()" style="text-decoration: none;color:black">
-                            <div>
-                                &nbsp;产地
-                                <span id="buy_area_start_html" style="margin-left:30%"></span>
+                    <td style="padding: 0">
+                        <div onclick="buy_get_area_start()" style="background-color: white;color:black">
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">产地</span>
+                                </span>
+                                <span id="buy_area_start_html" style="border: 0" class="form-control"></span>
                                 <input type="hidden" name="area_start" id="buy_area_start">
                                 <input type="hidden" name="area_start_name" id="buy_area_start_name">
-                                <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive"
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
                                          style="width: 10px">
                                 </span>
                             </div>
@@ -851,9 +938,10 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                热值(低位)
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">热值(低位)</span>
                             </span>
                             <input type="number" name="heat_value_min" id="buy_heat_value_min" class="form-control"
                                    placeholder="请输入热值" style="border-radius: 0;border: 0">
@@ -865,9 +953,10 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                吨数
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">吨数</span>
                             </span>
                             <input type="number" name="quantity" id="buy_quantity" class="form-control"
                                    placeholder="请输入煤炭吨数" style="border-radius: 0;border: 0">
@@ -879,15 +968,16 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
                                 期望价格
                             </span>
                             <input type="number" name="price_min" id="buy_price_min" class="form-control"
-                                   placeholder="最低价" style="text-align: center;width:40%;border-radius: 0;border: 0">
+                                   placeholder="最低价" style=";width:46%;border-radius: 0;border: 0">
                             <span class="" style="float:left;padding-top: 6px">&mdash;</span>
                             <input type="number" name="price_max" id="buy_price_max" class="form-control"
-                                   placeholder="最高价" style="text-align: center;width:40%;border-radius: 0;border: 0">
+                                   placeholder="最高价" style=";width:46%;border-radius: 0;border: 0">
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 元
                             </span>
@@ -895,12 +985,16 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td style="padding: 0">
                         <a data-toggle="collapse" href="#collapse_buy_method" style="text-decoration: none;color:black">
-                            <div>
-                                &nbsp;付款方式
-                                <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive"
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">付款方式</span>
+                                </span>
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
                                          style="width: 20px">
                                 </span>
                             </div>
@@ -909,18 +1003,18 @@
                         <div id="collapse_buy_method" class="collapse" role="tablist" aria-labelledby="">
                             <!--style="position: absolute;clip:rect(0,0,0,0)"-->
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;padding-left: 0">
-                                <input type="radio" style="opacity: 0;" class="pull-left" name="pay_type"
+                                   style="margin-left: 7%;width:26%;margin-top:5px;text-align: center">
+                                <input type="radio" style="display: none" class="pull-left" name="pay_type"
                                        autocomplete="off" value="预先付款">预先付款
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;padding-left: 0">
-                                <input type="radio" style="opacity: 0;" class="pull-left" name="pay_type"
+                                   style="margin-left: 3%;width:26%;margin-top:5px;text-align: center">
+                                <input type="radio" style="display: none" class="pull-left" name="pay_type"
                                        autocomplete="off" value="货到付款">货到付款
                             </label>
                             <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;padding-left: 0">
-                                <input type="radio" style="opacity: 0;" class="pull-left" name="pay_type"
+                                   style="margin-left: 3%;width:26%;margin-top:5px;text-align: center">
+                                <input type="radio" style="display: none" class="pull-left" name="pay_type"
                                        autocomplete="off" value="电话沟通">电话沟通
                             </label>
                         </div>
@@ -928,12 +1022,13 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
+                        <div class="input-group" style="width: 100%">
                             <span class="input-group-addon"
-                                  style="border-radius: 0;border:0;vertical-align: middle;background-color: white">
-                                联系电话
+                                  style="width: 25%;border-radius: 0;border:0;vertical-align: middle;background-color: white">
+                                <span class="pull-left">联系电话</span>
                                 <!--<span style="font-size: 1.5em;color:red;vertical-align: middle">*</span>-->
-                                <img src="__PUBLIC__/home/images/necessary.png" class="" style="width: 7px">
+                                <img src="__PUBLIC__/home/images/necessary.png" class=""
+                                     style="width: 7px;margin-top: -2px;">
                             </span>
                             <input type="number" name="phone_number" id="buy_phone_number" class="form-control"
                                    placeholder="请输入联系方式" style="border-radius: 0;border: 0">
@@ -944,7 +1039,7 @@
                 <tr>
                     <td style="">
                         <div class="form-group" style="">
-                            <label>
+                            <label for="buy_content" style="color:#555;margin-left: 3px">
                                 详细描述
                             </label>
                             <textarea name="content" id="buy_content" class="form-control"
@@ -954,8 +1049,10 @@
                     </td>
                 </tr>
             </table>
-            <input type="button" class="btn btn-group-justified" onclick="buy_sub()" value="发&nbsp&nbsp&nbsp布"
-                   style="color:white;font-size: 2em;background-color: #fb3e1e;bottom: 0;">
+            <div class="text-center">
+                <input type="button" class="btn btn-default" onclick="buy_sub()" value="发&nbsp&nbsp&nbsp布"
+                       style="text-align: center;width:96%; color:white;font-size: 1.5em;background-color: #fb3e1e;bottom: 0;">
+            </div>
         </form>
     </div>
 </div>
