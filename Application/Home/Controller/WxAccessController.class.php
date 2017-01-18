@@ -8,6 +8,7 @@
 
 namespace Home\Controller;
 
+use Home\Model\UserModel;
 use Think\Controller;
 
 header("Content-type: text/html; charset=utf-8");
@@ -43,7 +44,7 @@ class WxAccessController extends Controller
         // 获取用户授权后的信息
         $resultArr = $weObj->getOauthAccessToken();
 
-        $userModel = M("User");
+        $userModel = new UserModel();
         $r = $userModel->where(array("open_id" => $resultArr["openid"]))->find();
         if (empty($r)) {//验证用户是否注册
             // 授权登录，跳转到$this->oauth()方法
@@ -72,8 +73,10 @@ class WxAccessController extends Controller
         $userInfo = $weObj->getOauthUserinfo($resultArr["access_token"], $resultArr["openid"]);
 
         if ($userInfo) {
+            // 既然到oauth中来了，肯定是没有保存用户信息的
             $this->save_user_info($userInfo);
             $this->goto_home();
+
         } else {
             // TODO 写日志，微信平台调用失败
         }
@@ -82,10 +85,11 @@ class WxAccessController extends Controller
     public function goto_home()
     {
         // 跳转地址设置为默认主页，如果cookie里有上次浏览地址，就跳到上次浏览的地址
-        $target_url = "PersonalCenter/personal_center";
+//        $target_url = "PersonalCenter/personal_center";
+        $target_url = "Homepage/homepage";
         // 等所有视图文件夹里的js/css文件删除后再打开下面的注释
-//        if(!empty($_COOKIE['last_url'])){
-//            $target_url =  $_COOKIE['last_url'];
+//        if (!empty($_COOKIE['last_url'])) {
+//            $target_url = $_COOKIE['last_url'];
 //        }
         $this->redirect($target_url, '页面跳转中...');
     }

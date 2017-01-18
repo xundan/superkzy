@@ -110,14 +110,15 @@ class LoginController extends Controller
     }
 
 
-    public function t5_upgrade_success(){
+    public function t5_upgrade_success()
+    {
         $this->updateSessionForUser();
-        if (cookie('last_url')){
+        if (cookie('last_url')) {
             // 如果设置了跳回地址
             $this->success('设置成功', cookie('last_url'));
-        }else{
+        } else {
             // 否则跳回默认地址
-            $this->success('设置成功', U("Homepage/homepage_client"));
+            $this->success('设置成功', U("Homepage/homepage"));
         }
     }
 
@@ -183,6 +184,7 @@ class LoginController extends Controller
     public function register_do()
     {
         $phone_numbers = I('post.phone_number', '', 'strip_tags');
+        $role_id = I('post.role_id', '', 'strip_tags');
         $clients_id = I('post.invite_code', '', 'strip_tags') ? I('post.invite_code', '', 'strip_tags') : "";//邀请码
         $code = session(md5($phone_numbers));
         $codes = I('post.code', '', 'strip_tags');
@@ -197,25 +199,30 @@ class LoginController extends Controller
                 exit;
             }
             $data['phone_number'] = $phone_numbers;
-//            $data['role_id'] = I('post.type', '', 'strip_tags');
+            $data['role_id'] = $role_id;
             $data['invite_id'] = $clients_id;
-            $res = $userModel->add($data);
-            if ($res) {
-                $returnArr['status'] = 1;
-                $returnArr['msg'] = "注册成功。";
-                $tesp['phone_number'] = $phone_numbers;
-                $res = $userModel->where($tesp)->find();
-                $_SESSION['user_info'] = $res;
-                $_SESSION['role_id'] = $res['role_id'];
-                echo jsonEcho($returnArr);
-                exit;
-            } else {
-                // TODO 日志
-                $returnArr['status'] = 500;
-                $returnArr['msg'] = "注册失败。";
-                echo jsonEcho($returnArr);
-                exit;
+            $now_user = session('user_info');
+            if ($now_user) {
+                $open_id = $now_user['open_id'];
+                $res = $userModel->where(array("open_id" => $open_id))->save($data);
+                if ($res || ($res === 0)) {
+                    $returnArr['status'] = 1;
+                    $returnArr['msg'] = "注册成功。";
+                    $temp['phone_number'] = $phone_numbers;
+                    $res = $userModel->where($temp)->find();
+                    $_SESSION['user_info'] = $res;
+                    $_SESSION['role_id'] = $res['role_id'];
+                    echo jsonEcho($returnArr);
+                    exit;
+                } else {
+                    // TODO 日志
+                    $returnArr['status'] = 500;
+                    $returnArr['msg'] = "注册失败。";
+                    echo jsonEcho($returnArr);
+                    exit;
+                }
             }
+
         } else {
             //验证码填写错误
             $returnArr['status'] = 0;
@@ -224,5 +231,6 @@ class LoginController extends Controller
             exit;
         }
     }
+
 
 }

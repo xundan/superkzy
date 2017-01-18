@@ -8,14 +8,16 @@
 
 namespace Home\Controller;
 use Think\Controller;
+use Think\Exception;
+
 class ComController extends Controller
 {
     public function _initialize(){
         $user = session('user_info');
 
         //把当前路径放入cookie中
-//        $module_name = CONTROLLER_NAME.'/'.ACTION_NAME;
-//        cookie("last_url",$module_name);
+        $module_name = CONTROLLER_NAME.'/'.ACTION_NAME;
+        cookie("last_url",$module_name);
         if(!isset($user['uid'])){
             //判断是否有uid，如果没有分两种情况
             // 如果是本机测试，从数据库取uid=1的用户登录
@@ -26,15 +28,15 @@ class ComController extends Controller
                 session('user_info',$user_r);
                 session('role_id',$user_r['role_id']);
             }else{
-                // 授权并跳转到WxAccess/oauth
+                // 跳转到WxAccess/base 从base取出openid在数据库中找user，没有再跳转到WxAccess/oauth
                 header('Location: '.C('REDIRECT_URL_BASE'));
             }
         }
         $Auth = new \Think\Auth();
 
-//        if(!$Auth->check($module_name,$user['uid'])){
-//            $this->error('没有权限访问本页面',U('Login/register'));
-//        }
+        if(!$Auth->check($module_name,$user['uid'])){
+            $this->error('没有权限访问本页面 '.$module_name." session->".json_encode($user),U('Login/register'));
+        }
     }
 
     /**
