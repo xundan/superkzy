@@ -16,16 +16,29 @@ header("Content-type: text/html; charset=utf-8");
 class WxAccessController extends Controller
 {
 
-    public function index()
-    {
+    public $weObj;
+
+    public function _initialize(){
         $options = array(
             'token' => C('WX_TOKEN'),
             'encodingaeskey' => C('WX_ENCODINGAESKEY'),
             'appid' => C('WX_APPID'),
             'appsecret' => C('WX_APPSECRET')
         );
-        $weObj = new \Org\Util\Wechat($options);
-        $uri = $weObj->getOauthRedirect(C('ROOT_URL') . "WxAccess/oauth", "", "snsapi_base");
+        $this->setWeObj(new \Org\Util\Wechat($options));
+    }
+
+    public function index()
+    {
+//        $options = array(
+//            'token' => C('WX_TOKEN'),
+//            'encodingaeskey' => C('WX_ENCODINGAESKEY'),
+//            'appid' => C('WX_APPID'),
+//            'appsecret' => C('WX_APPSECRET')
+//        );
+//        $weObj = new \Org\Util\Wechat($options);
+//        $uri = $weObj->getOauthRedirect(C('ROOT_URL') . "WxAccess/oauth", "", "snsapi_base");
+        $uri = $this->getWeObj()->getOauthRedirect(C('ROOT_URL') . "WxAccess/oauth", "", "snsapi_base");
 //        echo $uri;
         $this->success("正在跳转", $uri);
         // 已经把uri打印出来直接作为入口，不用注册两次weObj了
@@ -34,15 +47,15 @@ class WxAccessController extends Controller
     // scope为snsapi_base时 回调的方法
     public function base()
     {
-        $options = array(
-            'token' => C('WX_TOKEN'),
-            'encodingaeskey' => C('WX_ENCODINGAESKEY'),
-            'appid' => C('WX_APPID'),
-            'appsecret' => C('WX_APPSECRET')
-        );
-        $weObj = new \Org\Util\Wechat($options);
+//        $options = array(
+//            'token' => C('WX_TOKEN'),
+//            'encodingaeskey' => C('WX_ENCODINGAESKEY'),
+//            'appid' => C('WX_APPID'),
+//            'appsecret' => C('WX_APPSECRET')
+//        );
+//        $weObj = new \Org\Util\Wechat($options);
         // 获取用户授权后的信息
-        $resultArr = $weObj->getOauthAccessToken();
+        $resultArr = $this->getWeObj()->getOauthAccessToken();
 
         $userModel = new UserModel();
         $r = $userModel->where(array("open_id" => $resultArr["openid"]))->find();
@@ -59,18 +72,18 @@ class WxAccessController extends Controller
     // scope为snsapi_userinfo时 回调的方法 第一次登录调用
     public function oauth()
     {
-        $options = array(
-            'token' => C('WX_TOKEN'),
-            'encodingaeskey' => C('WX_ENCODINGAESKEY'),
-            'appid' => C('WX_APPID'),
-            'appsecret' => C('WX_APPSECRET')
-        );
-        $weObj = new \Org\Util\Wechat($options);
+//        $options = array(
+//            'token' => C('WX_TOKEN'),
+//            'encodingaeskey' => C('WX_ENCODINGAESKEY'),
+//            'appid' => C('WX_APPID'),
+//            'appsecret' => C('WX_APPSECRET')
+//        );
+//        $weObj = new \Org\Util\Wechat($options);
         // 获取用户授权后的信息
-        $resultArr = $weObj->getOauthAccessToken();
+        $resultArr = $this->getWeObj()->getOauthAccessToken();
 
         $resultArr["access_token"];
-        $userInfo = $weObj->getOauthUserinfo($resultArr["access_token"], $resultArr["openid"]);
+        $userInfo = $this->getWeObj()->getOauthUserinfo($resultArr["access_token"], $resultArr["openid"]);
 
         if ($userInfo) {
             // 既然到oauth中来了，肯定是没有保存用户信息的
@@ -146,5 +159,22 @@ class WxAccessController extends Controller
         );
 //        $result = $weObj->createMenu($newmenu);
         echo $weObj->deleteMenu();
+    }
+
+
+    /**
+     * @return mixed
+     */
+    public function getWeObj()
+    {
+        return $this->weObj;
+    }
+
+    /**
+     * @param mixed $weObj
+     */
+    public function setWeObj(\Org\Util\Wechat $weObj)
+    {
+        $this->weObj = $weObj;
     }
 }
