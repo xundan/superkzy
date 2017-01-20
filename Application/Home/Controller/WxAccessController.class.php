@@ -123,7 +123,7 @@ class WxAccessController extends Controller
         $data['country'] = $userInfo["country"];
         $data['sex'] = $userInfo["sex"];
         $data['heading_url'] = $userInfo["headimgurl"];
-        $data['group_id'] = 2;
+        $data['group_id'] = C("AUTH_VISITOR");
         $res = $userModel->add($data);
         if ($res) {
             $temp['open_id'] = $userInfo["openid"];

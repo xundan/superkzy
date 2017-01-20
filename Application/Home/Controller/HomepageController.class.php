@@ -20,12 +20,12 @@ class HomepageController extends ComController
         $this->assign('todayTrans',$Msg->todayTransportCount());
         $this->display();
     }
-
-    public function homepage_visitor(){
-        $this->display();
-    }
-
-    public function homepage_client(){
-        $this->display();
-    }
+//
+//    public function homepage_visitor(){
+//        $this->display();
+//    }
+//
+//    public function homepage_client(){
+//        $this->display();
+//    }
 }

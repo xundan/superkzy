@@ -113,9 +113,9 @@ function set_deadline()
     $group_id = $_SESSION['user_info']['group_id'];
     if ($group_id == null) {
         return date('Y-m-d H:i:s',strtotime('+3 day'));
-    } else if ($group_id < 4) {
+    } else if ($group_id < C('AUTH_USER')) {
         return date('Y-m-d H:i:s',strtotime('+3 day'));
-    } else if ($group_id == 4) {
+    } else if ($group_id >= C('AUTH_USER')) {
         return date('Y-m-d H:i:s',strtotime('+7 day'));
     } else
         return null;

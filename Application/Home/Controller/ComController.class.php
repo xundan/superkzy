@@ -51,25 +51,7 @@ class ComController extends Controller
     }
 
     /**
-     * 设置有效期限
-     * @return int
-     */
-    public function set_deadline(){
-        $userRoleId = $_SESSION['user_info']['role_id'];
-        $group_id = $_SESSION['user_info']['group_id'];
-        if($group_id==null){
-            return date('Y-m-d H:i:s',strtotime('+3 day'));
-        }else if($group_id<4){
-            return date('Y-m-d H:i:s',strtotime('+3 day'));
-        }else if($group_id==4){
-            return date('Y-m-d H:i:s',strtotime('+7 day'));
-        }else
-            return null;
-    }
-
-    /**
-     * @param $id   煤炭id
-     * @return $mixed    煤炭属性
+     * @param $id int  煤炭id
      */
     public function get_coal_kind_title($id){
         $res = M('coal_kind')->field('title')->find($id);

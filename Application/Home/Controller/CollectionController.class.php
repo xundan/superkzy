@@ -11,7 +11,7 @@ namespace Home\Controller;
 use Home\Model\CollectionModel;
 use Think\Controller;
 
-class CollectionController extends Controller
+class CollectionController extends ComController
 {
     
     public function add(){
