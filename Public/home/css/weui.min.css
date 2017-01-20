@@ -734,8 +734,10 @@ button.weui_btn_plain_default, input.weui_btn_plain_default {
     -webkit-appearance: none;
     appearance: none;
     position: relative;
-    width: 52px;
-    height: 32px;
+    /*width: 52px;*/
+    /*height: 32px;*/
+    width: 48px;
+    height: 25px;
     border: 1px solid #dfdfdf;
     outline: 0;
     border-radius: 16px;
@@ -763,13 +765,15 @@ button.weui_btn_plain_default, input.weui_btn_plain_default {
     position: absolute;
     top: 0;
     left: 0;
-    height: 30px;
+    /*height: 30px;*/
+    height: 23px;
     border-radius: 15px;
     -webkit-transition: -webkit-transform .3s
 }
 
 .weui_switch:after {
-    width: 30px;
+    /*width: 30px;*/
+    width: 27px;
     background-color: #fff;
     transition: -webkit-transform .3s;
     transition: transform .3s;

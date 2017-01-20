@@ -68,34 +68,77 @@
                             <tbody>
                             <tr>
                                 <td style="border: none">
-                                    煤炭种类:{$coal_kind_title}
+                                    煤炭种类:
+                                    <empty name="message['kind']">
+                                        空
+                                        <else/>
+                                        {$message['kind']}
+                                    </empty>
                                 </td>
                                 <td style="border: none">
                                     产地:
+                                    <empty name="area_start['name']">
+                                        空
+                                        <else/>
+                                        {$area_start['name']}{$message['detail_area_start']}
+                                    </empty>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="border: none">
-                                    煤炭品质:{$coal_trait_title}
+                                    煤炭品质:
+                                    <empty name="message['trait']">
+                                        空
+                                        <else/>
+                                        {$message['trait']}
+                                    </empty>
                                 </td>
                                 <td style="border: none">
                                     价格:
+                                    <empty name="message['price']">
+                                        空
+                                        <else/>
+                                        {$message['price']}
+                                        <span style="">元</span>
+                                    </empty>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="border: none">
-                                    煤炭粒度:{$coal_granularity_title}
+                                    煤炭粒度:
+                                    <empty name="message['granularity']">
+                                        空
+                                        <else/>
+                                        {$message['granularity']}
+                                    </empty>
                                 </td>
                                 <td style="border: none">
                                     吨数:
+                                    <empty name="message['quantity']">
+                                        空
+                                        <else/>
+                                        {$message['quantity']}
+                                        <span style="">吨</span>
+                                    </empty>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="border: none">
                                     煤炭热值(高位):
+                                    <empty name="message['heat_value_max']">
+                                        空
+                                        <else/>
+                                        {$message['heat_value_max']}
+                                        <span style="">卡</span>
+                                    </empty>
                                 </td>
                                 <td style="border: none">
-                                    供货公司:{$product['supply_company']}
+                                    供货公司:
+                                    <empty name="message['supply_company']">
+                                        空
+                                        <else/>
+                                        {$message['supply_company']}
+                                    </empty>
                                 </td>
                             </tr>
                             <tr>
@@ -106,25 +149,63 @@
                             <tr>
                                 <td style="border: none">
                                     煤炭热值(低位):
+                                    <empty name="message['heat_value_min']">
+                                        空
+                                        <else/>
+                                        {$message['heat_value_min']}
+                                        <span style="">卡</span>
+                                    </empty>
                                 </td>
                                 <td style="border: none">
                                     全水份:
+                                    <empty name="message['water']">
+                                        空
+                                        <else/>
+                                        {$message['water']}
+                                    </empty>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="border: none">
                                     灰分:
+                                    <empty name="message['ash']">
+                                        空
+                                        <else/>
+                                        {$message['ash']}
+                                    </empty>
                                 </td>
                                 <td style="border: none">
                                     硫份:
+                                    <empty name="message['sulfur']">
+                                        空
+                                        <else/>
+                                        {$message['sulfur']}
+                                    </empty>
                                 </td>
                             </tr>
                             <tr>
                                 <td style="border: none">
                                     挥发份:
+                                    <empty name="message['volatile']">
+                                        空
+                                        <else/>
+                                        {$message[''volatile']}
+                                    </empty>
                                 </td>
                                 <td style="border: none">
                                     有效期:7天
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: none" colspan="2">
+                                    <p style="color:grey">详细描述</p>
+                                    <div style="">
+                                        <empty name="message['content']">
+                                            空
+                                            <else/>
+                                            {$message['content']}
+                                        </empty>
+                                    </div>
                                 </td>
                             </tr>
                             </tbody>

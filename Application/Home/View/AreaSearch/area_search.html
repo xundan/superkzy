@@ -4,6 +4,8 @@
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="full-screen" content="yes">
     <!--<link rel="icon" href="../../favicon.ico">-->
     <title></title>
     <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
@@ -734,8 +736,6 @@
         </div>
     </div>
 </div>
-<button id="aaa">123</button>
-<button id="bbb">12</button>
 </body>
 
 <!--导航功能-->
@@ -814,8 +814,9 @@
 //        var a = document.getElementById('slider_nav').offsetTop;
 //        console.log(a);
 //        return;
-        e.preventDefault = true;
-        event.preventDefault = true;
+//        e.preventDefault = true;
+//        event.preventDefault = true;
+//        event.preventDefault();
 
         document.getElementById('slider_nav').style.backgroundColor = '#eee';
 //        console.log(document.getElementById('slider_nav'));
@@ -847,10 +848,12 @@
 //        ee.click();
     }).bind('touchend',function(e){
         document.getElementById('slider_nav').style.backgroundColor = '';
-//        alert(123);
-//        $('#eeeee').click();
-//        href = document.getElementById('eeeee').href;
-//        window.open(href);
+
+        start_nav = document.getElementById('slider_nav').offsetTop;
+        endY = e.originalEvent.changedTouches[0].clientY;
+        distanceY = endY-start_nav;
+        i = Math.floor(distanceY/14);
+        document.getElementById('nav'+i).click();
     });
 </script>
 
@@ -962,18 +965,53 @@
 </script>
 
 <script>
-    $('#aaa').click(function(){
-//        alert(123);
-//        $('#slider_nav').children('ul').children('li').eq(5).children('a').click();
-//        $('#bbb').click();
-        $('#eeee').href();
+    $(function() {
+//        event.preventDefault();
+//        pushHistory();
+        console.log(event.cancelable);
+//        window.event.preventDefault();
+//        console.log(event.preventDefault);
+        window.addEventListener("popstate", function (e) {
+//            alert("我监听到了浏览器的返回按钮事件啦");
+//            if(confirm('确认取消订单吗？')){
+////                doQuery(2);
+//            console.log(window.location.pathname);
+//            console.log(history.url);
+            return;
+            window.location.href = "{:U('Homepage/homepage')}";
+//            }else{
+//                pushHistory();
+//            }
+        }, false);
+//        function pushHistory() {
+//            var state = {
+//                title: "title",
+//                url: "#"
+//            };
+//            window.history.pushState(state, "title", "#");
+//        }
+        });
+//    document.querySelector('body').addEventListener('touchstart', function (e) {
+//        e.preventDefault();
+//    });
+//    document.querySelector('body').addEventListener('touchmove', function (e) {
+//        e.preventDefault();
+//    });
+//    $('body').bind('touchstart',function(e){
+////        e.preventBubble();
+//        e.preventDefault();
+//    });
+//    document.addEventListener('touchstart', function(event) {
+//        // 判断默认行为是否可以被禁用
+//        if (event.cancelable) {
+//            // 判断默认行为是否已经被禁用
+//            if (!event.defaultPrevented) {
+//                event.preventDefault();
+//            }
+//        }
+//    }, false);
 
-    });
-    $('#bbb').click(function(){
-        alert(123);
-    });
-    $(function(){
-        event.preventDefault = false;
-    })
+
+
 </script>
 </html>

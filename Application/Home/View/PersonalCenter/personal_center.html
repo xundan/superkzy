@@ -42,14 +42,17 @@
                         <default/>
                     </switch>
                     <!--<button class="btn btn-xs btn-default" onclick="hint()" style="color:#04bfc6;border-radius: 10px">角色切换</button>-->
-                    <button class="btn btn-xs btn-default" data-toggle="modal" data-target="#hint" style="color:#04bfc6;border-radius: 10px">角色切换</button>
+                    <button class="btn btn-xs btn-default" id="role_change" data-toggle="modal" data-target="#hint" style="color:#04bfc6;border-radius: 10px">角色切换</button>
                     <!-- Modal -->
                     <div class="modal fade" id="hint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog" style="top:30%">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        <span aria-hidden="true">&times;</span>
+                                        <span class="sr-only">Close</span>
+                                    </button>
+                                    <h4 class="modal-title" id="myModalLabel">提示</h4>
                                 </div>
                                 <div class="modal-body">
                                     <span style="color:black">您的申请我们已收到，将在2个工作日内给您反馈!</span>
@@ -145,5 +148,25 @@
     function hint(){
         alert('您的申请我们已收到，将在2个工作日内给您反馈');
     }
+    $('#role_change').click(function(){
+        console.log(123);
+        $.ajax({
+            type:"post",
+            url:"{:U('Feedback/feedback_action')}",
+            data:{feedback:'role change needed'},
+            success:function(data){
+                var jsonObj=eval("("+data+")");
+//                showToast(jsonObj.msg);
+            },
+            error:function(XMLHttpRequest,textStatus,errorThrown){
+//                console.log(123456);
+//                console.log(XMLHttpRequest);
+//                console.log(textStatus);
+//                console.log(errorThrown);
+                alert('不可棱！！');
+            }
+        });
+    });
+
 </script>
 </html>

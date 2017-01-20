@@ -50,6 +50,12 @@ class OwnerOrderController extends ComController
         $this->display();
     }
 
+    public function driver_order_detail($id = null)
+    {
+        $this->assign_data($id);
+        $this->display();
+    }
+
     /**
      * 缓存数据
      * @param $id

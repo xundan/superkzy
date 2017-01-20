@@ -66,12 +66,7 @@
             data:subData,
             success:function(data){
                 console.log(123);
-
-//                $('input[name=submit_123]').val(23);
-//                return;
                 var jsonObj=eval("("+data+")");
-//                console.log(data);
-//                console.log(jsonObj.msg);
                 showToast(jsonObj.msg);
             },
             error:function(XMLHttpRequest,textStatus,errorThrown){

@@ -79,7 +79,12 @@
                                     装车时间:{$message['loading_time']|date="Y-m-d",###}
                                 </td>
                                 <td style="border: none;">
-                                    车辆类型:{$message['car_type']}
+                                    车辆类型:
+                                    <empty name="message['car_type']">
+                                        空
+                                        <else/>
+                                        {$message['car_type']}
+                                    </empty>
                                 </td>
                             </tr>
                             <tr>
@@ -91,7 +96,25 @@
                                     </if>
                                 </td>
                                 <td style="border: none;">
-                                    核载吨数:{$message['car_capacity']}
+                                    核载吨数:
+                                    <empty name="message['car_capacity']">
+                                        空
+                                        <else/>
+                                        {$message['car_capacity']}
+                                        <span style="">吨</span>
+                                    </empty>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: none" colspan="2">
+                                    <p style="color:grey">详细描述</p>
+                                    <div style="">
+                                        <empty name="message['content']">
+                                            空
+                                            <else/>
+                                            {$message['content']}
+                                        </empty>
+                                    </div>
                                 </td>
                             </tr>
                             </tbody>

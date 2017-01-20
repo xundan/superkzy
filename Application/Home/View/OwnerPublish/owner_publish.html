@@ -1056,6 +1056,30 @@
         </form>
     </div>
 </div>
+<div class="modal fade" id="hint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="top:30%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel" style="color:grey">小提示</h4>
+            </div>
+            <div class="modal-body">
+                <span style="color:black">您并没有权限进行该项操作，请点击注册前往注册界面</span>
+            </div>
+            <div class="modal-footer">
+                <a href="{:U('Login/register')}" type="button" class="btn btn-primary"
+                   style="background-color: #04bfc6">
+                    去注册
+                </a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 <!--导航功能-->
 <script>
@@ -1392,10 +1416,10 @@
     function give_sub() {
         var short_allocate = $('input[name=short_allocate]:checked').val();
         console.log(short_allocate);
-//        return;
         //获取表单数据
         var car_give = JSON.stringify($('#form_give').serializeArray());
 //        //表单数据存入cookie便于加载时显示
+        cookie('tag', '其他');
         cookie('car_give', car_give);
 //        //其他字段置为空
         cookie('car_need', null);
@@ -1420,25 +1444,22 @@
         }
         //ajax提交表单数据
         var subData = $("#form_give").serialize();
-        var subData2 = $("#form_give").serializeArray();
-        console.log(subData);
-        console.log(subData2);
-
-//        return;
+//            console.log(subData);
         var url = "{:U('OwnerPublish/car_give_action')}";
         $.ajax({
             type: "post",
             url: url,
 //            datatype:'json',
             data: subData,
-//            data:{start_area:area_start},
             success: function (data) {
-                console.log(123);
-                var jsonObj = eval("(" + data + ")");
-//                console.log(data);
-                console.log(jsonObj.msg);
-                showToast(jsonObj.msg);
-//                console.log(cookie());
+                if (data.status == 0) {
+                    console.log('auth check failure');
+                    $('#hint').modal();
+                } else {
+                    var jsonObj = eval("(" + data + ")");
+                    console.log(jsonObj.msg);
+                    showToast(jsonObj.msg);
+                }
             }
         });
     }
@@ -1461,6 +1482,7 @@
         var car_need = JSON.stringify($('#form_need').serializeArray());
 //        var area_start = $('extarea[name=need_content]').val().trim();
 //        //表单数据存入cookie便于加载时显示
+        cookie('tag', '找车');
         cookie('car_need', car_need);
 //        //其他字段置为空
         cookie('car_give', null);
@@ -1502,12 +1524,14 @@
             data: subData,
 //            data:{start_area:area_start},
             success: function (data) {
-                console.log(123);
-                var jsonObj = eval("(" + data + ")");
-//                console.log(data);
-                console.log(jsonObj.msg);
-                showToast(jsonObj.msg);
-//                console.log(cookie());
+                if (data.status == 0) {
+                    console.log('auth check failure');
+                    $('#hint').modal();
+                } else {
+                    var jsonObj = eval("(" + data + ")");
+                    console.log(jsonObj.msg);
+                    showToast(jsonObj.msg);
+                }
             }
         });
     }
@@ -1529,6 +1553,7 @@
         //获取表单数据
         var coal_sell = JSON.stringify($('#form_sell').serializeArray());
         //表单数据存入cookie便于加载时显示
+        cookie('tag', '供应');
         cookie('coal_sell', coal_sell);
         //其他字段置为空
         cookie('car_give', null);
@@ -1552,7 +1577,6 @@
             $('#sell_content_alert').html('详细描述与煤炭信息不能同时为空');
             return;
         }
-
         //ajax提交表单数据
         var subData = $("#form_sell").serialize();
 //        console.log(subData);
@@ -1562,11 +1586,14 @@
             url: url,
             data: subData,
             success: function (data) {
-                console.log(123);
-                console.log(data);
-                var jsonObj = eval("(" + data + ")");
-                console.log(jsonObj.msg);
-                showToast(jsonObj.msg);
+                if (data.status == 0) {
+                    console.log('auth check failure');
+                    $('#hint').modal();
+                } else {
+                    var jsonObj = eval("(" + data + ")");
+                    console.log(jsonObj.msg);
+                    showToast(jsonObj.msg);
+                }
             }
         });
     }
@@ -1588,6 +1615,7 @@
         //获取表单数据
         var coal_buy = JSON.stringify($('#form_buy').serializeArray());
         //表单数据存入cookie便于加载时显示
+        cookie('tag', '求购');
         cookie('coal_buy', coal_buy);
         //其他字段置为空
         cookie('car_give', null);
@@ -1620,12 +1648,14 @@
             url: url,
             data: subData,
             success: function (data) {
-                console.log(123);
-//                return;
-                var jsonObj = eval("(" + data + ")");
-                console.log(data);
-                console.log(jsonObj.msg);
-                showToast(jsonObj.msg);
+                if (data.status == 0) {
+                    console.log('auth check failure');
+                    $('#hint').modal();
+                } else {
+                    var jsonObj = eval("(" + data + ")");
+                    console.log(jsonObj.msg);
+                    showToast(jsonObj.msg);
+                }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
 //                console.log(123456);

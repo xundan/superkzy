@@ -191,13 +191,14 @@
                         if (data != "") {
                             var jsonObj = eval("(" + data + ")");
                             if (jsonObj.status == 1) {
-//                                $("#succ").show();
-//                                alert('wahaha');
                                 window.location.href = "__CONTROLLER__/t5_upgrade_success";
 
-                            } else {
+                            } else if(jsonObj.status === 0){
                                 showToast(jsonObj.msg);
+                                //已注册直接跳转到首页
+                                window.location.href = "__CONTROLLER__/t5_upgrade_success";
                             }
+                            else{}
                         }
                         else {
                             showToast('网络错误。');
