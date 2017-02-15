@@ -220,6 +220,7 @@
         if (cookie('search_input')) {
             $('#search_text').html(cookie('search_input'));
         }
+        //返回操作
         window.history.pushState('homepage','',window.location.href);
         window.addEventListener("popstate", function (e) {
             window.location.href = "{:U('Homepage/homepage')}";
@@ -640,6 +641,7 @@
 <!--撤销收藏-->
 <script>
     function collection_switch(obj, id) {
+        event.stopImmediatePropagation();
         if ($(obj).html() == '已收藏') {
             $(obj).addClass('disabled');
             $(obj).prop('disabled', true);
@@ -659,6 +661,7 @@
                 }
             }
         });
+        return false;
     }
 </script>
 </html>

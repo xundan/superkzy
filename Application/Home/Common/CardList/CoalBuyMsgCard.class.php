@@ -20,8 +20,10 @@ class CoalBuyMsgCard extends MsgCard
 
         $personal_page = $this->getPersonalUrl();
         $publish_date = date("Y-m-d", $message['publish_time']);
+        $message_detail = U('OwnerOrder/owner_order_trade_detail', array('id' => $message['id']));
         if ($message['formatted']) { // 如果用户按照标准格式填写
             $li_str = "<li class=\"weui_panel weui_panel_access\" style=\";border-radius: 5px\">
+<div onclick='window.location.href=\"{$message_detail}\"' style=\"text-decoration: none;color:black\">
 <div style=\"position: absolute;right: 0px;\">
     <img src=\"__PUBLIC__/home/images/buy.png\" width=\"50px\">
 </div>

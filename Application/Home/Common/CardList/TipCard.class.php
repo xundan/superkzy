@@ -26,6 +26,6 @@ class TipCard extends Card
 
     function toLi()
     {
-        return "<li>".$this->_tip['content']."</li>";
+        return "<p style='color: red;font-size: 12px;text-align: center'>".$this->_tip['content']."</p>";
     }
 }

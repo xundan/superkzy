@@ -24,7 +24,7 @@
             <span>全&emsp;部</span>
         </a>
         <a href="#search" class="text-center" data-toggle="tab"
-           style=";color: black;text-decoration: none;font-size: 1em;width:27%;padding: 5px 0;">
+           style=";color: black;text-decoration: none;font-size: 1em;width:27%;padding: 5px 0;height:42px">
             <img src="__PUBLIC__/home/images/area_start_text.png" class="" style="height: 20px">
             <span id="area_start_html">榆林</span>
 
@@ -35,7 +35,7 @@
             <img src="__PUBLIC__/home/images/change.png" class="" style="width: 55px;padding-top: 4px">
         </a>
         <a href="#search" data-toggle="tab" class="weui_navbar_item"
-           style=";color: black;text-decoration: none;font-size: 1em">
+           style=";color: black;text-decoration: none;font-size: 1em;height:42px">
             <span id="area_end_html">郑州</span>
             <img src="__PUBLIC__/home/images/area_end_text.png" class="" style="height: 20px">
 
@@ -221,6 +221,11 @@
         if (cookie('search_input')) {
             $('#search_text').html(cookie('search_input'));
         }
+        //返回操作
+        window.history.pushState('homepage','',window.location.href);
+        window.addEventListener("popstate", function (e) {
+            window.location.href = "{:U('Homepage/homepage')}";
+        },false);
         //是否提交表单
         if (cookie('need_post')) {
             cookie('need_post', false);
