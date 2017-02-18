@@ -15,6 +15,7 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
 </head>
+<include file="Common:common"/>
 <body style="background-color: #efeff4">
 <!--搜索框-->
 <div class="bd">
@@ -829,8 +830,8 @@
         distanceY = endY-start_nav;
 //        console.log(distanceY);
         i = Math.floor(distanceY/14);
-//        console.log(i);
-//        return;
+        var alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+        showToast3(alphabet[i]);
         document.getElementById('nav'+i).click();
 //        b = $('#slider_nav').children('ul').children('li').eq(i).children('a');
 //        b.click();

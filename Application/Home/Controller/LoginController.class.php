@@ -51,6 +51,21 @@ class LoginController extends Controller
         session('phone', null);
     }
 
+    public function t5_upgrade_success()
+    {
+        if (cookie('last_url_for_auth')) {
+            // 如果设置了跳回地址
+//            $temp = cookie('last_url');
+//            $b = U("Homepage/homepage");
+//            $this->success('设置成功'.$temp.'###'.$b, U($temp),30);
+            $this->success('设置成功', cookie('last_url_for_auth'));
+        }else {
+            // 否则跳回默认地址
+            $this->success('设置成功', U("Homepage/homepage"));
+        }
+    }
+
+
     //注册表单提交处理页面
     public function register_do()
     {

@@ -18,7 +18,7 @@
 <include file="Common:common"/>
 <!--我的发布-->
 <a href="{:U('OwnerPublishHistory/owner_publish_history')}" class="btn btn-default"
-   style="background-color: #04bfc6;color: white;right: 0;top: 80%;position: fixed;position: absolute;z-index: 2">我的发布</a>
+   style="background-color: #04bfc6;color: white;right: 0;top: 80%;position: fixed;position: absolute;z-index: 5">我的发布</a>
 <!--导航标签-->
 <div class="panel-title" style="margin:0;padding: 0;background-color: white">
     <div id="myTab" class="weui_navbar" role="" style="position: inherit;margin-bottom: 0;">
@@ -1105,6 +1105,11 @@
 <!--载入时读取上次发布的信息-->
 <script>
     $(function () {
+        //返回操作
+        window.history.pushState('homepage','',window.location.href);
+        window.addEventListener("popstate", function (e) {
+            window.location.href = "{:U('Homepage/homepage')}";
+        },false);
         console.log(cookie());
         if (cookie('tag') === '供应') {
             //发布供货
@@ -1507,7 +1512,7 @@
         }
         //装车时间判断 弱需求
         var loading_time = $('#need_loading_time').val();
-        var loading_timestamp = new Date(loading_time.replace(/-/g, '/')).getTime();
+        var loading_timestamp = new Date(loading_time.replace(/-/g, '/')).getTime()+24*60*60*1000;
         var now_time = new Date().getTime();
         if (loading_timestamp < now_time) {
             $('#need_content_alert').html('装车时间过期');

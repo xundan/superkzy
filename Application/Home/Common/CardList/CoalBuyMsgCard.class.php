@@ -74,7 +74,7 @@ class CoalBuyMsgCard extends MsgCard
 <div style=\"position: absolute;right: 0px;\">
     <img src=\"__PUBLIC__/home/images/buy.png\" width=\"50px\">
 </div>
-<div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
+<div onclick='window.location.href=\"{$message_detail}\"' class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
     <a href=\"{$personal_page}\">
         <div class=\"weui_media_hd\">
             <img src=\"{$message['user']['heading_url']}\" class=\"weui_media_appmsg_thumb\">

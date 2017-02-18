@@ -30,6 +30,9 @@ class TradeSearchController extends SearchController
         $this->display();
     }
 
+    public function message_filter(){
+        $this->display();
+    }
 
     /**
      * 上拉加载

@@ -77,6 +77,11 @@
 <!--载入读取上次标签-->
 <script>
     $(function () {
+        //返回操作
+        window.history.pushState('homepage','',window.location.href);
+        window.addEventListener("popstate", function (e) {
+            window.location.href = "{:U('Homepage/homepage')}";
+        },false);
         if (cookie('search_tag') == 'transport') {
             //运输订单
             $('#myTab a:eq(0)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on');

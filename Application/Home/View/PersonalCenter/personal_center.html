@@ -142,6 +142,13 @@
 </div>
 </body>
 <script>
+    $(function(){
+        //返回操作
+        window.history.pushState('homepage','',window.location.href);
+        window.addEventListener("popstate", function (e) {
+            window.location.href = "{:U('Homepage/homepage')}";
+        },false);
+    });
     $('#identify').children('li').click(function () {
         showToast2('该功能将在后续版本上线,敬请期待!');
     });

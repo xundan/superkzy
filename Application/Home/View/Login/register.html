@@ -10,6 +10,7 @@
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
 </head>
 <body style="background-color: #04bfc6;">
 <!--<body>-->
@@ -178,6 +179,12 @@
 
         //注册提交功能
         $('#submit').click(function () {
+            var role_id=$('input[name=role_id]:checked').val();
+            if(!role_id){
+                showToast('请选择身份');
+                return false;
+            }else{
+            }
             if (pre_check(true)) {
                 var phone_number = $('#phone_number').val();
                 var code = $('#code').val();
@@ -186,19 +193,28 @@
                 $.ajax({
                     type: "post",
                     url: url,
-                    data: {code: code, phone_number: phone_number, invite_code: invite_code},
+                    data: {code: code, phone_number: phone_number, invite_code: invite_code,role_id: role_id},
                     success: function (data) {
                         if (data != "") {
                             var jsonObj = eval("(" + data + ")");
-                            if (jsonObj.status == 1) {
-                                window.location.href = "__CONTROLLER__/t5_upgrade_success";
-
-                            } else if(jsonObj.status === 0){
-                                showToast(jsonObj.msg);
-                                //已注册直接跳转到首页
-                                window.location.href = "__CONTROLLER__/t5_upgrade_success";
-                            }
-                            else{}
+//                            if (jsonObj.status == 1) {
+////                                window.location.href = cookie('last_url');
+////                                window.location.href = "__CONTROLLER__/t5_upgrade_success";
+////                                window.location.href = "{:U('Login/t5_upgrade_success')}";
+//
+//                            } else if(jsonObj.status === 0){
+//                                showToast(jsonObj.msg);
+//                                //已注册直接跳转到首页
+////                                window.location.href = "__CONTROLLER__/t5_upgrade_success";
+//                            }
+//                            else{}
+//                            if(cookie('last_url')){
+//                                window.location.href = cookie('last_url');
+//                            }else{
+//                                window.location.href = "{:U('Homepage/homepage')}";
+//                            }
+                            showToast(jsonObj.msg);
+                            window.location.href = "__CONTROLLER__/t5_upgrade_success";
                         }
                         else {
                             showToast('网络错误。');
