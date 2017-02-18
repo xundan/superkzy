@@ -64,6 +64,8 @@ class CardList
                 }
             } elseif ($message['type'] == 'tips') {
                 $msgCard = new TipCard($message);
+            } else{
+                continue;
             }
             array_push($resultArray, $msgCard);
         }

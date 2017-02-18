@@ -41,7 +41,7 @@ class ComController extends Controller
 
     /**
      * 查询输入框输入内容整理
-     * @param $str              输入字符串
+     * @param  $str string      输入字符串
      * @return mixed|string     拆分数组
      */
     public function arrange_input($str){
@@ -70,7 +70,7 @@ class ComController extends Controller
 
     /**
      * 获取地址id或地址名
-     * @param $str  地址名
+     * @param $str string 地址名
      * @return mixed    地址id
      */
     public function get_area_id($str){
@@ -86,7 +86,7 @@ class ComController extends Controller
     }
 
     /**
-     * @param $id   付款方式id
+     * @param $id int  付款方式id
      * @return string   返回中文方式
      */
     public function get_pay_type_name($id){
