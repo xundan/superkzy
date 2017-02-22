@@ -33,7 +33,7 @@ class DistributeController extends RestController
             "origin"=>null,
             "category"=>null,
             "publisher_rid"=>null,
-            "publish_time"=>null,
+//            "publish_time"=>null,
             "level"=>1,
             "valid_time"=>3, // 默认为3天
             "via_type"=>2,
