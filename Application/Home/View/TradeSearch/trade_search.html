@@ -38,11 +38,11 @@
 </div>
 <!--我的收藏-->
 <a href="{:U('OwnerOrder/owner_order')}" class="btn btn-default"
-   style="background-color: #04bfc6;color: white;right: 0;top: 80%;position: fixed;position: absolute;z-index: 2">我的收藏</a>
+   style="background-color: #04bfc6;color: white;right: 0;top: 80%;position: fixed;position: absolute;z-index: 5">我的收藏</a>
 <!--搜索框-->
-<div class="bd" style="margin-top: 43px">
+<div class="bd" style="margin-top: 43px;position: fixed;width: 100%;z-index: 2">
     <div class="weui_search_bar" id="search_bar">
-        <form id="form_search" name="form_search" action="" method="" class="weui_search_outer">
+        <form id="form_search" name="form_search" class="weui_search_outer">
             <div class="weui_search_inner">
                 <i class="weui_icon_search"></i>
                 <input type="search" class="weui_search_input" name="search_input" id="search_input" placeholder="搜索">
@@ -104,14 +104,13 @@
 
 <!--搜索框功能-->
 <script>
-    $('#search_input').focus(function () {
+    $('.bd').on('focus', '#search_input', function () {
         var $weuiSearchBar = $('#search_bar');
         $weuiSearchBar.addClass('weui_search_focusing');
         if (cookie('search_input')) {
             $(this).val(cookie('search_input'));
         }
-    });
-    $('#search_input').blur(function () {
+    }).on('blur', '#search_input', function () {
         var $weuiSearchBar = $('#search_bar');
         $weuiSearchBar.removeClass('weui_search_focusing');
         if ($(this).val()) {
@@ -119,19 +118,10 @@
         } else {
             $('#search_text').show();
         }
-    });
-    //    $('#search_input').bind('input','#search_input',function(){
-    //        var $searchShow = $("#search_show");
-    //        if($(this).val()){
-    //            $searchShow.show();
-    //        }else{
-    //            $searchShow.hide();
-    //        }
-    //    });
-    $('#search_input').bind('keyup', '#search_input', function (event) {
+    }).on('keyup', '#search_input', function (event) {
         event = event || window.event;
         if (event.keyCode == 13) {
-//            //将输入的值存入cookie
+    //            //将输入的值存入cookie
             if ($(this).val().trim() == '') {
                 cookie('search_input', null);
                 $('input[name=search_input]').val('');
@@ -164,30 +154,11 @@
             document.tag_search.action = "{:U('TradeSearch/trade_search')}";
             document.tag_search.submit();
         }
-    });
-    $('#search_cancel').bind('touchend', '#search_cancel', function () {
-        $("#search_show").hide();
+    }).on('touchend', '#search_cancel', function () {
+        $('#search_input').val('');
+    }).on('touchend', '#search_clear', function () {
         $('#search_input').val('');
     });
-    $('#search_clear').bind('touchend', '#search_cancel', function () {
-        $("#search_show").hide();
-        $('#search_input').val('');
-    });
-    //    function search_enter(event){
-    //        event = event || window.event;
-    ////        alert(3);
-    //        if(event.keyCode == 13){
-    //            if($('#search_input').val() == ''){
-    //                alert(123);
-    //                return false;
-    //            }
-    //            console.log($('#search_input').val());
-    //            alert(1);
-    ////            alert($(this).val());
-    ////            window.location.href = 'url?keyword='+ $(this).val();
-    //        }
-    //    };
-    //    alert($('#search_input').val());
 </script>
 
 <!--导航功能-->
@@ -642,25 +613,33 @@
 <script>
     function collection_switch(obj, id) {
         event.stopImmediatePropagation();
-        if ($(obj).html() == '已收藏') {
-            $(obj).addClass('disabled');
-            $(obj).prop('disabled', true);
-            return false;
-        }
-        var url = "{:U('Collection/add')}";
-        $.ajax({
-            type: "post",
-            url: url,
-            data: {id: id},
-            success: function (data) {
-                if (data) {
-                    $(obj).html('已收藏');
-                    $(obj).addClass('disabled');
-                    $(obj).prop('disabled', true);
-                } else {
+        var url;
+        if ($(obj).html() == '撤销收藏') {
+            url = "{:U('Collection/del')}";
+            $.ajax({
+                type: "post",
+                url: url,
+                data: {id: id},
+                success: function (data) {
+                    if (data) {
+                        $(obj).html('收藏');
+                    } else {}
                 }
-            }
-        });
+            });
+        }else if($(obj).html() == '收藏'){
+            url = "{:U('Collection/add')}";
+            $.ajax({
+                type: "post",
+                url: url,
+                data: {id: id},
+                success: function (data) {
+                    if (data) {
+                        $(obj).html('撤销收藏');
+                    } else {
+                    }
+                }
+            });
+        }else{}
         return false;
     }
 </script>

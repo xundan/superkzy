@@ -45,9 +45,9 @@
 </div>
 <!--我的收藏-->
 <a href="{:U('OwnerOrder/owner_order')}" class="btn btn-default"
-   style="background-color: #04bfc6;color: white;right: 0;top: 80%;position: fixed;position: absolute;z-index: 2">我的收藏</a>
+   style="background-color: #04bfc6;color: white;right: 0;top: 80%;position: fixed;position: absolute;z-index: 5">我的收藏</a>
 <!--搜索框-->
-<div class="bd" style="margin-top: 43px">
+<div class="bd" style="margin-top: 43px;position: fixed;width: 100%;z-index: 2">
     <!--<a href="javascript:;" class="weui_btn weui_btn_primary">点击展现searchBar</a>-->
     <div class="weui_search_bar" id="search_bar">
         <form class="weui_search_outer">
@@ -111,14 +111,13 @@
 </body>
 <!--搜索框功能-->
 <script>
-    $('#search_input').focus(function () {
+    $('.bd').on('focus', '#search_input', function () {
         var $weuiSearchBar = $('#search_bar');
         $weuiSearchBar.addClass('weui_search_focusing');
         if (cookie('search_input')) {
             $(this).val(cookie('search_input'));
         }
-    });
-    $('#search_input').blur(function () {
+    }).on('blur', '#search_input', function () {
         var $weuiSearchBar = $('#search_bar');
         $weuiSearchBar.removeClass('weui_search_focusing');
         if ($(this).val()) {
@@ -126,8 +125,7 @@
         } else {
             $('#search_text').show();
         }
-    });
-    $('#search_input').bind('keyup', '#search_input', function (event) {
+    }).on('keyup', '#search_input', function (event) {
         event = event || window.event;
         if (event.keyCode == 13) {
             //将输入的值存入cookie
@@ -146,32 +144,9 @@
             document.tag_search.action = "{:U('DriverSearch/driver_job_search')}";
             document.tag_search.submit();
         }
-    });
-    //    $('#search_cancel').bind('touchend', '#search_cancel', function () {
-    //        alert(123);
-    //        $("#search_show").hide();
-    //        $('#search_input').val('');
-    //    });
-    $('#search_cancel').bind('touchend', function () {
-        alert(123);
+    }).on('touchend', '#search_cancel', function () {
         $('#search_input').val('');
-    });
-    //    $('#search_cancel').click(function(){
-    //        alert(123);
-    //        $("#search_show").hide();
-    //        $('#search_input').val('');
-    //    });
-    //    $('#search_cancel').bind('click', '#search_cancel', function () {
-    //        alert(123);
-    //        $("#search_show").hide();
-    //        $('#search_input').val('');
-    //    });
-    //    $('#search_clear').bind('touchend', '#search_cancel', function () {
-    //        $("#search_show").hide();
-    //        $('#search_input').val('');
-    //    });
-    $('#search_clear').bind('click', function () {
-        $(this).stopPropagation();
+    }).on('touchend', '#search_clear', function () {
         $('#search_input').val('');
     });
 </script>

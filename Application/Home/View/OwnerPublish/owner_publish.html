@@ -154,6 +154,7 @@
                                       style="width: 25%;border-radius: 0;border:0;background-color: white">
                                     <span class="pull-left">车辆类型</span>
                                 </span>
+                                <span id="give_car_type_html" style="border: 0" class="form-control"></span>
                                 <span class="input-group-addon"
                                       style="border-radius: 0;border:0;background-color: white">
                                     <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
@@ -357,6 +358,7 @@
                                       style="width: 25%;border-radius: 0;border:0;background-color: white">
                                     <span class="pull-left">粒度</span>
                                 </span>
+                                <span id="need_granularity_html" style="border: 0" class="form-control"></span>
                                 <span class="input-group-addon"
                                       style="border-radius: 0;border:0;background-color: white">
                                     <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
@@ -489,6 +491,7 @@
                                       style="width: 25%;border-radius: 0;border:0;background-color: white">
                                     <span class="pull-left">煤炭种类</span>
                                 </span>
+                                <span id="sell_kind_html" style="border: 0" class="form-control"></span>
                                 <span class="input-group-addon"
                                       style="border-radius: 0;border:0;background-color: white">
                                     <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
@@ -540,6 +543,7 @@
                                       style="width: 25%;border-radius: 0;border:0;background-color: white">
                                     <span class="pull-left">品质</span>
                                 </span>
+                                <span id="sell_trait_html" style="border: 0" class="form-control"></span>
                                 <span class="input-group-addon"
                                       style="border-radius: 0;border:0;background-color: white">
                                     <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
@@ -579,6 +583,7 @@
                                       style="width: 25%;border-radius: 0;border:0;background-color: white">
                                     <span class="pull-left">粒度</span>
                                 </span>
+                                <span id="sell_granularity_html" style="border: 0" class="form-control"></span>
                                 <span class="input-group-addon"
                                       style="border-radius: 0;border:0;background-color: white">
                                     <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
@@ -802,6 +807,7 @@
                                       style="width: 25%;border-radius: 0;border:0;background-color: white">
                                     <span class="pull-left">煤炭种类</span>
                                 </span>
+                                <span id="buy_kind_html" style="border: 0" class="form-control"></span>
                                 <span class="input-group-addon"
                                       style="border-radius: 0;border:0;background-color: white">
                                     <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
@@ -853,6 +859,7 @@
                                       style="width: 25%;border-radius: 0;border:0;background-color: white">
                                     <span class="pull-left">品质</span>
                                 </span>
+                                <span id="buy_trait_html" style="border: 0" class="form-control"></span>
                                 <span class="input-group-addon"
                                       style="border-radius: 0;border:0;background-color: white">
                                     <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
@@ -889,6 +896,7 @@
                                       style="width: 25%;border-radius: 0;border:0;background-color: white">
                                     <span class="pull-left">粒度</span>
                                 </span>
+                                <span id="buy_granularity_html" style="border: 0" class="form-control"></span>
                                 <span class="input-group-addon"
                                       style="border-radius: 0;border:0;background-color: white">
                                     <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
@@ -992,6 +1000,7 @@
                                       style="width: 25%;border-radius: 0;border:0;background-color: white">
                                     <span class="pull-left">付款方式</span>
                                 </span>
+                                <span id="buy_pay_type_html" style="border: 0" class="form-control"></span>
                                 <span class="input-group-addon"
                                       style="border-radius: 0;border:0;background-color: white">
                                     <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
@@ -1056,6 +1065,7 @@
         </form>
     </div>
 </div>
+<!--无权限提示模态框-->
 <div class="modal fade" id="hint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="top:30%">
         <div class="modal-content">
@@ -1080,6 +1090,32 @@
         </div>
     </div>
 </div>
+<!--发布成功模态框-->
+<div class="modal fade" id="publish_success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="top:30%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel2" style="color:grey">小提示</h4>
+            </div>
+            <div class="modal-body">
+                <span style="color:black">恭喜您发布成功！</span>
+            </div>
+            <div class="modal-footer">
+                <a href="{:U('OwnerPublishHistory/owner_publish_history')}" type="button" class="btn btn-primary"
+                   style="background-color: #04bfc6">
+                    查看已发布订单
+                </a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">继续发布</button>
+                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>
 <!--导航功能-->
 <script>
@@ -1099,6 +1135,9 @@
     $('input[type=radio]').click(function () {
         $(this).parent('label').addClass('myactive');
         $(this).parent('label').siblings().removeClass('myactive');
+        var check_val = $(this).val();
+        console.log(check_val);
+        $(this).parent('label').parent('div').parent('td').children('a').children('div').children('span').eq(1).html(check_val);
     });
 </script>
 
@@ -1463,7 +1502,8 @@
                 } else {
                     var jsonObj = eval("(" + data + ")");
                     console.log(jsonObj.msg);
-                    showToast(jsonObj.msg);
+//                    showToast(jsonObj.msg);
+                    $('#publish_success').modal();
                 }
             }
         });
@@ -1535,7 +1575,8 @@
                 } else {
                     var jsonObj = eval("(" + data + ")");
                     console.log(jsonObj.msg);
-                    showToast(jsonObj.msg);
+//                    showToast(jsonObj.msg);
+                    $('#publish_success').modal();
                 }
             }
         });
@@ -1597,7 +1638,8 @@
                 } else {
                     var jsonObj = eval("(" + data + ")");
                     console.log(jsonObj.msg);
-                    showToast(jsonObj.msg);
+//                    showToast(jsonObj.msg);
+                    $('#publish_success').modal();
                 }
             }
         });
@@ -1659,7 +1701,8 @@
                 } else {
                     var jsonObj = eval("(" + data + ")");
                     console.log(jsonObj.msg);
-                    showToast(jsonObj.msg);
+//                    showToast(jsonObj.msg);
+                    $('#publish_success').modal();
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
