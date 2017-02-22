@@ -19,11 +19,11 @@ class CarNeedMsgCard extends MsgCard
         $message_detail = U('OwnerOrder/owner_order_trade_detail', array('id' => $message['id']));
         $publish_date = date("Y-m-d", $message['publish_time']);
         if ($message['formatted']) { // 如果用户按照标准格式填写
-            $li_str = "<li class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
+            $li_str = "<li onclick='window.location.href=\"{$message_detail}\"' class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
 <div style=\"position: absolute;right: 0px;\">
     <img src=\"__PUBLIC__/home/images/need.png\" width=\"50px\">
 </div>
-<div onclick='window.location.href=\"{$message_detail}\"' class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
+<div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
     <a href=\"{$personal_page}\">
         <div class=\"weui_media_hd\">
             <img src=\"{$message['user']['heading_url']}\" class=\"weui_media_appmsg_thumb\">
@@ -39,13 +39,13 @@ class CarNeedMsgCard extends MsgCard
             <img src=\"__PUBLIC__/home/images/area_end.png\" style=\"width: 15px;height: 20px\">
         </p>
     </div>
-    <div class=\"weui_media_bd\" style=\"margin-right: -20%\">
-        <a href=\"tel:{$message['phone_number']}\" class=\"\">
+    <div class=\"weui_media_bd\" style=\"\">
+        <a href=\"tel:{$message['phone_number']}\" onclick='event.stopPropagation();' class=\"\">
             <h4><img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
             <span style=\"\">拨打电话</span></h4>
         </a>
         <div>
-            <button class=\"btn btn-xs btn-default\" style=\"padding-left: 20%;padding-right: 20%;border-color: #04bfc6;color: #04bfc6\" onclick='collection_switch(this,{$message['id']})'>{$message['in_collection']}</button>
+            <button class=\"btn btn-xs btn-default\" style=\"width: 70%;padding-left: 20%;padding-right: 20%;border-color: #04bfc6;color: #04bfc6\" onclick='collection_switch(this,{$message['id']})'>{$message['in_collection']}</button>
         </div>
     </div>
 </div>
@@ -57,11 +57,11 @@ class CarNeedMsgCard extends MsgCard
 </table>
 </li>";
         } else {
-            $li_str = "<li class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
+            $li_str = "<li onclick='window.location.href=\"{$message_detail}\"' class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
 <div style=\"position: absolute;right: 0px;\">
     <img src=\"__PUBLIC__/home/images/need.png\" width=\"50px\">
 </div>
-<div onclick='window.location.href=\"{$message_detail}\"' class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
+<div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
     <a href=\"{$personal_page}\">
         <div class=\"weui_media_hd\">
             <img src=\"{$message['user']['heading_url']}\" class=\"weui_media_appmsg_thumb\">
@@ -77,13 +77,13 @@ class CarNeedMsgCard extends MsgCard
             <img src=\"__PUBLIC__/home/images/area_end.png\" style=\"width: 15px;height: 20px\">
         </p>
     </div>
-    <div class=\"weui_media_bd\" style=\"margin-right: -20%\">
-        <a href=\"tel:{$message['phone_number']}\" class=\"\">
+    <div class=\"weui_media_bd\" style=\"\">
+        <a href=\"tel:{$message['phone_number']}\" onclick='event.stopPropagation();' class=\"\">
             <h4><img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
             <span style=\"\">拨打电话</span></h4>
         </a>
         <div>
-            <button class=\"btn btn-xs btn-default\" style=\"padding-left: 20%;padding-right: 20%;border-color: #04bfc6;color: #04bfc6\" onclick='collection_switch(this,{$message['id']})'>{$message['in_collection']}</button>
+            <button class=\"btn btn-xs btn-default\" style=\"width: 70%;padding-left: 20%;padding-right: 20%;border-color: #04bfc6;color: #04bfc6\" onclick='collection_switch(this,{$message['id']})'>{$message['in_collection']}</button>
         </div>
     </div>
 </div>

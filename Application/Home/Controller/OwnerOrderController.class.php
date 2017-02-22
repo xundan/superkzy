@@ -64,11 +64,13 @@ class OwnerOrderController extends ComController
     {
         vendor("jssdk.signPackage");
         $this->assign("signPackage", getSignPackage());
+        $uid = session('user_info')['uid'];
         if ($id) {
             // 如果路径里有uid
             $temp['id'] = $id;
-            $message = M('Messages')->where($temp)->find();
-
+            $MSG = new MessagesModel();
+            $message = $MSG->where($temp)->find();
+            $message = $MSG->toCollection($message, $uid);
             if ($message) {
                 $this->assign('message', $message);
                 $this->assign_user($message);

@@ -53,9 +53,7 @@
                                     <span style="">拨打电话</span></h4>
                             </a>
                             <button class="btn btn-xs btn-info" style="background-color: #04bfc6;width: 70%"
-                                    onclick="collection_switch(this,{$message['id']})">
-                                撤销收藏
-                            </button>
+                                    onclick="collection_switch(this,{$message['id']})">{$message['in_collection']}</button>
                         </div>
                     </div>
                     <div class="text-center">
@@ -129,22 +127,35 @@
 </body>
 <script>
     function collection_switch(obj, id) {
-        var url = "{:U('Collection/del')}";
-//        var msg_id = $('#msg_id').html().trim();
-//        var msg_id = id;
-        $.ajax({
-            type: "post",
-            url: url,
-            data: {id: id},
-            success: function (data) {
-                if (data) {
-                    $(obj).html('已撤销');
-                    $(obj).addClass('disabled');
-                    $(obj).prop('disabled', true);
-                } else {
+        event.stopImmediatePropagation();
+        var url;
+        if ($(obj).html() == '撤销收藏') {
+            url = "{:U('Collection/del')}";
+            $.ajax({
+                type: "post",
+                url: url,
+                data: {id: id},
+                success: function (data) {
+                    if (data) {
+                        $(obj).html('收藏');
+                    } else {}
                 }
-            }
-        });
+            });
+        }else if($(obj).html() == '收藏'){
+            url = "{:U('Collection/add')}";
+            $.ajax({
+                type: "post",
+                url: url,
+                data: {id: id},
+                success: function (data) {
+                    if (data) {
+                        $(obj).html('撤销收藏');
+                    } else {
+                    }
+                }
+            });
+        }else{}
+        return false;
     }
 
 </script>

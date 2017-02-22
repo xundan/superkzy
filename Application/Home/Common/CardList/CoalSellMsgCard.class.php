@@ -20,9 +20,10 @@ class CoalSellMsgCard extends MsgCard
         $publish_date = date("Y-m-d", $message['publish_time']);
         $deadline_date = substr($message['deadline'],0,10);
         if ($message['formatted']) { // 如果用户按照标准格式填写
-            $li_str = "<li class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
-<div style=\"position: absolute;right: 0px;\"><img src=\"__PUBLIC__/home/images/sell.png\" width=\"50px\"></div>
-<div onclick='window.location.href=\"{$message_detail}\"' class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
+            $li_str = "<li onclick='window.location.href=\"{$message_detail}\"'  class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
+<div style=\"position: absolute;right: 0px;\">
+<img src=\"__PUBLIC__/home/images/sell.png\" width=\"50px\"></div>
+<div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
     <a href=\"{$personal_page}\">
         <div class=\"weui_media_hd\">
             <img src=\"{$message['user']['heading_url']}\" class=\"weui_media_appmsg_thumb\">
@@ -35,12 +36,12 @@ class CoalSellMsgCard extends MsgCard
         <p class=\"weui_media_desc\"><img src=\"__PUBLIC__/home/images/area_start.png\" style=\"width: 10px;height: 15px\">{$message['user']['city']}</p>
     </div>
     <div class=\"weui_media_bd text-center\" style=\"\">
-        <a href=\"tel:{$message['phone_number']}\" class=\"\">
+        <a href=\"tel:{$message['phone_number']}\" onclick='event.stopPropagation();' class=\"\">
             <h4><img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
                 <span style=\"\">拨打电话</span></h4>
         </a>
         <div>
-            <button class=\"btn btn-xs btn-default\" style=\"padding-left: 20%;padding-right: 20%;border-color: #04bfc6;color: #04bfc6\" onclick='collection_switch(this,{$message['id']})'>{$message['in_collection']}</button>
+            <button class=\"btn btn-xs btn-default\" style=\"width: 70%;padding-left: 20%;padding-right: 20%;border-color: #04bfc6;color: #04bfc6\" onclick='collection_switch(this,{$message['id']})'>{$message['in_collection']}</button>
         </div>
     </div>
 </div>
@@ -55,9 +56,9 @@ class CoalSellMsgCard extends MsgCard
 </li>";
 
         } else {// 如果用户填了一大段话
-            $li_str = "<li class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
+            $li_str = "<li onclick='window.location.href=\"{$message_detail}\"' class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
 <div style=\"position: absolute;right: 0px;\"><img src=\"__PUBLIC__/home/images/sell.png\" width=\"50px\"></div>
-<div onclick='window.location.href=\"{$message_detail}\"' class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
+<div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
     <a href=\"{$personal_page}\">
         <div class=\"weui_media_hd\">
             <img src=\"{$message['user']['heading_url']}\" class=\"weui_media_appmsg_thumb\">
@@ -70,12 +71,12 @@ class CoalSellMsgCard extends MsgCard
         <p class=\"weui_media_desc\"><img src=\"__PUBLIC__/home/images/area_start.png\" style=\"width: 10px;height: 15px\">{$message['user']['city']}</p>
     </div>
     <div class=\"weui_media_bd text-center\" style=\"\">
-        <a href=\"tel:{$message['phone_number']}\" class=\"\">
+        <a href=\"tel:{$message['phone_number']}\" onclick='event.stopPropagation();' class=\"\">
             <h4><img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
                 <span style=\"\">拨打电话</span></h4>
         </a>
         <div>
-            <button class=\"btn btn-xs btn-default\" style=\"padding-left: 20%;padding-right: 20%;border-color: #04bfc6;color: #04bfc6\" onclick='collection_switch(this,{$message['id']})'>{$message['in_collection']}</button>
+            <button class=\"btn btn-xs btn-default\" style=\"width: 70%;padding-left: 20%;padding-right: 20%;border-color: #04bfc6;color: #04bfc6\" onclick='collection_switch(this,{$message['id']})'>{$message['in_collection']}</button>
         </div>
     </div>
 </div>

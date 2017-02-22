@@ -151,10 +151,8 @@
     });
     $('#identify').children('li').click(function () {
         showToast2('该功能将在后续版本上线,敬请期待!');
+        return false;
     });
-    function hint(){
-        alert('您的申请我们已收到，将在2个工作日内给您反馈');
-    }
     $('#role_change').click(function(){
         console.log(123);
         $.ajax({

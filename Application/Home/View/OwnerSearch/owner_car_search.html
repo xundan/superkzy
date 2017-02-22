@@ -298,8 +298,8 @@
         $('input[name=area_end]').val(cookie('area_end_id'));
 //        //地址跳转
 //        window.location.href = current_url;
-        var a = $('#tag_search').serialize();
-        alert(a);
+//        var a = $('#tag_search').serialize();
+//        alert(a);
         //提交表单
         document.tag_search.method = 'post';
         document.tag_search.action = "{:U('OwnerSearch/owner_car_search')}";
@@ -488,25 +488,35 @@
 <!--撤销收藏-->
 <script>
     function collection_switch(obj, id) {
-        if ($(obj).html() == '已收藏') {
-            $(obj).addClass('disabled');
-            $(obj).prop('disabled', true);
-            return false;
-        }
-        var url = "{:U('Collection/add')}";
-        $.ajax({
-            type: "post",
-            url: url,
-            data: {id: id},
-            success: function (data) {
-                if (data) {
-                    $(obj).html('已收藏');
-                    $(obj).addClass('disabled');
-                    $(obj).prop('disabled', true);
-                } else {
+        event.stopImmediatePropagation();
+        var url;
+        if ($(obj).html() == '撤销收藏') {
+            url = "{:U('Collection/del')}";
+            $.ajax({
+                type: "post",
+                url: url,
+                data: {id: id},
+                success: function (data) {
+                    if (data) {
+                        $(obj).html('收藏');
+                    } else {}
                 }
-            }
-        });
+            });
+        }else if($(obj).html() == '收藏'){
+            url = "{:U('Collection/add')}";
+            $.ajax({
+                type: "post",
+                url: url,
+                data: {id: id},
+                success: function (data) {
+                    if (data) {
+                        $(obj).html('撤销收藏');
+                    } else {
+                    }
+                }
+            });
+        }else{}
+        return false;
     }
 </script>
 </html>

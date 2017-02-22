@@ -237,7 +237,7 @@ class MessagesModel extends Model
         $in_collection = M('collection')->where($where)->find();
         if ($in_collection) {
             if ($in_collection['invalid_id'] == 0) {
-                $message['in_collection'] = "已收藏";
+                $message['in_collection'] = "撤销收藏";
             } else {
                 $message['in_collection'] = "收藏";
             }
@@ -341,7 +341,7 @@ class MessagesModel extends Model
 
     public function todayCount(){
         // select count(*) from `ck_messages` where to_days(`record_time`) = to_days(now());
-        $count = $this->query("select count(*) AS a from ck_messages where to_days(record_time) = to_days(now()) AND invalid_id = 0");
+        $count = $this->query("select count(*) AS a from ck_messages where to_days(record_time) = to_days(now()) AND category IN ('求购', '供应', '找车', '其他') AND invalid_id = 0");
         return $count[0]['a'];
     }
     public function todayTradeCount(){
