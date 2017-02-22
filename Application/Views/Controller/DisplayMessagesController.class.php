@@ -222,6 +222,7 @@ class DisplayMessagesController extends Controller
             "id" => $id,
             "category" => $main_tag,
             "content" => $new_content,
+            "content_all" => $new_content,
             "status" => 102,
         );
         if ($main_tag) {
