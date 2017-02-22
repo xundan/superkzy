@@ -16,7 +16,7 @@ class OwnerSearchController extends SearchController
     public function owner_car_search(){
         $whereCond = $this->createNewWhereConditions();
 
-        $data = $this->getOrderWithoutExist($whereCond,0,"其他");
+        $data = $this->getOrderWithoutExist($whereCond,0,"车源");
 
         $this->assign("li_array", $data['li_array']);
         $this->assign("where_cond_json", $data['where_cond_json']);
@@ -33,7 +33,7 @@ class OwnerSearchController extends SearchController
         $post = I('post.', '', 'trim,strip_tags');
         $whereCondJson = $post['where_cond_json'];
         $whereCond = WhereConditions::parseJson($whereCondJson);
-        $data = $this->getOrderWithoutExist($whereCond, $post['stage'],"其他");
+        $data = $this->getOrderWithoutExist($whereCond, $post['stage'],"车源");
         $data['page'] = $post['page']; // 把page送回去，作为校验
         echo json_encode($data);
         return;

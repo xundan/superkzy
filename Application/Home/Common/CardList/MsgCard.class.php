@@ -45,7 +45,7 @@ class MsgCard extends Card
             $li_str = "<li>" . $message['content'] . "</li>";
         } else {
             if ($message['category'] == '供应') { // 供应
-            } elseif ($message['category'] == '其他') { // 司机找活
+            } elseif ($message['category'] == '车源') { // 司机找活
             } elseif ($this->_message['category'] == '求购') { // 求购
             } elseif ($this->_message['category'] == '找车') { // 找车
             } else {

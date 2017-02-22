@@ -79,7 +79,7 @@ class DisplayMessagesController extends Controller
 
             $this->success('提交成功', 'showDemo?id=' . $this->find_next($id));
         } else {
-            $this->error('四个主要类型（求购，供应，找车，其他）至少选一个。', 'showDemo?id=' . $id);
+            $this->error('五个主要类型（求购，供应，找车，车源，其他）至少选一个。', 'showDemo?id=' . $id);
         }
     }
 
@@ -236,6 +236,7 @@ class DisplayMessagesController extends Controller
                 "id" => $id,
                 "category" => $main_tag,
                 "content" => $content,
+                "content_all" => $content,
                 "status" => 102,
             );
         }
@@ -250,7 +251,7 @@ class DisplayMessagesController extends Controller
     {
         $valid_check = false;
         foreach ($tags as $tag) {
-            if ($tag == "求购" || $tag == "供应" || $tag == "找车" || $tag == "其他") {
+            if ($tag == "求购" || $tag == "供应" || $tag == "找车" || $tag == "其他" || $tag == "车源") {
                 $valid_check = $tag;
                 break;
             }

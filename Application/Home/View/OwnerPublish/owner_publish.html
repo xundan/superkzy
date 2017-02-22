@@ -52,7 +52,7 @@
 <div class="tab-content" style="">
     <div id="car_give" class="tab-pane" style="">
         <form id="form_give" name="form_give" class="" method="post" action="">
-            <input type="hidden" name="category" id="give_category" value="其他">
+            <input type="hidden" name="category" id="give_category" value="车源">
             <table class="table table-responsive" style="border: 0">
                 <tr>
                     <td style="padding: 0">
@@ -1255,7 +1255,7 @@
             }
         }
         else {
-            //tag 为其他(即车源) 或默认跳转到此标签
+            //tag 为车源 或默认跳转到此标签
             var a = $('a[name=car_give]');
             a.siblings('a').removeClass('weui_bar_item_on');
             a.addClass('weui_bar_item_on');
@@ -1299,11 +1299,11 @@
 
 <!--选地址时跳转-->
 <script>
-    //其他 车源
+    //车源
     function give_get_area_start() {
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
-        cookie('tag', '其他');
+        cookie('tag', '车源');
         cookie('start_or_end', 'start');
         cookie('last_url', current_url);
 
@@ -1319,7 +1319,7 @@
     function give_get_area_end() {
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
-        cookie('tag', '其他');
+        cookie('tag', '车源');
         cookie('start_or_end', 'end');
         cookie('last_url', current_url);
 
@@ -1424,7 +1424,7 @@
         //获取表单数据
         var car_give = JSON.stringify($('#form_give').serializeArray());
 //        //表单数据存入cookie便于加载时显示
-        cookie('tag', '其他');
+        cookie('tag', '车源');
         cookie('car_give', car_give);
 //        //其他字段置为空
         cookie('car_need', null);

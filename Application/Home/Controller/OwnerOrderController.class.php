@@ -162,7 +162,7 @@ class OwnerOrderController extends ComController
         if ($category == "trade") {
             $whereCond->pushCond("category", "in", array("求购", "供应"));
         } else if($category == "transport") {
-            $whereCond->pushCond("category", "in", array("找车", "其他"));
+            $whereCond->pushCond("category", "in", array("找车", "车源"));
         } else {}
         $messages = $Msg->findWhere($whereCond);
         return $messages;

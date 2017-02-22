@@ -22,7 +22,7 @@ abstract class SearchController extends ComController
      * 获取返回数据，保证每次都获取十个卡片，包括tips
      * @param $whereCond mixed 查询条件
      * @param $stage int 当前卡片列表的状态：精确、模糊、其他、结束
-     * @param $category string 找车、其他、供应、求购
+     * @param $category string 找车、车源、供应、求购
      * @return mixed 返回数据
      */
     public function getOrderWithoutExist(WhereConditions $whereCond, $stage, $category)

@@ -83,6 +83,7 @@ class PullMessagesController extends RestController
         $str .= $this->get_message_by_interval_category($date1, $date2, "供应");
         $str .= $this->get_message_by_interval_category($date1, $date2, "求购");
         $str .= $this->get_message_by_interval_category($date1, $date2, "找车");
+        $str .= $this->get_message_by_interval_category($date1, $date2, "车源");
         $str .= $this->get_message_by_interval_category($date1, $date2, "其他");
         return $str;
     }

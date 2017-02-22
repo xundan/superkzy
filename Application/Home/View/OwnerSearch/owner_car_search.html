@@ -186,7 +186,7 @@
     $(function () {
 //        cookie(null);return;
         console.log(cookie());
-        if (cookie('search_tag') == '其他') {
+        if (cookie('search_tag') == '车源') {
             //信息查询
             $('#myTab a:eq(0)').removeClass('weui_bar_item_on').siblings('a').addClass('weui_bar_item_on weui_bar_item_on_extra').tab('show');
             $('#area_start_html').html(cookie('area_start'));
@@ -268,7 +268,7 @@
     $('#myTab a:eq(1)').click(function () {
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
-        cookie('search_tag', '其他');
+        cookie('search_tag', '车源');
         cookie('start_or_end', 'start');
         cookie('last_url', current_url);
         //地址跳转
@@ -277,7 +277,7 @@
     //地址互换
     $('#myTab a:eq(2)').click(function () {
         var current_url = window.location.href;
-        cookie('search_tag', '其他');
+        cookie('search_tag', '车源');
         var area_start = cookie('area_start');
         var area_start_id = cookie('area_start_id');
         var area_end = cookie('area_end');
@@ -309,7 +309,7 @@
     $('#myTab a:eq(3)').click(function () {
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
-        cookie('search_tag', '其他');
+        cookie('search_tag', '车源');
         cookie('start_or_end', 'end');
         cookie('last_url', current_url);
         //地址跳转
@@ -374,7 +374,7 @@
                             if (cookie('search_tag') == 'all') {
                                 document.getElementById('all').appendChild(li);
                             }
-                            else if (cookie('search_tag') == '其他') {
+                            else if (cookie('search_tag') == '车源') {
                                 document.getElementById('search').appendChild(li);
                             }
                             else {

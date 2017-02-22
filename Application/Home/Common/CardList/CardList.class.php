@@ -35,7 +35,7 @@ class CardList
             if ($message['type'] == 'plain') { // 是微信来源
                 if ($message['category'] == '供应') { // 供应
                     $msgCard = new WxCoalSellMsgCard($message);
-                } elseif ($message['category'] == '其他') { // 司机找活
+                } elseif ($message['category'] == '车源') { // 司机找活
                     $msgCard = new WxCarGiveMsgCard($message);
 
                 } elseif ($message['category'] == '求购') { // 求购
@@ -50,7 +50,7 @@ class CardList
             } elseif ($message['type'] == 'web') { // 是网站来源
                 if ($message['category'] == '供应') { // 供应
                     $msgCard = new CoalSellMsgCard($message);
-                } elseif ($message['category'] == '其他') { // 司机找活
+                } elseif ($message['category'] == '车源') { // 司机找活
                     $msgCard = new CarGiveMsgCard($message);
 
                 } elseif ($message['category'] == '求购') { // 求购
