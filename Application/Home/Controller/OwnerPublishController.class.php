@@ -16,6 +16,9 @@ header("Content-type: text/html; charset=utf-8");
 class OwnerPublishController extends ComController
 {
     public function owner_publish(){
+        $user = session('user_info');
+        $phone_number = ($user['phone_number'])?$user['phone_number']:"";
+        $this->assign("phone_number",$phone_number);
         $this->display();
     }
 
