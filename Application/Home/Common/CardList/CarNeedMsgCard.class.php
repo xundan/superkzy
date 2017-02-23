@@ -18,6 +18,15 @@ class CarNeedMsgCard extends MsgCard
         $personal_page = $this->getPersonalUrl();
         $message_detail = U('OwnerOrder/owner_order_trade_detail', array('id' => $message['id']));
         $publish_date = date("Y-m-d", $message['publish_time']);
+        $areastring = '';
+        if($message['district_start']['name']!=='空' || $message['district_end']['name']!=='空'){
+            $areastring = "<p class=\"weui_media_desc\">
+            <img src=\"__PUBLIC__/home/images/area_start.png\" style=\"width: 15px;height: 20px\">
+            {$message['district_start']['name']}→{$message['district_end']['name']}
+            <img src=\"__PUBLIC__/home/images/area_end.png\" style=\"width: 15px;height: 20px\">
+        </p>";
+        }
+
         if ($message['formatted']) { // 如果用户按照标准格式填写
             $li_str = "<li onclick='window.location.href=\"{$message_detail}\"' class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
 <div style=\"position: absolute;right: 0px;\">
@@ -32,13 +41,7 @@ class CarNeedMsgCard extends MsgCard
     <div class=\"weui_media_bd\">
         <a href=\"{$personal_page}\">
             <h4 class=\"weui_media_title\">{$message['user']['user_name']}<img src=\"__PUBLIC__/home/images/medal.png\" style=\"width: 15px;height: 20px\"></h4>
-        </a>
-        <p class=\"weui_media_desc\">
-            <img src=\"__PUBLIC__/home/images/area_start.png\" style=\"width: 15px;height: 20px\">
-            {$message['district_start']['name']}→{$message['district_end']['name']}
-            <img src=\"__PUBLIC__/home/images/area_end.png\" style=\"width: 15px;height: 20px\">
-        </p>
-    </div>
+        </a>".$areastring."</div>
     <div class=\"weui_media_bd\" style=\"\">
         <a href=\"tel:{$message['phone_number']}\" onclick='event.stopPropagation();' class=\"\">
             <h4><img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
@@ -70,13 +73,7 @@ class CarNeedMsgCard extends MsgCard
     <div class=\"weui_media_bd\">
         <a href=\"{$personal_page}\">
             <h4 class=\"weui_media_title\">{$message['user']['user_name']}<img src=\"__PUBLIC__/home/images/medal.png\" style=\"width: 15px;height: 20px\"></h4>
-        </a>
-        <p class=\"weui_media_desc\">
-            <img src=\"__PUBLIC__/home/images/area_start.png\" style=\"width: 15px;height: 20px\">
-            {$message['district_start']['name']}→{$message['district_end']['name']}
-            <img src=\"__PUBLIC__/home/images/area_end.png\" style=\"width: 15px;height: 20px\">
-        </p>
-    </div>
+        </a>".$areastring."</div>
     <div class=\"weui_media_bd\" style=\"\">
         <a href=\"tel:{$message['phone_number']}\" onclick='event.stopPropagation();' class=\"\">
             <h4><img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">

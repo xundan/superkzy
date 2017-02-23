@@ -29,11 +29,6 @@ class WxCarGiveMsgCard extends MsgCard
         <a href=\"#\">
             <h4 class=\"weui_media_title\">来自微信<img src=\"__PUBLIC__/home/images/medal.png\" style=\"width: 15px;height: 20px\"></h4>
         </a>
-        <p class=\"weui_media_desc\">
-            <img src=\"__PUBLIC__/home/images/area_start.png\" style=\"width: 15px;height: 20px\">
-            →
-            <img src=\"__PUBLIC__/home/images/area_end.png\" style=\"width: 15px;height: 20px\">
-        </p>
     </div>
     <div class=\"weui_media_bd\" style=\"margin-right: -20%\">
         <a href=\"tel:{$message['phone_number']}\" class=\"\">
