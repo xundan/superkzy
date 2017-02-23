@@ -36,7 +36,7 @@ class WxCoalSellMsgCard extends MsgCard
                 <span style=\"\">拨打电话</span></h4>
         </a>
         <div>
-            <button class=\"btn btn-xs btn-default\" style=\"width: 70%;padding-left: 20%;padding-right: 20%;border-color: #04bfc6;color: #04bfc6\" onclick='collection_switch(this,{$message['id']})'>{$message['in_collection']}</button>
+            <button class=\"btn btn-xs btn-default\" style=\"width: 70%;border-color: #04bfc6;color: #04bfc6\" onclick='collection_switch(this,{$message['id']})'>{$message['in_collection']}</button>
         </div>
     </div>
 </div>

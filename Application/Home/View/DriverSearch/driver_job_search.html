@@ -202,9 +202,16 @@
             }
         }
         //返回操作
-        window.history.pushState('homepage','',window.location.href);
+        pushHistory();
+        var bool=false;
+        setTimeout(function(){
+            bool=true;
+        },1500);
         window.addEventListener("popstate", function (e) {
-            window.location.href = "{:U('Homepage/homepage')}";
+            if(bool){
+                window.location.href = "{:U('Homepage/homepage')}";
+            }
+            pushHistory();
         },false);
         //是否提交表单
         if (cookie('need_post')) {
@@ -228,6 +235,13 @@
 //        console.log($('#where_cond_json').html());
 //        console.log($('#stage').html());
     });
+    function pushHistory(){
+        var state = {
+            title: "title",
+            url: "#"
+        };
+        window.history.pushState(state, "title", "#");
+    }
 </script>
 <!--点击标签查询-->
 <script>

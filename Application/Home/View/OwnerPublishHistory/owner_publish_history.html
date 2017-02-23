@@ -78,9 +78,16 @@
 <script>
     $(function () {
         //返回操作
-        window.history.pushState('homepage','',window.location.href);
+        pushHistory();
+        var bool=false;
+        setTimeout(function(){
+            bool=true;
+        },1500);
         window.addEventListener("popstate", function (e) {
-            window.location.href = "{:U('Homepage/homepage')}";
+            if(bool){
+                window.location.href = "{:U('Homepage/homepage')}";
+            }
+            pushHistory();
         },false);
         if (cookie('search_tag') == 'transport') {
             //运输订单
@@ -93,6 +100,13 @@
         }
         $('input[name=select_category]').val(cookie('search_tag'));
     });
+    function pushHistory(){
+        var state = {
+            title: "title",
+            url: "#"
+        };
+        window.history.pushState(state, "title", "#");
+    }
 </script>
 
 <!--点击标签查询-->

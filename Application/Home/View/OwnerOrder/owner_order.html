@@ -77,11 +77,8 @@
 <!--载入读取上次标签-->
 <script>
     $(function () {
-        //返回操作
-        window.history.pushState('homepage','',window.location.href);
-        window.addEventListener("popstate", function (e) {
-            window.location.href = "{:U('Homepage/homepage')}";
-        },false);
+        //返回操作 暂时为空
+
         if (cookie('search_tag') == 'transport') {
             //运输订单
             //避免为空或者false
