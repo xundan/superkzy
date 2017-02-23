@@ -222,8 +222,8 @@ class DisplayMessagesController extends Controller
             "id" => $id,
             "category" => $main_tag,
             "content" => $new_content,
-            "content_all" => $new_content,
             "status" => 102,
+            "content_all" => $new_content,
         );
         if ($main_tag) {
             // 如果有主标签，则处理一下内容的抬头
@@ -237,8 +237,8 @@ class DisplayMessagesController extends Controller
                 "id" => $id,
                 "category" => $main_tag,
                 "content" => $content,
-                "content_all" => $content,
                 "status" => 102,
+                "content_all" => $content,
             );
         }
         D('Message')->save($update_trans);
