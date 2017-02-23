@@ -27,7 +27,7 @@ class WxCarGiveMsgCard extends MsgCard
     </a>
     <div class=\"weui_media_bd\">
         <a href=\"#\">
-            <h4 class=\"weui_media_title\">（来自微信朋友圈）<img src=\"__PUBLIC__/home/images/medal.png\" style=\"width: 15px;height: 20px\"></h4>
+            <h4 class=\"weui_media_title\">来自微信<img src=\"__PUBLIC__/home/images/medal.png\" style=\"width: 15px;height: 20px\"></h4>
         </a>
         <p class=\"weui_media_desc\">
             <img src=\"__PUBLIC__/home/images/area_start.png\" style=\"width: 15px;height: 20px\">
