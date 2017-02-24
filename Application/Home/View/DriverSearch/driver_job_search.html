@@ -111,43 +111,61 @@
 </body>
 <!--搜索框功能-->
 <script>
-    $('.bd').on('focus', '#search_input', function () {
-        var $weuiSearchBar = $('#search_bar');
-        $weuiSearchBar.addClass('weui_search_focusing');
-        if (cookie('search_input')) {
-            $(this).val(cookie('search_input'));
+    $(function(){
+        var $searchBar = $('#search_bar'),
+                $searchText = $('#search_text'),
+                $searchInput = $('#search_input'),
+                $searchClear = $('#search_clear'),
+                $searchCancel = $('#search_cancel');
+
+        function hideSearchResult(){
+            $searchInput.val('');
         }
-    }).on('blur', '#search_input', function () {
-        var $weuiSearchBar = $('#search_bar');
-        $weuiSearchBar.removeClass('weui_search_focusing');
-        if ($(this).val()) {
-            $('#search_text').hide();
-        } else {
-            $('#search_text').show();
+        function cancelSearch(){
+            hideSearchResult();
+            $searchBar.removeClass('weui_search_focusing');
+            $searchText.show();
         }
-    }).on('keyup', '#search_input', function (event) {
-        event = event || window.event;
-        if (event.keyCode == 13) {
-            //将输入的值存入cookie
-            if ($(this).val().trim() == '') {
-                cookie('search_input', null);
-                $('input[name=search_input]').val('');
-            } else {
-                $('input[name=search_input]').val($(this).val().trim());
-                cookie('search_input', $(this).val().trim());
+
+        $searchText.on('click', function(){
+            $searchBar.addClass('weui_search_focusing');
+            $searchInput.focus();
+            if (cookie('search_input')) {
+                $(this).val(cookie('search_input'));
             }
-            $('input[name=select_category]').val(cookie('search_tag'));
-            $('input[name=area_start]').val(cookie('area_start_id'));
-            $('input[name=area_end]').val(cookie('area_end_id'));
-            //提交表单
-            document.tag_search.method = "post";
-            document.tag_search.action = "{:U('DriverSearch/driver_job_search')}";
-            document.tag_search.submit();
-        }
-    }).on('touchend', '#search_cancel', function () {
-        $('#search_input').val('');
-    }).on('touchend', '#search_clear', function () {
-        $('#search_input').val('');
+        });
+        $searchInput
+                .on('blur', function () {
+                    if(!this.value.length) cancelSearch();
+                })
+                .on('keyup', function(event){
+                    event = event || window.event;
+                    if (event.keyCode == 13) {
+                        //将输入的值存入cookie
+                        if ($(this).val().trim() == '') {
+                            cookie('search_input', null);
+                            $('input[name=search_input]').val('');
+                        } else {
+                            $('input[name=search_input]').val($(this).val().trim());
+                            cookie('search_input', $(this).val().trim());
+                        }
+                        $('input[name=select_category]').val(cookie('search_tag'));
+                        $('input[name=area_start]').val(cookie('area_start_id'));
+                        $('input[name=area_end]').val(cookie('area_end_id'));
+                        //提交表单
+                        document.tag_search.method = "post";
+                        document.tag_search.action = "{:U('DriverSearch/driver_job_search')}";
+                        document.tag_search.submit();
+                    }
+                });
+        $searchClear.on('click', function(){
+            hideSearchResult();
+            $searchInput.focus();
+        });
+        $searchCancel.on('click', function(){
+            cancelSearch();
+            $searchInput.blur();
+        });
     });
 </script>
 <!--导航功能-->
