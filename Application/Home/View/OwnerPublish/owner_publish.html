@@ -1133,11 +1133,16 @@
 <!--按钮选择样式-->
 <script>
     $('input[type=radio]').click(function () {
-        $(this).parent('label').addClass('myactive');
-        $(this).parent('label').siblings().removeClass('myactive');
         var check_val = $(this).val();
-        console.log(check_val);
-        $(this).parent('label').parent('div').parent('td').children('a').children('div').children('span').eq(1).html(check_val);
+        $(this).parent('label').siblings().removeClass('myactive');
+        $(this).parent('label').toggleClass('myactive');
+        var temp_html = $(this).parent('label').parent('div').parent('td').children('a').children('div').children('span').eq(1);
+        temp_html.html(check_val);
+        if(!$(this).parent('label').hasClass('myactive')){
+            console.log('cancel_check');
+            $(this).attr('checked',false);
+            temp_html.html('');
+        }
     });
 </script>
 
@@ -1181,18 +1186,21 @@
                         kind.prop("checked", "checked");
                         kind.parent('label').addClass('myactive');
                         kind.parent('label').siblings().removeClass('myactive');
+                        $('#sell_kind_html').html(val.value);
                     }
                     else if (val.name == 'trait') { //品质
                         var trait = $(":radio[name=trait][value='" + val.value + "']");
                         trait.prop("checked", "checked");
                         trait.parent('label').addClass('myactive');
                         trait.parent('label').siblings().removeClass('myactive');
+                        $('#sell_trait_html').html(val.value);
                     }
                     else if (val.name == 'granularity') {   //粒度
                         var granularity = $(":radio[name=granularity][value='" + val.value + "']");
                         granularity.prop("checked", "checked");
                         granularity.parent('label').addClass('myactive');
                         granularity.parent('label').siblings().removeClass('myactive');
+                        $('#sell_granularity_html').html(val.value);
                     }
                     else if (val.name == 'area_start') { //产地
                         val.value = cookie('area_start');
@@ -1224,18 +1232,21 @@
                         kind.prop("checked", "checked");
                         kind.parent('label').addClass('myactive');
                         kind.parent('label').siblings().removeClass('myactive');
+                        $('#buy_kind_html').html(val.value);
                     }
                     else if (val.name == 'trait') { //品质
                         var trait = $(":radio[name=trait][value='" + val.value + "']");
                         trait.prop("checked", "checked");
                         trait.parent('label').addClass('myactive');
                         trait.parent('label').siblings().removeClass('myactive');
+                        $('#buy_trait_html').html(val.value);
                     }
                     else if (val.name == 'granularity') {   //粒度
                         var granularity = $(":radio[name=granularity][value='" + val.value + "']");
                         granularity.prop("checked", "checked");
                         granularity.parent('label').addClass('myactive');
                         granularity.parent('label').siblings().removeClass('myactive');
+                        $('#buy_granularity_html').html(val.value);
                     }
                     else if (val.name == 'area_start') { //产地
                         val.value = cookie('area_start');
@@ -1257,6 +1268,7 @@
                         pay_type.prop("checked", "checked");
                         pay_type.parent('label').addClass('myactive');
                         pay_type.parent('label').siblings().removeClass('myactive');
+                        $('#buy_pay_type_html').html(val.value);
                     }
                     else {
                         $("#buy_" + val.name).val(val.value);
@@ -1300,6 +1312,7 @@
                         granularity.prop("checked", "checked");
                         granularity.parent('label').addClass('myactive');
                         granularity.parent('label').siblings().removeClass('myactive');
+                        $('#need_granularity_html').html(val.value);
                     }
                     else {
                         $("#need_" + val.name).val(val.value);
@@ -1340,6 +1353,7 @@
                         car_type.prop("checked", "checked");
                         car_type.parent('label').addClass('myactive');
                         car_type.parent('label').siblings().removeClass('myactive');
+                        $('#give_car_type_html').html(val.value);
                     }
                     else {
                         $("#give_" + val.name).val(val.value);

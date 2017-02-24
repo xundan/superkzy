@@ -219,7 +219,7 @@
 </body>
 <script>
     function collection_switch(obj, id) {
-        event.stopImmediatePropagation();
+        event.stopPropagation();
         var url;
         if ($(obj).html() == '撤销收藏') {
             url = "{:U('Collection/del')}";

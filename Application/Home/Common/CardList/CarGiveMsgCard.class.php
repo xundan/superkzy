@@ -16,7 +16,7 @@ class CarGiveMsgCard extends MsgCard
     {
         $message = $this->buildUpMessage();
         $personal_page = $this->getPersonalUrl();
-        $message_detail = U('OwnerOrder/owner_order_trade_detail', array('id' => $message['id']));
+        $message_detail = U('OwnerOrder/owner_order_transport_detail', array('id' => $message['id']));
         $publish_date = date("Y-m-d", $message['publish_time']);
         $areastring = '';
         if($message['district_start']['name']!=='空' || $message['district_end']['name']!=='空'){
@@ -39,11 +39,11 @@ class CarGiveMsgCard extends MsgCard
         </div>
     </a>
     <div class=\"weui_media_bd\">
-        <a href=\"{$personal_page}\">
-            <h4 class=\"weui_media_title\">{$message['user']['user_name']}<img src=\"__PUBLIC__/home/images/medal.png\" style=\"width: 15px;height: 20px\"></h4>
+        <a href=\"{$personal_page}\" style='text-decoration: none;color: black'>
+            <h4 class=\"weui_media_title\">{$message['user']['user_name']}</h4>
         </a>".$areastring."</div>
     <div class=\"weui_media_bd\" style=\"\">
-        <a href=\"tel:{$message['phone_number']}\" onclick='event.stopPropagation();' class=\"\">
+        <a href=\"tel:{$message['phone_number']}\" onclick='event.stopPropagation();' class=\"\" style='text-decoration: none;color: black'>
             <h4><img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
                 <span style=\"\">拨打电话</span></h4>
         </a>
@@ -71,11 +71,11 @@ class CarGiveMsgCard extends MsgCard
         </div>
     </a>
     <div class=\"weui_media_bd\">
-        <a href=\"{$personal_page}\">
-            <h4 class=\"weui_media_title\">{$message['user']['user_name']}<img src=\"__PUBLIC__/home/images/medal.png\" style=\"width: 15px;height: 20px\"></h4>
+        <a href=\"{$personal_page}\" style='text-decoration: none;color: black'>
+            <h4 class=\"weui_media_title\">{$message['user']['user_name']}</h4>
         </a>".$areastring."</div>
     <div class=\"weui_media_bd\" style=\"\">
-        <a href=\"tel:{$message['phone_number']}\" onclick='event.stopPropagation();' class=\"\">
+        <a href=\"tel:{$message['phone_number']}\" onclick='event.stopPropagation();' class=\"\" style='text-decoration: none;color: black'>
             <h4><img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
                 <span style=\"\">拨打电话</span></h4>
         </a>

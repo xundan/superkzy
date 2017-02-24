@@ -355,6 +355,10 @@
                     console.log('success');
                     var jsonObj = eval("(" + data + ")");
                     console.log(jsonObj);
+                    var endAjax = jsonObj.EOA;
+                    if(endAjax == 0) {
+                        return false;
+                    }
 //                    return;
                     if (jsonObj.msg) {
                         page++;

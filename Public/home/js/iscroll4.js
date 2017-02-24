@@ -127,11 +127,11 @@ var m = Math,
 			// Events
 			onRefresh: null,
 			onBeforeScrollStart: function (e) {
-				var target = e.target;
-				while (target.nodeType != 1)
-					target = target.parentNode;
-				if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA' && target.tagName != 'BUTTON' && target.tagName != 'A')
-					e.preventDefault();
+				//var target = e.target;
+				//while (target.nodeType != 1)
+				//	target = target.parentNode;
+				//if (target.tagName != 'SELECT' && target.tagName != 'INPUT' && target.tagName != 'TEXTAREA' && target.tagName != 'BUTTON' && target.tagName != 'A')
+				//	e.preventDefault();
 			},
 			onScrollStart: null,
 			onBeforeScrollMove: null,
@@ -495,7 +495,7 @@ iScroll.prototype = {
 		
 		if (that.options.onScrollMove) that.options.onScrollMove.call(that, e);
 	},
-	
+
 	_end: function (e) {
 		if (hasTouch && e.touches.length !== 0) return;
 

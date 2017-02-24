@@ -27,13 +27,12 @@ class WxCoalBuyMsgCard extends MsgCard
         </div>
     </a>
     <div class=\"weui_media_bd\">
-        <a href=\"#\">
-            <h4 class=\"weui_media_title\">来自微信<img src=\"__PUBLIC__/home/images/medal.png\" style=\"width: 15px;height: 20px\"></h4>
-        </a>
-        <p class=\"weui_media_desc\"><img src=\"__PUBLIC__/home/images/area_start.png\" style=\"width: 10px;height: 15px\"> </p>
+        <div>
+            <h4 class=\"weui_media_title\">来自微信</h4>
+        </div>
     </div>
     <div class=\"weui_media_bd text-center\" style=\"\">
-        <a href=\"tel:{$message['phone_number']}\" class=\"\">
+        <a href=\"tel:{$message['phone_number']}\" class=\"\" style='text-decoration: none;color: black'>
             <h4>
                 <img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
                 <span style=\"\">拨打电话</span>
