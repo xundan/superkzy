@@ -149,16 +149,25 @@ class WxAccessController extends Controller
         $weObj = new \Org\Util\Wechat($options);
         //获取菜单操作:
         $menu = $weObj->getMenu();
+        echo json_encode($menu);
+        echo "<br/>-<br/>";
         //设置菜单
         $newmenu = array(
             "button" =>
                 array(
-//                    array('type' => 'click', 'name' => '最新消息', 'key' => 'MENU_KEY_NEWS'),
-//                    array('type' => 'view', 'name' => '我要搜索', 'url' => 'http://www.baidu.com'),
+                    array('type' => 'view', 'name' => '供求信息', 'url' => 'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'),
+                    array(
+                        'name' => '戳我福利',
+                        'sub_button' => array(
+                            array('type' => 'view', 'name' => '便宜加油', 'url' => 'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'),
+                            array('type' => 'view', 'name' => '极速贷款', 'url' => 'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'),
+                        ),
+                    ),
                 )
         );
-//        $result = $weObj->createMenu($newmenu);
-        echo $weObj->deleteMenu();
+        $result = $weObj->createMenu($newmenu);
+        echo $result;
+//        echo $weObj->deleteMenu();
     }
 
 
