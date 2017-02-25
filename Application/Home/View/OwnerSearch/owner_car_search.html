@@ -129,7 +129,7 @@
             $searchBar.addClass('weui_search_focusing');
             $searchInput.focus();
             if (cookie('search_input')) {
-                $(this).val(cookie('search_input'));
+                $('#search_input').val(cookie('search_input'));
             }
         });
         $searchInput
@@ -142,10 +142,12 @@
                         //将输入的值存入cookie
                         if ($(this).val().trim() == '') {
                             cookie('search_input', null);
+                            cookie('search_input_for_highlight', null);
                             $('input[name=search_input]').val('');
                         } else {
                             $('input[name=search_input]').val($(this).val().trim());
                             cookie('search_input', $(this).val().trim());
+                            cookie('search_input_for_highlight',encodeURI(cookie('search_input')));
                         }
                         $('input[name=select_category]').val(cookie('search_tag'));
                         $('input[name=area_start]').val(cookie('area_start_id'));

@@ -58,9 +58,10 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                姓名
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">姓名</span>
                             </span>
                             <input id="nickname" name="nickname" class="form-control" placeholder="请输入姓名"
                                    style="border-radius: 0;border: 0" value="{$user_owner['user_name']}">
@@ -69,9 +70,10 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                电话
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">电话</span>
                             </span>
                             <input id="phone_number" name="phone_number" class="form-control" placeholder="请输入电话"
                                    style="border-radius: 0;border: 0" onclick="phone_register()"
@@ -80,42 +82,47 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td style="padding: 0">
                         <a data-toggle="collapse" href="#collapse_sex" aria-expanded="true"
-                           aria-controls="collapse_sell_coal_trait" style="text-decoration: none;color:black">
-                            <div>
-                                &nbsp;性别
-                                <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive"
+                           style="text-decoration: none;color:black">
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">性别</span>
+                                </span>
+                                <span id="sex" style="border: 0" class="form-control"></span>
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
                                          style="width: 20px">
                                 </span>
                             </div>
                         </a>
 
-                        <div id="collapse_sex" class="collapse" role="tablist" aria-labelledby="">
-                            <label class="btn btn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                <input id="rdo1" type="radio" class="pull-left" name="sex" autocomplete="off" value="1">
-                                &nbsp;男
+                        <div id="collapse_sex" class="collapse" role="tablist" aria-labelledby="" style="margin-bottom: 4px">
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="rdo1" type="radio" class="pull-left" style="display: none" name="sex"
+                                       autocomplete="off" value="1">男
                             </label>
-                            <label class="btn btn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                <input id="rdo2" type="radio" class="pull-left" name="sex" autocomplete="off" value="2">
-                                &nbsp;女
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="rdo2" type="radio" class="pull-left" style="display: none" name="sex"
+                                       autocomplete="off" value="2">女
                             </label>
-                            <label class="btn btn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                <input id="rdo0" type="radio" class="pull-left" name="sex" autocomplete="off" value="0">
-                                &nbsp;保密
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="rdo0" type="radio" class="pull-left" style="display: none" name="sex"
+                                       autocomplete="off" value="0">保密
                             </label>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                生日
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon" style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">生日</span>
                             </span>
                             <input type="date" name="birthday" class="form-control" placeholder="请输入生日"
                                    style="border-radius: 0;border: 0" value="{$user_owner['birthday']}">
@@ -124,9 +131,9 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                公司名称
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon" style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">公司名称</span>
                             </span>
                             <input id="supply_company" name="supply_company" class="form-control"
                                    placeholder="请输入您的矿、厂名称" style="border-radius: 0;border: 0"
@@ -135,25 +142,30 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <a href="#" style="text-decoration: none;color:black">
-                            <div onclick="get_area()">
-                                &nbsp;所在地区&nbsp;&nbsp;&nbsp;&nbsp;{$user_district}
-                                <span id="reside_area" style="margin-left:30%"></span>
+                    <td style="padding: 0">
+                        <div onclick="get_area()">
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">所在地区</span>
+                                </span>
+                                <span id="reside_area" style="border: 0" class="form-control">{$user_district}</span>
                                 <input type="hidden" name="reside_area">
-                                <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive"
+                                <input type="hidden" name="area_start_name" id="sell_area_start_name">
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
                                          style="width: 10px">
                                 </span>
                             </div>
-                        </a>
+                        </div>
                     </td>
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                详细地址
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon" style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">详细地址</span>
                             </span>
                             <input id="area_detail" name="area_detail" class="form-control" placeholder="请输入详细地址"
                                    style="border-radius: 0;border: 0" value="{$user_owner['area_detail']}">
@@ -162,9 +174,9 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                邀请人
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon" style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">邀请人</span>
                             </span>
                             <input id="invite_id" name="invite_id" class="form-control" placeholder="请输入邀请人编码"
                                    style="border-radius: 0;border: 0">
@@ -174,7 +186,8 @@
             </table>
             <input type="button" name="confirm_button" id="confirm_button" class="btn btn-group-justified "
                    value="确&nbsp&nbsp&nbsp定"
-                   style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e" onclick="submit_basic_form()">
+                   style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e"
+                   onclick="submit_basic_form()">
 
             <div id="result"></div>
         </form>
@@ -185,9 +198,9 @@
             <table class="table table-responsive" style="border: 0">
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                行业类型
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon" style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">行业类型</span>
                             </span>
                             <input id="owner_work_type" name="owner_work_type" class="form-control"
                                    placeholder="请输入行业类型" style="border-radius: 0;border: 0"
@@ -197,9 +210,9 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                从业时间
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon" style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">从业时间</span>
                             </span>
                             <input id="work_time" name="work_time" class="form-control" placeholder="请输入从业时间"
                                    style="border-radius: 0;border: 0" value="{$user_owner['work_time']}">
@@ -208,9 +221,9 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                公司名称
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon" style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">公司名称</span>
                             </span>
                             <input id="company_name" name="company_name" class="form-control" placeholder="请输入您的公司名称"
                                    style="border-radius: 0;border: 0" value="{$user_company['name']}">
@@ -219,9 +232,9 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                所属部门
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon" style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">所属部门</span>
                             </span>
                             <input id="owner_department" name="owner_department" class="form-control"
                                    placeholder="请输入您的部门" style="border-radius: 0;border: 0"
@@ -231,9 +244,9 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                职位
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon" style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">职位</span>
                             </span>
                             <input name="owner_position" class="form-control" placeholder="请输入您的职位"
                                    style="border-radius: 0;border: 0" value="{$user_owner['owner_position']}">
@@ -253,7 +266,8 @@
                 </tr>
             </table>
             <input type="button" name="confirm_button2" class="btn btn-group-justified " value="确&nbsp&nbsp&nbsp定"
-                   style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e" onclick="submit_exp_form()">
+                   style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e"
+                   onclick="submit_exp_form()">
         </form>
     </div>
 </div>
@@ -264,9 +278,30 @@
         $(this).siblings('a').removeClass('weui_bar_item_on');
         $(this).addClass('weui_bar_item_on');
         $(this).tab('show');
-    })
+    });
 </script>
-
+<!--按钮选择样式-->
+<script>
+    $('input[type=radio]').click(function () {
+        var check_val = $(this).val();
+        $(this).parent('label').siblings().removeClass('myactive');
+        $(this).parent('label').toggleClass('myactive');
+        var temp_html = $(this).parent('label').parent('div').parent('td').children('a').children('div').children('span').eq(1);
+        var sex_html;
+        switch (check_val){
+            case '1':sex_html = '男';break;
+            case '2':sex_html = '女';break;
+            case '0':sex_html = '保密';break;
+            default:sex_html = '未知';
+        }
+        temp_html.html(sex_html);
+        if(!$(this).parent('label').hasClass('myactive')){
+            console.log('cancel_check');
+            $(this).attr('checked',false);
+            temp_html.html('');
+        }
+    });
+</script>
 <!--areaSearch跳转回来时读取cookie信息-->
 <script>
     $(function () {
@@ -277,10 +312,13 @@
         // 性别
         if ("{$user_owner['sex']}" == "1") {
             $("#rdo1").attr("checked", "checked");
+            $('#sex').html('男');
         } else if ("{$user_owner['sex']}" == "2") {
             $("#rdo2").attr("checked", "checked");
+            $('#sex').html('女');
         } else if ("{$user_owner['sex']}" == "0") {
             $("#rdo0").attr("checked", "checked");
+            $('#sex').html('保密');
         } else {
             // 用户没选，什么都不做
         }
@@ -316,13 +354,13 @@
         window.location.href = "{:U('areaSearch/area_search')}";
     }
 
-    function submit_basic_form(){
-        cookie('form_basic_data',null);
+    function submit_basic_form() {
+        cookie('form_basic_data', null);
         document.getElementById('form_owner_basic_data').submit();
     }
 
-    function submit_exp_form(){
-        cookie('form_exp_data',null);
+    function submit_exp_form() {
+        cookie('form_exp_data', null);
         document.getElementById('form_owner_work_exp').submit();
     }
 </script>

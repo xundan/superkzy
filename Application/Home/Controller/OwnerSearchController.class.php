@@ -17,6 +17,7 @@ class OwnerSearchController extends SearchController
         $whereCond = $this->createNewWhereConditions();
 
         $data = $this->getOrderWithoutExist($whereCond,0,"车源");
+        $data = $this->search_highlight($data);
 
         $this->assign("li_array", $data['li_array']);
         $this->assign("where_cond_json", $data['where_cond_json']);
@@ -35,6 +36,7 @@ class OwnerSearchController extends SearchController
         $whereCond = WhereConditions::parseJson($whereCondJson);
         $data = $this->getOrderWithoutExist($whereCond, $post['stage'],"车源");
         $data['page'] = $post['page']; // 把page送回去，作为校验
+        $data = $this->search_highlight($data);
         echo json_encode($data);
         return;
     }
@@ -76,5 +78,21 @@ class OwnerSearchController extends SearchController
             $whereCond->pushCond("area_end", "eq", $input['areaEnd']);
             return $whereCond;
         }
+    }
+
+    /**
+     * 替换搜索内容以高亮显示
+     * @param $data
+     * @return mixed
+     */
+    private function search_highlight($data){
+        if(cookie('search_input_for_highlight')){
+            $search = urldecode(cookie('search_input_for_highlight'));
+            $search_replace = "<span style='color:red'>".$search."</span>";
+            $data['li_array'] = str_replace($search,$search_replace,$data['li_array']);
+        }else{}
+
+        return $data;
+
     }
 }

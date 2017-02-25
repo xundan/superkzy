@@ -124,7 +124,7 @@
             $searchBar.addClass('weui_search_focusing');
             $searchInput.focus();
             if (cookie('search_input')) {
-                $(this).val(cookie('search_input'));
+                $('#search_input').val(cookie('search_input'));
             }
         });
         $searchInput
@@ -137,10 +137,12 @@
                         //            //将输入的值存入cookie
                         if ($(this).val().trim() == '') {
                             cookie('search_input', null);
+                            cookie('search_input_for_highlight', null);
                             $('input[name=search_input]').val('');
                         } else {
                             $('input[name=search_input]').val($(this).val().trim());
                             cookie('search_input', $(this).val().trim());
+                            cookie('search_input_for_highlight',encodeURI(cookie('search_input')));
                         }
                         //将值传入hidden input提交
                         if (cookie('trade_search_filter_kind')) {
@@ -160,7 +162,6 @@
                         }
 
                         //将输入的值存入cookie
-                        cookie('search_input', $(this).val());
 
                         //提交表单
                         document.tag_search.method = "post";
@@ -528,6 +529,13 @@
                         $('#stage').html(jsonObj.stage);
                         jQuery.each(jsonObj.li_array, function (k, val) {
                             var li = document.createElement('li');
+//                            if(cookie('search_input')){
+//                                temp_search = cookie('search_input');
+//                                temp_search_new = "<span style='color:red'>"+temp_search+"</span>";
+//                                temp_search = new RegExp(temp_search,'g');
+//                                val = val.replace(temp_search,temp_search_new);
+//                            }
+                            console.log(val);
                             li.innerHTML = val;
                             console.log(cookie('search_tag'));
                             if (cookie('search_tag') == '求购') {

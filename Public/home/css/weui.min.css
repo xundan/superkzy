@@ -2202,6 +2202,7 @@ input[type=search]::-webkit-search-cancel-button, input[type=search]::-webkit-se
 .weui_bar_item_on{
     border-bottom: 3px solid;
     border-color: #04bfc6;
+    font-weight: bold;
 }
 .weui_bar_item_on_extra{
     border-bottom: 3px solid;

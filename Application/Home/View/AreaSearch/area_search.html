@@ -28,7 +28,7 @@
             </div>
             <label for="search_input" class="weui_search_text" id="search_text">
                 <i class="weui_icon_search"></i>
-                <span>搜索</span>
+                <span>搜索(点击此处直接输入地址选取)</span>
             </label>
         </form>
         <a href="javascript:" class="weui_search_cancel" id="search_cancel">取消</a>
@@ -37,7 +37,7 @@
         <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
             <div class="weui_cell" >
                 <div class="weui_cell_bd weui_cell_primary">
-                    <p id="search0" style="margin-bottom: 0">实时搜索文本</p>
+                    <p id="search0" style="margin-bottom: 0"></p>
                     <div id="search0_id" style="display: none"></div>
                 </div>
             </div>
@@ -45,7 +45,7 @@
         <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
             <div class="weui_cell" >
                 <div class="weui_cell_bd weui_cell_primary">
-                    <p id="search1" style="margin-bottom: 0">实时搜索文本</p>
+                    <p id="search1" style="margin-bottom: 0"></p>
                     <div id="search1_id" style="display: none"></div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
         <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
             <div class="weui_cell" >
                 <div class="weui_cell_bd weui_cell_primary">
-                    <p id="search2" style="margin-bottom: 0">实时搜索文本</p>
+                    <p id="search2" style="margin-bottom: 0"></p>
                     <div id="search2_id" style="display: none"></div>
                 </div>
             </div>
@@ -61,7 +61,7 @@
         <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
             <div class="weui_cell" >
                 <div class="weui_cell_bd weui_cell_primary">
-                    <p id="search3" style="margin-bottom: 0">实时搜索文本</p>
+                    <p id="search3" style="margin-bottom: 0"></p>
                     <div id="search3_id" style="display: none"></div>
                 </div>
             </div>
@@ -69,7 +69,7 @@
         <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
             <div class="weui_cell" >
                 <div class="weui_cell_bd weui_cell_primary">
-                    <p id="search4" style="margin-bottom: 0">实时搜索文本</p>
+                    <p id="search4" style="margin-bottom: 0"></p>
                     <div id="search4_id" style="display: none"></div>
                 </div>
             </div>
@@ -118,17 +118,17 @@
         <table class="table">
             <tr>
                 <td>
-                    {area3}
+                    暂无热点地区
                 </td>
             </tr>
             <tr>
                 <td>
-                    {area2}
+                    暂无热点地区
                 </td>
             </tr>
             <tr>
                 <td>
-                    {area1}
+                    暂无热点地区
                 </td>
             </tr>
         </table>
@@ -759,22 +759,33 @@
 
 <!--搜索框功能-->
 <script>
-    $('#search_input').focus(function(){
-        var $weuiSearchBar = $('#search_bar');
-        $weuiSearchBar.addClass('weui_search_focusing');
-    });
-    $('#search_input').blur(function(){
-        var $weuiSearchBar = $('#search_bar');
-        $weuiSearchBar.removeClass('weui_search_focusing');
-        if ($(this).val()){
-            $('#search_text').hide();
-        } else {
-            $('#search_text').show();
+    $(function(){
+        var $searchBar = $('#search_bar'),
+                $searchText = $('#search_text'),
+                $searchInput = $('#search_input'),
+                $searchClear = $('#search_clear'),
+                $searchCancel = $('#search_cancel');
+
+        function hideSearchResult(){
+            $searchInput.val('');
         }
-    });
-    $('#search_input').bind('input','#search_input',function(){
-        var $searchShow = $("#search_show");
-        if ($(this).val()) {
+        function cancelSearch(){
+            hideSearchResult();
+            $searchBar.removeClass('weui_search_focusing');
+            $searchText.show();
+        }
+
+        $searchText.on('click', function(){
+            $searchBar.addClass('weui_search_focusing');
+            $searchInput.focus();
+        });
+        $searchInput
+                .on('blur', function () {
+                    if(!this.value.length) cancelSearch();
+                })
+                .on('input', function(event){
+                    var $searchShow = $("#search_show");
+                    if ($(this).val()) {
 //            console.log($(this).val());
             var url="{:U('AreaSearch/ajax_area_search')}";
             var querystring = $(this).val();
@@ -786,25 +797,26 @@
                 dataType:'json',
                 success:function(data){
 //                console. eval("("+data+")");
-                console.log(data);
-                jQuery.each(data,function(k,val){
-                    $('#search'+k).html(val.name);
-                    $('#search'+k+'_id').html(val.id);
+                                console.log(data);
+                                jQuery.each(data,function(k,val){
+                                    $('#search'+k).html(val.name);
+                                    $('#search'+k+'_id').html(val.id);
+                                });
+                            }
+                        });
+                        $searchShow.show();
+                    } else {
+                        $searchShow.hide();
+                    }
                 });
-            }
-            });
-            $searchShow.show();
-        } else {
-            $searchShow.hide();
-        }
-    });
-    $('#search_cancel').bind('touchend','#search_cancel',function(){
-        $("#search_show").hide();
-        $('#search_input').val('');
-    });
-    $('#search_clear').bind('touchend','#search_cancel',function(){
-        $("#search_show").hide();
-        $('#search_input').val('');
+        $searchClear.on('click', function(){
+            hideSearchResult();
+            $searchInput.focus();
+        });
+        $searchCancel.on('click', function(){
+            cancelSearch();
+            $searchInput.blur();
+        });
     });
 </script>
 

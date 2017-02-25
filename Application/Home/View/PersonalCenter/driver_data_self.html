@@ -59,64 +59,71 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                姓名
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">姓名</span>
                             </span>
                             <input id="nickname" name="nickname" class="form-control" placeholder="请输入姓名"
-                                   style="border-radius: 0;border: 0" value="{$user_driver['user_name']}">
+                                   style="border-radius: 0;border: 0" value="{$user_owner['user_name']}">
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
+                        <div class="input-group" style="height:34px;width: 100%">
                             <span class="input-group-addon"
-                                  style="border-radius: 0;border:0;vertical-align: middle;background-color: white">
-                                联系电话
-                                <!--<span style="font-size: 1.5em;color:red;vertical-align: middle">*</span>-->
-                                <!--<img src="__PUBLIC__/home/images/necessary.png" class="" style="width: 7px">-->
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">电话</span>
                             </span>
-                            <input id="phone_number" name="phone_number" class="form-control" placeholder="请输入联系电话"
+                            <input id="phone_number" name="phone_number" class="form-control" placeholder="请输入电话"
                                    style="border-radius: 0;border: 0" onclick="phone_register()"
-                                   value="{$user_driver['phone_number']}">
+                                   value="{$user_owner['phone_number']}">
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td>
-                        <a data-toggle="collapse" href="#collapse_sex" aria-expanded="true" aria-controls="collapse_sex"
+                    <td style="padding: 0">
+                        <a data-toggle="collapse" href="#collapse_sex" aria-expanded="true"
                            style="text-decoration: none;color:black">
-                            <div>
-                                &nbsp;性别
-                                <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive"
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">性别</span>
+                                </span>
+                                <span id="sex" style="border: 0" class="form-control"></span>
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
                                          style="width: 20px">
                                 </span>
                             </div>
                         </a>
 
-                        <div id="collapse_sex" class="collapse" role="tablist" aria-labelledby="">
-                            <label class="btn btn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                <input id="rdo1" type="radio" class="pull-left" name="sex" autocomplete="off" value="1"> &nbsp;男
+                        <div id="collapse_sex" class="collapse" role="tablist" aria-labelledby="" style="margin-bottom: 4px">
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="rdo1" type="radio" class="pull-left" style="display: none" name="sex"
+                                       autocomplete="off" value="1">男
                             </label>
-                            <label class="btn btn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                <input id="rdo2" type="radio" class="pull-left" name="sex" autocomplete="off" value="2"> &nbsp;女
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="rdo2" type="radio" class="pull-left" style="display: none" name="sex"
+                                       autocomplete="off" value="2">女
                             </label>
-                            <label class="btn btn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                <input id="rdo0" type="radio" class="pull-left" name="sex" autocomplete="off" value="0"> &nbsp;保密
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="rdo0" type="radio" class="pull-left" style="display: none" name="sex"
+                                       autocomplete="off" value="0">保密
                             </label>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                身份证号
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon" style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">身份证号</span>
                             </span>
                             <input name="id_card" class="form-control" placeholder="请输入您的身份证号"
                                    style="border-radius: 0;border: 0" value="{$user_driver['id_card']}">
@@ -125,9 +132,9 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                驾驶证号
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon" style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">驾驶证号</span>
                             </span>
                             <input name="drive_card" class="form-control" placeholder="请输入您的驾驶证号"
                                    style="border-radius: 0;border: 0" value="{$user_driver['drive_card']}">
@@ -160,9 +167,9 @@
                 <!--</tr>-->
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                车牌号
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon" style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">车牌号</span>
                             </span>
                             <input name="plate_number" class="form-control" placeholder="请输入您的车牌号"
                                    style="border-radius: 0;border: 0" value="{$user_car['plate_number']}">
@@ -170,62 +177,67 @@
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td style="padding: 0">
                         <a data-toggle="collapse" href="#collapse_car_type" aria-expanded="true"
                            aria-controls="collapse_car_type" style="text-decoration: none;color:black">
-                            <div>
-                                &nbsp;车辆类型
-                                <span class="pull-right">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights img-responsive"
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">车辆类型</span>
+                                </span>
+                                <span id="car_type_html" style="border: 0" class="form-control"></span>
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
                                          style="width: 20px">
                                 </span>
                             </div>
                         </a>
 
-                        <div id="collapse_car_type" class="collapse" role="tablist" aria-labelledby="">
-                            <label class="btn btn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                <input id="car_type_1" type="radio" class="pull-left" name="car_type" autocomplete="off" value="1">
-                                &nbsp;平板
+                        <div id="collapse_car_type" class="collapse" role="tablist" aria-labelledby="" style="margin-bottom: 4px">
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="car_type_1" type="radio" class="pull-left" style="display: none" name="car_type"
+                                       autocomplete="off" value="1">平 板
                             </label>
-                            <label class="btn btn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                <input id="car_type_2" type="radio" class="pull-left" name="car_type" autocomplete="off" value="2">
-                                &nbsp;厢式
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="car_type_2" type="radio" class="pull-left" style="display: none" name="car_type"
+                                       autocomplete="off" value="2">厢 式
                             </label>
-                            <label class="btn btn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                <input id="car_type_3" type="radio" class="pull-left" name="car_type" autocomplete="off" value="3">
-                                &nbsp;高栏
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="car_type_3" type="radio" class="pull-left" style="display: none" name="car_type"
+                                       autocomplete="off" value="3">高 栏
                             </label>
-                            <label class="btn btn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                <input id="car_type_4" type="radio" class="pull-left" name="car_type" autocomplete="off" value="4">
-                                &nbsp;仓栅
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="car_type_4" type="radio" class="pull-left" style="display: none" name="car_type"
+                                       autocomplete="off" value="4">仓 栅
                             </label>
-                            <label class="btn btn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                <input id="car_type_5" type="radio" class="pull-left" name="car_type" autocomplete="off" value="5">
-                                &nbsp;罐式
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="car_type_5" type="radio" class="pull-left" style="display: none" name="car_type"
+                                       autocomplete="off" value="5">罐 式
                             </label>
-                            <label class="btn btn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                <input id="car_type_6" type="radio" class="pull-left" name="car_type" autocomplete="off" value="6">
-                                &nbsp;自卸
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="car_type_6" type="radio" class="pull-left" style="display: none" name="car_type"
+                                       autocomplete="off" value="6">自 卸
                             </label>
-                            <label class="btn btn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: left;padding-left: 8px">
-                                <input id="car_type_7" type="radio" class="pull-left" name="car_type" autocomplete="off" value="7">
-                                &nbsp;其他
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="car_type_7" type="radio" class="pull-left" style="display: none" name="car_type"
+                                       autocomplete="off" value="7">其 他
                             </label>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                核载吨数
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon" style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">核载吨数</span>
                             </span>
                             <input name="carrying_capacity" class="form-control" placeholder="请输入车辆核载吨数"
                                    style="border-radius: 0;border: 0" value="{$user_car['carrying_capacity']}">
@@ -312,32 +324,87 @@
         $(this).tab('show');
     })
 </script>
+<!--按钮选择样式-->
+<script>
+    $('input[name=sex]').click(function () {
+        var check_val = $(this).val();
+        $(this).parent('label').siblings().removeClass('myactive');
+        $(this).parent('label').toggleClass('myactive');
+        var temp_html = $(this).parent('label').parent('div').parent('td').children('a').children('div').children('span').eq(1);
+        var sex_html;
+        switch (check_val){
+            case '1':sex_html = '男';break;
+            case '2':sex_html = '女';break;
+            case '0':sex_html = '保密';break;
+            default:sex_html = '未知';
+        }
+        temp_html.html(sex_html);
+        if(!$(this).parent('label').hasClass('myactive')){
+            console.log('cancel_check');
+            $(this).attr('checked',false);
+            temp_html.html('');
+        }
+    });
+    $('input[name=car_type]').click(function () {
+        var check_val = $(this).val();
+        $(this).parent('label').siblings().removeClass('myactive');
+        $(this).parent('label').toggleClass('myactive');
+        var temp_html = $(this).parent('label').parent('div').parent('td').children('a').children('div').children('span').eq(1);
+        var car_type_html;
+        switch (check_val){
+            case '1':car_type_html = '平板';break;
+            case '2':car_type_html = '厢式';break;
+            case '3':car_type_html = '高栏';break;
+            case '4':car_type_html = '仓栅';break;
+            case '5':car_type_html = '罐式';break;
+            case '6':car_type_html = '自卸';break;
+            case '7':car_type_html = '其他';break;
+            default:car_type_html = '未知';
+        }
+        temp_html.html(car_type_html);
+        if(!$(this).parent('label').hasClass('myactive')){
+            console.log('cancel_check');
+            $(this).attr('checked',false);
+            temp_html.html('');
+        }
+    });
+</script>
 <script>
     $(function(){
         if ("{$user_driver['sex']}" == "1") {
             $("#rdo1").attr("checked", "checked");
+            $('#sex').html('男');
         } else if ("{$user_driver['sex']}" == "2") {
             $("#rdo2").attr("checked", "checked");
+            $('#sex').html('女');
         } else if ("{$user_driver['sex']}" == "0") {
             $("#rdo0").attr("checked", "checked");
+            $('#sex').html('保密');
         } else {
             // 用户没选，什么都不做
         }
 
         if ("{$user_car['type_id']}" == "1") {
             $("#car_type_1").attr("checked", "checked");
+            $('#car_type_html').html('平板');
         } else if ("{$user_car['type_id']}" == "2") {
             $("#car_type_2").attr("checked", "checked");
+            $('#car_type_html').html('厢式');
         } else if ("{$user_car['type_id']}" == "3") {
             $("#car_type_3").attr("checked", "checked");
+            $('#car_type_html').html('高栏');
         } else if ("{$user_car['type_id']}" == "4") {
             $("#car_type_4").attr("checked", "checked");
+            $('#car_type_html').html('仓栅');
         } else if ("{$user_car['type_id']}" == "5") {
             $("#car_type_5").attr("checked", "checked");
+            $('#car_type_html').html('罐式');
         } else if ("{$user_car['type_id']}" == "6") {
             $("#car_type_6").attr("checked", "checked");
+            $('#car_type_html').html('自卸');
         } else if ("{$user_car['type_id']}" == "7") {
             $("#car_type_7").attr("checked", "checked");
+            $('#car_type_html').html('其他');
         } else {
             // 用户没选，什么都不做
         }
