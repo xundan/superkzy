@@ -30,7 +30,7 @@ class CarGiveMsgCard extends MsgCard
         if ($message['formatted']) { // 如果用户按照标准格式填写
             $li_str = "<li onclick='window.location.href=\"{$message_detail}\"' class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
 <div style=\"position: absolute;right: 0px;\">
-    <img src=\"__PUBLIC__/home/images/other.png\" width=\"50px\">
+    <img src=\"__PUBLIC__/home/images/give.png\" width=\"50px\">
 </div>
 <div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
     <a href=\"{$personal_page}\">
@@ -55,14 +55,14 @@ class CarGiveMsgCard extends MsgCard
 <table class=\"table table-condensed\" style=\"margin: 0\">
     <tbody>
     <tr><td>车辆类型:{$message['car_type']}</td><td>吨数:{$message['car_capacity']}</td></tr>
-    <tr><td></td><td>发布时间:{$publish_date}</td></tr>
     </tbody>
 </table>
+<div class='pull-right'>发布时间:{$publish_date}</div>
 </li>";
         } else {
             $li_str = "<li onclick='window.location.href=\"{$message_detail}\"' class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
 <div style=\"position: absolute;right: 0px;\">
-    <img src=\"__PUBLIC__/home/images/other.png\" width=\"50px\">
+    <img src=\"__PUBLIC__/home/images/give.png\" width=\"50px\">
 </div>
 <div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
     <a href=\"{$personal_page}\">

@@ -55,9 +55,10 @@ class CarNeedMsgCard extends MsgCard
 <table class=\"table table-condensed\" style=\"margin: 0\">
     <tbody>
         <tr><td>发煤量:{$message['quantity']}</td><td>粒度:{$message['granularity']}</td></tr>
-        <tr><td>装车时间:{$message['loading_time']}</td><td>发布时间:{$publish_date}</td></tr>
+        <tr><td colspan='2'>装车时间:{$message['loading_time']}</td></tr>
     </tbody>
 </table>
+<div class='pull-right'>发布时间:{$publish_date}</div>
 </li>";
         } else {
             $li_str = "<li onclick='window.location.href=\"{$message_detail}\"' class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">

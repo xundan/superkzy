@@ -40,113 +40,224 @@ class AreaSearchController extends ComController
         $result_hot = M('districts')->where($where_hot)->select();
 
         //所有地区列表 默认A开始 每个字母开头assign一下
+        if(I('post.signal') == 1) {
 //        $where['level_type'] = array('gt',1);   //二级地区
-        $where['level_type'] = array('eq',2);   //二级地区
+            $where['level_type'] = array('eq', 2);   //二级地区
+            if (empty(S('resultsA'))) {
+                $where['pinyin'] = array('like', 'A%');
+                $resultA = M('districts')->where($where)->field('id,name')->select();
+                S('resultA', $resultA);
+            } else {
+                $resultA = S('resultA');
+            }
+            if (empty(S('resultsB'))) {
+                $where['pinyin'] = array('like', 'B%');
+                $resultB = M('districts')->where($where)->field('id,name')->select();
+                S('resultB', $resultB);
+            } else {
+                $resultB = S('resultB');
+            }
+            if (empty(S('resultsC'))) {
+                $where['pinyin'] = array('like', 'C%');
+                $resultC = M('districts')->where($where)->field('id,name')->select();
+                S('resultC', $resultC);
+            } else {
+                $resultC = S('resultC');
+            }
+            if (empty(S('resultsD'))) {
+                $where['pinyin'] = array('like', 'D%');
+                $resultD = M('districts')->where($where)->field('id,name')->select();
+                S('resultD', $resultD);
+            } else {
+                $resultD = S('resultD');
+            }
+            if (empty(S('resultsE'))) {
+                $where['pinyin'] = array('like', 'E%');
+                $resultE = M('districts')->where($where)->field('id,name')->select();
+                S('resultE', $resultE);
+            } else {
+                $resultE = S('resultE');
+            }
+            if (empty(S('resultsF'))) {
+                $where['pinyin'] = array('like', 'F%');
+                $resultF = M('districts')->where($where)->field('id,name')->select();
+                S('resultF', $resultF);
+            } else {
+                $resultF = S('resultF');
+            }
+            if (empty(S('resultsG'))) {
+                $where['pinyin'] = array('like', 'G%');
+                $resultG = M('districts')->where($where)->field('id,name')->select();
+                S('resultG', $resultG);
+            } else {
+                $resultG = S('resultG');
+            }
+            if (empty(S('resultsH'))) {
+                $where['pinyin'] = array('like', 'H%');
+                $resultH = M('districts')->where($where)->field('id,name')->select();
+                S('resultH', $resultH);
+            } else {
+                $resultH = S('resultH');
+            }
+            if (empty(S('resultsI'))) {
+                $where['pinyin'] = array('like', 'I%');
+                $resultI = M('districts')->where($where)->field('id,name')->select();
+                S('resultI', $resultI);
+            } else {
+                $resultI = S('resultI');
+            }
+            if (empty(S('resultsJ'))) {
+                $where['pinyin'] = array('like', 'J%');
+                $resultJ = M('districts')->where($where)->field('id,name')->select();
+                S('resultJ', $resultJ);
+            } else {
+                $resultJ = S('resultJ');
+            }
+            if (empty(S('resultsK'))) {
+                $where['pinyin'] = array('like', 'K%');
+                $resultK = M('districts')->where($where)->field('id,name')->select();
+                S('resultK', $resultK);
+            } else {
+                $resultK = S('resultK');
+            }
+            if (empty(S('resultsL'))) {
+                $where['pinyin'] = array('like', 'L%');
+                $resultL = M('districts')->where($where)->field('id,name')->select();
+                S('resultL', $resultL);
+            } else {
+                $resultL = S('resultL');
+            }
+            if (empty(S('resultsM'))) {
+                $where['pinyin'] = array('like', 'M%');
+                $resultM = M('districts')->where($where)->field('id,name')->select();
+                S('resultM', $resultM);
+            } else {
+                $resultM = S('resultM');
+            }
+            if (empty(S('resultsN'))) {
+                $where['pinyin'] = array('like', 'N%');
+                $resultN = M('districts')->where($where)->field('id,name')->select();
+                S('resultN', $resultN);
+            } else {
+                $resultN = S('resultN');
+            }
+            if (empty(S('resultsO'))) {
+                $where['pinyin'] = array('like', 'O%');
+                $resultO = M('districts')->where($where)->field('id,name')->select();
+                S('resultO', $resultO);
+            } else {
+                $resultO = S('resultO');
+            }
+            if (empty(S('resultsP'))) {
+                $where['pinyin'] = array('like', 'P%');
+                $resultP = M('districts')->where($where)->field('id,name')->select();
+                S('resultP', $resultP);
+            } else {
+                $resultP = S('resultP');
+            }
+            if (empty(S('resultsQ'))) {
+                $where['pinyin'] = array('like', 'Q%');
+                $resultQ = M('districts')->where($where)->field('id,name')->select();
+                S('resultQ', $resultQ);
+            } else {
+                $resultQ = S('resultQ');
+            }
+            if (empty(S('resultsR'))) {
+                $where['pinyin'] = array('like', 'R%');
+                $resultR = M('districts')->where($where)->field('id,name')->select();
+                S('resultR', $resultR);
+            } else {
+                $resultR = S('resultR');
+            }
+            if (empty(S('resultsS'))) {
+                $where['pinyin'] = array('like', 'S%');
+                $resultS = M('districts')->where($where)->field('id,name')->select();
+                S('resultS', $resultS);
+            } else {
+                $resultS = S('resultS');
+            }
+            if (empty(S('resultsT'))) {
+                $where['pinyin'] = array('like', 'T%');
+                $resultT = M('districts')->where($where)->field('id,name')->select();
+                S('resultT', $resultT);
+            } else {
+                $resultT = S('resultT');
+            }
+            if (empty(S('resultsU'))) {
+                $where['pinyin'] = array('like', 'U%');
+                $resultU = M('districts')->where($where)->field('id,name')->select();
+                S('resultU', $resultU);
+            } else {
+                $resultU = S('resultU');
+            }
+            if (empty(S('resultsV'))) {
+                $where['pinyin'] = array('like', 'V%');
+                $resultV = M('districts')->where($where)->field('id,name')->select();
+                S('resultV', $resultV);
+            } else {
+                $resultV = S('resultV');
+            }
+            if (empty(S('resultsW'))) {
+                $where['pinyin'] = array('like', 'W%');
+                $resultW = M('districts')->where($where)->field('id,name')->select();
+                S('resultW', $resultW);
+            } else {
+                $resultW = S('resultW');
+            }
+            if (empty(S('resultsX'))) {
+                $where['pinyin'] = array('like', 'X%');
+                $resultX = M('districts')->where($where)->field('id,name')->select();
+                S('resultX', $resultX);
+            } else {
+                $resultX = S('resultX');
+            }
+            if (empty(S('resultsY'))) {
+                $where['pinyin'] = array('like', 'Y%');
+                $resultY = M('districts')->where($where)->field('id,name')->select();
+                S('resultY', $resultY);
+            } else {
+                $resultY = S('resultY');
+            }
+            if (empty(S('resultsZ'))) {
+                $where['pinyin'] = array('like', 'Z%');
+                $resultZ = M('districts')->where($where)->field('id,name')->select();
+                S('resultZ', $resultZ);
+            } else {
+                $resultZ = S('resultZ');
+            }
+            echo json_encode(array('A'=>$resultA,'B'=>$resultB,'C'=>$resultC,'D'=>$resultD,'E'=>$resultE,'F'=>$resultF,'G'=>$resultG,
+                'H'=>$resultH,'I'=>$resultI,'J'=>$resultJ,'K'=>$resultK,'L'=>$resultL,'M'=>$resultM,'N'=>$resultN,'O'=>$resultO,
+                'P'=>$resultP,'Q'=>$resultQ,'R'=>$resultR,'S'=>$resultS,'T'=>$resultT,'U'=>$resultU,'V'=>$resultV,'W'=>$resultW,
+                'X'=>$resultX,'Y'=>$resultY,'Z'=>$resultZ,));exit;
+//            $this->assign('resultA', $resultA);
+//            $this->assign('resultB', $resultB);
+//            $this->assign('resultC', $resultC);
+//            $this->assign('resultD', $resultD);
+//            $this->assign('resultE', $resultE);
+//            $this->assign('resultF', $resultF);
+//            $this->assign('resultG', $resultG);
+//            $this->assign('resultH', $resultH);
+//            $this->assign('resultI', $resultI);
+//            $this->assign('resultJ', $resultJ);
+//            $this->assign('resultK', $resultK);
+//            $this->assign('resultL', $resultL);
+//            $this->assign('resultM', $resultM);
+//            $this->assign('resultN', $resultN);
+//            $this->assign('resultO', $resultO);
+//            $this->assign('resultP', $resultP);
+//            $this->assign('resultQ', $resultQ);
+//            $this->assign('resultR', $resultR);
+//            $this->assign('resultS', $resultS);
+//            $this->assign('resultT', $resultT);
+//            $this->assign('resultU', $resultU);
+//            $this->assign('resultV', $resultV);
+//            $this->assign('resultW', $resultW);
+//            $this->assign('resultX', $resultX);
+//            $this->assign('resultY', $resultY);
+//            $this->assign('resultZ', $resultZ);
+        }else{
 
-        $where['pinyin']  = array('like', 'A%');
-        $resultA = M('districts')->where($where)->select();
-        $this->assign('resultA',$resultA);
-
-        $where['pinyin']  = array('like', 'B%');
-        $resultB = M('districts')->where($where)->select();
-        $this->assign('resultB',$resultB);
-
-        $where['pinyin']  = array('like', 'C%');
-        $resultC = M('districts')->where($where)->select();
-        $this->assign('resultC',$resultC);
-
-        $where['pinyin']  = array('like', 'D%');
-        $resultD = M('districts')->where($where)->select();
-        $this->assign('resultD',$resultD);
-
-        $where['pinyin']  = array('like', 'E%');
-        $resultE = M('districts')->where($where)->select();
-        $this->assign('resultE',$resultE);
-
-        $where['pinyin']  = array('like', 'F%');
-        $resultF = M('districts')->where($where)->select();
-        $this->assign('resultF',$resultF);
-
-        $where['pinyin']  = array('like', 'G%');
-        $resultG = M('districts')->where($where)->select();
-        $this->assign('resultG',$resultG);
-
-        $where['pinyin']  = array('like', 'H%');
-        $resultH = M('districts')->where($where)->select();
-        $this->assign('resultH',$resultH);
-
-        $where['pinyin']  = array('like', 'I%');
-        $resultI = M('districts')->where($where)->select();
-        $this->assign('resultI',$resultI);
-
-        $where['pinyin']  = array('like', 'J%');
-        $resultJ = M('districts')->where($where)->select();
-        $this->assign('resultJ',$resultJ);
-
-        $where['pinyin']  = array('like', 'K%');
-        $resultK= M('districts')->where($where)->select();
-        $this->assign('resultK',$resultK);
-
-        $where['pinyin']  = array('like', 'L%');
-        $resultL = M('districts')->where($where)->select();
-        $this->assign('resultL',$resultL);
-
-        $where['pinyin']  = array('like', 'M%');
-        $resultM = M('districts')->where($where)->select();
-        $this->assign('resultM',$resultM);
-
-        $where['pinyin']  = array('like', 'N%');
-        $resultN = M('districts')->where($where)->select();
-        $this->assign('resultN',$resultN);
-
-        $where['pinyin']  = array('like', 'O%');
-        $resultO= M('districts')->where($where)->select();
-        $this->assign('resultO',$resultO);
-
-        $where['pinyin']  = array('like', 'P%');
-        $resultP = M('districts')->where($where)->select();
-        $this->assign('resultP',$resultP);
-
-        $where['pinyin']  = array('like', 'Q%');
-        $resultQ = M('districts')->where($where)->select();
-        $this->assign('resultQ',$resultQ);
-
-        $where['pinyin']  = array('like', 'R%');
-        $resultR = M('districts')->where($where)->select();
-        $this->assign('resultR',$resultR);
-
-        $where['pinyin']  = array('like', 'S%');
-        $resultS = M('districts')->where($where)->select();
-        $this->assign('resultS',$resultS);
-
-        $where['pinyin']  = array('like', 'T%');
-        $resultT = M('districts')->where($where)->select();
-        $this->assign('resultT',$resultT);
-
-        $where['pinyin']  = array('like', 'U%');
-        $resultU = M('districts')->where($where)->select();
-        $this->assign('resultU',$resultU);
-
-        $where['pinyin']  = array('like', 'V%');
-        $resultV = M('districts')->where($where)->select();
-        $this->assign('resultV',$resultV);
-
-        $where['pinyin']  = array('like', 'W%');
-        $resultW = M('districts')->where($where)->select();
-        $this->assign('resultW',$resultW);
-
-        $where['pinyin']  = array('like', 'X%');
-        $resultX = M('districts')->where($where)->select();
-        $this->assign('resultX',$resultX);
-
-        $where['pinyin']  = array('like', 'Y%');
-        $resultY = M('districts')->where($where)->select();
-        $this->assign('resultY',$resultY);
-
-        $where['pinyin']  = array('like', 'Z%');
-        $resultZ = M('districts')->where($where)->select();
-        $this->assign('resultZ',$resultZ);
-
+        }
         $this->display();
     }
 

@@ -14,6 +14,7 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
 </head>
 <body>
+<include file="Common:common"/>
 <!--订单展示栏-->
 <div id="msg_id" style="display: none">
     {$message['id']}
@@ -123,6 +124,35 @@
             </ul>
         </div>
     </div>
+    <if condition="session('user_info')['uid'] eq $message['publisher_rid']">
+        <button type="button" class="btn btn-default" onclick="delete_modal()"
+                style="text-align: center;width:100%; color:white;font-size: 1.5em;background-color: #fb3e1e;bottom: 0;">删&nbsp;&nbsp;&nbsp;&nbsp;除</button>
+    </if>
+</div>
+<!--删除模态框-->
+<div class="modal fade" id="delete_succsee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="top:30%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel2" style="color:grey">小提示</h4>
+            </div>
+            <div class="modal-body">
+                <span style="color:black">确定删除已发布的信息吗？</span>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0);" onclick="delete_message(this,{$message['id']})" type="button" class="btn btn-primary"
+                   style="background-color: #04bfc6">
+                    确定
+                </a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+            </div>
+        </div>
+    </div>
 </div>
 <?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
 </body>
@@ -156,6 +186,30 @@
                 }
             });
         }else{}
+        return false;
+    }
+
+    function delete_modal(){
+        $('#delete_succsee').modal();
+    }
+
+    function delete_message(obj,id){
+        var url="{:U('Collection/del_message')}";
+        $.ajax({
+            type: "post",
+            url: url,
+            data: {id: id},
+            success: function (data) {
+                if (data) {
+                    $('#delete_succsee').modal('hide');
+                    showToast('删除成功');
+                    setTimeout(function(){
+                        window.location.href = "{:U('OwnerPublishHistory/owner_publish_history')}";
+                    },1000);
+                } else {
+                }
+            }
+        });
         return false;
     }
 

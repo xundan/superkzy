@@ -90,6 +90,16 @@ class MessagesModel extends Model
         }
     }
 
+    public function updateMessageState($id,$state){
+
+        $msg = D('messages')->where(array("id" => $id))->find();
+        if($msg){
+            $msg['invalid_id'] = $state;
+            $temp = D('messages')->save($msg);
+            if ($temp === false) return 0;
+        }
+        return 1;
+    }
 
     public function getMessageAttr($id = 1, $attr = "content")
     {

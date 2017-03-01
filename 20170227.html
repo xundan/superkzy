@@ -29,7 +29,7 @@
             background: url(20170227-2.jpg) top left;
             background-repeat: no-repeat;
             background-size: cover;
-            padding: 5px 30px;
+            /*padding: 5px 30px;*/
             /*position: absolute;*/
             left: 0;
             /*top: 83%;*/
@@ -48,7 +48,8 @@
         }
 
         div#first_line{
-            width: 80%;
+            width: 100%;
+            vertical-align: middle;
         }
 
         input#tel_input{
@@ -59,7 +60,7 @@
 
         input#btn{
             width: 20%;
-            height: 20px;
+            height: 24px;
             margin: 0;
             background-color: mediumpurple;
             color: white;
@@ -67,6 +68,7 @@
         }
 
         p{
+            margin-left: 10%;
             width: 80%;
             font-size: 14px;
             color: white;
@@ -79,10 +81,11 @@
 <div id="main">
     <div id="div2">
         <div id="first_line">
-            <input id="tel_input" type="tel" placeholder="请输入联系方式" required pattern="^(0|86|17951)?(13[0-9]|15[012356789]|17[0678]|18[0-9]|14[57])[0-9]{8}">
+            <input id="tel_input" type="tel" placeholder="&nbsp;&nbsp;请输入联系方式" required pattern="^(0|86|17951)?(13[0-9]|15[012356789]|17[0678]|18[0-9]|14[57])[0-9]{8}">
             <input id="btn" type="button" onclick="submit_tel()" value="确定">
         </div>
-        <p id="p_text">留下您的联系方式，我们的客服人员会及时联系您，为你服务。</p>
+            <p id="p_text">留下您的联系方式，我们的客服人员会及时联系您，为你服务。</p>
+
     </div>
     <br>
     <br>
@@ -115,5 +118,49 @@
             }
         });
     }
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    wx.config({
+        debug: false,
+        appId: '{$signPackage["appId"]}',
+        timestamp: '{$signPackage["timestamp"]}',
+        nonceStr: '{$signPackage["nonceStr"]}',
+        signature: '{$signPackage["signature"]}',
+        jsApiList: [
+            // 所有要调用的 API 都要加到这个列表中
+            'onMenuShareTimeline', 'onMenuShareAppMessage'
+        ]
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+        // 分享到朋友圈
+        wx.onMenuShareTimeline({
+            title: '没钱怎么办？快找超矿金融吧！', // 分享标题
+            link: "http://www.kuaimei56.com/20170227.html", // 分享链接
+            imgUrl: 'http://www.kuaimei56.com/copyright.png', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        //分享给朋友
+        wx.onMenuShareAppMessage({
+            title: '没钱怎么办？快找超矿金融吧！', // 分享标题
+            desc: '无需抵押无需担保，借款模式更灵活！有运单有订单就有钱，比想象的更简单', // 分享描述
+            link: "http://www.kuaimei56.com/20170227.html", // 分享链接
+            imgUrl: 'http://www.kuaimei56.com/copyright.png', // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    });
 </script>
 </html>

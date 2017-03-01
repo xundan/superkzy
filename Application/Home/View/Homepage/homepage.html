@@ -152,9 +152,12 @@
                 <div data-toggle="modal" data-target="#more" style="text-decoration: none;color: white">
                     <div>
                         <img src="__PUBLIC__/home/images/more.png" style="width: 30px;height: 30px;">
-
-                        <p style="margin: 0">更&emsp;多</p>
-                        <span class="" style="font-size: 12px">相关咨询</span>
+                        <if condition="session('user_info')['role_id'] eq 2">
+                            <p style="margin: 1% 0;">更&nbsp;&nbsp;多</p>
+                            <else />
+                            <p style="margin: 1% 0;">车主福利</p>
+                            </if>
+                        <span class="" style="font-size: 0.8em">增值服务</span>
                     </div>
                 </div>
             </td>

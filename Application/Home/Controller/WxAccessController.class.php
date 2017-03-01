@@ -155,12 +155,20 @@ class WxAccessController extends Controller
         $newmenu = array(
             "button" =>
                 array(
-                    array('type' => 'view', 'name' => '供求信息', 'url' => 'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'),
+                    array(
+                        'name' => '会员中心',
+                        'sub_button' => array(
+                            array('type' => 'view', 'name' => '会员注册', 'url' => 'http://www.kuaimei56.com/index.php/Home/Login/register'),
+//                            array('type' => 'view', 'name' => '会员活动', 'url' => 'http://www.kuaimei56.com/index.php/Home/Login/register'),
+                        ),
+                    ),
+                    array('type' => 'view', 'name' => '平台网站', 'url' => 'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'),
                     array(
                         'name' => '戳我福利',
                         'sub_button' => array(
-                            array('type' => 'view', 'name' => '便宜加油', 'url' => 'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'),
-                            array('type' => 'view', 'name' => '极速贷款', 'url' => 'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'),
+                            array('type' => 'view', 'name' => '优惠加油', 'url' => 'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'),
+                            array('type' => 'view', 'name' => '超矿金融', 'url' => 'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'),
+//                            array('type' => 'view', 'name' => '推荐好友', 'url' => 'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'),
                         ),
                     ),
                 )

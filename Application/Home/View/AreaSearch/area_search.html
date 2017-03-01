@@ -16,7 +16,7 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
 </head>
 <include file="Common:common"/>
-<body style="background-color: #efeff4">
+<body id="aaaa" style="background-color: #efeff4">
 <!--搜索框-->
 <div class="bd">
     <div class="weui_search_bar" id="search_bar">
@@ -88,7 +88,7 @@
                 热点地区
             </span>
     </a>
-    <a href="#allarea" class="weui_navbar_item" data-toggle="tab" style="color: black;text-decoration: none">
+    <a href="#allarea" id="allarea_load" class="weui_navbar_item" data-toggle="tab" style="color: black;text-decoration: none">
             <span role="presentation" class="" style=";font-size: 1.2em">
                 地区列表
             </span>
@@ -134,8 +134,8 @@
         </table>
     </div>
     <div id="allarea" class="tab-pane" >
-        <div class="" id="slider_nav" style="margin-top: 12px;float: right;position: fixed;right: 10px;font-size: .8em;line-height: 14px">
-            <ul class="" style="list-style: none">
+        <div class="" id="slider_nav" style=";margin-top: 12px;float: right;position: fixed;right: 10px;font-size: .8em;line-height: 14px">
+            <ul class="" style="list-style: none" >
                 <li>
                     <a href="#A" id="nav0">A</a>
                 </li>
@@ -738,6 +738,7 @@
     </div>
 </div>
 <?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
+<div id="test"></div>
 </body>
 
 <!--导航功能-->
@@ -750,11 +751,39 @@
         $(this).siblings('a').removeClass('weui_bar_item_on');
         $(this).addClass('weui_bar_item_on');
         $(this).tab('show');
-    })
+    });
 //    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 //        var b = e.target; //通过此参数可以获得激活的 tab 信息
 //        console.log(b);
 ////        e.relatedTarget // 激活之前的那一个 tab 的信息
+//    })
+//    $('#lastarea').click(function (e) {
+////            e.preventDefault();
+////        $(this).parent('li').siblings('li').removeClass('weui_bar_item_on');
+////        $(this).parent('li').addClass('weui_bar_item_on');
+////        $(this).tab('show');
+//        $(this).siblings('a').removeClass('weui_bar_item_on');
+//        $(this).addClass('weui_bar_item_on');
+//        $(this).tab('show');
+//    });
+//    $('#allarea_load').click(function(){
+//
+//        $.ajax({
+//            type: "post",
+//            url: "{:U('AreaSearch/area_search')}",
+//            data: {siganl:1},
+//            success: function (data) {
+//                if (data) {
+//                    $(this).siblings('a').removeClass('weui_bar_item_on');
+//                    $(this).addClass('weui_bar_item_on');
+//                    $(this).tab('show');
+//                    $('#aaaa').innerHTML = data;
+//                    console.log(data);
+////                    $('#test').html(data);
+//                } else {
+//                }
+//            }
+//        });
 //    })
 </script>
 
@@ -788,15 +817,15 @@
                     var $searchShow = $("#search_show");
                     if ($(this).val()) {
 //            console.log($(this).val());
-            var url="{:U('AreaSearch/ajax_area_search')}";
-            var querystring = $(this).val();
+                        var url="{:U('AreaSearch/ajax_area_search')}";
+                        var querystring = $(this).val();
 //            console.log(querystring);
-            $.ajax({
-                type:'post',
-                url:url,
-                data:{querystr:querystring},
-                dataType:'json',
-                success:function(data){
+                        $.ajax({
+                            type:'post',
+                            url:url,
+                            data:{querystr:querystring},
+                            dataType:'json',
+                            success:function(data){
 //                console. eval("("+data+")");
                                 console.log(data);
                                 jQuery.each(data,function(k,val){
@@ -838,10 +867,10 @@
 //        startY = e.originalEvent.changedTouches[0].pageY;
 //        console.log('startX:'+startX+' startY:'+startY);
     }).bind('touchmove',function(e){
+        e.preventDefault();
         start_nav = document.getElementById('slider_nav').offsetTop;
         endY = e.originalEvent.changedTouches[0].clientY;
         distanceY = endY-start_nav;
-//        console.log(distanceY);
         i = Math.floor(distanceY/14);
         var alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
         showToast3(alphabet[i]);
@@ -976,35 +1005,92 @@
             $(this).attr('href',cookie('last_url'));
         }
     });
+    function test(obj){
+//        cookie('last_area',null);return;
+        var temp_area = $(obj).children('div').html();
+        var temp_area_id = $(obj).children('div').eq(1).html();
+        var temp_area_js = encodeURIComponent(temp_area);
+        var temp = {id:temp_area_id,name:temp_area_js};
+//        console.log(temp);
+        if(temp_area){
+            if(cookie('last_area')){
+                var a = JSON.parse(cookie('last_area'));
+                for(var i=0; i<a.length; i++) {
+                    if(temp_area_id == a[i].id) {
+                        a.splice(i, 1);
+                        break;
+                    }
+                }
+                a.push(temp);
+                cookie('last_area',JSON.stringify(a));
+            }else{
+                var b = [];
+                b.push(temp);
+                cookie('last_area',JSON.stringify(b));
+            }
+            if(cookie('start_or_end') == 'start'){
+                cookie('area_start',temp_area);
+                cookie('area_start_id',temp_area_id);
+            }else if(cookie('start_or_end') == 'end'){
+                cookie('area_end',temp_area);
+                cookie('area_end_id',temp_area_id);
+            }
+            cookie('need_post',true);
+            $(obj).attr('href',cookie('last_url'));
+        }
+        else{}
+    }
 </script>
 
 <script>
+//    var districts;
     $(function() {
-//        event.preventDefault();
-//        pushHistory();
-        console.log(event.cancelable);
-//        window.event.preventDefault();
-//        console.log(event.preventDefault);
-        window.addEventListener("popstate", function (e) {
-//            alert("我监听到了浏览器的返回按钮事件啦");
-//            if(confirm('确认取消订单吗？')){
-////                doQuery(2);
-//            console.log(window.location.pathname);
-//            console.log(history.url);
-            return;
-            window.location.href = "{:U('Homepage/homepage')}";
-//            }else{
-//                pushHistory();
-//            }
-        }, false);
-//        function pushHistory() {
-//            var state = {
-//                title: "title",
-//                url: "#"
-//            };
-//            window.history.pushState(state, "title", "#");
-//        }
-        });
+        console.log(cookie('last_url'));
+//        console.log(localStorage.getItem('districts'));
+        if(localStorage.getItem('districts')){
+            console.log('read from cache');
+            var result = JSON.parse(localStorage.getItem('districts'));
+            console.log(result);
+            jQuery.each(result,function(k,val){
+                jQuery.each(val,function(key,value){
+                    var temp = document.createElement('span');
+                    temp.innerHTML = "<table class='table table-condensed' style='margin-bottom: 0'><tr><td><a href='javascript:void(0)' onclick='test(this)' name='all_area' style='text-decoration: none;color:black;'><div>"+value.name+"</div><div style='display: none'>"+value.id+"</div></a></td></tr></table>";
+                    document.getElementById(k).appendChild(temp);
+                });
+            });
+
+//        if(false){
+
+        }else {
+            console.log('request data');
+            $.ajax({
+                type: "post",
+                url: "{:U('AreaSearch/area_search')}",
+                data: {signal: 1},
+                success: function (data) {
+//                    localStorage.setItem('area_have_value',1);
+                    var jsonObj = eval("(" + data + ")");
+//                console.log(data);
+                    console.log(jsonObj);
+                    localStorage.setItem('districts',JSON.stringify(jsonObj));
+                    jQuery.each(jsonObj, function (k, val) {
+                        console.log(k);
+                        console.log(JSON.stringify(val));
+                        localStorage.setItem(k,JSON.stringify(val));
+                        jQuery.each(val, function (key, value) {
+                            console.log(key + value.id + value.name);
+                            var li = document.createElement('span');
+                            li.innerHTML = "<table class='table table-condensed' style='margin-bottom: 0'><tr><td><a href='javascript:void(0)' onclick='test(this)' name='all_area' style='text-decoration: none;color:black;'><div>"+value.name+"</div><div style='display: none'>"+value.id+"</div></a></td></tr></table>";
+                            document.getElementById(k).appendChild(li);
+                        });
+                    });
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                    alert('不可棱！！');
+                }
+            });
+        }
+    });
 //    document.querySelector('body').addEventListener('touchstart', function (e) {
 //        e.preventDefault();
 //    });

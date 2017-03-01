@@ -9,6 +9,7 @@
 namespace Home\Controller;
 
 use Home\Model\CollectionModel;
+use Home\Model\MessagesModel;
 use Think\Controller;
 
 class CollectionController extends ComController
@@ -35,4 +36,14 @@ class CollectionController extends ComController
         echo json_encode($data);
         return;
     }
+
+    public function del_message(){
+        $Message = new MessagesModel();
+        $post = I('post.', '', 'trim,strip_tags');
+        $msg_id = $post['id'];
+        $data = $Message->updateMessageState($msg_id,2);
+        echo json_encode($data);
+        return;
+    }
+
 }
