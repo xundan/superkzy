@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <title>超矿金融</title>
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <style>
+
+        *{
+            margin: 0;
+        }
+
+        body {
+
+            overflow: hidden;
+        }
+
+        div#top{
+            width: 100%;
+            padding:0;
+        }
+
+        div#main {
+            width: 100%;
+            height: 22.2%;
+            background: url(20170227-2.jpg) top left;
+            background-repeat: no-repeat;
+            background-size: cover;
+            padding: 5px 30px;
+            /*position: absolute;*/
+            left: 0;
+            /*top: 83%;*/
+            color: white;
+            font-size: larger;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        div#div2{
+            width: 100%;
+            text-align: center;
+            font-weight: normal;
+            margin-top: -1%;
+        }
+
+        div#first_line{
+            width: 80%;
+        }
+
+        input#tel_input{
+            width: 60%;
+            margin: 0;
+        }
+
+        input#btn{
+            width: 20%;
+            margin: 0;
+            background-color: mediumpurple;
+            color: white;
+            border: 0;
+        }
+
+        p{
+            width: 80%;
+            font-size: 9px;
+            color: white;
+        }
+    </style>
+</head>
+
+<body style="width:100%; height:100%;">
+<div id="top"><img src="20170227.jpg" style="width: 100%;"></div>
+<div id="main">
+    <div id="div2">
+        <div id="first_line">
+            <input id="tel_input" type="tel" placeholder="请输入联系方式" required pattern="^(0|86|17951)?(13[0-9]|15[012356789]|17[0678]|18[0-9]|14[57])[0-9]{8}">
+            <input id="btn" type="button" onclick="submit_tel()" value="确定">
+        </div>
+        <p id="p_text">留下您的联系方式，我们的客服人员会及时联系您，为你服务。</p>
+    </div>
+</div>
+</body>
+<script>
+
+    function submit_tel() {
+
+        var mobile = $('#tel_input').val();
+        var pattern = /^(0|86|17951)?(13[0-9]|15[012356789]|17[0678]|18[0-9]|14[57])[0-9]{8}$/;
+        if (!pattern.test(mobile)) {
+            alert('请输入正确的手机号码');
+            return false;
+        }
+
+        var data = {phone_number:mobile,type:"potential",status:0};
+        $.ajax({
+            url:"http://www.kuaimei56.com/index.php/Views/FinancialClient/create",
+            type:"POST",
+            data:data,
+//            dataType:"json",
+            error:function(){
+                console.log("error");
+                $('#p_text').html("抱歉，服务器出现错误");
+            },
+            success:function(data){
+                console.log("success");
+                $('#main').html("提交成功！ ");
+            }
+        });
+    }
+</script>
+</html>
