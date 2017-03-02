@@ -37,19 +37,19 @@ class OwnerOrderController extends ComController
         return;
     }
 
-    public function owner_order_transport_detail($id = null)
+    public function owner_order_transport_detail($id = null,$from=null)
     {
         $this->assign_data($id);
         $this->display();
     }
 
-    public function owner_order_trade_detail($id = null)
+    public function owner_order_trade_detail($id = null,$from=null)
     {
         $this->assign_data($id);
         $this->display();
     }
 
-    public function driver_order_detail($id = null)
+    public function driver_order_detail($id = null,$from=null)
     {
         $this->assign_data($id);
         $this->display();
