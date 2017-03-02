@@ -12,7 +12,6 @@ use Think\Controller;
 use Home\Common\CardList\CardList;
 use Home\Common\CardList\WhereConditions;
 use Home\Model\MessagesModel;
-use Home\Model\CollectionModel;
 
 header("Content-type: text/html; charset=utf-8");
 
@@ -101,7 +100,7 @@ class OwnerOrderController extends ComController
             $this->assign('user', $user);
         } elseif ($message['sender']) {
             // 用户来自微信，展示一个静态页面+广告，显示手机号码
-            $this->display("user_from_wx");
+//            $this->display("user_from_wx");
         }
     }
 
@@ -190,5 +189,17 @@ class OwnerOrderController extends ComController
         $data["li_array"] = $cards->toLiArray();
         $data["category"] = $category;
         return $data;
+    }
+
+    /**
+     * 手动删除message
+     */
+    public function del_message(){
+        $Message = new MessagesModel();
+        $post = I('post.', '', 'trim,strip_tags');
+        $msg_id = $post['id'];
+        $data = $Message->updateMessageState($msg_id,2);
+        echo json_encode($data);
+        return;
     }
 }

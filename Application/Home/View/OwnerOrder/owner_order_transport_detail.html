@@ -194,7 +194,7 @@
     }
 
     function delete_message(obj,id){
-        var url="{:U('Collection/del_message')}";
+        var url="{:U('OwnerOrder/del_message')}";
         $.ajax({
             type: "post",
             url: url,
@@ -219,7 +219,7 @@
     wx.config({
         debug: false,
         appId: '{$signPackage["appId"]}',
-        timestamp: '{$signPackage["timestamp"]}',
+        timestamp: {$signPackage["timestamp"]},
         nonceStr: '{$signPackage["nonceStr"]}',
         signature: '{$signPackage["signature"]}',
         jsApiList: [
@@ -230,10 +230,17 @@
     wx.ready(function () {
         // 在这里调用 API
         // 分享到朋友圈
+        var role = "游客";
+        if('{$user["role_id"]}'=='1'){
+            role = "车主";
+        }else{
+            role = "货主";
+        }
         wx.onMenuShareTimeline({
-            title: '分享标题', // 分享标题
-            link: "{:U('OwnerOrder/owner_order_transport_detail')}", // 分享链接
-            imgUrl: 'http://www.kuaimei56.com/copyright.png', // 分享图标
+
+            title: '来自{$user["user_name"]}('+role+')的{$message["category"]}消息', // 分享标题
+            link: "{:U('OwnerOrder/owner_order_transport_detail')}?id={$message['id']}", // 分享链接
+            imgUrl: '__PUBLIC__/home/images/cjkzy_icon.png', // 分享图标
             success: function () {
                 // 用户确认分享后执行的回调函数
             },
@@ -244,10 +251,10 @@
 
         //分享给朋友
         wx.onMenuShareAppMessage({
-            title: '分享标题', // 分享标题
-            desc: '分享描述', // 分享描述
-            link: "{:U('OwnerOrder/owner_order_transport_detail')}", // 分享链接
-            imgUrl: 'http://www.kuaimei56.com/copyright.png', // 分享图标
+            title: '来自{$user["user_name"]}('+role+')的{$message["category"]}消息', // 分享标题
+            desc: '{$user["user_name"]}('+role+')在超级矿资源发布了最新消息，点击了解更多信息', // 分享描述
+            link: "{:U('OwnerOrder/owner_order_transport_detail')}?id={$message['id']}", // 分享链接
+            imgUrl: '__PUBLIC__/home/images/cjkzy_icon.png', // 分享图标
             type: '', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function () {
