@@ -17,6 +17,26 @@ class ChatRecordController extends RestController
     protected $allowMethod = array('get', 'post', 'put'); // REST允许的请求类型列表
     protected $allowType = array('json'); // REST允许请求的资源类型列表
 
+    protected $_wx_all = array("cjkzy001",// u"一圈",
+        "cjkzy003",// u"三圈",
+        "cjkzy005",// u"五圈",
+        "cjkzy007",// u"煤炭交易平台",
+        "mgzdz456",// u"非煤炭类交易平台",
+        "cjkzywl",// u"物流信息平台",
+        "cjkzyshan",// u"陕西",
+        "cjkzy012",// u"山西",
+        "cjkzynmg",// u"内蒙古",
+        "cjkzyhb",// u"京津冀",
+        "cjkzyhn",// u"河南",
+        "cjkzysd",// u"山东",
+        "cjkzyjs",// u"江苏安徽",
+        "cjkzyhh",// u"湖南湖北",
+        "cjkzyxn",// u"西南",
+        "cjkzyxb",// u"西北",
+        "cjkzybgd",// u"东北",
+        "cjkzynf",// u"南方",
+        "test",// u"测试",
+      );
 
     public function index()
     {
@@ -266,6 +286,91 @@ class ChatRecordController extends RestController
         }
     }
 
+    /**
+     * 拉取时间区间内的所有record
+     * @param $time int 时间戳 起始时间 秒数
+     */
+    public function all_by_time($time=0)
+    {
+        if ($time==0){
+            $time = time();
+        }
+        $start_time = $time-24*60*60;
+        date_default_timezone_set("Asia/Shanghai");
+        $date1_str = date("Y-m-d H:i:s", $start_time); // h是12小时制，H是24小时制
+        $date2_str = date("Y-m-d H:i:s", $time);
+
+        $records = $this->get_records_by_interval($date1_str, $date2_str);
+
+        $next_time = $time+24*60*60;
+        $url_prev = U('Views/ChatRecord/all_by_time') . "?time=".$start_time;
+        $url_next = U('Views/ChatRecord/all_by_time') . "?time=".$next_time;
+//        $url_delete = U('Views/DisplayMessages/delete')."?id=$id";
+        $this->assign("prev", $url_prev);
+        $this->assign("time_now",($date1_str.'<=>'.$date2_str));
+        $this->assign("next", $url_next);
+
+        $this->assign('records', $records);
+
+        $this->display();
+    }
+
+    /**
+     * 获取时段内的所有通话记录（每个会话前十条），并拼装好html标签
+     * @param $date1_str
+     * @param $date2_str
+     * @return string
+     */
+    private function get_records_by_interval($date1_str, $date2_str){
+        $all = "";
+        $fetch = $this->fetch_all_distinct_record_by_interval($date1_str,$date2_str, $this->_wx_all);
+        foreach ($fetch as $item) {
+            $chat = $this->fetch_distinct_record_reverse($item['self_wx'],$item['client_name']);
+            if ($chat) {
+                $record_list = "<hr><h3 class='title'><strong>".$item['self_wx']."与".$item['client_name']."的会话：</strong></h3><br/>";
+                $count = 0;
+                foreach ($chat as $a_record){
+                    if ($count>=10) break; // 每个会话只显示最近十条
+                    if ($a_record){
+                        $record_list.="<span class='record_time'>".$a_record["record_time"]."</span> ";
+                        if ($a_record["isme"]){
+                            $record_list .= "<span class='self_wx'>".$item['self_wx']."</span>:";
+                        }else{
+                            $record_list .= "<span class='client_name'>".$a_record["client_name"]."</span>:";
+                        }
+                        $record_list .= "<br/><span class='content'>".$a_record["content"]."</span><br/>";
+                        $count++;
+                    }
+                }
+                $all .= $record_list."<br><br>";
+            }
+        }
+        return $all;
+    }
+
+    /**
+     * 按时段获取所有会话，没有取内容
+     * @param $date1
+     * @param $date2
+     * @param $wx_in
+     * @return mixed
+     */
+    private function fetch_all_distinct_record_by_interval($date1, $date2, $wx_in)
+    {
+        $where['invalid_id'] = 0;
+        $where['type'] = 'plain';
+        $where['isme'] = 0;
+        $where['self_wx']=array("IN", $wx_in);
+        $where['record_time'] = array("BETWEEN", array($date1, $date2));
+        $fetch = D('ChatRecord')->field('content',true)->where($where)->group('client_name')->order('record_time asc')->select();
+        return $fetch;
+    }
+
+    /**
+     * 获取所有会话，没有取内容，只为了取会话者
+     * @param $wx_in
+     * @return mixed
+     */
     private function fetch_all_distinct_record($wx_in)
     {
         $fetch = D('ChatRecord')->field('content',true)->where("isme=0 AND type='plain' AND invalid_id=0 AND self_wx IN "
@@ -273,6 +378,12 @@ class ChatRecordController extends RestController
         return $fetch;
     }
 
+    /**
+     * 时间正序获取所有会话
+     * @param $self_wx
+     * @param $client_name
+     * @return mixed
+     */
     private function fetch_distinct_record($self_wx, $client_name)
     {
         $whereAttr = array(
@@ -284,6 +395,28 @@ class ChatRecordController extends RestController
         return $find;
     }
 
+    /**
+     * 倒序获取所有会话
+     * @param $self_wx
+     * @param $client_name
+     * @return mixed
+     */
+    private function fetch_distinct_record_reverse($self_wx, $client_name)
+    {
+        $whereAttr = array(
+            'self_wx' => $self_wx,
+            'client_name'=> $client_name,
+            'invalid_id' => 0,
+        );
+        $find = D('ChatRecord')->where($whereAttr)->order('record_time desc')->select();
+        return $find;
+    }
+
+    /**
+     * 获取未发送的消息
+     * @param $self_wx
+     * @return mixed
+     */
     private function fetch_unsent_record($self_wx)
     {
         $whereAttr = array(
@@ -296,7 +429,16 @@ class ChatRecordController extends RestController
         return $find;
     }
 
-
+    /**
+     * 拼装ChatRecord对象
+     * @param $self_wx
+     * @param $client_name
+     * @param $content
+     * @param $isme
+     * @param $type
+     * @param $remark
+     * @return mixed
+     */
     private function createChatRecord($self_wx, $client_name, $content, $isme, $type, $remark)
     {
 
@@ -320,6 +462,12 @@ class ChatRecordController extends RestController
         return $insert;
     }
 
+    /**
+     * 按id更新对话状态status
+     * @param $id
+     * @param $status
+     * @return bool
+     */
     private function update_status($id, $status)
     {
         $data['status']=$status;
@@ -327,6 +475,13 @@ class ChatRecordController extends RestController
         return $insert;
     }
 
+    /**
+     * 按对话者更新对话类型（type)
+     * @param $self_wx
+     * @param $client_name
+     * @param $r_type
+     * @return bool
+     */
     private function update_type($self_wx, $client_name, $r_type)
     {
         $attribute = array(
@@ -404,6 +559,7 @@ class ChatRecordController extends RestController
     }
 
     /**
+     * 拼装sql的in子句
      * @param $wx_list
      * @return string
      */

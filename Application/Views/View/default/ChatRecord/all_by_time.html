@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>获取记录</title>
+    <style>
+        *{
+            font-size: 22px;
+        }
+        p{
+            font-size: 26px;
+        }
+        .title{
+            font-size: 26px;
+            color: black;
+        }
+        .record_time{
+            color: blue;
+        }
+        .self_wx{
+            color: green;
+        }
+        .client_name{
+            color: red;
+        }
+        .content{
+            color: black;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+<div align="center">
+    <p>{$time_now}</p>
+    <input type="button" value="上一天" id="prevM" name="prevM" onclick="location.href='{$prev}'"  style="width: 30%;flex: auto;margin-bottom: 20px;height: 50px"/>
+    <input type="button" value="下一天" id="nextM" name="nextM" onclick="location.href='{$next}'"  style="width: 30%;flex: auto;margin-bottom: 20px;height: 50px"/>
+    <p>* <i>显示当天活跃的客户的最近十条留言记录。</i></p>
+</div>
+<div style="width: 90%;padding-left: 20px">
+    {$records}
+</div>
+<div align="center">
+    <p>{$time_now}</p>
+    <input type="button" value="上一天" id="prevM2" name="prevM" onclick="location.href='{$prev}'"  style="width: 30%;flex: auto;margin-bottom: 20px;height: 50px"/>
+    <input type="button" value="下一天" id="nextM2" name="nextM" onclick="location.href='{$next}'"  style="width: 30%;flex: auto;margin-bottom: 20px;height: 50px"/>
+</div>
+</body>
+</html>

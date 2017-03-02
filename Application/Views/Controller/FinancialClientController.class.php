@@ -139,4 +139,11 @@ class FinancialClientController extends RestController
         Log::record(json_encode($result1),Log::ERR);
     }
 
+    public function show(){
+
+        vendor("jssdk.signPackage");
+        $this->assign("signPackage",getSignPackage());
+        $this->display();
+    }
+
 }
