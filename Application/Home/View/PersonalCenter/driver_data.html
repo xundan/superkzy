@@ -13,7 +13,8 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
 </head>
-<body style="">
+<body onload="onload()">
+<include file="Common:common"/>
 <!--导航标签-->
 <div class="panel-title" style="margin:0;padding: 0;background-color: white">
     <div id="myTab" class="weui_navbar" role="" style="position: inherit;margin-bottom: 0;">
@@ -193,9 +194,9 @@
                 </td>
             </tr>
         </table>
-        <input type="button" name="share_button" id="share_button" class="btn btn-group-justified "
-               value="分&nbsp&nbsp&nbsp享"
-               style="margin-top:10%;color:white;font-size: 1.5em;background-color: #04bfc6" onclick="share()">
+        <!--<input type="button" name="share_button" id="share_button" class="btn btn-group-justified "-->
+               <!--value="分&nbsp&nbsp&nbsp享"-->
+               <!--style="margin-top:10%;color:white;font-size: 1.5em;background-color: #04bfc6" onclick="share()">-->
     </div>
     <div id="driver_work_exp" class="tab-pane" style="">
         <table class="table table-responsive" style="border: 0">
@@ -248,9 +249,9 @@
                 </td>
             </tr>
         </table>
-        <input type="button" name="share_button" id="share_button2" class="btn btn-group-justified "
-               value="分&nbsp&nbsp&nbsp享"
-               style="margin-top:10%;color:white;font-size: 1.5em;background-color: #04bfc6" onclick="share()">
+        <!--<input type="button" name="share_button" id="share_button2" class="btn btn-group-justified "-->
+               <!--value="分&nbsp&nbsp&nbsp享"-->
+               <!--style="margin-top:10%;color:white;font-size: 1.5em;background-color: #04bfc6" onclick="share()">-->
     </div>
 </div>
 <?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
@@ -265,7 +266,65 @@
 </script>
 <script>
     function share() {
-        // todo
+        showToast2("点击右上角，分享至好友或朋友圈↗");
     }
+</script>
+<script>
+    function onload(){
+        cookie("current_action","PersonalCenter/driver_data?uid={$user_driver['uid']}");
+    }
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    wx.config({
+        debug: false,
+        appId: '{$signPackage["appId"]}',
+        timestamp: {$signPackage["timestamp"]},
+        nonceStr: '{$signPackage["nonceStr"]}',
+        signature: '{$signPackage["signature"]}',
+        jsApiList: [
+            // 所有要调用的 API 都要加到这个列表中
+            'onMenuShareTimeline', 'onMenuShareAppMessage'
+        ]
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+        // 分享到朋友圈
+        var role = "";
+        if('{$user_driver["role_id"]}'=='1'){
+            role = "(车主)";
+        }else{
+            role = "(货主)";
+        }
+
+        wx.onMenuShareTimeline({
+
+            title: '{$user_driver["user_name"]}'+role, // 分享标题
+            link: "http://www.kuaimei56.com/index.php/Home/PersonalCenter/driver_data?uid={$user_driver['uid']}", // 分享链接
+            imgUrl: "{$user_driver['heading_url']}", // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+
+        //分享给朋友
+        wx.onMenuShareAppMessage({
+            title: '{$user_driver["user_name"]}'+role, // 分享标题
+            desc: '{$user_driver["user_name"]}'+role, // 分享描述
+            link: "http://www.kuaimei56.com/index.php/Home/PersonalCenter/driver_data?uid={$user_driver['uid']}", // 分享链接
+            imgUrl: "{$user_driver['heading_url']}", // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    });
 </script>
 </html>

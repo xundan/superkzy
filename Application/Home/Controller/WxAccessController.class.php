@@ -30,14 +30,6 @@ class WxAccessController extends Controller
 
     public function index()
     {
-//        $options = array(
-//            'token' => C('WX_TOKEN'),
-//            'encodingaeskey' => C('WX_ENCODINGAESKEY'),
-//            'appid' => C('WX_APPID'),
-//            'appsecret' => C('WX_APPSECRET')
-//        );
-//        $weObj = new \Org\Util\Wechat($options);
-//        $uri = $weObj->getOauthRedirect(C('ROOT_URL') . "WxAccess/oauth", "", "snsapi_base");
         $uri = $this->getWeObj()->getOauthRedirect(C('ROOT_URL') . "WxAccess/oauth", "", "snsapi_base");
 //        echo $uri;
         $this->success("正在跳转", $uri);
@@ -47,13 +39,6 @@ class WxAccessController extends Controller
     // scope为snsapi_base时 回调的方法
     public function base()
     {
-//        $options = array(
-//            'token' => C('WX_TOKEN'),
-//            'encodingaeskey' => C('WX_ENCODINGAESKEY'),
-//            'appid' => C('WX_APPID'),
-//            'appsecret' => C('WX_APPSECRET')
-//        );
-//        $weObj = new \Org\Util\Wechat($options);
         // 获取用户授权后的信息
         $resultArr = $this->getWeObj()->getOauthAccessToken();
 
@@ -72,13 +57,6 @@ class WxAccessController extends Controller
     // scope为snsapi_userinfo时 回调的方法 第一次登录调用
     public function oauth()
     {
-//        $options = array(
-//            'token' => C('WX_TOKEN'),
-//            'encodingaeskey' => C('WX_ENCODINGAESKEY'),
-//            'appid' => C('WX_APPID'),
-//            'appsecret' => C('WX_APPSECRET')
-//        );
-//        $weObj = new \Org\Util\Wechat($options);
         // 获取用户授权后的信息
         $resultArr = $this->getWeObj()->getOauthAccessToken();
 
@@ -100,10 +78,9 @@ class WxAccessController extends Controller
         // 跳转地址设置为默认主页，如果cookie里有上次浏览地址，就跳到上次浏览的地址
 //        $target_url = "PersonalCenter/personal_center";
         $target_url = "Homepage/homepage";
-        // 等所有视图文件夹里的js/css文件删除后再打开下面的注释
-//        if (!empty($_COOKIE['last_url'])) {
-//            $target_url = $_COOKIE['last_url'];
-//        }
+        if (!empty($_COOKIE['current_action'])) {
+            $target_url = $_COOKIE['current_action'];
+        }
         $this->redirect($target_url, '页面跳转中...');
     }
 

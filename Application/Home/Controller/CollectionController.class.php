@@ -37,13 +37,4 @@ class CollectionController extends ComController
         return;
     }
 
-    public function del_message(){
-        $Message = new MessagesModel();
-        $post = I('post.', '', 'trim,strip_tags');
-        $msg_id = $post['id'];
-        $data = $Message->updateMessageState($msg_id,2);
-        echo json_encode($data);
-        return;
-    }
-
 }

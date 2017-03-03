@@ -55,6 +55,8 @@ class PersonalCenterController extends ComController
 
             $user_owner = M('User')->where($temp)->find();
             if ($user_owner) {
+                $this->assign_jssdk();
+
                 $this->assign('user_owner', $user_owner);
                 // 如果有公司信息，载入之
                 if ($user_owner['company_id']) {
@@ -185,6 +187,7 @@ class PersonalCenterController extends ComController
 
             $user_driver = M('User')->where($temp)->find();
             if ($user_driver) {
+                $this->assign_jssdk();
                 $this->assign('user_driver', $user_driver);
                 // 如果有车辆信息，载入之
                 if ($user_driver['car_id']) {
@@ -285,5 +288,11 @@ class PersonalCenterController extends ComController
             // todo LOG HERE.
             return false;
         }
+    }
+
+    private function assign_jssdk()
+    {
+        vendor("jssdk.signPackage");
+        $this->assign("signPackage", getSignPackage());
     }
 }

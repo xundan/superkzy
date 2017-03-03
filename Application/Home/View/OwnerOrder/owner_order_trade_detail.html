@@ -13,7 +13,7 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body onload="onload()">
 <include file="Common:common"/>
 <!--订单展示栏-->
 <div id="msg_id" style="display: none">
@@ -307,6 +307,12 @@
         return false;
     }
 
+</script>
+<script>
+    // 使微信验证后还能跳回本界面
+    function onload(){
+        cookie("current_action","OwnerOrder/owner_order_trade_detail?id={$message['id']}");
+    }
 </script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
