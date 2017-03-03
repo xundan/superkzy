@@ -108,7 +108,7 @@ class LoginController extends Controller
                     echo jsonEcho($returnArr);
                     exit;
                 }
-            }
+            }else{}
 
         } else {
             //验证码填写错误

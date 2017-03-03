@@ -17,6 +17,14 @@
 </head>
 <include file="Common:common"/>
 <body id="aaaa" style="background-color: #efeff4">
+<form name="call_back" id="call_back">
+    <input type="hidden" name="select_category">
+    <input type="hidden" name="search_input">
+    <input type="hidden" name="area_start">
+    <input type="hidden" name="area_start_name">
+    <input type="hidden" name="area_end">
+    <input type="hidden" name="area_end_name">
+</form>
 <!--搜索框-->
 <div class="bd">
     <div class="weui_search_bar" id="search_bar">
@@ -903,10 +911,10 @@
 <!--cookie操作地址-->
 <script>
     //所有地区选择
-    $('a[name=all_area]').click(function(){
+    function test(obj){
 //        cookie('last_area',null);return;
-        var temp_area = $(this).children('div').html().trim();
-        var temp_area_id = $(this).children('div').eq(1).html().trim();
+        var temp_area = $(obj).children('div').html();
+        var temp_area_id = $(obj).children('div').eq(1).html();
         var temp_area_js = encodeURIComponent(temp_area);
         var temp = {id:temp_area_id,name:temp_area_js};
 //        console.log(temp);
@@ -926,18 +934,83 @@
                 b.push(temp);
                 cookie('last_area',JSON.stringify(b));
             }
+            var json_obj,source_cookie,source_cookie_obj,source_cookie_name;
             if(cookie('start_or_end') == 'start'){
                 cookie('area_start',temp_area);
                 cookie('area_start_id',temp_area_id);
+                if(cookie('source')){
+                    json_obj = JSON.parse(cookie('source'));
+                    source_cookie = json_obj.value;
+                    source_cookie_obj = JSON.parse(source_cookie);
+                    source_cookie_name = json_obj.name;
+                    jQuery.each(source_cookie_obj,function(k,val){
+                        if(val.name == 'select_category'){
+                            $('input[name=select_category]').val(val.value);
+                        }
+                        if(val.name == 'area_start') {
+                            val.value=temp_area_id;
+                            $('input[name=area_start]').val(val.value);
+                        }
+                        if(val.name == 'area_start_name') {
+                            val.value=temp_area;
+                            $('input[name=area_start_name]').val(val.value)
+                        }
+                        if(val.name == 'area_end'){
+                            $('input[name=area_end]').val(val.value)
+                        }
+                        if(val.name == 'area_end_name'){
+                            $('input[name=area_end_name]').val(val.value)
+                        }
+                        if(val.name == 'search_input'){
+                            $('input[name=search_input]').val(val.value)
+                        }
+                    });
+                    cookie(source_cookie_name,JSON.stringify(source_cookie_obj));
+                }else{
+                }
+
             }else if(cookie('start_or_end') == 'end'){
-                cookie('area_end',temp_area);
-                cookie('area_end_id',temp_area_id);
+                cookie('area_start',temp_area);
+                cookie('area_start_id',temp_area_id);
+                if(cookie('source')){
+                    json_obj = JSON.parse(cookie('source'));
+                    source_cookie = json_obj.value;
+                    source_cookie_obj = JSON.parse(source_cookie);
+                    source_cookie_name = json_obj.name;
+                    jQuery.each(source_cookie_obj,function(k,val){
+                        if(val.name == 'select_category'){
+                            $('input[name=select_category]').val(val.value);
+                        }
+                        if(val.name == 'area_end'){
+                            val.value=temp_area_id;
+                            $('input[name=area_end]').val(val.value);
+                        }
+                        if(val.name == 'area_end_name'){
+                            val.value=temp_area;
+                            $('input[name=area_end_name]').val(val.value);
+                        }
+                        if(val.name == 'area_start'){
+                            $('input[name=area_start]').val(val.value)
+                        }
+                        if(val.name == 'area_start_name'){
+                            $('input[name=area_start_name]').val(val.value)
+                        }
+                        if(val.name == 'search_input'){
+                            $('input[name=search_input]').val(val.value)
+                        }
+                    });
+                    cookie(source_cookie_name,JSON.stringify(source_cookie_obj));
+                }else{
+                }
             }
-            cookie('need_post',true);
-            $(this).attr('href',cookie('last_url'));
+//            cookie('need_post',true);
+//            $(obj).attr('href',cookie('last_url'));
+            document.call_back.method = "post";
+            document.call_back.action = cookie('last_url');
+            document.call_back.submit();
         }
         else{}
-    });
+    }
     //实时搜索选择
     $('a[name=real_time_area]').click(function(){
         var temp_area = $(this).children('div').children('div').children('p').html().trim();
@@ -960,12 +1033,38 @@
                 b.push(temp);
                 cookie('last_area',JSON.stringify(b));
             }
+            var json_obj,source_cookie,source_cookie_obj,source_cookie_name;
             if(cookie('start_or_end') == 'start'){
                 cookie('area_start',temp_area);
                 cookie('area_start_id',temp_area_id);
+                if(cookie('source')){
+                    json_obj = JSON.parse(cookie('source'));
+                    source_cookie = json_obj.value;
+                    source_cookie_obj = JSON.parse(source_cookie);
+                    source_cookie_name = json_obj.name;
+                    jQuery.each(source_cookie_obj,function(k,val){
+                        if(val.name == 'area_start') val.value=temp_area_id;
+                        if(val.name == 'area_start_name') val.value=temp_area;
+                    });
+                    cookie(source_cookie_name,JSON.stringify(source_cookie_obj));
+                }else{
+                }
+
             }else if(cookie('start_or_end') == 'end'){
-                cookie('area_end',temp_area);
-                cookie('area_end_id',temp_area_id);
+                cookie('area_start',temp_area);
+                cookie('area_start_id',temp_area_id);
+                if(cookie('source')){
+                    json_obj = JSON.parse(cookie('source'));
+                    source_cookie = json_obj.value;
+                    source_cookie_obj = JSON.parse(source_cookie);
+                    source_cookie_name = json_obj.name;
+                    jQuery.each(source_cookie_obj,function(k,val){
+                        if(val.name == 'area_end') val.value=temp_area_id;
+                        if(val.name == 'area_end_name') val.value=temp_area;
+                    });
+                    cookie(source_cookie_name,JSON.stringify(source_cookie_obj));
+                }else{
+                }
             }
             cookie('need_post',true);
             $(this).attr('href',cookie('last_url'));
@@ -994,57 +1093,88 @@
                 b.push(temp);
                 cookie('last_area',JSON.stringify(b));
             }
+            var json_obj,source_cookie,source_cookie_obj,source_cookie_name;
             if(cookie('start_or_end') == 'start'){
                 cookie('area_start',temp_area);
                 cookie('area_start_id',temp_area_id);
+                if(cookie('source')){
+                    json_obj = JSON.parse(cookie('source'));
+                    source_cookie = json_obj.value;
+                    source_cookie_obj = JSON.parse(source_cookie);
+                    source_cookie_name = json_obj.name;
+                    jQuery.each(source_cookie_obj,function(k,val){
+                        if(val.name == 'select_category'){
+                            $('input[name=select_category]').val(val.value);
+                        }
+                        if(val.name == 'area_start') {
+                            val.value=temp_area_id;
+                            $('input[name=area_start]').val(val.value);
+                        }
+                        if(val.name == 'area_start_name') {
+                            val.value=temp_area;
+                            $('input[name=area_start_name]').val(val.value)
+                        }
+                        if(val.name == 'area_end'){
+                            $('input[name=area_end]').val(val.value)
+                        }
+                        if(val.name == 'area_end_name'){
+                            $('input[name=area_end_name]').val(val.value)
+                        }
+                        if(val.name == 'search_input'){
+                            $('input[name=search_input]').val(val.value)
+                        }
+                    });
+                    cookie(source_cookie_name,JSON.stringify(source_cookie_obj));
+                }else{
+                }
+
             }else if(cookie('start_or_end') == 'end'){
-                cookie('area_end',temp_area);
-                cookie('area_end_id',temp_area_id);
+                cookie('area_start',temp_area);
+                cookie('area_start_id',temp_area_id);
+                if(cookie('source')){
+                    json_obj = JSON.parse(cookie('source'));
+                    source_cookie = json_obj.value;
+                    source_cookie_obj = JSON.parse(source_cookie);
+                    source_cookie_name = json_obj.name;
+                    jQuery.each(source_cookie_obj,function(k,val){
+                        if(val.name == 'select_category'){
+                            $('input[name=select_category]').val(val.value);
+                        }
+                        if(val.name == 'area_end'){
+                            val.value=temp_area_id;
+                            $('input[name=area_end]').val(val.value);
+                        }
+                        if(val.name == 'area_end_name'){
+                            val.value=temp_area;
+                            $('input[name=area_end_name]').val(val.value);
+                        }
+                        if(val.name == 'area_start'){
+                            $('input[name=area_start]').val(val.value)
+                        }
+                        if(val.name == 'area_start_name'){
+                            $('input[name=area_start_name]').val(val.value)
+                        }
+                        if(val.name == 'search_input'){
+                            $('input[name=search_input]').val(val.value)
+                        }
+                    });
+                    cookie(source_cookie_name,JSON.stringify(source_cookie_obj));
+                }else{
+                }
             }
-            cookie('need_post',true);
-            $(this).attr('href',cookie('last_url'));
+//            cookie('need_post',true);
+//            $(this).attr('href',cookie('last_url'));
+            document.call_back.method = "post";
+            document.call_back.action = cookie('last_url');
+            document.call_back.submit();
         }
     });
-    function test(obj){
-//        cookie('last_area',null);return;
-        var temp_area = $(obj).children('div').html();
-        var temp_area_id = $(obj).children('div').eq(1).html();
-        var temp_area_js = encodeURIComponent(temp_area);
-        var temp = {id:temp_area_id,name:temp_area_js};
-//        console.log(temp);
-        if(temp_area){
-            if(cookie('last_area')){
-                var a = JSON.parse(cookie('last_area'));
-                for(var i=0; i<a.length; i++) {
-                    if(temp_area_id == a[i].id) {
-                        a.splice(i, 1);
-                        break;
-                    }
-                }
-                a.push(temp);
-                cookie('last_area',JSON.stringify(a));
-            }else{
-                var b = [];
-                b.push(temp);
-                cookie('last_area',JSON.stringify(b));
-            }
-            if(cookie('start_or_end') == 'start'){
-                cookie('area_start',temp_area);
-                cookie('area_start_id',temp_area_id);
-            }else if(cookie('start_or_end') == 'end'){
-                cookie('area_end',temp_area);
-                cookie('area_end_id',temp_area_id);
-            }
-            cookie('need_post',true);
-            $(obj).attr('href',cookie('last_url'));
-        }
-        else{}
-    }
 </script>
 
 <script>
 //    var districts;
     $(function() {
+        console.log(cookie());
         console.log(cookie('last_url'));
 //        console.log(localStorage.getItem('districts'));
         if(localStorage.getItem('districts')){

@@ -26,7 +26,7 @@
         <a href="#search" class="text-center" data-toggle="tab"
            style="word-wrap:break-word;table-layout:fixed;color: black;text-decoration: none;font-size: 1em;width:27%;padding: 5px 0;height:42px">
             <img src="__PUBLIC__/home/images/area_start_text.png" class="" style="height: 20px">
-            <span id="area_start_html">榆林</span>
+            <span id="area_start_html">点击选择</span>
 
             <div id="area_start" style="display: none"></div>
         </a>
@@ -36,7 +36,7 @@
         </a>
         <a href="#search" data-toggle="tab" class="weui_navbar_item"
            style="word-wrap:break-word;table-layout:fixed;color: black;text-decoration: none;font-size: 1em;height:42px">
-            <span id="area_end_html">郑州</span>
+            <span id="area_end_html">点击选择</span>
             <img src="__PUBLIC__/home/images/area_end_text.png" class="" style="height: 20px">
 
             <div id="area_end" style="display: none"></div>
@@ -70,10 +70,10 @@
     <input type="hidden" name="select_category">
     <input type="hidden" name="search_input">
     <input type="hidden" name="area_start">
+    <input type="hidden" name="area_start_name">
     <input type="hidden" name="area_end">
+    <input type="hidden" name="area_end_name">
     <input type="hidden" name="page" id="page" value="1">
-    <!--<input type="hidden" name="where_cond_json" id="where_cond_json">{$where_cond_json}</input>-->
-    <!--<input type="hidden" name="stage" id="stage" value="{$stage}">-->
 </form>
 <div style="display: none">
     <div id="where_cond_json">
@@ -132,7 +132,7 @@
             $searchBar.addClass('weui_search_focusing');
             $searchInput.focus();
             if (cookie('search_input')) {
-                $('#search_input').val(cookie('search_input'));
+                $('#search_input').val($('input[name=search_input]').val());
             }
         });
         $searchInput
@@ -152,9 +152,8 @@
                             cookie('search_input', $(this).val().trim());
                             cookie('search_input_for_highlight',encodeURI(cookie('search_input')));
                         }
-                        $('input[name=select_category]').val(cookie('search_tag'));
-                        $('input[name=area_start]').val(cookie('area_start_id'));
-                        $('input[name=area_end]').val(cookie('area_end_id'));
+                        //更新页面cookie
+                        cookie('driver_job_search',JSON.stringify($('#tag_search').serializeArray()));
                         //提交表单
                         document.tag_search.method = "post";
                         document.tag_search.action = "{:U('DriverSearch/driver_job_search')}";
@@ -185,42 +184,56 @@
 //        cookie(null);return;
 //        console.log(cookie());
         console.log($('#where_cond_json').html());
+        var temp_load = cookie('driver_job_search');
+        var temp_load_obj = JSON.parse(cookie('driver_job_search'));
         if (cookie('search_tag') == '找车') {
             //信息查询
             $('#myTab a:eq(0)').removeClass('weui_bar_item_on').siblings('a').addClass('weui_bar_item_on weui_bar_item_on_extra').tab('show');
-            $('#area_start_html').html(cookie('area_start'));
-            $('#area_end_html').html(cookie('area_end'));
-            if (cookie('search_input')) {
-                $('#search_text').html(cookie('search_input'));
-            }
+            jQuery.each(temp_load_obj,function(k,val){
+                if(val.name == 'area_start'){
+                    if(val.value != '') {
+                        $('input[name=area_start]').val(val.value);
+                    }else{}
+                }
+                else if(val.name == 'area_start_name'){
+                    if(val.value != ''){
+                        $('input[name=area_start_name]').val(val.value);
+                        $('#area_start_html').html(val.value);
+                    }else{}
+                }
+                else if(val.name == 'area_end'){
+                    if(val.value != ''){
+                        $('input[name=area_end]').val(val.value);
+                    }else{}
+                }
+                else if(val.name == 'area_end_name'){
+                    if(val.value != ''){
+                        $('input[name=area_end_name]').val(val.value);
+                        $('#area_end_html').html(val.value);
+                    }
+                }
+                else if(val.name == 'search_input'){
+                    if(val.value != ''){
+                        $('input[name=search_input]').val(val.value);
+                    }else{}
+                }
+            });
         }
         else {
             //全部信息
             $('#myTab a:eq(0)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on weui_bar_item_on_extra');
-            cookie('search_tag', 'all');
-            if (cookie('area_start')) {
-                $('#area_start_html').html(cookie('area_start'));
-                $('input[name=area_start]').val(cookie('area_start_id'));
-            }
-            else {
-                $('#area_start_html').html('榆林');
-                $('input[name=area_start]').val(610800);
-                cookie('area_start', '榆林');
-                cookie('area_start_id', 610800);
-            }
-            if (cookie('area_end')) {
-                $('#area_end_html').html(cookie('area_end'));
-                $('input[name=area_end]').val(cookie('area_end_id'));
-            }
-            else {
-                $('#area_end_html').html('郑州');
-                $('input[name=area_end]').val(410100);
-                cookie('area_end', '郑州');
-                cookie('area_end_id', 410100);
-            }
-            if (cookie('search_input')) {
-                $('#search_text').html(cookie('search_input'));
-            }
+            jQuery.each(temp_load_obj,function(k,val){
+                if(val.name == 'search_input'){
+                    if(val.value != ''){
+                        $('input[name=search_input]').val(val.value);
+                    }else{}
+                }else{}
+            });
+        }
+        //载入搜索框内容
+        if ($('input[name=search_input]').val()) {
+            console.log('asdasd');
+            $('#search_text').html($('input[name=search_input]').val());
         }
         //返回操作
         pushHistory();
@@ -234,24 +247,6 @@
             }
             pushHistory();
         },false);
-        //是否提交表单
-        if (cookie('need_post')) {
-            cookie('need_post', false);
-            $('input[name=select_category]').val(cookie('search_tag'));
-//            $('input[name=search_input]').val(cookie('search_input'));
-            $('input[name=area_start]').val(cookie('area_start_id'));
-            $('input[name=area_end]').val(cookie('area_end_id'));
-            if (cookie('search_input')) {
-                $('input[name=search_input]').val(cookie('search_input'));
-            } else {
-                $('input[name=search_input]').val('');
-            }
-            //提交表单
-            document.tag_search.method = 'post';
-            document.tag_search.action = "{:U('DriverSearch/driver_job_search')}";
-            document.tag_search.submit();
-        } else {
-        }
 //        console.log(a);
 //        console.log($('#where_cond_json').html());
 //        console.log($('#stage').html());
@@ -270,9 +265,17 @@
     $('#myTab a:eq(0)').click(function () {
         //存入所选标签入cookie
         cookie('search_tag', 'all');
-        $('input[name=select_category]').val(cookie('search_tag'));
         //重置筛选条件的cookie
         cookie('search_input', null);
+        //填写表单数据
+        $('input[name=select_category]').val(cookie('search_tag'));
+        $('input[name=area_start]').val('');
+        $('input[name=area_start_name]').val('');
+        $('input[name=area_end]').val('');
+        $('input[name=area_end_name]').val('');
+        $('input[name=search_input]').val('');
+        //更新页面cookie
+        cookie('driver_job_search',JSON.stringify($('#tag_search').serializeArray()));
         //提交表单
         document.tag_search.method = 'post';
         document.tag_search.action = "{:U('DriverSearch/driver_job_search')}";
@@ -286,35 +289,30 @@
         cookie('search_tag', '找车');
         cookie('start_or_end', 'start');
         cookie('last_url', current_url);
+        //填写表单数据
+        $('input[name=select_category]').val('找车');
+        //更新页面cookie
+        cookie('driver_job_search',JSON.stringify($('#tag_search').serializeArray()));
+        //告诉area_search要改什么
+        var source = {name:'driver_job_search',value:cookie('driver_job_search')};
+        cookie('source',JSON.stringify(source));
         //地址跳转
         window.location.href = goto_url;
     });
     //地址互换
     $('#myTab a:eq(2)').click(function () {
-        var current_url = window.location.href;
         cookie('search_tag', '找车');
-        var area_start = cookie('area_start');
-        var area_start_id = cookie('area_start_id');
-        var area_end = cookie('area_end');
-        var area_end_id = cookie('area_end_id');
-        cookie('area_start', area_end);
-        cookie('area_start_id', area_end_id);
-        cookie('area_end', area_start);
-        cookie('area_end_id', area_start_id);
-        //表单填写
-        if (cookie('search_input')) {
-            $('input[name=search_input]').val(cookie('search_input'));
-        } else {
-            $('input[name=search_input]').val('');
-        }
-//        $('input[name=search_input]').val(cookie(''));
-        $('input[name=select_category]').val(cookie('search_tag'));
-        $('input[name=area_start]').val(cookie('area_start_id'));
-        $('input[name=area_end]').val(cookie('area_end_id'));
-//        //地址跳转
-//        window.location.href = current_url;
-//        var a = $('#tag_search').serialize();
-//        alert(a);
+        $('input[name=select_category]').val('找车');
+        var area_start = $('input[name=area_start]').val();
+        var area_start_name = $('input[name=area_start_name]').val();
+        var area_end = $('input[name=area_end]').val();
+        var area_end_name = $('input[name=area_end_name]').val();
+        $('input[name=area_start]').val(area_end);
+        $('input[name=area_start_name]').val(area_end_name);
+        $('input[name=area_end]').val(area_start);
+        $('input[name=area_end_name]').val(area_start_name);
+        //更新页面cookie
+        cookie('driver_job_search',JSON.stringify($('#tag_search').serializeArray()));
         //提交表单
         document.tag_search.method = 'post';
         document.tag_search.action = "{:U('DriverSearch/driver_job_search')}";
@@ -327,6 +325,13 @@
         cookie('search_tag', '找车');
         cookie('start_or_end', 'end');
         cookie('last_url', current_url);
+        //填写表单数据
+        $('input[name=select_category]').val('找车');
+        //更新页面cookie
+        cookie('driver_job_search',JSON.stringify($('#tag_search').serializeArray()));
+        //告诉area_search要改什么
+        var source = {name:'driver_job_search',value:cookie('driver_job_search')};
+        cookie('source',JSON.stringify(source));
         //地址跳转
         window.location.href = goto_url;
     })
@@ -340,7 +345,55 @@
      */
     function pullDownAction() {
         console.log('down');
-        location.reload();
+//        location.reload();
+        var search_input = $('input[name=search_input]').val();
+        var select_category = $('input[name=select_category]').val();
+        var area_start = $('input[name=area_start]').val();
+        var area_start_name = $('input[name=area_start_name]').val();
+        var area_end = $('input[name=area_end]').val();
+        var area_end_name = $('input[name=area_end_name]').val();
+        $.ajax({
+            type: "post",
+            url: "{:U('DriverSearch/driver_job_search')}",
+            data: {
+                isAjax: 1,
+                search_input: search_input,
+                select_category: select_category,
+                area_start:area_start,
+                area_start_name:area_start_name,
+                area_end:area_end,
+                area_end_name:area_end_name
+            },
+            success: function (data) {
+                console.log('success');
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+                if (jsonObj.msg) {
+                    if (cookie('search_tag') == 'all') {
+                        document.getElementById('all').innerHTML = '';
+                    }
+                    else if (cookie('search_tag') == '找车') {
+                        document.getElementById('search').innerHTML = '';
+                    }
+                    jQuery.each(jsonObj.li_array, function (k, val) {
+                        var li = document.createElement('li');
+                        li.innerHTML = val;
+                        console.log(cookie('search_tag'));
+                        if (cookie('search_tag') == 'all') {
+                            document.getElementById('all').appendChild(li);
+                        }
+                        else if (cookie('search_tag') == '找车') {
+                            document.getElementById('search').appendChild(li);
+                        }
+                        else {
+                        }
+                    });
+                }
+                else {
+                }
+                myScroll.refresh();
+            }
+        });
         myScroll.refresh();//数据加载完成后，调用界面更新方法  Remember to refresh when contents are loaded (ie: on ajax completion)
 //    },1000);  // <-- Simulate network congestion, remove setTimeout from production!
     }

@@ -1203,13 +1203,15 @@
                         $('#sell_granularity_html').html(val.value);
                     }
                     else if (val.name == 'area_start') { //产地
-                        val.value = cookie('area_start');
-                        $('#sell_area_start_html').html(val.value);
-//                        $('#sell_area_start').val(val.value);
-                        $('#sell_area_start').val(cookie('area_start_id'));
+//                        val.value = cookie('area_start');
+//                        $('#sell_area_start_html').html(val.value);
+//                        $('#sell_area_start').val(cookie('area_start_id'));
+                        $('#sell_area_start').val(val.value);
                     }
                     else if (val.name == 'area_start_name') { //产地名
-                        $('#sell_area_start_name').val(cookie('area_start'));
+//                        $('#sell_area_start_name').val(cookie('area_start'));
+                        $('#sell_area_start_name').val(val.value);
+                        $('#sell_area_start_html').html(val.value);
                     }
                     else {
                         $("#sell_" + val.name).val(val.value);
@@ -1249,13 +1251,17 @@
                         $('#buy_granularity_html').html(val.value);
                     }
                     else if (val.name == 'area_start') { //产地
-                        val.value = cookie('area_start');
-                        $('#buy_area_start_html').html(val.value);
-//                        $('#buy_area_start').val(val.value);
-                        $('#buy_area_start').val(cookie('area_start_id'));
+//                        val.value = cookie('area_start');
+//                        $('#buy_area_start_html').html(val.value);
+////                        $('#buy_area_start').val(val.value);
+//                        $('#buy_area_start').val(cookie('area_start_id'));
+                        $('#buy_area_start').val(val.value);
                     }
                     else if (val.name == 'area_start_name') { //产地名
-                        $('#buy_area_start_name').val(cookie('area_start'));
+//                        $('#buy_area_start_name').val(cookie('area_start'));
+                        $('#buy_area_start_name').val(val.value);
+                        $('#buy_area_start_html').html(val.value);
+
                     }
                     else if (val.name == 'car_type') {  //车辆类型
                         var car_type = $(":radio[name=car_type][value='" + val.value + "']");
@@ -1290,22 +1296,27 @@
                 var car_need = JSON.parse(cookie('car_need'));
                 jQuery.each(car_need, function (k, val) {
                     if (val.name == 'area_start') { //出发地址
-                        val.value = cookie('area_start');
-                        $('#need_area_start_html').html(val.value);
+//                        val.value = cookie('area_start');
+//                        $('#need_area_start_html').html(val.value);
+//                        $('#need_area_start').val(cookie('area_start_id'));
                         $('#need_area_start').val(val.value);
-                        $('#need_area_start').val(cookie('area_start_id'));
                     }
                     else if (val.name == 'area_start_name') { //出发地址名
-                        $('#need_area_start_name').val(cookie('area_start'));
+//                        $('#need_area_start_name').val(cookie('area_start'));
+                        $('#need_area_start_name').val(val.value);
+                        $('#need_area_start_html').html(val.value);
                     }
                     else if (val.name == 'area_end') {  //目的地址
-                        val.value = cookie('area_end');
-                        $('#need_area_end_html').html(val.value);
-//                        $('#need_area_end').val(val.value);
-                        $('#need_area_end').val(cookie('area_end_id'));
+//                        val.value = cookie('area_end');
+//                        $('#need_area_end_html').html(val.value);
+////                        $('#need_area_end').val(val.value);
+//                        $('#need_area_end').val(cookie('area_end_id'));
+                        $('#need_area_end').val(val.value);
                     }
                     else if (val.name == 'area_end_name') { //目的地址名
-                        $('#need_area_end_name').val(cookie('area_end'));
+//                        $('#need_area_end_name').val(cookie('area_end'));
+                        $('#need_area_end_html').html(val.value);
+                        $('#need_area_end_name').val(val.value);
                     }
                     else if (val.name == 'granularity') {   //粒度
                         var granularity = $(":radio[name=granularity][value='" + val.value + "']");
@@ -1331,22 +1342,28 @@
                 var car_give = JSON.parse(cookie('car_give'));
                 jQuery.each(car_give, function (k, val) {
                     if (val.name == 'area_start') { //出发地址
-                        val.value = cookie('area_start');
-                        $('#give_area_start_html').html(val.value);
-//                        $('#give_area_start').val(val.value);
-                        $('#give_area_start').val(cookie('area_start_id'));
+//                        val.value = cookie('area_start');
+//                        $('#give_area_start_html').html(val.value);
+////                        $('#give_area_start').val(val.value);
+//                        $('#give_area_start').val(cookie('area_start_id'));
+                        $('#give_area_start').val(val.value);
                     }
                     else if (val.name == 'area_start_name') { //出发地址名
-                        $('#give_area_start_name').val(cookie('area_start'));
+//                        $('#give_area_start_name').val(cookie('area_start'));
+                        $('#give_area_start_name').val(val.value);
+                        $('#give_area_start_html').html(val.value);
                     }
                     else if (val.name == 'area_end') {  //目的地址
-                        val.value = cookie('area_end');
-                        $('#give_area_end_html').html(val.value);
-//                        $('#give_area_end').val(val.value);
-                        $('#give_area_end').val(cookie('area_end_id'));
+//                        val.value = cookie('area_end');
+//                        $('#give_area_end_html').html(val.value);
+////                        $('#give_area_end').val(val.value);
+//                        $('#give_area_end').val(cookie('area_end_id'));
+                        $('#give_area_end').val(val.value);
                     }
                     else if (val.name == 'area_end_name') { //目的地址名
-                        $('#give_area_end_name').val(cookie('area_end'));
+//                        $('#give_area_end_name').val(cookie('area_end'));
+                        $('#give_area_end_name').val(val.value);
+                        $('#give_area_end_html').html(val.value);
                     }
                     else if (val.name == 'car_type') {  //车辆类型
                         var car_type = $(":radio[name=car_type][value='" + val.value + "']");
@@ -1380,6 +1397,10 @@
         cookie('coal_sell', null);
         cookie('coal_buy', null);
 
+        //告诉area_search 要改的来源
+        var temp = {name:'car_give',value:cookie('car_give')};
+        cookie('source',JSON.stringify(temp));
+
         //地址跳转
         window.location.href = goto_url;
     }
@@ -1396,7 +1417,9 @@
         cookie('coal_sell', null);
         cookie('coal_buy', null);
 
-        console.log(cookie());
+        //告诉area_search 要改的来源
+        var temp = {name:'car_give',value:cookie('car_give')};
+        cookie('source',JSON.stringify(temp));
 
         //地址跳转
         window.location.href = goto_url;
@@ -1416,6 +1439,10 @@
         cookie('coal_sell', null);
         cookie('coal_buy', null);
 
+        //告诉area_search 要改的来源
+        var temp = {name:'car_need',value:cookie('car_need')};
+        cookie('source',JSON.stringify(temp));
+
         //地址跳转
         window.location.href = goto_url;
     }
@@ -1431,6 +1458,10 @@
         cookie('car_give', null);
         cookie('coal_sell', null);
         cookie('coal_buy', null);
+
+        //告诉area_search 要改的来源
+        var temp = {name:'car_need',value:cookie('car_need')};
+        cookie('source',JSON.stringify(temp));
 
         //地址跳转
         window.location.href = goto_url;
@@ -1450,6 +1481,10 @@
         cookie('car_need', null);
         cookie('coal_buy', null);
 
+        //告诉area_search 要改的来源
+        var temp = {name:'coal_sell',value:cookie('coal_sell')};
+        cookie('source',JSON.stringify(temp));
+
         //地址跳转
         window.location.href = goto_url;
     }
@@ -1467,6 +1502,10 @@
         cookie('car_give', null);
         cookie('car_need', null);
         cookie('coal_sell', null);
+
+        //告诉area_search 要改的来源
+        var temp = {name:'coal_buy',value:cookie('coal_buy')};
+        cookie('source',JSON.stringify(temp));
 
         //地址跳转
         window.location.href = goto_url;

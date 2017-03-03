@@ -22,6 +22,10 @@ class OwnerSearchController extends SearchController
         $this->assign("li_array", $data['li_array']);
         $this->assign("where_cond_json", $data['where_cond_json']);
         $this->assign("stage", $data['stage']);
+        if(I('post.isAjax', '', 'trim,strip_tags')){
+            echo json_encode($data);
+            return;
+        }
         $this->display();
     }
 
@@ -54,6 +58,8 @@ class OwnerSearchController extends SearchController
             $input['areaEnd'] = $post['area_end'];
             $input['searchInput'] = $post['search_input'];
             $input['searchTag'] = $post['select_category'];
+            $input['areaStartName'] = $post['area_start_name'];
+            $input['areaEndName'] = $post['area_end_name'];
         } elseif (cookie('search_tag')) {
             $input['areaStart'] = cookie('area_start_id');
             $input['areaEnd'] = cookie('area_end_id');
@@ -71,12 +77,7 @@ class OwnerSearchController extends SearchController
             $whereCond->pushSearchCond("content_all", $input['searchInput']);
             return $whereCond;
         } else {
-            $whereCond->pushSearchCond("content_all", $input['searchInput']);
-            $whereCond->pushCond("area_start", "like", substr($input['areaStart'], 0, 2) . "%");
-            $whereCond->pushCond("area_end", "like", substr($input['areaEnd'], 0, 2) . "%");
-            $whereCond->pushCond("area_start", "eq", $input['areaStart']);
-            $whereCond->pushCond("area_end", "eq", $input['areaEnd']);
-            return $whereCond;
+            return $this->combineAreaInput($input, $whereCond);
         }
     }
 
@@ -94,5 +95,33 @@ class OwnerSearchController extends SearchController
 
         return $data;
 
+    }
+
+    /**
+     * @param $input
+     * @param $whereCond
+     * @return mixed
+     */
+    private function combineAreaInput($input,WhereConditions $whereCond)
+    {
+        if ($input['areaStart'] || $input['areaEnd']) {
+            $input['searchInput'] = $input['searchInput'] . ' ' . $input['areaStartName'] . ' ' . $input['areaEndName'];
+        }
+        $whereCond->pushSearchCond("content_all", $input['searchInput']);
+        if ($input['areaStart'] && !$input['areaEnd']) {
+            $whereCond->pushCond("area_start", "like", substr($input['areaStart'], 0, 2) . "%");
+            $whereCond->pushCond("area_start", "eq", $input['areaStart']);
+        } else if ($input['areaEnd'] && !$input['areaStart']) {
+            $whereCond->pushCond("area_end", "like", substr($input['areaEnd'], 0, 2) . "%");
+            $whereCond->pushCond("area_end", "eq", $input['areaEnd']);
+        } else if ($input['areaEnd'] && $input['areaStart']) {
+            $whereCond->pushCond("area_start", "like", substr($input['areaStart'], 0, 2) . "%");
+            $whereCond->pushCond("area_end", "like", substr($input['areaEnd'], 0, 2) . "%");
+            $whereCond->pushCond("area_start", "eq", $input['areaStart']);
+            $whereCond->pushCond("area_end", "eq", $input['areaEnd']);
+        } else {
+            // (!$input['areaStart']&&!$input['areaEnd'])
+        }
+        return $whereCond;
     }
 }
