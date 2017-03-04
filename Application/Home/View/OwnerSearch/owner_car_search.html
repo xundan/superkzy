@@ -131,9 +131,7 @@
         $searchText.on('click', function(){
             $searchBar.addClass('weui_search_focusing');
             $searchInput.focus();
-            if (cookie('search_input')) {
-                $('#search_input').val($('input[name=search_input]').val());
-            }
+            $('#search_input').val($('input[name=search_input]').val());
         });
         $searchInput
                 .on('blur', function () {
@@ -150,8 +148,8 @@
                             $('input[name=search_input]').val('');
                         } else {
                             $('input[name=search_input]').val($(this).val().trim());
-                            cookie('search_input', $(this).val().trim());
-                            cookie('search_input_for_highlight',encodeURI(cookie('search_input')));
+//                            cookie('search_input', $(this).val().trim());
+//                            cookie('search_input_for_highlight',encodeURI(cookie('search_input')));
                         }
                         //更新页面cookie
                         cookie('owner_car_search',JSON.stringify($('#tag_search').serializeArray()));
@@ -183,56 +181,52 @@
 <script>
     $(function () {
 //        cookie(null);return;
-        console.log(JSON.parse(cookie('owner_car_search')));
+        console.log(cookie('owner_car_search'));
         console.log(cookie());
         var temp_load = cookie('owner_car_search');
         var temp_load_obj = JSON.parse(cookie('owner_car_search'));
-        if (cookie('search_tag') == '车源') {
+        jQuery.each(temp_load_obj,function(k,val){
+            if(val.name == 'select_category'){
+                $('input[name=select_category]').val(val.value);
+            }
+            else if(val.name == 'area_start'){
+                if(val.value != '') {
+                    $('input[name=area_start]').val(val.value);
+                }else{}
+            }
+            else if(val.name == 'area_start_name'){
+                if(val.value != ''){
+                    $('input[name=area_start_name]').val(val.value);
+                    $('#area_start_html').html(val.value);
+                }else{}
+            }
+            else if(val.name == 'area_end'){
+                if(val.value != ''){
+                    $('input[name=area_end]').val(val.value);
+                }else{}
+            }
+            else if(val.name == 'area_end_name'){
+                if(val.value != ''){
+                    $('input[name=area_end_name]').val(val.value);
+                    $('#area_end_html').html(val.value);
+                }
+            }
+            else if(val.name == 'search_input'){
+                if(val.value != ''){
+                    $('input[name=search_input]').val(val.value);
+                }else{}
+            }
+        });
+        console.log('form');
+        console.log(JSON.stringify($('#tag_search').serializeArray()));
+        if ($('input[name=select_category]').val() == '车源') {
             //信息查询
             $('#myTab a:eq(0)').removeClass('weui_bar_item_on').siblings('a').addClass('weui_bar_item_on weui_bar_item_on_extra').tab('show');
-            jQuery.each(temp_load_obj,function(k,val){
-                if(val.name == 'area_start'){
-                    if(val.value != '') {
-                        $('input[name=area_start]').val(val.value);
-                    }else{}
-                }
-                else if(val.name == 'area_start_name'){
-                    if(val.value != ''){
-                        $('input[name=area_start_name]').val(val.value);
-                        $('#area_start_html').html(val.value);
-                    }else{}
-                }
-                else if(val.name == 'area_end'){
-                    if(val.value != ''){
-                        $('input[name=area_end]').val(val.value);
-                    }else{}
-                }
-                else if(val.name == 'area_end_name'){
-                    if(val.value != ''){
-                        $('input[name=area_end_name]').val(val.value);
-                        $('#area_end_html').html(val.value);
-                    }
-                }
-                else if(val.name == 'search_input'){
-                    if(val.value != ''){
-                        $('input[name=search_input]').val(val.value);
-                    }else{}
-                }
-            });
         }
         else {
             //全部信息
             $('#myTab a:eq(0)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on weui_bar_item_on_extra');
-            jQuery.each(temp_load_obj,function(k,val){
-                if(val.name == 'search_input'){
-                    if(val.value != ''){
-                        $('input[name=search_input]').val(val.value);
-                    }else{}
-                }else{}
-            });
         }
-        console.log('form');
-        console.log(JSON.stringify($('#tag_search').serializeArray()));
         //载入搜索框内容
         if ($('input[name=search_input]').val()) {
             console.log('asdasd');
@@ -250,6 +244,7 @@
             }
             pushHistory();
         },false);
+//        pullDownAction();
     });
     function pushHistory(){
         var state = {
@@ -263,12 +258,8 @@
 <script>
     //点击全部标签
     $('#myTab a:eq(0)').click(function () {
-        //存入所选标签入cookie
-        cookie('search_tag', 'all');
-        //重置筛选条件的cookie
-        cookie('search_input', null);
         //填写表单数据
-        $('input[name=select_category]').val(cookie('search_tag'));
+        $('input[name=select_category]').val('all');
         $('input[name=area_start]').val('');
         $('input[name=area_start_name]').val('');
         $('input[name=area_end]').val('');
@@ -286,7 +277,6 @@
     $('#myTab a:eq(1)').click(function () {
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
-        cookie('search_tag', '车源');
         cookie('start_or_end', 'start');
         cookie('last_url', current_url);
         //填写表单数据
@@ -302,7 +292,6 @@
     //地址互换
     $('#myTab a:eq(2)').click(function () {
         //填写表单
-        cookie('search_tag', '车源');
         $('input[name=select_category]').val('车源');
         var area_start = $('input[name=area_start]').val();
         var area_start_name = $('input[name=area_start_name]').val();
@@ -323,7 +312,6 @@
     $('#myTab a:eq(3)').click(function () {
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
-        cookie('search_tag', '车源');
         cookie('start_or_end', 'end');
         cookie('last_url', current_url);
         //填写表单数据
@@ -370,20 +358,19 @@
                 var jsonObj = eval("(" + data + ")");
                 console.log(jsonObj);
                 if (jsonObj.msg) {
-                    if (cookie('search_tag') == 'all') {
+                    if (select_category == 'all') {
                         document.getElementById('all').innerHTML = '';
                     }
-                    else if (cookie('search_tag') == '车源') {
+                    else if (select_category == '车源') {
                         document.getElementById('search').innerHTML = '';
                     }
                     jQuery.each(jsonObj.li_array, function (k, val) {
                         var li = document.createElement('li');
                         li.innerHTML = val;
-                        console.log(cookie('search_tag'));
-                        if (cookie('search_tag') == 'all') {
+                        if (select_category == 'all') {
                             document.getElementById('all').appendChild(li);
                         }
-                        else if (cookie('search_tag') == '车源') {
+                        else if (select_category == '车源') {
                             document.getElementById('search').appendChild(li);
                         }
                         else {
@@ -408,7 +395,7 @@
             console.log(a);
             var page = $('#page').val();
             var request_page = parseInt(page) + 1;
-            var select_category = cookie('search_tag');
+            var select_category = $('input[name=select_category]').val();
             var where_cond_json = $('#where_cond_json').html().trim();
             var stage = $('#stage').html().trim();
             console.log(where_cond_json);
@@ -443,11 +430,10 @@
                         jQuery.each(jsonObj.li_array, function (k, val) {
                             var li = document.createElement('li');
                             li.innerHTML = val;
-                            console.log(cookie('search_tag'));
-                            if (cookie('search_tag') == 'all') {
+                            if (select_category == 'all') {
                                 document.getElementById('all').appendChild(li);
                             }
-                            else if (cookie('search_tag') == '车源') {
+                            else if (select_category == '车源') {
                                 document.getElementById('search').appendChild(li);
                             }
                             else {
@@ -551,12 +537,11 @@
 
     }
     //初始化绑定iScroll控件
-//    document.addEventListener('touchmove', function (e) {
-//        e.preventDefault();
-//    }, false);
+    document.addEventListener('touchmove', function (e) {
+        e.preventDefault();
+    }, false);
     document.addEventListener('DOMContentLoaded', loaded, false);
     //    window.onload = loaded();
-
 </script>
 <!--撤销收藏-->
 <script>
@@ -592,4 +577,49 @@
         return false;
     }
 </script>
+<!--<script>-->
+    <!--window.onload = function(){-->
+<!--//        var hightlight_content = document.getElementById('all');-->
+<!--//        var temp_search =$('input[name=search_input]').val();-->
+<!--//        var temp_search_new = "<span style='color:red'>"+temp_search+"</span>";-->
+<!--//        console.log(temp_search_new);-->
+<!--//        temp_search = new RegExp(temp_search,'g');-->
+<!--//        content = content.replace(temp_search,temp_search_new);-->
+
+<!--//        var range_obj = document.createRange();-->
+<!--//        range_obj.selectNodeContents(document.getElementById('all'));-->
+<!--//        console.log(range_obj);-->
+<!--//        var card_length = range_obj.startContainer.childNodes.length;-->
+<!--//        for(i=1;i<card_length-1;i++){-->
+<!--//            var content = range_obj.startContainer.childNodes[i].innerHTML;-->
+<!--//            console.log(typeof(content));-->
+<!--//            var temp_search =$('input[name=search_input]').val();-->
+<!--//            var temp_search_new = "<span style='color:red'>"+temp_search+"</span>";-->
+<!--//            console.log(temp_search_new);-->
+<!--//            temp_search = new RegExp(temp_search,'g');-->
+<!--//            content = content.replace(temp_search,temp_search_new);-->
+<!--//            console.log(content);-->
+<!--//        }-->
+<!--//        console.log(range_obj);-->
+
+        <!--var a = document.getElementById('all').innerHTML;-->
+        <!--console.log(a);-->
+        <!--var s1 =$('input[name=search_input]').val();-->
+        <!--var s2 =$('input[name=area_start_name]').val();-->
+        <!--var s3 =$('input[name=area_end_name]').val();-->
+        <!--var temp_search = s1+s2+s3;-->
+<!--//        console.log(temp_search);return;-->
+        <!--if(!temp_search) return false;-->
+        <!--var temp_search_new = "<span style='color:red'>"+temp_search+"</span>";-->
+        <!--temp_search = new RegExp(temp_search,'g');-->
+        <!--a = a.replace(temp_search,temp_search_new);-->
+<!--//        document.getElementById('all').innerText(a);-->
+        <!--$('#all').html(a);-->
+
+<!--//        range_obj.cloneRange();-->
+<!--//        document.getElementById('all').innerHTML = range_obj;-->
+<!--//        range_obj.deleteContents();-->
+    <!--};-->
+
+<!--</script>-->
 </html>

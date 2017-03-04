@@ -19,7 +19,6 @@ class DriverSearchController extends SearchController
         $whereCond = $this->createNewWhereConditions();
 
         $data = $this->getOrderWithoutExist($whereCond,0,"找车");
-        $data = $this->search_highlight($data);
 
         $this->assign("li_array", $data['li_array']);
         $this->assign("where_cond_json", $data['where_cond_json']);
@@ -41,7 +40,6 @@ class DriverSearchController extends SearchController
         $whereCond = WhereConditions::parseJson($whereCondJson);
         $data = $this->getOrderWithoutExist($whereCond, $post['stage'],"找车");
         $data['page'] = $post['page']; // 把page送回去，作为校验
-        $data = $this->search_highlight($data);
         echo json_encode($data);
         return;
     }
@@ -60,18 +58,26 @@ class DriverSearchController extends SearchController
             $input['searchTag'] = $post['select_category'];
             $input['areaStartName'] = $post['area_start_name'];
             $input['areaEndName'] = $post['area_end_name'];
-        } elseif (cookie('search_tag')) {
-            $input['areaStart'] = cookie('area_start_id');
-            $input['areaEnd'] = cookie('area_end_id');
-            $input['searchInput'] = cookie('search_input');
-            $input['searchTag'] = cookie('search_tag');
-        } else {
-            $input['areaStart'] = "610800";
-            $input['areaEnd'] = "410100";
-            $input['searchInput'] = "";
-            $input['searchTag'] = "all";
         }
-
+//        elseif (cookie('search_tag')) {
+//            $input['areaStart'] = cookie('area_start_id');
+//            $input['areaEnd'] = cookie('area_end_id');
+//            $input['searchInput'] = cookie('search_input');
+//            $input['searchTag'] = cookie('search_tag');
+//        } else {
+//            $input['areaStart'] = "610800";
+//            $input['areaEnd'] = "410100";
+//            $input['searchInput'] = "";
+//            $input['searchTag'] = "all";
+//        }
+        else{
+            $input['areaStart'] = '';
+            $input['areaEnd'] = '';
+            $input['searchInput'] = '';
+            $input['searchTag'] = '';
+            $input['areaStartName'] = '';
+            $input['areaEndName'] = '';
+        }
         $whereCond = new WhereConditions();
         if ($input['searchTag'] == "all") {
             $whereCond->pushSearchCond("content_all", $input['searchInput']);
