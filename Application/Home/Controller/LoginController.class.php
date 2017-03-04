@@ -10,6 +10,7 @@ namespace Home\Controller;
 
 //use Think\Auth;
 use Think\Controller;
+use Think\Log;
 
 header("Content-type:text/html; charset=utf-8");
 
@@ -19,14 +20,12 @@ class LoginController extends Controller
 
     public function register()
     {
-        $user_info = $_SESSION['user_info']['role_id'];
-        $this->assign('user_info', $user_info);
-        $this->display();
-    }
-
-    public function register_no_invite()
-    {
-        $user_info = $_SESSION['user_info']['role_id'];
+//        $user_info = $_SESSION['user_info']['role_id'];
+        $user_info = session('user_info');
+        if (!isset($user_info)){
+            cookie("current_url",__SELF__);
+            header('Location: '.C('REDIRECT_URL_BASE'));
+        }
         $this->assign('user_info', $user_info);
         $this->display();
     }
@@ -102,14 +101,16 @@ class LoginController extends Controller
                     echo jsonEcho($returnArr);
                     exit;
                 } else {
+                    Log::record("user saved error: ".$now_user["uid"], Log::ERR);
                     // TODO 日志
                     $returnArr['status'] = 500;
                     $returnArr['msg'] = "注册失败。";
                     echo jsonEcho($returnArr);
                     exit;
                 }
-            }else{}
-
+            }else{
+                Log::record("no user_info in session: ".$now_user["uid"], Log::ERR);
+            }
         } else {
             //验证码填写错误
             $returnArr['status'] = 0;

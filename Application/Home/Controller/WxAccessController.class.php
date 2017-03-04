@@ -77,11 +77,11 @@ class WxAccessController extends Controller
     {
         // 跳转地址设置为默认主页，如果cookie里有上次浏览地址，就跳到上次浏览的地址
 //        $target_url = "PersonalCenter/personal_center";
-        $target_url = "Homepage/homepage";
-        if (!empty($_COOKIE['current_action'])) {
-            $target_url = $_COOKIE['current_action'];
+        $target_url = U("Homepage/homepage");
+        if (!empty($_COOKIE['current_url'])) {
+            $target_url = $_COOKIE['current_url'];
         }
-        $this->redirect($target_url, '页面跳转中...');
+        $this->success('页面跳转中...',$target_url, 0);
     }
 
     /**
