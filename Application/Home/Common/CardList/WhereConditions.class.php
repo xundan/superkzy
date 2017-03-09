@@ -333,13 +333,23 @@ class WhereConditions
         }
     }
 
-    public function pushSearchCond($column, $val)
+    public function pushSearchCond($column, $val ,$bool_operator = null)
     {
         $real_var = trim($val);
         if (!$real_var) return false;//sql会报错，所以直接返回
         $query = $this->search_method($real_var);
         if (count($query)) {
-            return $this->_whereConditions[$column] = $query;
+            if($bool_operator){
+                $old_restraint = $this->getV($column);
+                if($old_restraint[count($old_restraint)-1] == 'OR'){
+                    array_pop($old_restraint);
+                }
+                array_push($old_restraint, $query); // 新约束
+                array_push($old_restraint, $bool_operator); // 约束之间的逻辑运算
+                return $this->_whereConditions[$column] = $old_restraint; //
+            }else{
+                return $this->_whereConditions[$column] = array($query);
+            }
         } else {
             return false;
         }

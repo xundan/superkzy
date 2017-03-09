@@ -361,6 +361,9 @@
                 var jsonObj = eval("(" + data + ")");
                 console.log(jsonObj);
                 if (jsonObj.msg) {
+                    $('#page').val(1);
+                    $('#where_cond_json').html(jsonObj.where_cond_json);
+                    $('#stage').html(jsonObj.stage);
                     if (select_category == 'all') {
                         document.getElementById('all').innerHTML = '';
                     }

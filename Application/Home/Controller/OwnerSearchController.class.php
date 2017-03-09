@@ -57,6 +57,10 @@ class OwnerSearchController extends SearchController
             $input['searchTag'] = $post['select_category'];
             $input['areaStartName'] = $post['area_start_name'];
             $input['areaEndName'] = $post['area_end_name'];
+            //对输入的名字进行处理
+            $input['areaStartName'] = preg_replace("/市|区|县|镇/", "", $input['areaStartName']);
+            $input['areaEndName'] = preg_replace("/市|区|县|镇/", "",  $input['areaEndName']);
+            //TODO 用short_name 取代正则替换
         }
 //        elseif (cookie('search_tag')) {
 //            $input['areaStart'] = cookie('area_start_id');
@@ -110,10 +114,36 @@ class OwnerSearchController extends SearchController
      */
     private function combineAreaInput($input,WhereConditions $whereCond)
     {
+        $searchString = $input['searchInput'];
         if ($input['areaStart'] || $input['areaEnd']) {
-            $input['searchInput'] = $input['searchInput'] . ' ' . $input['areaStartName'] . ' ' . $input['areaEndName'];
+            $searchString = $input['searchInput'] . ' ' . $input['areaStartName'] . ' ' . $input['areaEndName'];
         }
-        $whereCond->pushSearchCond("content_all", $input['searchInput']);
+        $whereCond->pushSearchCond("content_all", $searchString);
+        //添加白名单
+        if(($input['areaStartName'] == '神木') || ($input['areaEndName'] == '神木')){
+            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 包府路','OR');
+            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 店塔','OR');
+            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 孙家岔','OR');
+            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 大柳塔','OR');
+            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 尔林兔','OR');
+            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 锦界','OR');
+        }else if(($input['areaStartName'] == '府谷') || ($input['areaEndName'] == '府谷')){
+            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 府谷镇','OR');
+            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 庙沟门','OR');
+            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 新民','OR');
+            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 大昌汗','OR');
+            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 三道沟','OR');
+            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 老高川','OR');
+            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 田家寨','OR');
+        }else if(($input['areaStartName'] == '榆阳') || ($input['areaEndName'] == '榆阳')){
+            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 麻黄梁','OR');
+            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 金鸡滩','OR');
+            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 小壕兔','OR');
+            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 小纪汗','OR');
+        }else if(($input['areaStartName'] == '鄂尔多斯东胜') || ($input['areaEndName'] == '鄂尔多斯东胜')){
+            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 包府路','OR');
+        }else{}
+
         if ($input['areaStart'] && !$input['areaEnd']) {
             $whereCond->pushCond("area_start", "like", substr($input['areaStart'], 0, 2) . "%");
             $whereCond->pushCond("area_start", "eq", $input['areaStart']);

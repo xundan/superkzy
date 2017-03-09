@@ -23,7 +23,7 @@
         </a>
     </div>
     <div class="text-center">
-        <button class="btn btn-default" style="width: 80%;margin-top: 30%">我的邀请码:123123123</button>
+        <button class="btn btn-default" style="width: 80%;margin-top: 30%">我的邀请码:{$invitation_id}</button>
         <p class="text-muted text-center" style="padding:3% 10%">
             &emsp;我平台将会举行推荐好友送红包、抽奖等活动，赶快邀请您的朋友一起加入吧，我们将竭诚为您服务。
         </p>
@@ -31,4 +31,72 @@
 </div>
 <?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
 </body>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    wx.config({
+        debug: false,
+        appId: '{$signPackage["appId"]}',
+        timestamp: {$signPackage["timestamp"]},
+        nonceStr: '{$signPackage["nonceStr"]}',
+        signature: '{$signPackage["signature"]}',
+        jsApiList: [
+            // 所有要调用的 API 都要加到这个列表中
+            'onMenuShareTimeline','onMenuShareAppMessage'
+        ]
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+
+        // 分享到朋友圈
+        wx.onMenuShareTimeline({
+
+            title: '发布了消息没人联系？快来超级矿资源平台吧！', // 分享标题
+
+            link: '{$invited_url}', // 分享链接
+
+            imgUrl: 'http://www.kuaimei56.com/copyright.png', // 分享图标
+
+            success: function () {
+                // 用户确认分享后执行的回调函数
+//                alert('分享成功xcl');
+            },
+
+            cancel: function () {
+
+                // 用户取消分享后执行的回调函数
+//                alert('分享失败xcl');
+            }
+
+        });
+
+        //分享给朋友
+        wx.onMenuShareAppMessage({
+
+            title: '发布供求+物流的免费信息平台，十万人都在用！', // 分享标题
+
+            desc: '发布了消息没人联系？快来超级矿资源平台吧！免费的信息平台！', // 分享描述
+
+            link: '{$invited_url}', // 分享链接
+
+            imgUrl: 'http://www.kuaimei56.com/copyright.png', // 分享图标
+
+            type: '', // 分享类型,music、video或link，不填默认为link
+
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+
+            success: function () {
+
+                // 用户确认分享后执行的回调函数
+//                alert('超级矿资源：你分享成功了！');
+            },
+
+            cancel: function () {
+
+                // 用户取消分享后执行的回调函数
+//                alert('超级矿资源：你咋不继续分享了涅？')
+            }
+
+        });
+    });
+</script>
 </html>

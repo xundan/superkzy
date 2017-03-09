@@ -12,6 +12,7 @@
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
 </head>
 <body onload="onload()">
 <include file="Common:common"/>
@@ -142,30 +143,6 @@
                         </div>
                     </td>
                 </tr>
-                <!--<tr>-->
-                <!--<td>-->
-                <!--<a href="#" style="text-decoration: none;color:black">-->
-                <!--<div>-->
-                <!--&nbsp;上传驾驶证照片-->
-                <!--<span class="pull-right">-->
-                <!--<img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">-->
-                <!--</span>-->
-                <!--</div>-->
-                <!--</a>-->
-                <!--</td>-->
-                <!--</tr>-->
-                <!--<tr>-->
-                <!--<td>-->
-                <!--<a href="#" style="text-decoration: none;color:black">-->
-                <!--<div>-->
-                <!--&nbsp;上传行驶证照片-->
-                <!--<span class="pull-right">-->
-                <!--<img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">-->
-                <!--</span>-->
-                <!--</div>-->
-                <!--</a>-->
-                <!--</td>-->
-                <!--</tr>-->
                 <tr>
                     <td style="padding: 0">
                         <div class="input-group" style="height:34px;width: 100%">
@@ -248,21 +225,9 @@
                         </div>
                     </td>
                 </tr>
-                <!--<tr>-->
-                <!--<td>-->
-                <!--<a href="#" style="text-decoration: none;color:black">-->
-                <!--<div>-->
-                <!--&nbsp;上传验车照-->
-                <!--<span class="pull-right">-->
-                <!--<img src="__PUBLIC__/home/images/goto.png" class="pull-right img-responsive" style="width: 10px">-->
-                <!--</span>-->
-                <!--</div>-->
-                <!--</a>-->
-                <!--</td>-->
-                <!--</tr>-->
             </table>
-            <input type="submit" name="" id="" class="btn btn-group-justified " value="确&nbsp&nbsp&nbsp定"
-                   style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e">
+            <input type="button" name="" id="" class="btn btn-group-justified " value="确&nbsp&nbsp&nbsp定"
+                   style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e" onclick="confirm_modal_basic()">
         </form>
     </div>
     <div id="driver_work_exp" class="tab-pane" style="">
@@ -311,9 +276,57 @@
                     </td>
                 </tr>
             </table>
-            <input type="submit" name="" class="btn btn-group-justified " value="确&nbsp&nbsp&nbsp定"
-                   style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e">
+            <input type="button" name="" class="btn btn-group-justified " value="确&nbsp&nbsp&nbsp定"
+                   style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e" onclick="confirm_modal_exp()">
         </form>
+    </div>
+</div>
+<!--确认修改基本信息模态框-->
+<div class="modal fade" id="confirm_modal_basic" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="top:30%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel2" style="color:grey">小提示</h4>
+            </div>
+            <div class="modal-body">
+                <span style="color:black">确定修改吗？</span>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0);" onclick="submit_basic_form()" type="button" class="btn btn-primary"
+                   style="background-color: #04bfc6">
+                    确定
+                </a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--确认修改从业经验模态框-->
+<div class="modal fade" id="confirm_modal_exp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="top:30%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel" style="color:grey">小提示</h4>
+            </div>
+            <div class="modal-body">
+                <span style="color:black">确定修改吗？</span>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0);" onclick="submit_exp_form()" type="button" class="btn btn-primary"
+                   style="background-color: #04bfc6">
+                    确定
+                </a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
     </div>
 </div>
 <?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
@@ -411,6 +424,25 @@
             // 用户没选，什么都不做
         }
     })
+</script>
+<script>
+    function confirm_modal_basic(){
+        $('#confirm_modal_basic').modal();
+    }
+
+    function confirm_modal_exp(){
+        $('#confirm_modal_exp').modal();
+    }
+
+    function submit_basic_form() {
+        cookie('form_basic_data', null);
+        document.getElementById('form_driver_basic_data').submit();
+    }
+
+    function submit_exp_form() {
+        cookie('form_exp_data', null);
+        document.getElementById('form_driver_work_exp').submit();
+    }
 </script>
 <script>
     function share() {

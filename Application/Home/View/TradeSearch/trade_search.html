@@ -15,7 +15,7 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
 </head>
-<body style="">
+<body style="" id="qqqq">
 <!--导航标签-->
 <div class="panel-title" style=";margin:0;padding: 0;background-color: white;display: block">
     <div id="myTab" class="weui_navbar" style=";margin-bottom: 0;">
@@ -100,6 +100,11 @@
         </div>
     </div>
 </div>
+<!--<div id="testdiv">-->
+    <!--<p id="testp">-->
+        <!--<bold>aaaaaa</bold>-->
+    <!--</p>-->
+<!--</div>-->
 <?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
 </body>
 
@@ -194,6 +199,14 @@
 <!--载入读取上次标签-->
 <script>
     $(function () {
+//        console.log('teststart');
+//        testdiv1 = $('#testdiv');
+//        testdiv2 = document.getElementById('testdiv');
+//        testdiv3 = document.querySelector('#testdiv');
+//        console.log(testdiv1);
+//        console.log(testdiv2.toString());
+////        console.log(testdiv3.html());
+        console.log('testend');
         console.log($('#where_cond_json').html());
         console.log($('#stage').html());
         var now = new Date();
@@ -223,9 +236,15 @@
             }
             pushHistory();
         },false);
-        document.querySelector('body').addEventListener('touchmove', function (e) {
-            e.preventDefault();
-        });
+//        document.querySelector('body').addEventListener('touchmove', function (e) {
+//            e.preventDefault();
+//        });
+//        document.getElementsByTagName('body').addEventListener('touchmove',function(e){
+//            e.preventDefault();
+//        })
+//        $('#qqqq').on('touchmove',function(event){
+//            event.preventDefault();
+//        });
 
     });
     function pushHistory(){
@@ -406,6 +425,10 @@
                 console.log(jsonObj);
 //                    return;
                 if (jsonObj.msg) {
+                    //重置筛选条件组成
+                    $('#page').val(1);
+                    $('#where_cond_json').html(jsonObj.where_cond_json);
+                    $('#stage').html(jsonObj.stage);
                     if (cookie('search_tag') == '求购') {
                         document.getElementById('buy').innerHTML = '';
                     }
@@ -483,7 +506,7 @@
 //                                temp_search = new RegExp(temp_search,'g');
 //                                val = val.replace(temp_search,temp_search_new);
 //                            }
-                            console.log(val);
+//                            console.log(val);
                             li.innerHTML = val;
                             console.log(cookie('search_tag'));
                             if (cookie('search_tag') == '求购') {
@@ -592,9 +615,15 @@
 //    },800);
     }
     //初始化绑定iScroll控件
-    //    document.addEventListener('touchmove', function (e) {
-    //        e.preventDefault();
-    //    }, false);
+        document.addEventListener('touchmove', function (event) {
+            // 判断默认行为是否可以被禁用
+            if (event.cancelable) {
+                // 判断默认行为是否已经被禁用
+                if (!event.defaultPrevented) {
+                    event.preventDefault();
+                }
+            }
+        }, false);
     document.addEventListener('DOMContentLoaded', loaded, false);
     //    window.onload = loaded();
 

@@ -10,7 +10,7 @@ namespace Home\Controller;
 use Think\Controller;
 
 
-class CooperatePageController extends ComController
+class CooperatePageController extends Controller
 {
     public function WeChe(){
         $this->display();

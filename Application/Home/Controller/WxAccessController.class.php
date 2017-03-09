@@ -143,7 +143,7 @@ class WxAccessController extends Controller
                     array(
                         'name' => '戳我福利',
                         'sub_button' => array(
-                            array('type' => 'view', 'name' => '优惠加油', 'url' => 'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'),
+                            array('type' => 'view', 'name' => '优惠加油', 'url' => 'https://u.wcar.net.cn/1dN'),
                             array('type' => 'view', 'name' => '超矿金融', 'url' => 'http://www.kuaimei56.com/index.php/Views/FinancialClient/show'),
 //                            array('type' => 'view', 'name' => '推荐好友', 'url' => 'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'),
                         ),

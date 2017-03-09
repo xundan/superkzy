@@ -188,7 +188,7 @@
             <input type="button" name="confirm_button" id="confirm_button" class="btn btn-group-justified "
                    value="确&nbsp&nbsp&nbsp定"
                    style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e"
-                   onclick="submit_basic_form()">
+                   onclick="confirm_modal_basic()">
 
             <div id="result"></div>
         </form>
@@ -268,8 +268,56 @@
             </table>
             <input type="button" name="confirm_button2" class="btn btn-group-justified " value="确&nbsp&nbsp&nbsp定"
                    style="margin-top:10%;color:white;font-size: 1.5em;background-color: #fb3e1e"
-                   onclick="submit_exp_form()">
+                   onclick="confirm_modal_exp()">
         </form>
+    </div>
+</div>
+<!--确认修改基本信息模态框-->
+<div class="modal fade" id="confirm_modal_basic" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="top:30%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel2" style="color:grey">小提示</h4>
+            </div>
+            <div class="modal-body">
+                <span style="color:black">确定修改吗？</span>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0);" onclick="submit_basic_form()" type="button" class="btn btn-primary"
+                   style="background-color: #04bfc6">
+                    确定
+                </a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--确认修改从业经验模态框-->
+<div class="modal fade" id="confirm_modal_exp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="top:30%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel" style="color:grey">小提示</h4>
+            </div>
+            <div class="modal-body">
+                <span style="color:black">确定修改吗？</span>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0);" onclick="submit_exp_form()" type="button" class="btn btn-primary"
+                   style="background-color: #04bfc6">
+                    确定
+                </a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
     </div>
 </div>
 <?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
@@ -354,6 +402,14 @@
         cookie('form_basic_data', JSON.stringify($("#form_owner_basic_data").serializeArray()));
         cookie('form_exp_data', JSON.stringify($("#form_owner_work_exp").serializeArray()));
         window.location.href = "{:U('areaSearch/area_search')}";
+    }
+
+    function confirm_modal_basic(){
+        $('#confirm_modal_basic').modal();
+    }
+
+    function confirm_modal_exp(){
+        $('#confirm_modal_exp').modal();
     }
 
     function submit_basic_form() {

@@ -76,7 +76,7 @@
         <div id="check" class="checkbox" style="margin-top: 10%;">
             <label>
                 <input type="checkbox" name="service" id="service" value="" checked>
-                <a href="#" style="color:white">阅读并同意服务条款</a>
+                <a href="__PUBLIC__/home/超级矿资源条款.htm" style="color:white;text-decoration: none">阅读并同意服务条款</a>
             </label>
         </div>
         <input type="button" name="submit" id="submit" class="btn btn-lg btn-default btn-group-justified "
@@ -199,9 +199,13 @@
                         if (data != "") {
                             var jsonObj = eval("(" + data + ")");
                             showToast(jsonObj.msg);
-                            setTimeout(function(){
+                            if(jsonObj.status == 1){
+                                setTimeout(function(){
                                 window.location.href = "__CONTROLLER__/t5_upgrade_success";
-                            },1500);
+                                },1500);
+                            }else{
+                                return false;
+                            }
                         }
                         else {
                             showToast('网络错误!');

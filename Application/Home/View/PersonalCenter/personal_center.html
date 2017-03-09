@@ -21,27 +21,26 @@
         <img src="{$user_info['heading_url']}" class="" style="width:20%">
     </div>
     <div align="center">
-        <table class="">
+        <table width="auto">
             <tr>
-                <td>
-                    用户名:
+                <td width="40%" style="text-align: right">
+                    <span style="font-size: 1.3em">用户名:</span>
                 </td>
-                <td>
-                    {$user_info['user_name']}
+                <td width="80%">
+                    <span style="font-size: 1.3em">{$user_info['user_name']}</span>
                 </td>
             </tr>
             <tr>
-                <td style="">
+                <td width="40%" style="text-align: right">
                     &emsp;角色:
                 </td>
-                <td>
+                <td width="80%">
                     <switch name="user_role">
                         <case value="0">游客</case>
                         <case value="1">车主</case>
                         <case value="2">货主</case>
                         <default/>
                     </switch>
-                    <!--<button class="btn btn-xs btn-default" onclick="hint()" style="color:#04bfc6;border-radius: 10px">角色切换</button>-->
                     <button class="btn btn-xs btn-default" id="role_change" data-toggle="modal" data-target="#hint" style="color:#04bfc6;border-radius: 10px">角色切换</button>
                     <!-- Modal -->
                     <div class="modal fade" id="hint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -128,7 +127,7 @@
             </span>
         </div>
     </a>
-    <a href="javascript:showToast2('该功能将在后续版本上线,敬请期待!');" style="color:black;text-decoration: none">
+    <a href="http://d.eqxiu.com/s/40gfGpSt?eqrcode=1&from=singlemessage&isappinstalled=0" style="color:black;text-decoration: none">
         <div class="list-group-item">
             <span>
                 <img src="__PUBLIC__/home/images/user_guide.png" class="" style="width: 20px;height: 20px;">
