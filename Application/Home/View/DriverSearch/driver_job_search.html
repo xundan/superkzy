@@ -58,7 +58,7 @@
             </div>
             <label for="search_input" class="weui_search_text" id="search_text">
                 <i class="weui_icon_search"></i>
-                <span>搜索</span>
+                <span>请填写您需要的信息</span>
             </label>
             <input type="text" style="display: none">
         </form>
@@ -178,6 +178,7 @@
 </script>
 <!--载入读取上次标签-->
 <script>
+    var bool=false;
     $(function () {
 //        cookie(null);return;
 //        console.log(cookie());
@@ -225,6 +226,7 @@
         }
         else {
             //全部信息
+            $('input[name=select_category]').val('all');
             $('#myTab a:eq(0)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on weui_bar_item_on_extra');
         }
         //载入搜索框内容
@@ -234,22 +236,72 @@
         }
         //返回操作
         pushHistory();
-        var bool=false;
         setTimeout(function(){
             bool=true;
         },1500);
-        window.addEventListener("popstate", function (e) {
-            if(bool){
-                window.location.href = "{:U('Homepage/homepage')}";
-            }
-            pushHistory();
-        },false);
-//        console.log(a);
-//        console.log($('#where_cond_json').html());
-//        console.log($('#stage').html());
-//        pullDownAction();
-//        setTimeout(pullDownAction,5000);
+        setTimeout(pullDownAction2,200);
     });
+    window.addEventListener("popstate", function (e) {
+        if(bool){
+            window.location.href = "{:U('Homepage/homepage')}";
+        }
+        pushHistory();
+    },false);
+    function pullDownAction2() {
+        console.log('auto-down');
+        var search_input = $('input[name=search_input]').val();
+        var select_category = $('input[name=select_category]').val();
+        var area_start = $('input[name=area_start]').val();
+        var area_start_name = $('input[name=area_start_name]').val();
+        var area_end = $('input[name=area_end]').val();
+        var area_end_name = $('input[name=area_end_name]').val();
+        $.ajax({
+            type: "post",
+            url: "{:U('DriverSearch/driver_job_search')}",
+            data: {
+                isAjax: 1,
+                search_input: search_input,
+                select_category: select_category,
+                area_start:area_start,
+                area_start_name:area_start_name,
+                area_end:area_end,
+                area_end_name:area_end_name
+            },
+            success: function (data) {
+                console.log('success');
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+                if (jsonObj.msg) {
+                    $('#page').val(1);
+                    $('#where_cond_json').html(jsonObj.where_cond_json);
+                    $('#stage').html(jsonObj.stage);
+                    if (select_category == 'all') {
+                        document.getElementById('all').innerHTML = '';
+                    }
+                    else if (select_category == '找车') {
+                        document.getElementById('search').innerHTML = '';
+                    }
+                    jQuery.each(jsonObj.li_array, function (k, val) {
+                        var li = document.createElement('li');
+                        li.innerHTML = val;
+                        console.log(cookie('search_tag'));
+                        if (select_category == 'all') {
+                            document.getElementById('all').appendChild(li);
+                        }
+                        else if (select_category == '找车') {
+                            document.getElementById('search').appendChild(li);
+                        }
+                        else {
+                        }
+                    });
+                }
+                else {
+                }
+                myScroll.refresh();
+            }
+        });
+    }
+
     function pushHistory(){
         var state = {
             title: "title",
@@ -396,7 +448,7 @@
      *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
      */
     function pullUpAction() {
-        setTimeout(function () {
+//        setTimeout(function () {
             console.log('up');
             var a = $('#tag_search').serialize();
             console.log(a);
@@ -454,7 +506,7 @@
             });
             //============================================
             myScroll.refresh(); // 数据加载完成后，调用界面更新方法 Remember to refresh when contents are loaded (ie: on ajax completion)
-        }, 1000); // <-- Simulate network congestion, remove setTimeout from production!
+//        }, 1000); // <-- Simulate network congestion, remove setTimeout from production!
     }
     /**
      * 初始化iScroll控件

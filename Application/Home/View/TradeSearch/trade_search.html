@@ -50,7 +50,7 @@
             </div>
             <label for="search_input" class="weui_search_text" id="search_text">
                 <i class="weui_icon_search"></i>
-                <span>搜索</span>
+                <span>请填写您需要的信息</span>
             </label>
             <input type="text" style="display: none;">
         </form>
@@ -198,6 +198,7 @@
 
 <!--载入读取上次标签-->
 <script>
+    var bool=false;
     $(function () {
 //        console.log('teststart');
 //        testdiv1 = $('#testdiv');
@@ -226,33 +227,84 @@
         }
         //返回操作
         pushHistory();
-        var bool=false;
         setTimeout(function(){
             bool=true;
         },1500);
-        window.addEventListener("popstate", function (e) {
-            if(bool){
-                window.location.href = "{:U('Homepage/homepage')}";
-            }
-            pushHistory();
-        },false);
-//        document.querySelector('body').addEventListener('touchmove', function (e) {
-//            e.preventDefault();
-//        });
-//        document.getElementsByTagName('body').addEventListener('touchmove',function(e){
-//            e.preventDefault();
-//        })
-//        $('#qqqq').on('touchmove',function(event){
-//            event.preventDefault();
-//        });
 
+        setTimeout(pullDownAction2,200);
     });
+    window.addEventListener("popstate", function (e) {
+        if(bool){
+            window.location.href = "{:U('Homepage/homepage')}";
+        }
+        pushHistory();
+    },false);
     function pushHistory(){
         var state = {
             title: "title",
             url: "#"
         };
         window.history.pushState(state, "title", "#");
+    }
+    function pullDownAction2() {
+        console.log('auto-down');
+//        location.reload();
+        var subData = $('#tag_search').serialize();
+        var search_input = cookie('search_input') ? cookie('search_input') : '';
+        var select_category = cookie('search_tag');
+        var filter_kind = cookie('trade_search_filter_kind') ? cookie('trade_search_filter_kind') : '';
+        var filter_granularity = cookie('trade_search_filter_granularity') ? cookie('trade_search_filter_granularity') : '';
+        var filter_heat_min = cookie('trade_search_filter_heat_min') ? cookie('trade_search_filter_heat_min') : '';
+        var filter_heat_max = cookie('trade_search_filter_heat_max') ? cookie('trade_search_filter_heat_max') : '';
+        $.ajax({
+            type: "post",
+            url: "{:U('TradeSearch/trade_search')}",
+            data: {
+                isAjax: 1,
+                search_input: search_input,
+                select_category: select_category,
+                filter_kind: filter_kind,
+                filter_granularity: filter_granularity,
+                filter_heat_min: filter_heat_min,
+                filter_heat_max: filter_heat_max
+            },
+            success: function (data) {
+                console.log('success');
+//                console.log(data);
+//                return;
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+//                    return;
+                if (jsonObj.msg) {
+                    //重置筛选条件组成
+                    $('#page').val(1);
+                    $('#where_cond_json').html(jsonObj.where_cond_json);
+                    $('#stage').html(jsonObj.stage);
+                    if (cookie('search_tag') == '求购') {
+                        document.getElementById('buy').innerHTML = '';
+                    }
+                    else if (cookie('search_tag') == '供应') {
+                        document.getElementById('sell').innerHTML = '';
+                    }
+                    jQuery.each(jsonObj.li_array, function (k, val) {
+                        var li = document.createElement('li');
+                        li.innerHTML = val;
+                        console.log(cookie('search_tag'));
+                        if (cookie('search_tag') == '求购') {
+                            document.getElementById('buy').appendChild(li);
+                        }
+                        else if (cookie('search_tag') == '供应') {
+                            document.getElementById('sell').appendChild(li);
+                        }
+                        else {
+                        }
+                    });
+                }
+                else {
+                }
+                myScroll.refresh();
+            }
+        });
     }
 </script>
 <!--点击标签查询-->
@@ -615,15 +667,15 @@
 //    },800);
     }
     //初始化绑定iScroll控件
-        document.addEventListener('touchmove', function (event) {
-            // 判断默认行为是否可以被禁用
-            if (event.cancelable) {
-                // 判断默认行为是否已经被禁用
-                if (!event.defaultPrevented) {
-                    event.preventDefault();
-                }
+    document.addEventListener('touchmove', function (event) {
+        // 判断默认行为是否可以被禁用
+        if (event.cancelable) {
+            // 判断默认行为是否已经被禁用
+            if (!event.defaultPrevented) {
+                event.preventDefault();
             }
-        }, false);
+        }
+    }, false);
     document.addEventListener('DOMContentLoaded', loaded, false);
     //    window.onload = loaded();
 

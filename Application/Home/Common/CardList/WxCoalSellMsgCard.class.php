@@ -19,11 +19,9 @@ class WxCoalSellMsgCard extends MsgCard
         $li_str = "<li class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
 <div style=\"position: absolute;right: 0px;\"><img src=\"__PUBLIC__/home/images/sell.png\" width=\"50px\"></div>
 <div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
-    <a href=\"#\">
-        <div class=\"weui_media_hd\">
-            <img src=\"__PUBLIC__/home/images/from_wx.png\" class=\"weui_media_appmsg_thumb\">
-        </div>
-    </a>
+    <div class=\"weui_media_hd\">
+        <img src=\"__PUBLIC__/home/images/from_wx.png\" class=\"weui_media_appmsg_thumb\">
+    </div>
     <div class=\"weui_media_bd\">
         <div>
             <h4 class=\"weui_media_title\">来自微信</h4>

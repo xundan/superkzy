@@ -169,7 +169,8 @@ a {
 }
 
 .weui_icon_clear:before, .weui_icon_search:before {
-    color: #b2b2b2;
+    /*color: #b2b2b2;*/
+    color: orange;
     font-size: 14px
 }
 
@@ -2058,7 +2059,8 @@ a.weui_media_box:active {
     display: -webkit-flex;
     display: flex;
     box-sizing: border-box;
-    background-color: #efeff4
+    /*background-color: #efeff4*/
+    background-color: #04bfc6
 }
 
 .weui_search_bar:before {
@@ -2187,7 +2189,8 @@ a.weui_media_box:active {
     margin-left: 10px;
     line-height: 28px;
     white-space: nowrap;
-    color: #09bb07
+    /*color: #09bb07*/
+    color: white;
 }
 
 .weui_search_input:not(:valid) ~ .weui_icon_clear {
@@ -2200,9 +2203,11 @@ input[type=search]::-webkit-search-cancel-button, input[type=search]::-webkit-se
 
 /*add for need*/
 .weui_bar_item_on{
-    border-bottom: 3px solid;
-    border-color: #04bfc6;
+    /*border-bottom: 3px solid white;*/
+    /*border-color: #04bfc6;*/
     font-weight: bold;
+    /*background-color: #04bfc6 !important;*/
+    /*color:white !important;*/
 }
 .weui_bar_item_on_extra{
     border-bottom: 3px solid;

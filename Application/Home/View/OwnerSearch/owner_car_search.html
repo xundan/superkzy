@@ -58,7 +58,7 @@
             </div>
             <label for="search_input" class="weui_search_text" id="search_text">
                 <i class="weui_icon_search"></i>
-                <span>搜索</span>
+                <span>请填写您需要的信息</span>
             </label>
             <input type="text" style="display: none">
         </form>
@@ -179,8 +179,9 @@
 </script>
 <!--载入读取上次标签-->
 <script>
+    var bool = false;
     $(function () {
-//        cookie(null);return;
+    //        cookie(null);return;
         console.log(cookie('owner_car_search'));
         console.log(cookie());
         var temp_load = cookie('owner_car_search');
@@ -225,6 +226,7 @@
         }
         else {
             //全部信息
+            $('input[name=select_category]').val('all');
             $('#myTab a:eq(0)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on weui_bar_item_on_extra');
         }
         //载入搜索框内容
@@ -234,18 +236,71 @@
         }
         //返回操作
         pushHistory();
-        var bool=false;
         setTimeout(function(){
             bool=true;
         },1500);
-        window.addEventListener("popstate", function (e) {
-            if(bool){
-                window.location.href = "{:U('Homepage/homepage')}";
-            }
-            pushHistory();
-        },false);
-//        pullDownAction();
+        setTimeout(pullDownAction2,200);
     });
+    window.addEventListener("popstate", function (e) {
+        if(bool){
+            window.location.href = "{:U('Homepage/homepage')}";
+        }
+        pushHistory();
+    },false);
+    function pullDownAction2() {
+        console.log('auto-down');
+        var search_input = $('input[name=search_input]').val();
+        var select_category = $('input[name=select_category]').val();
+        var area_start = $('input[name=area_start]').val();
+        var area_start_name = $('input[name=area_start_name]').val();
+        var area_end = $('input[name=area_end]').val();
+        var area_end_name = $('input[name=area_end_name]').val();
+        $.ajax({
+            type: "post",
+            url: "{:U('OwnerSearch/owner_car_search')}",
+            data: {
+                isAjax: 1,
+                search_input: search_input,
+                select_category: select_category,
+                area_start:area_start,
+                area_start_name:area_start_name,
+                area_end:area_end,
+                area_end_name:area_end_name
+            },
+            success: function (data) {
+                console.log('success');
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+                if (jsonObj.msg) {
+                    $('#page').val(1);
+                    $('#where_cond_json').html(jsonObj.where_cond_json);
+                    $('#stage').html(jsonObj.stage);
+                    if (select_category == 'all') {
+                        document.getElementById('all').innerHTML = '';
+                    }
+                    else if (select_category == '车源') {
+                        document.getElementById('search').innerHTML = '';
+                    }
+                    jQuery.each(jsonObj.li_array, function (k, val) {
+                        var li = document.createElement('li');
+                        li.innerHTML = val;
+                        if (select_category == 'all') {
+                            document.getElementById('all').appendChild(li);
+                        }
+                        else if (select_category == '车源') {
+                            document.getElementById('search').appendChild(li);
+                        }
+                        else {
+                        }
+                    });
+                }
+                else {
+                }
+                myScroll.refresh();
+            }
+        });
+    }
+
     function pushHistory(){
         var state = {
             title: "title",
@@ -425,7 +480,7 @@
                         return false;
                     }
 //                    return;
-                    if (jsonObj.msg) {
+                        if (jsonObj.msg) {
                         page++;
                         $('#page').val(page);
                         $('#where_cond_json').html(jsonObj.where_cond_json);
@@ -540,8 +595,14 @@
 
     }
     //初始化绑定iScroll控件
-    document.addEventListener('touchmove', function (e) {
-        e.preventDefault();
+    document.addEventListener('touchmove', function (event) {
+        // 判断默认行为是否可以被禁用
+        if (event.cancelable) {
+            // 判断默认行为是否已经被禁用
+            if (!event.defaultPrevented) {
+                event.preventDefault();
+            }
+        }
     }, false);
     document.addEventListener('DOMContentLoaded', loaded, false);
     //    window.onload = loaded();
@@ -580,49 +641,4 @@
         return false;
     }
 </script>
-<!--<script>-->
-    <!--window.onload = function(){-->
-<!--//        var hightlight_content = document.getElementById('all');-->
-<!--//        var temp_search =$('input[name=search_input]').val();-->
-<!--//        var temp_search_new = "<span style='color:red'>"+temp_search+"</span>";-->
-<!--//        console.log(temp_search_new);-->
-<!--//        temp_search = new RegExp(temp_search,'g');-->
-<!--//        content = content.replace(temp_search,temp_search_new);-->
-
-<!--//        var range_obj = document.createRange();-->
-<!--//        range_obj.selectNodeContents(document.getElementById('all'));-->
-<!--//        console.log(range_obj);-->
-<!--//        var card_length = range_obj.startContainer.childNodes.length;-->
-<!--//        for(i=1;i<card_length-1;i++){-->
-<!--//            var content = range_obj.startContainer.childNodes[i].innerHTML;-->
-<!--//            console.log(typeof(content));-->
-<!--//            var temp_search =$('input[name=search_input]').val();-->
-<!--//            var temp_search_new = "<span style='color:red'>"+temp_search+"</span>";-->
-<!--//            console.log(temp_search_new);-->
-<!--//            temp_search = new RegExp(temp_search,'g');-->
-<!--//            content = content.replace(temp_search,temp_search_new);-->
-<!--//            console.log(content);-->
-<!--//        }-->
-<!--//        console.log(range_obj);-->
-
-        <!--var a = document.getElementById('all').innerHTML;-->
-        <!--console.log(a);-->
-        <!--var s1 =$('input[name=search_input]').val();-->
-        <!--var s2 =$('input[name=area_start_name]').val();-->
-        <!--var s3 =$('input[name=area_end_name]').val();-->
-        <!--var temp_search = s1+s2+s3;-->
-<!--//        console.log(temp_search);return;-->
-        <!--if(!temp_search) return false;-->
-        <!--var temp_search_new = "<span style='color:red'>"+temp_search+"</span>";-->
-        <!--temp_search = new RegExp(temp_search,'g');-->
-        <!--a = a.replace(temp_search,temp_search_new);-->
-<!--//        document.getElementById('all').innerText(a);-->
-        <!--$('#all').html(a);-->
-
-<!--//        range_obj.cloneRange();-->
-<!--//        document.getElementById('all').innerHTML = range_obj;-->
-<!--//        range_obj.deleteContents();-->
-    <!--};-->
-
-<!--</script>-->
 </html>
