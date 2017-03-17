@@ -8,8 +8,10 @@
 
 namespace Home\Controller;
 
+use Home\Model\RawMessagesModel;
 use Home\Model\UserModel;
 use Think\Controller;
+use Think\Log;
 
 header("Content-type: text/html; charset=utf-8");
 
@@ -26,6 +28,65 @@ class WxAccessController extends Controller
             'appsecret' => C('WX_APPSECRET')
         );
         $this->setWeObj(new \Org\Util\Wechat($options));
+    }
+
+    public function reply(){
+        $this->getWeObj()->valid();
+        $type = $this->getWeObj()->getRev()->getRevType();
+        switch($type) {
+            case \Org\Util\Wechat::MSGTYPE_TEXT:
+                $content = $this->getWeObj()->getRevContent();
+                if ($content=="你好"){
+                    $this->getWeObj()->text("你好，这里是超级矿资源，感谢您的支持！")->reply();
+                    exit;
+                }
+                if ($content=="查看结构"){
+                    $str = json_encode($this->getWeObj()->getRevData());
+                    $this->getWeObj()->text($str)->reply();
+                    exit;
+                }
+
+                // 如果是小消息
+                $mode = '/([0-9]{11})|(\+86[0-9]{11})/'; //正则，必须写在反斜杠里面
+                preg_match($mode, $content, $match);
+
+                if ($match) {
+                    $sender = $this->getWeObj()->getRevFrom();
+                    $sender_wx = "wx_mp";
+                    $owner = $match[0];
+                    date_default_timezone_set('PRC');
+                    $title = date('y-m-d_H:i', time());
+                    $title .= $owner;
+
+                    $insert = $this->createMpRaw($title, $content, $owner, $sender, $sender_wx);
+                    if ($insert) {
+                        $this->getWeObj()->text("您的消息已经收到，我们将及时为您转发。")->reply();
+                    } else {
+                        Log::record("WxAccess: insert_raw() failed. ", Log::ERR);
+                    }
+
+                    exit;
+                }
+
+
+                break;
+            case \Org\Util\Wechat::MSGTYPE_EVENT:
+                $event = $this->getWeObj()->getRevEvent();
+
+                if ($event['event']=='subscribe'){
+                    $welcome_str = "感谢关注【超级矿资源】微信公众平台！
+您可以点击下方的进入 <a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>首页</a>开始 <a href='http://www.kuaimei56.com/index.php/Home/OwnerPublish/owner_publish'>发布</a>或 <a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>查询</a> 运单、订单信息。也可以在这里回复直接提出您的问题。
+
+在本页面直接回复您要转发的消息，我们会为您转发到我们的<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>平台网站</a>和所有超矿微信的朋友圈。";
+                    $this->getWeObj()->text($welcome_str)->reply();
+                    exit;
+                }
+                break;
+            case \Org\Util\Wechat::MSGTYPE_IMAGE:
+                break;
+            default:
+                $this->getWeObj()->text("使用帮助")->reply();
+        }
     }
 
     public function index()
@@ -81,7 +142,8 @@ class WxAccessController extends Controller
         if (!empty($_COOKIE['current_url'])) {
             $target_url = $_COOKIE['current_url'];
         }
-        $this->success('页面跳转中...',$target_url, 0);
+//        $this->success('页面跳转中...',$target_url, 0);
+        redirect($target_url, 0, '页面跳转中...');
     }
 
     /**
@@ -170,5 +232,39 @@ class WxAccessController extends Controller
     public function setWeObj(\Org\Util\Wechat $weObj)
     {
         $this->weObj = $weObj;
+//        $weObj->valid(); //被动接口处于加密模式时必须调用
     }
+
+
+    /**
+     * @param $title
+     * @param $content
+     * @param $owner
+     * @param $sender
+     * @param $sender_wx
+     * @return mixed    成功与否
+     */
+    private function createMpRaw($title, $content, $owner, $sender, $sender_wx)
+    {
+        //解决短时间内重复调用问题
+        $Raw = new RawMessagesModel();
+        $duplicate_data = $Raw->where("rid = '$title'")->find();
+        if ($duplicate_data) {
+            return $duplicate_data;
+        }
+
+        $rawAttribute = array(
+            'rid' => $title,
+            'content' => $content,
+            'sender' => $sender,
+            'type' => 'wx_mp', // 来自公众号平台
+            'remark' => '0',
+            'status' => 0,
+            'owner' => $owner,
+            'sender_wx' => $sender_wx,
+        );
+        $insert = $Raw->add($rawAttribute);
+        return $insert;
+    }
+
 }

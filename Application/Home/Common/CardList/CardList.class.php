@@ -32,7 +32,7 @@ class CardList
     {
         $resultArray = array();
         foreach ($messages as $message) {
-            if ($message['type'] == 'plain') { // 是微信来源
+            if ($message['type'] == 'plain' || $message['type'] == 'wx_mp') { // 是微信来源
                 if ($message['category'] == '供应') { // 供应
                     $msgCard = new WxCoalSellMsgCard($message);
                 } elseif ($message['category'] == '车源') { // 司机找活

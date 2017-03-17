@@ -41,7 +41,7 @@ class MsgCard extends Card
     {
         $li_str = "";
         $message = $this->_message;
-        if ($message['type'] == 'plain') { // R
+        if ($message['type'] == 'plain'||$message['type'] == 'wx_mp') { // R
             $li_str = "<li>" . $message['content'] . "</li>";
         } else {
             if ($message['category'] == '供应') { // 供应
