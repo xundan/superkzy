@@ -30,13 +30,14 @@ class ComController extends Controller
                 session('role_id',$user_r['role_id']);
             }else{
                 // 跳转到WxAccess/base 从base取出openid在数据库中找user，没有再跳转到WxAccess/oauth
-                header('Location: '.C('REDIRECT_URL_BASE'));
+                header('Location: '.C('REDIRECT_URL_BASE'));exit;
             }
         }
         $Auth = new \Think\Auth();
 
         if(!$Auth->check($module_name,$user['uid'])){
-            $this->error('没有权限访问本页面 '.$module_name." session->".json_encode($user),U('Login/register'));
+////            $this->error('没有权限访问本页面 '.$module_name." session->".json_encode($user),U('Feedback/403'),0);exit;
+            header('Location:'.U('Feedback/403'));exit;
         }
     }
 

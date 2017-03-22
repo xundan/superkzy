@@ -114,34 +114,16 @@ class OwnerSearchController extends SearchController
      */
     private function combineAreaInput($input,WhereConditions $whereCond)
     {
-        $searchString = $input['searchInput'];
-        if ($input['areaStart'] || $input['areaEnd']) {
-            $searchString = $input['searchInput'] . ' ' . $input['areaStartName'] . ' ' . $input['areaEndName'];
-        }
-        $whereCond->pushSearchCond("content_all", $searchString);
+        $whereCond->pushSearchCond("content_all", $input['searchInput']);
         //添加白名单
         if(($input['areaStartName'] == '神木') || ($input['areaEndName'] == '神木')){
-            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 包府路','OR');
-            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 店塔','OR');
-            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 孙家岔','OR');
-            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 大柳塔','OR');
-            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 尔林兔','OR');
-            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 锦界','OR');
+            $whereCond->pushSearchCond("content_all",'神木 包府路 店塔 孙家岔 大柳塔 尔林兔 锦界','OR');
         }else if(($input['areaStartName'] == '府谷') || ($input['areaEndName'] == '府谷')){
-            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 府谷镇','OR');
-            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 庙沟门','OR');
-            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 新民','OR');
-            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 大昌汗','OR');
-            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 三道沟','OR');
-            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 老高川','OR');
-            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 田家寨','OR');
+            $whereCond->pushSearchCond("content_all",'府谷 府谷镇 庙沟门 新民 大昌汗 三道沟 老高川 田家寨','OR');
         }else if(($input['areaStartName'] == '榆阳') || ($input['areaEndName'] == '榆阳')){
-            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 麻黄梁','OR');
-            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 金鸡滩','OR');
-            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 小壕兔','OR');
-            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 小纪汗','OR');
+            $whereCond->pushSearchCond("content_all",'榆阳 麻黄梁 金鸡滩 小壕兔 小纪汗','OR');
         }else if(($input['areaStartName'] == '鄂尔多斯东胜') || ($input['areaEndName'] == '鄂尔多斯东胜')){
-            $whereCond->pushSearchCond("content_all", $input['searchInput'].' 包府路','OR');
+            $whereCond->pushSearchCond("content_all",'鄂尔多斯东胜 包府路','OR');
         }else{}
 
         if ($input['areaStart'] && !$input['areaEnd']) {

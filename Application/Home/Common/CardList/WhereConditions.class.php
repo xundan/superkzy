@@ -335,35 +335,59 @@ class WhereConditions
 
     public function pushSearchCond($column, $val ,$bool_operator = null)
     {
+        $where = array();
         $real_var = trim($val);
         if (!$real_var) return false;//sql会报错，所以直接返回
-        $query = $this->search_method($real_var);
-        if (count($query)) {
-            if($bool_operator){
-                $old_restraint = $this->getV($column);
-                if($old_restraint[count($old_restraint)-1] == 'OR'){
-                    array_pop($old_restraint);
-                }
-                array_push($old_restraint, $query); // 新约束
-                array_push($old_restraint, $bool_operator); // 约束之间的逻辑运算
-                return $this->_whereConditions[$column] = $old_restraint; //
+        if ($bool_operator){
+            $query = $this->search_method($real_var,$bool_operator);
+            $old_restraint = $this->getV($column);
+            if(!empty($old_restraint)){
+                array_push($where,$old_restraint);
+                array_push($where,$query);
             }else{
-                return $this->_whereConditions[$column] = array($query);
+                array_push($where,$query);
             }
+        }else{
+            $query = $this->search_method($real_var,'and');
+            array_push($where,$query);
+        }
+        if(count($where)){
+            return $this->_whereConditions[$column] = $where;
         } else {
             return false;
         }
+
+
+//        if (count($query)) {
+//            if($bool_operator){
+//                $old_restraint = $this->getV($column);
+//                if($old_restraint[count($old_restraint)-1] == 'OR'){
+//                    array_pop($old_restraint);
+//                }
+//                array_push($old_restraint, $query); // 新约束
+//                array_push($old_restraint, $bool_operator); // 约束之间的逻辑运算
+//                return $this->_whereConditions[$column] = $old_restraint; //
+//            }else{
+//                return $this->_whereConditions[$column] = array($query);
+//            }
+//        } else {
+//            return false;
+//        }
     }
 
     //对字符串进行处理
-    private function search_method($queryString)
+    private function search_method($queryString,$relation)
     {
         $tempStr = $this->arrange_input($queryString);
         $tempStr = explode(" ", $tempStr);
         $query = array();
-        foreach ($tempStr as $item) {
-            $query[] = array('like', '%' . $item . '%');
+        array_push($query,'like');
+        foreach ($tempStr as &$item) {
+//            $query[] = array('like', '%' . $item . '%');
+            $item = "%".$item."%";
         }
+        array_push($query,$tempStr);
+        array_push($query,$relation);
         return $query;
     }
 

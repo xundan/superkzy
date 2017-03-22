@@ -179,7 +179,6 @@
 </script>
 <!--载入读取上次标签-->
 <script>
-    var bool = false;
     $(function () {
     //        cookie(null);return;
         console.log(cookie('owner_car_search'));
@@ -235,18 +234,42 @@
             $('#search_text').html($('input[name=search_input]').val());
         }
         //返回操作
-        pushHistory();
+        function pushHistory() {
+            var state = {
+                title: "title",
+                url: "#"
+            };
+            window.history.pushState(state, "title", "#");
+//            alert('push');
+        }
+        var bool = false;
+//        alert(1+' '+bool);
         setTimeout(function(){
             bool=true;
-        },1500);
+        },1000);
+//        alert(navigator.userAgent);
+        if(navigator.userAgent.indexOf('Android') > 0){
+            pushHistory();
+            window.addEventListener("popstate", function (e) {
+                if(true){
+                    window.location.href = "{:U('Homepage/homepage')}";
+                }else{
+                    return false;
+                }
+//                pushHistory();
+            },false);
+        }else{
+            pushHistory();
+            window.addEventListener("popstate", function (e) {
+                if(bool){
+                    window.location.href = "{:U('Homepage/homepage')}";
+                }else{
+                    return false;
+                }
+            },false);
+        }
         setTimeout(pullDownAction2,200);
     });
-    window.addEventListener("popstate", function (e) {
-        if(bool){
-            window.location.href = "{:U('Homepage/homepage')}";
-        }
-        pushHistory();
-    },false);
     function pullDownAction2() {
         console.log('auto-down');
         var search_input = $('input[name=search_input]').val();
@@ -301,14 +324,6 @@
 
             }
         });
-    }
-
-    function pushHistory(){
-        var state = {
-            title: "title",
-            url: "#"
-        };
-        window.history.pushState(state, "title", "#");
     }
 </script>
 <!--点击标签查询-->

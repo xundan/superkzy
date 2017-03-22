@@ -79,7 +79,7 @@ class LoginController extends Controller
             $r = $userModel->where(array("phone_number" => $phone_numbers))->find();
             if (!empty($r)) {//验证用户是否注册
                 $returnArr['status'] = 233;
-                $returnArr['msg'] = "该手机号已经注册过。";
+                $returnArr['msg'] = "该手机号已被注册，正在登录";
                 echo json_encode($returnArr);
                 exit;
             }

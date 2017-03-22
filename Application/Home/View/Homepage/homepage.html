@@ -14,152 +14,150 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
 </head>
 
-<body style="position: relative;background-color: white">
+<body style=";background-color: white;">
 
 <!--海报-->
-<div style="background-color: #04bfc6;height: 50px">
-<img src="__PUBLIC__/home/images/logo.png" style="margin-left: 15px;height: 50px;width: 75px">
-    <span style="font-size: 1.6em;color: white;vertical-align: middle">超级矿资源</span>
+<div style="background-color: #04bfc6;height: 10%;">
+    <img src="__PUBLIC__/home/images/logo.png" style="margin-top: 1.5%;margin-left: 3%;height: 90%;width: 25%">
+    <span style="font-size: 2em;color: white;vertical-align: middle">超级矿资源</span>
 </div>
 
 <!--信息统计-->
-<ul style="margin-top: 3%;margin-left: 10%;width: 80%;color: #04bfc6;">
+<ul style="margin-top: 0;margin-bottom: 0;margin-left: 10%;padding: 3%;width: 80%;color: #04bfc6;height: 5%">
     <li><span style="color: black">今日平台信息总量：<span style="color:red">{$todayCount}条</span></span></li>
     <!--<li><span style="color: black">运输订单信息量：<span style="color:red">{$todayTrade}条</span></span></li>-->
     <!--<li><span style="color: black">交易订单信息量：<span style="color:red">{$todayTrans}条</span></span></li>-->
 </ul>
 
 <!--顶部功能栏-->
-<div class="text-center" style="width: 100%;">
-<div style="position: absolute;top: 21%;">
-    <div class="text-center" style="width: 50%;float:left;padding-bottom: 5%;
-        /*border-right:1px solid #04bfc6;*/
-        border: none;
-  background-image: -webkit-linear-gradient(white,#04bfc6 100%);
-  background-image: -moz-linear-gradient(white,#04bfc6 100%);
-  background-image: -o-linear-gradient(white,#04bfc6 100%);
-  background-image: linear-gradient(white,#04bfc6 100%);
-  background-size:  1px 100%;
-  background-repeat: no-repeat;
-  background-position: right;
-        ">
-        <a href="{:U('OwnerPublish/owner_publish')}" style="text-decoration: none;color:black">
-            <!--<div class="btn" style="border-radius: 50%;padding: 1px;">-->
-            <img src="__PUBLIC__/home/images/publish_button.png" style=";
-                width: 50%;height: 50%;
-                /*width: 70px;height: 70px;*/
-                ">
-            <!--</div>-->
-            <div style="font-size: 1.5em;margin-top: 1px">发布信息</div>
-        </a>
-    </div>
-    <div class="text-center" style="width: 50%;float: left;padding-bottom: 5%;">
-        <a href="{:U('DriverSearch/driver_job_search')}" style="text-decoration: none;color: black">
-            <img src="__PUBLIC__/home/images/driver_search_button.png" class=""
-                 style=";
-                     /*width: 70px;height: 70px;*/
-                     width: 50%;height: 50%;
-                     ">
-
-            <div style="font-size: 1.5em;margin-top: 1px">司机找活</div>
-        </a>
-    </div>
-    <div style=";height: 1px;width: 100%;float: left;margin:0;
-    background: -webkit-linear-gradient(left, rgba(255,255,255,0), #04bfc6 50%,rgba(255,255,255,0));
-    background: -o-linear-gradient(right, rgba(255,255,255,0), #04bfc6 50%,rgba(255,255,255,0));
-    background: -moz-linear-gradient(right, rgba(255,255,255,0), #04bfc6 50%,rgba(255,255,255,0));
-    background: linear-gradient(to right, rgba(255,255,255,0), #04bfc6 50%,rgba(255,0,0,0));
-    ">
-    </div>
-    <!--<div style="margin-left: 30%;height: 100px;width: 1px;-->
-    <!--background: -webkit-linear-gradient(left, rgba(255,0,0,0), rgba(255,0,0,1),rgba(255,0,0,0));-->
-    <!--background: -o-linear-gradient(right, rgba(255,0,0,0), rgba(255,0,0,1),rgba(255,0,0,0));-->
-    <!--background: -moz-linear-gradient(right, rgba(255,0,0,0), rgba(255,0,0,1),rgba(255,0,0,0));-->
-    <!--background: linear-gradient(to bottom, rgba(255,0,0,0), rgba(255,0,0,1),rgba(255,0,0,0));-->
-    <!--">-->
-    <!--</div>-->
-    <div class="text-center" style="width: 50%;float: left;padding-top: 5%;
+<div class="" style="margin:auto auto;width: 100%;height:70%;vertical-align: middle;display:flex;
+            justify-content:center;
+            align-items:center;">
+    <div style="width: 100%;vertical-align: middle">
+        <div class="text-center" style="width: 50%;float:left;padding-bottom: 5%;
             /*border-right:1px solid #04bfc6;*/
             border: none;
-  background-image: -webkit-linear-gradient(#04bfc6,white 100%);
-  background-image: -moz-linear-gradient(#04bfc6,white 100%);
-  background-image: -o-linear-gradient(#04bfc6,white 100%);
-  background-image: linear-gradient(#04bfc6,white 100%);
-  background-size:  1px 100%;
-  background-repeat: no-repeat;
-  background-position: right;
+        background-image: -webkit-linear-gradient(white,#04bfc6 100%);
+        background-image: -moz-linear-gradient(white,#04bfc6 100%);
+        background-image: -o-linear-gradient(white,#04bfc6 100%);
+        background-image: linear-gradient(white,#04bfc6 100%);
+        background-size:  1px 100%;
+        background-repeat: no-repeat;
+        background-position: right;
             ">
-        <a href="{:U('OwnerSearch/owner_car_search')}" style="text-decoration: none;color: black">
-            <img src="__PUBLIC__/home/images/owner_search_button.png"
-                 style=";
-                         width: 50%;height: 50%;
+            <a href="{:U('OwnerPublish/owner_publish')}" style="text-decoration: none;color:black">
+                <!--<div class="btn" style="border-radius: 50%;padding: 1px;">-->
+                <img src="__PUBLIC__/home/images/publish_button.png" style=";
+                    width: 50%;height: 50%;
+                    /*width: 70px;height: 70px;*/
+                    ">
+                <!--</div>-->
+                <div style="font-size: 1.5em;margin-top: 1px">发布信息</div>
+            </a>
+        </div>
+        <div class="text-center" style="width: 50%;float: left;padding-bottom: 5%;">
+            <a href="{:U('DriverSearch/driver_job_search')}" style="text-decoration: none;color: black">
+                <img src="__PUBLIC__/home/images/driver_search_button.png" class=""
+                     style=";
                          /*width: 70px;height: 70px;*/
+                         width: 50%;height: 50%;
                          ">
 
-            <div style="font-size: 1.5em;margin-top: 1px">货源找车</div>
-        </a>
+                <div style="font-size: 1.5em;margin-top: 1px">司机找活</div>
+            </a>
+        </div>
+        <div style=";height: 1px;width: 100%;float: left;margin:0;
+        background: -webkit-linear-gradient(left, rgba(255,255,255,0), #04bfc6 50%,rgba(255,255,255,0));
+        background: -o-linear-gradient(right, rgba(255,255,255,0), #04bfc6 50%,rgba(255,255,255,0));
+        background: -moz-linear-gradient(right, rgba(255,255,255,0), #04bfc6 50%,rgba(255,255,255,0));
+        background: linear-gradient(to right, rgba(255,255,255,0), #04bfc6 50%,rgba(255,255,255,0));
+        ">
+        </div>
+        <!--<div style="margin-left: 30%;height: 100px;width: 1px;-->
+        <!--background: -webkit-linear-gradient(left, rgba(255,0,0,0), rgba(255,0,0,1),rgba(255,0,0,0));-->
+        <!--background: -o-linear-gradient(right, rgba(255,0,0,0), rgba(255,0,0,1),rgba(255,0,0,0));-->
+        <!--background: -moz-linear-gradient(right, rgba(255,0,0,0), rgba(255,0,0,1),rgba(255,0,0,0));-->
+        <!--background: linear-gradient(to bottom, rgba(255,0,0,0), rgba(255,0,0,1),rgba(255,0,0,0));-->
+        <!--">-->
+        <!--</div>-->
+        <div class="text-center" style="width: 50%;float: left;padding-top: 5%;
+                /*border-right:1px solid #04bfc6;*/
+                border: none;
+        background-image: -webkit-linear-gradient(#04bfc6,white 100%);
+        background-image: -moz-linear-gradient(#04bfc6,white 100%);
+        background-image: -o-linear-gradient(#04bfc6,white 100%);
+        background-image: linear-gradient(#04bfc6,white 100%);
+        background-size:  1px 100%;
+        background-repeat: no-repeat;
+        background-position: right;
+                ">
+            <a href="{:U('OwnerSearch/owner_car_search')}" style="text-decoration: none;color: black">
+                <img src="__PUBLIC__/home/images/owner_search_button.png"
+                     style=";
+                             width: 50%;height: 50%;
+                             /*width: 70px;height: 70px;*/
+                             ">
+
+                <div style="font-size: 1.5em;margin-top: 1px">货源找车</div>
+            </a>
+        </div>
+        <div class="text-center" style="width: 50%;float: left;padding-top: 5%">
+            <a href="{:U('TradeSearch/trade_search')}" style="text-decoration: none;color: black">
+
+                <img src="__PUBLIC__/home/images/trade_search_button.png"
+                     style=";
+                             /*width: 70px;height: 70px;*/
+                             width: 50%;height: 50%;
+                             ">
+
+                <div style="font-size: 1.5em;margin-top: 1px">买卖查询</div>
+            </a>
+        </div>
     </div>
-    <div class="text-center" style="width: 50%;float: left;padding-top: 5%">
-        <a href="{:U('TradeSearch/trade_search')}" style="text-decoration: none;color: black">
-
-            <img src="__PUBLIC__/home/images/trade_search_button.png"
-                 style=";
-                         /*width: 70px;height: 70px;*/
-                         width: 50%;height: 50%;
-                         ">
-
-            <div style="font-size: 1.5em;margin-top: 1px">买卖查询</div>
-        </a>
-    </div>
-</div>
-
 </div>
 <!--底部功能栏-->
-<div class="" style="position: fixed;bottom: 0;width: 100%;background-color: #04bfc6">
-    <table class="table" style="border: none;margin: 0">
+<div class="" style="position: absolute;;bottom: 0;width: 100%;background-color: #04bfc6;vertical-align: middle;">
+    <table class="table" style="border: none;margin: 0;height: 100%">
         <tr>
-            <td class="text-center">
+            <td class="text-center;" style="vertical-align: middle;text-align: center">
                 <a href="{:U('PersonalCenter/personal_center')}" style="text-decoration: none;color: white">
                     <div>
-                        <img src="__PUBLIC__/home/images/personal_center.png" style="width: 30px;height: 30px;">
+                        <img src="__PUBLIC__/home/images/personal_center.png" style="width: 40px;height: 40px;">
 
-                        <p style="margin: 0">个人中心</p>
-                        <span class="" style="font-size: 12px">订单查询</span>
+                        <p style="margin: 5% 0;font-size: 1em">个人中心</p>
                     </div>
                 </a>
             </td>
-            <td class="text-center">
+            <td class="text-center" style="vertical-align: middle;text-align: center">
                 <a href="{:U('OwnerPublishHistory/owner_publish_history')}" style="text-decoration: none;color: white">
                     <div>
-                        <img src="__PUBLIC__/home/images/my_publish.png" style="width: 30px;height: 30px;">
+                        <img src="__PUBLIC__/home/images/my_publish.png" style="width: 40px;height: 40px;">
 
-                        <p style="margin: 0">我的发布</p>
-                        <span class="" style="font-size: 12px">发布查询</span>
+                        <p style="margin: 5% 0;font-size: 1em">我的发布</p>
                     </div>
                 </a>
             </td>
-            <td class="text-center">
+            <td class="text-center" style="vertical-align: middle;text-align: center">
                 <a href="{:U('Feedback/feedback')}" style="text-decoration: none;color: white">
                     <div>
-                        <img src="__PUBLIC__/home/images/custom_service.png" style="width: 30px;height: 30px;">
+                        <img src="__PUBLIC__/home/images/custom_service.png" style="width: 40px;height: 40px;">
 
-                        <p style="margin: 0">客&emsp;服</p>
-                        <span class="" style="font-size: 12px">服务咨询</span>
+                        <p style="margin: 5% 0;font-size: 1em">客&emsp;&emsp;服</p>
                     </div>
                 </a>
             </td>
-            <td class="text-center">
-                <div data-toggle="modal" data-target="#more" style="text-decoration: none;color: white">
-                    <div>
-                        <img src="__PUBLIC__/home/images/more.png" style="width: 30px;height: 30px;">
-                        <if condition="session('user_info')['role_id'] eq 2">
-                            <p style="margin: 1% 0;">更&nbsp;&nbsp;多</p>
-                            <else />
-                            <p style="margin: 1% 0;">车主福利</p>
-                            </if>
-                        <span class="" style="font-size: 0.8em">增值服务</span>
+            <td class="text-center" style="vertical-align: middle;text-align: center">
+                <if condition="session('user_info')['role_id'] eq 2">
+                    <div data-toggle="modal" data-target="#more" style="text-decoration: none;color: white">
+                        <img src="__PUBLIC__/home/images/more.png" style="width: 40px;height: 40px;">
+                        <p style="margin: 5% 0;font-size: 1em">更&emsp;&emsp;多</p>
                     </div>
-                </div>
+                    <else />
+                    <div onclick="window.location.href='{:U(\'CooperatePage/WeChe\')}'" style="color:white">
+                        <img src="__PUBLIC__/home/images/more.png" style="width: 40px;height: 40px;">
+                        <p style="margin: 5% 0;font-size: 1em">车主福利</p>
+                    </div>
+                </if>
             </td>
         </tr>
     </table>
@@ -188,4 +186,5 @@
 
 <?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
 </body>
+
 </html>

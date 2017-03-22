@@ -198,7 +198,6 @@
 
 <!--载入读取上次标签-->
 <script>
-    var bool=false;
     $(function () {
 //        console.log('teststart');
 //        testdiv1 = $('#testdiv');
@@ -226,26 +225,42 @@
             $('#search_text').html(cookie('search_input'));
         }
         //返回操作
-        pushHistory();
+        function pushHistory() {
+            var state = {
+                title: "title",
+                url: "#"
+            };
+            window.history.pushState(state, "title", "#");
+//            alert('push');
+        }
+        var bool = false;
+//        alert(1+' '+bool);
         setTimeout(function(){
             bool=true;
-        },1500);
-
+        },1000);
+//        alert(navigator.userAgent);
+        if(navigator.userAgent.indexOf('Android') > 0){
+            pushHistory();
+            window.addEventListener("popstate", function (e) {
+                if(true){
+                    window.location.href = "{:U('Homepage/homepage')}";
+                }else{
+                    return false;
+                }
+//                pushHistory();
+            },false);
+        }else{
+            pushHistory();
+            window.addEventListener("popstate", function (e) {
+                if(bool){
+                    window.location.href = "{:U('Homepage/homepage')}";
+                }else{
+                    return false;
+                }
+            },false);
+        }
         setTimeout(pullDownAction2,200);
     });
-    window.addEventListener("popstate", function (e) {
-        if(bool){
-            window.location.href = "{:U('Homepage/homepage')}";
-        }
-        pushHistory();
-    },false);
-    function pushHistory(){
-        var state = {
-            title: "title",
-            url: "#"
-        };
-        window.history.pushState(state, "title", "#");
-    }
     function pullDownAction2() {
         console.log('auto-down');
 //        location.reload();
@@ -256,6 +271,8 @@
         var filter_granularity = cookie('trade_search_filter_granularity') ? cookie('trade_search_filter_granularity') : '';
         var filter_heat_min = cookie('trade_search_filter_heat_min') ? cookie('trade_search_filter_heat_min') : '';
         var filter_heat_max = cookie('trade_search_filter_heat_max') ? cookie('trade_search_filter_heat_max') : '';
+        filter_kind = filter_kind?filter_kind.split(','):'';
+        filter_granularity = filter_granularity?filter_granularity.split(','):'';
         $.ajax({
             type: "post",
             url: "{:U('TradeSearch/trade_search')}",
@@ -728,12 +745,19 @@
 
     function refresh_hl() {
         var keywords = [];
-
-        var str = $('input[name=area_start_name]').val();
+        var str = cookie('trade_search_filter_kind');
+        if (typeof str == 'string') {
+            keywords = keywords.concat(str.split(','));
+        }
+        str = cookie('trade_search_filter_granularity');
+        if (typeof str == 'string') {
+            keywords = keywords.concat(str.split(','));
+        }
+        str = cookie('trade_search_filter_heat_min');
         keywords.push(str ? str : '');
-        str = $('input[name=area_end_name]').val();
+        str = cookie('trade_search_filter_heat_max');
         keywords.push(str ? str : '');
-        str = $('input[name=search_input]').val();
+        str = cookie('search_input');
         if (typeof str == 'string') {
             keywords = keywords.concat(str.split(/\s+/g));
 //            alert(str+'-'+keywords);
