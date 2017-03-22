@@ -22,7 +22,7 @@ class CarGiveMsgCard extends MsgCard
         if($message['district_start']['name']!=='空' || $message['district_end']['name']!=='空'){
             $areastring = "<p class=\"weui_media_desc\">
             <img src=\"__PUBLIC__/home/images/area_start.png\" style=\"width: 15px;height: 20px\">
-            {$message['district_start']['name']}→{$message['district_end']['name']}
+            <span class=\"highlight\">{$message['district_start']['name']}→{$message['district_end']['name']}</span>
             <img src=\"__PUBLIC__/home/images/area_end.png\" style=\"width: 15px;height: 20px\">
         </p>";
         }
@@ -40,7 +40,7 @@ class CarGiveMsgCard extends MsgCard
     </a>
     <div class=\"weui_media_bd\">
         <a href=\"{$personal_page}\" style='text-decoration: none;color: black'>
-            <h4 class=\"weui_media_title\">{$message['user']['user_name']}</h4>
+            <h4 class=\"weui_media_title highlight\">{$message['user']['user_name']}</h4>
         </a>".$areastring."</div>
     <div class=\"weui_media_bd\" style=\"\">
         <a href=\"tel:{$message['phone_number']}\" onclick='event.stopPropagation();' class=\"\" style='text-decoration: none;color: black'>
@@ -54,7 +54,7 @@ class CarGiveMsgCard extends MsgCard
 </div>
 <table class=\"table table-condensed\" style=\"margin: 0\">
     <tbody>
-    <tr><td>车辆类型:{$message['car_type']}</td><td>吨数:{$message['car_capacity']}</td></tr>
+    <tr><td class=\"highlight\">车辆类型:{$message['car_type']}</td><td class=\"highlight\">吨数:{$message['car_capacity']}</td></tr>
     </tbody>
 </table>
 <div class='pull-right'>发布时间:{$publish_date}</div>
@@ -72,7 +72,7 @@ class CarGiveMsgCard extends MsgCard
     </a>
     <div class=\"weui_media_bd\">
         <a href=\"{$personal_page}\" style='text-decoration: none;color: black'>
-            <h4 class=\"weui_media_title\">{$message['user']['user_name']}</h4>
+            <h4 class=\"weui_media_title highlight\">{$message['user']['user_name']}</h4>
         </a>".$areastring."</div>
     <div class=\"weui_media_bd\" style=\"\">
         <a href=\"tel:{$message['phone_number']}\" onclick='event.stopPropagation();' class=\"\" style='text-decoration: none;color: black'>
@@ -84,7 +84,7 @@ class CarGiveMsgCard extends MsgCard
         </div>
     </div>
 </div>
-<div>{$message['content']}</div><div class='pull-right'>发布时间:{$publish_date}</div>
+<div class=\"highlight\">{$message['content']}</div><div class='pull-right'>发布时间:{$publish_date}</div>
 </li>";
         }
         return $this->replacePublicString($li_str);

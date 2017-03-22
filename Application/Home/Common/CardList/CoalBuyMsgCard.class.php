@@ -54,16 +54,16 @@ class CoalBuyMsgCard extends MsgCard
 <table class=\"table table-condensed\" style=\"margin: 0\">
     <tbody>
     <tr>
-        <td>煤炭种类:{$message['kind']}</td>
-        <td>{$message['price']}元/吨</td>
+        <td class=\"highlight\">煤炭种类:{$message['kind']}</td>
+        <td class=\"highlight\">{$message['price']}元/吨</td>
     </tr>
     <tr>
-        <td>煤炭品质:{$message['trait']}</td>
-        <td>产地:{$message['district_start']['name']}</td>
+        <td class=\"highlight\">煤炭品质:{$message['trait']}</td>
+        <td class=\"highlight\">产地:{$message['district_start']['name']}</td>
     </tr>
     <tr>
-        <td>煤炭粒度:{$message['granularity']}</td>
-        <td>吨数:{$message['quantity']}</td>
+        <td class=\"highlight\">煤炭粒度:{$message['granularity']}</td>
+        <td class=\"highlight\">吨数:{$message['quantity']}</td>
     </tr>
 </tbody>
 </table>
@@ -82,7 +82,7 @@ class CoalBuyMsgCard extends MsgCard
     </a>
     <div class=\"weui_media_bd\">
         <a href=\"{$personal_page}\" style='text-decoration: none;color: black'>
-            <h4 class=\"weui_media_title\">{$message['user']['user_name']}</h4>
+            <h4 class=\"weui_media_title highlight\">{$message['user']['user_name']}</h4>
         </a>
         <p class=\"weui_media_desc\">" . $message["user"]["city"] . "</p>
     </div>
@@ -98,7 +98,7 @@ class CoalBuyMsgCard extends MsgCard
         </div>
     </div>
 </div>
-<div>{$message['content']}</div><div class='pull-right'>发布时间:{$publish_date}</div>
+<div class=\"highlight\">{$message['content']}</div><div class='pull-right'>发布时间:{$publish_date}</div>
 </li>
   ";
         }

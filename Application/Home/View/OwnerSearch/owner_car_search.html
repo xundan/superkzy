@@ -297,6 +297,8 @@
                 else {
                 }
                 myScroll.refresh();
+                refresh_hl();
+
             }
         });
     }
@@ -438,6 +440,8 @@
                 else {
                 }
                 myScroll.refresh();
+                refresh_hl();
+
             }
         });
         myScroll.refresh();//数据加载完成后，调用界面更新方法  Remember to refresh when contents are loaded (ie: on ajax completion)
@@ -501,6 +505,8 @@
                     else {
                     }
                     myScroll.refresh();
+                    refresh_hl();
+
                 }
             });
             //============================================
@@ -640,5 +646,48 @@
         }else{}
         return false;
     }
+</script>
+
+<script>
+
+    function refresh_hl() {
+        var keywords = [];
+
+        var str = $('input[name=area_start_name]').val();
+        keywords.push(str ? str : '');
+        str = $('input[name=area_end_name]').val();
+        keywords.push(str ? str : '');
+        str = $('input[name=search_input]').val();
+        if (typeof str == 'string') {
+            keywords = keywords.concat(str.split(/\s+/g));
+//            alert(str+'-'+keywords);
+        }
+        show_highlight(keywords);
+//        alert(keywords);
+    }
+
+    function replace_with_highlight(str, keyword){
+        if (keyword=='') return str;
+        return str.replace(new RegExp(keyword,'gm'),'<span style="background-color: orange; font-weight: bold">'+keyword+"</span>");
+    }
+
+    function show_highlight(keywords){
+        function show_hl_by_element(element){
+            var str = element.innerHTML;
+            element.innerHTML = keywords.reduce(replace_with_highlight,str);
+        }
+        collectionToArray(document.getElementsByClassName('highlight')).map(show_hl_by_element);
+//    $('.highlight').map(show_hl_by_element);
+
+    }
+
+    function collectionToArray(collection){
+        var ary = [];
+        for(var i=0, len = collection.length; i < len; i++){
+            ary.push(collection[i]);
+        }
+        return ary;
+    }
+
 </script>
 </html>

@@ -41,7 +41,7 @@ class WxCoalBuyMsgCard extends MsgCard
         </div>
     </div>
 </div>
-<div>{$message['content']}</div><div class='pull-right'>发布时间:{$publish_date}</div>
+<div class=\"highlight\">{$message['content']}</div><div class='pull-right'>发布时间:{$publish_date}</div>
 </li>
   ";
         return $this->replacePublicString($li_str);
