@@ -73,6 +73,7 @@ class MessageModel extends Model
         'kind',
         'trait',
         'granularity',
+        'vip',
         '_pk' => "id",
     );
 }

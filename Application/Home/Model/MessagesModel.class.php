@@ -65,6 +65,7 @@ class MessagesModel extends Model
         $data['publisher_rid'] = $_SESSION['user_info']['uid'];
         $data['sender'] = $_SESSION['user_info']['user_name'];
         $data['type'] = "web";
+        $data['vip'] = "9";
         $data['valid_time'] = 3;
         $data['times_number'] += 1;
         $Msg = D('messages');

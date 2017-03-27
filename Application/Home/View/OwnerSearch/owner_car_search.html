@@ -683,6 +683,7 @@
 
     function replace_with_highlight(str, keyword){
         if (keyword=='') return str;
+        keyword=keyword.replace(new RegExp("市|区|县|镇",'gm'),'');
         return str.replace(new RegExp(keyword,'gm'),'<span style="background-color: orange; font-weight: bold">'+keyword+"</span>");
     }
 

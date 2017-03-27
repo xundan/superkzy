@@ -9,6 +9,7 @@
 namespace Views\Controller;
 
 use Think\Controller\RestController;
+use Think\Log;
 
 class DistributeController extends RestController
 {
@@ -52,6 +53,7 @@ class DistributeController extends RestController
             "owner" => null,
             "sender_wx" => null,
             "sender" => null,
+            "vip" => "1",
         );
         $update_trans = array(
             "id" => -1,
@@ -64,7 +66,7 @@ class DistributeController extends RestController
             $check = $Raw->save($update_trans);
 
             if ($check == false) {
-                //TODO 写日志，通知开发
+                Log::record("DistributeController: Update Raw false: sql->".$Raw->getLastSql(),Log::ERR);
             }
             // 生成新的消息表数据
             $insert_trans["title"] = $trans1["rid"];
@@ -87,10 +89,15 @@ class DistributeController extends RestController
             }
             $insert_trans['origin'] = $origin;
             $insert_trans['phone_number'] = $origin;
+            if ($insert_trans['type']=="wx_mp"){
+                $insert_trans['vip']="2";
+            }else{
+                $insert_trans['vip']="1";
+            }
 //            var_dump($insert_trans);
             $check = $Message->add($insert_trans);
             if ($check == false) {
-                //TODO 写日志，通知开发
+                Log::record("DistributeController: Add Messages false: sql->".$Message->getLastSql(),Log::ERR);
             }
         }
         // 只有转移数量大于0时，才记录
