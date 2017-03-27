@@ -476,6 +476,8 @@
         var filter_granularity = cookie('trade_search_filter_granularity') ? cookie('trade_search_filter_granularity') : '';
         var filter_heat_min = cookie('trade_search_filter_heat_min') ? cookie('trade_search_filter_heat_min') : '';
         var filter_heat_max = cookie('trade_search_filter_heat_max') ? cookie('trade_search_filter_heat_max') : '';
+        filter_kind = filter_kind?filter_kind.split(','):'';
+        filter_granularity = filter_granularity?filter_granularity.split(','):'';
         $.ajax({
             type: "post",
             url: "{:U('TradeSearch/trade_search')}",
