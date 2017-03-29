@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <title>信息查询</title>
+</head>
+<body>
+    <ul class="nav nav-tabs nav-justified" id="myTabs">
+        <li role="presentation" class="active"><a href="#user_add" data-toggle="tab">公众号用户关注</a></li>
+        <li role="presentation"><a href="#feedback" data-toggle="tab">用户反馈</a></li>
+        <li role="presentation"><a href="#message_add" data-toggle="tab">平台网站信息增量</a></li>
+        <li role="presentation"><a href="#financial_client" data-toggle="tab">超矿金融</a></li>
+    </ul>
+    <div class="tab-content">
+        <div id="user_add" class="tab-pane">
+            <div class="container">
+                <div id="user_add_form" style="margin: 5%">
+                    <label for="message_add_start_time">
+                        起始时间
+                    </label>
+                    <input id="user_add_start_time" class="form-control" type="date" style="width: 40%;display: inline">
+                    <label for="user_add_end_time">
+                        终止时间
+                    </label>
+                    <input id="user_add_end_time" class="form-control" type="date" style="width: 40%;display: inline">
+                    <button id="user_add_submit" class="btn btn-default">确定</button>
+                </div>
+                <div id="user_add_content">
+                    <table style="width: 100%" class="table table-striped">
+                        <thead>
+                        <th>项目</th>
+                        <th>数量</th>
+                        </thead>
+                        <tbody id="user_add_insert">
+                        <tr>
+                            <td>新增用户总数</td>
+                            <td id="user_count">0</td>
+                        </tr>
+                        <tr>
+                            <td>新增注册用户</td>
+                            <td id="user_reg_count">0</td>
+                        </tr>
+                        <tr>
+                            <td>新增未注册用户</td>
+                            <td id="user_unreg_count">0</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="feedback" class="tab-pane">
+            <div class="container">
+                <div id="feedback_form" style="margin: 5%">
+                    <label for="feedback_start_time">
+                        起始时间
+                    </label>
+                    <input id="feedback_start_time" class="form-control" type="date" style="width: 40%;display: inline">
+                    <label for="feedback_end_time">
+                        终止时间
+                    </label>
+                    <input id="feedback_end_time" class="form-control" type="date" style="width: 40%;display: inline">
+                    <button id="feedback_submit" class="btn btn-default">确定</button>
+                </div>
+                <div id="feedback_content">
+                    <div>总条数:<span id="feedback_count"></span></div>
+                    <table style="width: 100%" class="table table-striped">
+                        <thead>
+                            <th>用户名</th>
+                            <th>用户电话号码</th>
+                            <th>联系方式</th>
+                            <th>内容</th>
+                            <th>填写时间</th>
+                        </thead>
+                        <tbody id="feedback_insert">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="message_add" class="tab-pane">
+            <div class="container">
+                <div id="message_add_form" style="margin: 5%">
+                    <label for="message_add_start_time">
+                        起始时间
+                    </label>
+                    <input id="message_add_start_time" class="form-control" type="date" style="width: 40%;display: inline">
+                    <label for="message_add_end_time">
+                        终止时间
+                    </label>
+                    <input id="message_add_end_time" class="form-control" type="date" style="width: 40%;display: inline">
+                    <button id="message_add_submit" class="btn btn-default">确定</button>
+                </div>
+                <div id="message_add_content">
+                    <table style="width: 100%" class="table table-striped">
+                        <thead>
+                        <th>来源</th>
+                        <th>数量</th>
+                        </thead>
+                        <tbody id="message_add_insert">
+                            <tr>
+                                <td>来自微信</td>
+                                <td id="wx_count">0</td>
+                            </tr>
+                            <tr>
+                                <td>来自公众号</td>
+                                <td id="wx_mp_count">0</td>
+                            </tr>
+                            <tr>
+                                <td>来自平台网站发布</td>
+                                <td id="web_count">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div id="financial_client" class="tab-pane">
+            <div class="container">
+                <form id="financial_client_form" style="margin: 5%">
+                    <label for="financial_client_start_time">
+                        起始时间
+                    </label>
+                    <input id="financial_client_start_time" class="form-control" type="date" style="width: 40%;display: inline">
+                    <label for="financial_client_end_time">
+                        终止时间
+                    </label>
+                    <input id="financial_client_end_time" class="form-control" type="date" style="width: 40%;display: inline">
+                    <button id="financial_client_submit" class="btn btn-default">确定</button>
+                </form>
+                <div id="financial_client_content">
+                    <div>总条数:<span id="financial_client_count"></span></div>
+                    <table style="width: 100%" class="table table-striped">
+                        <thead>
+                        <th>用户电话</th>
+                        <th>填写时间</th>
+                        </thead>
+                        <tbody id="financial_client_insert">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $('#myTabs a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show')
+    })
+</script>
+<!--用户关注-->
+<script>
+    $('#user_add_submit').click(function(){
+        var start_time = $('#user_add_start_time').val();
+        var end_time = $('#user_add_end_time').val();
+        start_time = time_to_timestamp(start_time);
+        end_time = time_to_timestamp(end_time);
+        $.ajax({
+            type: "post",
+            url: "{:U('MessageStatistic/user_add_action')}",
+            data: {
+                start_time:start_time,
+                end_time:end_time
+            },
+            success: function (data) {
+                console.log('success');
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+                if(jsonObj){
+                    $('#user_count').html(0);
+                    $('#user_reg_count').html(0);
+                    $('#user_unreg_count').html(0);
+                    if(jsonObj.user_count){
+                        $('#user_count').html(jsonObj.user_count);
+                    }
+                    if(jsonObj.user_reg_count){
+                        $('#user_reg_count').html(jsonObj.user_reg_count);
+                    }
+                    if(jsonObj.user_unreg_count){
+                        $('#user_unreg_count').html(jsonObj.user_unreg_count);
+                    }
+                }
+            }
+        })
+    })
+</script>
+<!--用户反馈-->
+<script>
+    $('#feedback_submit').click(function(){
+        var time = new Date();
+        var start_time = $('#feedback_start_time').val();
+        var end_time = $('#feedback_end_time').val();
+        start_time = time_to_timestamp(start_time);
+        end_time = time_to_timestamp(end_time);
+        $.ajax({
+            type: "post",
+            url: "{:U('MessageStatistic/feedback_action')}",
+            data: {
+                start_time:start_time,
+                end_time:end_time
+            },
+            success: function (data) {
+                console.log('success');
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+                $('#feedback_insert').html('');
+                if(jsonObj){
+                    $('#feedback_count').html(jsonObj.length);
+                    jQuery.each(jsonObj, function (k, val) {
+                        var li = document.createElement('tr');
+                        li.innerHTML = '<td>'+val.user_name+'</td>'+'<td>'+val.phone_number+'</td>'+'<td>'+val.contact+'</td>'+'<td>'+val.content+'</td>'+'<td>'+val.record_time+'</td>';
+                        document.getElementById('feedback_insert').appendChild(li);
+                    });
+                }
+            }
+        })
+    })
+</script>
+<!--平台网站-->
+<script>
+    $('#message_add_submit').click(function(){
+        var start_time = $('#message_add_start_time').val();
+        var end_time = $('#message_add_end_time').val();
+        start_time = time_to_timestamp(start_time);
+        end_time = time_to_timestamp(end_time);
+        $.ajax({
+            type: "post",
+            url: "{:U('MessageStatistic/message_add_action')}",
+            data: {
+                start_time:start_time,
+                end_time:end_time
+            },
+            success: function (data) {
+                console.log('success');
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+                if(jsonObj){
+                    $('#wx_count').html(0);
+                    $('#wx_mp_count').html(0);
+                    $('#web_count').html(0);
+                    if(jsonObj.wx){
+                        $('#wx_count').html(jsonObj.wx);
+                    }
+                    if(jsonObj.wx_mp){
+                        $('#wx_mp_count').html(jsonObj.wx_mp);
+                    }
+                    if(jsonObj.web){
+                        $('#web_count').html(jsonObj.web);
+                    }
+                }
+            }
+        })
+    })
+</script>
+<!--超矿金融-->
+<script>
+    $('#financial_client_submit').click(function(e){
+        e.preventDefault();
+        var start_time = $('#financial_client_start_time').val();
+        var end_time = $('#financial_client_end_time').val();
+        start_time = time_to_timestamp(start_time);
+        end_time = time_to_timestamp(end_time);
+
+        $.ajax({
+            type: "post",
+            url: "{:U('MessageStatistic/financial_client_action')}",
+            data: {
+                start_time:start_time,
+                end_time:end_time
+            },
+            success: function (data) {
+                console.log('success');
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+                $('#financial_client_insert').html('');
+                if(jsonObj){
+                    $('#financial_client_count').html(jsonObj.length);
+                    jQuery.each(jsonObj, function (k, val) {
+                        var li = document.createElement('tr');
+                        li.innerHTML = '<td>'+val.phone_number+'</td>'+'<td>'+val.record_time+'</td>';
+                        document.getElementById('financial_client_insert').appendChild(li);
+                    });
+                }
+            }
+        })
+    })
+</script>
+<script>
+    function time_to_timestamp(strtime) {
+        var time = new Date();
+        if (strtime) {
+            strtime = strtime.replace(/-/g, "/")
+        } else {
+            strtime = time.toLocaleDateString();
+        }
+        strtime = Date.parse(new Date(strtime)) / 1000;
+        return strtime;
+    }
+</script>
+</html>
