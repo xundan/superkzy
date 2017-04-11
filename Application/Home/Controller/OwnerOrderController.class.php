@@ -55,6 +55,10 @@ class OwnerOrderController extends ComController
         $this->display();
     }
 
+    public function wx_order_detail($id = null,$from=null){
+//        $this->assign_data($id);
+        $this->display();
+    }
     /**
      * 缓存数据
      * @param $id
@@ -77,15 +81,15 @@ class OwnerOrderController extends ComController
                 $this->assign_product($message);
             } elseif ($message === false) {
                 // TODO false说明查询出错，记录日志
-                $this->display("Common:500");
+                $this->display("Common:500");exit;
 
             } else {
                 // TODO 查询为空，用户查到了不该到的地方，记日志
-                $this->display("Common:404");
+                $this->display("Common:404");exit;
             }
         } else {
             // TODO 查询为空，用户查到了不该到的地方，记日志
-            $this->display("Common:404");
+            $this->display("Common:404");exit;
         }
     }
 

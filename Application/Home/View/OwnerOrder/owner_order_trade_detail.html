@@ -337,9 +337,34 @@
         }else{
             role = "货主";
         }
+        var title_string = '';
+        if("{$message['kind']}" == '' && "{$message['price']}" == '' && ("{$message['heat_value_max']}" == '0' || "{$message['heat_value_max']}" == '') && ("{$message['heat_value_min']}" == '0' || "{$message['heat_value_min']}" =='' )) {
+            title_string += '{$message["content"]|mb_substr=0,20,"utf-8"}' + '...';
+        }else {
+            if ("{$area_start['name']}" != '') {
+                title_string += "{$area_start['name']}"+".";
+            } else {
+            }
+            if ("{$message['kind']}" != '') {
+                title_string += "{$message['kind']}"+".";
+            } else {
+            }
+            if ("{$message['heat_value_max']}" != '' && "{$message['heat_value_max']}" != 0) {
+                title_string += "高热" + "{$message['heat_value_max']}"+"卡.";
+            } else if ("{$message['heat_value_min']}" != '' && "{$message['heat_value_min']}" != 0) {
+                title_string += "低热" + "{$message['heat_value_min']}"+"卡.";
+            } else {
+            }
+            if ("{$message['price']}" != '') {
+                title_string += "{$message['price']}"+'元.';
+            } else {
+            }
+
+        }
+
         wx.onMenuShareTimeline({
 
-            title: '来自{$user["user_name"]}('+role+')的{$message["category"]}消息', // 分享标题
+            title: '[{$message["category"]}]'+title_string, // 分享标题
             link: "http://www.kuaimei56.com/index.php/Home/OwnerOrder/owner_order_trade_detail?id={$message['id']}", // 分享链接
             imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
             success: function () {
@@ -352,7 +377,8 @@
 
         //分享给朋友
         wx.onMenuShareAppMessage({
-            title: '来自{$user["user_name"]}('+role+')的{$message["category"]}消息', // 分享标题
+//            title: '来自{$user["user_name"]}('+role+')的{$message["category"]}消息', // 分享标题
+            title: '[{$message["category"]}]'+title_string, // 分享标题
             desc: '{$user["user_name"]}('+role+')在超级矿资源发布了最新消息，点击了解更多信息', // 分享描述
             link: "http://www.kuaimei56.com/index.php/Home/OwnerOrder/owner_order_trade_detail?id={$message['id']}", // 分享链接
             imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标

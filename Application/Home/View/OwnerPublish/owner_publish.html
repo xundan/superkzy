@@ -218,6 +218,11 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="text-center" style="background-color: white">
+                        有效期3天
+                    </td>
+                </tr>
+                <tr>
                     <td style="padding: 0">
                         <div class="input-group" style="width: 100%">
                             <span class="input-group-addon"
@@ -420,7 +425,7 @@
                                   style="width: 25%;border-radius: 0;border:0;background-color: white">
                                 <span class="pull-left">装车费</span>
                             </span>
-                            <input id="need_loading_cost" name="loading_cost" class="form-control" placeholder="请输入装车费"
+                            <input id="need_loading_cost" type="number" name="loading_cost" class="form-control" placeholder="请输入装车费"
                                    style="border-radius: 0;border: 0">
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 元
@@ -435,12 +440,17 @@
                                   style="width: 25%;border-radius: 0;border:0;background-color: white">
                                 <span class="pull-left">卸车费</span>
                             </span>
-                            <input id="need_unloading_cost" name="unloading_cost" class="form-control"
+                            <input id="need_unloading_cost" type="number" name="unloading_cost" class="form-control"
                                    placeholder="请输入卸车费" style="border-radius: 0;border: 0">
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 元
                             </span>
                         </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center" style="background-color: white">
+                        有效期3天
                     </td>
                 </tr>
                 <tr>
@@ -1030,6 +1040,11 @@
                     </td>
                 </tr>
                 <tr>
+                    <td class="text-center" style="background-color: white">
+                        有效期7天
+                    </td>
+                </tr>
+                <tr>
                     <td style="padding: 0">
                         <div class="input-group" style="width: 100%">
                             <span class="input-group-addon"
@@ -1563,11 +1578,11 @@
 //            datatype:'json',
             data: subData,
             success: function (data) {
-                if (data.status == 0) {
+                var jsonObj = eval("(" + data + ")");
+                if (jsonObj.status == 0) {
                     console.log('auth check failure');
                     $('#hint').modal();
                 } else {
-                    var jsonObj = eval("(" + data + ")");
                     console.log(jsonObj.msg);
 //                    showToast(jsonObj.msg);
                     $('#publish_success').modal();
@@ -1636,11 +1651,11 @@
             data: subData,
 //            data:{start_area:area_start},
             success: function (data) {
-                if (data.status == 0) {
+                var jsonObj = eval("(" + data + ")");
+                if (jsonObj.status == 0) {
                     console.log('auth check failure');
                     $('#hint').modal();
                 } else {
-                    var jsonObj = eval("(" + data + ")");
                     console.log(jsonObj.msg);
 //                    showToast(jsonObj.msg);
                     $('#publish_success').modal();
@@ -1699,11 +1714,11 @@
             url: url,
             data: subData,
             success: function (data) {
-                if (data.status == 0) {
+                var jsonObj = eval("(" + data + ")");
+                if (jsonObj.status == 0) {
                     console.log('auth check failure');
                     $('#hint').modal();
                 } else {
-                    var jsonObj = eval("(" + data + ")");
                     console.log(jsonObj.msg);
 //                    showToast(jsonObj.msg);
                     $('#publish_success').modal();
@@ -1762,11 +1777,11 @@
             url: url,
             data: subData,
             success: function (data) {
-                if (data.status == 0) {
+                var jsonObj = eval("(" + data + ")");
+                if (jsonObj.status == 0) {
                     console.log('auth check failure');
                     $('#hint').modal();
                 } else {
-                    var jsonObj = eval("(" + data + ")");
                     console.log(jsonObj.msg);
 //                    showToast(jsonObj.msg);
                     $('#publish_success').modal();

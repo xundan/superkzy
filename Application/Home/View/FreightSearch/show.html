@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <title>运费查询</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
+</head>
+<body>
+<!--导航标签-->
+<div class="panel-title" style="height: 5%;background-color: white;display: block">
+    <div id="myTab" class="row" style="height: 100%;">
+        <div class="text-center col-xs-5" style=";color: black;font-size: 1.2em;padding: 5px 0;font-weight: 100">
+            <img src="__PUBLIC__/home/images/area_start_text.png" class="" style="height: 20px">
+            <span id="area_start_html">点击选择</span>
+            <span class="glyphicon glyphicon-remove" style="font-weight: lighter;"></span>
+            <span class="weui_icon_clear_no_circle" style="color: black"></span>
+            <!--<a href="javascript:" class="weui_icon_clear" id="search_clear"></a>-->
+            <div id="area_start" style="display: none"></div>
+        </div>
+        <div class="text-center col-xs-2" style=";color: black;font-size: 1.2em;padding: 5px 0;">
+            <hr style="border-color: red;width: 10%;margin: 16px 0;display: inline"/>->
+        </div>
+        <div class="text-center col-xs-5" style="color: black;font-size: 1.2em;padding: 5px 0;">
+            <span id="area_end_html">点击选择</span>
+            <span class="glyphicon glyphicon-remove"></span>
+            <img src="__PUBLIC__/home/images/area_end_text.png" class="" style="height: 20px">
+            <div id="area_end" style="display: none"></div>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <div style=";background-color: white;border-radius: 5px;">
+        <table style="width: 100%">
+            <tr>
+                <td class="help-block pull-right" style="margin: 0">
+                    asadas
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0 10px;font-size: 1.2em">
+                    <img src="__PUBLIC__/home/images/area_start_text.png" class="" style="height: 20px">
+                    <span>aaaaa</span>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0 10px;font-size: 1.2em">
+                    <img src="__PUBLIC__/home/images/area_end_text.png" class="" style="height: 20px">
+                    <span>aaaaa</span>
+                </td>
+            </tr>
+        </table>
+        <hr style="margin: 8px 0">
+        <div>
+            <a href="tel:" onclick='event.stopPropagation();' class="btn btn-default" style='text-decoration: none;color: black;border-color: #04bfc6'>
+                <span><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 15px">
+                    <span style="font-size: 1.2em">拨打电话</span></span>
+            </a>
+            <div class="pull-right" style="padding: 0 3px">
+                <span>
+                    <img src="__PUBLIC__/home/images/useless.png" style="height: 30px" onclick="asd(this)">
+                    <span style="color:#fb3e1e;margin-left: -3px" id="useful_count">123</span>
+                </span>
+                <button style="margin-left: 12px" class="btn btn-default" data-toggle="modal" data-target="#feedback">报错</button>
+            </div>
+            <button class="btn btn-default" style="background-color: red;color: blue;"><span class="glyphicon glyphicon-user"></span> asd</button>
+            <div style="background: url('__PUBLIC__/home/images/useless.png') no-repeat;"></div>
+        </div>
+    </div>
+    <!--<div data-toggle="modal" data-target="#feedback" style="text-decoration: none;">-->
+    <!--<p style="margin: 5% 0;font-size: 1em">报错</p>-->
+    <!--</div>-->
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="feedback" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="top:30%">
+        <div class="modal-content">
+            <div class="modal-header" style="border: none">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h5 class="modal-title" id="myModalLabel" style="color: grey;">报错</h5>
+            </div>
+            <div class="modal-body" style="padding-top: 0;padding-bottom: 0">
+                <textarea name="feedback" class="form-control" rows="5" placeholder="您可以输入报错信息，也可以直接提交" style="resize: none;width: 100%"></textarea>
+            </div>
+            <div class="modal-footer" style="border: none">
+                <button type="button" class="btn btn-primary">提交</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    function asd(obj){
+        var count = parseInt($(obj).siblings('span').html());
+        if($(obj).attr('src') == "__PUBLIC__/home/images/useless.png"){
+            $(obj).attr("src","__PUBLIC__/home/images/usefull.png");
+            count += 1;
+            $(obj).siblings('span').html(count);
+            console.log(count);
+
+        }else{
+            $(obj).attr("src","__PUBLIC__/home/images/useless.png");
+            count -= 1;
+            $(obj).siblings('span').html(count);
+            console.log(count);
+        }
+
+    

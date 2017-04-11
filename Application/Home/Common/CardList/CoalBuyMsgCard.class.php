@@ -22,7 +22,7 @@ class CoalBuyMsgCard extends MsgCard
         $publish_date = date("Y-m-d", $message['publish_time']);
         $message_detail = U('OwnerOrder/owner_order_trade_detail', array('id' => $message['id']));
         if ($message['formatted']) { // 如果用户按照标准格式填写
-            $li_str = "<li onclick='window.location.href=\"{$message_detail}\"' class=\"weui_panel weui_panel_access\" style=\";border-radius: 5px\">
+            $li_str = "<li class=\"weui_panel weui_panel_access\" style=\";border-radius: 5px\">
 <div style=\"text-decoration: none;color:black\">
 <div style=\"position: absolute;right: 0px;\">
     <img src=\"__PUBLIC__/home/images/buy.png\" width=\"50px\">
@@ -30,13 +30,11 @@ class CoalBuyMsgCard extends MsgCard
 <div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
     <a href=\"{$personal_page}\">
         <div class=\"weui_media_hd\">
-            <img src=\"{$message['user']['heading_url']}\" class=\"weui_media_appmsg_thumb\">
+            <img src=\"{$message['user']['heading_url']}\" class=\"weui_media_appmsg_thumb img-circle\">
         </div>
     </a>
     <div class=\"weui_media_bd\">
-        <a href=\"{$personal_page}\" style='text-decoration: none;color: black'>
-            <h4 class=\"weui_media_title\">{$message['user']['user_name']}</h4>
-        </a>
+        <h4 class=\"weui_media_title highlight\"><span onclick='window.location.href=\"{$personal_page}\"'>{$message['user']['user_name']}</span></h4>
         <p class=\"weui_media_desc\"><img src=\"__PUBLIC__/home/images/area_start.png\" style=\"width: 10px;height: 15px\">" . $message['user']['city'] . "</p>
     </div>
     <div class=\"weui_media_bd text-center\" style=\"\">
@@ -51,7 +49,7 @@ class CoalBuyMsgCard extends MsgCard
         </div>
     </div>
 </div>
-<table class=\"table table-condensed\" style=\"margin: 0\">
+<table onclick='window.location.href=\"{$message_detail}\"' class=\"table table-condensed\" style=\"margin: 0\">
     <tbody>
     <tr>
         <td class=\"highlight\">煤炭种类:{$message['kind']}</td>
@@ -70,20 +68,18 @@ class CoalBuyMsgCard extends MsgCard
 </li>
   ";
         } else {
-            $li_str = "<li onclick='window.location.href=\"{$message_detail}\"' class=\"weui_panel weui_panel_access\" style=\";border-radius: 5px\">
+            $li_str = "<li class=\"weui_panel weui_panel_access\" style=\";border-radius: 5px\">
 <div style=\"position: absolute;right: 0px;\">
     <img src=\"__PUBLIC__/home/images/buy.png\" width=\"50px\">
 </div>
 <div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
     <a href=\"{$personal_page}\">
         <div class=\"weui_media_hd\">
-            <img src=\"{$message['user']['heading_url']}\" class=\"weui_media_appmsg_thumb\">
+            <img src=\"{$message['user']['heading_url']}\" class=\"weui_media_appmsg_thumb img-circle\">
         </div>
     </a>
     <div class=\"weui_media_bd\">
-        <a href=\"{$personal_page}\" style='text-decoration: none;color: black'>
-            <h4 class=\"weui_media_title highlight\">{$message['user']['user_name']}</h4>
-        </a>
+        <h4 class=\"weui_media_title highlight\"><span onclick='window.location.href=\"{$personal_page}\"'>{$message['user']['user_name']}</span></h4>
         <p class=\"weui_media_desc\">" . $message["user"]["city"] . "</p>
     </div>
     <div class=\"weui_media_bd text-center\" style=\"\">
@@ -98,7 +94,7 @@ class CoalBuyMsgCard extends MsgCard
         </div>
     </div>
 </div>
-<div class=\"highlight\">{$message['content']}</div><div class='pull-right'>发布时间:{$publish_date}</div>
+<div class=\"highlight\" onclick='window.location.href=\"{$message_detail}\"' >{$message['content']}</div><div class='pull-right'>发布时间:{$publish_date}</div>
 </li>
   ";
         }

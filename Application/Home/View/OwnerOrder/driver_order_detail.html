@@ -62,43 +62,65 @@
                     <hr style="border-color: #04bfc6;width: 35%;display: inline-flex;float:right">
                 </div>
                 <div class="text-center">
-                    <img class="" src="__PUBLIC__/home/images/area_start.png"
-                         style="width: 12px;height: 15px;">
-                    {$area_start['name']}{$message['detail_area_start']} ——>
-                    {$area_end['name']}{$message['detail_area_end']}
-                    <img class="" src="__PUBLIC__/home/images/area_end.png"
-                         style="width: 12px;height: 15px;">
+                    <table style="width: 100%;table-layout: fixed">
+                            <tr>
+                                <td colspan="3">
+                                    <img class="" src="__PUBLIC__/home/images/area_start.png"
+                                         style="width: 12px;height: 15px;">
+                                        {$area_start['name']}
+                                </td>
+                                <td colspan="1" rowspan="2">
+                                    <span class="glyphicon glyphicon-arrow-right"></span>
+                                </td>
+                                <td colspan="3" style="">
+                                    {$area_end['name']}
+                                    <img class="" src="__PUBLIC__/home/images/area_end.png"
+                                         style="width: 12px;height: 15px;">
+                                </td>
+                            </tr>
+                        <if condition="($message['detail_area_start'] neq '') OR ($message['detail_area_end'] neq '')">
+                            <tr style="line-height: 1">
+                                <td colspan="3" style="border: none;word-wrap: break-word">
+                                    {$message['detail_area_start']}
+                                </td>
+                                <td colspan="3" style="border: none;word-wrap: break-word">
+                                    {$message['detail_area_end']}
+                                </td>
+                            </tr>
+                        </if>
+                    </table>
                 </div>
                 <div>
-                    <table class="table table-responsive" style=";margin-bottom: 0;border: none">
+                    <table class="table" style=";margin-bottom: 0;border: none;table-layout: fixed">
                         <tbody>
                         <tr>
                             <td style="border: none">
-                                车辆数量:
-                                <empty name="message['car_quantity']">
+                                发煤量:
+                                <empty name="message['quantity']">
                                     空
                                     <else/>
-                                    {$message['car_quantity']}
-                                    <span style="">辆</span>
+                                    {$message['quantity']}
+                                    <span style="">吨</span>
                                 </empty>
                             </td>
+                            <td style="border: none;color:red;">
+                                运费:
+                                <empty name="message['price']">
+                                    空
+                                    <else/>
+                                    {$message['price']}
+                                    <span style="">元/吨</span>
+                                </empty>
+                            </td>
+
+                        </tr>
+                        <tr>
                             <td style="border: none">
                                 粒度:
                                 <empty name="message['granularity']">
                                     空
                                     <else/>
                                     {$message['granularity']}
-                                </empty>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="border: none">
-                                发煤量:
-                                <empty name="message['quantity']">
-                                    空
-                                <else/>
-                                    {$message['quantity']}
-                                    <span style="">吨</span>
                                 </empty>
                             </td>
                             <td style="border: none">
@@ -113,12 +135,12 @@
                         </tr>
                         <tr>
                             <td style="border: none">
-                                运费:
-                                <empty name="message['price']">
+                                需要车辆:
+                                <empty name="message['car_quantity']">
                                     空
                                     <else/>
-                                    {$message['price']}
-                                    <span style="">元/吨</span>
+                                    {$message['car_quantity']}
+                                    <span style="">辆</span>
                                 </empty>
                             </td>
                             <td style="border: none">
@@ -279,9 +301,20 @@
         }else{
             role = "货主";
         }
+        var title_string = '';
+        if("{$area_start['name']}" == '' && "{$area_end['name']}" == ''){
+            title_string += '{$message["content"]|mb_substr=0,20,"utf-8"}'+'...'
+        }else{
+            title_string += "{$area_start['name']}"+"->"+"{$area_end['name']}";
+            if("{$message['price']}"==''){
+            }else{
+                title_string += ":"+"运费"+"{$message['price']}";
+            }
+        }
+
         wx.onMenuShareTimeline({
 
-            title: '来自{$user["user_name"]}('+role+')的{$message["category"]}消息', // 分享标题
+            title: '[{$message["category"]}]'+title_string, // 分享标题
             link: "http://www.kuaimei56.com/index.php/Home/OwnerOrder/driver_order_detail?id={$message['id']}", // 分享链接
             imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
             success: function () {
@@ -295,7 +328,10 @@
         //分享给朋友
         wx.onMenuShareAppMessage({
             title: '来自{$user["user_name"]}('+role+')的{$message["category"]}消息', // 分享标题
+//            title: '[{$message["category"]}]'+title_string, // 分享标题
             desc: '{$user["user_name"]}('+role+')在超级矿资源发布了最新消息，点击了解更多信息', // 分享描述
+//            desc: title_string, // 分享描述
+//            desc: '{$message["content"]|mb_substr=0,4,"utf-8"}', // 分享描述
             link: "http://www.kuaimei56.com/index.php/Home/OwnerOrder/driver_order_detail?id={$message['id']}", // 分享链接
             imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
             type: '', // 分享类型,music、video或link，不填默认为link

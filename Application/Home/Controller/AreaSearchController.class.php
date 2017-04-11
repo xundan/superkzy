@@ -274,14 +274,15 @@ class AreaSearchController extends ComController
             $map['pinyin'] = $querystring;
             $map['_logic'] = 'or';
             $where['_complex'] = $map;
-            $where['name'] = array('notlike','%区');
+//            $where['name'] = array('notlike','%区');
             $result = M('districts')->where($where)->limit(5)->select();
             count($result);
             echo json_encode($result);exit;
         }else{
 //            echo "有中文，或者数字，特殊符号存在！";
 //            $where['merger_name'] = array('like','%'.$querystring.'%');
-            $where['name'] = array(array('like','%'.$querystring.'%'),array('notlike','%区'),'and');
+//            $where['name'] = array(array('like','%'.$querystring.'%'),array('notlike','%区'),'and');
+            $where['name'] =array('like','%'.$querystring.'%');
             $result = M('districts')->where($where)->limit(5)->select();
             echo json_encode($result);exit;
         }

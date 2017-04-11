@@ -75,7 +75,7 @@ class WxAccessController extends Controller
 
                 if ($event['event']=='subscribe'){
                     $welcome_str = "感谢关注【超级矿资源】微信公众平台！
-您可以点击下方的进入 <a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>首页</a>开始 <a href='http://www.kuaimei56.com/index.php/Home/OwnerPublish/owner_publish'>发布</a>或 <a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>查询</a> 运单、订单信息。也可以在这里回复直接提出您的问题。
+您可以点击<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>平台网站</a>开始 <a href='http://www.kuaimei56.com/index.php/Home/OwnerPublish/owner_publish'>发布</a>或 <a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>查询</a> 运单、订单信息。也可以在这里回复直接提出您的问题。
 
 在本页面直接回复您要转发的消息，我们会为您转发到我们的<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>平台网站</a>和所有超矿微信的朋友圈。";
                     $this->getWeObj()->text($welcome_str)->reply();
@@ -102,7 +102,6 @@ class WxAccessController extends Controller
     {
         // 获取用户授权后的信息
         $resultArr = $this->getWeObj()->getOauthAccessToken();
-
         $userModel = new UserModel();
         $r = $userModel->where(array("open_id" => $resultArr["openid"]))->find();
         if (empty($r)) {//验证用户是否注册

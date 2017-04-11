@@ -352,8 +352,9 @@ class MessagesModel extends Model
 
     public function todayCount(){
         // select count(*) from `ck_messages` where to_days(`record_time`) = to_days(now());
-        $count = $this->query("select count(*) AS a from ck_messages where to_days(record_time) = to_days(now()) AND category IN ('求购', '供应', '找车', '车源') AND invalid_id = 0");
-        return $count[0]['a'];
+//        $count = $this->query("select count(*) AS a from ck_messages where to_days(record_time) = to_days(now()) AND category IN ('求购', '供应', '找车', '车源') AND invalid_id = 0");
+        $count = $this->query("select count(*) AS a from ck_messages where yearweek(record_time) = yearweek(now()) AND category IN ('求购', '供应', '找车', '车源') AND invalid_id = 0");
+        return floor((int)$count[0]['a']*1.5);
     }
     public function todayTradeCount(){
         // select count(*) from `ck_messages` where to_days(`record_time`) = to_days(now());

@@ -28,20 +28,19 @@ class CarGiveMsgCard extends MsgCard
         }
 
         if ($message['formatted']) { // 如果用户按照标准格式填写
-            $li_str = "<li onclick='window.location.href=\"{$message_detail}\"' class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
+            $li_str = "<li class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
 <div style=\"position: absolute;right: 0px;\">
     <img src=\"__PUBLIC__/home/images/give.png\" width=\"50px\">
 </div>
 <div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
     <a href=\"{$personal_page}\">
         <div class=\"weui_media_hd\">
-            <img src=\"{$message['user']['heading_url']}\" class=\"weui_media_appmsg_thumb\">
+            <img src=\"{$message['user']['heading_url']}\" class=\"weui_media_appmsg_thumb img-circle\">
         </div>
     </a>
     <div class=\"weui_media_bd\">
-        <a href=\"{$personal_page}\" style='text-decoration: none;color: black'>
-            <h4 class=\"weui_media_title highlight\">{$message['user']['user_name']}</h4>
-        </a>".$areastring."</div>
+            <h4 class=\"weui_media_title highlight\"><span onclick='window.location.href=\"{$personal_page}\"'>{$message['user']['user_name']}</span></h4>
+        ".$areastring."</div>
     <div class=\"weui_media_bd\" style=\"\">
         <a href=\"tel:{$message['phone_number']}\" onclick='event.stopPropagation();' class=\"\" style='text-decoration: none;color: black'>
             <h4><img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
@@ -52,7 +51,7 @@ class CarGiveMsgCard extends MsgCard
         </div>
     </div>
 </div>
-<table class=\"table table-condensed\" style=\"margin: 0\">
+<table onclick='window.location.href=\"{$message_detail}\"'  class=\"table table-condensed\" style=\"margin: 0\">
     <tbody>
     <tr><td class=\"highlight\">车辆类型:{$message['car_type']}</td><td class=\"highlight\">吨数:{$message['car_capacity']}</td></tr>
     </tbody>
@@ -60,20 +59,19 @@ class CarGiveMsgCard extends MsgCard
 <div class='pull-right'>发布时间:{$publish_date}</div>
 </li>";
         } else {
-            $li_str = "<li onclick='window.location.href=\"{$message_detail}\"' class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
+            $li_str = "<li class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
 <div style=\"position: absolute;right: 0px;\">
     <img src=\"__PUBLIC__/home/images/give.png\" width=\"50px\">
 </div>
 <div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
     <a href=\"{$personal_page}\">
         <div class=\"weui_media_hd\">
-            <img src=\"{$message['user']['heading_url']}\" class=\"weui_media_appmsg_thumb\">
+            <img src=\"{$message['user']['heading_url']}\" class=\"weui_media_appmsg_thumb img-circle\">
         </div>
     </a>
     <div class=\"weui_media_bd\">
-        <a href=\"{$personal_page}\" style='text-decoration: none;color: black'>
-            <h4 class=\"weui_media_title highlight\">{$message['user']['user_name']}</h4>
-        </a>".$areastring."</div>
+            <h4 class=\"weui_media_title highlight\"><span onclick='window.location.href=\"{$personal_page}\"'>{$message['user']['user_name']}</span></h4>
+        ".$areastring."</div>
     <div class=\"weui_media_bd\" style=\"\">
         <a href=\"tel:{$message['phone_number']}\" onclick='event.stopPropagation();' class=\"\" style='text-decoration: none;color: black'>
             <h4><img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
@@ -84,7 +82,7 @@ class CarGiveMsgCard extends MsgCard
         </div>
     </div>
 </div>
-<div class=\"highlight\">{$message['content']}</div><div class='pull-right'>发布时间:{$publish_date}</div>
+<div class=\"highlight\" onclick='window.location.href=\"{$message_detail}\"' >{$message['content']}</div><div class='pull-right'>发布时间:{$publish_date}</div>
 </li>";
         }
         return $this->replacePublicString($li_str);
