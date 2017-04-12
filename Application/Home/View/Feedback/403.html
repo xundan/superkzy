@@ -15,11 +15,29 @@
     <div class="help-block text-center">
         <p style="font-size: 2em;font-family: 微软雅黑"><b>403</b></p>
         <p style="font-size: 1.6em;font-family: 微软雅黑">您暂时没有权利访问该界面！</p>
+        <p>还有<span id="time_count"></span>秒跳转到会员注册界面，点击<a href="{:U('Login/register')}">跳转</a>立即跳转</p>
         <a class="btn btn-default" href="{:U('feedback/feedback')}" style="margin-top: 5%;padding-left: 5%;padding-right: 5%;border-color: #04bfc6;color: #04bfc6">
             建 议 及 反 馈
         </a>
     </div>
     <?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
 </body>
+<script>
+    var countNum = 10;
+    window.onload = function(){
 
+        timeCount();
+        setTimeout(function(){
+            window.location.href = '{:U("Login/register")}';
+        },10000)
+    };
+    function timeCount(){
+        if(countNum<0) return false;
+        document.getElementById('time_count').innerText = countNum;
+        countNum--;
+        setTimeout(function(){
+            timeCount();
+        },1000)
+    }
+</script>
 </html>

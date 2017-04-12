@@ -81,15 +81,15 @@ class OwnerOrderController extends ComController
                 $this->assign_product($message);
             } elseif ($message === false) {
                 // TODO false说明查询出错，记录日志
-                $this->display("Common:500");exit;
+                $this->display("Feedback:500");exit;
 
             } else {
                 // TODO 查询为空，用户查到了不该到的地方，记日志
-                $this->display("Common:404");exit;
+                $this->display("Feedback:404");exit;
             }
         } else {
             // TODO 查询为空，用户查到了不该到的地方，记日志
-            $this->display("Common:404");exit;
+            $this->display("Feedback:404");exit;
         }
     }
 
