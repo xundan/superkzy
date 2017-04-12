@@ -41,7 +41,7 @@ class RestController extends Controller {
     public function __construct() {
         // 资源类型检测
         if(''==__EXT__) { // 自动检测资源类型
-            $this->_type   =  $this->getAcceptType();
+            $this->_type   =  $this->getCheckedAcceptType();
         }elseif(!in_array(__EXT__,$this->allowType)) {
             // 资源类型非法 则用默认资源类型访问
             $this->_type   =  $this->defaultType;
@@ -90,6 +90,13 @@ class RestController extends Controller {
         }
     }
 
+    protected function getCheckedAcceptType(){
+        if(isset($_SERVER['HTTP_ACCEPT'])){
+            return $this->getAcceptType();
+        } else {
+            return false;
+        }
+    }
     /**
      * 获取当前请求的Accept头信息
      * @return string

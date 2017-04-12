@@ -9,6 +9,7 @@
     <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
     <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
     <title>客服</title>
 </head>
 <include file="Common:common"/>
@@ -59,29 +60,21 @@
         }
 
         var subData=$("#form_feedback").serialize();
-//        console.log(subData);
         var url="{:U('Feedback/feedback_action')}";
         $.ajax({
             type:"post",
             url:url,
             data:subData,
             success:function(data){
-                console.log(123);
                 var jsonObj=eval("("+data+")");
                 showToast(jsonObj.msg);
             },
             error:function(XMLHttpRequest,textStatus,errorThrown){
-//                console.log(123456);
-//                console.log(XMLHttpRequest);
-//                console.log(textStatus);
-//                console.log(errorThrown);
                 alert('不可棱！！');
             }
         });
 
     }
+
 </script>
-
-
-
 </html>
