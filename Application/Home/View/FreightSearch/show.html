@@ -72,8 +72,8 @@
                 </span>
                 <button style="margin-left: 12px" class="btn btn-default" data-toggle="modal" data-target="#feedback">报错</button>
             </div>
-            <button class="btn btn-default" style="background-color: red;color: blue;"><span class="glyphicon glyphicon-user"></span> asd</button>
-            <div style="background: url('__PUBLIC__/home/images/useless.png') no-repeat;"></div>
+            <!--<button class="btn btn-default" style="background-color: red;color: blue;"><span class="glyphicon glyphicon-user"></span> asd</button>-->
+            <!--<div style="background: url('__PUBLIC__/home/images/useless.png') no-repeat;"></div>-->
         </div>
     </div>
     <!--<div data-toggle="modal" data-target="#feedback" style="text-decoration: none;">-->
@@ -105,19 +105,29 @@
 </div>
 </body>
 <script>
-    function asd(obj){
+    function asd(obj) {
         var count = parseInt($(obj).siblings('span').html());
-        if($(obj).attr('src') == "__PUBLIC__/home/images/useless.png"){
-            $(obj).attr("src","__PUBLIC__/home/images/usefull.png");
+        if ($(obj).attr('src') == "__PUBLIC__/home/images/useless.png") {
+            $(obj).attr("src", "__PUBLIC__/home/images/usefull.png");
+//            $.ajax({
+//                type: "post",
+//                url: "{:U('FreightSearch/VoteCount')}",
+//                data: {message_id:id,vote: 'Upvote',count:count},
+//                success: function (data) {
+//
+//                },
+//                error: function (XMLHttpRequest, textStatus, errorThrown) {
+//                }
+//            });
             count += 1;
             $(obj).siblings('span').html(count);
             console.log(count);
 
-        }else{
-            $(obj).attr("src","__PUBLIC__/home/images/useless.png");
+        } else {
+            $(obj).attr("src", "__PUBLIC__/home/images/useless.png");
             count -= 1;
             $(obj).siblings('span').html(count);
             console.log(count);
         }
-
-    
+    }
+</script>

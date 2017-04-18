@@ -17,6 +17,7 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
 </head>
 <body>
+<include file="Common:common"/>
 <!--导航标签-->
 <div class="panel-title" style="margin:0;padding: 0;background-color: white">
     <div id="myTab" class="weui_navbar" style=";margin-bottom: 0;">
@@ -59,6 +60,32 @@
         <div id="pullUp">
             <span class="pullUpIcon"></span>
             <span class="pullUpLabel" style="margin-left: -48px">上拉加载更多...</span>
+        </div>
+    </div>
+</div>
+
+<!--删除模态框-->
+<div class="modal fade" id="delete_succsee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="top:30%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel2" style="color:grey">小提示</h4>
+            </div>
+            <div class="modal-body">
+                <span style="color:black">该操作会彻底删除您的信息，确定删除该信息吗？</span>
+            </div>
+            <div class="modal-footer">
+                <a href="javascript:void(0);" onclick="delete_message()" type="button" class="btn btn-primary"
+                   style="background-color: #04bfc6">
+                    确定
+                </a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+            </div>
         </div>
     </div>
 </div>
@@ -177,6 +204,7 @@
                     if (jsonObj.msg == 'success') {
                         page++;
                         $('#page').val(page);
+                        $('.time-limit').toggle();
                         jQuery.each(jsonObj.li_array, function (k, val) {
                             var li = document.createElement('li');
                             li.innerHTML = val;
@@ -190,6 +218,7 @@
                             else {
                             }
                         });
+                        $('.time-limit').toggle();
                     }
                     else {
                     }
@@ -329,5 +358,90 @@
         }else{}
         return false;
     }
+</script>
+<!--过期续时功能-->
+<script>
+    $(function(){
+        $('.time-limit').toggle();
+    });
+    function overdue(obj,id){
+        console.log(id);
+        var img = $(obj).parent('div').prev('li').children('div').eq(0).children('img');
+        var img_src_overdue;
+        if(img.attr('src').match('overdue')){
+            img_src_overdue = img.attr('src');
+        }else{
+            img_src_overdue = img.attr('src').replace('.png','_overdue.png');
+        }
+        $.ajax({
+            type: "post",
+            url: "{:U('OwnerPublish/overdue')}",
+            data: {id:id},
+            success: function (data) {
+                console.log(data);
+//                showToast('下架成功');
+                if(data){
+//                    img_src.attr('src','__PUBLIC__/home/images/sell_overdue.png');
+                    img.attr('src',img_src_overdue);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    };
+
+    function refill(obj,id){
+        console.log(id);
+        var img = $(obj).parent('div').prev('li').children('div').eq(0).children('img');
+        var img_src_refill;
+        if(img.attr('src').match('overdue')){
+            img_src_refill = img.attr('src').replace('_overdue.png','.png');
+        }else{
+            img_src_refill = img.attr('src');
+        }
+        $.ajax({
+            type: "post",
+            url: "{:U('OwnerPublish/refill')}",
+            data: {id:id},
+            success: function (data) {
+                console.log(data);
+//                showToast('续时成功');
+                if(data){
+//                    $(obj).parent('div').prev('li').children('div').eq(0).children('img').attr('src','__PUBLIC__/home/images/sell.png');
+                    img.attr('src',img_src_refill);
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    }
+    //设置一个全局id用来存放msg_id
+    var global_msg_id;
+    function delete_modal(obj,id){
+        global_msg_id = id;
+        $('#delete_succsee').modal();
+    }
+
+    function delete_message(){
+        var id = global_msg_id;
+        var url="{:U('OwnerOrder/del_message')}";
+        $.ajax({
+            type: "post",
+            url: url,
+            data: {id: id},
+            success: function (data) {
+                if (data) {
+                    $('#delete_succsee').modal('hide');
+                    showToast('删除成功');
+                    setTimeout(function(){
+                        window.location.href = "{:U('OwnerPublishHistory/owner_publish_history')}";
+                    },1000);
+                } else {
+                }
+            }
+        });
+        return false;
+    }
+
 </script>
 </html>

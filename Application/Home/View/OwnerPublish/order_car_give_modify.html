@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <title>车源订单修改页</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
+</head>
+<body>
+<!--导航标签-->
+<div class="panel-title" style="margin:0;padding: 0;background-color: white">
+    <div id="myTab" class="weui_navbar" role="" style="position: inherit;margin-bottom: 0;">
+        <a href="#car_give" name="car_give" class="weui_navbar_item weui_bar_item_on" data-toggle="tab"
+           style="color: black;text-decoration: none">
+            <span role="presentation" class="" style=";font-size: 1.2em">
+                发 布 车 源
+            </span>
+        </a>
+    </div>
+</div>
+<!--发布栏-->
+<div id="car_give" class="tab-pane" style="">
+    <form id="form_give" name="form_give" class="" method="post" action="">
+        <input type="hidden" name="id" id="give_id">
+        <input type="hidden" name="category" id="give_category" value="车源">
+        <table class="table table-responsive" style="border: 0">
+            <tr>
+                <td style="padding: 0">
+                    <div onclick="give_get_area_start()" style="background-color: white;color:black">
+                        <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">出发地址</span>
+                                </span>
+                            <span id="give_area_start_html" style="border: 0" class="form-control"></span>
+                            <input type="hidden" id="give_area_start" name="area_start">
+                            <input type="hidden" id="give_area_start_name" name="area_start_name">
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
+                                         style="width: 10px">
+                                </span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0;">
+                    <div class="input-group" style="width: 100%">
+                        <span class="input-group-addon"
+                              style="width: 25%;border-radius: 0;border:0;background-color: white">
+                            <img src="__PUBLIC__/home/images/area_start.png" class="pull-left" style="width: 10px">
+                        </span>
+                        <input id="give_detail_area_start" name="detail_area_start" class="form-control"
+                               placeholder="请填写详细信息" style=";border-radius: 0;border: 0">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0">
+                    <div onclick="give_get_area_end()" style="background-color: white;color:black">
+                        <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">目的地址</span>
+                                </span>
+                            <span id="give_area_end_html" style="border: 0" class="form-control"></span>
+                            <input type="hidden" id="give_area_end" name="area_end">
+                            <input type="hidden" id="give_area_end_name" name="area_end_name">
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
+                                         style="width: 10px">
+                                </span>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0">
+                    <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <img src="__PUBLIC__/home/images/area_end.png" class="pull-left" style="width: 10px">
+                            </span>
+                        <input id="give_detail_area_end" name="detail_area_end" class="form-control"
+                               placeholder="请填写详细信息" style="border-radius: 0;border: 0">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0">
+                    <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">装车时间</span>
+                            </span>
+                        <input type="date" id="give_loading_time" name="loading_time" class="form-control"
+                               placeholder="请输入装车时间" style="border-radius: 0;border: 0">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0;">
+                    <div class="input-group" style="background-color: white;width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">短途调配</span>
+                            </span>
+
+                        <div class="weui_cell_ft">
+                            <input id="give_short_allocate" name="short_allocate" class="weui_switch" style=""
+                                   type="checkbox" checked>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0">
+                    <a data-toggle="collapse" href="#collapse_give_car_type"
+                       style="text-decoration: none;color:black">
+                        <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">车辆类型</span>
+                                </span>
+                            <span id="give_car_type_html" style="border: 0" class="form-control"></span>
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
+                                         style="width: 20px">
+                                </span>
+                        </div>
+                    </a>
+
+                    <div id="collapse_give_car_type" class="collapse" role="tablist" aria-labelledby="">
+                        <label class="mybtn mybtn-default"
+                               style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                            <input id="give_car_type1" name="car_type" type="radio" style="display: none;"
+                                   class="pull-left" autocomplete="off" value="平板">平 板
+                        </label>
+                        <label class="mybtn mybtn-default"
+                               style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                            <input id="give_car_type2" name="car_type" type="radio" style="display: none;"
+                                   class="pull-left" autocomplete="off" value="厢式">厢 式
+                        </label>
+                        <label class="mybtn mybtn-default"
+                               style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                            <input id="give_car_type3" name="car_type" type="radio" style="display: none;"
+                                   class="pull-left" autocomplete="off" value="高栏">高 栏
+                        </label>
+                        <label class="mybtn mybtn-default"
+                               style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                            <input id="give_car_type4" name="car_type" type="radio" style="display: none;"
+                                   class="pull-left" autocomplete="off" value="仓栅">仓 栅
+                        </label>
+                        <label class="mybtn mybtn-default"
+                               style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                            <input id="give_car_type5" name="car_type" type="radio" style="display: none;"
+                                   class="pull-left" autocomplete="off" value="罐式">罐 式
+                        </label>
+                        <label class="mybtn mybtn-default"
+                               style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                            <input id="give_car_type6" name="car_type" type="radio" style="display: none;"
+                                   class="pull-left" autocomplete="off" value="自卸">自 卸
+                        </label>
+                        <label class="mybtn mybtn-default"
+                               style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                            <input id="give_car_type7" name="car_type" type="radio" style="display: none;"
+                                   class="pull-left" autocomplete="off" value="其他">其 他
+                        </label>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0">
+                    <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">核载吨数</span>
+                            </span>
+                        <input type="number" id="give_car_capacity" name="car_capacity" class="form-control"
+                               placeholder="请输入吨数" style="border-radius: 0;border: 0">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                吨
+                            </span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td class="text-center" style="background-color: white">
+                    有效期3天
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0">
+                    <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;vertical-align: middle;background-color: white">
+                                <span class="pull-left">联系电话</span>
+                                <img src="__PUBLIC__/home/images/necessary.png" class=""
+                                     style="width: 7px;margin-top: -2px;">
+                            </span>
+                        <input id="give_phone_number" name="phone_number" class="form-control" placeholder="请输入联系方式"
+                               style="border-radius: 0;border: 0" value="{$phone_number}">
+                        <span class="text-danger" id="give_phone_alert"></span>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="">
+                    <div class="form-group" style="">
+                        <label for="give_content" style="color:#555;margin-left: 3px">
+                            详细描述
+                        </label>
+                            <textarea id="give_content" name="content" class="form-control"
+                                      style="resize: none"></textarea>
+                        <span class="text-danger" id="give_content_alert"></span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div class="text-center">
+            <input type="button" class="btn btn-default" onclick="give_sub()" value="发&nbsp&nbsp&nbsp布"
+                   style="text-align: center;width:96%; color:white;font-size: 1.5em;background-color: #fb3e1e;bottom: 0;">
+        </div>
+    </form>
+</div>
+<!--无权限提示模态框-->
+<div class="modal fade" id="hint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="top:30%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel" style="color:grey">小提示</h4>
+            </div>
+            <div class="modal-body">
+                <span style="color:black">您并没有权限进行该项操作，请点击注册前往注册界面</span>
+            </div>
+            <div class="modal-footer">
+                <a href="{:U('Login/register')}" type="button" class="btn btn-primary"
+                   style="background-color: #04bfc6">
+                    去注册
+                </a>
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+<!--发布成功模态框-->
+<div class="modal fade" id="publish_success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="top:30%">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel2" style="color:grey">小提示</h4>
+            </div>
+            <div class="modal-body">
+                <span style="color:black">恭喜您修改成功！</span>
+            </div>
+            <div class="modal-footer">
+                <a href="{:U('OwnerPublishHistory/owner_publish_history')}" type="button" class="btn btn-primary"
+                   style="background-color: #04bfc6">
+                    我的发布
+                </a>
+                <!--<a href="{:U('OwnerOrder/owner_publish_history')}" type="button" class="btn btn-primary"-->
+                <!--style="background-color: #04bfc6">-->
+                <!--去订单详情-->
+                <!--</a>-->
+                <button type="button" class="btn btn-default" data-dismiss="modal">继续修改</button>
+                <!--<button type="button" class="btn btn-primary">Save changes</button>-->
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<!--按钮选择样式-->
+<script>
+    $('input[type=radio]').click(function () {
+        var check_val = $(this).val();
+        $(this).parent('label').siblings().removeClass('myactive');
+        $(this).parent('label').toggleClass('myactive');
+        var temp_html = $(this).parent('label').parent('div').parent('td').children('a').children('div').children('span').eq(1);
+        temp_html.html(check_val);
+        if(!$(this).parent('label').hasClass('myactive')){
+            console.log('cancel_check');
+            $(this).attr('checked',false);
+            temp_html.html('');
+        }
+    });
+</script>
+<!--载入订单信息-->
+<script>
+    $(function(){
+        console.log(cookie('car_give_modify'));
+        if (cookie('car_give_modify')) {
+            var car_give_modify = JSON.parse(cookie('car_give_modify'));
+            jQuery.each(car_give_modify, function (k, val) {
+                if (val.name == 'area_start') { //出发地址
+//                        val.value = cookie('area_start');
+//                        $('#give_area_start_html').html(val.value);
+////                        $('#give_area_start').val(val.value);
+//                        $('#give_area_start').val(cookie('area_start_id'));
+                    $('#give_area_start').val(val.value);
+                }
+                else if (val.name == 'area_start_name') { //出发地址名
+//                        $('#give_area_start_name').val(cookie('area_start'));
+                    $('#give_area_start_name').val(val.value);
+                    $('#give_area_start_html').html(val.value);
+                }
+                else if (val.name == 'area_end') {  //目的地址
+//                        val.value = cookie('area_end');
+//                        $('#give_area_end_html').html(val.value);
+////                        $('#give_area_end').val(val.value);
+//                        $('#give_area_end').val(cookie('area_end_id'));
+                    $('#give_area_end').val(val.value);
+                }
+                else if (val.name == 'area_end_name') { //目的地址名
+//                        $('#give_area_end_name').val(cookie('area_end'));
+                    $('#give_area_end_name').val(val.value);
+                    $('#give_area_end_html').html(val.value);
+                }
+                else if (val.name == 'car_type') {  //车辆类型
+                    var car_type = $(":radio[name=car_type][value='" + val.value + "']");
+                    car_type.prop("checked", "checked");
+                    car_type.parent('label').addClass('myactive');
+                    car_type.parent('label').siblings().removeClass('myactive');
+                    $('#give_car_type_html').html(val.value);
+                }
+                else {
+                    $("#give_" + val.name).val(val.value);
+                }
+            });
+        }
+    })
+</script>
+<!--地址跳转-->
+<script>
+    //车源
+    function give_get_area_start() {
+        var goto_url = "{:U('areaSearch/area_search')}";
+        var current_url = window.location.href;
+        cookie('start_or_end', 'start');
+        cookie('last_url', current_url);
+
+        //表单数据存入cookie便于加载时显示
+        cookie('car_give_modify', JSON.stringify($('#form_give').serializeArray()));
+
+        //告诉area_search 要改的来源
+        var temp = {name:'car_give_modify',value:cookie('car_give_modify')};
+        cookie('source',JSON.stringify(temp));
+
+        //地址跳转
+        window.location.href = goto_url;
+    }
+    function give_get_area_end() {
+        var goto_url = "{:U('areaSearch/area_search')}";
+        var current_url = window.location.href;
+        cookie('start_or_end', 'end');
+        cookie('last_url', current_url);
+
+        //表单数据存入cookie便于加载时显示并把其他tag置空
+        cookie('car_give_modify', JSON.stringify($('#form_give').serializeArray()));
+
+        //告诉area_search 要改的来源
+        var temp = {name:'car_give_modify',value:cookie('car_give_modify')};
+        cookie('source',JSON.stringify(temp));
+
+        //地址跳转
+        window.location.href = goto_url;
+    }
+</script>
+<!--车源表单提交输入及检测-->
+<script>
+    //获取焦点清空输入及错误信息
+    $('#give_phone_number').focus(function () {
+        if ($('#give_phone_alert').html()) {
+            $(this).val('');
+            $('#give_phone_alert').html('');
+        }
+    });
+    $('#give_content').focus(function () {
+        $('#give_content_alert').html('');
+    });
+    function give_sub() {
+        var short_allocate = $('input[name=short_allocate]:checked').val();
+        console.log(short_allocate);
+        //获取表单数据
+        var car_give_modify = JSON.stringify($('#form_give').serializeArray());
+//        //表单数据存入cookie便于加载时显示
+        cookie('car_give_modify', car_give_modify);
+        //联系电话验证
+        var phone = $('#give_phone_number').val().trim();
+        if (!phone) {
+            $('#give_phone_alert').html('联系电话不能为空');
+            return;
+        } else if (phone.length != 11 || !phone.match(/^(-?\d+)(\.\d+)?$/)) {
+            $('#give_phone_alert').html('请输入正确的电话号码');
+            return;
+        }
+        //判断content有无输入，content和煤炭信息不能同时为空
+        var area_start = $('#give_area_start').val().trim();
+        var area_end = $('#give_area_end').val().trim();
+        var content = $('#give_content').val().trim();
+        if (!content && !area_start && !area_end) {
+            $('#give_content_alert').html('详细描述与地址信息不能同时为空');
+            return;
+        }
+        //ajax提交表单数据
+        var subData = $("#form_give").serialize();
+//        console.log(subData);return;
+        var url = "{:U('OwnerPublish/car_give_modify_action')}";
+        $.ajax({
+            type: "post",
+            url: url,
+//            datatype:'json',
+            data: subData,
+            success: function (data) {
+                var jsonObj = eval("(" + data + ")");
+                if (jsonObj.status == 0) {
+                    console.log('auth check failure');
+                    $('#hint').modal();
+                } else {
+                    console.log(jsonObj.msg);
+//                    showToast(jsonObj.msg);
+                    $('#publish_success').modal();
+                }
+            }
+        });
+    }
+</script>
+</html>

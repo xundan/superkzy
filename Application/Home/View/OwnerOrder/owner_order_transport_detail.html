@@ -21,6 +21,21 @@
 <div id="msg_id" style="display: none">
     {$message['id']}
 </div>
+<form id="form_give_modify" name="form_give_modify" style="display: none">
+    <input name="id" value="{$message['id']}">
+    <input name="area_start" value="{$area_start['id']}">
+    <input name="area_start_name" value="{$area_start['name']}">
+    <input name="detail_area_start" value="{$message['detail_area_start']}">
+    <input name="area_end" value="{$area_end['id']}">
+    <input name="area_end_name" value="{$area_end['name']}">
+    <input name="detail_area_end" value="{$message['detail_area_end']}">
+    <input type="date" name="loading_time" value="{$message['loading_time']}">
+    <input name="short_allocate" value="{$message['short_allocate']}">
+    <input name="car_type" value="{$message['car_type']}">
+    <input name="car_capacity" value="{$message['car_capacity']}">
+    <input name="phone_number" value="{$message['phone_number']}">
+    <input name="content" value="{$message['content']}">
+</form>
 <div class="container">
     <div class="tab-content" style="">
         <div id="transport" class="tab-pane active" style="background-color: #efeff4">
@@ -148,8 +163,20 @@
         </div>
     </div>
     <if condition="session('user_info')['uid'] eq $message['publisher_rid']">
-        <button type="button" class="btn btn-default" onclick="delete_modal()"
-                style="text-align: center;width:100%; color:white;font-size: 1.5em;background-color: #fb3e1e;bottom: 0;">删&nbsp;&nbsp;&nbsp;&nbsp;除</button>
+        <div class="btn-group btn-group-justified btn-group-sm" style="">
+            <div class="btn-group" style="">
+                <button class="btn btn-default" onclick="modify()"
+                        style="border: none;font-size: 1.3em;color:#fb3e1e;background-color: #ffe1dd">
+                    修&emsp;&emsp;改
+                </button>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-default" onclick="delete_modal()"
+                        style="border: none;color:white;font-size: 1.3em;background-color: #fb3e1e">
+                    删&emsp;&emsp;除
+                </button>
+            </div>
+        </div>
     </if>
 </div>
 <!--删除模态框-->
@@ -164,7 +191,7 @@
                 <h4 class="modal-title" id="myModalLabel2" style="color:grey">小提示</h4>
             </div>
             <div class="modal-body">
-                <span style="color:black">确定删除已发布的信息吗？</span>
+                <span style="color:black">该操作会彻底删除您的信息，确定删除该吗？</span>
             </div>
             <div class="modal-footer">
                 <a href="javascript:void(0);" onclick="delete_message(this,{$message['id']})" type="button" class="btn btn-primary"
@@ -320,5 +347,14 @@
             },false);
         }
     })
+</script>
+<!--修改信息-->
+<script>
+    function modify(){
+        cookie('car_give_modify', JSON.stringify($('#form_give_modify').serializeArray()));
+        console.log(cookie('car_give_modify'));
+        //地址跳转
+        window.location.href = "{:U('OwnerPublish/order_car_give_modify')}";
+    }
 </script>
 </html>

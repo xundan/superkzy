@@ -68,10 +68,7 @@
 </style>
 <body>
 
-    <div align="center">
-        <input type="button" value="上一条" id="prevM" name="prevM" onclick="location.href='{$prev}'"  style="width: 30%;flex: auto;margin-bottom: 20px;height: 50px"/>
-        <input type="button" value="下一条" id="nextM" name="nextM" onclick="location.href='{$next}'"  style="width: 30%;flex: auto;margin-bottom: 20px;height: 50px"/>
-    </div>
+
         <span style="font-size: 25px">您好 <i>{$username}！</i></span>
         <a href="__ROOT__/Views/StaffsLogin/logout" style="float: right;font-size: 15px">登出</a>
 
@@ -98,6 +95,17 @@
                     <textarea  rows="5" style=" overflow:visible;" name="content" id="content_id">{$data['content']}</textarea>
                 </td>
             </tr>
+            <tr>
+                <td colspan="3">
+                    <fieldset>
+                        <legend>运费筛选(未启用)</legend>
+                        <div id="area_start_select">起始地:</div><input type="text" name="area_start" id="area_start_text" placeholder="起始地">
+                        <div id="area_end_select">终止地:</div><input type="text" name="area_end" id="area_end_text" placeholder="终止地">
+                        <div id="freight">运费:</div><input type="number" name="freight" id="freight_text" placeholder="运费">
+                        <button type="button" id="freight_submit">提交</button>
+                    </fieldset>
+                </td>
+            </tr>
             </tbody>
         </table>
 
@@ -110,8 +118,7 @@
 
         <!--删除按钮-->
         <div style="text-align: center;margin-top: 20px;margin-bottom: 20px">
-            <input type="button" id="Button2" name="Button2" onclick="all_choose()" value="全选" style="width:10%;height: 30px">
-            <input type="button" id="Button3" name="Button3" onclick="cancel_all_choose()" value="取消全选" style="width:10%;height: 30px">
+            <input type="button" id="Button2" name="Button2" onclick="all_choose(this)" value="全选" style="width:10%;height: 30px">
         </div>
 
         <!--标签复选框-->
@@ -158,8 +165,12 @@
         </fieldset>
             <center><input type="submit" name="submit" value="提交" style="width: 30%;height: 50px;margin-top: 20px"/></center>
     </form>
+    <div align="center" style="margin-top: 3%">
+        <input type="button" value="上一条" id="prevM" name="prevM" onclick="location.href='{$prev}'"  style="width: 30%;flex: auto;margin-bottom: 20px;height: 50px"/>
+        <input type="button" value="下一条" id="nextM" name="nextM" onclick="location.href='{$next}'"  style="width: 30%;flex: auto;margin-bottom: 20px;height: 50px"/>
+    </div>
 
-    <script>
+<script>
         function delete_confirm() {
             if (!confirm("确认要删除？")) {
 //                取消不变
@@ -195,20 +206,109 @@
                 });
             }
         }
-function all_choose() {
-            $(".checkbox").prop("checked",true);
-        }
-function cancel_all_choose() {
-            $(".checkbox").prop("checked",false);
-        }
+function all_choose(obj) {
+    var button_text = $(obj).val();
+    if( button_text == '全选'){
+        $(".checkbox").prop("checked",true);
+        $(obj).val('取消全选');
+    }else if( button_text == '取消全选'){
+        $(".checkbox").prop("checked",false);
+        $(obj).val('全选');
+    }else{}
+}
+</script>
 
-//        function tip(){
-//            alert('提交成功');
-////            document.location='{$next}';
-//            window.open('{$next}');
-//
+<!--匹配地址-->
+<script>
+    $(function(){
+        var areaMatch = document.getElementById('content_id');
+        var areaMatchContent = areaMatch.innerHTML;
+        var temp_start = document.getElementById('area_start_select');
+        var temp_end = document.getElementById('area_end_select');
+        $.getJSON('__PUBLIC__/freight_area.json',function(data){
+//            var areaJsonObj = eval("(" + data + ")");
+//            var areaJsonObj = data;
+//            console.log(areaJsonObj);return;
+            jQuery.each(data,function(k,val){
+                if(val.short_name=='府谷'){
+                    console.log(val.short_name);
+                }
+
+                if(areaMatchContent.indexOf(val.short_name)>= 0){
+                    var select_start = document.createElement('span');
+                    select_start.innerHTML="<label><input type='radio' value="+val.id+" name='area_start'>"+val.short_name+"</label>";
+                    var select_end = document.createElement('span');
+                    select_end.innerHTML="<label><input type='radio' value="+val.id+" name='area_end'>"+val.short_name+"</label>";
+                    temp_start.appendChild(select_start);
+                    temp_end.appendChild(select_end);
+                }else{
+                }
+            });
+        });
+        //运费数字
+        var temp_freight = document.getElementById('freight');
+        var result = areaMatchContent.match(/\d{1,}(?=\D)/g);
+        if(result){
+            $.each(result,function(k,val){
+                if(val.length == 2 || val.length == 3){
+                    var select_freight = document.createElement('span');
+                    select_freight.innerHTML="<label><input type='radio' value="+val+" name='freight'>"+val+"</label>";
+                    temp_freight.appendChild(select_freight);
+                }else{}
+            })
+        }
+    })
+</script>
+
+<script>
+    $('#freight_submit').click(function(){
+        var area_start_text = $('#area_start_text').val();
+        var area_start = $('input[name=area_start]:checked').val();
+        var area_end_text = $('#area_end_text').val();
+        var area_end = $('input[name=area_end]:checked').val();
+        var freight_text = $('#freight_text').val();
+        var freight = $('input[name=freight]:checked').val();
+//        var result_area_start,result_area_end,result_freight;
+//        if(area_start_text){
+//            result_area_start = area_start_text;
+//        }else{
+//            result_area_start = area_start;
 //        }
-    </script>
+//        if(area_end_text){
+//            result_area_end = area_end_text;
+//        }else{
+//            result_area_end = area_end;
+//        }
+        area_start = parseInt(area_start)/100;
+        area_end = parseInt(area_end)/100;
+        var result_freight;
+        if(freight_text){
+            result_freight = freight_text;
+        }else{
+            result_freight = freight;
+        }
+        var message_id = {$data['id']};
+
+        console.log(area_start);
+//        console.log(result_area_start,result_area_end,result_freight,message_id);
+
+//        console.log($('input[name=freight]:checked').parent('label').parent('span').siblings('span').eq(1).children('label').children('input').val());
+//        return;
+        $.ajax({
+            type:"post",
+            url:"{:U('DisplayMessages/freightSubmit')}",
+            data:{message_id:message_id,area_start_id:area_start,area_start_name:area_start_text,
+                area_end_id:area_end,area_end_name:area_end_text,freight_price:result_freight},
+            success:function(data){
+                $('#area_start_text').val('');
+                $('#area_end_text').val('');
+                $('#freight_text').val('');
+            },
+            error:function(XMLHttpRequest,textStatus,errorThrown){
+            }
+        });
+    })
+</script>
 
 
 </body>

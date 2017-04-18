@@ -36,19 +36,25 @@ class OwnerOrderController extends ComController
         echo json_encode($data);
         return;
     }
-
+    //车源信息
     public function owner_order_transport_detail($id = null,$from=null)
     {
         $this->assign_data($id);
         $this->display();
     }
-
+    //供货信息
     public function owner_order_trade_detail($id = null,$from=null)
     {
         $this->assign_data($id);
         $this->display();
     }
-
+    //求购信息
+    public function owner_order_trade_buy_detail($id = null,$from=null)
+    {
+        $this->assign_data($id);
+        $this->display();
+    }
+    //求车信息
     public function driver_order_detail($id = null,$from=null)
     {
         $this->assign_data($id);

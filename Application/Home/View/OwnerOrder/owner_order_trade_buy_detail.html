@@ -21,22 +21,17 @@
 <div id="msg_id" style="display: none">
     {$message['id']}
 </div>
-<form id="form_sell_modify" name="form_sell_modify" style="display: none">
+<form id="form_buy_modify" name="form_buy_modify" style="display: none">
     <input name="id" value="{$message['id']}">
     <input name="kind" value="{$message['kind']}">
     <input name="trait" value="{$message['trait']}">
     <input name="granularity" value="{$message['granularity']}">
-    <input name="supply_company" value="{$message['supply_company']}">
     <input name="area_start" value="{$area_start['id']}">
     <input name="area_start_name" value="{$area_start['name']}">
-    <input type="number" name="price" value="{$message['price']}">
+    <input type="number" name="price_min" value="{$message['price_min']}">
+    <input type="number" name="price_max" value="{$message['price_max']}">
     <input type="number" name="quantity" value="{$message['quantity']}">
-    <input type="number" name="heat_value_max" value="{$message['heat_value_max']}">
     <input type="number" name="heat_value_min" value="{$message['heat_value_min']}">
-    <input name="water" value="{$message['water']}">
-    <input name="ash" value="{$message['ash']}">
-    <input name="sulfur" value="{$message['sulfur']}">
-    <input name="volatile" value="{$message['volatile']}">
     <input name="phone_number" value="{$message['phone_number']}">
     <input name="content" value="{$message['content']}">
 </form>
@@ -74,8 +69,8 @@
                                 <h4><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">
                                     <span style="">拨打电话</span></h4>
                             </a>
-                                <button class="btn btn-xs btn-info" style="background-color: #04bfc6;width: 70%"
-                                        onclick="collection_switch(this,{$message['id']})">{$message['in_collection']}</button>
+                            <button class="btn btn-xs btn-info" style="background-color: #04bfc6;width: 70%"
+                                    onclick="collection_switch(this,{$message['id']})">{$message['in_collection']}</button>
                         </div>
                     </div>
                     <div class="text-center">
@@ -114,13 +109,8 @@
                                     </empty>
                                 </td>
                                 <td style="border: none">
-                                    价格:
-                                    <empty name="message['price']">
-                                        空
-                                        <else/>
-                                        {$message['price']}
-                                        <span style="">元</span>
-                                    </empty>
+                                    价格区间:
+                                    {$message['price_min']}&mdash;{$message['price_max']}元/吨
                                 </td>
                             </tr>
                             <tr>
@@ -144,30 +134,6 @@
                             </tr>
                             <tr>
                                 <td style="border: none">
-                                    煤炭热值(高位):
-                                    <empty name="message['heat_value_max']">
-                                        空
-                                        <else/>
-                                        {$message['heat_value_max']}
-                                        <span style="">卡</span>
-                                    </empty>
-                                </td>
-                                <td style="border: none">
-                                    供货公司:
-                                    <empty name="message['supply_company']">
-                                        空
-                                        <else/>
-                                        {$message['supply_company']}
-                                    </empty>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="border: none">
-                                    详细指标
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="border: none">
                                     煤炭热值(低位):
                                     <empty name="message['heat_value_min']">
                                         空
@@ -177,41 +143,15 @@
                                     </empty>
                                 </td>
                                 <td style="border: none">
-                                    全水份:
-                                    <empty name="message['water']">
+                                    付款方式:
+                                    <empty name="message['pay_ype']">
                                         空
                                         <else/>
-                                        {$message['water']}
+                                        {$message['pay_type']}
                                     </empty>
                                 </td>
                             </tr>
                             <tr>
-                                <td style="border: none">
-                                    灰分:
-                                    <empty name="message['ash']">
-                                        空
-                                        <else/>
-                                        {$message['ash']}
-                                    </empty>
-                                </td>
-                                <td style="border: none">
-                                    硫份:
-                                    <empty name="message['sulfur']">
-                                        空
-                                        <else/>
-                                        {$message['sulfur']}
-                                    </empty>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="border: none">
-                                    挥发份:
-                                    <empty name="message['volatile']">
-                                        空
-                                        <else/>
-                                        {$message['volatile']}
-                                    </empty>
-                                </td>
                                 <td style="border: none">
                                     有效期:7天
                                 </td>
@@ -322,22 +262,22 @@
 
     function delete_message(obj,id){
         var url="{:U('OwnerOrder/del_message')}";
-            $.ajax({
-                type: "post",
-                url: url,
-                data: {id: id},
-                success: function (data) {
-                    console.log(data);return;
-                    if (data) {
-                        $('#delete_succsee').modal('hide');
-                        showToast('删除成功');
-                        setTimeout(function(){
-                            window.location.href = "{:U('OwnerPublishHistory/owner_publish_history')}";
-                        },1000);
-                    } else {
-                    }
+        $.ajax({
+            type: "post",
+            url: url,
+            data: {id: id},
+            success: function (data) {
+                console.log(data);return;
+                if (data) {
+                    $('#delete_succsee').modal('hide');
+                    showToast('删除成功');
+                    setTimeout(function(){
+                        window.location.href = "{:U('OwnerPublishHistory/owner_publish_history')}";
+                    },1000);
+                } else {
                 }
-            });
+            }
+        });
         return false;
     }
 </script>
@@ -448,10 +388,10 @@
 <!--修改信息-->
 <script>
     function modify(){
-        cookie('coal_sell_modify', JSON.stringify($('#form_sell_modify').serializeArray()));
-        console.log(cookie('coal_sell_modify'));
+        cookie('coal_buy_modify', JSON.stringify($('#form_buy_modify').serializeArray()));
+        console.log(cookie('coal_buy_modify'));
         //地址跳转
-        window.location.href = "{:U('OwnerPublish/order_coal_sell_modify')}";
+        window.location.href = "{:U('OwnerPublish/order_coal_buy_modify')}";
     }
 </script>
 </html>

@@ -20,13 +20,17 @@ class CoalBuyMsgCard extends MsgCard
 
         $personal_page = $this->getPersonalUrl();
         $publish_date = date("Y-m-d", $message['publish_time']);
-        $message_detail = U('OwnerOrder/owner_order_trade_detail', array('id' => $message['id']));
+        $message_detail = U('OwnerOrder/owner_order_trade_buy_detail', array('id' => $message['id']));
+
+        if($message['invalid_id'] == 99){
+            $imageString = "<img src='__PUBLIC__/home/images/buy_overdue.png' width='50px'>";
+        }else{
+            $imageString = "<img src='__PUBLIC__/home/images/buy.png' width='50px'>";
+        }
+
         if ($message['formatted']) { // 如果用户按照标准格式填写
             $li_str = "<li class=\"weui_panel weui_panel_access\" style=\";border-radius: 5px\">
-<div style=\"text-decoration: none;color:black\">
-<div style=\"position: absolute;right: 0px;\">
-    <img src=\"__PUBLIC__/home/images/buy.png\" width=\"50px\">
-</div>
+<div style=\"position: absolute;right: 0px;\">".$imageString."</div>
 <div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
     <a href=\"{$personal_page}\">
         <div class=\"weui_media_hd\">
@@ -65,13 +69,14 @@ class CoalBuyMsgCard extends MsgCard
     </tr>
 </tbody>
 </table>
-</li>
-  ";
+</li>"."<div class='time-limit' style='margin-top:3px;margin-right:1px;text-align:right;display:none'>
+<button class='btn btn-xs btn-info' onclick='refill(this,{$message["id"]})'>续时</button>
+<button class='btn btn-xs btn-default' onclick='overdue(this,{$message["id"]})'>下架</button>
+<button class='btn btn-xs btn-danger' onclick='delete_modal(this,{$message["id"]})'>删除</button>
+</div>";
         } else {
             $li_str = "<li class=\"weui_panel weui_panel_access\" style=\";border-radius: 5px\">
-<div style=\"position: absolute;right: 0px;\">
-    <img src=\"__PUBLIC__/home/images/buy.png\" width=\"50px\">
-</div>
+<div style=\"position: absolute;right: 0px;\">".$imageString."</div>
 <div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
     <a href=\"{$personal_page}\">
         <div class=\"weui_media_hd\">
@@ -95,8 +100,11 @@ class CoalBuyMsgCard extends MsgCard
     </div>
 </div>
 <div class=\"highlight\" onclick='window.location.href=\"{$message_detail}\"' >{$message['content']}</div><div class='pull-right'>发布时间:{$publish_date}</div>
-</li>
-  ";
+</li>"."<div class='time-limit' style='margin-top:3px;margin-right:1px;text-align:right;display:none'>
+<button class='btn btn-xs btn-info' onclick='refill(this,{$message["id"]})'>续时</button>
+<button class='btn btn-xs btn-default' onclick='overdue(this,{$message["id"]})'>下架</button>
+<button class='btn btn-xs btn-danger' onclick='delete_modal(this,{$message["id"]})'>删除</button>
+</div>";
         }
         return $this->replacePublicString($li_str);
     }

@@ -23,19 +23,7 @@
 <!--导航标签-->
 <div class="panel-title" style="margin:0;padding: 0;background-color: white">
     <div id="myTab" class="weui_navbar" role="" style="position: inherit;margin-bottom: 0;">
-        <a href="#car_give" name="car_give" class="weui_navbar_item" data-toggle="tab"
-           style="color: black;text-decoration: none">
-            <span role="presentation" class="" style=";font-size: 1.2em">
-                发布车源
-            </span>
-        </a>
-        <a href="#car_need" name="car_need" class="weui_navbar_item weui_bar_item_on" data-toggle="tab"
-           style="color: black;text-decoration: none">
-            <span role="presentation" class="" style=";font-size: 1.2em">
-                发布求车
-            </span>
-        </a>
-        <a href="#coal_sell" name="coal_sell" class="weui_navbar_item" data-toggle="tab"
+        <a href="#coal_sell" name="coal_sell" class="weui_navbar_item weui_bar_item_on" data-toggle="tab"
            style="color: black;text-decoration: none">
             <span role="presentation" class="" style=";font-size: 1.2em">
                 发布供货
@@ -47,448 +35,22 @@
                 发布求购
             </span>
         </a>
+        <a href="#car_need" name="car_need" class="weui_navbar_item" data-toggle="tab"
+           style="color: black;text-decoration: none">
+            <span role="presentation" class="" style=";font-size: 1.2em">
+                发布求车
+            </span>
+        </a>
+        <a href="#car_give" name="car_give" class="weui_navbar_item" data-toggle="tab"
+           style="color: black;text-decoration: none">
+            <span role="presentation" class="" style=";font-size: 1.2em">
+                发布车源
+            </span>
+        </a>
     </div>
 </div>
 <!--发布栏-->
 <div class="tab-content" style="">
-    <div id="car_give" class="tab-pane" style="">
-        <form id="form_give" name="form_give" class="" method="post" action="">
-            <input type="hidden" name="category" id="give_category" value="车源">
-            <table class="table table-responsive" style="border: 0">
-                <tr>
-                    <td style="padding: 0">
-                        <div onclick="give_get_area_start()" style="background-color: white;color:black">
-                            <div class="input-group" style="height:34px;width: 100%">
-                                <span class="input-group-addon"
-                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                    <span class="pull-left">出发地址</span>
-                                </span>
-                                <span id="give_area_start_html" style="border: 0" class="form-control"></span>
-                                <input type="hidden" id="give_area_start" name="area_start">
-                                <input type="hidden" id="give_area_start_name" name="area_start_name">
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
-                                         style="width: 10px">
-                                </span>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0;">
-                        <div class="input-group" style="width: 100%">
-                        <span class="input-group-addon"
-                              style="width: 25%;border-radius: 0;border:0;background-color: white">
-                            <img src="__PUBLIC__/home/images/area_start.png" class="pull-left" style="width: 10px">
-                        </span>
-                            <input id="give_detail_area_start" name="detail_area_start" class="form-control"
-                                   placeholder="请填写详细信息" style=";border-radius: 0;border: 0">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <div onclick="give_get_area_end()" style="background-color: white;color:black">
-                            <div class="input-group" style="height:34px;width: 100%">
-                                <span class="input-group-addon"
-                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                    <span class="pull-left">目的地址</span>
-                                </span>
-                                <span id="give_area_end_html" style="border: 0" class="form-control"></span>
-                                <input type="hidden" id="give_area_end" name="area_end">
-                                <input type="hidden" id="give_area_end_name" name="area_end_name">
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
-                                         style="width: 10px">
-                                </span>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <div class="input-group" style="width: 100%">
-                            <span class="input-group-addon"
-                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                <img src="__PUBLIC__/home/images/area_end.png" class="pull-left" style="width: 10px">
-                            </span>
-                            <input id="give_detail_area_end" name="detail_area_end" class="form-control"
-                                   placeholder="请填写详细信息" style="border-radius: 0;border: 0">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <div class="input-group" style="width: 100%">
-                            <span class="input-group-addon"
-                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                <span class="pull-left">装车时间</span>
-                            </span>
-                            <input type="date" id="give_loading_time" name="loading_time" class="form-control"
-                                   placeholder="请输入装车时间" style="border-radius: 0;border: 0">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0;">
-                        <div class="input-group" style="background-color: white;width: 100%">
-                            <span class="input-group-addon"
-                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                <span class="pull-left">短途调配</span>
-                            </span>
-
-                            <div class="weui_cell_ft">
-                                <input id="give_short_allocate" name="short_allocate" class="weui_switch" style=""
-                                       type="checkbox" checked>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <a data-toggle="collapse" href="#collapse_give_car_type"
-                           style="text-decoration: none;color:black">
-                            <div class="input-group" style="height:34px;width: 100%">
-                                <span class="input-group-addon"
-                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                    <span class="pull-left">车辆类型</span>
-                                </span>
-                                <span id="give_car_type_html" style="border: 0" class="form-control"></span>
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
-                                         style="width: 20px">
-                                </span>
-                            </div>
-                        </a>
-
-                        <div id="collapse_give_car_type" class="collapse" role="tablist" aria-labelledby="">
-                            <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
-                                <input id="give_car_type1" name="car_type" type="radio" style="display: none;"
-                                       class="pull-left" autocomplete="off" value="平板">平 板
-                            </label>
-                            <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
-                                <input id="give_car_type2" name="car_type" type="radio" style="display: none;"
-                                       class="pull-left" autocomplete="off" value="厢式">厢 式
-                            </label>
-                            <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
-                                <input id="give_car_type3" name="car_type" type="radio" style="display: none;"
-                                       class="pull-left" autocomplete="off" value="高栏">高 栏
-                            </label>
-                            <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
-                                <input id="give_car_type4" name="car_type" type="radio" style="display: none;"
-                                       class="pull-left" autocomplete="off" value="仓栅">仓 栅
-                            </label>
-                            <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
-                                <input id="give_car_type5" name="car_type" type="radio" style="display: none;"
-                                       class="pull-left" autocomplete="off" value="罐式">罐 式
-                            </label>
-                            <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
-                                <input id="give_car_type6" name="car_type" type="radio" style="display: none;"
-                                       class="pull-left" autocomplete="off" value="自卸">自 卸
-                            </label>
-                            <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
-                                <input id="give_car_type7" name="car_type" type="radio" style="display: none;"
-                                       class="pull-left" autocomplete="off" value="其他">其 他
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <div class="input-group" style="width: 100%">
-                            <span class="input-group-addon"
-                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                <span class="pull-left">核载吨数</span>
-                            </span>
-                            <input type="number" id="give_car_capacity" name="car_capacity" class="form-control"
-                                   placeholder="请输入吨数" style="border-radius: 0;border: 0">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                吨
-                            </span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-center" style="background-color: white">
-                        有效期3天
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <div class="input-group" style="width: 100%">
-                            <span class="input-group-addon"
-                                  style="width: 25%;border-radius: 0;border:0;vertical-align: middle;background-color: white">
-                                <span class="pull-left">联系电话</span>
-                                <img src="__PUBLIC__/home/images/necessary.png" class=""
-                                     style="width: 7px;margin-top: -2px;">
-                            </span>
-                            <input id="give_phone_number" name="phone_number" class="form-control" placeholder="请输入联系方式"
-                                   style="border-radius: 0;border: 0" value="{$phone_number}">
-                            <span class="text-danger" id="give_phone_alert"></span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="">
-                        <div class="form-group" style="">
-                            <label for="give_content" style="color:#555;margin-left: 3px">
-                                详细描述
-                            </label>
-                            <textarea id="give_content" name="content" class="form-control"
-                                      style="resize: none"></textarea>
-                            <span class="text-danger" id="give_content_alert"></span>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-            <div class="text-center">
-                <input type="button" class="btn btn-default" onclick="give_sub()" value="发&nbsp&nbsp&nbsp布"
-                       style="text-align: center;width:96%; color:white;font-size: 1.5em;background-color: #fb3e1e;bottom: 0;">
-            </div>
-        </form>
-    </div>
-    <div id="car_need" class="tab-pane active" style="">
-        <form id="form_need" name="" class="" method="post" action="">
-            <input type="hidden" name="category" id="need_category" value="找车">
-            <table class="table table-responsive" style="border: 0">
-                <tr>
-                    <td style="padding: 0">
-                        <div onclick="need_get_area_start()" style="background-color: white;color:black">
-                            <div class="input-group" style="height:34px;width: 100%">
-                                <span class="input-group-addon"
-                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                    <span class="pull-left">发货地址</span>
-                                </span>
-                                <span id="need_area_start_html" style="border: 0" class="form-control"></span>
-                                <input type="hidden" id="need_area_start" name="area_start">
-                                <input type="hidden" id="need_area_start_name" name="area_start_name">
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
-                                         style="width: 10px">
-                                </span>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <div class="input-group" style="width: 100%">
-                            <span class="input-group-addon"
-                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                <img src="__PUBLIC__/home/images/area_start.png" class="pull-left" style="width: 10px">
-                            </span>
-                            <input id="need_detail_area_start" name="detail_area_start" class="form-control"
-                                   placeholder="请填写详细信息" style="border-radius: 0;border: 0">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <div onclick="need_get_area_end()" style="background-color: white;color:black">
-                            <div class="input-group" style="height:34px;width: 100%">
-                                <span class="input-group-addon"
-                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                    <span class="pull-left">收货地址</span>
-                                </span>
-                                <span id="need_area_end_html" style="border: 0" class="form-control"></span>
-                                <input type="hidden" id="need_area_end" name="area_end">
-                                <input type="hidden" id="need_area_end_name" name="area_end_name">
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
-                                         style="width: 10px">
-                                </span>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <div class="input-group" style="width: 100%">
-                            <span class="input-group-addon"
-                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                <img src="__PUBLIC__/home/images/area_end.png" class="pull-left" style="width: 10px">
-                            </span>
-                            <input id="need_detail_area_end" name="detail_area_end" class="form-control"
-                                   placeholder="请填写详细信息" style="border-radius: 0;border: 0">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <div class="input-group" style="width: 100%">
-                            <span class="input-group-addon"
-                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                <span class="pull-left">车辆数量</span>
-                            </span>
-                            <input id="need_car_quantity" name="car_quantity" class="form-control"
-                                   placeholder="请输入所需车辆数量" style="border-radius: 0;border: 0">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                辆
-                            </span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <div class="input-group" style="width: 100%">
-                            <span class="input-group-addon"
-                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                <span class="pull-left">发煤量</span>
-                            </span>
-                            <input id="need_quantity" name="quantity" class="form-control" placeholder="请输入吨数"
-                                   style="border-radius: 0;border: 0">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                吨
-                            </span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <a data-toggle="collapse" href="#collapse_need_granularity"
-                           style="text-decoration: none;color:black">
-                            <div class="input-group" style="height:34px;width: 100%">
-                                <span class="input-group-addon"
-                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                    <span class="pull-left">粒度</span>
-                                </span>
-                                <span id="need_granularity_html" style="border: 0" class="form-control"></span>
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
-                                         style="width: 20px">
-                                </span>
-                            </div>
-                        </a>
-
-                        <div id="collapse_need_granularity" class="collapse" role="tablist" aria-labelledby="">
-                            <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
-                                <input type="radio" class="pull-left" style="display: none" name="granularity"
-                                       id="need_granularity1" autocomplete="off" value="原煤"> 原 煤
-                            </label>
-                            <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
-                                <input type="radio" class="pull-left" style="display: none" name="granularity"
-                                       id="need_granularity2" autocomplete="off" value="块煤"> 块 煤
-                            </label>
-                            <label class="mybtn mybtn-default"
-                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
-                                <input type="radio" class="pull-left" style="display: none" name="granularity"
-                                       id="need_granularity3" autocomplete="off" value="沫煤"> 沫 煤
-                            </label>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <div class="input-group" style="width: 100%">
-                            <span class="input-group-addon"
-                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                <span class="pull-left">运费</span>
-                            </span>
-                            <input id="need_price" name="price" class="form-control" placeholder="请输入运费"
-                                   style="border-radius: 0;border: 0">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                元/吨
-                            </span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <div class="input-group" style="width: 100%">
-                            <span class="input-group-addon"
-                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                <span class="pull-left">装车时间</span>
-                            </span>
-                            <input type="date" id="need_loading_time" name="loading_time" class="form-control"
-                                   placeholder="请输入装车时间" style="border-radius: 0;border: 0">
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <div class="input-group" style="width: 100%">
-                            <span class="input-group-addon"
-                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                <span class="pull-left">装车费</span>
-                            </span>
-                            <input id="need_loading_cost" type="number" name="loading_cost" class="form-control" placeholder="请输入装车费"
-                                   style="border-radius: 0;border: 0">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                元
-                            </span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <div class="input-group" style="width: 100%">
-                            <span class="input-group-addon"
-                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                <span class="pull-left">卸车费</span>
-                            </span>
-                            <input id="need_unloading_cost" type="number" name="unloading_cost" class="form-control"
-                                   placeholder="请输入卸车费" style="border-radius: 0;border: 0">
-                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                元
-                            </span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="text-center" style="background-color: white">
-                        有效期3天
-                    </td>
-                </tr>
-                <tr>
-                    <td style="padding: 0">
-                        <div class="input-group" style="width: 100%">
-                            <span class="input-group-addon"
-                                  style="width: 25%;border-radius: 0;border:0;vertical-align: middle;background-color: white">
-                                <span class="pull-left">联系电话</span>
-                                <!--<span style="font-size: 1.5em;color:red;vertical-align: middle">*</span>-->
-                                <img src="__PUBLIC__/home/images/necessary.png" class=""
-                                     style="width: 7px;margin-top: -2px;">
-                            </span>
-                            <input type="number" id="need_phone_number" name="phone_number" class="form-control"
-                                   placeholder="请输入联系方式" style="border-radius: 0;border: 0" value="{$phone_number}">
-                            <span class="text-danger" id="need_phone_alert"></span>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td style="">
-                        <div class="form-group " style="">
-                            <label for="need_content" style="color:#555;margin-left: 3px">
-                                详细描述
-                            </label>
-                            <textarea id="need_content" name="content" class="form-control"
-                                      style="resize: none"></textarea>
-                            <span class="text-danger" id="need_content_alert"></span>
-                        </div>
-                    </td>
-                </tr>
-            </table>
-            <div class="text-center">
-                <input type="button" class="btn btn-default" onclick="need_sub()" value="发&nbsp&nbsp&nbsp布"
-                       style="text-align: center;width:96%; color:white;font-size: 1.5em;background-color: #fb3e1e;bottom: 0;">
-            </div>
-        </form>
-    </div>
     <div id="coal_sell" class="tab-pane" style="">
         <form id="form_sell" name="form_sell" class="" method="post" action="">
             <input type="hidden" name="category" id="sell_category" value="供应">
@@ -1080,6 +642,444 @@
             </div>
         </form>
     </div>
+    <div id="car_need" class="tab-pane active" style="">
+        <form id="form_need" name="" class="" method="post" action="">
+            <input type="hidden" name="category" id="need_category" value="找车">
+            <table class="table table-responsive" style="border: 0">
+                <tr>
+                    <td style="padding: 0">
+                        <div onclick="need_get_area_start()" style="background-color: white;color:black">
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">发货地址</span>
+                                </span>
+                                <span id="need_area_start_html" style="border: 0" class="form-control"></span>
+                                <input type="hidden" id="need_area_start" name="area_start">
+                                <input type="hidden" id="need_area_start_name" name="area_start_name">
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
+                                         style="width: 10px">
+                                </span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <img src="__PUBLIC__/home/images/area_start.png" class="pull-left" style="width: 10px">
+                            </span>
+                            <input id="need_detail_area_start" name="detail_area_start" class="form-control"
+                                   placeholder="请填写详细信息" style="border-radius: 0;border: 0">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div onclick="need_get_area_end()" style="background-color: white;color:black">
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">收货地址</span>
+                                </span>
+                                <span id="need_area_end_html" style="border: 0" class="form-control"></span>
+                                <input type="hidden" id="need_area_end" name="area_end">
+                                <input type="hidden" id="need_area_end_name" name="area_end_name">
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
+                                         style="width: 10px">
+                                </span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <img src="__PUBLIC__/home/images/area_end.png" class="pull-left" style="width: 10px">
+                            </span>
+                            <input id="need_detail_area_end" name="detail_area_end" class="form-control"
+                                   placeholder="请填写详细信息" style="border-radius: 0;border: 0">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">车辆数量</span>
+                            </span>
+                            <input id="need_car_quantity" name="car_quantity" class="form-control"
+                                   placeholder="请输入所需车辆数量" style="border-radius: 0;border: 0">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                辆
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">发煤量</span>
+                            </span>
+                            <input id="need_quantity" name="quantity" class="form-control" placeholder="请输入吨数"
+                                   style="border-radius: 0;border: 0">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                吨
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <a data-toggle="collapse" href="#collapse_need_granularity"
+                           style="text-decoration: none;color:black">
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">粒度</span>
+                                </span>
+                                <span id="need_granularity_html" style="border: 0" class="form-control"></span>
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
+                                         style="width: 20px">
+                                </span>
+                            </div>
+                        </a>
+
+                        <div id="collapse_need_granularity" class="collapse" role="tablist" aria-labelledby="">
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input type="radio" class="pull-left" style="display: none" name="granularity"
+                                       id="need_granularity1" autocomplete="off" value="原煤"> 原 煤
+                            </label>
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input type="radio" class="pull-left" style="display: none" name="granularity"
+                                       id="need_granularity2" autocomplete="off" value="块煤"> 块 煤
+                            </label>
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input type="radio" class="pull-left" style="display: none" name="granularity"
+                                       id="need_granularity3" autocomplete="off" value="沫煤"> 沫 煤
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">运费</span>
+                            </span>
+                            <input id="need_price" type="number" name="price" class="form-control" placeholder="请输入运费"
+                                   style="border-radius: 0;border: 0">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                元/吨
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">装车时间</span>
+                            </span>
+                            <input type="date" id="need_loading_time" name="loading_time" class="form-control"
+                                   placeholder="请输入装车时间" style="border-radius: 0;border: 0">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">装车费</span>
+                            </span>
+                            <input id="need_loading_cost" type="number" name="loading_cost" class="form-control" placeholder="请输入装车费"
+                                   style="border-radius: 0;border: 0">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                元
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">卸车费</span>
+                            </span>
+                            <input id="need_unloading_cost" type="number" name="unloading_cost" class="form-control"
+                                   placeholder="请输入卸车费" style="border-radius: 0;border: 0">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                元
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center" style="background-color: white">
+                        有效期3天
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;vertical-align: middle;background-color: white">
+                                <span class="pull-left">联系电话</span>
+                                <!--<span style="font-size: 1.5em;color:red;vertical-align: middle">*</span>-->
+                                <img src="__PUBLIC__/home/images/necessary.png" class=""
+                                     style="width: 7px;margin-top: -2px;">
+                            </span>
+                            <input type="number" id="need_phone_number" name="phone_number" class="form-control"
+                                   placeholder="请输入联系方式" style="border-radius: 0;border: 0" value="{$phone_number}">
+                            <span class="text-danger" id="need_phone_alert"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="">
+                        <div class="form-group " style="">
+                            <label for="need_content" style="color:#555;margin-left: 3px">
+                                详细描述
+                            </label>
+                            <textarea id="need_content" name="content" class="form-control"
+                                      style="resize: none"></textarea>
+                            <span class="text-danger" id="need_content_alert"></span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div class="text-center">
+                <input type="button" class="btn btn-default" onclick="need_sub()" value="发&nbsp&nbsp&nbsp布"
+                       style="text-align: center;width:96%; color:white;font-size: 1.5em;background-color: #fb3e1e;bottom: 0;">
+            </div>
+        </form>
+    </div>
+    <div id="car_give" class="tab-pane" style="">
+        <form id="form_give" name="form_give" class="" method="post" action="">
+            <input type="hidden" name="category" id="give_category" value="车源">
+            <table class="table table-responsive" style="border: 0">
+                <tr>
+                    <td style="padding: 0">
+                        <div onclick="give_get_area_start()" style="background-color: white;color:black">
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">出发地址</span>
+                                </span>
+                                <span id="give_area_start_html" style="border: 0" class="form-control"></span>
+                                <input type="hidden" id="give_area_start" name="area_start">
+                                <input type="hidden" id="give_area_start_name" name="area_start_name">
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
+                                         style="width: 10px">
+                                </span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0;">
+                        <div class="input-group" style="width: 100%">
+                        <span class="input-group-addon"
+                              style="width: 25%;border-radius: 0;border:0;background-color: white">
+                            <img src="__PUBLIC__/home/images/area_start.png" class="pull-left" style="width: 10px">
+                        </span>
+                            <input id="give_detail_area_start" name="detail_area_start" class="form-control"
+                                   placeholder="请填写详细信息" style=";border-radius: 0;border: 0">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div onclick="give_get_area_end()" style="background-color: white;color:black">
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">目的地址</span>
+                                </span>
+                                <span id="give_area_end_html" style="border: 0" class="form-control"></span>
+                                <input type="hidden" id="give_area_end" name="area_end">
+                                <input type="hidden" id="give_area_end_name" name="area_end_name">
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
+                                         style="width: 10px">
+                                </span>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <img src="__PUBLIC__/home/images/area_end.png" class="pull-left" style="width: 10px">
+                            </span>
+                            <input id="give_detail_area_end" name="detail_area_end" class="form-control"
+                                   placeholder="请填写详细信息" style="border-radius: 0;border: 0">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">装车时间</span>
+                            </span>
+                            <input type="date" id="give_loading_time" name="loading_time" class="form-control"
+                                   placeholder="请输入装车时间" style="border-radius: 0;border: 0">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0;">
+                        <div class="input-group" style="background-color: white;width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">短途调配</span>
+                            </span>
+
+                            <div class="weui_cell_ft">
+                                <input id="give_short_allocate" name="short_allocate" class="weui_switch" style=""
+                                       type="checkbox" checked>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <a data-toggle="collapse" href="#collapse_give_car_type"
+                           style="text-decoration: none;color:black">
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">车辆类型</span>
+                                </span>
+                                <span id="give_car_type_html" style="border: 0" class="form-control"></span>
+                                <span class="input-group-addon"
+                                      style="border-radius: 0;border:0;background-color: white">
+                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
+                                         style="width: 20px">
+                                </span>
+                            </div>
+                        </a>
+
+                        <div id="collapse_give_car_type" class="collapse" role="tablist" aria-labelledby="">
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="give_car_type1" name="car_type" type="radio" style="display: none;"
+                                       class="pull-left" autocomplete="off" value="平板">平 板
+                            </label>
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="give_car_type2" name="car_type" type="radio" style="display: none;"
+                                       class="pull-left" autocomplete="off" value="厢式">厢 式
+                            </label>
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="give_car_type3" name="car_type" type="radio" style="display: none;"
+                                       class="pull-left" autocomplete="off" value="高栏">高 栏
+                            </label>
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="give_car_type4" name="car_type" type="radio" style="display: none;"
+                                       class="pull-left" autocomplete="off" value="仓栅">仓 栅
+                            </label>
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="give_car_type5" name="car_type" type="radio" style="display: none;"
+                                       class="pull-left" autocomplete="off" value="罐式">罐 式
+                            </label>
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="give_car_type6" name="car_type" type="radio" style="display: none;"
+                                       class="pull-left" autocomplete="off" value="自卸">自 卸
+                            </label>
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                                <input id="give_car_type7" name="car_type" type="radio" style="display: none;"
+                                       class="pull-left" autocomplete="off" value="其他">其 他
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">核载吨数</span>
+                            </span>
+                            <input type="number" id="give_car_capacity" name="car_capacity" class="form-control"
+                                   placeholder="请输入吨数" style="border-radius: 0;border: 0">
+                            <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
+                                吨
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center" style="background-color: white">
+                        有效期3天
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;vertical-align: middle;background-color: white">
+                                <span class="pull-left">联系电话</span>
+                                <img src="__PUBLIC__/home/images/necessary.png" class=""
+                                     style="width: 7px;margin-top: -2px;">
+                            </span>
+                            <input id="give_phone_number" name="phone_number" class="form-control" placeholder="请输入联系方式"
+                                   style="border-radius: 0;border: 0" value="{$phone_number}">
+                            <span class="text-danger" id="give_phone_alert"></span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="">
+                        <div class="form-group" style="">
+                            <label for="give_content" style="color:#555;margin-left: 3px">
+                                详细描述
+                            </label>
+                            <textarea id="give_content" name="content" class="form-control"
+                                      style="resize: none"></textarea>
+                            <span class="text-danger" id="give_content_alert"></span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <div class="text-center">
+                <input type="button" class="btn btn-default" onclick="give_sub()" value="发&nbsp&nbsp&nbsp布"
+                       style="text-align: center;width:96%; color:white;font-size: 1.5em;background-color: #fb3e1e;bottom: 0;">
+            </div>
+        </form>
+    </div>
 </div>
 <!--无权限提示模态框-->
 <div class="modal fade" id="hint" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -1185,52 +1185,49 @@
             pushHistory();
         },false);
         console.log(cookie());
-        if (cookie('tag') === '供应') {
-            //发布供货
-            //避免为空或者false
-            //标签选中
-            var a = $('a[name=coal_sell]');
+        if (cookie('tag') === '车源') {
+            //tag 为车源
+            var a = $('a[name=car_give]');
             a.siblings('a').removeClass('weui_bar_item_on');
             a.addClass('weui_bar_item_on');
             a.tab('show');
-            //载入cookie所存数据
-            if (cookie('coal_sell')) {
-                var coal_sell = JSON.parse(cookie('coal_sell'));
-                jQuery.each(coal_sell, function (k, val) {
-                    if (val.name == 'kind') {   //种类
-                        var kind = $(":radio[name=kind][value='" + val.value + "']");
-                        kind.prop("checked", "checked");
-                        kind.parent('label').addClass('myactive');
-                        kind.parent('label').siblings().removeClass('myactive');
-                        $('#sell_kind_html').html(val.value);
-                    }
-                    else if (val.name == 'trait') { //品质
-                        var trait = $(":radio[name=trait][value='" + val.value + "']");
-                        trait.prop("checked", "checked");
-                        trait.parent('label').addClass('myactive');
-                        trait.parent('label').siblings().removeClass('myactive');
-                        $('#sell_trait_html').html(val.value);
-                    }
-                    else if (val.name == 'granularity') {   //粒度
-                        var granularity = $(":radio[name=granularity][value='" + val.value + "']");
-                        granularity.prop("checked", "checked");
-                        granularity.parent('label').addClass('myactive');
-                        granularity.parent('label').siblings().removeClass('myactive');
-                        $('#sell_granularity_html').html(val.value);
-                    }
-                    else if (val.name == 'area_start') { //产地
+            //载入存在cookie中的数据
+            if (cookie('car_give')) {
+                var car_give = JSON.parse(cookie('car_give'));
+                jQuery.each(car_give, function (k, val) {
+                    if (val.name == 'area_start') { //出发地址
 //                        val.value = cookie('area_start');
-//                        $('#sell_area_start_html').html(val.value);
-//                        $('#sell_area_start').val(cookie('area_start_id'));
-                        $('#sell_area_start').val(val.value);
+//                        $('#give_area_start_html').html(val.value);
+////                        $('#give_area_start').val(val.value);
+//                        $('#give_area_start').val(cookie('area_start_id'));
+                        $('#give_area_start').val(val.value);
                     }
-                    else if (val.name == 'area_start_name') { //产地名
-//                        $('#sell_area_start_name').val(cookie('area_start'));
-                        $('#sell_area_start_name').val(val.value);
-                        $('#sell_area_start_html').html(val.value);
+                    else if (val.name == 'area_start_name') { //出发地址名
+//                        $('#give_area_start_name').val(cookie('area_start'));
+                        $('#give_area_start_name').val(val.value);
+                        $('#give_area_start_html').html(val.value);
+                    }
+                    else if (val.name == 'area_end') {  //目的地址
+//                        val.value = cookie('area_end');
+//                        $('#give_area_end_html').html(val.value);
+////                        $('#give_area_end').val(val.value);
+//                        $('#give_area_end').val(cookie('area_end_id'));
+                        $('#give_area_end').val(val.value);
+                    }
+                    else if (val.name == 'area_end_name') { //目的地址名
+//                        $('#give_area_end_name').val(cookie('area_end'));
+                        $('#give_area_end_name').val(val.value);
+                        $('#give_area_end_html').html(val.value);
+                    }
+                    else if (val.name == 'car_type') {  //车辆类型
+                        var car_type = $(":radio[name=car_type][value='" + val.value + "']");
+                        car_type.prop("checked", "checked");
+                        car_type.parent('label').addClass('myactive');
+                        car_type.parent('label').siblings().removeClass('myactive');
+                        $('#give_car_type_html').html(val.value);
                     }
                     else {
-                        $("#sell_" + val.name).val(val.value);
+                        $("#give_" + val.name).val(val.value);
                     }
                 });
             }
@@ -1348,48 +1345,51 @@
             }
         }
         else {
-            //tag 为车源 或默认跳转到此标签
-            var a = $('a[name=car_give]');
+            //发布供货 或默认跳转到此标签
+            //避免为空或者false
+            //标签选中
+            var a = $('a[name=coal_sell]');
             a.siblings('a').removeClass('weui_bar_item_on');
             a.addClass('weui_bar_item_on');
             a.tab('show');
-            //载入存在cookie中的数据
-            if (cookie('car_give')) {
-                var car_give = JSON.parse(cookie('car_give'));
-                jQuery.each(car_give, function (k, val) {
-                    if (val.name == 'area_start') { //出发地址
+            //载入cookie所存数据
+            if (cookie('coal_sell')) {
+                var coal_sell = JSON.parse(cookie('coal_sell'));
+                jQuery.each(coal_sell, function (k, val) {
+                    if (val.name == 'kind') {   //种类
+                        var kind = $(":radio[name=kind][value='" + val.value + "']");
+                        kind.prop("checked", "checked");
+                        kind.parent('label').addClass('myactive');
+                        kind.parent('label').siblings().removeClass('myactive');
+                        $('#sell_kind_html').html(val.value);
+                    }
+                    else if (val.name == 'trait') { //品质
+                        var trait = $(":radio[name=trait][value='" + val.value + "']");
+                        trait.prop("checked", "checked");
+                        trait.parent('label').addClass('myactive');
+                        trait.parent('label').siblings().removeClass('myactive');
+                        $('#sell_trait_html').html(val.value);
+                    }
+                    else if (val.name == 'granularity') {   //粒度
+                        var granularity = $(":radio[name=granularity][value='" + val.value + "']");
+                        granularity.prop("checked", "checked");
+                        granularity.parent('label').addClass('myactive');
+                        granularity.parent('label').siblings().removeClass('myactive');
+                        $('#sell_granularity_html').html(val.value);
+                    }
+                    else if (val.name == 'area_start') { //产地
 //                        val.value = cookie('area_start');
-//                        $('#give_area_start_html').html(val.value);
-////                        $('#give_area_start').val(val.value);
-//                        $('#give_area_start').val(cookie('area_start_id'));
-                        $('#give_area_start').val(val.value);
+//                        $('#sell_area_start_html').html(val.value);
+//                        $('#sell_area_start').val(cookie('area_start_id'));
+                        $('#sell_area_start').val(val.value);
                     }
-                    else if (val.name == 'area_start_name') { //出发地址名
-//                        $('#give_area_start_name').val(cookie('area_start'));
-                        $('#give_area_start_name').val(val.value);
-                        $('#give_area_start_html').html(val.value);
-                    }
-                    else if (val.name == 'area_end') {  //目的地址
-//                        val.value = cookie('area_end');
-//                        $('#give_area_end_html').html(val.value);
-////                        $('#give_area_end').val(val.value);
-//                        $('#give_area_end').val(cookie('area_end_id'));
-                        $('#give_area_end').val(val.value);
-                    }
-                    else if (val.name == 'area_end_name') { //目的地址名
-//                        $('#give_area_end_name').val(cookie('area_end'));
-                        $('#give_area_end_name').val(val.value);
-                        $('#give_area_end_html').html(val.value);
-                    }
-                    else if (val.name == 'car_type') {  //车辆类型
-                        var car_type = $(":radio[name=car_type][value='" + val.value + "']");
-                        car_type.prop("checked", "checked");
-                        car_type.parent('label').addClass('myactive');
-                        car_type.parent('label').siblings().removeClass('myactive');
-                        $('#give_car_type_html').html(val.value);
+                    else if (val.name == 'area_start_name') { //产地名
+//                        $('#sell_area_start_name').val(cookie('area_start'));
+                        $('#sell_area_start_name').val(val.value);
+                        $('#sell_area_start_html').html(val.value);
                     }
                     else {
-                        $("#give_" + val.name).val(val.value);
+                        $("#sell_" + val.name).val(val.value);
                     }
                 });
             }

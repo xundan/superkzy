@@ -16,6 +16,7 @@ class DisplayMessagesController extends Controller
 
     public function showDemo($id)
     {
+
 //        dump($_SESSION['cur_user']);
         if (true) {
 //        if ($_SESSION['cur_user']) {
@@ -29,15 +30,15 @@ class DisplayMessagesController extends Controller
             $id_minus = $this->find_prev($id);
             $id_plus = $this->find_next($id);
             if (!$data) {
-                echo "<br><h1>没有更多数据了。</h1>";
+                echo "<h4>没有更多数据了。</h4>";
             }
 
             if ($id_minus == -1) {
-                echo "<br><h1>已经是第一条了。</h1>";
+                echo "<h4>已经是第一条了。</h4>";
                 $id_minus = $id;
             }
             if ($id_plus == -1) {
-                echo "<br><h1>已经是最后一条了。</h1>";
+                echo "<h4>已经是最后一条了。</h4>";
                 $id_plus = $id;
             }
             $url_prev = U('Views/DisplayMessages/showDemo') . "?id=$id_minus";
@@ -258,6 +259,32 @@ class DisplayMessagesController extends Controller
             }
         }
         return $valid_check;
+    }
+
+    public function freightSubmit(){
+        $subInfo = I('post.', '', 'strip_tags,trim');
+
+        $data['message_id'] = $subInfo['message_id'];
+        $data['area_start_id'] = $subInfo['area_start_id'];
+        $data['area_start_name'] = $subInfo['area_start_name'];
+        $data['area_end_id'] = $subInfo['area_end'];
+        $data['area_end_name'] = $subInfo['area_end_name'];
+        $data['freight_price'] = $subInfo['freight_price'];
+        if($subInfo['area_start_id']){
+            $result = M('ck_districts')->where("id=%d",array($subInfo['area_start_id']))->find();
+            $data['area_start_name'] = $result['name'];
+        }
+        if($subInfo['area_end_id']){
+            $result = M('ck_districts')->where("id=%d",array($subInfo['area_end_id']))->find();
+            $data['area_end_name'] = $result['name'];
+        }
+        $result = M('ck_freight')->add($data);
+        if($result){
+            $returnArr['status'] = 1;
+            $returnArr['msg'] = "发布成功";
+            echo json_encode($returnArr);
+        }else{
+        }
     }
 
 

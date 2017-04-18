@@ -17,6 +17,7 @@ class LogController
         $data['ip'] = $_SERVER['REMOTE_ADDR'];
         $data['page'] = $subInfo['page']?$subInfo['page']:$_SERVER['REQUEST_URI'];
         $data['param'] = $subInfo['param']?$subInfo['param']:null;
+        $data['title'] = $subInfo['title']?$subInfo['title']:null;
         $data['oper'] = $subInfo['oper']?$subInfo['oper']:"browse";
         $data['result'] = $subInfo['result']?$subInfo['result']:"OK";
         $res = M('log')->data($data)->add();

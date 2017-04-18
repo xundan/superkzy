@@ -33,22 +33,24 @@ class MessagesModel extends Model
         array('publish_time', 'time', '1', 'function'),
 //        array('area_start', 'get_area_id', '1', 'function'),
 //        array('area_end', 'get_area_id', '1', 'function'),
-        array('short_allocate', 'short_allocate', '1', 'callback'),
+        array('short_allocate', 'short_allocate', '3', 'callback'),
     );
 
     public function short_allocate()
     {
         $short_allocate = I('post.short_allocate', '', 'strip_tags,trim');
         if ($short_allocate) {
-            return 0;
+            return $short_allocate;
         } else {
-            return 1;
+            return 0;
         }
     }
 
     public function join_content()
     {
         $subInfo = I('post.', '', 'strip_tags,trim');
+        //把id释放掉防止污染content_all
+        unset($subInfo['id']);
         $data['content_all'] = json_encode($subInfo, JSON_UNESCAPED_UNICODE);
         return $data['content_all'];
     }
@@ -91,15 +93,62 @@ class MessagesModel extends Model
         }
     }
 
-    public function updateMessageState($id,$state){
-
-        $msg = D('messages')->where(array("id" => $id))->find();
-        if($msg){
-            $msg['invalid_id'] = $state;
-            $temp = D('messages')->save($msg);
+    public function updateMessageState($id,$state,$refill=false){
+        if($refill){
+            $msg['invalid_id'] = 0;
+            $group_id = $_SESSION['user_info']['group_id'];
+            if ($group_id == null) {
+                $msg['deadline'] = date('Y-m-d H:i:s',strtotime('+3 day'));
+            } else if ($group_id < C('AUTH_USER')) {
+                $msg['deadline'] = date('Y-m-d H:i:s',strtotime('+3 day'));
+            } else if ($group_id >= C('AUTH_USER')) {
+                $msg['deadline'] = date('Y-m-d H:i:s',strtotime('+7 day'));
+            } else{}
+            $temp = D('messages')->where(array("id" => $id))->save($msg);
             if ($temp === false) return 0;
+            return 1;
+        }else{
+            $msg['invalid_id'] = $state;
+            $temp = D('messages')->where(array("id" => $id))->save($msg);
+            if ($temp === false) return 0;
+            return 1;
         }
-        return 1;
+    }
+
+    public function updateMessage(){
+        $subInfo = I('post.', '', 'strip_tags,trim');
+        $data = $subInfo;
+        if (!$subInfo['area_start'] && !$subInfo['area_end'] && !$subInfo['kind'] && !$subInfo['trait'] && !$subInfo['granularity']) {
+            $data['formatted'] = 0;
+        } else {
+            $data['formatted'] = 1;
+        }
+        $Msg = D('messages');
+        if ($Msg->create($data,2)) {
+            $result = $Msg->save();
+            if ($result) {
+                // 成功后返回值是影响行数
+                $returnArr['status'] = 1;
+                $returnArr['msg'] = "修改成功";
+                echo json_encode($returnArr);
+            } elseif($result == 0){
+                // 成功后返回值是影响行数
+                $returnArr['status'] = 2;
+                $returnArr['msg'] = "未进行修改";
+                echo json_encode($returnArr);
+            }else{
+                //todo 数据库错误
+//                $this->display('Common:403');
+            }
+        } else {
+            //验证没通过
+//            exit($Msg->getError());
+            $returnArr['status'] = 2;
+            $returnArr['msg'] = $Msg->getError();
+            echo json_encode($returnArr);
+//            throw new Exception;
+//            $this->display('Common:403');
+        }
     }
 
     public function getMessageAttr($id = 1, $attr = "content")
@@ -115,6 +164,21 @@ class MessagesModel extends Model
         $asc = $cond->getAsc();
         $beginStr = ($page - 1) * $countRow;
         $this->_message = $this->where($cond->getWhereConditions())->where('invalid_id=0')->limit($beginStr, $countRow)->order($asc)->select();
+        return $this->_message;
+    }
+
+    /**
+     * 用来区分发布历史页面,历史界面专用方法
+     * @param WhereConditions $cond
+     * @return string
+     */
+    public function findWhereForPublishHistory(WhereConditions $cond)
+    {
+        $countRow = C("DEFAULT_ROW");//常量
+        $page = $cond->getPage();
+        $asc = $cond->getAsc();
+        $beginStr = ($page - 1) * $countRow;
+        $this->_message = $this->where($cond->getWhereConditions())->where('invalid_id=0 or invalid_id=99')->limit($beginStr, $countRow)->order($asc)->select();
         return $this->_message;
     }
 

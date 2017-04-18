@@ -95,7 +95,8 @@ class PullMessagesController extends RestController
         $where['status'] = 102;
         $where['category']=$category;
         $where['record_time'] = array("BETWEEN", array($date1, $date2));
-        $results = D('message')->field("content")->where($where)->select();
+        $results = D('message')->distinct(true)->field("content")->where($where)->select();
+//        $results = D('message')->field("content")->where($where)->select();
         $results_str = "";
         foreach ($results as $row) {
             $results_str .= $row["content"];
