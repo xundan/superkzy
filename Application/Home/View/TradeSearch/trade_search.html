@@ -37,6 +37,8 @@
         </a>
     </div>
 </div>
+<!--小红点-->
+<div id='remind_filter' style="position: absolute;z-index: 999;right: 0;top:0;width: 10px;height: 10px;background-color: red;border-radius: 50%;display: none"></div>
 <!--我的收藏-->
 <a href="{:U('OwnerOrder/owner_order')}" class="btn btn-default"
    style="background-color: #04bfc6;color: white;right: 0;top: 80%;position: fixed;position: absolute;z-index: 5">我的收藏</a>
@@ -223,6 +225,10 @@
             //求购信息
             $('#myTab a:eq(0)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on');
             cookie('search_tag', '求购');
+        }
+        //载入小红点
+        if(cookie('trade_search_filter_kind') || cookie('trade_search_filter_granularity') || cookie('trade_search_filter_heat_min') || cookie('trade_search_filter_heat_max')){
+            $('#remind_filter').toggle();
         }
         //载入搜索框内容
         if (cookie('search_input')) {

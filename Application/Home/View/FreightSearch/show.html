@@ -16,6 +16,14 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
 </head>
 <body>
+<!--标签隐藏表单提交-->
+<form name="tag_search" id="tag_search">
+    <input type="hidden" name="area_start">
+    <input type="hidden" name="area_start_name">
+    <input type="hidden" name="area_end">
+    <input type="hidden" name="area_end_name">
+    <input type="hidden" name="page" id="page" value="1">
+</form>
 <!--导航标签-->
 <div class="panel-title" style="height: 5%;background-color: white;display: block">
     <div id="myTab" class="row" style="height: 100%;">
@@ -28,7 +36,8 @@
             <div id="area_start" style="display: none"></div>
         </div>
         <div class="text-center col-xs-2" style=";color: black;font-size: 1.2em;padding: 5px 0;">
-            <hr style="border-color: red;width: 10%;margin: 16px 0;display: inline"/>->
+            <!--<hr style="border-color: red;width: 10%;margin: 16px 0;display: inline"/>-->
+            ->
         </div>
         <div class="text-center col-xs-5" style="color: black;font-size: 1.2em;padding: 5px 0;">
             <span id="area_end_html">点击选择</span>
@@ -38,50 +47,60 @@
         </div>
     </div>
 </div>
-<div class="container">
-    <div style=";background-color: white;border-radius: 5px;">
-        <table style="width: 100%">
-            <tr>
-                <td class="help-block pull-right" style="margin: 0">
-                    asadas
-                </td>
-            </tr>
-            <tr>
-                <td style="padding: 0 10px;font-size: 1.2em">
-                    <img src="__PUBLIC__/home/images/area_start_text.png" class="" style="height: 20px">
-                    <span>aaaaa</span>
-                </td>
-            </tr>
-            <tr>
-                <td style="padding: 0 10px;font-size: 1.2em">
-                    <img src="__PUBLIC__/home/images/area_end_text.png" class="" style="height: 20px">
-                    <span>aaaaa</span>
-                </td>
-            </tr>
-        </table>
-        <hr style="margin: 8px 0">
-        <div>
-            <a href="tel:" onclick='event.stopPropagation();' class="btn btn-default" style='text-decoration: none;color: black;border-color: #04bfc6'>
+<!--订单展示栏-->
+<div id="wrapper" style="top: 9px;margin-left: 2.5%;">
+    <div id="scroller">
+        <div id="pullDown">
+            <span class="pullDownIcon" style="float: left"></span>
+            <span class="pullDownLabel" style="margin-left: -48px">下拉刷新...</span>
+        </div>
+        <div class="tab-content">
+            <ul id="search" class="tab-pane active" style="margin-top: 40px;list-style-type: none">
+                <div style=";background-color: white;border-radius: 5px;">
+                    <table style="width: 100%">
+                        <tr>
+                            <td class="help-block pull-right" style="margin: 0">
+                                asadas
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0 10px;font-size: 1.2em">
+                                <img src="__PUBLIC__/home/images/area_start_text.png" class="" style="height: 20px">
+                                <span>aaaaa</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0 10px;font-size: 1.2em">
+                                <img src="__PUBLIC__/home/images/area_end_text.png" class="" style="height: 20px">
+                                <span>aaaaa</span>
+                            </td>
+                        </tr>
+                    </table>
+                    <hr style="margin: 8px 0">
+                    <div>
+                        <a href="tel:" onclick='event.stopPropagation();' class="btn btn-default" style='text-decoration: none;color: black;border-color: #04bfc6'>
                 <span><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 15px">
                     <span style="font-size: 1.2em">拨打电话</span></span>
-            </a>
-            <div class="pull-right" style="padding: 0 3px">
+                        </a>
+                        <div class="pull-right" style="padding: 0 3px">
                 <span>
                     <img src="__PUBLIC__/home/images/useless.png" style="height: 30px" onclick="asd(this)">
                     <span style="color:#fb3e1e;margin-left: -3px" id="useful_count">123</span>
                 </span>
-                <button style="margin-left: 12px" class="btn btn-default" data-toggle="modal" data-target="#feedback">报错</button>
-            </div>
-            <!--<button class="btn btn-default" style="background-color: red;color: blue;"><span class="glyphicon glyphicon-user"></span> asd</button>-->
-            <!--<div style="background: url('__PUBLIC__/home/images/useless.png') no-repeat;"></div>-->
+                            <button style="margin-left: 12px" class="btn btn-default" data-toggle="modal" data-target="#feedback">报错</button>
+                        </div>
+                        <!--<button class="btn btn-default" style="background-color: red;color: blue;"><span class="glyphicon glyphicon-user"></span> asd</button>-->
+                        <!--<div style="background: url('__PUBLIC__/home/images/useless.png') no-repeat;"></div>-->
+                    </div>
+                </div>
+            </ul>
+        </div>
+        <div id="pullUp">
+            <span class="pullUpIcon"></span>
+            <span class="pullUpLabel" style="margin-left: -48px">上拉加载更多...</span>
         </div>
     </div>
-    <!--<div data-toggle="modal" data-target="#feedback" style="text-decoration: none;">-->
-    <!--<p style="margin: 5% 0;font-size: 1em">报错</p>-->
-    <!--</div>-->
 </div>
-
-
 <!-- Modal -->
 <div class="modal fade" id="feedback" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="top:30%">
@@ -104,6 +123,263 @@
     </div>
 </div>
 </body>
+<!--载入读取上次标签-->
+<script>
+    $(function () {
+        var temp_load = cookie('freight_search');
+        var temp_load_obj = JSON.parse(cookie('freight_search'));
+        jQuery.each(temp_load_obj,function(k,val){
+            if(val.name == 'area_start'){
+                if(val.value != '') {
+                    $('input[name=area_start]').val(val.value);
+                }else{}
+            }
+            else if(val.name == 'area_start_name'){
+                if(val.value != ''){
+                    $('input[name=area_start_name]').val(val.value);
+                    $('#area_start_html').html(val.value);
+                }else{}
+            }
+            else if(val.name == 'area_end'){
+                if(val.value != ''){
+                    $('input[name=area_end]').val(val.value);
+                }else{}
+            }
+            else if(val.name == 'area_end_name'){
+                if(val.value != ''){
+                    $('input[name=area_end_name]').val(val.value);
+                    $('#area_end_html').html(val.value);
+                }
+            }
+        });
+        console.log('form');
+        console.log(JSON.stringify($('#tag_search').serializeArray()));
+        setTimeout(pullDownAction2,200);
+    });
+//    function pullDownAction2() {
+//        console.log('auto-down');
+//        var area_start = $('input[name=area_start]').val();
+//        var area_start_name = $('input[name=area_start_name]').val();
+//        var area_end = $('input[name=area_end]').val();
+//        var area_end_name = $('input[name=area_end_name]').val();
+//        $.ajax({
+//            type: "post",
+//            url: "{:U('FreightSearch/show')}",
+//            data: {
+//                isAjax: 1,
+//                area_start:area_start,
+//                area_start_name:area_start_name,
+//                area_end:area_end,
+//                area_end_name:area_end_name
+//            },
+//            success: function (data) {
+//                console.log('success');
+//                var jsonObj = eval("(" + data + ")");
+//                console.log(jsonObj);
+//                if (jsonObj.msg) {
+//                    $('#page').val(1);
+//                    $('#where_cond_json').html(jsonObj.where_cond_json);
+//                    $('#stage').html(jsonObj.stage);
+//                }
+//                else {
+//                }
+//                myScroll.refresh();
+//                refresh_hl();
+//            }
+//        });
+//    }
+</script>
+<!--点击地址选择-->
+<script>
+    //起始地
+    $('#myTab div:eq(0)').click(function () {
+        var goto_url = "{:U('areaSearch/area_search')}";
+        var current_url = window.location.href;
+        cookie('start_or_end', 'start');
+        cookie('last_url', current_url);
+        //填写表单数据
+        //更新页面cookie
+        cookie('freight_search',JSON.stringify($('#tag_search').serializeArray()));
+        //告诉area_search要改什么
+        var source = {name:'freight_search',value:cookie('freight_search')};
+        cookie('source',JSON.stringify(source));
+        //地址跳转
+        window.location.href = goto_url;
+    });
+    //目的地
+    $('#myTab a:eq(2)').click(function () {
+        var goto_url = "{:U('areaSearch/area_search')}";
+        var current_url = window.location.href;
+        cookie('start_or_end', 'end');
+        cookie('last_url', current_url);
+        //填写表单数据
+        //更新页面cookie
+        cookie('freight_search',JSON.stringify($('#tag_search').serializeArray()));
+        //告诉area_search要改什么
+        var source = {name:'freight_search',value:cookie('freight_search')};
+        cookie('source',JSON.stringify(source));
+        //地址跳转
+        window.location.href = goto_url;
+    })
+</script>
+<!--滚动功能-->
+<script>
+    var myScroll, pullDownEl, pullDownOffset, pullUpEl, pullUpOffset;
+    var time_now, update_time;
+    /**下拉刷新 （自定义实现此方法）
+     *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
+     */
+    function pullDownAction() {
+        console.log('down');
+        var area_start = $('input[name=area_start]').val();
+        var area_start_name = $('input[name=area_start_name]').val();
+        var area_end = $('input[name=area_end]').val();
+        var area_end_name = $('input[name=area_end_name]').val();
+        $.ajax({
+            type: "post",
+            url: "{:U('FreightSearch/show')}",
+            data: {
+                isAjax: 1,
+                area_start:area_start,
+                area_start_name:area_start_name,
+                area_end:area_end,
+                area_end_name:area_end_name
+            },
+            success: function (data) {
+                console.log('success');
+                myScroll.refresh();
+                refresh_hl();
+            }
+        });
+        myScroll.refresh();//数据加载完成后，调用界面更新方法  Remember to refresh when contents are loaded (ie: on ajax completion)
+    }
+    /**滚动翻页 （自定义实现此方法）
+     *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
+     */
+    function pullUpAction() {
+        console.log('up');
+        var a = $('#tag_search').serialize();
+        console.log(a);
+        var page = $('#page').val();
+        var request_page = parseInt(page) + 1;
+        var where_cond_json = $('#where_cond_json').html().trim();
+        var stage = $('#stage').html().trim();
+        console.log(where_cond_json);
+        console.log(stage);
+        console.log(page);
+        console.log(request_page);
+        console.log(select_category);
+        //==========================================
+        $.ajax({
+            type: "post",
+            url: "{:U('FreightSearch/show_more')}",
+            data: {
+                page: request_page,
+                where_cond_json: where_cond_json,
+                stage: stage
+            },
+            success: function (data) {
+                console.log('success');
+                myScroll.refresh();
+                refresh_hl();
+            }
+        });
+        //============================================
+        myScroll.refresh(); // 数据加载完成后，调用界面更新方法 Remember to refresh when contents are loaded (ie: on ajax completion)
+    }
+    /**
+     * 初始化iScroll控件
+     */
+    function loaded() {
+        pullDownEl = document.getElementById('pullDown');
+        pullDownOffset = pullDownEl.offsetHeight;
+        pullUpEl = document.getElementById('pullUp');
+        pullUpOffset = pullUpEl.offsetHeight;
+//        console.log(pullDownOffset);
+//        console.log(pullUpOffset);
+        setTimeout(function () {
+            myScroll = new iScroll('wrapper', {
+//        scrollbarClass: 'myScrollbar', /* 重要样式 */
+                useTransition: true,
+                topOffset: pullDownOffset,
+//        probeType: 3,
+//        mouseWheel: false,
+                scrollbars: true,
+//                vScrollbar:false,
+//        disableMouse: false,
+//        disablePointer: false,
+                //点击事件
+                click: false,
+                taps: false,
+//        tap: true,
+                preventDefault: false,//（把这句加上去哦）
+                preventDefaultException: {tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|A)$/},
+                onRefresh: function () {
+                    console.log('refresh');
+                    if (pullDownEl.className.match('loading')) {
+                        pullDownEl.className = '';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+//                pullDownEl.querySelector('.pullDownLabel').innerHTML = '数据更新时间：' + update_time+'下拉刷新';
+                    } else if (pullUpEl.className.match('loading')) {
+                        pullUpEl.className = '';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+                    }
+                    document.getElementById("pullUp").style.display = "none";
+                    time_now = new Date();
+                    update_time = time_now.toLocaleString();
+//            document.getElementById("show").innerHTML="onRefresh: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
+
+                },
+                onScrollMove: function () {
+//            document.getElementById("show").innerHTML="onScrollMove: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
+                    if (this.y > 0) {
+                        pullDownEl.className = 'flip';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...</br>' + '最后更新时间：' + update_time;
+                        this.minScrollY = 0;
+                    }
+                    if (this.y < 0 && pullDownEl.className.match('flip')) {
+                        pullDownEl.className = '';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+                        this.minScrollY = -pullDownOffset;
+                    }
+
+                    if (this.scrollerH < this.wrapperH && this.y < (this.minScrollY - pullUpOffset) || this.scrollerH > this.wrapperH && this.y < (this.maxScrollY - pullUpOffset)) {
+                        document.getElementById("pullUp").style.display = "";
+                        pullUpEl.className = 'flip';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...</br>' + '最后更新时间：' + update_time;
+                    }
+                    if (this.scrollerH < this.wrapperH && this.y > (this.minScrollY - pullUpOffset) && pullUpEl.className.match('flip') || this.scrollerH > this.wrapperH && this.y > (this.maxScrollY - pullUpOffset) && pullUpEl.className.match('flip')) {
+                        document.getElementById("pullUp").style.display = "none";
+                        pullUpEl.className = '';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+                    }
+                },
+                onScrollEnd: function () {
+//            document.getElementById("show").innerHTML="onScrollEnd: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
+                    if (pullDownEl.className.match('flip')) {
+                        pullDownEl.className = 'loading';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '加载中...';
+                        pullDownAction(); // Execute custom function (ajax call?)
+                    } else if (pullUpEl.className.match('flip')) {
+                        pullUpEl.className = 'loading';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载中...';
+                        pullUpAction(); // Execute custom function (ajax call?)
+                    }
+                }
+            });
+            console.dir(myScroll.options);
+        }, 100);
+//    setTimeout(function(){
+//        document.getElementById('wrapper').style.left = '0';
+//    },800);
+    }
+    //初始化绑定iScroll控件
+    document.addEventListener('touchmove', function (e) {
+        e.preventDefault();
+    }, false);
+    document.addEventListener('DOMContentLoaded', loaded, false);
+    //    window.onload = loaded()
+</script>
 <script>
     function asd(obj) {
         var count = parseInt($(obj).siblings('span').html());
@@ -129,5 +405,42 @@
             $(obj).siblings('span').html(count);
             console.log(count);
         }
+    }
+</script>
+<!--高亮-->
+<script>
+
+    function refresh_hl() {
+        var keywords = [];
+
+        var str = $('input[name=area_start_name]').val();
+        keywords.push(str ? str : '');
+        str = $('input[name=area_end_name]').val();
+        keywords.push(str ? str : '');
+        show_highlight(keywords);
+    }
+
+    function replace_with_highlight(str, keyword){
+        if (keyword=='') return str;
+        keyword=keyword.replace(new RegExp("市|区|县|镇",'gm'),'');
+        return str.replace(new RegExp(keyword,'gm'),'<span style="background-color: orange; font-weight: bold">'+keyword+"</span>");
+    }
+
+    function show_highlight(keywords){
+        function show_hl_by_element(element){
+            var str = element.innerHTML;
+            element.innerHTML = keywords.reduce(replace_with_highlight,str);
+        }
+        collectionToArray(document.getElementsByClassName('highlight')).map(show_hl_by_element);
+//    $('.highlight').map(show_hl_by_element);
+
+    }
+
+    function collectionToArray(collection){
+        var ary = [];
+        for(var i=0, len = collection.length; i < len; i++){
+            ary.push(collection[i]);
+        }
+        return ary;
     }
 </script>
