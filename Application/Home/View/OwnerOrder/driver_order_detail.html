@@ -259,6 +259,7 @@
                 success: function (data) {
                     if (data) {
                         $(obj).html('收藏');
+                        ck_log("collect","撤销收藏-"+id);
                     } else {
                     }
                 }
@@ -272,6 +273,7 @@
                 success: function (data) {
                     if (data) {
                         $(obj).html('撤销收藏');
+                        ck_log("collect","收藏-"+id);
                     } else {
                     }
                 }
@@ -286,6 +288,7 @@
     }
 
     function delete_message(obj,id){
+        ck_log("click",'删除{$message["category"]}消息{$message["id"]}');
         var url="{:U('OwnerOrder/del_message')}";
         $.ajax({
             type: "post",
@@ -350,9 +353,11 @@
             imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
             success: function () {
                 // 用户确认分享后执行的回调函数
+                ck_log("share",'分享{$message["category"]}消息{$message["id"]}至朋友圈');
             },
             cancel: function () {
                 // 用户取消分享后执行的回调函数
+                ck_log("share",'取消分享{$message["category"]}消息{$message["id"]}至朋友圈');
             }
         });
 
@@ -369,9 +374,11 @@
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function () {
                 // 用户确认分享后执行的回调函数
+                ck_log("share",'分享{$message["category"]}消息{$message["id"]}给好友');
             },
             cancel: function () {
                 // 用户取消分享后执行的回调函数
+                ck_log("share",'取消分享{$message["category"]}消息{$message["id"]}给好友');
             }
         });
     });
@@ -400,6 +407,7 @@
 <script>
     function modify(){
         cookie('car_need_modify', JSON.stringify($('#form_need_modify').serializeArray()));
+        ck_log("click",'修改{$message["category"]}消息{$message["id"]}');
         console.log(cookie('car_need_modify'));
         //地址跳转
         window.location.href = "{:U('OwnerPublish/order_car_need_modify')}";

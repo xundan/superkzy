@@ -1,19 +1,22 @@
 // 需要jquery
 
-function ck_log(operation,result){
+function ck_log(operation,param){
     // 参数可以不写
+
     if (!operation) operation = "browse";
-    if (!result) result="OK";
+    var result="OK";
     var page = window.location.pathname;
-    var param = window.location.search;
+    if (!param) param = window.location.search;
+    var title = $("title").html();
     var subData = {
         "page":page,
         "param":param,
+        "title":title,
         "oper":operation,
         "result":result
     };
-    //http://localhost/superkzy/index.php/Home/Feedback/{:U('Log/fetch')} 404 (Not Found)
-    var url = "../Log/fetch";
+    //var url = "http://localhost/superkzy/index.php/Home/Log/fetch";
+    var url = "http://www.kuaimei56.com/index.php/Home/Log/fetch";
     $.ajax({
         type:"post",
         url:url,

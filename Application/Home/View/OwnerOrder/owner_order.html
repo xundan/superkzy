@@ -138,6 +138,7 @@
         console.log('down');
         location.reload();
         myScroll.refresh();//数据加载完成后，调用界面更新方法  Remember to refresh when contents are loaded (ie: on ajax completion)
+        ck_log("scroll","下滑-刷新");
 //    },1000);  // <-- Simulate network congestion, remove setTimeout from production!
     }
     /**滚动翻页 （自定义实现此方法）
@@ -189,6 +190,7 @@
                     else {
                     }
                     myScroll.refresh();
+                    ck_log("scroll","上滑-加载");
                 }
             });
             //============================================
@@ -304,6 +306,7 @@
                 success: function (data) {
                     if (data) {
                         $(obj).html('收藏');
+                        ck_log("collect","撤销收藏-"+id);
                     } else {}
                 }
             });
@@ -316,6 +319,7 @@
                 success: function (data) {
                     if (data) {
                         $(obj).html('撤销收藏');
+                        ck_log("collect","收藏-"+id);
                     } else {
                     }
                 }

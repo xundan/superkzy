@@ -53,6 +53,7 @@
 
 <script>
     function feedback_sub(){
+        ck_log("click","点击提交");
         var temp = $('textarea[name=feedback]').val().trim();
         if(temp == ''){
             showToast('没有输入');

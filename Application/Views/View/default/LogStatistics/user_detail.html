@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <title>日志查看</title>
+</head>
+<body>
+<table class="table table-hover">
+
+    <tr>
+        <td>序号</td>
+        <td>用户</td>
+        <td>ip</td>
+        <td>页面</td>
+        <td>操作对象</td>
+        <td>参数</td>
+        <td>操作方式</td>
+        <td>操作结果</td>
+        <td>时间</td>
+    </tr>
+    <volist name="details" id="vo">
+        <tr class="success">
+            <td>{$i}</td>
+            <td>{$vo.uid}</td>
+            <td>{$vo.ip}</td>
+            <td>{$vo.title}</td>
+            <td>{$vo.page}</td>
+            <td>{$vo.param}</td>
+            <td>{$vo.oper}</td>
+            <td>{$vo.result}</td>
+            <td>{$vo.now}</td>
+        </tr>
+    </volist>
+</table>
+</body>
+</html>

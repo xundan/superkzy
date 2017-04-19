@@ -6,7 +6,7 @@
           content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
     <!--<link rel="icon" href="../../favicon.ico">-->
-    <title>我的个人主页</title>
+    <title>我的个人主页（货主）</title>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
@@ -415,11 +415,13 @@
 
     function submit_basic_form() {
         cookie('form_basic_data', null);
+        ck_log("submit","货主-提交个人基本信息");
         document.getElementById('form_owner_basic_data').submit();
     }
 
     function submit_exp_form() {
         cookie('form_exp_data', null);
+        ck_log("submit","货主-提交个人职业信息");
         document.getElementById('form_owner_work_exp').submit();
     }
 </script>
@@ -462,9 +464,11 @@
             imgUrl: "{$user_owner['heading_url']}", // 分享图标
             success: function () {
                 // 用户确认分享后执行的回调函数
+                ck_log("share","货主-分享自己的页面至朋友圈");
             },
             cancel: function () {
                 // 用户取消分享后执行的回调函数
+                ck_log("share","货主-取消分享自己的页面至朋友圈");
             }
         });
 
@@ -478,9 +482,11 @@
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function () {
                 // 用户确认分享后执行的回调函数
+                ck_log("share","货主-分享自己的页面给好友");
             },
             cancel: function () {
                 // 用户取消分享后执行的回调函数
+                ck_log("share","货主-取消分享自己的页面给好友");
             }
         });
     });

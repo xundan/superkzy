@@ -1401,6 +1401,7 @@
 <script>
     //车源
     function give_get_area_start() {
+        ck_log("click","车源-选择起始地");
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
         cookie('tag', '车源');
@@ -1421,6 +1422,7 @@
         window.location.href = goto_url;
     }
     function give_get_area_end() {
+        ck_log("click","车源-选择终止地");
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
         cookie('tag', '车源');
@@ -1443,6 +1445,7 @@
 
     //找车
     function need_get_area_start() {
+        ck_log("click","找车-选择起始地");
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
         cookie('tag', '找车');
@@ -1463,6 +1466,7 @@
         window.location.href = goto_url;
     }
     function need_get_area_end() {
+        ck_log("click","找车-选择终止地");
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
         cookie('tag', '找车');
@@ -1485,6 +1489,7 @@
 
     //供应
     function sell_get_area_start() {
+        ck_log("click","供应-选择起始地");
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
         cookie('tag', '供应');
@@ -1507,6 +1512,7 @@
 
     //求购
     function buy_get_area_start() {
+        ck_log("click","求购-选择地址");
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
         cookie('tag', '求购');
@@ -1541,6 +1547,7 @@
         $('#give_content_alert').html('');
     });
     function give_sub() {
+        ck_log("submit","车源-发布");
         var short_allocate = $('input[name=short_allocate]:checked').val();
         console.log(short_allocate);
         //获取表单数据
@@ -1607,6 +1614,7 @@
     });
     function need_sub() {
         //获取表单数据
+        ck_log("submit","求车-发布");
         var car_need = JSON.stringify($('#form_need').serializeArray());
 //        var area_start = $('extarea[name=need_content]').val().trim();
 //        //表单数据存入cookie便于加载时显示
@@ -1679,6 +1687,7 @@
         $('#sell_content_alert').html('');
     });
     function sell_sub() {
+        ck_log("submit","供应-发布");
         //获取表单数据
         var coal_sell = JSON.stringify($('#form_sell').serializeArray());
         //表单数据存入cookie便于加载时显示
@@ -1742,6 +1751,7 @@
         $('#buy_content_alert').html('');
     });
     function buy_sub() {
+        ck_log("submit","求购-发布");
         //获取表单数据
         var coal_buy = JSON.stringify($('#form_buy').serializeArray());
         //表单数据存入cookie便于加载时显示

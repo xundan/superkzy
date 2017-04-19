@@ -228,6 +228,7 @@
 <!--重置按钮重置选中样式-->
 <script>
     $('#filter_reset').click(function () {
+        ck_log("filter","重置");
         $('input[type=checkbox]:checked').parent('label').removeClass('myactive');
     });
 </script>
@@ -263,11 +264,11 @@
         if (cookie('search_input')) {
             $('input[name=search_input]').val(cookie('search_input'));
         }
-        console.log($('#filter').serialize());
+        // 写入分析日志
+        ck_log("filter","["+filter_kind+","+filter_granularity+","+filter_heat_min+","+filter_heat_max+"]");
         //提交
         document.filter.method = "post";
         document.filter.action = "{:U('TradeSearch/trade_search')}";
-//        document.filter.action = "{:U('TradeSearch/test_input')}";
         document.filter.submit();
     });
 </script>

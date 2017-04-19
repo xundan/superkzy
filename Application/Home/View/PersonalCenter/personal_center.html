@@ -165,11 +165,12 @@
 //        window.history.pushState(state, "title", "#");
 //    };
     $('#identify').children('li').click(function () {
+        ck_log("点击","认证|积分|评级");
         showToast2('该功能将在后续版本上线,敬请期待!');
         return false;
     });
     $('#role_change').click(function(){
-        console.log(123);
+        ck_log("click","切换身份");
         $.ajax({
             type:"post",
             url:"{:U('Feedback/feedback_action')}",
@@ -177,15 +178,9 @@
             success:function(data){
                 var jsonObj=eval("("+data+")");
 //                showToast(jsonObj.msg);
-            },
-            error:function(XMLHttpRequest,textStatus,errorThrown){
-//                console.log(123456);
-//                console.log(XMLHttpRequest);
-//                console.log(textStatus);
-//                console.log(errorThrown);
-                alert('不可棱！！');
             }
         });
+    });
     });
 
 </script>

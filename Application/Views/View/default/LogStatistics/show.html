@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <title>日志查看</title>
+</head>
+<body>
+<table class="table table-hover">
+
+    <tr>
+
+        <td>序号</td>
+        <td>用户</td>
+        <td>操作次数</td>
+        <td>最后操作时间</td>
+        <td>详细</td>
+    </tr>
+    <volist name="res" id="vo">
+        <tr class="success">
+            <td>{$i}</td>
+            <td>{$vo.uid}</td>
+            <td>{$vo.b}</td>
+            <td>{$vo.a}</td>
+            <td><a href="{:U('Views/LogStatistics/user_detail')}?uid={$vo.uid}&date={$date}">详细</a></td>
+        </tr>
+    </volist>
+    <!--<tr class="success">-->
+        <!--<td>TB - Monthly</td>-->
+        <!--<td>01/04/2012</td>-->
+        <!--<td>Approved</td>-->
+        <!--<td><a>详细</a></td>-->
+    <!--</tr>-->
+</table>
+</body>
+</html>

@@ -141,6 +141,7 @@
 <script>
     //点击运输订单标签
     $('#myTab a:eq(0)').click(function () {
+        ck_log("click","点击运输订单标签");
         //存入所选标签入cookie
         cookie('search_tag', 'transport');
         $('input[name=select_category]').val(cookie('search_tag'));
@@ -154,6 +155,7 @@
 
     //点击供应信息标签
     $('#myTab a:eq(1)').click(function () {
+        ck_log("click","点击供应信息标签");
         //存入所选标签入cookie
         cookie('search_tag', 'trade');
         $('input[name=select_category]').val(cookie('search_tag'));
@@ -173,7 +175,7 @@
      *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
      */
     function pullDownAction() {
-        console.log('down');
+        ck_log("scroll","下滑-刷新");
         location.reload();
         myScroll.refresh();//数据加载完成后，调用界面更新方法  Remember to refresh when contents are loaded (ie: on ajax completion)
 //    },1000);  // <-- Simulate network congestion, remove setTimeout from production!
@@ -182,7 +184,7 @@
      *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
      */
     function pullUpAction() {
-        console.log('up');
+        ck_log("scroll","上滑-加载");
         var page = $('#page').val();
         var request_page = parseInt(page) + 1;
         var select_category = cookie('search_tag');
