@@ -33,6 +33,7 @@ class LogStatisticsController extends Controller
         $Logs = D("Log");
         $details = $Logs->detail_by_uid($uid,$date);
         $this->assign("details",$details);
+        $this->assign('user_info',$details['user']);
         $this->display();
     }
 }

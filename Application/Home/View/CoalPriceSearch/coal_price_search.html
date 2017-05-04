@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <title>煤价查询</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
+    <!--<script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>-->
+</head>
+<body style="background-color: #efeff4">
+<!--导航标签-->
+<div class="panel-title" style=";margin:0;padding: 0;background-color: white;display: block">
+    <div id="myTab" class="weui_navbar" style=";margin-bottom: 0;">
+        <a href="#all" data-toggle="tab" class="weui_navbar_item weui_bar_item_on"
+           style="color: black;text-decoration: none;font-size: 1.2em;width:50%">
+            <span>全&emsp;部</span>
+        </a>
+        <a href="#search" class="text-center" data-toggle="tab"
+           style="word-wrap:break-word;table-layout:fixed;color: black;text-decoration: none;font-size: 1em;width:50%;padding: 5px 0;height:42px">
+            <img src="__PUBLIC__/home/images/area_start.png" class="" style="height: 20px">
+            <span id="refinery_name_html">点击选择</span>
+        </a>
+    </div>
+</div>
+<!--标签隐藏表单提交-->
+<form name="tag_search" id="tag_search">
+    <input type="hidden" name="select_category">
+    <input type="hidden" name="refinery_name">
+    <input type="hidden" name="page" id="page" value="1">
+</form>
+<!--订单展示栏-->
+<div id="wrapper" style="top: 52px;margin-left: 2.5%;">
+    <div id="scroller">
+        <div id="pullDown">
+            <span class="pullDownIcon" style="float: left"></span>
+            <span class="pullDownLabel" style="margin-left: -48px">下拉刷新...</span>
+        </div>
+        <div class="tab-content">
+            <ul id="all" class="tab-pane active" style=";list-style-type: none">
+                <volist name="message" id="data">
+                    <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
+                        <div class="weui_media_box weui_media_appmsg"
+                             style="margin: 0;padding-left: 0;padding-right: 0">
+                            <div class="weui_media_bd" style="margin-left: 20px">
+                                <p class="weui_media_desc">
+                                    <span>{$data.area_name}</span> <span style="font-size: 1.5em">{$data.refinery_name}</span>
+                                </p>
+                                <h2 class="weui_media_title" style="color: red">
+                                    {$data.supply_company}
+                                </h2>
+                            </div>
+                            <div class="weui_media_bd text-center" style="">
+                                <a href="tel:{$data.phone_number}" onclick='event.stopPropagation();' class=""
+                                   style='text-decoration: none;color: black'>
+                                    <h4>
+                                        <img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">
+                                        <span style="">拨打电话</span>
+                                    </h4>
+                                </a>
+                                <div>
+                                    <a href="{:U('CoalPriceSearch/coal_price_detail',array('message_id'=>$data['message_id']))}" class="btn btn-xs btn-default" style="width: 70%;border-color: #04bfc6;color:
+                                    #04bfc6">详细指标</a>
+                                </div>
+                            </div>
+                        </div>
+                        <hr style="margin-top: 0;margin-bottom: 8px"/>
+                        <table class="table table-condensed" style="margin: 0;table-layout: fixed">
+                            <thead>
+                            <tr>
+                                <th class="text-center" style="border: none;">类别</th>
+                                <th class="text-center" style="border: none;">高位热值</th>
+                                <th class="text-center" style="border: none;">价格</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <volist name="data['content']" id="vo">
+                                    <tr>
+                                        <td class="text-center" style="border: none;">{$vo.kind_name}</td>
+                                        <td class="text-center" style="border: none;">
+                                            <volist name="vo['detailed_index']" id="val">
+                                                <if condition="$val.index_name eq '高位热值'">
+                                                    {$val.index_value}
+                                                </if>
+                                            </volist>
+                                        </td>
+                                        <td class="text-center" style="border: none;">{$vo.price}</td>
+                                    </tr>
+                                </volist>
+                            </tbody>
+                        </table>
+                        <span class="pull-right help-block" style="font-size: 12px">发布时间:{$data['update_time']|substr=0,10}</span>
+                    </li>
+                </volist>
+                <span id="insert_point"></span>
+            </ul>
+        <ul id="search" class="tab-pane" style=";list-style-type: none">
+            <volist name="message" id="data">
+                <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
+                    <div class="weui_media_box weui_media_appmsg"
+                         style="margin: 0;padding-left: 0;padding-right: 0">
+                        <div class="weui_media_bd" style="margin-left: 20px">
+                            <p class="weui_media_desc">
+                                <span>{$data.area_name}</span> <span style="font-size: 1.5em">{$data.refinery_name}</span>
+                            </p>
+                            <h2 class="weui_media_title" style="color: red">
+                                {$data.supply_company}
+                            </h2>
+                        </div>
+                        <div class="weui_media_bd text-center" style="">
+                            <a href="tel:{$data.phone_number}" onclick='event.stopPropagation();' class=""
+                               style='text-decoration: none;color: black'>
+                                <h4>
+                                    <img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">
+                                    <span style="">拨打电话</span>
+                                </h4>
+                            </a>
+                            <div>
+                                <a href="{:U('CoalPriceSearch/coal_price_detail',array('message_id'=>$data['message_id']))}" class="btn btn-xs btn-default" style="width: 70%;border-color: #04bfc6;color:
+                                    #04bfc6">详细指标</a>
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="margin-top: 0;margin-bottom: 8px"/>
+                    <table class="table table-condensed" style="margin: 0;table-layout: fixed">
+                        <thead>
+                        <tr>
+                            <th class="text-center" style="border: none;">类别</th>
+                            <th class="text-center" style="border: none;">高位热值</th>
+                            <th class="text-center" style="border: none;">价格</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <volist name="data['content']" id="vo">
+                            <tr>
+                                <td class="text-center" style="border: none;">{$vo.kind_name}</td>
+                                <td class="text-center" style="border: none;">
+                                    <volist name="vo['detailed_index']" id="val">
+                                        <if condition="$val.index_name eq '高位热值'">
+                                            {$val.index_value}
+                                        </if>
+                                    </volist>
+                                </td>
+                                <td class="text-center" style="border: none;">{$vo.price}</td>
+                            </tr>
+                        </volist>
+                        </tbody>
+                    </table>
+                    <span class="pull-right help-block" style="font-size: 12px">发布时间:{$data['update_time']|substr=0,10}</span>
+                </li>
+            </volist>
+        </ul>
+    </div>
+    <div id="pullUp">
+        <span class="pullUpIcon"></span>
+        <span class="pullUpLabel" style="margin-left: -48px">上拉加载更多...</span>
+    </div>
+</div>
+</div>
+<span id="cloneObj" style="display: none;">
+                    <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
+                        <div class="weui_media_box weui_media_appmsg"
+                             style="margin: 0;padding-left: 0;padding-right: 0">
+                            <div class="weui_media_bd" style="margin-left: 20px">
+                                <p class="weui_media_desc">
+                                    <span>{$data.area_name}</span> <span style="font-size: 1.5em">{$data.refinery_name}</span>
+                                </p>
+                                <h2 class="weui_media_title" style="color: red">
+                                    {$data.refinery_name}
+                                </h2>
+                            </div>
+                            <div class="weui_media_bd text-center" style="">
+                                <a href="tel:{$data.phone_number}" onclick='event.stopPropagation();' class=""
+                                   style='text-decoration: none;color: black'>
+                                    <h4>
+                                        <img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">
+                                        <span style="">拨打电话</span>
+                                    </h4>
+                                </a>
+                                <div>
+                                    <a class="btn btn-xs btn-default" style="width: 70%;border-color: #04bfc6;color:
+                                    #04bfc6">详细指标</a>
+                                </div>
+                            </div>
+                        </div>
+                        <hr style="margin-top: 0;margin-bottom: 8px"/>
+                        <table class="table table-condensed" style="margin: 0;table-layout: fixed">
+                            <thead>
+                            <tr>
+                                <th class="text-center" style="border: none;">类别</th>
+                                <th class="text-center" style="border: none;">高位热值</th>
+                                <th class="text-center" style="border: none;">价格</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <volist name="data['content']" id="vo">
+                                <tr>
+                                    <td class="text-center" style="border: none;">{$vo.kind_name}</td>
+                                    <td class="text-center" style="border: none;">
+                                        <volist name="vo['detailed_index']" id="val">
+                                            <if condition="$val.index_name eq '高位热值'">
+                                                {$val.index_value}
+                                            </if>
+                                        </volist>
+                                    </td>
+                                    <td class="text-center" style="border: none;">{$vo.price}</td>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                        <span class="pull-right help-block" style="font-size: 12px">发布时间:{$data['update_time']|substr=0,10}</span>
+                    </li>
+                </span>
+<?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
+</body>
+<!--导航功能-->
+<script>
+    $('#myTab a').eq(0).click(function (e) {
+        $(this).siblings('a').removeClass('weui_bar_item_on');
+        $(this).addClass('weui_bar_item_on');
+        $(this).tab('show')
+    })
+</script>
+<!--载入读取上次标签-->
+<script>
+    $(function () {
+        var temp_load = cookie('coal_price_search');
+        var temp_load_obj = JSON.parse(cookie('coal_price_search'));
+        jQuery.each(temp_load_obj, function (k, val) {
+            if (val.name == 'select_category') {
+                $('input[name=select_category]').val(val.value);
+            }
+            else if (val.name == 'area_start') {
+                if (val.value != '') {
+                    $('input[name=area_start]').val(val.value);
+                } else {
+                }
+            }
+            else if (val.name == 'area_start_name') {
+                if (val.value != '') {
+                    $('input[name=area_start_name]').val(val.value);
+                    $('#area_start_html').html(val.value);
+                } else {
+                }
+            }
+        });
+        console.log('form');
+        console.log(JSON.stringify($('#tag_search').serializeArray()));
+        if ($('input[name=select_category]').val() == 'search') {
+            //信息查询
+            $('#myTab a:eq(0)').removeClass('weui_bar_item_on').siblings('a').addClass('weui_bar_item_on weui_bar_item_on_extra').tab('show');
+            $('#refinery_name_html').html(cookie('refinery_name'));
+        }
+        else {
+            //全部信息
+            $('input[name=select_category]').val('all');
+            $('#myTab a:eq(0)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on weui_bar_item_on_extra');
+        }
+    });
+</script>
+<!--点击标签查询-->
+<script>
+    //点击全部标签
+    $('#myTab a:eq(0)').click(function () {
+        //填写表单数据
+        $('input[name=select_category]').val('all');
+        $('input[name=area_name]').val('');
+        //更新页面cookie
+        cookie('coal_price_search', JSON.stringify($('#tag_search').serializeArray()));
+        //提交表单
+        document.tag_search.method = 'post';
+        document.tag_search.action = "{:U('CoalPriceSearch/coal_price_search')}";
+        document.tag_search.submit();
+    });
+    //点击地址选择标签
+    //起始地
+    $('#myTab a:eq(1)').click(function () {
+        //填写表单数据
+        $('input[name=select_category]').val('search');
+        //更新页面cookie
+        cookie('coal_price_search', JSON.stringify($('#tag_search').serializeArray()));
+        //告诉area_search要改什么
+        var source = {name: 'coal_price_search', value: cookie('coal_price_search')};
+        cookie('source', JSON.stringify(source));
+        //地址跳转
+        window.location.href = "{:U('CoalPriceSearch/refinery_search')}";
+    });
+</script>
+<!--滚动功能-->
+<script>
+    var myScroll, pullDownEl, pullDownOffset, pullUpEl, pullUpOffset;
+    var time_now, update_time;
+    /**下拉刷新 （自定义实现此方法）
+     *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
+     */
+    function pullDownAction() {
+        console.log('down');
+//        location.reload();
+        var select_category = $('input[name=select_category]').val();
+        var refinery_name = $('input[name=refinery_name]').val();
+        $.ajax({
+            type: "post",
+            url: "{:U('CoalPriceSearch/coal_price_search')}",
+            data: {
+                isAjax:1,
+                select_category: select_category,
+                refinery_name: refinery_name
+            },
+            success: function (data) {
+                console.log('success');
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+                $('#page').val(1);
+                $('#all').html('');
+                $.each(jsonObj.data,function(k,val){
+                    var tempObj=$("#cloneObj").children("li").clone(true);
+                    tempObj.children('div').children('div').eq(0).children('p').children('span').eq(0).html(val.area_name);
+                    tempObj.children('div').children('div').eq(0).children('p').children('span').eq(1).html(val.refinery_name);
+                    tempObj.children('div').children('div').eq(0).children('h2').html(val.supply_company);
+                    tempObj.children('div').children('div').eq(1).children('a').attr('href','tel:'+val.phone_number);
+                    tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').attr('href',"__CONTROLLER__/coal_price_detail/message_id/"+val.message_id);
+                    var temp_string = '';
+                    $.each(val.content,function(key,value){
+                        var temp_value = '';
+                        $.each(value.detailed_index,function(i,j){
+                            if(j.index_name == '高位热值'){
+                                temp_value = j.index_value;
+                            }
+                        });
+                        temp_string+="<tr><td class='text-center' style='border: none;'>" +
+                                value.kind_name+"</td><td class='text-center' style='border: none;'>"+ temp_value+
+                                "</td><td class='text-center' style='border: none;'>"+value.price+"</td></tr>";
+                    });
+                    tempObj.find('tbody').html(temp_string);
+                    tempObj.appendTo("#all");
+                });
+                myScroll.refresh();
+            }
+        });
+        myScroll.refresh();//数据加载完成后，调用界面更新方法  Remember to refresh when contents are loaded (ie: on ajax completion)
+//    },1000);  // <-- Simulate network congestion, remove setTimeout from production!
+    }
+    /**滚动翻页 （自定义实现此方法）
+     *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
+     */
+    function pullUpAction() {
+//        setTimeout(function () {
+        console.log('up');
+        var a = $('#tag_search').serialize();
+        console.log(a);
+        var page = $('#page').val();
+        var request_page = parseInt(page) + 1;
+        var select_category = $('input[name=select_category]').val();
+        //==========================================
+        $.ajax({
+            type: "post",
+                url: "{:U('CoalPriceSearch/coal_price_search_more')}",
+            data: {
+                page: request_page,
+                select_category: select_category
+            },
+            success: function (data) {
+                console.log('success');
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+                $('#page').val(request_page);
+                $.each(jsonObj.data,function(k,val){
+                    var tempObj=$("#cloneObj").children("li").clone(true);
+                    tempObj.children('div').children('div').eq(0).children('p').children('span').eq(0).html(val.area_name);
+                    tempObj.children('div').children('div').eq(0).children('p').children('span').eq(1).html(val.refinery_name);
+                    tempObj.children('div').children('div').eq(0).children('h2').html(val.supply_company);
+                    tempObj.children('div').children('div').eq(1).children('a').attr('href','tel:'+val.phone_number);
+                    tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').attr('href',"__CONTROLLER__/coal_price_detail/message_id/"+val.message_id);
+                    var temp_string = '';
+                    $.each(val.content,function(key,value){
+                        var temp_value = '';
+                        $.each(value.detailed_index,function(i,j){
+                            if(j.index_name == '高位热值'){
+                                temp_value = j.index_value;
+                            }
+                        });
+                        temp_string+="<tr><td class='text-center' style='border: none;'>" +
+                                value.kind_name+"</td><td class='text-center' style='border: none;'>"+ temp_value+
+                        "</td><td class='text-center' style='border: none;'>"+value.price+"</td></tr>";
+                    });
+                    tempObj.find('tbody').html(temp_string);
+                    tempObj.appendTo("#all");
+                });
+                myScroll.refresh();
+            }
+        });
+        //============================================
+        myScroll.refresh(); // 数据加载完成后，调用界面更新方法 Remember to refresh when contents are loaded (ie: on ajax completion)
+//        }, 1000); // <-- Simulate network congestion, remove setTimeout from production!
+    }
+    /**
+     * 初始化iScroll控件
+     */
+    function loaded() {
+        pullDownEl = document.getElementById('pullDown');
+        pullDownOffset = pullDownEl.offsetHeight;
+        pullUpEl = document.getElementById('pullUp');
+        pullUpOffset = pullUpEl.offsetHeight;
+        setTimeout(function () {
+            myScroll = new iScroll('wrapper', {
+//        scrollbarClass: 'myScrollbar', /* 重要样式 */
+                useTransition: true,
+                topOffset: pullDownOffset,
+//        probeType: 3,
+//        mouseWheel: false,
+                scrollbars: true,
+//                vScrollbar:false,
+//        disableMouse: false,
+//        disablePointer: false,
+                //点击事件
+                click: false,
+                taps: false,
+//        tap: true,
+                preventDefault: false,//（把这句加上去哦）
+                preventDefaultException: {tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|A)$/},
+                onRefresh: function () {
+                    console.log('refresh');
+                    if (pullDownEl.className.match('loading')) {
+                        pullDownEl.className = '';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+//                pullDownEl.querySelector('.pullDownLabel').innerHTML = '数据更新时间：' + update_time+'下拉刷新';
+                    } else if (pullUpEl.className.match('loading')) {
+                        pullUpEl.className = '';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+                    }
+                    document.getElementById("pullUp").style.display = "none";
+                    time_now = new Date();
+                    update_time = time_now.toLocaleString();
+//            document.getElementById("show").innerHTML="onRefresh: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
+
+                },
+                onScrollMove: function () {
+//            document.getElementById("show").innerHTML="onScrollMove: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
+                    if (this.y > 0) {
+                        pullDownEl.className = 'flip';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...</br>' + '最后更新时间：' + update_time;
+                        this.minScrollY = 0;
+                    }
+                    if (this.y < 0 && pullDownEl.className.match('flip')) {
+                        pullDownEl.className = '';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+                        this.minScrollY = -pullDownOffset;
+                    }
+
+                    if (this.scrollerH < this.wrapperH && this.y < (this.minScrollY - pullUpOffset) || this.scrollerH > this.wrapperH && this.y < (this.maxScrollY - pullUpOffset)) {
+                        document.getElementById("pullUp").style.display = "";
+                        pullUpEl.className = 'flip';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...</br>' + '最后更新时间：' + update_time;
+                    }
+                    if (this.scrollerH < this.wrapperH && this.y > (this.minScrollY - pullUpOffset) && pullUpEl.className.match('flip') || this.scrollerH > this.wrapperH && this.y > (this.maxScrollY - pullUpOffset) && pullUpEl.className.match('flip')) {
+                        document.getElementById("pullUp").style.display = "none";
+                        pullUpEl.className = '';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+                    }
+                },
+                onScrollEnd: function () {
+//            document.getElementById("show").innerHTML="onScrollEnd: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
+                    if (pullDownEl.className.match('flip')) {
+                        pullDownEl.className = 'loading';
+                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '加载中...';
+                        pullDownAction(); // Execute custom function (ajax call?)
+                    } else if (pullUpEl.className.match('flip')) {
+                        pullUpEl.className = 'loading';
+                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载中...';
+                        pullUpAction(); // Execute custom function (ajax call?)
+                    }
+                }
+            });
+            console.dir(myScroll.options);
+        }, 100);
+//    setTimeout(function(){
+//        document.getElementById('wrapper').style.left = '0';
+//    },800);
+    }
+    //初始化绑定iScroll控件
+    document.addEventListener('touchmove', function (e) {
+        e.preventDefault();
+    }, false);
+    document.addEventListener('DOMContentLoaded', loaded, false);
+    //    window.onload = loaded()
+</script>
+</html>

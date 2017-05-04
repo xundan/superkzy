@@ -34,11 +34,11 @@ class ComController extends Controller
             }
         }
         $Auth = new \Think\Auth();
-
-        if(!$Auth->check($module_name,$user['uid'])){
-////            $this->error('没有权限访问本页面 '.$module_name." session->".json_encode($user),U('Feedback/403'),0);exit;
-            header('Location:'.U('Feedback/403'));exit;
-        }
+        $user = session('user_info');
+//        if(!$Auth->check($module_name,$user['uid'])){
+//////            $this->error('没有权限访问本页面 '.$module_name." session->".json_encode($user),U('Feedback/403'),0);exit;
+//            header('Location:'.U('Feedback/403'));exit;
+//        }
     }
 
     /**

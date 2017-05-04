@@ -439,7 +439,7 @@ body {
 
 .myactive{
     background-color: #04bfc6;
-    color:white;
+    color:white !important;
 }
 
 /*全局样式设置*/

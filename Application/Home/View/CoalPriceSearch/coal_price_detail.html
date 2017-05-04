@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <title>煤价详情</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
+    <!--<script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>-->
+</head>
+<body style="background-color: #efeff4;">
+<!--订单展示栏-->
+    <div class="tab-content">
+        <volist name="message" id="data">
+            <div class="weui_panel weui_panel_access" style=";border-radius: 5px">
+                <div class="text-center">{$data.refinery_name}------{$data.supply_company}</div>
+                <hr style="margin-top: 0;margin-bottom: 8px;color: #ddd"/>
+                <table class="table table-condensed table-striped" style="margin: 0;table-layout: fixed">
+                    <thead>
+                    <tr>
+                        <th class="text-center" style="border-bottom: 1px solid #ddd">类别</th>
+                        <volist name="data['content'][0]['detailed_index']" id="val">
+                            <th class="text-center" style="border-bottom: 1px solid #ddd">{$val.index_name}</th>
+                        </volist>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <volist name="data['content']" id="vo">
+                            <tr>
+                                <td class="text-center" style="border: none;">{$vo.kind_name}</td>
+                                <volist name="vo['detailed_index']" id="val">
+                                    <td class="text-center" style="border: none;">
+                                        {$val.index_value}
+                                    </td>
+                                </volist>
+                            </tr>
+                        </volist>
+                    </tbody>
+                </table>
+                <span class="pull-right help-block" style="font-size: 12px">发布时间:{$data['update_time']|substr=0,10}</span>
+            </div>
+        </volist>
+    </div>
+<?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
+</body>
+</html>

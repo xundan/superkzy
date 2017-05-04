@@ -17,6 +17,8 @@
 
         <td>序号</td>
         <td>用户</td>
+        <td>用户名</td>
+        <td>角色</td>
         <td>操作次数</td>
         <td>最后操作时间</td>
         <td>详细</td>
@@ -25,6 +27,8 @@
         <tr class="success">
             <td>{$i}</td>
             <td>{$vo.uid}</td>
+            <td>{$vo.user_name}</td>
+            <td>{$vo.role_id}</td>
             <td>{$vo.b}</td>
             <td>{$vo.a}</td>
             <td><a href="{:U('Views/LogStatistics/user_detail')}?uid={$vo.uid}&date={$date}">详细</a></td>

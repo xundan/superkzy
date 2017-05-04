@@ -372,8 +372,10 @@
         var img_src_overdue;
         if(img.attr('src').match('overdue')){
             img_src_overdue = img.attr('src');
+            $(obj).addClass('disabled');
         }else{
             img_src_overdue = img.attr('src').replace('.png','_overdue.png');
+            $(obj).addClass('disabled');
         }
         $.ajax({
             type: "post",
@@ -394,6 +396,7 @@
 
     function refill(obj,id){
         console.log(id);
+        $(obj).next().removeClass('disabled');
         var img = $(obj).parent('div').prev('li').children('div').eq(0).children('img');
         var img_src_refill;
         if(img.attr('src').match('overdue')){

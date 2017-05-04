@@ -17,7 +17,8 @@ class CarGiveMsgCard extends MsgCard
         $message = $this->buildUpMessage();
         $personal_page = $this->getPersonalUrl();
         $message_detail = U('OwnerOrder/owner_order_transport_detail', array('id' => $message['id']));
-        $publish_date = date("Y-m-d", $message['publish_time']);
+//        $publish_date = date("Y-m-d", $message['publish_time']);
+        $publish_date = substr($message['update_time'],0,10);
         $areastring = '';
         if($message['district_start']['name']!=='空' || $message['district_end']['name']!=='空'){
             $areastring = "<p class=\"weui_media_desc\">
@@ -29,8 +30,10 @@ class CarGiveMsgCard extends MsgCard
 
         if($message['invalid_id'] == 99){
             $imageString = "<img src='__PUBLIC__/home/images/give_overdue.png' width='50px'>";
+            $disableString = 'disabled';
         }else{
             $imageString = "<img src='__PUBLIC__/home/images/give.png' width='50px'>";
+            $disableString = '';
         }
 
         if ($message['formatted']) { // 如果用户按照标准格式填写
@@ -62,9 +65,9 @@ class CarGiveMsgCard extends MsgCard
 </table>
 <div class='pull-right'>发布时间:{$publish_date}</div>
 </li>"."<div class='time-limit' style='margin-top:3px;margin-right:1px;text-align:right;display:none'>
-<button class='btn btn-xs btn-info' onclick='refill(this,{$message["id"]})'>续时</button>
-<button class='btn btn-xs btn-default' onclick='overdue(this,{$message["id"]})'>下架</button>
-<button class='btn btn-xs btn-danger' onclick='delete_modal(this,{$message["id"]})'>删除</button>
+<button class='btn btn-sm btn-info' onclick='refill(this,{$message["id"]})'>续时</button>
+<button style='margin-left:5px' class='btn btn-sm btn-default ".$disableString."' onclick='overdue(this,{$message["id"]})'>下架</button>
+<button style='margin-left:5px' class='btn btn-sm btn-danger' onclick='delete_modal(this,{$message["id"]})'>删除</button>
 </div>";
         } else {
             $li_str = "<li class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
@@ -90,9 +93,9 @@ class CarGiveMsgCard extends MsgCard
 </div>
 <div class=\"highlight\" onclick='window.location.href=\"{$message_detail}\"' >{$message['content']}</div><div class='pull-right'>发布时间:{$publish_date}</div>
 </li>"."<div class='time-limit' style='margin-top:3px;margin-right:1px;text-align:right;display:none'>
-<button class='btn btn-xs btn-info' onclick='refill(this,{$message["id"]})'>续时</button>
-<button class='btn btn-xs btn-default' onclick='overdue(this,{$message["id"]})'>下架</button>
-<button class='btn btn-xs btn-danger' onclick='delete_modal(this,{$message["id"]})'>删除</button>
+<button class='btn btn-sm btn-info' onclick='refill(this,{$message["id"]})'>续时</button>
+<button style='margin-left:5px' class='btn btn-sm btn-default ".$disableString."' onclick='overdue(this,{$message["id"]})'>下架</button>
+<button style='margin-left:5px' class='btn btn-sm btn-danger' onclick='delete_modal(this,{$message["id"]})'>删除</button>
 </div>";
         }
         return $this->replacePublicString($li_str);

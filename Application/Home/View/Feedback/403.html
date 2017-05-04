@@ -12,16 +12,15 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
     <title>访问受限</title>
 </head>
-<body style="background-color: white">
-    <img src="__PUBLIC__/home/images/403.jpg" style="height: auto;width: 100%;">
+<body style=";background: url('__PUBLIC__/home/images/403.jpg') no-repeat;background-size: contain;">
     <div class="help-block text-center">
-        <p style="font-size: 2em;font-family: 微软雅黑"><b>403</b></p>
-        <p style="font-size: 1.6em;font-family: 微软雅黑">您暂时没有权利访问该界面！</p>
-        <p>还有<span id="time_count"></span>秒跳转到会员注册界面，点击<a href="{:U('Login/register')}">跳转</a>立即跳转</p>
+        <p style="font-size: 1.6em;font-family: 微软雅黑">您还不是会员,先去注册吧！</p>
+        <p style="font-size: 1.4em"><span id="time_count"></span>秒后自动跳转，点击<a href="{:U('Login/register')}">前往注册</a></p>
         <a class="btn btn-default" href="{:U('feedback/feedback')}" style="margin-top: 5%;padding-left: 5%;padding-right: 5%;border-color: #04bfc6;color: #04bfc6">
             建 议 及 反 馈
         </a>
     </div>
+    <!--<img src="__PUBLIC__/home/images/403.jpg" style="height: auto;width: 100%;">-->
     <?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
 </body>
 <script>

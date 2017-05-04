@@ -1030,6 +1030,10 @@
                         var url="{:U('AreaSearch/ajax_area_search')}";
                         var querystring = $(this).val();
 //            console.log(querystring);
+                        for(var i=0;i<5;i++){
+                            $('#search'+i).html('');
+                            $('#search'+i+'_id').html('');
+                        }
                         $.ajax({
                             type:'post',
                             url:url,
@@ -1517,7 +1521,8 @@
                     });
                 },
                 error: function (XMLHttpRequest, textStatus, errorThrown) {
-                    alert('不可棱！！');
+                    localStorage.removeItem('districts');
+                    return false;
                 }
             });
         }
@@ -1544,24 +1549,5 @@
 
 
 </script>
-<script>
-    $(function(){
-        if(navigator.userAgent.indexOf('Android') > 0){
 
-        }else{
-            //返回操作
-            function pushHistory() {
-                var state = {
-                    title: "title",
-                    url: "#"
-                };
-                window.history.pushState(state, "title", "#");
-            }
-            pushHistory();
-            window.addEventListener("popstate", function (e) {
-                window.location=document.referrer;
-            },false);
-        }
-    })
-</script>
 </html>

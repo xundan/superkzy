@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="full-screen" content="yes">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <title>选择地址</title>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
+    <!--<script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>-->
+</head>
+<include file="Common:common"/>
+<body id="aaaa" style="background-color: #efeff4">
+<form name="call_back" id="call_back">
+    <input type="hidden" name="select_category">
+    <input type="hidden" name="search_input">
+    <input type="hidden" name="refinery_name">
+</form>
+<!--搜索框-->
+<div class="bd">
+    <div class="weui_search_bar" id="search_bar">
+        <form class="weui_search_outer">
+            <div class="weui_search_inner">
+                <i class="weui_icon_search"></i>
+                <input type="search" class="weui_search_input" id="search_input" placeholder="搜索" required/>
+                <a href="javascript:" class="weui_icon_clear" id="search_clear"></a>
+            </div>
+            <label for="search_input" class="weui_search_text" id="search_text">
+                <i class="weui_icon_search"></i>
+                <span>搜索(输入煤矿地址,例如:海弯煤矿)</span>
+            </label>
+        </form>
+        <a href="javascript:" class="weui_search_cancel" id="search_cancel">取消</a>
+    </div>
+    <div class="weui_cells weui_cells_access search_show" id="search_show">
+        <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
+            <div class="weui_cell" >
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p id="search0" style="margin-bottom: 0"></p>
+                    <div id="search0_id" style="display: none"></div>
+                </div>
+            </div>
+        </a>
+        <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
+            <div class="weui_cell" >
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p id="search1" style="margin-bottom: 0"></p>
+                    <div id="search1_id" style="display: none"></div>
+                </div>
+            </div>
+        </a>
+        <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
+            <div class="weui_cell" >
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p id="search2" style="margin-bottom: 0"></p>
+                    <div id="search2_id" style="display: none"></div>
+                </div>
+            </div>
+        </a>
+        <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
+            <div class="weui_cell" >
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p id="search3" style="margin-bottom: 0"></p>
+                    <div id="search3_id" style="display: none"></div>
+                </div>
+            </div>
+        </a>
+        <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
+            <div class="weui_cell" >
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p id="search4" style="margin-bottom: 0"></p>
+                    <div id="search4_id" style="display: none"></div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+<div>
+    最近搜索
+    <span>asd</span>
+    <span>asd</span>
+    <span>asd</span>
+    <span>asd</span>
+    <span>asd</span>
+    <span>asd</span>
+</div>
+<div class="container" style="background-color: white;padding: 0;">
+    <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">全部</button>
+    <!--<button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">榆林</button>-->
+    <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">鄂尔多斯</button>
+    <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">山西</button>
+    <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">神木</button>
+    <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">榆阳</button>
+    <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">府谷</button>
+    <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">横山</button>
+    <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">其他</button>
+    <table class="table table-striped text-center" style="table-layout: fixed">
+        <tbody id="show_refinery">
+        </tbody>
+    </table>
+</div>
+<?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
+</body>
+
+<!--地址按钮选择样式及点选出现矿名-->
+<script>
+    $('.area_name').click(function () {
+        $(this).addClass('myactive');
+        $(this).siblings('button').removeClass('myactive');
+        var area_name = $(this).html().trim();
+        $.ajax({
+            type: "post",
+            url: "{:U('CoalPriceSearch/area_search')}",
+            data: {area_name: area_name},
+            success: function (data) {
+                var insert_node = $('#show_refinery');
+//                var a = insert_node.html();
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+                var temp_string = "<tr>";
+                var col_count = 0;
+                $.each(jsonObj.refinery_name,function(k,val){
+                    console.log(val.refinery_name);
+                    temp_string += "<td class='refinery_name'>"+val.refinery_name+"</td>";
+                    col_count++;
+                    if(col_count == 4){
+                        temp_string += "</tr><tr>";
+                        col_count = 0;
+                    }else{}
+                });
+                while ((4-col_count) > 0 && col_count!=0 ){
+                    console.log(col_count);
+                    temp_string += "<td></td>";
+                    col_count++;
+                }
+                temp_string += "</tr>";
+//                a += temp_string;
+                insert_node.html(temp_string);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    });
+</script>
+
+<!--搜索框功能-->
+<script>
+    $(function(){
+        var $searchBar = $('#search_bar'),
+            $searchText = $('#search_text'),
+            $searchInput = $('#search_input'),
+            $searchClear = $('#search_clear'),
+            $searchCancel = $('#search_cancel');
+
+        function hideSearchResult(){
+            $searchInput.val('');
+        }
+        function cancelSearch(){
+            hideSearchResult();
+            $searchBar.removeClass('weui_search_focusing');
+            $searchText.show();
+        }
+
+        $searchText.on('click', function(){
+            $searchBar.addClass('weui_search_focusing');
+            $searchInput.focus();
+        });
+        $searchInput
+                .on('blur', function () {
+                    if(!this.value.length) cancelSearch();
+                })
+                .on('input', function(event){
+                    var $searchShow = $("#search_show");
+                    if ($(this).val()) {
+//            console.log($(this).val());
+                        var url="{:U('AreaSearch/ajax_area_search')}";
+                        var querystring = $(this).val();
+//            console.log(querystring);
+                        for(var i=0;i<5;i++){
+                            $('#search'+i).html('');
+                            $('#search'+i+'_id').html('');
+                        }
+                        $.ajax({
+                            type:'post',
+                            url:url,
+                            data:{querystr:querystring},
+                            dataType:'json',
+                            success:function(data){
+//                console. eval("("+data+")");
+                                console.log(data);
+                                jQuery.each(data,function(k,val){
+                                    $('#search'+k).html(val.name);
+                                    $('#search'+k+'_id').html(val.id);
+                                });
+                            }
+                        });
+                        $searchShow.show();
+                    } else {
+                        $searchShow.hide();
+                    }
+                });
+        $searchClear.on('click', function(){
+            hideSearchResult();
+            $searchInput.focus();
+        });
+        $searchCancel.on('click', function(){
+            cancelSearch();
+            $searchInput.blur();
+        });
+    });
+</script>
+
+<!--点击矿名跳转-->
+<script>
+    $('#show_refinery').on("click",".refinery_name",function(){
+        var refinery_name = $(this).html().trim();
+        cookie('refinery_name',refinery_name);
+        $('input[name=refinery_name]').val(refinery_name);
+        $('input[name=select_category]').val('search');
+        document.call_back.method = "post";
+        document.call_back.action = "{:U('CoalPriceSearch/coal_price_search')}";
+        document.call_back.submit();
+    });
+</script>
+</html>

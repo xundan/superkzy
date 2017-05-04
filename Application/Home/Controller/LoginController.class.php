@@ -57,7 +57,9 @@ class LoginController extends Controller
 //            $temp = cookie('last_url');
 //            $b = U("Homepage/homepage");
 //            $this->success('设置成功'.$temp.'###'.$b, U($temp),30);
-            $this->success('设置成功', cookie('last_url_for_auth'));
+            //TODO 如果是订单详情跳转过来的话没有记录参数会查不到从而404
+//            $this->success('设置成功', cookie('last_url_for_auth'));
+            $this->success('设置成功', cookie('current_url'));
         }else {
             // 否则跳回默认地址
             $this->success('设置成功', U("Homepage/homepage"));
