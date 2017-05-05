@@ -15,16 +15,23 @@ class LogStatisticsController extends Controller
 {
     public function index(){
         $today = date("Y-m-d");
-//        $this->show($today);
         $this->redirect('LogStatistics/show', array('date' => $today));
+
+
     }
 
     public function show($date){
+        // 计算前后一天
+        $this_time = strtotime($date);
+        $prev_date = date("Y-m-d",strtotime("-1 day", $this_time));
+        $next_date = date("Y-m-d",strtotime("+1 day", $this_time));
 
         $Logs = D("Log");
         $res = $Logs->all_by_date($date);
         $this->assign("res",$res);
         $this->assign("date",$date);
+        $this->assign("prev_date",$prev_date);
+        $this->assign("next_date",$next_date);
         $this->display();
     }
 

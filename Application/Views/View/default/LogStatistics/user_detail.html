@@ -22,6 +22,7 @@
         <td>操作方式</td>
         <td>操作结果</td>
         <td>时间</td>
+        <td>时长(秒)</td>
     </tr>
     <volist name="details" id="vo">
         <tr class="success">
@@ -34,8 +35,43 @@
             <td>{$vo.oper}</td>
             <td>{$vo.result}</td>
             <td>{$vo.now}</td>
+            <td class = "duration">{$vo.duration}</td>
         </tr>
     </volist>
 </table>
 </body>
+<script>
+    $(document).ready(function(){
+        $('.duration').each(function(){
+            var d = parseInt($(this).text());
+            $(this).css("background-color","white");
+            if (d>300){
+                $(this).text("再次打开("+d+"s)");
+                $(this).css("background-color","rgb(255,0,255)");
+            }else if (d==-1){
+                $(this).text("末次打开(未知)");
+            }else if (d==-2){
+                $(this).text("未统计");
+            }else if (d>-1 && d<2){
+                $(this).text("极短("+d+"s)");
+                $(this).css("background-color","rgb(225,255,225)");
+            }else if (d>1 && d<6){
+                $(this).text("短("+d+"s)");
+                $(this).css("background-color","rgb(205,255,205)");
+            }else if (d>5 && d<11){
+                $(this).text("中("+d+"s)");
+                $(this).css("background-color","rgb(175,255,175)");
+            }else if (d>9 && d<61){
+                $(this).text("长("+d+"s)");
+                $(this).css("background-color","rgb(150,255,150)");
+            }else if (d>59 && d<301){
+                $(this).text("极长("+d+"s)");
+                $(this).css("background-color","rgb(120,255,120)");
+            }else{
+                $(this).text("报错，请通知开发("+d+"s)");
+                $(this).css("background-color","red");
+            }
+        });
+    });
+</script>
 </html>

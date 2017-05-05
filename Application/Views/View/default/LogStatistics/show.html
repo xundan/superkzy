@@ -2,15 +2,25 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
     <!--<link rel="icon" href="../../favicon.ico">-->
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <title>日志查看</title>
 </head>
 <body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4"><a class="btn btn-primary" href="{:U('Views/LogStatistics/show')}?date={$prev_date}">前一天</a>
+        </div>
+        <div class="col-md-4"><h4>{$date}</h4></div>
+        <div class="col-md-4"><a class="btn btn-primary" href="{:U('Views/LogStatistics/show')}?date={$next_date}">后一天</a>
+        </div>
+    </div>
+</div>
 <table class="table table-hover">
 
     <tr>
@@ -35,10 +45,10 @@
         </tr>
     </volist>
     <!--<tr class="success">-->
-        <!--<td>TB - Monthly</td>-->
-        <!--<td>01/04/2012</td>-->
-        <!--<td>Approved</td>-->
-        <!--<td><a>详细</a></td>-->
+    <!--<td>TB - Monthly</td>-->
+    <!--<td>01/04/2012</td>-->
+    <!--<td>Approved</td>-->
+    <!--<td><a>详细</a></td>-->
     <!--</tr>-->
 </table>
 </body>
