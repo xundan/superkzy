@@ -4,5 +4,7 @@ return array(
     "DEFAULT_ROW"=>10,
 
     "AUTH_VISITOR"=>2,
-    "AUTH_USER"=>5
+    "AUTH_USER"=>5,
+
+//    "EXPIRE_DAYS" => 7,
 );

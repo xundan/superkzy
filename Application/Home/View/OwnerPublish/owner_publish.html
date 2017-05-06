@@ -1590,7 +1590,9 @@
                 if (jsonObj.status == 0) {
                     console.log('auth check failure');
                     $('#hint').modal();
-                } else {
+                } else if (jsonObj.status == 3) {
+                    showToast(jsonObj.msg);
+                }else {
                     console.log(jsonObj.msg);
 //                    showToast(jsonObj.msg);
                     $('#publish_success').modal();
@@ -1664,7 +1666,9 @@
                 if (jsonObj.status == 0) {
                     console.log('auth check failure');
                     $('#hint').modal();
-                } else {
+                } else if (jsonObj.status == 3) {
+                    showToast(jsonObj.msg);
+                }else  {
                     console.log(jsonObj.msg);
 //                    showToast(jsonObj.msg);
                     $('#publish_success').modal();
@@ -1728,7 +1732,9 @@
                 if (jsonObj.status == 0) {
                     console.log('auth check failure');
                     $('#hint').modal();
-                } else {
+                } else if (jsonObj.status == 3) {
+                    showToast(jsonObj.msg);
+                }else  {
                     console.log(jsonObj.msg);
 //                    showToast(jsonObj.msg);
                     $('#publish_success').modal();
@@ -1792,7 +1798,9 @@
                 if (jsonObj.status == 0) {
                     console.log('auth check failure');
                     $('#hint').modal();
-                } else {
+                } else if (jsonObj.status == 3) {
+                    showToast(jsonObj.msg);
+                }else  {
                     console.log(jsonObj.msg);
 //                    showToast(jsonObj.msg);
                     $('#publish_success').modal();

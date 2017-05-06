@@ -258,3 +258,14 @@ function createRandCode($table,$field){
     }
     return $finalData;
 }
+
+/**
+ * @param $baseDate String time-string
+ * @param $interval int
+ * @return string
+ */
+function dateAfter($baseDate, $interval)
+{
+    $time = strtotime($baseDate) + $interval * 86400;
+    return date("Y-m-d H:i:s", $time);
+}

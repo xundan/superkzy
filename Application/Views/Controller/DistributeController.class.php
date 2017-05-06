@@ -10,6 +10,7 @@ namespace Views\Controller;
 
 use Think\Controller\RestController;
 use Think\Log;
+use Views\Model\MessageModel;
 
 class DistributeController extends RestController
 {
@@ -26,7 +27,7 @@ class DistributeController extends RestController
     {
 
         $Raw = D('Raw');
-        $Message = D('Message');
+        $Message = new MessageModel();
 
         $map['status'] = 0;
         $transferring = $Raw->where($map)->select();
@@ -39,7 +40,7 @@ class DistributeController extends RestController
             "publisher_rid" => null,
             "publish_time" => $now,
             "level" => 1,
-            "valid_time" => 3, // 默认为3天
+            "valid_time" => 7,//C('EXPIRE_DAYS') 默认为7天
             "via_type" => 2,
             "times_number" => 1,
             "type" => null,
@@ -72,6 +73,7 @@ class DistributeController extends RestController
             $insert_trans["title"] = $trans1["rid"];
             $insert_trans["content"] = $trans1["content"];
             $insert_trans["content_all"] = $trans1["content"];
+            $insert_trans["content_all_md5"] = md5($trans1["content"]);
             $insert_trans["sender"] = $trans1["sender"];
             $insert_trans["type"] = $trans1["type"];
             $insert_trans["owner"] = $trans1["owner"];
@@ -95,9 +97,13 @@ class DistributeController extends RestController
                 $insert_trans['vip']="1";
             }
 //            var_dump($insert_trans);
-            $check = $Message->add($insert_trans);
-            if ($check == false) {
+            $check = $Message->add_by_md5($insert_trans);
+            if ($check === false) {
                 Log::record("DistributeController: Add Messages false: sql->".$Message->getLastSql(),Log::ERR);
+            }elseif($check === 0){
+                Log::record("DistributeController: duplicate message: md5->".$insert_trans['content_all_md5'],Log::INFO);
+            }else{
+
             }
         }
         // 只有转移数量大于0时，才记录

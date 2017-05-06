@@ -10,8 +10,6 @@ namespace Home\Model;
 
 use Home\Common\CardList\WhereConditions;
 use Think\Controller;
-use Think\Exception;
-use Think\Log;
 use Think\Model;
 
 class MessagesModel extends Model
@@ -29,7 +27,7 @@ class MessagesModel extends Model
     //自动完成
     protected $_auto = array(
         array('deadline', 'set_deadline', '1', 'function'),    //插入时设置截止日期
-        array('content_all', 'join_content', '3', 'callback'),    //新增和编辑的时候拼接表单数据
+//        array('content_all', 'join_content', '3', 'callback'),    //新增和编辑的时候拼接表单数据
         array('publish_time', 'time', '1', 'function'),
 //        array('area_start', 'get_area_id', '1', 'function'),
 //        array('area_end', 'get_area_id', '1', 'function'),
@@ -59,51 +57,56 @@ class MessagesModel extends Model
     {
         $subInfo = I('post.', '', 'strip_tags,trim');
         $data = $subInfo;
-        if (!$subInfo['area_start'] && !$subInfo['area_end'] && !$subInfo['kind'] && !$subInfo['trait'] && !$subInfo['granularity']) {
-            $data['formatted'] = 0;
-        } else {
-            $data['formatted'] = 1;
-        }
-        $data['publisher_rid'] = $_SESSION['user_info']['uid'];
-        $data['sender'] = $_SESSION['user_info']['user_name'];
-        $data['type'] = "web";
-        $data['vip'] = "9";
-        $data['valid_time'] = 3;
-        $data['times_number'] += 1;
-        $Msg = D('messages');
-        if ($Msg->create($data)) {
-            $result = $Msg->add();
-            if ($result) {
-                // 如果主键是自动增长型 成功后返回值就是最新插入的值
-                $returnArr['status'] = 1;
-                $returnArr['msg'] = "发布成功";
-                echo json_encode($returnArr);
-            } else {
-                //todo 数据库错误
-//                $this->display('Common:403');
-            }
-        } else {
-            //验证没通过
-//            exit($Msg->getError());
-            $returnArr['status'] = 2;
-            $returnArr['msg'] = $Msg->getError();
+        // 判断重复
+        $data['content_all'] = $this->join_content();
+        $data['content_all_md5']=md5($data['content_all']);
+        $origin = $this->where("content_all_md5='%s' and invalid_id=0",$data['content_all_md5'])->find();
+        if ($origin){
+            //重复的消息直接更新截止日期
+            $this->updateMessageState($origin['id'],3,true);
+            $returnArr['status'] = 3;
+            $returnArr['msg'] = '发布内容已更新';
             echo json_encode($returnArr);
+        }else{
+            // 拼装数据并插入
+            if (!$subInfo['area_start'] && !$subInfo['area_end'] && !$subInfo['kind'] && !$subInfo['trait'] && !$subInfo['granularity']) {
+                $data['formatted'] = 0;
+            } else {
+                $data['formatted'] = 1;
+            }
+            $data['publisher_rid'] = $_SESSION['user_info']['uid'];
+            $data['sender'] = $_SESSION['user_info']['user_name'];
+            $data['type'] = "web";
+            $data['vip'] = "9";
+            $data['valid_time'] = 7; // C("EXPIRE_DAYS");
+            $data['times_number'] += 1;
+            if ($this->create($data)) {
+                $result = $this->add();
+                if ($result) {
+                    // 如果主键是自动增长型 成功后返回值就是最新插入的值
+                    $returnArr['status'] = 1;
+                    $returnArr['msg'] = "发布成功";
+                    echo json_encode($returnArr);
+                } else {
+                    //todo 数据库错误
+//                $this->display('Common:403');
+                }
+            } else {
+                //验证没通过
+//            exit($this->getError());
+                $returnArr['status'] = 2;
+                $returnArr['msg'] = $this->getError();
+                echo json_encode($returnArr);
 //            throw new Exception;
 //            $this->display('Common:403');
+            }
         }
     }
 
     public function updateMessageState($id,$state,$refill=false){
         if($refill){
             $msg['invalid_id'] = 0;
-            $group_id = $_SESSION['user_info']['group_id'];
-            if ($group_id == null) {
-                $msg['deadline'] = date('Y-m-d H:i:s',strtotime('+3 day'));
-            } else if ($group_id < C('AUTH_USER')) {
-                $msg['deadline'] = date('Y-m-d H:i:s',strtotime('+3 day'));
-            } else if ($group_id >= C('AUTH_USER')) {
-                $msg['deadline'] = date('Y-m-d H:i:s',strtotime('+7 day'));
-            } else{}
+            $msg['deadline'] = set_deadline();
             $temp = D('messages')->where(array("id" => $id))->save($msg);
             if ($temp === false) return 0;
             return 1;
@@ -123,9 +126,8 @@ class MessagesModel extends Model
         } else {
             $data['formatted'] = 1;
         }
-        $Msg = D('messages');
-        if ($Msg->create($data,2)) {
-            $result = $Msg->save();
+        if ($this->create($data,2)) {
+            $result = $this->save();
             if ($result) {
                 // 成功后返回值是影响行数
                 $returnArr['status'] = 1;
@@ -417,7 +419,7 @@ class MessagesModel extends Model
     public function todayCount(){
         // select count(*) from `ck_messages` where to_days(`record_time`) = to_days(now());
 //        $count = $this->query("select count(*) AS a from ck_messages where to_days(record_time) = to_days(now()) AND category IN ('求购', '供应', '找车', '车源') AND invalid_id = 0");
-        $count = $this->query("select count(*) AS a from ck_messages where yearweek(record_time) = yearweek(now()) AND category IN ('求购', '供应', '找车', '车源') AND invalid_id = 0");
+        $count = $this->query("select count(*) AS a from ck_messages where category IN ('求购', '供应', '找车', '车源') AND invalid_id = 0");
         return floor((int)$count[0]['a']*1.5);
     }
     public function todayTradeCount(){
