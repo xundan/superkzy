@@ -28,7 +28,7 @@ class WxCoalSellMsgCard extends MsgCard
         </div>
     </div>
     <div class=\"weui_media_bd text-center\" style=\"\">
-        <a href=\"tel:{$message['phone_number']}\" class=\"\" style='text-decoration: none;color: black'>
+        <a href=\"tel:{$message['phone_number']}\" onclick=\"ck_log('dial', {$message['phone_number']})\" class=\"\" style='text-decoration: none;color: black'>
             <h4><img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
                 <span style=\"\">拨打电话</span></h4>
         </a>

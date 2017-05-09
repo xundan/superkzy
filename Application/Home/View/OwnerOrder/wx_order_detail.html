@@ -38,7 +38,7 @@
                             <h4 class="weui_media_title"><span onclick='window.location.href="{$personal_page}"'>{$message['user']['user_name']}</span></h4>
                         </div>
                         <div class="weui_media_bd">
-                            <a href="tel:{$message['phone_number']}" onclick='event.stopPropagation();' style='text-decoration: none;color: black'>
+                            <a href="tel:{$message['phone_number']}"  onclick="ck_log('dial', {$message['phone_number']})" style='text-decoration: none;color: black'>
                                 <h4><img src="__PUBLIC__/home/images/phone.png" style="width: 20px">
                                     <span>拨打电话</span></h4>
                             </a>

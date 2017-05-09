@@ -45,7 +45,7 @@ class CoalBuyMsgCard extends MsgCard
         <p class=\"weui_media_desc\"><img src=\"__PUBLIC__/home/images/area_start.png\" style=\"width: 10px;height: 15px\">" . $message['user']['city'] . "</p>
     </div>
     <div class=\"weui_media_bd text-center\" style=\"\">
-        <a href=\"tel:{$message['phone_number']}\" onclick='event.stopPropagation();' class=\"\" style='text-decoration: none;color: black'>
+        <a href=\"tel:{$message['phone_number']}\" onclick=\"ck_log('dial', {$message['phone_number']})\" class=\"\" style='text-decoration: none;color: black'>
             <h4>
                 <img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
                 <span style=\"\">拨打电话</span>
@@ -91,7 +91,7 @@ class CoalBuyMsgCard extends MsgCard
         <p class=\"weui_media_desc\">" . $message["user"]["city"] . "</p>
     </div>
     <div class=\"weui_media_bd text-center\" style=\"\">
-        <a href=\"tel:{$message['phone_number']}\" onclick='event.stopPropagation();' class=\"\" style='text-decoration: none;color: black'>
+        <a href=\"tel:{$message['phone_number']}\" onclick=\"ck_log('dial', {$message['phone_number']})\" class=\"\" style='text-decoration: none;color: black'>
             <h4>
                 <img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
                 <span style=\"\">拨打电话</span>

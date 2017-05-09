@@ -49,10 +49,11 @@ class CarGiveMsgCard extends MsgCard
             <h4 class=\"weui_media_title highlight\"><span onclick='window.location.href=\"{$personal_page}\"'>{$message['user']['user_name']}</span></h4>
         ".$areastring."</div>
     <div class=\"weui_media_bd\" style=\"\">
-        <a href=\"tel:{$message['phone_number']}\" onclick='event.stopPropagation();' class=\"\" style='text-decoration: none;color: black'>
+    <div>
+        <a href=\"tel:{$message['phone_number']}\" onclick=\"ck_log('dial',{$message['phone_number']})\" class=\"\" style='text-decoration: none;color: black'>
             <h4><img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
                 <span style=\"\">拨打电话</span></h4>
-        </a>
+        </a></div>
         <div>
             <button class=\"btn btn-xs btn-default\" style=\"width: 70%;border-color: #04bfc6;color: #04bfc6\" onclick='collection_switch(this,{$message['id']})'>{$message['in_collection']}</button>
         </div>
@@ -82,7 +83,7 @@ class CarGiveMsgCard extends MsgCard
             <h4 class=\"weui_media_title highlight\"><span onclick='window.location.href=\"{$personal_page}\"'>{$message['user']['user_name']}</span></h4>
         ".$areastring."</div>
     <div class=\"weui_media_bd\" style=\"\">
-        <a href=\"tel:{$message['phone_number']}\" onclick='event.stopPropagation();' class=\"\" style='text-decoration: none;color: black'>
+        <a href=\"tel:{$message['phone_number']}\" onclick=\"ck_log('dial', {$message['phone_number']})\" class=\"\" style='text-decoration: none;color: black'>
             <h4><img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
                 <span style=\"\">拨打电话</span></h4>
         </a>
@@ -106,5 +107,4 @@ class CarGiveMsgCard extends MsgCard
     {
         return U('DriverOrder/driver_order_detail',array("id"=>$this->_message['id']));
     }
-
 }
