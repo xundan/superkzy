@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/echarts.min.js"></script>
+    <title>{$date}页面统计</title>
+</head>
+<body>
+<table class="table table-hover text-center" style="table-layout: fixed">
+    <tr>
+        <td><a class="btn" href="{:U('Views/LogStatistics/page')}?date={$prev_date}">前一天</a></td>
+        <td><h4>{$date}</h4></td>
+        <td><a class="btn" href="{:U('Views/LogStatistics/page')}?date={$next_date}">后一天</a></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/show')}?date={$date}">按用户统计</a></td>
+        <td></td>
+    </tr>
+</table>
+
+<div id="main" style="width: 100%;height:800px;"></div>
+
+<table class="table table-hover">
+
+    <tr>
+        <td>序号</td>
+        <td>页面</td>
+        <td>点击次数</td>
+        <td>总停留</td>
+        <td>平均停留</td>
+        <td>详细</td>
+    </tr>
+    <volist name="res" id="vo">
+        <tr class="success">
+            <td>{$i}</td>
+            <td>{$vo.title}</td>
+            <td>{$vo.c}</td>
+            <td>{$vo.d}</td>
+            <td class="duration">{$vo.a}</td>
+            <td><a href="{:U('Views/LogStatistics/page_detail')}?title={$vo.title}&date={$date}">详细</a></td>
+        </tr>
+    </volist>
+</table>
+</body>
+<script>
+    function color_bg() {
+        $('.duration').each(function () {
+            var d = parseInt($(this).text());
+            $(this).css("background-color", "white");
+            if (d <= 0) {
+                $(this).css("background-color", "rgb(255,0,0)");
+            } else if (d <= 2) {
+                $(this).css("background-color", "rgb(225,255,225)");
+            } else if (d <= 10) {
+                $(this).css("background-color", "rgb(175,255,175)");
+            } else if (d <= 60) {
+                $(this).css("background-color", "rgb(125,255,125)");
+            } else if (d <= 300) {
+                $(this).css("background-color", "rgb(80,255,80)");
+            } else {
+                $(this).css("background-color", "rgb(30,255,30)");
+            }
+        });
+    }
+
+    var c_chart={}, a_chart={}, d_chart={}, c_max = 0, a_max = 0, c_all = 0;
+
+    function get_ajax_data() {
+        $.ajax({
+            url: "{:U('LogStatistics/page_ajax')}?date={$date}",
+            type: "GET",
+            error: function (e) {
+                alert(e);
+            },
+            success: function (str_data) {
+                var data = JSON.parse(str_data);
+                console.log(data);
+                $.each(data, function (i, row) {
+                    var c = parseInt(row['c']);
+                    var a = parseInt(row['a']);
+                    c_chart[row['title']] = c;
+                    c_all += c;
+                    if (c > c_max) c_max = c;
+                    a_chart[row['title']] = a;
+                    if (a > a_max) a_max = a;
+                    d_chart[row['title']] = parseInt(row['d']);
+                });
+                draw();
+            }
+        });
+    }
+
+    function draw() {
+//        app.title = '水印 - ECharts 下载统计';
+        var myChart = echarts.init(document.getElementById('main'));
+
+        var waterMarkText = '超级矿资源';
+
+        var canvas = document.createElement('canvas');
+        var ctx = canvas.getContext('2d');
+        canvas.width = canvas.height = 200;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.globalAlpha = 0.08;
+        ctx.font = '25px Helvetica Neue';
+        ctx.translate(50, 50);
+        ctx.rotate(-Math.PI / 4);
+        ctx.fillText(waterMarkText, 0, 0);
+
+        option = {
+            backgroundColor: {
+                type: 'pattern',
+                image: canvas,
+                repeat: 'repeat'
+            },
+            tooltip: {},
+            title: [{
+                text: '点击次数 与 平均时长（秒）',
+                subtext: '点击总计 ' + c_all,
+                x: '25%',
+                textAlign: 'center'
+            }, {
+                text: '点击量分布',
+                subtext: '总计 ' + Object.keys(c_chart).reduce(function (all, key) {
+                    return all + c_chart[key];
+                }, 0),
+                x: '85%',
+                textAlign: 'right'
+            }, {
+                text: '总时长分布（秒）',
+                subtext: '总计 ' + Object.keys(d_chart).reduce(function (all, key) {
+                    return all + d_chart[key];
+                }, 0),
+                x: '85%',
+                y: '50%',
+                textAlign: 'right'
+            }],
+            grid: [{
+                top: 50,
+                width: '50%',
+                bottom: '45%',
+                left: 10,
+                containLabel: true
+            }, {
+                top: '55%',
+                width: '50%',
+                bottom: 0,
+                left: 10,
+                containLabel: true
+            }],
+            xAxis: [{
+                type: 'value',
+                max: c_max,
+                splitLine: {
+                    show: false
+                }
+            }, {
+                type: 'value',
+                max: a_max,
+                gridIndex: 1,
+                splitLine: {
+                    show: false
+                }
+            }],
+            yAxis: [{
+                type: 'category',
+                data: Object.keys(c_chart),
+                axisLabel: {
+                    interval: 0,
+                    rotate: 30
+                },
+                splitLine: {
+                    show: false
+                }
+            }, {
+                gridIndex: 1,
+                type: 'category',
+                data: Object.keys(a_chart),
+                axisLabel: {
+                    interval: 0,
+                    rotate: 30
+                },
+                splitLine: {
+                    show: false
+                }
+            }],
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            series: [{
+                type: 'bar',
+                stack: 'chart',
+                z: 3,
+                label: {
+                    normal: {
+                        position: 'right',
+                        show: true
+                    }
+                },
+                data: Object.keys(c_chart).map(function (key) {
+                    return c_chart[key];
+                })
+            }, {
+                type: 'bar',
+                stack: 'chart',
+                silent: true,
+                itemStyle: {
+                    normal: {
+                        color: '#eee'
+                    }
+                },
+                data: Object.keys(c_chart).map(function (key) {
+                    return c_max - c_chart[key];
+                })
+            }, {
+                type: 'bar',
+                stack: 'component',
+                xAxisIndex: 1,
+                yAxisIndex: 1,
+                z: 3,
+                label: {
+                    normal: {
+                        position: 'right',
+                        show: true
+                    }
+                },
+                data: Object.keys(a_chart).map(function (key) {
+                    return a_chart[key];
+                })
+            }, {
+                type: 'bar',
+                stack: 'component',
+                silent: true,
+                xAxisIndex: 1,
+                yAxisIndex: 1,
+                itemStyle: {
+                    normal: {
+                        color: '#eee'
+                    }
+                },
+                data: Object.keys(a_chart).map(function (key) {
+                    return a_max - a_chart[key];
+                })
+            }, {
+                type: 'pie',
+                radius: [0, '30%'],
+                center: ['75%', '25%'],
+                data: Object.keys(c_chart).map(function (key) {
+                    return {
+                        name: key,
+                        value: c_chart[key]
+                    }
+                })
+            }, {
+                type: 'pie',
+                radius: [0, '30%'],
+                center: ['75%', '75%'],
+                data: Object.keys(d_chart).map(function (key) {
+                    return {
+                        name: key,
+                        value: d_chart[key]
+                    }
+                })
+            }]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+
+    $(document).ready(function () {
+        color_bg();
+        get_ajax_data();
+    });
+</script>
+</html>

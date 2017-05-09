@@ -8,6 +8,11 @@ function ck_log(operation,param){
     var page = window.location.pathname;
     if (!param) param = window.location.search;
     var title = $("title").html();
+    if(!title) {
+        title = "空";
+    }else if(title.indexOf("weixin")==0){
+        title = "微信跳转";
+    }
     var subData = {
         "page":page,
         "param":param,

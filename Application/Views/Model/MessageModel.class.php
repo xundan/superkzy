@@ -90,4 +90,23 @@ class MessageModel extends Model
             return $this->add($data);
         }
     }
+
+    public function statistics_by_day(){
+        return $this->field("substr(`record_time`,1,10) as a ,COUNT(*) as s")->group('a')->order('a desc')->select();
+    }
+    public function all_statistics_by_day(){
+        return $this->field("substr(`record_time`,1,10) as a ,COUNT(*) as s")->group('a')->order('a')->select();
+    }
+
+    public function web_statistics_by_day(){
+        return $this->field("substr(`record_time`,1,10) as a ,COUNT(*) as s")->where("type='web'")->group('a')->order('a')->select();
+    }
+
+    public function wx_mp_statistics_by_day(){
+        return $this->field("substr(`record_time`,1,10) as a ,COUNT(*) as s")->where("type='wx_mp'")->group('a')->order('a')->select();
+    }
+
+    public function plain_statistics_by_day(){
+        return $this->field("substr(`record_time`,1,10) as a ,COUNT(*) as s")->where("type='plain'")->group('a')->order('a')->select();
+    }
 }

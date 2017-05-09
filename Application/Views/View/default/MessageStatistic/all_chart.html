@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--<script src="echarts.js"></script>-->
+    <script type="text/javascript" src="__PUBLIC__/js/echarts.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <title>每日消息总量表</title>
+</head>
+<body>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<div id="main" style="width: 100%;height:800px;"></div>
+<script type="text/javascript">
+    // 基于准备好的dom，初始化echarts实例
+
+    var date_arr=[],all_arr=[],web_arr=[],wx_mp_arr=[],plain_arr=[];
+    $.ajax({
+        url:"{:U('MessageStatistic/statistics')}",
+        type:"GET",
+        error:function(e){
+            alert(e);
+        },
+        success:function(str_data){
+            var data = JSON.parse(str_data);
+
+            /**
+             * 将obj中date对应的数据push到数组arr中
+             * @param date
+             * @param arr
+             * @param obj
+             */
+            function iterate_by_date(date, arr, obj) {
+                var flag = true;
+                for (var j = 0; j < obj.length; j++) {
+                    var m = obj[j];
+                    if (m['a'] == date) {
+                        arr.push(m['s']);
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag) {
+                    arr.push(0);
+                }
+            }
+
+            $.each(data[0],function(i,n){
+                var date = n['a'];
+                if (date!='2016-08-12'){
+                    date_arr.push(n['a']);
+                    all_arr.push(n['s']);
+                    iterate_by_date(date, plain_arr, data[1]);
+                    iterate_by_date(date, wx_mp_arr, data[2]);
+                    iterate_by_date(date, web_arr, data[3]);
+                }
+            });
+            draw();
+        }
+    });
+
+
+   function draw(){
+       var myChart = echarts.init(document.getElementById('main'));
+
+       // 指定图表的配置项和数据
+       option = {
+           title: {
+               text: '每日消息总量'
+           },
+           tooltip: {
+               trigger: 'axis',
+               axisPointer: {
+                   type: 'cross',
+                   label: {
+                       backgroundColor: '#6a7985'
+                   }
+               }
+           },
+           legend: {
+            data: ['好友消息', '公众号消息', '平台网站消息']
+//               data: ['好友消息']
+           },
+           toolbox: {
+               feature: {
+                   saveAsImage: {}
+               }
+           },
+           grid: {
+               left: '3%',
+               right: '4%',
+               bottom: '3%',
+               containLabel: true
+           },
+           xAxis: [
+               {
+                   type: 'category',
+                   boundaryGap: false,
+//                data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                   data: date_arr
+               }
+           ],
+           yAxis: [
+               {
+                   type: 'value'
+               }
+           ],
+           dataZoom: [
+               {
+                   type: 'slider',
+                   xAxisIndex: 0,
+                   filterMode: 'empty',
+                   start: 90,
+                   end: 100
+               },
+               {
+                   type: 'inside',
+                   xAxisIndex: 0,
+                   filterMode: 'empty'
+               }
+           ],
+           series: [
+               {
+                   name: '好友消息',
+                   type: 'line',
+                   stack: '总量',
+                   label: {
+                       normal: {
+                           show: true,
+                           position: 'top'
+                       }
+                   },
+                   areaStyle: {normal: {}},
+                   data: plain_arr
+               },
+            {
+                name: '公众号消息',
+                type: 'line',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                areaStyle: {normal: {}},
+                data: wx_mp_arr
+            },
+            {
+                name: '平台网站消息',
+                type: 'line',
+                stack: '总量',
+                label: {
+                    normal: {
+                        show: true,
+                        position: 'top'
+                    }
+                },
+                areaStyle: {normal: {}},
+                data: web_arr
+            }
+           ]
+       };
+       // 使用刚指定的配置项和数据显示图表。
+       myChart.setOption(option);
+   }
+</script>
+</body>
+</html>

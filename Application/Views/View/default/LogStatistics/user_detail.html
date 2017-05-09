@@ -8,70 +8,162 @@
     <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
-    <title>日志查看</title>
+    <script type="text/javascript" src="__PUBLIC__/js/echarts.min.js"></script>
+    <title>个人日志统计</title>
 </head>
 <body>
+
+<div id="main" style="width: 100%;height:800px;"></div>
+
 <table class="table table-hover">
     <tr>
         <td>序号</td>
+        <td>参数</td>
+        <td>页面</td>
+        <td>时长(秒)</td>
         <td>用户</td>
         <td>ip</td>
-        <td>页面</td>
         <td>操作对象</td>
-        <td>参数</td>
         <td>操作方式</td>
         <td>操作结果</td>
         <td>时间</td>
-        <td>时长(秒)</td>
     </tr>
     <volist name="details" id="vo">
         <tr class="success">
             <td>{$i}</td>
+            <td>{$vo.param}</td>
+            <td>{$vo.title}</td>
+            <td class = "duration">{$vo.duration}</td>
             <td>{$vo.uid}</td>
             <td>{$vo.ip}</td>
-            <td>{$vo.title}</td>
             <td>{$vo.page}</td>
-            <td>{$vo.param}</td>
             <td>{$vo.oper}</td>
             <td>{$vo.result}</td>
             <td>{$vo.now}</td>
-            <td class = "duration">{$vo.duration}</td>
         </tr>
     </volist>
 </table>
 </body>
 <script>
-    $(document).ready(function(){
-        $('.duration').each(function(){
+    function color_duration() {
+        $('.duration').each(function () {
             var d = parseInt($(this).text());
-            $(this).css("background-color","white");
-            if (d>300){
-                $(this).text("离开("+d+"s)");
-                $(this).css("background-color","rgb(255,0,255)");
-            }else if (d==-1){
+            $(this).css("background-color", "white");
+            if (d > 300) {
+                $(this).text("离开(" + d + "s)");
+                $(this).css("background-color", "rgb(255,100,255)");
+            } else if (d == -1) {
                 $(this).text("末次打开(未知)");
-            }else if (d==-2){
+                $(this).css("background-color", "rgb(255,0,255)");
+            } else if (d == -2) {
                 $(this).text("未统计");
-            }else if (d>-1 && d<2){
-                $(this).text("极短("+d+"s)");
-                $(this).css("background-color","rgb(225,255,225)");
-            }else if (d>1 && d<6){
-                $(this).text("短("+d+"s)");
-                $(this).css("background-color","rgb(205,255,205)");
-            }else if (d>5 && d<11){
-                $(this).text("中("+d+"s)");
-                $(this).css("background-color","rgb(175,255,175)");
-            }else if (d>9 && d<61){
-                $(this).text("长("+d+"s)");
-                $(this).css("background-color","rgb(150,255,150)");
-            }else if (d>59 && d<301){
-                $(this).text("极长("+d+"s)");
-                $(this).css("background-color","rgb(120,255,120)");
-            }else{
-                $(this).text("报错，请通知开发("+d+"s)");
-                $(this).css("background-color","red");
+            } else if (d > -1 && d < 2) {
+                $(this).text("极短(" + d + "s)");
+                $(this).css("background-color", "rgb(225,255,225)");
+            } else if (d > 1 && d < 6) {
+                $(this).text("短(" + d + "s)");
+                $(this).css("background-color", "rgb(205,255,205)");
+            } else if (d > 5 && d < 11) {
+                $(this).text("中(" + d + "s)");
+                $(this).css("background-color", "rgb(175,255,175)");
+            } else if (d > 9 && d < 61) {
+                $(this).text("长(" + d + "s)");
+                $(this).css("background-color", "rgb(150,255,150)");
+            } else if (d > 59 && d < 301) {
+                $(this).text("极长(" + d + "s)");
+                $(this).css("background-color", "rgb(120,255,120)");
+            } else {
+                $(this).text("报错，请通知开发(" + d + "s)");
+                $(this).css("background-color", "red");
             }
         });
+    }
+    var chart_data;
+    function get_ajax_data() {
+        $.ajax({
+            url: "{:U('LogStatistics/user_detail_ajax')}?uid={$user_info.uid}&date={$date}",
+            type: "GET",
+            error: function (e) {
+                alert(e);
+            },
+            success: function (str_data) {
+                chart_data = JSON.parse(str_data);
+                console.log(chart_data);
+                draw();
+            }
+        });
+    }
+
+    function draw() {
+//        app.title = '水印 - ECharts 下载统计';
+        var myChart = echarts.init(document.getElementById('main'));
+        var axisData = Object.keys(chart_data).map(function (key) {
+            return chart_data[key]['title'];
+        });
+
+        var data = Object.keys(chart_data).map(function (key) {
+            var a = parseInt(chart_data[key]['duration']);
+            return (a>300)?300:a; // 最多三百秒
+        });
+        var links = data.map(function (item, i) {
+            return {
+                source: i,
+                target: i + 1
+            };
+        });
+        console.log(axisData);
+        console.log(data);
+        console.log(links);
+
+        links.pop();
+        var option = {
+            title: {
+                text: '用户({$user_info.user_name})停留顺序'
+            },
+            tooltip: {},
+            xAxis: {
+                type : 'category',
+                boundaryGap : false,
+                data : axisData
+            },
+            yAxis: {
+                type : 'value'
+            },
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            series: [
+                {
+                    type: 'graph',
+                    layout: 'none',
+                    coordinateSystem: 'cartesian2d',
+                    symbolSize: 40,
+                    label: {
+                        normal: {
+                            show: true,
+                            position: 'top'
+                        }
+                    },
+                    edgeSymbol: ['circle', 'arrow'],
+                    edgeSymbolSize: [4, 10],
+                    data: data,
+                    links: links,
+                    lineStyle: {
+                        normal: {
+                            color: '#2f4554'
+                        }
+                    }
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    }
+    $(document).ready(function(){
+        color_duration();
+        get_ajax_data();
     });
 </script>
 </html>

@@ -9,18 +9,23 @@
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
-    <title>日志查看</title>
+    <script type="text/javascript" src="__PUBLIC__/js/echarts.min.js"></script>
+    <title>{$date}用户行为统计</title>
 </head>
 <body>
-<div class="container">
-    <div class="row">
-        <div class="col-md-4"><a class="btn btn-primary" href="{:U('Views/LogStatistics/show')}?date={$prev_date}">前一天</a>
-        </div>
-        <div class="col-md-4"><h4>{$date}</h4></div>
-        <div class="col-md-4"><a class="btn btn-primary" href="{:U('Views/LogStatistics/show')}?date={$next_date}">后一天</a>
-        </div>
-    </div>
-</div>
+<table class="table table-hover text-center" style="table-layout: fixed">
+    <tr>
+        <td><a class="btn" href="{:U('Views/LogStatistics/show')}?date={$prev_date}">前一天</a></td>
+        <td><h4>{$date}</h4></td>
+        <td><a class="btn" href="{:U('Views/LogStatistics/show')}?date={$next_date}">后一天</a></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/page')}?date={$date}">按页面统计</a></td>
+        <td></td>
+    </tr>
+</table>
+<div id="main" style="width: 100%;height:800px;"></div>
 <table class="table table-hover">
 
     <tr>
@@ -44,12 +49,95 @@
             <td><a href="{:U('Views/LogStatistics/user_detail')}?uid={$vo.uid}&date={$date}">详细</a></td>
         </tr>
     </volist>
-    <!--<tr class="success">-->
-    <!--<td>TB - Monthly</td>-->
-    <!--<td>01/04/2012</td>-->
-    <!--<td>Approved</td>-->
-    <!--<td><a>详细</a></td>-->
-    <!--</tr>-->
 </table>
 </body>
+<script>
+    var chart_data;
+
+    function get_ajax_data() {
+
+
+        $.ajax({
+            url: "{:U('LogStatistics/show_ajax')}?date={$date}",
+            type: "GET",
+            error: function (e) {
+                alert(e);
+            },
+            success: function (str_data) {
+                chart_data = JSON.parse(str_data);
+                console.log(chart_data);
+                draw();
+            }
+        });
+    }
+
+    function draw() {
+//        app.title = '水印 - ECharts 下载统计';
+        var myChart = echarts.init(document.getElementById('main'));
+
+        option = {
+            color: ['#3398DB'],
+            tooltip : {
+                trigger: 'axis',
+                axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                    type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                }
+            },
+            title: [{
+                text: '用户操作次数',
+                x: '50%',
+                textAlign: 'center'
+            }],
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    data : Object.keys(chart_data).map(function (key) {
+                        return chart_data[key]['user_name'];
+                    }),
+                    axisTick: {
+                        alignWithLabel: true
+                    }
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            toolbox: {
+                feature: {
+                    saveAsImage: {}
+                }
+            },
+            series : [
+                {
+                    name:'点击次数',
+                    type:'bar',
+                    barWidth: '60%',
+                    data:Object.keys(chart_data).map(function (key) {
+                        return chart_data[key]['b'];
+                    })
+                }
+            ]
+        };
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+        myChart.on('click', function (params) {
+            console.log(params);
+            window.open("{:U('Views/LogStatistics/user_detail')}?date={$date}&uid=" + chart_data[params.dataIndex]['uid']);
+
+        });
+    }
+
+    $(document).ready(function () {
+        get_ajax_data();
+    });
+</script>
 </html>

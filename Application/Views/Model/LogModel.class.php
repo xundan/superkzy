@@ -42,6 +42,8 @@ class LogModel extends Model
         return $res;
     }
 
+    //更新时长的方法
+
     /**
      * 按日期更新log表的duration字段
      * @param $day string 日期
@@ -112,5 +114,17 @@ class LogModel extends Model
             $result = $result && $res;
         }
         return $result;
+    }
+
+    // 统计的方法
+
+    /**
+     * 按日期对页面时长和点击量进行统计
+     * @param $date
+     * @return mixed
+     */
+    public function group_page_by_title($date){
+        //SELECT sum(duration) as d,count(*) as c,title from ck_log where oper='browse'and now like "2017-05-01%" group by title ORDER BY c DESC
+        return $this->field("sum(duration) as d,count(*) as c,avg(duration) as a,title")->where("oper='browse'and now like '$date%'")->group('title')->order('c desc')->select();
     }
 }

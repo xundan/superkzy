@@ -10,6 +10,7 @@ namespace Views\Controller;
 
 
 use Think\Controller;
+use Views\Model\MessageModel;
 
 class MessageStatisticController extends Controller
 {
@@ -77,5 +78,24 @@ class MessageStatisticController extends Controller
         date_default_timezone_set("Asia/Shanghai");
         $result = date("Y-m-d H:i:s", $date);
         return $result;
+    }
+
+    public function statistic_all(){
+        $Msg = new MessageModel();
+        $this->assign("res",$Msg->statistics_by_day());
+        $this->display();
+    }
+
+    public function all_chart(){
+        $this->display();
+    }
+    public function statistics(){
+        $Msg = new MessageModel();
+        $data = array();
+        array_push($data, $Msg->all_statistics_by_day());
+        array_push($data, $Msg->plain_statistics_by_day());
+        array_push($data, $Msg->wx_mp_statistics_by_day());
+        array_push($data, $Msg->web_statistics_by_day());
+        echo json_encode($data);
     }
 }
