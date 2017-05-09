@@ -9,11 +9,10 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/js/echarts.min.js"></script>
-    <title>{$s_date}->{$e_date}个人日志统计</title>
+    <title>{$s_date}->{$e_date}电话被呼统计</title>
 </head>
 <body>
-
-<h1>{$s_date}->{$e_date}个人日志统计</h1>
+<h1>{$s_date}->{$e_date}电话被呼统计</h1>
 <table class="table table-hover text-center" style="table-layout: fixed">
     <tr>
         <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/show')}?s_date={$s_date}&e_date={$e_date}">个人统计总页</a></td>
@@ -26,8 +25,6 @@
     </tr>
 
 </table>
-<div id="main" style="width: 100%;height:800px;"></div>
-
 <table class="table table-hover">
     <tr>
         <td>序号</td>
@@ -40,7 +37,6 @@
         <td>操作方式</td>
         <td>操作结果</td>
         <td>时间</td>
-        <td>跳转</td>
     </tr>
     <volist name="details" id="vo">
         <tr class="success">
@@ -48,13 +44,12 @@
             <td>{$vo.param}</td>
             <td>{$vo.title}</td>
             <td class = "duration">{$vo.duration}</td>
-            <td>{$vo.uid}</td>
+            <td><a href="{:U('Views/LogStatistics/user_to_dial_detail')}?uid={$vo.uid}&s_date={$s_date}&e_date={$e_date}">{$vo.uid}</a></td>
             <td>{$vo.ip}</td>
             <td>{$vo.page}</td>
             <td>{$vo.oper}</td>
             <td>{$vo.result}</td>
             <td>{$vo.now}</td>
-            <td><a href="{:U('Views/LogStatistics/page_detail')}?title={$vo.title}&s_date={$s_date}&e_date={$e_date}">同期页面操作</a></td>
         </tr>
     </volist>
 </table>
@@ -93,92 +88,8 @@
             }
         });
     }
-    var chart_data;
-    function get_ajax_data() {
-        $.ajax({
-            url: "{:U('LogStatistics/user_detail_ajax')}?uid={$user_info.uid}&s_date={$s_date}&e_date={$e_date}",
-            type: "GET",
-            error: function (e) {
-                alert(e);
-            },
-            success: function (str_data) {
-                chart_data = JSON.parse(str_data);
-                console.log(chart_data);
-                draw();
-            }
-        });
-    }
-
-    function draw() {
-//        app.title = '水印 - ECharts 下载统计';
-        var myChart = echarts.init(document.getElementById('main'));
-        var axisData = Object.keys(chart_data).map(function (key) {
-            return chart_data[key]['title'];
-        });
-
-        var data = Object.keys(chart_data).map(function (key) {
-            var a = parseInt(chart_data[key]['duration']);
-            return (a>300)?300:a; // 最多三百秒
-        });
-        var links = data.map(function (item, i) {
-            return {
-                source: i,
-                target: i + 1
-            };
-        });
-        console.log(axisData);
-        console.log(data);
-        console.log(links);
-
-        links.pop();
-        var option = {
-            title: {
-                text: '用户({$user_info.user_name})停留顺序'
-            },
-            tooltip: {},
-            xAxis: {
-                type : 'category',
-                boundaryGap : false,
-                data : axisData
-            },
-            yAxis: {
-                type : 'value'
-            },
-            toolbox: {
-                feature: {
-                    saveAsImage: {}
-                }
-            },
-            series: [
-                {
-                    type: 'graph',
-                    layout: 'none',
-                    coordinateSystem: 'cartesian2d',
-                    symbolSize: 40,
-                    label: {
-                        normal: {
-                            show: true,
-                            position: 'top'
-                        }
-                    },
-                    edgeSymbol: ['circle', 'arrow'],
-                    edgeSymbolSize: [4, 10],
-                    data: data,
-                    links: links,
-                    lineStyle: {
-                        normal: {
-                            color: '#2f4554'
-                        }
-                    }
-                }
-            ]
-        };
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-    }
     $(document).ready(function(){
         color_duration();
-        get_ajax_data();
     });
 </script>
 </html>

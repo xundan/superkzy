@@ -10,20 +10,34 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/js/echarts.min.js"></script>
-    <title>{$date}页面统计</title>
+    <title>{$s_date}->{$e_date}页面统计</title>
 </head>
 <body>
+<h1>{$s_date}->{$e_date}页面统计</h1>
 <table class="table table-hover text-center" style="table-layout: fixed">
     <tr>
-        <td><a class="btn" href="{:U('Views/LogStatistics/page')}?date={$prev_date}">前一天</a></td>
-        <td><h4>{$date}</h4></td>
-        <td><a class="btn" href="{:U('Views/LogStatistics/page')}?date={$next_date}">后一天</a></td>
+        <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/show')}?s_date={$s_date}&e_date={$e_date}">个人统计总页</a></td>
+        <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/page')}?s_date={$s_date}&e_date={$e_date}">页面统计总页</a></td>
+        <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/oper')}?s_date={$s_date}&e_date={$e_date}">操作统计总页</a></td>
+        <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/dial')}?s_date={$s_date}&e_date={$e_date}">电话呼入统计总页</a></td>
+        <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/user_to_dial')}?s_date={$s_date}&e_date={$e_date}">电话呼出统计总页</a></td>
+        <td><a class="btn btn-warning" href="{:U('Views/LogStatistics/dial_web')}?s_date={$s_date}&e_date={$e_date}">电话双向统计总页</a></td>
+        <td><a class="btn btn-warning" href="{:U('Views/MessageStatistic/statistic_all')}">信息总量统计总页</a></td>
+    </tr>
+
+</table>
+<table class="table table-hover text-center" style="table-layout: fixed">
+    <tr>
+        <td><a class="btn" href="{:U('Views/LogStatistics/page')}?s_date={$prev_s_date}&e_date={$prev_e_date}">前七天</a></td>
+        <td><h4>{$s_date}->{$e_date}</h4></td>
+        <td><a class="btn" href="{:U('Views/LogStatistics/page')}?s_date={$next_s_date}&e_date={$next_e_date}">后七天</a></td>
     </tr>
     <tr>
-        <td></td>
-        <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/show')}?date={$date}">按用户统计</a></td>
-        <td></td>
+        <td><label for="s_picker">起始日期：</label><input id="s_picker" type="date" value="{$s_date}"/></td>
+        <td><label for="e_picker">结束日期：</label><input id="e_picker" type="date" value="{$e_date}"/></td>
+        <td><a class="btn btn-primary" href="javascript:void(0);" onclick="select_date()">自定义时长查询(不包含结束日期)</a></td>
     </tr>
+
 </table>
 
 <div id="main" style="width: 100%;height:800px;"></div>
@@ -45,7 +59,7 @@
             <td>{$vo.c}</td>
             <td>{$vo.d}</td>
             <td class="duration">{$vo.a}</td>
-            <td><a href="{:U('Views/LogStatistics/page_detail')}?title={$vo.title}&date={$date}">详细</a></td>
+            <td><a href="{:U('Views/LogStatistics/page_detail')}?title={$vo.title}&s_date={$s_date}&e_date={$e_date}">详细</a></td>
         </tr>
     </volist>
 </table>
@@ -71,17 +85,17 @@
         });
     }
 
-    var c_chart={}, a_chart={}, d_chart={}, c_max = 0, a_max = 0, c_all = 0;
+    var data, c_chart={}, a_chart={}, d_chart={}, c_max = 0, a_max = 0, c_all = 0;
 
     function get_ajax_data() {
         $.ajax({
-            url: "{:U('LogStatistics/page_ajax')}?date={$date}",
+            url: "{:U('LogStatistics/page_ajax')}?s_date={$s_date}&e_date={$e_date}",
             type: "GET",
             error: function (e) {
-                alert(e);
+                alert("错误："+ e.name);
             },
             success: function (str_data) {
-                var data = JSON.parse(str_data);
+                data = JSON.parse(str_data);
                 console.log(data);
                 $.each(data, function (i, row) {
                     var c = parseInt(row['c']);
@@ -275,11 +289,22 @@
         };
         // 使用刚指定的配置项和数据显示图表。
         myChart.setOption(option);
+
+        myChart.on('click', function (params) {
+            console.log(params);
+            window.open("{:U('Views/LogStatistics/page_detail')}?s_date={$s_date}&e_date={$e_date}&title=" + data[params.dataIndex]['title']);
+        });
     }
 
     $(document).ready(function () {
         color_bg();
         get_ajax_data();
     });
+
+    function select_date(){
+        var s_date = $("#s_picker").val();
+        var e_date = $("#e_picker").val();
+        window.location.href = "{:U('Views/LogStatistics/page')}?s_date="+s_date+"&e_date="+e_date;
+    }
 </script>
 </html>

@@ -29,16 +29,70 @@ class LogModel extends Model
         '_pk' => "id",
     );
 
-    public function all_by_date($date){
-        $res = $this->join('ck_user on ck_user.uid = ck_log.uid')->field('ck_log.uid,user_name,role_id,max(now) as a,count(*) as b')->where("now like '$date%'")->group('uid')->order("a")->select();
+    // 统计的方法
+
+    public function all_by_date($s_date,$e_date){
+        $res = $this->join('ck_user on ck_user.uid = ck_log.uid')->field('ck_log.uid,user_name,role_id,max(now) as a,count(*) as b')->where("now>'$s_date' and now<'$e_date'")->group('uid')->order("a")->select();
         return $res;
     }
 
-    public function detail_by_uid($uid, $date){
+    public function detail_by_uid($uid, $s_date,$e_date){
         if (!$uid) return false;
-        $res = $this->field("uid,ip,title,page,param,oper,result,now,duration")->where("uid = $uid and now like '$date%'")->order("now")->select();
+        $res = $this->field("uid,ip,title,page,param,oper,result,now,duration")->where("uid = $uid and now>'$s_date' and now<'$e_date'")->order("now")->select();
         $user = M('ck_user')->where(array('uid'=>$uid))->find();
         $res['user'] = $user;
+        return $res;
+    }
+
+    /**
+     * 按日期对页面时长和点击量进行统计
+     * @param $s_date
+     * @param $e_date
+     * @return mixed
+     */
+    public function all_by_title($s_date, $e_date){
+        //SELECT sum(duration) as d,count(*) as c,title from ck_log where oper='browse'and now like "2017-05-01%" group by title ORDER BY c DESC
+        return $this->field("sum(duration) as d,count(*) as c,avg(duration) as a,title")->where("oper='browse'and now>'$s_date' and now<'$e_date'")->group('title')->order('c desc')->select();
+    }
+
+    public function detail_by_title($title, $s_date,$e_date){
+        if (!$title) return false;
+        $res = $this->field("uid,ip,title,page,param,oper,result,now,duration")->where("title = '$title' and now>'$s_date' and now<'$e_date'")->order("now")->select();
+        return $res;
+    }
+
+    public function all_by_oper($s_date,$e_date){
+        return $this->field("count(*) as c, param, oper, title")->where("oper!='browse'and now>'$s_date' and now<'$e_date'")->group('param, title')->order('c desc')->select();
+    }
+
+    public function detail_by_oper($title,$oper, $s_date,$e_date){
+        if (!$title) return false;
+        $res = $this->field("uid,ip,title,page,param,oper,result,now,duration")->where("title = '$title' and oper='$oper' and now>'$s_date' and now<'$e_date'")->order("now")->select();
+        return $res;
+    }
+
+    public function all_by_dial($s_date,$e_date){
+        return $this->field("count(*) as c, param, oper")->where("oper='dial'and now>'$s_date' and now<'$e_date'")->group('param')->order('c desc')->select();
+    }
+
+    public function detail_by_dial($phone, $s_date,$e_date){
+        if (!$phone) return false;
+        $res = $this->field("uid,ip,title,page,param,oper,result,now,duration")->where("oper='dial' and param='$phone' and now>'$s_date' and now<'$e_date'")->order("now")->select();
+        return $res;
+    }
+
+    public function all_user_to_dial($s_date,$e_date){
+        return $this->join('ck_user on ck_user.uid = ck_log.uid')->field("user_name, ck_log.uid as u,count(param) as c")->where("oper='dial'and now>'$s_date' and now<'$e_date'")->group('u')->order('c desc')->select();
+    }
+
+    public function detail_user_to_dial($uid, $s_date,$e_date){
+        if (!$uid) return false;
+        $res = $this->field("uid,ip,title,page,param,oper,result,now,duration")->where("uid = '$uid' and oper='dial' and now>'$s_date' and now<'$e_date'")->order("now")->select();
+        return $res;
+    }
+
+    public function dial_web($s_date,$e_date){
+        $res = $this->join('ck_user on ck_user.uid = ck_log.uid')->join('ck_messages on ck_messages.owner = ck_log.param')->field('user_name, ck_log.uid as u,param, ck_messages.sender as s,count(param) as c')->where("oper='dial'and now>'$s_date' and now<'$e_date'")->group('param,ck_log.uid')->order("c desc")->select();
         return $res;
     }
 
@@ -116,15 +170,4 @@ class LogModel extends Model
         return $result;
     }
 
-    // 统计的方法
-
-    /**
-     * 按日期对页面时长和点击量进行统计
-     * @param $date
-     * @return mixed
-     */
-    public function group_page_by_title($date){
-        //SELECT sum(duration) as d,count(*) as c,title from ck_log where oper='browse'and now like "2017-05-01%" group by title ORDER BY c DESC
-        return $this->field("sum(duration) as d,count(*) as c,avg(duration) as a,title")->where("oper='browse'and now like '$date%'")->group('title')->order('c desc')->select();
-    }
 }

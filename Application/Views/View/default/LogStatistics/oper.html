@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/js/echarts.min.js"></script>
+    <title>{$s_date}->{$e_date}页面统计</title>
+</head>
+<body>
+<h1>{$s_date}->{$e_date}页面统计</h1>
+
+<table class="table table-hover text-center" style="table-layout: fixed">
+    <tr>
+        <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/show')}?s_date={$s_date}&e_date={$e_date}">个人统计总页</a></td>
+        <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/page')}?s_date={$s_date}&e_date={$e_date}">页面统计总页</a></td>
+        <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/oper')}?s_date={$s_date}&e_date={$e_date}">操作统计总页</a></td>
+        <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/dial')}?s_date={$s_date}&e_date={$e_date}">电话呼入统计总页</a></td>
+        <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/user_to_dial')}?s_date={$s_date}&e_date={$e_date}">电话呼出统计总页</a></td>
+        <td><a class="btn btn-warning" href="{:U('Views/LogStatistics/dial_web')}?s_date={$s_date}&e_date={$e_date}">电话双向统计总页</a></td>
+        <td><a class="btn btn-warning" href="{:U('Views/MessageStatistic/statistic_all')}">信息总量统计总页</a></td>
+    </tr>
+
+</table>
+<table class="table table-hover text-center" style="table-layout: fixed">
+    <tr>
+        <td><a class="btn" href="{:U('Views/LogStatistics/oper')}?s_date={$prev_s_date}&e_date={$prev_e_date}">前七天</a></td>
+        <td><h4>{$s_date}->{$e_date}</h4></td>
+        <td><a class="btn" href="{:U('Views/LogStatistics/oper')}?s_date={$next_s_date}&e_date={$next_e_date}">后七天</a></td>
+    </tr>
+    <tr>
+        <td><label for="s_picker">起始日期：</label><input id="s_picker" type="date" value="{$s_date}"/></td>
+        <td><label for="e_picker">结束日期：</label><input id="e_picker" type="date" value="{$e_date}"/></td>
+        <td><a class="btn btn-primary" href="javascript:void(0);" onclick="select_date()">自定义时长查询(不包含结束日期)</a></td>
+    </tr>
+
+</table>
+
+<table class="table table-hover">
+
+    <tr>
+        <td>序号</td>
+        <td>页面</td>
+        <td>分类</td>
+        <td>操作</td>
+        <td>总操作数量</td>
+        <td>详细</td>
+    </tr>
+    <volist name="res" id="vo">
+        <tr class="success">
+            <td>{$i}</td>
+            <td>{$vo.title}</td>
+            <td class="operation">{$vo.oper}</td>
+            <td>{$vo.param}</td>
+            <td>{$vo.c}</td>
+            <!--<td class="duration">{$vo.a}</td>-->
+            <td><a href="{:U('Views/LogStatistics/oper_detail')}?title={$vo.title}&oper={$vo.oper}&s_date={$s_date}&e_date={$e_date}">详细</a></td>
+        </tr>
+    </volist>
+</table>
+</body>
+<script>
+    function color_bg() {
+        $('.operation').each(function () {
+            var d = $(this).text();
+            $(this).css("background-color", "white");
+            if (d == 'click') {
+                $(this).css("background-color", "lightgreen");
+            } else if (d == 'submit') {
+                $(this).css("background-color", "lightblue");
+            } else if (d == 'scroll') {
+                $(this).css("background-color", "lightgrey");
+            } else if (d == 'collect') {
+                $(this).css("background-color", "yellow");
+            } else if (d == 'dial') {
+                $(this).css("background-color", "red");
+            } else if (d == 'share') {
+                $(this).css("background-color", "pink");
+            } else if (d == 'filter') {
+                $(this).css("background-color", "orange");
+            } else if (d == 'search') {
+                $(this).css("background-color", "coral");
+            } else {
+                $(this).css("background-color", "brown");
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        color_bg();
+    });
+
+    function select_date(){
+        var s_date = $("#s_picker").val();
+        var e_date = $("#e_picker").val();
+        window.location.href = "{:U('Views/LogStatistics/oper')}?s_date="+s_date+"&e_date="+e_date;
+    }
+</script>
+</html>
