@@ -99,6 +99,7 @@
                 <td colspan="3">
                     <fieldset>
                         <legend>运费筛选(未启用)</legend>
+                        <div id="phone_number" style="display: none">{$data['phone_number]}</div>
                         <div id="area_start_select">起始地:</div><input type="text" name="area_start" id="area_start_text" placeholder="起始地">
                         <div id="area_end_select">终止地:</div><input type="text" name="area_end" id="area_end_text" placeholder="终止地">
                         <div id="freight">运费:</div><input type="number" name="freight" id="freight_text" placeholder="运费">
@@ -288,7 +289,7 @@ function all_choose(obj) {
             result_freight = freight;
         }
         var message_id = {$data['id']};
-
+        var phone_number = {data['phone_number']};
         console.log(area_start);
 //        console.log(result_area_start,result_area_end,result_freight,message_id);
 
@@ -297,8 +298,14 @@ function all_choose(obj) {
         $.ajax({
             type:"post",
             url:"{:U('DisplayMessages/freightSubmit')}",
-            data:{message_id:message_id,area_start_id:area_start,area_start_name:area_start_text,
-                area_end_id:area_end,area_end_name:area_end_text,freight_price:result_freight},
+            data:{
+                message_id:message_id,
+                phone_number:phone_number,
+                area_start_id:area_start,
+                area_start_name:area_start_text,
+                area_end_id:area_end,
+                area_end_name:area_end_text,
+                freight_price:result_freight},
             success:function(data){
                 $('#area_start_text').val('');
                 $('#area_end_text').val('');

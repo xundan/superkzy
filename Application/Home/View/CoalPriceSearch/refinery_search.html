@@ -20,7 +20,6 @@
 <body id="aaaa" style="background-color: #efeff4">
 <form name="call_back" id="call_back">
     <input type="hidden" name="select_category">
-    <input type="hidden" name="search_input">
     <input type="hidden" name="refinery_name">
 </form>
 <!--搜索框-->
@@ -43,58 +42,47 @@
         <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
             <div class="weui_cell" >
                 <div class="weui_cell_bd weui_cell_primary">
-                    <p id="search0" style="margin-bottom: 0"></p>
-                    <div id="search0_id" style="display: none"></div>
+                    <p id="search0" class="refinery_name" style="margin-bottom: 0"></p>
                 </div>
             </div>
         </a>
         <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
             <div class="weui_cell" >
                 <div class="weui_cell_bd weui_cell_primary">
-                    <p id="search1" style="margin-bottom: 0"></p>
-                    <div id="search1_id" style="display: none"></div>
+                    <p id="search1" class="refinery_name" style="margin-bottom: 0"></p>
                 </div>
             </div>
         </a>
         <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
             <div class="weui_cell" >
                 <div class="weui_cell_bd weui_cell_primary">
-                    <p id="search2" style="margin-bottom: 0"></p>
-                    <div id="search2_id" style="display: none"></div>
+                    <p id="search2" class="refinery_name" style="margin-bottom: 0"></p>
                 </div>
             </div>
         </a>
         <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
             <div class="weui_cell" >
                 <div class="weui_cell_bd weui_cell_primary">
-                    <p id="search3" style="margin-bottom: 0"></p>
-                    <div id="search3_id" style="display: none"></div>
+                    <p id="search3" class="refinery_name" style="margin-bottom: 0"></p>
                 </div>
             </div>
         </a>
         <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
             <div class="weui_cell" >
                 <div class="weui_cell_bd weui_cell_primary">
-                    <p id="search4" style="margin-bottom: 0"></p>
-                    <div id="search4_id" style="display: none"></div>
+                    <p id="search4" class="refinery_name" style="margin-bottom: 0"></p>
                 </div>
             </div>
         </a>
     </div>
 </div>
-<div>
-    最近搜索
-    <span>asd</span>
-    <span>asd</span>
-    <span>asd</span>
-    <span>asd</span>
-    <span>asd</span>
-    <span>asd</span>
+<div id="last_search">
+    &emsp;最近搜索<br/>
 </div>
-<div class="container" style="background-color: white;padding: 0;">
+<div class="" style="background-color: white;padding: 0;">
     <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">全部</button>
     <!--<button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">榆林</button>-->
-    <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">鄂尔多斯</button>
+    <button class="btn pull-left area_name" style="padding: 6px 0;;margin:1% 2.5%;width: 20%">鄂尔多斯</button>
     <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">山西</button>
     <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">神木</button>
     <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">榆阳</button>
@@ -105,9 +93,32 @@
         <tbody id="show_refinery">
         </tbody>
     </table>
+    <div class="pull-right" style="position: fixed;bottom:5%;right: 0;">
+        <a href="{:U('Feedback/feedback')}" style="text-decoration: underline !important;">
+            煤矿不全,煤价不准,或其他问题请点击这里哦
+        </a>
+
+    </div>
 </div>
 <?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
 </body>
+
+<!--页面载入-->
+<script>
+    $(function(){
+        if(cookie('last_refinery')){
+            var temp_last_refinery = cookie('last_refinery').split(',');
+            temp_last_refinery.forEach(function(v,k){
+                var span = document.createElement('span');
+//                span.innerHTML = "<span class='refinery_name' style='width: 25%;margin: 1% 2.5%'>"+v+"</span>";
+                span.innerHTML = v;
+                span.style.cssText = "width: 20%;margin: 0 2.5%;padding:0;font-size:6px";
+                span.setAttribute('class','btn btn-sm refinery_name');
+                document.getElementById('last_search').appendChild(span);
+            });
+        }else{}
+    })
+</script>
 
 <!--地址按钮选择样式及点选出现矿名-->
 <script>
@@ -122,12 +133,12 @@
             success: function (data) {
                 var insert_node = $('#show_refinery');
 //                var a = insert_node.html();
+                insert_node.html('');
                 var jsonObj = eval("(" + data + ")");
                 console.log(jsonObj);
                 var temp_string = "<tr>";
                 var col_count = 0;
                 $.each(jsonObj.refinery_name,function(k,val){
-                    console.log(val.refinery_name);
                     temp_string += "<td class='refinery_name'>"+val.refinery_name+"</td>";
                     col_count++;
                     if(col_count == 4){
@@ -136,7 +147,6 @@
                     }else{}
                 });
                 while ((4-col_count) > 0 && col_count!=0 ){
-                    console.log(col_count);
                     temp_string += "<td></td>";
                     col_count++;
                 }
@@ -156,6 +166,7 @@
         var $searchBar = $('#search_bar'),
             $searchText = $('#search_text'),
             $searchInput = $('#search_input'),
+            $searchShow = $('#search_show'),
             $searchClear = $('#search_clear'),
             $searchCancel = $('#search_cancel');
 
@@ -166,6 +177,7 @@
             hideSearchResult();
             $searchBar.removeClass('weui_search_focusing');
             $searchText.show();
+            $searchShow.hide();
         }
 
         $searchText.on('click', function(){
@@ -180,7 +192,7 @@
                     var $searchShow = $("#search_show");
                     if ($(this).val()) {
 //            console.log($(this).val());
-                        var url="{:U('AreaSearch/ajax_area_search')}";
+                        var url="{:U('CoalPriceSearch/ajax_refinery_search')}";
                         var querystring = $(this).val();
 //            console.log(querystring);
                         for(var i=0;i<5;i++){
@@ -190,14 +202,13 @@
                         $.ajax({
                             type:'post',
                             url:url,
-                            data:{querystr:querystring},
+                            data:{refinery_name:querystring},
                             dataType:'json',
                             success:function(data){
 //                console. eval("("+data+")");
                                 console.log(data);
                                 jQuery.each(data,function(k,val){
-                                    $('#search'+k).html(val.name);
-                                    $('#search'+k+'_id').html(val.id);
+                                    $('#search'+k).html(val.refinery_name);
                                 });
                             }
                         });
@@ -219,11 +230,57 @@
 
 <!--点击矿名跳转-->
 <script>
-    $('#show_refinery').on("click",".refinery_name",function(){
+    $('body').on("click",".refinery_name",function(){
         var refinery_name = $(this).html().trim();
-        cookie('refinery_name',refinery_name);
+        //存入历史cookie
+        //cookie('refinery_name',refinery_name);
+        if(cookie('last_refinery')){
+            var temp_last_refinery = cookie('last_refinery');
+            console.log(1,temp_last_refinery);
+            var temp_last_refinery_array = temp_last_refinery.split(',');
+            console.log('oldarray',temp_last_refinery_array);
+            var old_refinery_name_index = temp_last_refinery_array.indexOf(refinery_name);
+            console.log('index',old_refinery_name_index);
+            if(old_refinery_name_index >= 0){
+                console.log(11);
+                temp_last_refinery_array.splice(old_refinery_name_index,1);
+                console.log('del',temp_last_refinery_array);
+            }else{console.log(22)}
+            temp_last_refinery_array.splice(0,0,refinery_name);
+            console.log('add',temp_last_refinery_array);
+            var new_last_refinery_array = temp_last_refinery_array.slice(0,8);
+            console.log('length8',new_last_refinery_array);
+            var new_last_refinery_name = new_last_refinery_array.join(',');
+            console.log('newstring',new_last_refinery_name);
+            cookie('last_refinery',new_last_refinery_name);
+            console.log('last',cookie('last_refinery'));
+        }else{
+            cookie('last_refinery',refinery_name);
+        }
+        //更新页面cookie
+        var json_obj,source_cookie,source_cookie_obj,source_cookie_name;
+        if(cookie('source')){
+            json_obj = JSON.parse(cookie('source'));
+            source_cookie = json_obj.value;
+            source_cookie_obj = JSON.parse(source_cookie);
+            source_cookie_name = json_obj.name;
+            jQuery.each(source_cookie_obj,function(k,val){
+                if(val.name == 'select_category'){
+                    $('input[name=select_category]').val(val.value);
+                }
+                if(val.name == 'refinery_name') {
+                    val.value=refinery_name;
+                    $('input[name=refinery_name]').val(val.value);
+                }
+            });
+            cookie(source_cookie_name,JSON.stringify(source_cookie_obj));
+        }else{
+        }
+//        return false;
+        //填写表单
         $('input[name=refinery_name]').val(refinery_name);
         $('input[name=select_category]').val('search');
+        //地址跳转
         document.call_back.method = "post";
         document.call_back.action = "{:U('CoalPriceSearch/coal_price_search')}";
         document.call_back.submit();

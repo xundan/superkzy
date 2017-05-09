@@ -62,7 +62,9 @@ class OwnerOrderController extends ComController
     }
 
     public function wx_order_detail($id = null,$from=null){
-//        $this->assign_data($id);
+        $this->assign_data($id);
+//        $a = M('messages')->where(array('id'=>$id))->find();
+//        dump($a);
         $this->display();
     }
     /**

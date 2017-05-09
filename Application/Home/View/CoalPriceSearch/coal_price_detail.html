@@ -16,19 +16,31 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
     <!--<script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>-->
 </head>
-<body style="background-color: #efeff4;">
+<style>
+    td{
+        /*width: 80px !important;*/
+    }
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background-color: #f7f7f7
+    }
+</style>
+<body style="background-color: #efeff4">
 <!--订单展示栏-->
     <div class="tab-content">
         <volist name="message" id="data">
             <div class="weui_panel weui_panel_access" style=";border-radius: 5px">
-                <div class="text-center">{$data.refinery_name}------{$data.supply_company}</div>
+                <div class="container">
+                    <div style="font-size: 1.2em;color:grey;background-color: white">{$data.refinery_name}</div>
+                    <div style="font-size: 1.5em;color:red;background-color: white">{$data.supply_company}</div>
+                </div>
                 <hr style="margin-top: 0;margin-bottom: 8px;color: #ddd"/>
-                <table class="table table-condensed table-striped" style="margin: 0;table-layout: fixed">
+                <div style="width: 97%;overflow: scroll;">
+                <table class="table table-condensed table-striped" style="margin: 0;margin-left: 1.5%;table-layout: fixed">
                     <thead>
                     <tr>
-                        <th class="text-center" style="border-bottom: 1px solid #ddd">类别</th>
+                        <th class="text-center" style="border-bottom: 1px solid #ddd;width: 5em">类别</th>
                         <volist name="data['content'][0]['detailed_index']" id="val">
-                            <th class="text-center" style="border-bottom: 1px solid #ddd">{$val.index_name}</th>
+                            <th class="text-center" style="border-bottom: 1px solid #ddd;width: 3em">{$val.index_name}</th>
                         </volist>
                     </tr>
                     </thead>
@@ -45,6 +57,7 @@
                         </volist>
                     </tbody>
                 </table>
+                </div>
                 <span class="pull-right help-block" style="font-size: 12px">发布时间:{$data['update_time']|substr=0,10}</span>
             </div>
         </volist>

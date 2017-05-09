@@ -446,3 +446,40 @@ body {
 a{
     text-decoration: none !important;
 }
+
+.item_fake {
+    position: relative;
+    display: block;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    /*add for need padding: 13px 0;*/
+    padding: 5px 0;
+    text-align: center;
+    font-size: 15px;
+    -webkit-tap-highlight-color: transparent
+}
+
+.item_fake:after {
+    content: " ";
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 1px;
+    height: 100%;
+    border-right: 1px solid #ccc;
+    color: #ccc;
+    -webkit-transform-origin: 100% 0;
+    transform-origin: 100% 0;
+    -webkit-transform: scaleX(.5);
+    transform: scaleX(.5)
+}
+/*过期按钮禁用*/
+.btn-default.disabled, .btn-default.disabled.active, .btn-default.disabled.focus, .btn-default.disabled:active, .btn-default.disabled:focus, .btn-default.disabled:hover, .btn-default[disabled], .btn-default[disabled].active, .btn-default[disabled].focus, .btn-default[disabled]:active, .btn-default[disabled]:focus, .btn-default[disabled]:hover, fieldset[disabled] .btn-default, fieldset[disabled] .btn-default.active, fieldset[disabled] .btn-default.focus, fieldset[disabled] .btn-default:active, fieldset[disabled] .btn-default:focus, fieldset[disabled] .btn-default:hover {
+    background-color: #e6e6e6;
+    border-color: #ccc
+}
+
+body{
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}

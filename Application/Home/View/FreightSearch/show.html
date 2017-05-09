@@ -25,30 +25,31 @@
     <input type="hidden" name="page" id="page" value="1">
 </form>
 <!--导航标签-->
-<div class="panel-title" style="height: 5%;background-color: white;display: block">
+<div class="panel-title" style="height: 60px;background-color: white;display: block">
     <div id="myTab" class="row" style="height: 100%;">
-        <div class="text-center col-xs-5" style=";color: black;font-size: 1.2em;padding: 5px 0;font-weight: 100">
+        <div class="text-center col-xs-5" id="area_start_click" style="line-height: 50px;color: black;font-size: 1.2em;padding: 5px 0;font-weight: 100">
             <img src="__PUBLIC__/home/images/area_start_text.png" class="" style="height: 20px">
             <span id="area_start_html">点击选择</span>
-            <span class="glyphicon glyphicon-remove" style="font-weight: lighter;"></span>
+            <span id="area_start_remove" class="glyphicon glyphicon-remove" style="font-weight: lighter;"></span>
             <span class="weui_icon_clear_no_circle" style="color: black"></span>
             <!--<a href="javascript:" class="weui_icon_clear" id="search_clear"></a>-->
             <div id="area_start" style="display: none"></div>
         </div>
-        <div class="text-center col-xs-2" style=";color: black;font-size: 1.2em;padding: 5px 0;">
+        <div class="text-center col-xs-2" style="line-height: 50px;color: black;font-size: 1.2em;padding: 5px 0;">
             <!--<hr style="border-color: red;width: 10%;margin: 16px 0;display: inline"/>-->
-            ->
+            <span class="glyphicon glyphicon-arrow-right" style="color: red;font-size: 35px;"></span>
+            <!-- ->-->
         </div>
-        <div class="text-center col-xs-5" style="color: black;font-size: 1.2em;padding: 5px 0;">
+        <div class="text-center col-xs-5" id="area_end_click" style="line-height: 50px;color: black;font-size: 1.2em;padding: 5px 0;">
             <span id="area_end_html">点击选择</span>
-            <span class="glyphicon glyphicon-remove"></span>
+            <span id="area_end_remove" class="glyphicon glyphicon-remove"></span>
             <img src="__PUBLIC__/home/images/area_end_text.png" class="" style="height: 20px">
             <div id="area_end" style="display: none"></div>
         </div>
     </div>
 </div>
 <!--订单展示栏-->
-<div id="wrapper" style="top: 9px;margin-left: 2.5%;">
+<div id="wrapper" style="top: 33px;margin-left: 2.5%;">
     <div id="scroller">
         <div id="pullDown">
             <span class="pullDownIcon" style="float: left"></span>
@@ -56,43 +57,54 @@
         </div>
         <div class="tab-content">
             <ul id="search" class="tab-pane active" style="margin-top: 40px;list-style-type: none">
-                <div style=";background-color: white;border-radius: 5px;">
-                    <table style="width: 100%">
-                        <tr>
-                            <td class="help-block pull-right" style="margin: 0">
-                                asadas
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 0 10px;font-size: 1.2em">
-                                <img src="__PUBLIC__/home/images/area_start_text.png" class="" style="height: 20px">
-                                <span>aaaaa</span>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td style="padding: 0 10px;font-size: 1.2em">
-                                <img src="__PUBLIC__/home/images/area_end_text.png" class="" style="height: 20px">
-                                <span>aaaaa</span>
-                            </td>
-                        </tr>
-                    </table>
-                    <hr style="margin: 8px 0">
-                    <div>
-                        <a href="tel:" onclick='event.stopPropagation();' class="btn btn-default" style='text-decoration: none;color: black;border-color: #04bfc6'>
-                <span><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 15px">
-                    <span style="font-size: 1.2em">拨打电话</span></span>
-                        </a>
-                        <div class="pull-right" style="padding: 0 3px">
-                <span>
-                    <img src="__PUBLIC__/home/images/useless.png" style="height: 30px" onclick="asd(this)">
-                    <span style="color:#fb3e1e;margin-left: -3px" id="useful_count">123</span>
-                </span>
-                            <button style="margin-left: 12px" class="btn btn-default" data-toggle="modal" data-target="#feedback">报错</button>
-                        </div>
-                        <!--<button class="btn btn-default" style="background-color: red;color: blue;"><span class="glyphicon glyphicon-user"></span> asd</button>-->
-                        <!--<div style="background: url('__PUBLIC__/home/images/useless.png') no-repeat;"></div>-->
+                <if condition="$none eq 'empty'">
+                    <div class="text-center" style="color: red">
+                        查询不到消息啦哈哈哈哈！
                     </div>
-                </div>
+                </if>
+                <volist name="message" id="data">
+                    <div style=";background-color: white;border-radius: 5px;">
+                        <table style="width: 100%" onclick="window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/'+{$data['message_id']};">
+                            <tr>
+                                <td></td>
+                                <td class="help-block text-right" style="margin: 0">
+                                    {$data['record_time']|substr=0,10}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0 10px;font-size: 1.2em">
+                                    <img src="__PUBLIC__/home/images/area_start_text.png" class="" style="height: 20px">
+                                    <span class="highlight">{$data['area_start_name']}</span>
+                                </td>
+                                <td rowspan="2" class="text-right" style="padding: 0 10px;font-size: 2em;color: red">
+                                    ¥{$data['freight_price']}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 0 10px;font-size: 1.2em">
+                                    <img src="__PUBLIC__/home/images/area_end_text.png" class="" style="height: 20px">
+                                    <span class="highlight">{$data['area_end_name']}</span>
+                                </td>
+                            </tr>
+                        </table>
+                        <hr style="margin: 8px 0">
+                        <div style="margin-left: 3%;margin-bottom: 1%;padding-bottom: 2%">
+                            <a href="tel:{$data.phone_number}" onclick='event.stopPropagation();' class="btn btn-default" style='padding: 3px;text-decoration: none;color: #04bfc6;border-color: #04bfc6'>
+                                <span><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 15px">
+                                <span style="font-size: 1.2em">拨打电话</span></span>
+                            </a>
+                            <div class="pull-right" style="padding: 0 3px;">
+                                <!--<span>-->
+                                    <!--<img src="__PUBLIC__/home/images/useless.png" style="height: 30px" onclick="asd(this)">-->
+                                    <!--<span style="color:#fb3e1e;margin-left: -3px" id="useful_count">123</span>-->
+                                <!--</span>-->
+                                <button style="padding: 4px 8px;margin-left: 12px;color: #04bfc6;border-color: #04bfc6" class="btn btn-default" data-toggle="modal" data-target="#feedback" data-whatever="{$data['id']}">报错</button>
+                            </div>
+                            <!--<button class="btn btn-default" style="background-color: red;color: blue;"><span class="glyphicon glyphicon-user"></span> asd</button>-->
+                            <!--<div style="background: url('__PUBLIC__/home/images/useless.png') no-repeat;"></div>-->
+                        </div>
+                    </div>
+                </volist>
             </ul>
         </div>
         <div id="pullUp">
@@ -101,8 +113,52 @@
         </div>
     </div>
 </div>
+<!--克隆-->
+<span id="cloneObj" style="display: none;">
+    <div style=";background-color: white;border-radius: 5px;">
+        <table style="width: 100%" onclick="window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/'+{$data['message_id']};">
+            <tr>
+                <td></td>
+                <td class="help-block text-right" style="margin: 0">
+                    {$data['record_time']|substr=0,10}
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0 10px;font-size: 1.2em">
+                    <img src="__PUBLIC__/home/images/area_start_text.png" class="" style="height: 20px">
+                    <span class="highlight">{$data['area_start_name']}</span>
+                </td>
+                <td rowspan="2" class="text-right" style="padding: 0 10px;font-size: 2em;color: red">
+                    ¥{$data['freight_price']}
+                </td>
+            </tr>
+            <tr>
+                <td style="padding: 0 10px;font-size: 1.2em">
+                    <img src="__PUBLIC__/home/images/area_end_text.png" class="" style="height: 20px">
+                    <span class="highlight">{$data['area_end_name']}</span>
+                </td>
+            </tr>
+        </table>
+        <hr style="margin: 8px 0">
+        <div style="margin-left: 3%;margin-bottom: 1%;padding-bottom: 2%">
+            <a href="tel:{$data.phone_number}" onclick='event.stopPropagation();' class="btn btn-default" style='padding: 3px;text-decoration: none;color: #04bfc6;border-color: #04bfc6'>
+                                <span><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 15px">
+                                <span style="font-size: 1.2em">拨打电话</span></span>
+            </a>
+            <div class="pull-right" style="padding: 0 3px;">
+                <!--<span>-->
+                <!--<img src="__PUBLIC__/home/images/useless.png" style="height: 30px" onclick="asd(this)">-->
+                <!--<span style="color:#fb3e1e;margin-left: -3px" id="useful_count">123</span>-->
+                <!--</span>-->
+                <button style="padding: 4px 8px;margin-left: 12px;color: #04bfc6;border-color: #04bfc6" class="btn btn-default" data-toggle="modal" data-target="#feedback" data-whatever="{$data['id']}">报错</button>
+            </div>
+            <!--<button class="btn btn-default" style="background-color: red;color: blue;"><span class="glyphicon glyphicon-user"></span> asd</button>-->
+            <!--<div style="background: url('__PUBLIC__/home/images/useless.png') no-repeat;"></div>-->
+        </div>
+    </div>
+</span>
 <!-- Modal -->
-<div class="modal fade" id="feedback" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade bs-example-modal-lg" id="feedback" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="top:30%">
         <div class="modal-content">
             <div class="modal-header" style="border: none">
@@ -110,13 +166,14 @@
                     <span aria-hidden="true">&times;</span>
                     <span class="sr-only">Close</span>
                 </button>
-                <h5 class="modal-title" id="myModalLabel" style="color: grey;">报错</h5>
+                <h5 class="modal-title" id="myModalLabel" style="color: grey;">错误信息提交</h5>
             </div>
             <div class="modal-body" style="padding-top: 0;padding-bottom: 0">
-                <textarea name="feedback" class="form-control" rows="5" placeholder="您可以输入报错信息，也可以直接提交" style="resize: none;width: 100%"></textarea>
+                <input id="freight_id" name="freight_id" type="hidden">
+                <textarea name="feedback" id="feedback_input" class="form-control" rows="5" placeholder="您可以输入报错信息，也可以直接提交" style="resize: none;width: 100%"></textarea>
             </div>
             <div class="modal-footer" style="border: none">
-                <button type="button" class="btn btn-primary">提交</button>
+                <button id="feedback_submit" type="button" class="btn btn-primary" style="border-color: #ccc;background-color: #04bfc6">提交</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
             </div>
         </div>
@@ -128,6 +185,7 @@
     $(function () {
         var temp_load = cookie('freight_search');
         var temp_load_obj = JSON.parse(cookie('freight_search'));
+        console.log(temp_load_obj);
         jQuery.each(temp_load_obj,function(k,val){
             if(val.name == 'area_start'){
                 if(val.value != '') {
@@ -154,45 +212,13 @@
         });
         console.log('form');
         console.log(JSON.stringify($('#tag_search').serializeArray()));
-        setTimeout(pullDownAction2,200);
+        refresh_hl();
     });
-//    function pullDownAction2() {
-//        console.log('auto-down');
-//        var area_start = $('input[name=area_start]').val();
-//        var area_start_name = $('input[name=area_start_name]').val();
-//        var area_end = $('input[name=area_end]').val();
-//        var area_end_name = $('input[name=area_end_name]').val();
-//        $.ajax({
-//            type: "post",
-//            url: "{:U('FreightSearch/show')}",
-//            data: {
-//                isAjax: 1,
-//                area_start:area_start,
-//                area_start_name:area_start_name,
-//                area_end:area_end,
-//                area_end_name:area_end_name
-//            },
-//            success: function (data) {
-//                console.log('success');
-//                var jsonObj = eval("(" + data + ")");
-//                console.log(jsonObj);
-//                if (jsonObj.msg) {
-//                    $('#page').val(1);
-//                    $('#where_cond_json').html(jsonObj.where_cond_json);
-//                    $('#stage').html(jsonObj.stage);
-//                }
-//                else {
-//                }
-//                myScroll.refresh();
-//                refresh_hl();
-//            }
-//        });
-//    }
 </script>
 <!--点击地址选择-->
 <script>
     //起始地
-    $('#myTab div:eq(0)').click(function () {
+    $('#area_start_click').click(function () {
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
         cookie('start_or_end', 'start');
@@ -207,7 +233,7 @@
         window.location.href = goto_url;
     });
     //目的地
-    $('#myTab a:eq(2)').click(function () {
+    $('#area_end_click').click(function () {
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
         cookie('start_or_end', 'end');
@@ -220,17 +246,17 @@
         cookie('source',JSON.stringify(source));
         //地址跳转
         window.location.href = goto_url;
-    })
-</script>
-<!--滚动功能-->
-<script>
-    var myScroll, pullDownEl, pullDownOffset, pullUpEl, pullUpOffset;
-    var time_now, update_time;
-    /**下拉刷新 （自定义实现此方法）
-     *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
-     */
-    function pullDownAction() {
-        console.log('down');
+    });
+    //删除起始地
+    $('#area_start_remove').click(function(event){
+        event.stopPropagation();
+        console.log('remove_start_area');
+        //更改表单数据
+        $('input[name=area_start]').val('');
+        $('input[name=area_start_name]').val('');
+        //更新页面cookie
+        cookie('freight_search',JSON.stringify($('#tag_search').serializeArray()));
+        //取表单数据
         var area_start = $('input[name=area_start]').val();
         var area_start_name = $('input[name=area_start_name]').val();
         var area_end = $('input[name=area_end]').val();
@@ -247,8 +273,124 @@
             },
             success: function (data) {
                 console.log('success');
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+                $('#search').html('');
+                $('#area_start_html').html('点击选择');
+                $('#page').val(1);
+                $.each(jsonObj.data,function(k,val){
+                    var tempObj=$("#cloneObj").children("div").clone(true);
+                    tempObj.children('table').attr('onclick',"window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/"+val.message_id+"';");
+                    tempObj.children('table').children('tbody').children('tr').eq(0).children('td').eq(1).html(val.record_time.substr(0,10));
+                    tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(0).children('span').html(val.area_start_name);
+                    tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(1).html('¥'+val.freight_price);
+                    tempObj.children('table').children('tbody').children('tr').eq(2).children('td').children('span').html(val.area_end_name);
+                    tempObj.children('div').children('a').attr('href','tel:'+val.phone_number);
+                    tempObj.children('div').children('div').children('button').attr('data-whatever',val.id);
+                    tempObj.appendTo("#search");
+                });
                 myScroll.refresh();
                 refresh_hl();
+                flag = true;
+            }
+        });
+        myScroll.refresh();
+    });
+    //删除目的地
+    $('#area_end_remove').click(function(event){
+        event.stopPropagation();
+        console.log('remove_end_area',flag);
+        //更改表单数据
+        $('input[name=area_end]').val('');
+        $('input[name=area_end_name]').val('');
+        //更新页面cookie
+        cookie('freight_search',JSON.stringify($('#tag_search').serializeArray()));
+        //取表单数据
+        var area_start = $('input[name=area_start]').val();
+        var area_start_name = $('input[name=area_start_name]').val();
+        var area_end = $('input[name=area_end]').val();
+        var area_end_name = $('input[name=area_end_name]').val();
+        $.ajax({
+            type: "post",
+            url: "{:U('FreightSearch/show')}",
+            data: {
+                isAjax: 1,
+                area_start:area_start,
+                area_start_name:area_start_name,
+                area_end:area_end,
+                area_end_name:area_end_name
+            },
+            success: function (data) {
+                console.log('success',flag);
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+                $('#search').html('');
+                $('#area_end_html').html('点击选择');
+                $('#page').val(1);
+                $.each(jsonObj.data,function(k,val){
+                    var tempObj=$("#cloneObj").children("div").clone(true);
+                    tempObj.children('table').attr('onclick',"window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/"+val.message_id+"';");
+                    tempObj.children('table').children('tbody').children('tr').eq(0).children('td').eq(1).html(val.record_time.substr(0,10));
+                    tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(0).children('span').html(val.area_start_name);
+                    tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(1).html('¥'+val.freight_price);
+                    tempObj.children('table').children('tbody').children('tr').eq(2).children('td').children('span').html(val.area_end_name);
+                    tempObj.children('div').children('a').attr('href','tel:'+val.phone_number);
+                    tempObj.children('div').children('div').children('button').attr('data-whatever',val.id);
+                    tempObj.appendTo("#search");
+                });
+                myScroll.refresh();
+                refresh_hl();
+                flag = true;
+            }
+        });
+        myScroll.refresh();
+    });
+
+</script>
+<!--滚动功能-->
+<script>
+    var flag = true;
+    var myScroll, pullDownEl, pullDownOffset, pullUpEl, pullUpOffset;
+    var time_now, update_time;
+    /**下拉刷新 （自定义实现此方法）
+     *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
+     */
+    function pullDownAction() {
+        console.log('down',flag);
+        var area_start = $('input[name=area_start]').val();
+        var area_start_name = $('input[name=area_start_name]').val();
+        var area_end = $('input[name=area_end]').val();
+        var area_end_name = $('input[name=area_end_name]').val();
+        $.ajax({
+            type: "post",
+            url: "{:U('FreightSearch/show')}",
+            data: {
+                isAjax: 1,
+                area_start:area_start,
+                area_start_name:area_start_name,
+                area_end:area_end,
+                area_end_name:area_end_name
+            },
+            success: function (data) {
+                console.log('success',flag);
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+                $('#search').html('');
+                $('#page').val(1);
+                $.each(jsonObj.data,function(k,val){
+                    var tempObj=$("#cloneObj").children("div").clone(true);
+                    tempObj.children('table').attr('onclick',"window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/"+val.message_id+"';");
+                    tempObj.children('table').children('tbody').children('tr').eq(0).children('td').eq(1).html(val.record_time.substr(0,10));
+                    tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(0).children('span').html(val.area_start_name);
+                    tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(1).html('¥'+val.freight_price);
+                    tempObj.children('table').children('tbody').children('tr').eq(2).children('td').children('span').html(val.area_end_name);
+                    tempObj.children('div').children('a').attr('href','tel:'+val.phone_number);
+                    tempObj.children('div').children('div').children('button').attr('data-whatever',val.id);
+                    tempObj.appendTo("#search");
+                });
+                myScroll.refresh();
+                refresh_hl();
+                flag = true;
             }
         });
         myScroll.refresh();//数据加载完成后，调用界面更新方法  Remember to refresh when contents are loaded (ie: on ajax completion)
@@ -257,29 +399,53 @@
      *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
      */
     function pullUpAction() {
-        console.log('up');
+        console.log('up',flag);
         var a = $('#tag_search').serialize();
-        console.log(a);
+        var area_start = $('input[name=area_start]').val();
+        var area_start_name = $('input[name=area_start_name]').val();
+        var area_end = $('input[name=area_end]').val();
+        var area_end_name = $('input[name=area_end_name]').val();
         var page = $('#page').val();
+        console.log('cur_page',page);
         var request_page = parseInt(page) + 1;
-        var where_cond_json = $('#where_cond_json').html().trim();
-        var stage = $('#stage').html().trim();
-        console.log(where_cond_json);
-        console.log(stage);
-        console.log(page);
-        console.log(request_page);
-        console.log(select_category);
-        //==========================================
+        console.log('rq_page',request_page);
         $.ajax({
             type: "post",
             url: "{:U('FreightSearch/show_more')}",
             data: {
-                page: request_page,
-                where_cond_json: where_cond_json,
-                stage: stage
+                area_start:area_start,
+                area_start_name:area_start_name,
+                area_end:area_end,
+                area_end_name:area_end_name,
+                page:request_page
             },
             success: function (data) {
-                console.log('success');
+                console.log('success',flag);
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+                $.each(jsonObj.data,function(k,val){
+                    var tempObj=$("#cloneObj").children("div").clone(true);
+                    tempObj.children('table').attr('onclick',"window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/"+val.message_id+"';");
+                    tempObj.children('table').children('tbody').children('tr').eq(0).children('td').eq(1).html(val.record_time.substr(0,10));
+                    tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(0).children('span').html(val.area_start_name);
+                    tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(1).html('¥'+val.freight_price);
+                    tempObj.children('table').children('tbody').children('tr').eq(2).children('td').children('span').html(val.area_end_name);
+                    tempObj.children('div').children('a').attr('href','tel:'+val.phone_number);
+                    tempObj.children('div').children('div').children('button').attr('data-whatever',val.id);
+                    tempObj.appendTo("#search");
+                });
+                if(jsonObj.end_tag == 'end'){
+                    if(flag){
+                        var div = document.createElement('div');
+                        div.style.cssText = 'margin-top:2.5%;color:red;text-align:center';
+                        div.innerHTML = '小矿查不到更多消息啦!';
+                        document.getElementById('search').appendChild(div);
+                        flag = false;
+                    }
+                    $('#page').val(jsonObj.page);
+                }else if(jsonObj.end_tag == 'continue'){
+                    $('#page').val(jsonObj.page);
+                }
                 myScroll.refresh();
                 refresh_hl();
             }
@@ -380,6 +546,7 @@
     document.addEventListener('DOMContentLoaded', loaded, false);
     //    window.onload = loaded()
 </script>
+<!--点赞功能-->
 <script>
     function asd(obj) {
         var count = parseInt($(obj).siblings('span').html());
@@ -407,6 +574,36 @@
         }
     }
 </script>
+<!--报错功能-->
+<script>
+    //自动对焦
+    $('#feedback').on('shown.bs.modal', function (event) {
+        $('#feedback_input').focus();
+        var button = $(event.relatedTarget);
+        var recipient = button.data('whatever');
+        var modal = $(this);
+//        modal.find('.modal-title').text('New message to ' + recipient);
+        modal.find('.modal-body input').val(recipient)
+    });
+    $('#feedback_submit').click(function(){
+        var freight_id = $('#freight_id').val();
+        var content = $('#feedback_input').val();
+        var feedback_string = '运费ID为'+freight_id+"的报错信息:"+content;
+        $.ajax({
+            type: "post",
+            url: "{:U('Feedback/feedback_action')}",
+            data: {
+                contact:freight_id,
+                feedback:feedback_string
+            },
+            success: function (data) {
+                $('#feedback').modal('hide');
+            }
+        });
+    });
+
+</script>
+
 <!--高亮-->
 <script>
 

@@ -265,11 +265,13 @@ class DisplayMessagesController extends Controller
         $subInfo = I('post.', '', 'strip_tags,trim');
 
         $data['message_id'] = $subInfo['message_id'];
+        $data['phone_number'] = $subInfo['phone_number'];
         $data['area_start_id'] = $subInfo['area_start_id'];
         $data['area_start_name'] = $subInfo['area_start_name'];
         $data['area_end_id'] = $subInfo['area_end'];
         $data['area_end_name'] = $subInfo['area_end_name'];
         $data['freight_price'] = $subInfo['freight_price'];
+        $data['invalid_id'] = 0;
         if($subInfo['area_start_id']){
             $result = M('ck_districts')->where("id=%d",array($subInfo['area_start_id']))->find();
             $data['area_start_name'] = $result['name'];

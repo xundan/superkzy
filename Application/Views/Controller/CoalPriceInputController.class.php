@@ -18,11 +18,48 @@ class CoalPriceInputController extends Controller
         $this->display();
     }
 
+    public function coal_price_message_show(){
+        $result = D('CoalPriceMessage')->field('message_id,area_name,refinery_name,supply_company,invalid_id')->select();
+        echo json_encode($result);
+    }
+
+    public function coal_price_input_delete(){
+        $subInfo = I('post.', '', 'strip_tags,trim');
+        $where['message_id'] = $subInfo['message_id'];
+        $data = array();
+        if($subInfo['modify_flag'] == 2){
+            $data['invalid_id'] = 2;
+        }else if($subInfo['modify_flag'] == 1){
+            $data['invalid_id'] = 0;
+        }
+
+        $result = D('CoalPriceMessage')->where($where)->save($data);
+        $returnArr = array();
+        if($result === false){
+            $returnArr['status'] = 1;
+            $returnArr['msg'] = '数据库错误';
+        }else{
+            $returnArr['status'] = 2;
+            $returnArr['msg'] = '操作成功';
+        }
+        echo json_encode($returnArr);
+        return;
+    }
+
     public function coal_price_input_refinery_name_query(){
         $subInfo = I('post.', '', 'strip_tags,trim');
         $refineryName = $subInfo['refinery_name'];
-        $result = D('CoalPriceMessage')->where(array('refinery_name'=>$refineryName))->select();
-        echo json_encode($result);
+        $supplyCompany = $subInfo['supply_company'];
+        $result = D('CoalPriceMessage')->where(array('refinery_name'=>$refineryName,'supply_company'=>$supplyCompany,'invalid_id'=>0))->select();
+        if($result){
+            echo json_encode($result);
+            return;
+        }else{
+            $result['msg'] = '找不到信息';
+            $result['status'] = 1;
+            echo json_encode($result);
+            return;
+        }
     }
 
     public function coal_price_input_query(){
@@ -46,6 +83,12 @@ class CoalPriceInputController extends Controller
         $Msg['supply_company'] = $subInfo['supply_company'];
         $Msg['supply_company_level'] = $subInfo['supply_company_level'];
         $Msg['phone_number'] = $subInfo['phone_number'];
+        if($this->DuplicationDetect()){
+            $returnArray['status'] = 1;
+            $returnArray['msg'] = '重复信息';
+            echo json_encode($returnArray);
+            return;
+        }
         //插入信息数据
         $message_id = D('CoalPriceMessage')->add($Msg);
         $data['Msg'] = array(
@@ -58,6 +101,7 @@ class CoalPriceInputController extends Controller
         for($i=1;$i<=$kindCount;$i++){
             $data['DetailedIndex'] = array();
             $data['kind_name'] = $subInfo['kind'.$i. '_name'];
+            $data['kind_filter'] = $subInfo['kind'.$i.'_filter'];
             $data['price'] = $subInfo['kind'.$i. '_price'];
             $data['tax'] = $subInfo['kind'.$i. '_tax'];
             $data['message_id'] = $message_id;
@@ -128,6 +172,7 @@ class CoalPriceInputController extends Controller
             //依次更新一条原有数据
             $content_id = $value['content_id'];
             $data['kind_name'] = $subInfo['kind'.$i.'_name'];
+            $data['kind_filter'] = $subInfo['kind'.$i.'_filter'];
             $data['price'] = $subInfo['kind'.$i.'_price'];
             $data['tax'] = $subInfo['kind'.$i.'_tax'];
             $data['message_id'] = $messageId;
@@ -174,6 +219,7 @@ class CoalPriceInputController extends Controller
                 $data = array();
                 $data['DetailedIndex'] = array();
                 $data['kind_name'] = $subInfo['kind'.$j.'_name'];
+                $data['kind_filter'] = $subInfo['kind'.$j.'_filter'];
                 $data['price'] = $subInfo['kind'.$j.'_price'];
                 $data['tax'] = $subInfo['kind'.$j.'_tax'];
                 $data['message_id'] = $messageId;
@@ -199,11 +245,25 @@ class CoalPriceInputController extends Controller
         $returnArray = array();
         if($flag){
             $model->commit();
-            $returnArray['msg'] = '成功';
+            $returnArray['msg'] = '修改成功';
         }else{
             $model->rollback();
             $returnArray['msg'] = '数据库产生错误';
         }
         echo json_encode($returnArray);
     }
+
+    private function DuplicationDetect(){
+        $subInfo = I('post.', '', 'strip_tags,trim');
+        $where['refinery_name'] = $subInfo['refinery_name'];
+        $where['supply_company'] = $subInfo['supply_company'];
+        $where['invalid_id'] = 0;
+        $result = D('CoalPriceMessage')->where($where)->find();
+        if($result){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
 }

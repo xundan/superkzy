@@ -14,8 +14,8 @@
 </head>
 <body>
 <ul class="nav nav-tabs nav-justified" id="myTabs">
-    <li role="presentation" class="active"><a href="#coal_price_modify" data-toggle="tab">修改价格</a></li>
-    <li role="presentation"><a href="#coal_price_input" data-toggle="tab">录入信息</a></li>
+    <li role="presentation"><a href="#coal_price_modify" data-toggle="tab">信息查询</a></li>
+    <li role="presentation" class="active"><a href="#coal_price_input" data-toggle="tab">录入信息</a></li>
 </ul>
 <div class="tab-content">
     <div id="coal_price_modify" class="tab-pane">
@@ -30,10 +30,13 @@
             <div id="coal_price_content_modify_form">
                 <table style="width: 100%" class="table table-striped">
                     <thead>
-                    <th>类别</th>
-                    <th>价格</th>
-                    <th>含税</th>
-                    <th>提交</th>
+                    <tr>
+                        <th>地区名</th>
+                        <th>煤矿名</th>
+                        <th>公司名</th>
+                        <th>煤矿编号</th>
+                        <th>操作</th>
+                    </tr>
                     </thead>
                     <tbody id="coal_price_content_insert">
                     </tbody>
@@ -48,6 +51,11 @@
                     煤矿名称
                 </label>
                 <input id="refinery_name_input" class="form-control" style="width: 60%;display: inline">
+                </br>
+                <label for="supply_company_input">
+                    公司名称
+                </label>
+                <input id="supply_company_input" class="form-control" style="width: 60%;display: inline">
                 <button id="coal_price_msg_refinery_name_input_submit" class="btn btn-default">确定</button>
                 <div id="message_ids"></div>
                 <hr/>
@@ -58,7 +66,20 @@
                 <button id="coal_price_msg_id_input_submit" class="btn btn-default">确定</button>
             </div>
             <form id="coal_price_msg_input_form" method="post">
-                <input id="area_name" name="area_name" class="form-control" type="text" placeholder="地区名">
+                <div class="input-group">
+                    <input id="area_name" name="area_name" class="form-control" type="text" placeholder="地区名">
+                    <div class="input-group-btn">
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">选择地址 <span class="caret"></span></button>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><a class="area_select" href="#">鄂尔多斯</a></li>
+                            <li><a class="area_select" href="#">山西</a></li>
+                            <li><a class="area_select" href="#">神木</a></li>
+                            <li><a class="area_select" href="#">榆阳</a></li>
+                            <li><a class="area_select" href="#">府谷</a></li>
+                            <li><a class="area_select" href="#">横山</a></li>
+                        </ul>
+                    </div>
+                </div>
                 <input id="refinery_name" name="refinery_name" class="form-control" type="text" placeholder="矿名">
                 <input id="supply_company" name="supply_company" class="form-control" type="text" placeholder="供应商">
                 <input id="supply_company_level" name="supply_company_level" class="form-control" type="text" placeholder="供应商等级">
@@ -67,6 +88,7 @@
                     <thead>
                     <tr>
                         <td style="text-align: center">类别</td>
+                        <td style="text-align: center">类别2</td>
                         <td style="text-align: center">价格</td>
                         <td style="text-align: center">含税</td>
                         <td><input name="index1_name" class="form-control" style=";display: inline;padding: 0;text-align: center"></td>
@@ -80,9 +102,10 @@
                     </thead>
                     <tbody id="feedback_insert">
                     <tr>
-                        <td><input name="kind1_name" id="kind1_name" class="form-control" style=";display: inline;padding: 0;text-align: center"></td>
-                        <td><input name="kind1_price" id="kind1_price" class="form-control" style=";display: inline;padding: 0;text-align: center"></td>
-                        <td><input name="kind1_tax" id="kind1_tax" class="form-control" style=";display: inline;padding: 0;text-align: center"></td>
+                        <td><input name="kind1_name" class="form-control" style=";display: inline;padding: 0;text-align: center"></td>
+                        <td><input name="kind1_filter" class="form-control" style=";display: inline;padding: 0;text-align: center"></td>
+                        <td><input name="kind1_price" class="form-control" style=";display: inline;padding: 0;text-align: center"></td>
+                        <td><input name="kind1_tax" class="form-control" style=";display: inline;padding: 0;text-align: center"></td>
                         <td><input name="kind1_index1" class="form-control" style=";display: inline;padding: 0;text-align: center"></td>
                         <td><input name="kind1_index2" class="form-control" style=";display: inline;padding: 0;text-align: center"></td>
                         <td><input name="kind1_index3" class="form-control" style=";display: inline;padding: 0;text-align: center"></td>
@@ -120,6 +143,11 @@
 //                    $('#row_plus')[0].colSpan = a-1;
 //                    console.log($('#row_plus'));
 //                    console.log($('#test')[0].rows.length);
+        $('#supply_company_level').val('金牌');
+    });
+    //下拉菜单
+    $('.area_select').click(function(){
+        $('#area_name').val($(this).html());
     });
     //扩张表格
     function  AddRow(){
@@ -133,11 +161,13 @@
             if(i == 0){
                 newCell.innerHTML= "<input name='kind"+(rowCount-1)+"_name' class='form-control' style=';display: inline;padding: 0;text-align: center'>";
             }else if(i == 1){
-                newCell.innerHTML= "<input name='kind"+(rowCount-1)+"_price' class='form-control' style=';display: inline;padding: 0;text-align: center'>";
+                newCell.innerHTML= "<input name='kind"+(rowCount-1)+"_filter' class='form-control' style=';display: inline;padding: 0;text-align: center'>";
             }else if(i == 2){
+                newCell.innerHTML= "<input name='kind"+(rowCount-1)+"_price' class='form-control' style=';display: inline;padding: 0;text-align: center'>";
+            }else if(i == 3){
                 newCell.innerHTML= "<input name='kind"+(rowCount-1)+"_tax"+"' class='form-control' style=';display: inline;padding: 0;text-align: center'>";
             }else{
-                newCell.innerHTML= "<input name='kind"+(rowCount-1)+"_index"+(i-2)+"' class='form-control' style=';display: inline;padding: 0;text-align: center'>";
+                newCell.innerHTML= "<input name='kind"+(rowCount-1)+"_index"+(i-3)+"' class='form-control' style=';display: inline;padding: 0;text-align: center'>";
             }
         }
     }
@@ -150,20 +180,24 @@
             var tRow = obj.rows[i];
             var newCell = tRow.insertCell(cellCount-1);
             if(i == 0){
-                newCell.innerHTML= "<input name='index"+(cellCount-3)+"_name"+"' class='form-control' style=';display: inline;padding: 0;text-align: center'>";
+                newCell.innerHTML= "<input name='index"+(cellCount-4)+"_name"+"' class='form-control' style=';display: inline;padding: 0;text-align: center'>";
             }else{
-                newCell.innerHTML= "<input name='kind"+i+"_index"+(cellCount-3)+"' class='form-control' style=';display: inline;padding: 0;text-align: center'>";
+                newCell.innerHTML= "<input name='kind"+i+"_index"+(cellCount-4)+"' class='form-control' style=';display: inline;padding: 0;text-align: center'>";
             }
         }
     }
     //根据矿名查编号
     $('#coal_price_msg_refinery_name_input_submit').click(function(){
         var refinery_name = $('#refinery_name_input').val();
+        var supply_name = $('#supply_company_input').val();
         var url = "{:U('CoalPriceInput/coal_price_input_refinery_name_query')}";
         $.ajax({
             type: "post",
             url: url,
-            data: {refinery_name:refinery_name},
+            data: {
+                refinery_name:refinery_name,
+                supply_company:supply_name
+            },
             success: function (data) {
                 console.log('success');
                 var jsonObj = eval("(" + data + ")");
@@ -171,13 +205,37 @@
 //                $('#msg_id_input').val(jsonObj.message_id);
                 var temp_string = '';
                 $.each(jsonObj,function(k,val){
-                    temp_string += '第'+k+'条编号:'+val.message_id+' ';
+                    temp_string += '编号:'+val.message_id+' ';
                 });
+                if(jsonObj.msg){
+                    temp_string = jsonObj.msg;
+                }
                 $('#message_ids').html(temp_string);
             }
         })
     });
-    //展示
+    //展示煤矿信息
+    $('#coal_price_msg_id_modify_submit').click(function(){
+        var url = "{:U('CoalPriceInput/coal_price_message_show')}";
+        $.ajax({
+            type: "post",
+            url: url,
+            data: {message_id:1},
+            success: function (data) {
+                console.log('success');
+//                console.log(data);
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+                //赋值数据
+                $.each(jsonObj,function(k,val){
+                    var li = document.createElement('tr');
+                    li.innerHTML = '<td>'+val.area_name+'</td>'+'<td>'+val.refinery_name+'</td>'+'<td>'+val.supply_company+'</td>'+'<td>'+val.message_id+'###'+val.invalid_id+'</td><td><a class="delete btn btn-sm btn-default">删除</a><a class="recovery btn btn-sm btn-default">恢复</a></td>';
+                    document.getElementById('coal_price_content_insert').appendChild(li);
+                });
+            }
+        })
+    });
+    //展示已录入信息
     $('#coal_price_msg_id_input_submit').click(function(){
         var message_id = $('#msg_id_input').val();
         var url = "{:U('CoalPriceInput/coal_price_input_query')}";
@@ -193,7 +251,7 @@
                 //添加行列
                 var obj = document.getElementById('input_table');
                 var rowCount = obj.rows.length-2;
-                var cellCount = obj.rows[0].cells.length-4;
+                var cellCount = obj.rows[0].cells.length-5;
                 var kindCount = jsonObj.length;
                 var indexCount = jsonObj[0].DetailedIndex.length;
                 console.log(kindCount,rowCount,indexCount,cellCount);
@@ -208,7 +266,7 @@
                 //赋值数据
                 //煤矿信息
                 $("#area_name").val(jsonObj[0].Msg.area_name);
-                $('#refinery_name').val(jsonObj[0].Msg.area_name);
+                $('#refinery_name').val(jsonObj[0].Msg.refinery_name);
                 $('#supply_company').val(jsonObj[0].Msg.supply_company);
                 $('#supply_company_level').val(jsonObj[0].Msg.supply_company_level);
                 $('#phone_number').val(jsonObj[0].Msg.phone_number);
@@ -216,6 +274,7 @@
                 $.each(jsonObj,function(index,value){
                     console.log(index,value);
                     $("input[name=kind"+(index+1)+"_name]").val(value.kind_name);
+                    $("input[name=kind"+(index+1)+"_filter]").val(value.kind_filter);
                     $("input[name=kind"+(index+1)+"_price]").val(value.price);
                     $("input[name=kind"+(index+1)+"_tax]").val(value.tax);
                     $.each(value.DetailedIndex,function(key,val){
@@ -231,17 +290,19 @@
         var obj = document.getElementById('input_table');
         var rowCount = obj.rows.length;
         var cellCount = obj.rows[0].cells.length;
-        var index_count=0;
-        for(var i=1;i<=cellCount-4;i++){
-            var temp = document.getElementsByName("index"+i+"_name");
-            if(!temp[0].value){
-                continue;
-            }
-            index_count++;
-        }
-        console.log(index_count);
+//        var index_count=0;
+//        for(var i=1;i<=cellCount-5;i++){
+//            var temp = document.getElementsByName("index"+i+"_name");
+//            console.log(temp);
+//            console.log(temp[0].value);
+//            if(!temp[0].value){
+//                continue;
+//            }
+//            index_count++;
+//        }
+//        console.log(index_count);
         $('#kind_count').val(rowCount-2);
-        $('#index_count').val(cellCount-4);
+        $('#index_count').val(cellCount-5);
         var url='';
         var message_id = $('#msg_id_input').val();
         if(message_id){
@@ -262,11 +323,61 @@
             success: function (data) {
                 console.log('success');
                 console.log(data);
-                var jsonObj = eval("(" + data + ")");
-                console.log(jsonObj);
-                alert('成功');
+                if(data){
+                    var jsonObj = eval("(" + data + ")");
+                    if(jsonObj.status){
+                        alert(jsonObj.msg);
+                    }else{
+                        alert(jsonObj.msg);
+                    }
+                }else{
+                    alert('插入成功');
+                }
             }
         })
+    })
+</script>
+<!--删除消息-->
+<script>
+    $('body').on("click",".delete",function(){
+        console.log($(this));
+        var message_id = $(this).parent('td').parent('tr').children('td').eq(3).html();
+        $.ajax({
+            type: "post",
+            url: "{:U('CoalPriceInput/coal_price_input_delete')}",
+            data: {
+                modify_flag:2,
+                message_id: message_id
+            },
+            success: function (data) {
+                var jsonObj = eval("(" + data + ")");
+                alert(jsonObj.msg);
+            },
+            error: function(){
+
+            }
+        });
+    })
+</script>
+<!--恢复消息-->
+<script>
+    $('body').on("click",".recovery",function(){
+        console.log($(this));
+        var message_id = $(this).parent('td').parent('tr').children('td').eq(3).html();
+        $.ajax({
+            type: "post",
+            url: "{:U('CoalPriceInput/coal_price_input_delete')}",
+            data: {
+                modify_flag:1,
+                message_id: message_id
+            },
+            success: function (data) {
+                var jsonObj = eval("(" + data + ")");
+                alert(jsonObj.msg);
+            },
+            error: function(){
+            }
+        });
     })
 </script>
 </html>

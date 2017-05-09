@@ -22,20 +22,19 @@
     {$message['id']}
 </div>
 
-
 <div class="container">
     <div class="tab-content" style="">
         <div id="transport" class="tab-pane active" style="background-color: #efeff4">
             <ul id="thelist" class="" style="list-style-type: none">
                 <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
                     <div class="weui_media_box weui_media_appmsg" style="margin: 0;padding-left: 0;padding-right: 0">
-                        <a href="{$personal_page}">
-                            <div class="weui_media_hd">
-                                <img src="{$message['user']['heading_url']}" class="weui_media_appmsg_thumb">
-                            </div>
-                        </a>
+                        <div class="weui_media_hd">
+                            <img src="__PUBLIC__/home/images/from_wx.png" class="weui_media_appmsg_thumb">
+                        </div>
                         <div class="weui_media_bd">
-                            <h4 class="weui_media_title"><span onclick='window.location.href="{$personal_page}"'>{$message['user']['user_name']}</span></h4>
+                            <div>
+                                <h4 class="weui_media_title">来自微信</h4>
+                            </div>
                         </div>
                         <div class="weui_media_bd">
                             <a href="tel:{$message['phone_number']}"  onclick="ck_log('dial', {$message['phone_number']})" style='text-decoration: none;color: black'>
@@ -51,7 +50,9 @@
                     </div>
                     <div>
                         {$message['content']}
-                        <span class="pull-right help-block" style="font-size: 12px">发布时间:{$message['publish_time']|date="Y-m-d",###}</span>
+                    </div>
+                    <div class="pull-right help-block" style="font-size: 12px">
+                        发布时间:{$message['update_time']|substr=0,10}
                     </div>
                 </li>
             </ul>

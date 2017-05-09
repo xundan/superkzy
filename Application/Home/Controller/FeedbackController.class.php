@@ -21,7 +21,7 @@ class FeedbackController extends Controller
         $data['content'] = $subInfo['feedback'];
         $data['contact'] = $subInfo['contact'];
         if(empty($subInfo))
-            exit;
+            return;
         $fres = M('feedback')->data($data)->add();
         if($fres){
             $returnArr['status'] = 1;
@@ -32,7 +32,7 @@ class FeedbackController extends Controller
             $returnArr['msg'] = "提交失败";
             M("product")->delete($fres);
             echo json_encode($returnArr);
-            exit;
+            return;
         }
     }
 
