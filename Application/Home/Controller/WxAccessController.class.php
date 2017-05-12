@@ -31,11 +31,18 @@ class WxAccessController extends Controller
     }
 
     public function reply(){
+        $activity_flag = false;
         $this->getWeObj()->valid();
         $type = $this->getWeObj()->getRev()->getRevType();
         switch($type) {
             case \Org\Util\Wechat::MSGTYPE_TEXT:
                 $content = $this->getWeObj()->getRevContent();
+                if ($activity_flag&&($content=="我爱母亲")){
+//                    $this->getWeObj()->text("你好，这里是超级矿资源，感谢您的支持！")->reply();
+                    $mediaid = "";
+                    $this->getWeObj()->image($mediaid)->reply();
+                    exit;
+                }
                 if ($content=="你好"){
                     $this->getWeObj()->text("你好，这里是超级矿资源，感谢您的支持！")->reply();
                     exit;
@@ -68,6 +75,15 @@ class WxAccessController extends Controller
                     exit;
                 }
 
+                if ($activity_flag){
+                    $this->getWeObj()->text("回复“我爱母亲”，即可参加母亲节赢iPhone7中国红手机活动。
+
+ 回复带有联系方式（手机号）的供应/求购/找车/车源信息，我们会为您公示转发。")->reply();
+                    exit;
+                }else{
+                    $this->getWeObj()->text("回复带有联系方式（手机号）的供应/求购/找车/车源信息，我们会为您公示转发。")->reply();
+                    exit;
+                }
 
                 break;
             case \Org\Util\Wechat::MSGTYPE_EVENT:
@@ -75,14 +91,39 @@ class WxAccessController extends Controller
 
                 if ($event['event']=='subscribe'){
                     $welcome_str = "感谢关注【超级矿资源】微信公众平台！
+
 您可以点击<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>平台网站</a>开始 <a href='http://www.kuaimei56.com/index.php/Home/OwnerPublish/owner_publish'>发布</a>或 <a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>查询</a> 运单、订单信息。也可以在这里回复直接提出您的问题。
 
 在本页面直接回复您要转发的消息，我们会为您转发到我们的<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>平台网站</a>和所有超矿微信的朋友圈。";
+                    if($activity_flag){
+                        $welcome_str = "感谢关注【超级矿资源】微信公众平台！
+
+母亲节期间，公众号回复“我爱母亲”，即可参加母亲节赢iPhone7中国红手机活动。
+
+您可以点击<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>平台网站</a>开始 <a href='http://www.kuaimei56.com/index.php/Home/OwnerPublish/owner_publish'>发布</a>或 <a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>查询</a> 运单、订单信息。也可以在这里回复直接提出您的问题。
+
+在本页面直接回复您要转发的消息，我们会为您转发到我们的<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>平台网站</a>和所有超矿微信的朋友圈。";
+
+                    }
                     $this->getWeObj()->text($welcome_str)->reply();
+
                     exit;
                 }
                 break;
             case \Org\Util\Wechat::MSGTYPE_IMAGE:
+                if($activity_flag){
+                    $n =array(
+                        "0"=>array(
+                            'Title'=>'母亲节感恩大回馈，点击领取中国红！',
+                            'Description'=>'恭喜你获得抽奖资格',
+                            'PicUrl'=>'http://www.kuaimei56.com/iphone_red.jpg',
+                            'Url'=>'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'
+                        )
+                    );
+                    $this->getWeObj()->news($n)->reply();
+                    exit;
+                }
+
                 break;
             default:
                 $this->getWeObj()->text("使用帮助")->reply();
