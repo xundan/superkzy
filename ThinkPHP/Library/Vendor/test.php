@@ -34,4 +34,23 @@ function sendCode_forKMW($phone,$code)
     $resp = $c->execute($req);
     return $resp;
 }
+
+function setExpiringSMS($phone,$data)
+{
+    include "TopSdk.php";
+    $c = new TopClient;
+    $c->appkey = '23425802';
+    $c->secretKey = C('VERIFY_SECRETKEY');
+    $req = new AlibabaAliqinFcSmsNumSendRequest;
+    $req->setExtend("123456");
+    $req->setSmsType("normal");
+    $req->setSmsFreeSignName('超级矿资源');
+    $req->setSmsParam(json_encode($data));
+    $req->setRecNum("$phone");
+    $req->setSmsTemplateCode("SMS_67055003");
+    $resp = $c->execute($req);
+    return $resp;
+}
+
+
 ?>
