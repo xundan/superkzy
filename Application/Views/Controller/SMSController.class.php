@@ -23,12 +23,11 @@ class SMSController extends RestController
     {
         $a = 1;
         echo $a."SMS api works";
-//        var_dump($this->send('15850732459','公众号',12,'求车'));
+        var_dump($this->send('15850732459','公众号',12,'求车'));
 //        var_dump($this->send('18809185991','公众号',12,'求车'));
     }
 
     public function prepareSMSList(){
-
         $date = date("Y-m-d",strtotime("-1 day"));
         $Msg = new MessageModel();
         $SMS = new SMSModel();
@@ -60,7 +59,7 @@ class SMSController extends RestController
             }
 
             foreach($send_list as $s){
-                $res=$this->send($s['phone'],"公众号",$s['amount'],$s['remark']);
+                $res=$this->send($s['phone'],"公众号",$s['amount'],$s['category']);
                 if(!$res){
                     $s['status']=-1;
 //                    $s['remark'].='发送失败';
@@ -73,14 +72,11 @@ class SMSController extends RestController
     }
 
     public function send($phone,$date,$count,$category){
-
         $d['date']=$date;
         $d['count']=''.$count;
         $d['category']=$category;
-
-        vendor("DialPhone");
+        vendor("test");
         $res=setExpiringSMS($phone,$d);
-        var_dump("$res");
         if (isset($res->code)){
             Log::record("SMSController send failed.",Log::ERR);
             return false;

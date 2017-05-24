@@ -17,7 +17,6 @@ class ChatRecordController extends RestController
     protected $allowMethod = array('get', 'post', 'put'); // REST允许的请求类型列表
     protected $allowType = array('json'); // REST允许请求的资源类型列表
 
-    // 字段暂时没有用上
     protected $_wx_all = array("cjkzy001",// u"一圈",
         "cjkzy003",// u"三圈",
         "cjkzy005",// u"五圈",
@@ -368,14 +367,13 @@ class ChatRecordController extends RestController
     }
 
     /**
-     * 获取[7天内]的所有会话，没有取内容，只为了取会话者
+     * 获取所有会话，没有取内容，只为了取会话者
      * @param $wx_in
      * @return mixed
      */
     private function fetch_all_distinct_record($wx_in)
     {
-        $s_date = date("Y-m-d",strtotime("-7 day"));
-        $fetch = D('ChatRecord')->field('content',true)->where("isme=0 AND type='plain' AND invalid_id=0 AND record_time>'$s_date' AND self_wx IN "
+        $fetch = D('ChatRecord')->field('content',true)->where("isme=0 AND type='plain' AND invalid_id=0 AND self_wx IN "
             .$wx_in)->group('client_name')->order('record_time asc')->select();
         return $fetch;
     }
