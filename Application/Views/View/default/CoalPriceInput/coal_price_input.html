@@ -229,7 +229,13 @@
                 //赋值数据
                 $.each(jsonObj,function(k,val){
                     var li = document.createElement('tr');
-                    li.innerHTML = '<td>'+val.area_name+'</td>'+'<td>'+val.refinery_name+'</td>'+'<td>'+val.supply_company+'</td>'+'<td>'+val.message_id+'###'+val.invalid_id+'</td><td><a class="delete btn btn-sm btn-default">删除</a><a class="recovery btn btn-sm btn-default">恢复</a></td>';
+                    li.innerHTML = '<td>'+val.area_name+'</td>'
+                            +'<td>'+val.refinery_name+'</td>'
+                            +'<td>'+val.supply_company+'</td>'
+                            +'<td>'+val.message_id+'###'+val.invalid_id+'###'+val.vip
+                            +'</td><td><a class="delete btn btn-sm btn-default">删除</a>'
+                            +'<a class="recovery btn btn-sm btn-default">恢复</a>'
+                            +'<input class="vip-set form-control" style="display: inline;width:92px"  type="number" value="'+val.vip+'"></td>';
                     document.getElementById('coal_price_content_insert').appendChild(li);
                 });
             }
@@ -340,8 +346,8 @@
 <!--删除消息-->
 <script>
     $('body').on("click",".delete",function(){
-        console.log($(this));
         var message_id = $(this).parent('td').parent('tr').children('td').eq(3).html();
+        console.log(message_id);
         $.ajax({
             type: "post",
             url: "{:U('CoalPriceInput/coal_price_input_delete')}",
@@ -350,6 +356,7 @@
                 message_id: message_id
             },
             success: function (data) {
+                console.log(data);
                 var jsonObj = eval("(" + data + ")");
                 alert(jsonObj.msg);
             },
@@ -364,6 +371,7 @@
     $('body').on("click",".recovery",function(){
         console.log($(this));
         var message_id = $(this).parent('td').parent('tr').children('td').eq(3).html();
+        console.log(message_id);
         $.ajax({
             type: "post",
             url: "{:U('CoalPriceInput/coal_price_input_delete')}",
@@ -378,6 +386,33 @@
             error: function(){
             }
         });
+    })
+</script>
+<!--设置vip-->
+<script>
+    $('body').on("keyup",".vip-set",function(event){
+        event = event || window.event;
+        if (event.keyCode == 13) {
+            var message_id = $(this).parent('td').parent('tr').children('td').eq(3).html();
+            var vip = $(this).val();
+            console.log(message_id);
+            $.ajax({
+                type: "post",
+                url: "{:U('CoalPriceInput/coal_price_input_vip')}",
+                data: {
+                    vip:vip,
+                    message_id: message_id
+                },
+                success: function (data) {
+                    var jsonObj = eval("(" + data + ")");
+                    alert(jsonObj.msg);
+                },
+                error: function(){
+                }
+            });
+        }else{
+            return false;
+        }
     })
 </script>
 </html>

@@ -2,19 +2,20 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
     <meta name="x5-fullscreen" content="true">
     <meta name="full-screen" content="yes">
     <!--<link rel="icon" href="../../favicon.ico">-->
     <title>选择地址</title>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
-    <!--<script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>-->
+    <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
 </head>
 <include file="Common:common"/>
 <body id="aaaa" style="background-color: #efeff4">
@@ -40,35 +41,35 @@
     </div>
     <div class="weui_cells weui_cells_access search_show" id="search_show">
         <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
-            <div class="weui_cell" >
+            <div class="weui_cell">
                 <div class="weui_cell_bd weui_cell_primary">
                     <p id="search0" class="refinery_name" style="margin-bottom: 0"></p>
                 </div>
             </div>
         </a>
         <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
-            <div class="weui_cell" >
+            <div class="weui_cell">
                 <div class="weui_cell_bd weui_cell_primary">
                     <p id="search1" class="refinery_name" style="margin-bottom: 0"></p>
                 </div>
             </div>
         </a>
         <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
-            <div class="weui_cell" >
+            <div class="weui_cell">
                 <div class="weui_cell_bd weui_cell_primary">
                     <p id="search2" class="refinery_name" style="margin-bottom: 0"></p>
                 </div>
             </div>
         </a>
         <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
-            <div class="weui_cell" >
+            <div class="weui_cell">
                 <div class="weui_cell_bd weui_cell_primary">
                     <p id="search3" class="refinery_name" style="margin-bottom: 0"></p>
                 </div>
             </div>
         </a>
         <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
-            <div class="weui_cell" >
+            <div class="weui_cell">
                 <div class="weui_cell_bd weui_cell_primary">
                     <p id="search4" class="refinery_name" style="margin-bottom: 0"></p>
                 </div>
@@ -93,11 +94,10 @@
         <tbody id="show_refinery">
         </tbody>
     </table>
-    <div class="pull-right" style="position: fixed;bottom:5%;right: 0;">
+    <div class="pull-right" style=";bottom:0;right: 0;">
         <a href="{:U('Feedback/feedback')}" style="text-decoration: underline !important;">
             煤矿不全,煤价不准,或其他问题请点击这里哦
         </a>
-
     </div>
 </div>
 <?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
@@ -105,18 +105,19 @@
 
 <!--页面载入-->
 <script>
-    $(function(){
-        if(cookie('last_refinery')){
+    $(function () {
+        if (cookie('last_refinery')) {
             var temp_last_refinery = cookie('last_refinery').split(',');
-            temp_last_refinery.forEach(function(v,k){
+            temp_last_refinery.forEach(function (v, k) {
                 var span = document.createElement('span');
 //                span.innerHTML = "<span class='refinery_name' style='width: 25%;margin: 1% 2.5%'>"+v+"</span>";
                 span.innerHTML = v;
                 span.style.cssText = "width: 20%;margin: 0 2.5%;padding:0;font-size:6px";
-                span.setAttribute('class','btn btn-sm refinery_name');
+                span.setAttribute('class', 'btn btn-sm refinery_name');
                 document.getElementById('last_search').appendChild(span);
             });
-        }else{}
+        } else {
+        }
     })
 </script>
 
@@ -126,6 +127,8 @@
         $(this).addClass('myactive');
         $(this).siblings('button').removeClass('myactive');
         var area_name = $(this).html().trim();
+        //日志记录
+        ck_log('click', '地区名:' + area_name);
         $.ajax({
             type: "post",
             url: "{:U('CoalPriceSearch/area_search')}",
@@ -138,15 +141,16 @@
                 console.log(jsonObj);
                 var temp_string = "<tr>";
                 var col_count = 0;
-                $.each(jsonObj.refinery_name,function(k,val){
-                    temp_string += "<td class='refinery_name'>"+val.refinery_name+"</td>";
+                $.each(jsonObj.refinery_name, function (k, val) {
+                    temp_string += "<td class='refinery_name'>" + val + "</td>";
                     col_count++;
-                    if(col_count == 4){
+                    if (col_count == 4) {
                         temp_string += "</tr><tr>";
                         col_count = 0;
-                    }else{}
+                    } else {
+                    }
                 });
-                while ((4-col_count) > 0 && col_count!=0 ){
+                while ((4 - col_count) > 0 && col_count != 0) {
                     temp_string += "<td></td>";
                     col_count++;
                 }
@@ -162,53 +166,56 @@
 
 <!--搜索框功能-->
 <script>
-    $(function(){
+    $(function () {
         var $searchBar = $('#search_bar'),
-            $searchText = $('#search_text'),
-            $searchInput = $('#search_input'),
-            $searchShow = $('#search_show'),
-            $searchClear = $('#search_clear'),
-            $searchCancel = $('#search_cancel');
+                $searchText = $('#search_text'),
+                $searchInput = $('#search_input'),
+                $searchShow = $('#search_show'),
+                $searchClear = $('#search_clear'),
+                $searchCancel = $('#search_cancel');
 
-        function hideSearchResult(){
+        function hideSearchResult() {
             $searchInput.val('');
         }
-        function cancelSearch(){
+
+        function cancelSearch() {
             hideSearchResult();
             $searchBar.removeClass('weui_search_focusing');
             $searchText.show();
             $searchShow.hide();
         }
 
-        $searchText.on('click', function(){
+        $searchText.on('click', function () {
+            //日志记录
+            ck_log('click', '开始搜索');
             $searchBar.addClass('weui_search_focusing');
             $searchInput.focus();
         });
         $searchInput
                 .on('blur', function () {
-                    if(!this.value.length) cancelSearch();
+                    if (!this.value.length) cancelSearch();
                 })
-                .on('input', function(event){
+                .on('input', function (event) {
                     var $searchShow = $("#search_show");
                     if ($(this).val()) {
 //            console.log($(this).val());
-                        var url="{:U('CoalPriceSearch/ajax_refinery_search')}";
+                        var url = "{:U('CoalPriceSearch/ajax_refinery_search')}";
                         var querystring = $(this).val();
 //            console.log(querystring);
-                        for(var i=0;i<5;i++){
-                            $('#search'+i).html('');
-                            $('#search'+i+'_id').html('');
+                        for (var i = 0; i < 5; i++) {
+                            $('#search' + i).html('');
+                            $('#search' + i + '_id').html('');
                         }
                         $.ajax({
-                            type:'post',
-                            url:url,
-                            data:{refinery_name:querystring},
-                            dataType:'json',
-                            success:function(data){
+                            type: 'post',
+                            url: url,
+                            data: {refinery_name: querystring},
+                            dataType: 'json',
+                            success: function (data) {
 //                console. eval("("+data+")");
                                 console.log(data);
-                                jQuery.each(data,function(k,val){
-                                    $('#search'+k).html(val.refinery_name);
+                                jQuery.each(data, function (k, val) {
+                                    $('#search' + k).html(val.refinery_name);
                                 });
                             }
                         });
@@ -217,11 +224,15 @@
                         $searchShow.hide();
                     }
                 });
-        $searchClear.on('click', function(){
+        $searchClear.on('click', function () {
+            //日志记录
+            ck_log('click', '清空搜索');
             hideSearchResult();
             $searchInput.focus();
         });
-        $searchCancel.on('click', function(){
+        $searchCancel.on('click', function () {
+            //日志记录
+            ck_log('click', '取消搜索');
             cancelSearch();
             $searchInput.blur();
         });
@@ -230,51 +241,55 @@
 
 <!--点击矿名跳转-->
 <script>
-    $('body').on("click",".refinery_name",function(){
+    $('body').on("click", ".refinery_name", function () {
         var refinery_name = $(this).html().trim();
+        //日志记录
+        ck_log('click', '矿名:' + refinery_name);
         //存入历史cookie
         //cookie('refinery_name',refinery_name);
-        if(cookie('last_refinery')){
+        if (cookie('last_refinery')) {
             var temp_last_refinery = cookie('last_refinery');
-            console.log(1,temp_last_refinery);
+            console.log(1, temp_last_refinery);
             var temp_last_refinery_array = temp_last_refinery.split(',');
-            console.log('oldarray',temp_last_refinery_array);
+            console.log('oldarray', temp_last_refinery_array);
             var old_refinery_name_index = temp_last_refinery_array.indexOf(refinery_name);
-            console.log('index',old_refinery_name_index);
-            if(old_refinery_name_index >= 0){
+            console.log('index', old_refinery_name_index);
+            if (old_refinery_name_index >= 0) {
                 console.log(11);
-                temp_last_refinery_array.splice(old_refinery_name_index,1);
-                console.log('del',temp_last_refinery_array);
-            }else{console.log(22)}
-            temp_last_refinery_array.splice(0,0,refinery_name);
-            console.log('add',temp_last_refinery_array);
-            var new_last_refinery_array = temp_last_refinery_array.slice(0,8);
-            console.log('length8',new_last_refinery_array);
+                temp_last_refinery_array.splice(old_refinery_name_index, 1);
+                console.log('del', temp_last_refinery_array);
+            } else {
+                console.log(22)
+            }
+            temp_last_refinery_array.splice(0, 0, refinery_name);
+            console.log('add', temp_last_refinery_array);
+            var new_last_refinery_array = temp_last_refinery_array.slice(0, 8);
+            console.log('length8', new_last_refinery_array);
             var new_last_refinery_name = new_last_refinery_array.join(',');
-            console.log('newstring',new_last_refinery_name);
-            cookie('last_refinery',new_last_refinery_name);
-            console.log('last',cookie('last_refinery'));
-        }else{
-            cookie('last_refinery',refinery_name);
+            console.log('newstring', new_last_refinery_name);
+            cookie('last_refinery', new_last_refinery_name);
+            console.log('last', cookie('last_refinery'));
+        } else {
+            cookie('last_refinery', refinery_name);
         }
         //更新页面cookie
-        var json_obj,source_cookie,source_cookie_obj,source_cookie_name;
-        if(cookie('source')){
+        var json_obj, source_cookie, source_cookie_obj, source_cookie_name;
+        if (cookie('source')) {
             json_obj = JSON.parse(cookie('source'));
             source_cookie = json_obj.value;
             source_cookie_obj = JSON.parse(source_cookie);
             source_cookie_name = json_obj.name;
-            jQuery.each(source_cookie_obj,function(k,val){
-                if(val.name == 'select_category'){
+            jQuery.each(source_cookie_obj, function (k, val) {
+                if (val.name == 'select_category') {
                     $('input[name=select_category]').val(val.value);
                 }
-                if(val.name == 'refinery_name') {
-                    val.value=refinery_name;
+                if (val.name == 'refinery_name') {
+                    val.value = refinery_name;
                     $('input[name=refinery_name]').val(val.value);
                 }
             });
-            cookie(source_cookie_name,JSON.stringify(source_cookie_obj));
-        }else{
+            cookie(source_cookie_name, JSON.stringify(source_cookie_obj));
+        } else {
         }
 //        return false;
         //填写表单

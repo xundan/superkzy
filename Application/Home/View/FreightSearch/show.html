@@ -25,41 +25,50 @@
     <input type="hidden" name="page" id="page" value="1">
 </form>
 <!--导航标签-->
-<div class="panel-title" style="height: 60px;background-color: white;display: block">
+<div class="panel-title" style="height: 50px;background-color: white;display: block;">
     <div id="myTab" class="row" style="height: 100%;">
-        <div class="text-center col-xs-5" id="area_start_click" style="line-height: 50px;color: black;font-size: 1.2em;padding: 5px 0;font-weight: 100">
+        <div class="text-center col-xs-5" id="area_start_click" style="line-height: 40px;color: black;font-size: 1.2em;padding: 5px 0;font-weight: 100">
             <img src="__PUBLIC__/home/images/area_start_text.png" class="" style="height: 20px">
             <span id="area_start_html">点击选择</span>
-            <span id="area_start_remove" class="glyphicon glyphicon-remove" style="font-weight: lighter;"></span>
-            <span class="weui_icon_clear_no_circle" style="color: black"></span>
+            <!--<span id="area_start_remove" class="" style="font-size:1em;color:darkgrey">X</span>-->
+            <!--<span class="weui_icon_clear_no_circle" style="color: black"></span>-->
+            <span id="area_start_remove" style="line-height: 40px">
+                <!--<img src="__PUBLIC__/home/images/remove.png" style="position: absolute;right: 0;top:33%;width: 1em">-->
+                <img src="__PUBLIC__/home/images/remove.png" style="margin-top: -4px;width: 1em">
+            </span>
             <!--<a href="javascript:" class="weui_icon_clear" id="search_clear"></a>-->
             <div id="area_start" style="display: none"></div>
         </div>
-        <div class="text-center col-xs-2" style="line-height: 50px;color: black;font-size: 1.2em;padding: 5px 0;">
+        <div class="text-center col-xs-2" style="line-height: 40px;color: black;padding: 5px 0;">
             <!--<hr style="border-color: red;width: 10%;margin: 16px 0;display: inline"/>-->
-            <span class="glyphicon glyphicon-arrow-right" style="color: red;font-size: 35px;"></span>
+            <!--<span class="glyphicon glyphicon-arrow-right" style="color: red;font-size: 35px;"></span>-->
+            <img src="__PUBLIC__/home/images/arrow-right.png" style="margin-top: -4px;width: 4em">
             <!-- ->-->
         </div>
-        <div class="text-center col-xs-5" id="area_end_click" style="line-height: 50px;color: black;font-size: 1.2em;padding: 5px 0;">
+        <div class="text-center col-xs-5" id="area_end_click" style="line-height: 40px;color: black;font-size: 1.2em;padding: 5px 0;">
             <span id="area_end_html">点击选择</span>
-            <span id="area_end_remove" class="glyphicon glyphicon-remove"></span>
+            <!--<span id="area_end_remove" class="glyphicon glyphicon-remove"></span>-->
+            <span id="area_end_remove" style="line-height: 40px">
+                <img src="__PUBLIC__/home/images/remove.png" style="margin-top: -4px;width: 1em">
+            </span>
             <img src="__PUBLIC__/home/images/area_end_text.png" class="" style="height: 20px">
             <div id="area_end" style="display: none"></div>
         </div>
     </div>
 </div>
 <!--订单展示栏-->
-<div id="wrapper" style="top: 33px;margin-left: 2.5%;">
+<div id="wrapper" style="top: 60px;margin-left: 2.5%;">
     <div id="scroller">
         <div id="pullDown">
             <span class="pullDownIcon" style="float: left"></span>
             <span class="pullDownLabel" style="margin-left: -48px">下拉刷新...</span>
         </div>
         <div class="tab-content">
-            <ul id="search" class="tab-pane active" style="margin-top: 40px;list-style-type: none">
+            <ul id="search" class="tab-pane active" style=";list-style-type: none">
                 <if condition="$none eq 'empty'">
                     <div class="text-center" style="color: red">
-                        查询不到消息啦哈哈哈哈！
+                        <img src="__PUBLIC__/home/images/no_more_message.jpg" style="width: 100%;">
+                        <!--查询不到消息啦哈哈哈哈！-->
                     </div>
                 </if>
                 <volist name="message" id="data">

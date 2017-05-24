@@ -105,18 +105,6 @@
 <!--载入读取上次标签-->
 <script>
     $(function () {
-        //返回操作
-        pushHistory();
-        var bool=false;
-        setTimeout(function(){
-            bool=true;
-        },1500);
-        window.addEventListener("popstate", function (e) {
-            if(bool){
-                window.location.href = "{:U('Homepage/homepage')}";
-            }
-            pushHistory();
-        },false);
         if (cookie('search_tag') == 'transport') {
             //运输订单
             $('#myTab a:eq(0)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on');
@@ -128,13 +116,6 @@
         }
         $('input[name=select_category]').val(cookie('search_tag'));
     });
-    function pushHistory(){
-        var state = {
-            title: "title",
-            url: "#"
-        };
-        window.history.pushState(state, "title", "#");
-    }
 </script>
 
 <!--点击标签查询-->
@@ -448,5 +429,32 @@
         return false;
     }
 
+</script>
+<!--地址返回操作-->
+<script>
+    $(function () {
+        if (true) {
+        } else {
+            //返回操作
+            pushHistory();
+            var bool=false;
+            setTimeout(function(){
+                bool=true;
+            },1500);
+            window.addEventListener("popstate", function (e) {
+                if(bool){
+                    window.location.href = "{:U('Homepage/homepage')}";
+                }
+                pushHistory();
+            },false);
+        }
+    });
+    function pushHistory(){
+        var state = {
+            title: "title",
+            url: "#"
+        };
+        window.history.pushState(state, "title", "#");
+    }
 </script>
 </html>

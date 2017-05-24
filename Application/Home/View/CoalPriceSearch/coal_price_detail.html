@@ -14,54 +14,86 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
-    <!--<script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>-->
+    <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
 </head>
 <style>
-    td{
+    td {
         /*width: 80px !important;*/
     }
+
     .table-striped > tbody > tr:nth-of-type(odd) {
         background-color: #f7f7f7
     }
 </style>
 <body style="background-color: #efeff4">
 <!--订单展示栏-->
-    <div class="tab-content">
-        <volist name="message" id="data">
-            <div class="weui_panel weui_panel_access" style=";border-radius: 5px">
-                <div class="container">
-                    <div style="font-size: 1.2em;color:grey;background-color: white">{$data.refinery_name}</div>
-                    <div style="font-size: 1.5em;color:red;background-color: white">{$data.supply_company}</div>
-                </div>
-                <hr style="margin-top: 0;margin-bottom: 8px;color: #ddd"/>
-                <div style="width: 97%;overflow: scroll;">
-                <table class="table table-condensed table-striped" style="margin: 0;margin-left: 1.5%;table-layout: fixed">
+<div class="tab-content">
+    <volist name="message" id="data">
+        <div class="weui_panel weui_panel_access" style=";border-radius: 5px">
+            <div class="container">
+                <div style="font-size: 1.2em;color:grey;background-color: white">{$data.refinery_name}</div>
+                <div style="font-size: 1.5em;color:red;background-color: white">{$data.supply_company}</div>
+            </div>
+            <hr style="margin-top: 0;margin-bottom: 8px;color: #ddd"/>
+            <div style="width: 97%;overflow: scroll;">
+                <table class="table table-condensed table-striped"
+                       style="margin-bottom: 0;margin-left: 2.5%;table-layout: fixed">
                     <thead>
                     <tr>
                         <th class="text-center" style="border-bottom: 1px solid #ddd;width: 5em">类别</th>
                         <volist name="data['content'][0]['detailed_index']" id="val">
-                            <th class="text-center" style="border-bottom: 1px solid #ddd;width: 3em">{$val.index_name}</th>
+                            <empty name="val.index_name">
+                                <else/>
+                                <th class="text-center" style="border-bottom: 1px solid #ddd;width: 5em">
+                                    {$val.index_name}
+                                </th>
+                            </empty>
                         </volist>
                     </tr>
                     </thead>
                     <tbody>
-                        <volist name="data['content']" id="vo">
+                    <volist name="data['content']" id="vo">
+                        <empty name="vo['kind_name']">
+                            <else/>
                             <tr>
                                 <td class="text-center" style="border: none;">{$vo.kind_name}</td>
                                 <volist name="vo['detailed_index']" id="val">
-                                    <td class="text-center" style="border: none;">
-                                        {$val.index_value}
-                                    </td>
+                                    <empty name="val.index_name">
+                                        <else/>
+                                        <td class="text-center" style="border: none;">
+                                            <empty name="val.index_value">
+                                                &mdash;
+                                                <else/>
+                                                {$val.index_value}
+                                            </empty>
+                                        </td>
+                                    </empty>
                                 </volist>
                             </tr>
-                        </volist>
+                        </empty>
+                    </volist>
                     </tbody>
                 </table>
-                </div>
-                <span class="pull-right help-block" style="font-size: 12px">发布时间:{$data['update_time']|substr=0,10}</span>
             </div>
-        </volist>
-    </div>
+            <span class="pull-right help-block" style="font-size: 12px">发布时间:{$data['update_time']|substr=0,10}</span>
+        </div>
+    </volist>
+</div>
 <?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
 </body>
+<script>
+    $(function(){
+        $(window).onpopstate = function(){
+            alert(123);
+            window.history.back();
+        };
+//        $(window).on('popstate',function(){
+//            alert(123);
+//            window.history.back();
+//        });
+        //window.history.pushState('forward', null, '#');
+        //window.history.forward();
+    })
+
+</script>
 </html>

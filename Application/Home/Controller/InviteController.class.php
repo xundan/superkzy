@@ -49,7 +49,7 @@ class InviteController extends ComController
                 $userModel->save(array("uid" => $uid, 'invitation_id' => $userInfo['invitation_id']));
             }
             //二维码
-            $invited_url = C("URL") . "?invitation_id=" . $userInfo['invitation_id'];
+            $invited_url = "http://".C("URL") . "?invitation_id=" . $userInfo['invitation_id'];
             vendor("qrcode.echoCode");
             $userInfo['qr_code'] = EchoCode($invited_url);
             $userModel->save(array("uid" => $uid, 'qr_code' => $userInfo['qr_code']));

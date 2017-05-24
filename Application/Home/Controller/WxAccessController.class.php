@@ -31,16 +31,27 @@ class WxAccessController extends Controller
     }
 
     public function reply(){
+        $emoji = unicode2utf8('\ue022');
         $activity_flag = false;
         $this->getWeObj()->valid();
         $type = $this->getWeObj()->getRev()->getRevType();
         switch($type) {
             case \Org\Util\Wechat::MSGTYPE_TEXT:
                 $content = $this->getWeObj()->getRevContent();
+                $content = trim($content);
                 if ($activity_flag&&($content=="我爱母亲")){
 //                    $this->getWeObj()->text("你好，这里是超级矿资源，感谢您的支持！")->reply();
-                    $mediaid = "";
-                    $this->getWeObj()->image($mediaid)->reply();
+//                    $media_id = "4MvaT_gC28bI6pHCBq7T-zFr8p2pxSo0PmN8kGFKGj0";
+//                    $this->getWeObj()->image($media_id)->reply();
+                    $n =array(
+                        "0"=>array(
+                            'Title'=>'母亲节超矿煤炭平台送iPhone7中国红啦！！！',
+                            'Description'=>'感恩母亲节大回馈，超级矿资源送iPhone7中国红啦！！！',
+                            'PicUrl'=>'http://www.kuaimei56.com/redphone.jpg',
+                            'Url'=>'http://mp.weixin.qq.com/s/02N7S_GcQ-UK-17eNSGAcA'
+                        )
+                    );
+                    $this->getWeObj()->news($n)->reply();
                     exit;
                 }
                 if ($content=="你好"){
@@ -76,7 +87,7 @@ class WxAccessController extends Controller
                 }
 
                 if ($activity_flag){
-                    $this->getWeObj()->text("回复“我爱母亲”，即可参加母亲节赢iPhone7中国红手机活动。
+                    $this->getWeObj()->text($emoji.$emoji.$emoji."回复“我爱母亲”，即可参加母亲节赢iPhone7中国红手机活动。".$emoji.$emoji.$emoji."
 
  回复带有联系方式（手机号）的供应/求购/找车/车源信息，我们会为您公示转发。")->reply();
                     exit;
@@ -88,36 +99,55 @@ class WxAccessController extends Controller
                 break;
             case \Org\Util\Wechat::MSGTYPE_EVENT:
                 $event = $this->getWeObj()->getRevEvent();
-
-                if ($event['event']=='subscribe'){
-                    $welcome_str = "感谢关注【超级矿资源】微信公众平台！
-
-您可以点击<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>平台网站</a>开始 <a href='http://www.kuaimei56.com/index.php/Home/OwnerPublish/owner_publish'>发布</a>或 <a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>查询</a> 运单、订单信息。也可以在这里回复直接提出您的问题。
-
-在本页面直接回复您要转发的消息，我们会为您转发到我们的<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>平台网站</a>和所有超矿微信的朋友圈。";
-                    if($activity_flag){
+                switch ($event['event']){
+                    case "subscribe":
                         $welcome_str = "感谢关注【超级矿资源】微信公众平台！
 
-母亲节期间，公众号回复“我爱母亲”，即可参加母亲节赢iPhone7中国红手机活动。
+您可以点击<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>平台网站</a>开始 <a href='http://www.kuaimei56.com/index.php/Home/OwnerPublish/owner_publish'>发布</a>或 <a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>查询</a> 运单、订单信息。也可以在这里回复直接提出您的问题。
+
+在公众号直接回复您要转发的消息，我们会为您转发到我们的<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>平台网站</a>和所有超矿微信的朋友圈。
+
+您可以加cjkzy010微信号好友进入我们的超矿煤炭群,群里有各种煤炭供求信息和我们的活动资讯。";
+                        if($activity_flag){
+                            $welcome_str = "感谢关注【超级矿资源】微信公众平台！
+
+".$emoji.$emoji.$emoji."母亲节期间，公众号回复“我爱母亲”，即可参加母亲节赢iPhone7中国红手机活动。".$emoji.$emoji.$emoji."
 
 您可以点击<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>平台网站</a>开始 <a href='http://www.kuaimei56.com/index.php/Home/OwnerPublish/owner_publish'>发布</a>或 <a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>查询</a> 运单、订单信息。也可以在这里回复直接提出您的问题。
 
-在本页面直接回复您要转发的消息，我们会为您转发到我们的<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>平台网站</a>和所有超矿微信的朋友圈。";
-
-                    }
-                    $this->getWeObj()->text($welcome_str)->reply();
-
-                    exit;
+在公众号直接回复您要转发的消息，我们会为您转发到我们的<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>平台网站</a>和所有超矿微信的朋友圈。";
+                        }
+                        $this->getWeObj()->text($welcome_str)->reply();
+                        exit;
+                        break;
+                    case "CLICK":
+                        switch($event['key']){
+                            case 'activity':
+                                $n =array(
+                                    "0"=>array(
+                                        'Title'=>'母亲节超矿煤炭平台送iPhone7中国红啦！！！',
+                                        'Description'=>'感恩母亲节大回馈，超级矿资源送iPhone7中国红啦！！！',
+                                        'PicUrl'=>'http://www.kuaimei56.com/redphone.jpg',
+                                        'Url'=>'http://mp.weixin.qq.com/s/02N7S_GcQ-UK-17eNSGAcA'
+                                    )
+                                );
+                                $this->getWeObj()->news($n)->reply();
+                                break;
+                            default:
+                                $this->getWeObj()->text('点击菜单'.$event->key)->reply();
+                                break;
+                        }
+                        break;
                 }
                 break;
             case \Org\Util\Wechat::MSGTYPE_IMAGE:
                 if($activity_flag){
                     $n =array(
                         "0"=>array(
-                            'Title'=>'母亲节感恩大回馈，点击领取中国红！',
-                            'Description'=>'恭喜你获得抽奖资格',
-                            'PicUrl'=>'http://www.kuaimei56.com/iphone_red.jpg',
-                            'Url'=>'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'
+                            'Title'=>'恭喜您获得抽奖资格,点击领取中国红！',
+                            'Description'=>'超矿煤炭平台母亲节感恩大回馈活动',
+                            'PicUrl'=>'http://www.kuaimei56.com/redphone.jpg',
+                            'Url'=>'http://www.kuaimei56.com/index.php/Home/ActivityPromotion/turn_plate_lottery'
                         )
                     );
                     $this->getWeObj()->news($n)->reply();
@@ -249,7 +279,7 @@ class WxAccessController extends Controller
                         'sub_button' => array(
                             array('type' => 'view', 'name' => '平台网站', 'url' => 'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'),
                             array('type' => 'view', 'name' => '发布信息', 'url' => 'http://www.kuaimei56.com/index.php/Home/OwnerPublish/owner_publish'),
-                            array('type' => 'view', 'name' => '司机找活', 'url' => 'http://www.kuaimei56.com/index.php/Home/DriverSearch/driver_job_search'),
+                            array('type' => 'view', 'name' => '找车信息', 'url' => 'http://www.kuaimei56.com/index.php/Home/DriverSearch/driver_job_search'),
                             array('type' => 'view', 'name' => '买卖查询', 'url' => 'http://www.kuaimei56.com/index.php/Home/TradeSearch/trade_search'),
 //                            array('type' => 'view', 'name' => '推荐好友', 'url' => 'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'),
                         ),
@@ -257,6 +287,8 @@ class WxAccessController extends Controller
                     array(
                         'name' => '戳我福利',
                         'sub_button' => array(
+                            //活动链接
+//                            array('type' => 'click', 'name' => '母亲节回馈活动', 'key' => 'activity'),
                             array('type' => 'view', 'name' => '送出行险', 'url' => 'https://u.wcar.net.cn/1es'),
                             array('type' => 'view', 'name' => '优惠加油', 'url' => 'https://u.wcar.net.cn/1dN'),
                             array('type' => 'view', 'name' => '超矿金融', 'url' => 'http://www.kuaimei56.com/index.php/Views/FinancialClient/show'),

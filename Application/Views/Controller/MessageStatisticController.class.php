@@ -40,7 +40,7 @@ class MessageStatisticController extends Controller
         $start = $this->TimestampToTime($start_time);
         $end = $this->TimestampToTime($end_time);
         $where['record_time'] = array("BETWEEN", array($start, $end));
-        $result = M('ck_feedback')->join('ck_user ON ck_user.uid=ck_feedback.uid')->where($where)->select();
+        $result = M('ck_feedback')->join('LEFT JOIN ck_user ON ck_user.uid=ck_feedback.uid')->where($where)->select();
         echo json_encode($result);
         return;
     }
@@ -70,6 +70,12 @@ class MessageStatisticController extends Controller
         $end = $this->TimestampToTime($end_time);
         $where['record_time'] = array("BETWEEN", array($start, $end));
         $result = M('ck_financial_client')->where($where)->select();
+        echo json_encode($result);
+        return;
+    }
+
+    public function lottery_action(){
+        $result = M('ck_activity_2017_05')->join('LEFT JOIN ck_user ON ck_user.uid=ck_activity_2017_05.uid')->select();
         echo json_encode($result);
         return;
     }

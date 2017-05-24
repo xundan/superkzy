@@ -12,7 +12,7 @@ use Home\Common\CardList\WhereConditions;
 use Home\Model\MessagesModel;
 header("Content-type: text/html; charset=utf-8");
 
-class AreaSearchController extends ComController
+class AreaSearchController extends Controller
 {
     public function area_search(){
         //最近常用地区 从cookie中读取

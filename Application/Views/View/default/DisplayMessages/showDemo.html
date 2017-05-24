@@ -99,7 +99,7 @@
                 <td colspan="3">
                     <fieldset>
                         <legend>运费筛选(未启用)</legend>
-                        <div id="phone_number" style="display: none">{$data['phone_number]}</div>
+                        <div id="phone_number" style="display: none">{$data['phone_number']}</div>
                         <div id="area_start_select">起始地:</div><input type="text" name="area_start" id="area_start_text" placeholder="起始地">
                         <div id="area_end_select">终止地:</div><input type="text" name="area_end" id="area_end_text" placeholder="终止地">
                         <div id="freight">运费:</div><input type="number" name="freight" id="freight_text" placeholder="运费">
@@ -248,7 +248,9 @@ function all_choose(obj) {
         });
         //运费数字
         var temp_freight = document.getElementById('freight');
-        var result = areaMatchContent.match(/\d{1,}(?=\D)/g);
+        //var result = areaMatchContent.match(/\d{1,}(?=\D)/g);
+        var result = areaMatchContent.match(/\d+(\.\d+)?/g);
+
         if(result){
             $.each(result,function(k,val){
                 if(val.length == 2 || val.length == 3){
@@ -289,7 +291,7 @@ function all_choose(obj) {
             result_freight = freight;
         }
         var message_id = {$data['id']};
-        var phone_number = {data['phone_number']};
+        var phone_number = {$data['phone_number']};
         console.log(area_start);
 //        console.log(result_area_start,result_area_end,result_freight,message_id);
 

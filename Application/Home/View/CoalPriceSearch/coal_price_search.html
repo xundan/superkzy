@@ -14,7 +14,7 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
-    <!--<script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>-->
+    <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
 </head>
 <style>
     .table-striped > tbody > tr:nth-of-type(odd) {
@@ -60,22 +60,32 @@
                                     <span>{$data.area_name}</span>
                                     <span>{$data.refinery_name}</span>
                                 </p>
+
                                 <h2 class="" style="font-size: 1.5em;color: red;margin:0">
                                     {$data.supply_company}
                                 </h2>
                             </div>
                             <div class="weui_media_bd text-center" style="">
-                                <a href="tel:{$data.phone_number}" onclick='event.stopPropagation();' class=""
+                                <a href="tel:{$data.phone_number}" onclick='event.stopPropagation();' class="dial"
                                    style='text-decoration: none;color: black'>
                                     <h4>
-                                        <img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">
+                                        <img src="__PUBLIC__/home/images/phone.png" class="dial" style="width: 20px">
                                         <span style="">拨打电话</span>
                                     </h4>
                                 </a>
-                                <div>
-                                    <a href="{:U('CoalPriceSearch/coal_price_detail',array('message_id'=>$data['message_id']))}" class="btn btn-xs btn-default" style="width: 70%;border-color: #04bfc6;color:
-                                    #04bfc6">详细指标</a>
-                                </div>
+                                <empty name="data['content'][0][detailed_index][1].index_name">
+                                    <div>
+                                        <a href="{:U('CoalPriceSearch/coal_price_detail',array('message_id'=>$data['message_id']))}"
+                                           class="detail btn btn-xs btn-default disabled" style="width: 70%;border-color: #04bfc6;color:
+                                            #04bfc6">无详细指标</a>
+                                    </div>
+                                    <else/>
+                                    <div>
+                                        <a href="{:U('CoalPriceSearch/coal_price_detail',array('message_id'=>$data['message_id']))}"
+                                           class="detail btn btn-xs btn-default" style="width: 70%;border-color: #04bfc6;color:
+                                        #04bfc6">详细指标</a>
+                                    </div>
+                                </empty>
                             </div>
                         </div>
                         <hr style="margin-top: 0;margin-bottom: 8px"/>
@@ -83,22 +93,32 @@
                             <thead>
                             <tr>
                                 <th class="text-center" style="border: none;">类别</th>
-                                <th class="text-center" style="border: none;">{$data['content'][0][detailed_index][0].index_name}</th>
+                                <empty name="data['content'][0][detailed_index][0].index_name">
+                                    <th class="text-center" style="border: none;">热值</th>
+                                    <else/>
+                                    <th class="text-center" style="border: none;">
+                                        {$data['content'][0][detailed_index][0].index_name}
+                                    </th>
+                                </empty>
                                 <th class="text-center" style="border: none;">价格</th>
                             </tr>
                             </thead>
                             <tbody>
-                                <volist name="data['content']" id="vo">
-                                    <tr>
-                                        <notempty name="vo.kind_name">
-                                            <td class="text-center" style="border: none;">{$vo.kind_name}</td>
-                                            <td class="text-center" style="border: none;">
+                            <volist name="data['content']" id="vo">
+                                <tr>
+                                    <notempty name="vo.kind_name">
+                                        <td class="text-center" style="border: none;">{$vo.kind_name}</td>
+                                        <td class="text-center" style="border: none;">
+                                            <empty name="vo['detailed_index'][0].index_value">
+                                                &mdash;
+                                                <else/>
                                                 {$vo['detailed_index'][0].index_value}
-                                            </td>
-                                            <td class="text-center" style="border: none;">{$vo.price}</td>
-                                        </notempty>
-                                    </tr>
-                                </volist>
+                                            </empty>
+                                        </td>
+                                        <td class="text-center" style="border: none;">{$vo.price}</td>
+                                    </notempty>
+                                </tr>
+                            </volist>
                             </tbody>
                         </table>
                         <span class="pull-right help-block" style="font-size: 12px">发布时间:{$data['update_time']|substr=0,10}</span>
@@ -107,65 +127,85 @@
                 <span id="insert_point"></span>
             </ul>
             <ul id="search" class="tab-pane" style=";list-style-type: none">
-            <volist name="message" id="data">
-                <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
-                    <div class="weui_media_box weui_media_appmsg"
-                         style="margin: 0;padding-left: 0;padding-right: 0">
-                        <div class="weui_media_bd" style="margin-left: 20px">
-                            <p class="weui_media_desc">
-                                <span>{$data.area_name}</span> <span>{$data.refinery_name}</span>
-                            </p>
-                            <h2 class="" style="font-size: 1.5em;color: red;margin:0">
-                                {$data.supply_company}
-                            </h2>
-                        </div>
-                        <div class="weui_media_bd text-center" style="">
-                            <a href="tel:{$data.phone_number}" onclick='event.stopPropagation();' class=""
-                               style='text-decoration: none;color: black'>
-                                <h4>
-                                    <img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">
-                                    <span style="">拨打电话</span>
-                                </h4>
-                            </a>
-                            <div>
-                                <a href="{:U('CoalPriceSearch/coal_price_detail',array('message_id'=>$data['message_id']))}" class="btn btn-xs btn-default" style="width: 70%;border-color: #04bfc6;color:
-                                    #04bfc6">详细指标</a>
+                <volist name="message" id="data">
+                    <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
+                        <div class="weui_media_box weui_media_appmsg"
+                             style="margin: 0;padding-left: 0;padding-right: 0">
+                            <div class="weui_media_bd" style="margin-left: 20px">
+                                <p class="weui_media_desc">
+                                    <span>{$data.area_name}</span> <span>{$data.refinery_name}</span>
+                                </p>
+
+                                <h2 class="" style="font-size: 1.5em;color: red;margin:0">
+                                    {$data.supply_company}
+                                </h2>
+                            </div>
+                            <div class="weui_media_bd text-center" style="">
+                                <a href="tel:{$data.phone_number}" onclick='event.stopPropagation();' class=""
+                                   style='text-decoration: none;color: black'>
+                                    <h4>
+                                        <img src="__PUBLIC__/home/images/phone.png" class="dial" style="width: 20px">
+                                        <span style="">拨打电话</span>
+                                    </h4>
+                                </a>
+                                <empty name="data['content'][0][detailed_index][1].index_name">
+                                    <div>
+                                        <a href="{:U('CoalPriceSearch/coal_price_detail',array('message_id'=>$data['message_id']))}"
+                                           class="detail btn btn-xs btn-default disabled" style="width: 70%;border-color: #04bfc6;color:
+                                            #04bfc6">无详细指标</a>
+                                    </div>
+                                    <else/>
+                                    <div>
+                                        <a href="{:U('CoalPriceSearch/coal_price_detail',array('message_id'=>$data['message_id']))}"
+                                           class="detail btn btn-xs btn-default" style="width: 70%;border-color: #04bfc6;color:
+                                        #04bfc6">详细指标</a>
+                                    </div>
+                                </empty>
                             </div>
                         </div>
-                    </div>
-                    <hr style="margin-top: 0;margin-bottom: 8px"/>
-                    <table class="table table-condensed table-striped" style="margin: 0;table-layout: fixed">
-                        <thead>
-                        <tr>
-                            <th class="text-center" style="border: none;">类别</th>
-                            <th class="text-center" style="border: none;">{$data['content'][0][detailed_index][0].index_name}</th>
-                            <th class="text-center" style="border: none;">价格</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <volist name="data['content']" id="vo">
+                        <hr style="margin-top: 0;margin-bottom: 8px"/>
+                        <table class="table table-condensed table-striped" style="margin: 0;table-layout: fixed">
+                            <thead>
                             <tr>
-                                <notempty name="vo.kind_name">
-                                    <td class="text-center" style="border: none;">{$vo.kind_name}</td>
-                                    <td class="text-center" style="border: none;">
-                                        {$vo['detailed_index'][0].index_value}
-                                    </td>
-                                    <td class="text-center" style="border: none;">{$vo.price}</td>
-                                </notempty>
+                                <th class="text-center" style="border: none;">类别</th>
+                                <empty name="data['content'][0][detailed_index][0].index_name">
+                                    <th class="text-center" style="border: none;">热值</th>
+                                    <else/>
+                                    <th class="text-center" style="border: none;">
+                                        {$data['content'][0][detailed_index][0].index_name}
+                                    </th>
+                                </empty>
+                                <th class="text-center" style="border: none;">价格</th>
                             </tr>
-                        </volist>
-                        </tbody>
-                    </table>
-                    <span class="pull-right help-block" style="font-size: 12px">发布时间:{$data['update_time']|substr=0,10}</span>
-                </li>
-            </volist>
-        </ul>
+                            </thead>
+                            <tbody>
+                            <volist name="data['content']" id="vo">
+                                <tr>
+                                    <notempty name="vo.kind_name">
+                                        <td class="text-center" style="border: none;">{$vo.kind_name}</td>
+                                        <td class="text-center" style="border: none;">
+                                            <empty name="vo['detailed_index'][0].index_value">
+                                                &mdash;
+                                                <else/>
+                                                {$vo['detailed_index'][0].index_value}
+                                            </empty>
+                                        </td>
+                                        <td class="text-center" style="border: none;">{$vo.price}</td>
+                                    </notempty>
+                                </tr>
+                            </volist>
+                            </tbody>
+                        </table>
+                        <span class="pull-right help-block" style="font-size: 12px">发布时间:{$data['update_time']|substr=0,10}</span>
+                    </li>
+                </volist>
+            </ul>
         </div>
-    <div id="pullUp">
-        <span class="pullUpIcon"></span>
-        <span class="pullUpLabel" style="margin-left: -48px">上拉加载更多...</span>
+        <div id="pullUp">
+            <span class="pullUpIcon"></span>
+            <span class="pullUpLabel" style="margin-left: -48px">上拉加载更多...</span>
+        </div>
     </div>
-</div>
 </div>
 <span id="cloneObj" style="display: none;">
     <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
@@ -175,20 +215,22 @@
                 <p class="weui_media_desc">
                     <span>{$data.area_name}</span> <span>{$data.refinery_name}</span>
                 </p>
+
                 <h2 class="" style="font-size: 1.5em;color: red;margin:0">
                     {$data.supply_company}
                 </h2>
             </div>
             <div class="weui_media_bd text-center" style="">
-                <a href="tel:{$data.phone_number}" onclick='event.stopPropagation();' class=""
+                <a href="tel:{$data.phone_number}" onclick='event.stopPropagation();' class="dial"
                    style='text-decoration: none;color: black'>
                     <h4>
                         <img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">
                         <span style="">拨打电话</span>
                     </h4>
                 </a>
+
                 <div>
-                    <a class="btn btn-xs btn-default" style="width: 70%;border-color: #04bfc6;color:
+                    <a class="detail btn btn-xs btn-default" style="width: 70%;border-color: #04bfc6;color:
                     #04bfc6">详细指标</a>
                 </div>
             </div>
@@ -208,7 +250,11 @@
                     <notempty name="vo.kind_name">
                         <td class="text-center" style="border: none;">{$vo.kind_name}</td>
                         <td class="text-center" style="border: none;">
-                            {$vo['detailed_index'][0].index_value}
+                            <empty name="vo['detailed_index'][0].index_value">
+                                &mdash;
+                                <else/>
+                                {$vo['detailed_index'][0].index_value}
+                            </empty>
                         </td>
                         <td class="text-center" style="border: none;">{$vo.price}</td>
                     </notempty>
@@ -232,7 +278,8 @@
 <!--载入读取上次标签-->
 <script>
     $(function () {
-        if(cookie('coal_price_search')){
+        //alert(sessionStorage.getItem('coal_price_search_html_data'));
+        if (cookie('coal_price_search')) {
             var temp_load = cookie('coal_price_search');
             var temp_load_obj = JSON.parse(cookie('coal_price_search'));
             jQuery.each(temp_load_obj, function (k, val) {
@@ -244,7 +291,8 @@
                         $('input[name=refinery_name]').val(val.value);
                     } else {
                     }
-                }else{}
+                } else {
+                }
             });
         }
         console.log('form');
@@ -252,9 +300,9 @@
         if ($('input[name=select_category]').val() == 'search') {
             //信息查询
             $('#myTab a:eq(0)').removeClass('weui_bar_item_on').siblings('a').addClass('weui_bar_item_on weui_bar_item_on_extra').tab('show');
-            if($('input[name=refinery_name]').val()){
+            if ($('input[name=refinery_name]').val()) {
                 $('#refinery_name_html').html($('input[name=refinery_name]').val());
-            }else{
+            } else {
                 $('#refinery_name_html').html('点击选择');
             }
 
@@ -270,6 +318,11 @@
 <script>
     //点击全部标签
     $('#myTab a:eq(0)').click(function () {
+        var str = window.location.href;
+        str = str.substring(str.lastIndexOf("/") + 1) + '_data';
+        sessionStorage.removeItem(str);
+        //日志记录
+        ck_log('click', '全部煤矿');
         //填写表单数据
         $('input[name=select_category]').val('all');
         $('input[name=refinery_name]').val('');
@@ -283,6 +336,8 @@
     //点击地址选择标签
     //起始地
     $('#myTab a:eq(1)').click(function () {
+        //日志记录
+        ck_log('click', '选择煤矿');
         //填写表单数据
         $('input[name=select_category]').val('search');
         //更新页面cookie
@@ -304,6 +359,8 @@
      */
     function pullDownAction() {
         console.log('down');
+        //日志记录
+        ck_log('scroll', '下拉刷新');
 //        location.reload();
         var select_category = $('input[name=select_category]').val();
         var refinery_name = $('input[name=refinery_name]').val();
@@ -311,7 +368,7 @@
             type: "post",
             url: "{:U('CoalPriceSearch/coal_price_search')}",
             data: {
-                isAjax:1,
+                isAjax: 1,
                 select_category: select_category,
                 refinery_name: refinery_name
             },
@@ -320,38 +377,58 @@
                 var jsonObj = eval("(" + data + ")");
                 console.log(jsonObj);
                 $('#page').val(1);
-                if(select_category == 'all'){
+                if (select_category == 'all') {
                     $('#all').html('');
-                }else if(select_category == 'search'){
+                } else if (select_category == 'search') {
                     $('#search').html('');
                 }
-                $.each(jsonObj.data,function(k,val){
-                    var tempObj=$("#cloneObj").children("li").clone(true);
+                $.each(jsonObj.data, function (k, val) {
+                    var tempObj = $("#cloneObj").children("li").clone(true);
                     tempObj.children('div').children('div').eq(0).children('p').children('span').eq(0).html(val.area_name);
                     tempObj.children('div').children('div').eq(0).children('p').children('span').eq(1).html(val.refinery_name);
                     tempObj.children('div').children('div').eq(0).children('h2').html(val.supply_company);
-                    tempObj.children('div').children('div').eq(1).children('a').attr('href','tel:'+val.phone_number);
-                    tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').attr('href',"__CONTROLLER__/coal_price_detail/message_id/"+val.message_id);
-                    tempObj.children('table').children('thead').children('tr').children('th').eq(1).html(val.content[0].detailed_index[0].index_name);
-                    tempObj.children('span').html('发布时间:'+val.update_time.substr(0,10));
+                    tempObj.children('div').children('div').eq(1).children('a').attr('href', 'tel:' + val.phone_number);
+                    //tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').attr('href',"__CONTROLLER__/coal_price_detail/message_id/"+val.message_id);
+                    if (val.content[0].detailed_index[0].index_name) {
+                        if (!val.content[0].detailed_index[1].index_name) {
+                            tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').addClass('disabled');
+                            tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').text('无详细指标');
+                        } else {
+                            tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').attr('href', "__CONTROLLER__/coal_price_detail/message_id/" + val.message_id);
+                        }
+                        tempObj.children('table').children('thead').children('tr').children('th').eq(1).html(val.content[0].detailed_index[0].index_name);
+                    } else {
+                        if (!val.content[0].detailed_index[1].index_name) {
+                            tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').addClass('disabled');
+                            tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').text('无详细指标');
+                        } else {
+                            tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').attr('href', "__CONTROLLER__/coal_price_detail/message_id/" + val.message_id);
+                        }
+                        tempObj.children('table').children('thead').children('tr').children('th').eq(1).html('热值');
+                    }
+                    tempObj.children('span').html('发布时间:' + val.update_time.substr(0, 10));
                     var temp_string = '';
-                    $.each(val.content,function(key,value){
-                        if(value.kind_name == '') return true;
+                    $.each(val.content, function (key, value) {
+                        if (value.kind_name == '') return true;
                         var temp_value = '';
-                        $.each(value.detailed_index,function(i,j){
-                            if(i == 0){
-                                temp_value = j.index_value;
+                        $.each(value.detailed_index, function (i, j) {
+                            if (i == 0) {
+                                if (j.index_value) {
+                                    temp_value = j.index_value;
+                                } else {
+                                    temp_value = '&mdash;';
+                                }
                                 return false;
                             }
                         });
-                        temp_string+="<tr><td class='text-center' style='border: none;'>" +
-                                value.kind_name+"</td><td class='text-center' style='border: none;'>"+ temp_value+
-                                "</td><td class='text-center' style='border: none;'>"+value.price+"</td></tr>";
+                        temp_string += "<tr><td class='text-center' style='border: none;'>" +
+                                value.kind_name + "</td><td class='text-center' style='border: none;'>" + temp_value +
+                                "</td><td class='text-center' style='border: none;'>" + value.price + "</td></tr>";
                     });
                     tempObj.find('tbody').html(temp_string);
-                    if(select_category == 'all'){
+                    if (select_category == 'all') {
                         tempObj.appendTo("#all");
-                    }else if(select_category == 'search'){
+                    } else if (select_category == 'search') {
                         tempObj.appendTo("#search");
                     }
                 });
@@ -367,6 +444,8 @@
     function pullUpAction() {
 //        setTimeout(function () {
         console.log('up');
+        //日志记录
+        ck_log('scroll', '加载更多');
         var a = $('#tag_search').serialize();
         console.log(a);
         var page = $('#page').val();
@@ -376,62 +455,95 @@
         //==========================================
         $.ajax({
             type: "post",
-                url: "{:U('CoalPriceSearch/coal_price_search_more')}",
+            url: "{:U('CoalPriceSearch/coal_price_search_more')}",
             data: {
                 page: request_page,
                 select_category: select_category,
-                refinery_name:refinery_name
+                refinery_name: refinery_name
             },
             success: function (data) {
-                console.log('success',select_category);
+                console.log('success', select_category);
                 var jsonObj = eval("(" + data + ")");
                 console.log(jsonObj);
-                $.each(jsonObj.data,function(k,val){
-                    var tempObj=$("#cloneObj").children("li").clone(true);
+                $.each(jsonObj.data, function (k, val) {
+                    var tempObj = $("#cloneObj").children("li").clone(true);
                     tempObj.children('div').children('div').eq(0).children('p').children('span').eq(0).html(val.area_name);
                     tempObj.children('div').children('div').eq(0).children('p').children('span').eq(1).html(val.refinery_name);
                     tempObj.children('div').children('div').eq(0).children('h2').html(val.supply_company);
-                    tempObj.children('div').children('div').eq(1).children('a').attr('href','tel:'+val.phone_number);
-                    tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').attr('href',"__CONTROLLER__/coal_price_detail/message_id/"+val.message_id);
-                    tempObj.children('table').children('thead').children('tr').children('th').eq(1).html(val.content[0].detailed_index[0].index_name);
-                    tempObj.children('span').html('发布时间:'+val.update_time.substr(0,10));
+                    tempObj.children('div').children('div').eq(1).children('a').attr('href', 'tel:' + val.phone_number);
+                    if (val.content[0].detailed_index[0].index_name) {
+                        if (!val.content[0].detailed_index[1].index_name) {
+                            tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').addClass('disabled');
+                            tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').text('无详细指标');
+                        } else {
+                            tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').attr('href', "__CONTROLLER__/coal_price_detail/message_id/" + val.message_id);
+                        }
+                        tempObj.children('table').children('thead').children('tr').children('th').eq(1).html(val.content[0].detailed_index[0].index_name);
+                    } else {
+                        if (!val.content[0].detailed_index[1].index_name) {
+                            tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').addClass('disabled');
+                            tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').text('无详细指标');
+                        } else {
+                            tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').attr('href', "__CONTROLLER__/coal_price_detail/message_id/" + val.message_id);
+                        }
+                        tempObj.children('table').children('thead').children('tr').children('th').eq(1).html('热值');
+                    }
+                    tempObj.children('span').html('发布时间:' + val.update_time.substr(0, 10));
                     var temp_string = '';
-                    $.each(val.content,function(key,value){
-                        if(value.kind_name == '') return true;
+                    $.each(val.content, function (key, value) {
+                        if (value.kind_name == '') return true;
                         var temp_value = '';
-                        $.each(value.detailed_index,function(i,j){
-                            if(i == 0){
-                                temp_value = j.index_value;
+                        $.each(value.detailed_index, function (i, j) {
+                            if (i == 0) {
+                                if (j.index_value) {
+                                    temp_value = j.index_value;
+                                } else {
+                                    temp_value = '&mdash;';
+                                }
                                 return false;
                             }
                         });
-                        temp_string+="<tr><td class='text-center' style='border: none;'>" +
-                                value.kind_name+"</td><td class='text-center' style='border: none;'>"+ temp_value+
-                        "</td><td class='text-center' style='border: none;'>"+value.price+"</td></tr>";
+                        temp_string += "<tr><td class='text-center' style='border: none;'>" +
+                                value.kind_name + "</td><td class='text-center' style='border: none;'>" + temp_value +
+                                "</td><td class='text-center' style='border: none;'>" + value.price + "</td></tr>";
                     });
                     tempObj.find('tbody').html(temp_string);
-                    if(select_category == 'all'){
+                    if (select_category == 'all') {
                         tempObj.appendTo("#all");
-                    }else if(select_category == 'search'){
+                    } else if (select_category == 'search') {
                         tempObj.appendTo("#search");
                     }
                 });
-                if(jsonObj.end_tag == 'end'){
-                    if(flag){
+                if (jsonObj.end_tag == 'end') {
+                    if (flag) {
                         var div = document.createElement('div');
                         div.style.cssText = 'margin-top:2.5%;color:red;text-align:center';
                         div.innerHTML = '小矿查不到更多消息啦!';
-                        if(select_category == 'all'){
+                        if (select_category == 'all') {
                             document.getElementById('all').appendChild(div);
-                        }else if(select_category == 'search'){
+                        } else if (select_category == 'search') {
                             document.getElementById('search').appendChild(div);
                         }
                         flag = false;
                     }
                     $('#page').val(jsonObj.page);
-                }else if(jsonObj.end_tag == 'continue'){
+                } else if (jsonObj.end_tag == 'continue') {
                     $('#page').val(jsonObj.page);
                 }
+                //ajax数据存在sessionStorage中
+                var str = window.location.href;
+                str = str.substring(str.lastIndexOf("/") + 1) + '_data';
+                if (sessionStorage.getItem(str)) {
+                    var untreated_data = sessionStorage.getItem(str);
+                    if (data == untreated_data) console.log('asdasdasd');
+                    var aaa = eval("(" + untreated_data + ")");
+                    console.log(aaa);
+
+                } else {
+                    sessionStorage.setItem(str, data);
+                }
+
+                //刷新滚动区域
                 myScroll.refresh();
             }
         });
@@ -447,78 +559,80 @@
         pullDownOffset = pullDownEl.offsetHeight;
         pullUpEl = document.getElementById('pullUp');
         pullUpOffset = pullUpEl.offsetHeight;
-        setTimeout(function () {
-            myScroll = new iScroll('wrapper', {
-//        scrollbarClass: 'myScrollbar', /* 重要样式 */
-                useTransition: true,
-                topOffset: pullDownOffset,
-//        probeType: 3,
-//        mouseWheel: false,
-                scrollbars: true,
-//                vScrollbar:false,
+        //setTimeout(function () {
+        myScroll = new iScroll('wrapper', {
+            //scrollbarClass: 'myScrollbar', /* 重要样式 */
+            useTransition: true,
+            topOffset: pullDownOffset,
+            //probeType: 3,
+            //mouseWheel: false,
+            //scrollbars: true,
+            fadeScrollbar: true,
+            vScrollbar: (!(/android/gi).test(navigator.appVersion)),
 //        disableMouse: false,
 //        disablePointer: false,
-                //点击事件
-                click: false,
-                taps: false,
+            //点击事件
+            click: false,
+            taps: false,
 //        tap: true,
-                preventDefault: false,//（把这句加上去哦）
-                preventDefaultException: {tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|A)$/},
-                onRefresh: function () {
-                    console.log('refresh');
-                    if (pullDownEl.className.match('loading')) {
-                        pullDownEl.className = '';
-                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+            preventDefault: false,//（把这句加上去哦）
+            preventDefaultException: {tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|A)$/},
+            onRefresh: function () {
+                console.log('refresh');
+                if (pullDownEl.className.match('loading')) {
+                    pullDownEl.className = '';
+                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
 //                pullDownEl.querySelector('.pullDownLabel').innerHTML = '数据更新时间：' + update_time+'下拉刷新';
-                    } else if (pullUpEl.className.match('loading')) {
-                        pullUpEl.className = '';
-                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
-                    }
-                    document.getElementById("pullUp").style.display = "none";
-                    time_now = new Date();
-                    update_time = time_now.toLocaleString();
+                } else if (pullUpEl.className.match('loading')) {
+                    pullUpEl.className = '';
+                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+                }
+                document.getElementById("pullUp").style.display = "none";
+                time_now = new Date();
+                update_time = time_now.toLocaleString();
 //            document.getElementById("show").innerHTML="onRefresh: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
 
-                },
-                onScrollMove: function () {
+            },
+            onScrollMove: function () {
 //            document.getElementById("show").innerHTML="onScrollMove: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
-                    if (this.y > 0) {
-                        pullDownEl.className = 'flip';
-                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...</br>' + '最后更新时间：' + update_time;
-                        this.minScrollY = 0;
-                    }
-                    if (this.y < 0 && pullDownEl.className.match('flip')) {
-                        pullDownEl.className = '';
-                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
-                        this.minScrollY = -pullDownOffset;
-                    }
-
-                    if (this.scrollerH < this.wrapperH && this.y < (this.minScrollY - pullUpOffset) || this.scrollerH > this.wrapperH && this.y < (this.maxScrollY - pullUpOffset)) {
-                        document.getElementById("pullUp").style.display = "";
-                        pullUpEl.className = 'flip';
-                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...</br>' + '最后更新时间：' + update_time;
-                    }
-                    if (this.scrollerH < this.wrapperH && this.y > (this.minScrollY - pullUpOffset) && pullUpEl.className.match('flip') || this.scrollerH > this.wrapperH && this.y > (this.maxScrollY - pullUpOffset) && pullUpEl.className.match('flip')) {
-                        document.getElementById("pullUp").style.display = "none";
-                        pullUpEl.className = '';
-                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
-                    }
-                },
-                onScrollEnd: function () {
-//            document.getElementById("show").innerHTML="onScrollEnd: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
-                    if (pullDownEl.className.match('flip')) {
-                        pullDownEl.className = 'loading';
-                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '加载中...';
-                        pullDownAction(); // Execute custom function (ajax call?)
-                    } else if (pullUpEl.className.match('flip')) {
-                        pullUpEl.className = 'loading';
-                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载中...';
-                        pullUpAction(); // Execute custom function (ajax call?)
-                    }
+                if (this.y > 0) {
+                    pullDownEl.className = 'flip';
+                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...</br>' + '最后更新时间：' + update_time;
+                    this.minScrollY = 0;
                 }
-            });
-            console.dir(myScroll.options);
-        }, 100);
+                if (this.y < 0 && pullDownEl.className.match('flip')) {
+                    pullDownEl.className = '';
+                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
+                    this.minScrollY = -pullDownOffset;
+                }
+
+                if (this.scrollerH < this.wrapperH && this.y < (this.minScrollY - pullUpOffset) || this.scrollerH > this.wrapperH && this.y < (this.maxScrollY - pullUpOffset)) {
+                    document.getElementById("pullUp").style.display = "";
+                    pullUpEl.className = 'flip';
+                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...</br>' + '最后更新时间：' + update_time;
+                }
+                if (this.scrollerH < this.wrapperH && this.y > (this.minScrollY - pullUpOffset) && pullUpEl.className.match('flip') || this.scrollerH > this.wrapperH && this.y > (this.maxScrollY - pullUpOffset) && pullUpEl.className.match('flip')) {
+                    document.getElementById("pullUp").style.display = "none";
+                    pullUpEl.className = '';
+                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
+                }
+                //console.log(this.y,this.scrollerH,this.maxScrollY,this.minScrollY);
+            },
+            onScrollEnd: function () {
+//            document.getElementById("show").innerHTML="onScrollEnd: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
+                if (pullDownEl.className.match('flip')) {
+                    pullDownEl.className = 'loading';
+                    pullDownEl.querySelector('.pullDownLabel').innerHTML = '加载中...';
+                    pullDownAction(); // Execute custom function (ajax call?)
+                } else if (pullUpEl.className.match('flip')) {
+                    pullUpEl.className = 'loading';
+                    pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载中...';
+                    pullUpAction(); // Execute custom function (ajax call?)
+                }
+            }
+        });
+        console.dir(myScroll.options);
+        //}, 100);
 //    setTimeout(function(){
 //        document.getElementById('wrapper').style.left = '0';
 //    },800);
@@ -529,5 +643,117 @@
     }, false);
     document.addEventListener('DOMContentLoaded', loaded, false);
     //    window.onload = loaded()
+</script>
+<!--日志记录-->
+<script>
+    $('.dial').on('click', function () {
+        var temp = $(this).attr('href');
+        var phone_number = temp.match(/tel:(\d*)/)[1];
+        console.log(phone_number);
+        ck_log('dial', phone_number);
+    });
+    $('.detail').on('click', function () {
+        var temp = $(this).attr('href');
+        var message_id = temp.match(/message_id\/(\d*)/)[1];
+        console.log(message_id);
+        ck_log('click', '详细指标' + message_id);
+    });
+</script>
+<!--记录位置-->
+<script>
+    window.onunload = function () {
+        var str = window.location.href;
+        str = str.substring(str.lastIndexOf("/") + 1) + '_scroll';
+        var scroll_offset = myScroll.y;
+        sessionStorage.setItem(str, scroll_offset);
+    }
+</script>
+<script>
+    window.onload = function () {
+        var select_category = $('input[name=select_category]').val();
+        var str = window.location.href;
+        var str_data = str.substring(str.lastIndexOf("/") + 1) + '_data';
+        var str_scroll = str.substring(str.lastIndexOf("/") + 1) + '_scroll';
+        var scroll_data = sessionStorage.getItem(str_data);
+        if (scroll_data) {
+            renderData(scroll_data, select_category);
+        }
+        var scroll_offset = sessionStorage.getItem(str_scroll);
+        if (scroll_offset) {
+            myScroll.scrollTo(0, scroll_offset, 0);
+        }
+    };
+</script>
+<script>
+    function renderData(data, select_category) {
+        var jsonObj = eval("(" + data + ")");
+        console.log(jsonObj);
+        $.each(jsonObj.data, function (k, val) {
+            var tempObj = $("#cloneObj").children("li").clone(true);
+            tempObj.children('div').children('div').eq(0).children('p').children('span').eq(0).html(val.area_name);
+            tempObj.children('div').children('div').eq(0).children('p').children('span').eq(1).html(val.refinery_name);
+            tempObj.children('div').children('div').eq(0).children('h2').html(val.supply_company);
+            tempObj.children('div').children('div').eq(1).children('a').attr('href', 'tel:' + val.phone_number);
+            if (val.content[0].detailed_index[0].index_name) {
+                if (!val.content[0].detailed_index[1].index_name) {
+                    tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').addClass('disabled');
+                    tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').text('无详细指标');
+                } else {
+                    tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').attr('href', "__CONTROLLER__/coal_price_detail/message_id/" + val.message_id);
+                }
+                tempObj.children('table').children('thead').children('tr').children('th').eq(1).html(val.content[0].detailed_index[0].index_name);
+            } else {
+                if (!val.content[0].detailed_index[1].index_name) {
+                    tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').addClass('disabled');
+                    tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').text('无详细指标');
+                } else {
+                    tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').attr('href', "__CONTROLLER__/coal_price_detail/message_id/" + val.message_id);
+                }
+                tempObj.children('table').children('thead').children('tr').children('th').eq(1).html('热值');
+            }
+            tempObj.children('span').html('发布时间:' + val.update_time.substr(0, 10));
+            var temp_string = '';
+            $.each(val.content, function (key, value) {
+                if (value.kind_name == '') return true;
+                var temp_value = '';
+                $.each(value.detailed_index, function (i, j) {
+                    if (i == 0) {
+                        if (j.index_value) {
+                            temp_value = j.index_value;
+                        } else {
+                            temp_value = '&mdash;';
+                        }
+                        return false;
+                    }
+                });
+                temp_string += "<tr><td class='text-center' style='border: none;'>" +
+                        value.kind_name + "</td><td class='text-center' style='border: none;'>" + temp_value +
+                        "</td><td class='text-center' style='border: none;'>" + value.price + "</td></tr>";
+            });
+            tempObj.find('tbody').html(temp_string);
+            if (select_category == 'all') {
+                tempObj.appendTo("#all");
+            } else if (select_category == 'search') {
+                tempObj.appendTo("#search");
+            }
+        });
+        if (jsonObj.end_tag == 'end') {
+            if (flag) {
+                var div = document.createElement('div');
+                div.style.cssText = 'margin-top:2.5%;color:red;text-align:center';
+                div.innerHTML = '小矿查不到更多消息啦!';
+                if (select_category == 'all') {
+                    document.getElementById('all').appendChild(div);
+                } else if (select_category == 'search') {
+                    document.getElementById('search').appendChild(div);
+                }
+                flag = false;
+            }
+            $('#page').val(jsonObj.page);
+        } else if (jsonObj.end_tag == 'continue') {
+            $('#page').val(jsonObj.page);
+        }
+        myScroll.refresh();
+    }
 </script>
 </html>

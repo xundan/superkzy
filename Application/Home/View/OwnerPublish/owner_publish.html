@@ -570,7 +570,7 @@
                             <input type="number" name="price_max" id="buy_price_max" class="form-control"
                                    placeholder="最高价" style=";width:46%;border-radius: 0;border: 0">
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
-                                元
+                                元/吨
                             </span>
                         </div>
                     </td>
@@ -826,7 +826,8 @@
                                   style="width: 25%;border-radius: 0;border:0;background-color: white">
                                 <span class="pull-left">装车费</span>
                             </span>
-                            <input id="need_loading_cost" type="number" name="loading_cost" class="form-control" placeholder="请输入装车费"
+                            <input id="need_loading_cost" type="number" name="loading_cost" class="form-control"
+                                   placeholder="请输入装车费"
                                    style="border-radius: 0;border: 0">
                             <span class="input-group-addon" style="border-radius: 0;border:0;background-color: white">
                                 元
@@ -1122,7 +1123,8 @@
     </div>
 </div>
 <!--发布成功模态框-->
-<div class="modal fade" id="publish_success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="publish_success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" style="top:30%">
         <div class="modal-content">
             <div class="modal-header">
@@ -1133,7 +1135,13 @@
                 <h4 class="modal-title" id="myModalLabel2" style="color:grey">小提示</h4>
             </div>
             <div class="modal-body">
-                <span style="color:black">恭喜您发布成功！</span>
+                <span style="color:black">
+                    恭喜您发布成功，您的信息我们还将为您免费推送到
+                    <span style="color: red">微信群</span>、
+                    <span style="color: red">朋友圈</span>、
+                    <span style="color: red">贴吧</span>
+                    以及我们的<span style="color: red">合作平台</span>进行宣传推广！
+                </span>
             </div>
             <div class="modal-footer">
                 <a href="{:U('OwnerPublishHistory/owner_publish_history')}" type="button" class="btn btn-primary"
@@ -1169,9 +1177,9 @@
         $(this).parent('label').toggleClass('myactive');
         var temp_html = $(this).parent('label').parent('div').parent('td').children('a').children('div').children('span').eq(1);
         temp_html.html(check_val);
-        if(!$(this).parent('label').hasClass('myactive')){
+        if (!$(this).parent('label').hasClass('myactive')) {
             console.log('cancel_check');
-            $(this).attr('checked',false);
+            $(this).attr('checked', false);
             temp_html.html('');
         }
     });
@@ -1179,7 +1187,7 @@
 
 <!--载入时读取上次发布的信息-->
 <script>
-    function pushHistory(){
+    function pushHistory() {
         var state = {
             title: "title",
             url: "#"
@@ -1189,16 +1197,16 @@
     $(function () {
         //返回操作
         pushHistory();
-        var bool=false;
-        setTimeout(function(){
-            bool=true;
-        },1500);
+        var bool = false;
+        setTimeout(function () {
+            bool = true;
+        }, 1500);
         window.addEventListener("popstate", function (e) {
-            if(bool){
+            if (bool) {
                 window.location.href = "{:U('Homepage/homepage')}";
             }
             pushHistory();
-        },false);
+        }, false);
         console.log(cookie());
         if (cookie('tag') === '车源') {
             //tag 为车源
@@ -1416,7 +1424,7 @@
 <script>
     //车源
     function give_get_area_start() {
-        ck_log("click","车源-选择起始地");
+        ck_log("click", "车源-选择起始地");
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
         cookie('tag', '车源');
@@ -1430,14 +1438,14 @@
         cookie('coal_buy', null);
 
         //告诉area_search 要改的来源
-        var temp = {name:'car_give',value:cookie('car_give')};
-        cookie('source',JSON.stringify(temp));
+        var temp = {name: 'car_give', value: cookie('car_give')};
+        cookie('source', JSON.stringify(temp));
 
         //地址跳转
         window.location.href = goto_url;
     }
     function give_get_area_end() {
-        ck_log("click","车源-选择终止地");
+        ck_log("click", "车源-选择终止地");
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
         cookie('tag', '车源');
@@ -1451,8 +1459,8 @@
         cookie('coal_buy', null);
 
         //告诉area_search 要改的来源
-        var temp = {name:'car_give',value:cookie('car_give')};
-        cookie('source',JSON.stringify(temp));
+        var temp = {name: 'car_give', value: cookie('car_give')};
+        cookie('source', JSON.stringify(temp));
 
         //地址跳转
         window.location.href = goto_url;
@@ -1460,7 +1468,7 @@
 
     //找车
     function need_get_area_start() {
-        ck_log("click","找车-选择起始地");
+        ck_log("click", "找车-选择起始地");
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
         cookie('tag', '找车');
@@ -1474,14 +1482,14 @@
         cookie('coal_buy', null);
 
         //告诉area_search 要改的来源
-        var temp = {name:'car_need',value:cookie('car_need')};
-        cookie('source',JSON.stringify(temp));
+        var temp = {name: 'car_need', value: cookie('car_need')};
+        cookie('source', JSON.stringify(temp));
 
         //地址跳转
         window.location.href = goto_url;
     }
     function need_get_area_end() {
-        ck_log("click","找车-选择终止地");
+        ck_log("click", "找车-选择终止地");
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
         cookie('tag', '找车');
@@ -1495,8 +1503,8 @@
         cookie('coal_buy', null);
 
         //告诉area_search 要改的来源
-        var temp = {name:'car_need',value:cookie('car_need')};
-        cookie('source',JSON.stringify(temp));
+        var temp = {name: 'car_need', value: cookie('car_need')};
+        cookie('source', JSON.stringify(temp));
 
         //地址跳转
         window.location.href = goto_url;
@@ -1504,7 +1512,7 @@
 
     //供应
     function sell_get_area_start() {
-        ck_log("click","供应-选择起始地");
+        ck_log("click", "供应-选择起始地");
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
         cookie('tag', '供应');
@@ -1518,8 +1526,8 @@
         cookie('coal_buy', null);
 
         //告诉area_search 要改的来源
-        var temp = {name:'coal_sell',value:cookie('coal_sell')};
-        cookie('source',JSON.stringify(temp));
+        var temp = {name: 'coal_sell', value: cookie('coal_sell')};
+        cookie('source', JSON.stringify(temp));
 
         //地址跳转
         window.location.href = goto_url;
@@ -1527,7 +1535,7 @@
 
     //求购
     function buy_get_area_start() {
-        ck_log("click","求购-选择地址");
+        ck_log("click", "求购-选择地址");
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
         cookie('tag', '求购');
@@ -1541,8 +1549,8 @@
         cookie('coal_sell', null);
 
         //告诉area_search 要改的来源
-        var temp = {name:'coal_buy',value:cookie('coal_buy')};
-        cookie('source',JSON.stringify(temp));
+        var temp = {name: 'coal_buy', value: cookie('coal_buy')};
+        cookie('source', JSON.stringify(temp));
 
         //地址跳转
         window.location.href = goto_url;
@@ -1562,7 +1570,7 @@
         $('#give_content_alert').html('');
     });
     function give_sub() {
-        ck_log("submit","车源-发布");
+        ck_log("submit", "车源-发布");
         var short_allocate = $('input[name=short_allocate]:checked').val();
         console.log(short_allocate);
         //获取表单数据
@@ -1607,7 +1615,7 @@
                     $('#hint').modal();
                 } else if (jsonObj.status == 3) {
                     showToast(jsonObj.msg);
-                }else {
+                } else {
                     console.log(jsonObj.msg);
 //                    showToast(jsonObj.msg);
                     $('#publish_success').modal();
@@ -1631,7 +1639,7 @@
     });
     function need_sub() {
         //获取表单数据
-        ck_log("submit","求车-发布");
+        ck_log("submit", "求车-发布");
         var car_need = JSON.stringify($('#form_need').serializeArray());
 //        var area_start = $('extarea[name=need_content]').val().trim();
 //        //表单数据存入cookie便于加载时显示
@@ -1660,7 +1668,7 @@
         }
         //装车时间判断 弱需求
         var loading_time = $('#need_loading_time').val();
-        var loading_timestamp = new Date(loading_time.replace(/-/g, '/')).getTime()+24*60*60*1000;
+        var loading_timestamp = new Date(loading_time.replace(/-/g, '/')).getTime() + 24 * 60 * 60 * 1000;
         var now_time = new Date().getTime();
         if (loading_timestamp < now_time) {
             $('#need_content_alert').html('装车时间过期');
@@ -1683,7 +1691,7 @@
                     $('#hint').modal();
                 } else if (jsonObj.status == 3) {
                     showToast(jsonObj.msg);
-                }else  {
+                } else {
                     console.log(jsonObj.msg);
 //                    showToast(jsonObj.msg);
                     $('#publish_success').modal();
@@ -1706,7 +1714,7 @@
         $('#sell_content_alert').html('');
     });
     function sell_sub() {
-        ck_log("submit","供应-发布");
+        ck_log("submit", "供应-发布");
         //获取表单数据
         var coal_sell = JSON.stringify($('#form_sell').serializeArray());
         //表单数据存入cookie便于加载时显示
@@ -1749,7 +1757,7 @@
                     $('#hint').modal();
                 } else if (jsonObj.status == 3) {
                     showToast(jsonObj.msg);
-                }else  {
+                } else {
                     console.log(jsonObj.msg);
 //                    showToast(jsonObj.msg);
                     $('#publish_success').modal();
@@ -1772,7 +1780,7 @@
         $('#buy_content_alert').html('');
     });
     function buy_sub() {
-        ck_log("submit","求购-发布");
+        ck_log("submit", "求购-发布");
         //获取表单数据
         var coal_buy = JSON.stringify($('#form_buy').serializeArray());
         //表单数据存入cookie便于加载时显示
@@ -1815,7 +1823,7 @@
                     $('#hint').modal();
                 } else if (jsonObj.status == 3) {
                     showToast(jsonObj.msg);
-                }else  {
+                } else {
                     console.log(jsonObj.msg);
 //                    showToast(jsonObj.msg);
                     $('#publish_success').modal();

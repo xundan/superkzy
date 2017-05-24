@@ -6,7 +6,7 @@
           content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
     <!--<link rel="icon" href="../../favicon.ico">-->
-    <title>货源找车</title>
+    <title>车源信息</title>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
@@ -25,7 +25,7 @@
             <span>全&emsp;部</span>
         </a>
         <a href="#search" class="text-center" data-toggle="tab"
-           style=";color: black;text-decoration: none;font-size: 1em;width:27%;padding: 5px 0;height:42px">
+           style=";color: black;text-decoration: none;font-size: 1em;width:27%;padding: 5px 0;height:42px;line-height: 32px">
             <img src="__PUBLIC__/home/images/area_start_text.png" class="" style="height: 20px">
             <span id="area_start_html">点击选择</span>
 
@@ -36,7 +36,7 @@
             <img src="__PUBLIC__/home/images/change.png" class="" style="width: 55px;padding-top: 4px">
         </a>
         <a href="#search" data-toggle="tab" class="weui_navbar_item"
-           style=";color: black;text-decoration: none;font-size: 1em;height:42px">
+           style=";color: black;text-decoration: none;font-size: 1em;height:42px;line-height: 32px">
             <span id="area_end_html">点击选择</span>
             <img src="__PUBLIC__/home/images/area_end_text.png" class="" style="height: 20px">
 
@@ -113,32 +113,33 @@
 </body>
 <!--搜索框功能-->
 <script>
-    $(function(){
+    $(function () {
         var $searchBar = $('#search_bar'),
                 $searchText = $('#search_text'),
                 $searchInput = $('#search_input'),
                 $searchClear = $('#search_clear'),
                 $searchCancel = $('#search_cancel');
 
-        function hideSearchResult(){
+        function hideSearchResult() {
             $searchInput.val('');
         }
-        function cancelSearch(){
+
+        function cancelSearch() {
             hideSearchResult();
             $searchBar.removeClass('weui_search_focusing');
             $searchText.show();
         }
 
-        $searchText.on('click', function(){
+        $searchText.on('click', function () {
             $searchBar.addClass('weui_search_focusing');
             $searchInput.focus();
             $('#search_input').val($('input[name=search_input]').val());
         });
         $searchInput
                 .on('blur', function () {
-                    if(!this.value.length) cancelSearch();
+                    if (!this.value.length) cancelSearch();
                 })
-                .on('keyup', function(event){
+                .on('keyup', function (event) {
                     event = event || window.event;
                     if (event.keyCode == 13) {
                         $('input[name=area_start_name]').val();
@@ -153,24 +154,36 @@
 //                            cookie('search_input_for_highlight',encodeURI(cookie('search_input')));
                         }
                         //更新页面cookie
-                        cookie('owner_car_search',JSON.stringify($('#tag_search').serializeArray()));
+                        cookie('owner_car_search', JSON.stringify($('#tag_search').serializeArray()));
 
-                        ck_log("search",$(this).val().trim());
+                        ck_log("search", $(this).val().trim());
                         //提交表单
                         document.tag_search.method = "post";
                         document.tag_search.action = "{:U('OwnerSearch/owner_car_search')}";
                         document.tag_search.submit();
                     }
                 });
-        $searchClear.on('click', function(){
+        $searchClear.on('click', function () {
             hideSearchResult();
-            ck_log("click","清除搜索内容");
+            ck_log("click", "清除搜索内容");
             $searchInput.focus();
         });
-        $searchCancel.on('click', function(){
+        $searchCancel.on('click', function () {
             cancelSearch();
-            ck_log("click","取消搜索");
+            ck_log("click", "取消搜索");
             $searchInput.blur();
+            //清空搜索栏并提交
+            $('input[name=area_start_name]').val();
+            //将输入的值存入cookie
+            cookie('search_input', null);
+            cookie('search_input_for_highlight', null);
+            $('input[name=search_input]').val('');
+            //更新页面cookie
+            cookie('owner_car_search', JSON.stringify($('#tag_search').serializeArray()));
+            //提交表单
+            document.tag_search.method = "post";
+            document.tag_search.action = "{:U('OwnerSearch/owner_car_search')}";
+            document.tag_search.submit();
         });
     });
 </script>
@@ -190,36 +203,40 @@
         console.log(cookie());
         var temp_load = cookie('owner_car_search');
         var temp_load_obj = JSON.parse(cookie('owner_car_search'));
-        jQuery.each(temp_load_obj,function(k,val){
-            if(val.name == 'select_category'){
+        jQuery.each(temp_load_obj, function (k, val) {
+            if (val.name == 'select_category') {
                 $('input[name=select_category]').val(val.value);
             }
-            else if(val.name == 'area_start'){
-                if(val.value != '') {
+            else if (val.name == 'area_start') {
+                if (val.value != '') {
                     $('input[name=area_start]').val(val.value);
-                }else{}
+                } else {
+                }
             }
-            else if(val.name == 'area_start_name'){
-                if(val.value != ''){
+            else if (val.name == 'area_start_name') {
+                if (val.value != '') {
                     $('input[name=area_start_name]').val(val.value);
                     $('#area_start_html').html(val.value);
-                }else{}
+                } else {
+                }
             }
-            else if(val.name == 'area_end'){
-                if(val.value != ''){
+            else if (val.name == 'area_end') {
+                if (val.value != '') {
                     $('input[name=area_end]').val(val.value);
-                }else{}
+                } else {
+                }
             }
-            else if(val.name == 'area_end_name'){
-                if(val.value != ''){
+            else if (val.name == 'area_end_name') {
+                if (val.value != '') {
                     $('input[name=area_end_name]').val(val.value);
                     $('#area_end_html').html(val.value);
                 }
             }
-            else if(val.name == 'search_input'){
-                if(val.value != ''){
+            else if (val.name == 'search_input') {
+                if (val.value != '') {
                     $('input[name=search_input]').val(val.value);
-                }else{}
+                } else {
+                }
             }
         });
         console.log('form');
@@ -227,53 +244,23 @@
         if ($('input[name=select_category]').val() == '车源') {
             //信息查询
             $('#myTab a:eq(0)').removeClass('weui_bar_item_on').siblings('a').addClass('weui_bar_item_on weui_bar_item_on_extra').tab('show');
+            //改变标签内容
+            $('#myTab a:eq(0)').children('span').html('清除条件');
         }
         else {
             //全部信息
             $('input[name=select_category]').val('all');
             $('#myTab a:eq(0)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on weui_bar_item_on_extra');
+            //改变标签内容
+            $('#myTab a:eq(0)').children('span').html('全&emsp;部');
         }
         //载入搜索框内容
         if ($('input[name=search_input]').val()) {
             console.log('asdasd');
             $('#search_text').html($('input[name=search_input]').val());
         }
-        //返回操作
-        function pushHistory() {
-            var state = {
-                title: "title",
-                url: "#"
-            };
-            window.history.pushState(state, "title", "#");
-//            alert('push');
-        }
-        var bool = false;
-//        alert(1+' '+bool);
-        setTimeout(function(){
-            bool=true;
-        },1000);
-//        alert(navigator.userAgent);
-        if(navigator.userAgent.indexOf('Android') > 0){
-            pushHistory();
-            window.addEventListener("popstate", function (e) {
-                if(true){
-                    window.location.href = "{:U('Homepage/homepage')}";
-                }else{
-                    return false;
-                }
-//                pushHistory();
-            },false);
-        }else{
-            pushHistory();
-            window.addEventListener("popstate", function (e) {
-                if(bool){
-                    window.location.href = "{:U('Homepage/homepage')}";
-                }else{
-                    return false;
-                }
-            },false);
-        }
-        setTimeout(pullDownAction2,200);
+        //自动刷新
+        setTimeout(pullDownAction2, 200);
     });
     function pullDownAction2() {
         console.log('auto-down');
@@ -290,10 +277,10 @@
                 isAjax: 1,
                 search_input: search_input,
                 select_category: select_category,
-                area_start:area_start,
-                area_start_name:area_start_name,
-                area_end:area_end,
-                area_end_name:area_end_name
+                area_start: area_start,
+                area_start_name: area_start_name,
+                area_end: area_end,
+                area_end_name: area_end_name
             },
             success: function (data) {
                 console.log('success');
@@ -335,7 +322,7 @@
 <script>
     //点击全部标签
     $('#myTab a:eq(0)').click(function () {
-        ck_log("click","选择全部");
+        ck_log("click", "选择全部");
         //填写表单数据
         $('input[name=select_category]').val('all');
         $('input[name=area_start]').val('');
@@ -344,7 +331,7 @@
         $('input[name=area_end_name]').val('');
         $('input[name=search_input]').val('');
         //更新页面cookie
-        cookie('owner_car_search',JSON.stringify($('#tag_search').serializeArray()));
+        cookie('owner_car_search', JSON.stringify($('#tag_search').serializeArray()));
         //提交表单
         document.tag_search.method = 'post';
         document.tag_search.action = "{:U('OwnerSearch/owner_car_search')}";
@@ -353,7 +340,7 @@
     //点击地址选择标签
     //起始地
     $('#myTab a:eq(1)').click(function () {
-        ck_log("click","选择起始地");
+        ck_log("click", "选择起始地");
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
         cookie('start_or_end', 'start');
@@ -361,16 +348,16 @@
         //填写表单数据
         $('input[name=select_category]').val('车源');
         //更新页面cookie
-        cookie('owner_car_search',JSON.stringify($('#tag_search').serializeArray()));
+        cookie('owner_car_search', JSON.stringify($('#tag_search').serializeArray()));
         //告诉area_search要改什么
-        var source = {name:'owner_car_search',value:cookie('owner_car_search')};
-        cookie('source',JSON.stringify(source));
+        var source = {name: 'owner_car_search', value: cookie('owner_car_search')};
+        cookie('source', JSON.stringify(source));
         //地址跳转
         window.location.href = goto_url;
     });
     //地址互换
     $('#myTab a:eq(2)').click(function () {
-        ck_log("click","地址互换");
+        ck_log("click", "地址互换");
         //填写表单
         $('input[name=select_category]').val('车源');
         var area_start = $('input[name=area_start]').val();
@@ -382,7 +369,7 @@
         $('input[name=area_end]').val(area_start);
         $('input[name=area_end_name]').val(area_start_name);
         //更新页面cookie
-        cookie('owner_car_search',JSON.stringify($('#tag_search').serializeArray()));
+        cookie('owner_car_search', JSON.stringify($('#tag_search').serializeArray()));
         //提交表单
         document.tag_search.method = 'post';
         document.tag_search.action = "{:U('OwnerSearch/owner_car_search')}";
@@ -390,7 +377,7 @@
     });
     //目的地
     $('#myTab a:eq(3)').click(function () {
-        ck_log("click","选择终止地");
+        ck_log("click", "选择终止地");
         var goto_url = "{:U('areaSearch/area_search')}";
         var current_url = window.location.href;
         cookie('start_or_end', 'end');
@@ -398,10 +385,10 @@
         //填写表单数据
         $('input[name=select_category]').val('车源');
         //更新页面cookie
-        cookie('owner_car_search',JSON.stringify($('#tag_search').serializeArray()));
+        cookie('owner_car_search', JSON.stringify($('#tag_search').serializeArray()));
         //告诉area_search要改什么
-        var source = {name:'owner_car_search',value:cookie('owner_car_search')};
-        cookie('source',JSON.stringify(source));
+        var source = {name: 'owner_car_search', value: cookie('owner_car_search')};
+        cookie('source', JSON.stringify(source));
         //地址跳转
         window.location.href = goto_url;
     })
@@ -429,10 +416,10 @@
                 isAjax: 1,
                 search_input: search_input,
                 select_category: select_category,
-                area_start:area_start,
-                area_start_name:area_start_name,
-                area_end:area_end,
-                area_end_name:area_end_name
+                area_start: area_start,
+                area_start_name: area_start_name,
+                area_end: area_end,
+                area_end_name: area_end_name
             },
             success: function (data) {
                 console.log('success');
@@ -465,7 +452,7 @@
                 }
                 myScroll.refresh();
                 refresh_hl();
-                ck_log("scroll","下滑-刷新");
+                ck_log("scroll", "下滑-刷新");
             }
         });
         myScroll.refresh();//数据加载完成后，调用界面更新方法  Remember to refresh when contents are loaded (ie: on ajax completion)
@@ -504,11 +491,11 @@
                     var jsonObj = eval("(" + data + ")");
                     console.log(jsonObj);
                     var endAjax = jsonObj.EOA;
-                    if(endAjax == 0) {
+                    if (endAjax == 0) {
                         return false;
                     }
 //                    return;
-                        if (jsonObj.msg) {
+                    if (jsonObj.msg) {
                         page++;
                         $('#page').val(page);
                         $('#where_cond_json').html(jsonObj.where_cond_json);
@@ -530,7 +517,7 @@
                     }
                     myScroll.refresh();
                     refresh_hl();
-                    ck_log("scroll","上滑-加载");
+                    ck_log("scroll", "上滑-加载");
                 }
             });
             //============================================
@@ -651,11 +638,12 @@
                 success: function (data) {
                     if (data) {
                         $(obj).html('收藏');
-                        ck_log("collect","撤销收藏-"+id);
-                    } else {}
+                        ck_log("collect", "撤销收藏-" + id);
+                    } else {
+                    }
                 }
             });
-        }else if($(obj).html() == '收藏'){
+        } else if ($(obj).html() == '收藏') {
             url = "{:U('Collection/add')}";
             $.ajax({
                 type: "post",
@@ -664,16 +652,17 @@
                 success: function (data) {
                     if (data) {
                         $(obj).html('撤销收藏');
-                        ck_log("collect","收藏-"+id);
+                        ck_log("collect", "收藏-" + id);
                     } else {
                     }
                 }
             });
-        }else{}
+        } else {
+        }
         return false;
     }
 </script>
-
+<!--搜索内容高亮-->
 <script>
 
     function refresh_hl() {
@@ -692,30 +681,72 @@
 //        alert(keywords);
     }
 
-    function replace_with_highlight(str, keyword){
-        if (keyword=='') return str;
-        keyword=keyword.replace(new RegExp("市|区|县|镇",'gm'),'');
-        return str.replace(new RegExp(keyword,'gm'),'<span style="background-color: orange; font-weight: bold">'+keyword+"</span>");
+    function replace_with_highlight(str, keyword) {
+        if (keyword == '') return str;
+        keyword = keyword.replace(new RegExp("市|区|县|镇", 'gm'), '');
+        return str.replace(new RegExp(keyword, 'gm'), '<span style="background-color: orange; font-weight: bold">' + keyword + "</span>");
     }
 
-    function show_highlight(keywords){
-        function show_hl_by_element(element){
+    function show_highlight(keywords) {
+        function show_hl_by_element(element) {
             var str = element.innerHTML;
-            element.innerHTML = keywords.reduce(replace_with_highlight,str);
+            element.innerHTML = keywords.reduce(replace_with_highlight, str);
         }
+
         collectionToArray(document.getElementsByClassName('highlight')).map(show_hl_by_element);
 //    $('.highlight').map(show_hl_by_element);
 
     }
 
-    function collectionToArray(collection){
+    function collectionToArray(collection) {
         var ary = [];
-        for(var i=0, len = collection.length; i < len; i++){
+        for (var i = 0, len = collection.length; i < len; i++) {
             ary.push(collection[i]);
         }
         return ary;
     }
 
 </script>
-
+<!--地址返回操作-->
+<script>
+    $(function () {
+        if (false) {
+        } else {
+            var bool = false;
+//        alert(1+' '+bool);
+            setTimeout(function () {
+                bool = true;
+            }, 1000);
+//        alert(navigator.userAgent);
+            if (navigator.userAgent.indexOf('Android') > 0) {
+                pushHistory();
+                window.addEventListener("popstate", function (e) {
+                    if (true) {
+                        window.location.href = "{:U('Homepage/homepage')}";
+                    } else {
+                        return false;
+                    }
+//                pushHistory();
+                }, false);
+            } else {
+                pushHistory();
+                window.addEventListener("popstate", function (e) {
+                    if (bool) {
+                        window.location.href = "{:U('Homepage/homepage')}";
+                    } else {
+                        return false;
+                    }
+                }, false);
+            }
+        }
+    });
+    function pushHistory() {
+        var state = {
+            title: "title",
+            url: "#"
+        };
+        window.history.pushState(state, "title", "#");
+//            alert('push');
+    }
+</script>
 </html>
