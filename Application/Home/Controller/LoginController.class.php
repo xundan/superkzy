@@ -39,7 +39,7 @@ class LoginController extends Controller
         $randStr = str_shuffle('1234567890');
         $str = substr($randStr, 0, 4);
         session(md5($phone), $str);
-        vendor("test");
+        vendor("DialPhone");
         sendCode($phone, "'" . $str . "'");
     }
 
