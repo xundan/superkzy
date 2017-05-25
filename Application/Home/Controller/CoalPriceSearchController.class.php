@@ -20,6 +20,8 @@ class CoalPriceSearchController extends Controller
      */
     public function coal_price_search()
     {
+        vendor("jssdk.signPackage");
+        $this->assign("signPackage", getSignPackage());
         $subInfo = I('post.', '', 'trim,strip_tags');
         //下拉刷新
         if ($subInfo['isAjax'] == 1) {
@@ -141,6 +143,8 @@ class CoalPriceSearchController extends Controller
      */
     public function coal_price_detail($message_id)
     {
+        vendor("jssdk.signPackage");
+        $this->assign("signPackage", getSignPackage());
         $where['message_id'] = $message_id;
         $result = $this->getOrder($where, 0, 1);
         $this->assign('message', $result);

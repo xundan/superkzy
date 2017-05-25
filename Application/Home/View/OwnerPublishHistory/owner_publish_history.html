@@ -453,7 +453,12 @@
                 pushHistory();
                 window.addEventListener("popstate", function (e) {
                     if (true) {
-                        window.location.href = "{:U('Homepage/homepage')}";
+                        var url = cookie('last_url_for_history');
+                        if(url){
+                            window.location.href = url;
+                        }else{
+                            window.location.href = "{:U('Homepage/homepage')}";
+                        }
                     } else {
                         return false;
                     }
@@ -463,7 +468,12 @@
                 pushHistory();
                 window.addEventListener("popstate", function (e) {
                     if (true) {
-                        window.location.href = "{:U('Homepage/homepage')}";
+                        var url = cookie('last_url_for_history');
+                        if(url){
+                            window.location.href = url;
+                        }else{
+                            window.location.href = "{:U('Homepage/homepage')}";
+                        }
                     } else {
                         return false;
                     }

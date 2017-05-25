@@ -45,7 +45,7 @@
     </div>
 </div>
 <!--我的收藏-->
-<a href="{:U('OwnerOrder/owner_order')}" class="btn btn-default"
+<a href="{:U('OwnerOrder/owner_order')}" class="btn btn-default" id="my_collection"
    style="background-color: #04bfc6;color: white;right: 0;top: 80%;position: fixed;position: absolute;z-index: 5">我的收藏</a>
 <!--搜索框-->
 <div class="bd" style="margin-top: 43px;position: fixed;width: 100%;z-index: 2">
@@ -722,6 +722,13 @@
 //        cookie('tag','车源');
 //        window.location.href = "{:U('OwnerPublish/owner_publish')}";
 //    })
+</script>
+<!--跳转到我的订单时记录当前地址-->
+<script>
+    $('#my_collection').click(function(){
+        var cur_url = window.location.href;
+        cookie('last_url_for_history',cur_url);
+    })
 </script>
 <!--地址返回操作-->
 <script>

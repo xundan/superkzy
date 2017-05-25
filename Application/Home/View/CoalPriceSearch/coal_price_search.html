@@ -318,9 +318,9 @@
 <script>
     //点击全部标签
     $('#myTab a:eq(0)').click(function () {
-        var str = window.location.href;
-        str = str.substring(str.lastIndexOf("/") + 1) + '_data';
-        sessionStorage.removeItem(str);
+//        var str = window.location.href;
+//        str = str.substring(str.lastIndexOf("/") + 1) + '_data';
+//        sessionStorage.removeItem(str);
         //日志记录
         ck_log('click', '全部煤矿');
         //填写表单数据
@@ -661,29 +661,30 @@
 </script>
 <!--记录位置-->
 <script>
-    window.onunload = function () {
-        var str = window.location.href;
-        str = str.substring(str.lastIndexOf("/") + 1) + '_scroll';
-        var scroll_offset = myScroll.y;
-        sessionStorage.setItem(str, scroll_offset);
-    }
+//    window.onunload = function () {
+//        var str = window.location.href;
+//        str = str.substring(str.lastIndexOf("/") + 1) + '_scroll';
+//        var scroll_offset = myScroll.y;
+//        sessionStorage.setItem(str, scroll_offset);
+//    }
 </script>
 <script>
-    window.onload = function () {
-        var select_category = $('input[name=select_category]').val();
-        var str = window.location.href;
-        var str_data = str.substring(str.lastIndexOf("/") + 1) + '_data';
-        var str_scroll = str.substring(str.lastIndexOf("/") + 1) + '_scroll';
-        var scroll_data = sessionStorage.getItem(str_data);
-        if (scroll_data) {
-            renderData(scroll_data, select_category);
-        }
-        var scroll_offset = sessionStorage.getItem(str_scroll);
-        if (scroll_offset) {
-            myScroll.scrollTo(0, scroll_offset, 0);
-        }
-    };
+//    window.onload = function () {
+//        var select_category = $('input[name=select_category]').val();
+//        var str = window.location.href;
+//        var str_data = str.substring(str.lastIndexOf("/") + 1) + '_data';
+//        var str_scroll = str.substring(str.lastIndexOf("/") + 1) + '_scroll';
+//        var scroll_data = sessionStorage.getItem(str_data);
+//        if (scroll_data) {
+//            renderData(scroll_data, select_category);
+//        }
+//        var scroll_offset = sessionStorage.getItem(str_scroll);
+//        if (scroll_offset) {
+//            myScroll.scrollTo(0, scroll_offset, 0);
+//        }
+//    };
 </script>
+<!--渲染数据-->
 <script>
     function renderData(data, select_category) {
         var jsonObj = eval("(" + data + ")");
@@ -755,5 +756,54 @@
         }
         myScroll.refresh();
     }
+</script>
+<!--微信分享-->
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    wx.config({
+        debug: false,
+        appId: '{$signPackage["appId"]}',
+        timestamp: {$signPackage["timestamp"]},
+        nonceStr: '{$signPackage["nonceStr"]}',
+        signature: '{$signPackage["signature"]}',
+        jsApiList: [
+            // 所有要调用的 API 都要加到这个列表中
+            'onMenuShareTimeline', 'onMenuShareAppMessage'
+        ]
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+        // 分享到朋友圈
+        wx.onMenuShareTimeline({
+            title: '超级矿资源煤价查询系统', // 分享标题
+            link: "http://www.kuaimei56.com/index.php/Home/CoalPriceSearch/coal_price_search", // 分享链接
+            imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                ck_log("share",'分享煤价查询系统至朋友圈');
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                ck_log("share",'取消分享煤价查询系统至朋友圈');
+            }
+        });
+        //分享给朋友
+        wx.onMenuShareAppMessage({
+            title: '超级矿资源煤价查询系统', // 分享标题
+            desc: '超级矿资源官方认证的煤矿煤价查询系统，点击进入畅享查询', // 分享描述
+            link: "http://www.kuaimei56.com/index.php/Home/CoalPriceSearch/coal_price_search", // 分享链接
+            imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                ck_log("share",'分享煤价查询系统给好友');
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                ck_log("share",'取消分享煤价查询系统给好友');
+            }
+        });
+    });
 </script>
 </html>
