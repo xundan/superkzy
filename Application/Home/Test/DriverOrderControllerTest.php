@@ -60,9 +60,9 @@ class DriverOrderControllerTest extends PHPUnit_Framework_TestCase
         }
         $this->assertEquals(4, count($messages));
         $whereConditions->updateExist($messages);
-        $this->assertEquals('{"conditions":"{\"id\":[\"in\",[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"11\",\"12\",\"13\",\"14\"]]}","page":1,"asc":"record_time desc","exists":["4","3","2","1"],"last_count":-2}', $whereConditions->toJson());
+        $this->assertEquals('{"conditions":"{\"id\":[\"in\",[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"11\",\"12\",\"13\",\"14\"]]}","page":1,"asc":"vip desc,record_time desc","exists":["4","3","2","1"],"last_count":-2}', $whereConditions->toJson());
         $whereConditions->resetExist();
-        $this->assertEquals('{"conditions":"{\"id\":[\"in\",[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"11\",\"12\",\"13\",\"14\"]]}","page":1,"asc":"record_time desc","exists":[],"last_count":-2}', $whereConditions->toJson());
+        $this->assertEquals('{"conditions":"{\"id\":[\"in\",[\"1\",\"2\",\"3\",\"4\",\"5\",\"6\",\"7\",\"8\",\"9\",\"10\",\"11\",\"12\",\"13\",\"14\"]]}","page":1,"asc":"vip desc,record_time desc","exists":[],"last_count":-2}', $whereConditions->toJson());
 
 
 
