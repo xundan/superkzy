@@ -42,22 +42,31 @@ abstract class SearchController extends ComController
                         break;
                     }
                 }
+//                if($cards->notFull()&&$whereCond->isExhausted()&&$cards->atSimilar()){// 如果条件退完
+//                    $count.="2";
+//                    $cards->addOther();
+//                    if ($cards->isFull()){
+//                        $count.="c";
+//                        break;
+//                    }
+//                }
+
                 if($cards->notFull()&&$whereCond->isExhausted()&&$cards->atSimilar()){// 如果条件退完
-                    $count.="2";
-                    $cards->addOther();
-                    if ($cards->isFull()){
-                        $count.="c";
-                        break;
-                    }
-                }
-                $temp_messages = $Msg->findWhereWithoutExist($whereCond, $cards->getCount(),$category);
-                $cards->appendMessage($temp_messages);
-                if ($cards->atOther()&&$cards->notFull()){ //其他查询也不能满足，说明查到底了
                     $count.="3";
                     $count.="d[".$cards->getCount()."]";
                     $cards->addEnd();
                     break;
                 }
+
+                $temp_messages = $Msg->findWhereWithoutExist($whereCond, $cards->getCount(),$category);
+                $cards->appendMessage($temp_messages);
+
+//                if ($cards->atOther()&&$cards->notFull()){ //其他查询也不能满足，说明查到底了
+//                    $count.="3";
+//                    $count.="d[".$cards->getCount()."]";
+//                    $cards->addEnd();
+//                    break;
+//                }
                 $whereCond->postSQL($temp_messages, $cards->getCount());
                 $count.="a[".$cards->getCount()."]";
             } while (!($cards->isFull() || $cards->atEnd()));
