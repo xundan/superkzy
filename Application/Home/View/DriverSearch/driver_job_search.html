@@ -240,6 +240,9 @@
         });
         console.log('form');
         console.log(JSON.stringify($('#tag_search').serializeArray()));
+        //筛选条件为空则把标签置为全部
+        tag_set();
+        //标签高亮
         if ($('input[name=select_category]').val() == '找车') {
             //信息查询
             $('#myTab a:eq(0)').removeClass('weui_bar_item_on').siblings('a').addClass('weui_bar_item_on weui_bar_item_on_extra').tab('show');
@@ -261,6 +264,7 @@
         //自动刷新
         setTimeout(pullDownAction2, 200);
     });
+    //自动刷新功能
     function pullDownAction2() {
         console.log('auto-down');
         var search_input = $('input[name=search_input]').val();
@@ -316,6 +320,14 @@
             }
         });
 
+    }
+    //筛选条件为空设置标签
+    function tag_set() {
+        if($('input[name=search_input]').val() || $('input[name=area_start]').val() || $('input[name=area_end]').val()){
+
+        }else{
+            $('input[name=select_category]').val('all');
+        }
     }
 </script>
 <!--点击标签查询-->
@@ -701,6 +713,15 @@
         return ary;
     }
 
+</script>
+<!--跳转到发布-->
+<script>
+//    $(document).on('click','#end_tip',function(e){
+//        e.preventDefault();
+//        console.log(11111);
+//        cookie('tag','车源');
+//        window.location.href = "{:U('OwnerPublish/owner_publish')}";
+//    })
 </script>
 <!--地址返回操作-->
 <script>

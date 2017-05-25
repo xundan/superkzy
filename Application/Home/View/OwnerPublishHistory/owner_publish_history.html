@@ -432,29 +432,44 @@
 </script>
 <!--地址返回操作-->
 <script>
-    $(function () {
-        if (true) {
-        } else {
-            //返回操作
-            pushHistory();
-            var bool=false;
-            setTimeout(function(){
-                bool=true;
-            },1500);
-            window.addEventListener("popstate", function (e) {
-                if(bool){
-                    window.location.href = "{:U('Homepage/homepage')}";
-                }
-                pushHistory();
-            },false);
-        }
-    });
-    function pushHistory(){
+    function pushHistory() {
         var state = {
             title: "title",
             url: "#"
         };
         window.history.pushState(state, "title", "#");
+//            alert('push');
     }
+    $(function () {
+        if (false) {
+        } else {
+            var bool = false;
+//        alert(1+' '+bool);
+            setTimeout(function () {
+                bool = true;
+            }, 1000);
+//        alert(navigator.userAgent);
+            if (navigator.userAgent.indexOf('Android') > 0) {
+                pushHistory();
+                window.addEventListener("popstate", function (e) {
+                    if (true) {
+                        window.location.href = "{:U('Homepage/homepage')}";
+                    } else {
+                        return false;
+                    }
+//                pushHistory();
+                }, false);
+            } else {
+                pushHistory();
+                window.addEventListener("popstate", function (e) {
+                    if (true) {
+                        window.location.href = "{:U('Homepage/homepage')}";
+                    } else {
+                        return false;
+                    }
+                }, false);
+            }
+        }
+    })
 </script>
 </html>

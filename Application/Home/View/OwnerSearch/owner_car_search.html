@@ -241,6 +241,9 @@
         });
         console.log('form');
         console.log(JSON.stringify($('#tag_search').serializeArray()));
+        //筛选条件为空则把标签置为全部
+        tag_set();
+        //标签高亮
         if ($('input[name=select_category]').val() == '车源') {
             //信息查询
             $('#myTab a:eq(0)').removeClass('weui_bar_item_on').siblings('a').addClass('weui_bar_item_on weui_bar_item_on_extra').tab('show');
@@ -316,6 +319,14 @@
 
             }
         });
+    }
+    //筛选条件为空设置标签
+    function tag_set() {
+        if($('input[name=search_input]').val() || $('input[name=area_start]').val() || $('input[name=area_end]').val()){
+
+        }else{
+            $('input[name=select_category]').val('all');
+        }
     }
 </script>
 <!--点击标签查询-->

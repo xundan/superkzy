@@ -127,8 +127,8 @@
             <legend>选择标签</legend>
             <label class="label1" style="margin-right: 5%"><input type="checkbox" name="tag[]" value="求购" class="checkbox2"/>求购</label>
             <label class="label1" style="margin-right: 5%"><input type="checkbox" name="tag[]" value="供应" class="checkbox2"/>供应</label>
-            <label class="label1" style="margin-right: 5%"><input type="checkbox" name="tag[]" value="找车" class="checkbox2"/>找车</label>
-            <label class="label1" style="margin-right: 5%"><input type="checkbox" name="tag[]" value="车源" class="checkbox2"/>车源</label>
+            <label class="label1" style="margin-right: 5%"><input type="checkbox" id="car_need" name="tag[]" value="找车" class="checkbox2"/>找车</label>
+            <label class="label1" style="margin-right: 5%"><input type="checkbox" id="car_give" name="tag[]" value="车源" class="checkbox2"/>车源</label>
             <label class="label1" style="margin-right: 5%"><input type="checkbox" name="tag[]" value="其他" class="checkbox2"/>其他</label><br/><br/>
             <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="陕西" class="checkbox"/>陕西</label>
             <label style="margin-right: 10%"><input type="checkbox" name="tag[]" value="山西" class="checkbox"/>山西</label>
@@ -216,7 +216,22 @@ function all_choose(obj) {
         $(".checkbox").prop("checked",false);
         $(obj).val('全选');
     }else{}
-}
+};
+    //点击找车车源全选功能 为了方便
+    $('#car_need').click(function(){
+        if($(this).is(':checked')){
+            $(".checkbox").prop("checked",true);
+        }else{
+            $(".checkbox").prop("checked",false);
+        }
+    });
+    $('#car_give').click(function(){
+        if($(this).is(':checked')){
+            $(".checkbox").prop("checked",true);
+        }else{
+            $(".checkbox").prop("checked",false);
+        }
+    })
 </script>
 
 <!--匹配地址-->

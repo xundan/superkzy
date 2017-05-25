@@ -1187,27 +1187,16 @@
 
 <!--载入时读取上次发布的信息-->
 <script>
-    function pushHistory() {
-        var state = {
-            title: "title",
-            url: "#"
-        };
-        window.history.pushState(state, "title", "#");
-    }
     $(function () {
-        //返回操作
-        pushHistory();
-        var bool = false;
-        setTimeout(function () {
-            bool = true;
-        }, 1500);
-        window.addEventListener("popstate", function (e) {
-            if (bool) {
-                window.location.href = "{:U('Homepage/homepage')}";
-            }
-            pushHistory();
-        }, false);
-        console.log(cookie());
+        //console.log(cookie());
+        //如果是从查询界面来得，改变tag
+        var url_path_name = window.location.pathname;
+        var url_pram = url_path_name.match(/category\/(\S*)(?=.html)/);
+        if(url_pram){
+            console.log(decodeURI(url_pram[1]));
+            cookie('tag',decodeURI(url_pram[1]));
+        }
+        //切标签页
         if (cookie('tag') === '车源') {
             //tag 为车源
             var a = $('a[name=car_give]');
@@ -1838,6 +1827,49 @@
             }
         });
     }
+</script>
+
+<!--地址返回操作-->
+<script>
+    function pushHistory() {
+        var state = {
+            title: "title",
+            url: "#"
+        };
+        window.history.pushState(state, "title", "#");
+//            alert('push');
+    }
+    $(function () {
+        if (false) {
+        } else {
+            var bool = false;
+//        alert(1+' '+bool);
+            setTimeout(function () {
+                bool = true;
+            }, 1000);
+//        alert(navigator.userAgent);
+            if (navigator.userAgent.indexOf('Android') > 0) {
+                pushHistory();
+                window.addEventListener("popstate", function (e) {
+                    if (true) {
+                        window.location.href = "{:U('Homepage/homepage')}";
+                    } else {
+                        return false;
+                    }
+//                pushHistory();
+                }, false);
+            } else {
+                pushHistory();
+                window.addEventListener("popstate", function (e) {
+                    if (true) {
+                        window.location.href = "{:U('Homepage/homepage')}";
+                    } else {
+                        return false;
+                    }
+                }, false);
+            }
+        }
+    })
 </script>
 
 </html>

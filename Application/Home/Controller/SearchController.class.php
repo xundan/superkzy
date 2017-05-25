@@ -54,7 +54,7 @@ abstract class SearchController extends ComController
                 if($cards->notFull()&&$whereCond->isExhausted()&&$cards->atSimilar()){// 如果条件退完
                     $count.="3";
                     $count.="d[".$cards->getCount()."]";
-                    $cards->addEnd();
+                    $cards->addEnd($category);
                     break;
                 }
 

@@ -120,15 +120,42 @@ class CardList
     }
     /**
      * 添加一个结尾标识
+     * @param null $category 卡片类型
      */
-    public function addEnd(){
-        $tip['type'] = "tips";
-        $tip['title'] = "结束";
-        $tip['content'] = "没有更多的信息了。";
-        array_push($this->_array, new TipCard($tip));
-        $this->_stage = self::END;
+    public function addEnd($category = null){
+        if($category){
+            switch($category){
+                case '找车':
+                    $search = 'category=车源';
+                    break;
+                case '车源':
+                    $search = 'category=找车';
+                    break;
+                case '供应':
+                    $search = 'category=求购';
+                    break;
+                case '求购':
+                    $search = 'category=供应';
+                    break;
+                default:
+                    $search = 'category=供应';
+            }
+            $url = U('OwnerPublish/owner_publish',$search);
+            //$url = U('OwnerPublish/owner_publish');
+            $tip['type'] = "tips";
+            $tip['title'] = "结束";
+            $tip['content'] = "就这些了亲。小矿建议您前去<a id='end_tip' href='".$url."' style='font-size: 1.5em'>发布</a>";
+            //$tip['content'] = "就这些了亲。小矿建议您前去<a id='end_tip' href='#' style='font-size: 1.5em'>发布</a>";
+            array_push($this->_array, new TipCard($tip));
+            $this->_stage = self::END;
+        }else{
+            $tip['type'] = "tips";
+            $tip['title'] = "结束";
+            $tip['content'] = "没有更多的信息了。";
+            array_push($this->_array, new TipCard($tip));
+            $this->_stage = self::END;
+        }
     }
-
 
     /**
      * @return int
