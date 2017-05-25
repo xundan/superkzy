@@ -47,17 +47,16 @@ class MessageStatisticController extends Controller
 
     public function message_add_action(){
         $post = I('post.', '', 'trim,strip_tags');
+        $Msg = new MessageModel();
         $start_time = $post['start_time'];
         $end_time = $post['end_time'];
         $start = $this->TimestampToTime($start_time);
         $end = $this->TimestampToTime($end_time);
         $where['record_time'] = array("BETWEEN", array($start, $end));
-        $origin['wx'] = 'plain';
-        $origin['wx_mp'] = 'wx_mp';
-        $origin['web'] = 'web';
-        $result['wx'] = count(M('ck_messages')->where($where)->where("type = '%s'",$origin['wx'])->select());
-        $result['wx_mp'] = count(M('ck_messages')->where($where)->where("type = '%s'",$origin['wx_mp'])->select());
-        $result['web'] = count(M('ck_messages')->where($where)->where("type = '%s'",$origin['web'])->select());
+        $result['wx'] = count($Msg->where($where)->where("type = '%s'",'plain')->select());
+        $result['group'] = count($Msg->where($where)->where("type = '%s'",'group')->select());
+        $result['wx_mp'] = count($Msg->where($where)->where("type = '%s'",'wx_mp')->select());
+        $result['web'] = count($Msg->where($where)->where("type = '%s'",'web')->select());
         echo json_encode($result);
         return;
     }
@@ -100,6 +99,7 @@ class MessageStatisticController extends Controller
         $data = array();
         array_push($data, $Msg->all_statistics_by_day());
         array_push($data, $Msg->plain_statistics_by_day());
+        array_push($data, $Msg->group_statistics_by_day());
         array_push($data, $Msg->wx_mp_statistics_by_day());
         array_push($data, $Msg->web_statistics_by_day());
         echo json_encode($data);

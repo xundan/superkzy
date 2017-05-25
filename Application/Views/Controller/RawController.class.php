@@ -227,11 +227,14 @@ class RawController extends RestController
             return $duplicate_data;
         }
 
+        $type = 'plain';
+        if (substr($sender,0,3) == '[q]') $type = 'group';
+
         $rawAttribute = array(
             'rid' => $title,
             'content' => $content,
             'sender' => $sender,
-            'type' => 'plain',
+            'type' => $type,
             'remark' => '0',
             'status' => 0,
             'owner' => $owner,

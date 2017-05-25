@@ -21,7 +21,7 @@ class DisplayMessagesController extends Controller
         if (true) {
 //        if ($_SESSION['cur_user']) {
             // 有where包装的时候不要直接find($id)，否则where会失效
-            $data = D('Message')->where("invalid_id=0 AND type in ('plain','wx_mp') AND status=0 AND id=%d", $id)->find();
+            $data = D('Message')->where("invalid_id=0 AND type in ('plain','group','wx_mp') AND status=0 AND id=%d", $id)->find();
             $this->assign("data", $data);
             $this->assign("id", $id);
             $cur_user = $_SESSION['cur_user'];
@@ -125,7 +125,7 @@ class DisplayMessagesController extends Controller
     public function find_prev($id)
     {
         if ($id < 1) return -1;
-        $prev = D('Message')->where("invalid_id=0 AND type in ('plain','wx_mp') AND status=0 AND id<" . $id)
+        $prev = D('Message')->where("invalid_id=0 AND type in ('plain','group','wx_mp') AND status=0 AND id<" . $id)
             ->order('id desc')->find();
         if ($prev) {
             return $prev['id'];
@@ -136,7 +136,7 @@ class DisplayMessagesController extends Controller
 
     public function find_next($id)
     {
-        $next = D('Message')->where("invalid_id=0 AND type in ('plain','wx_mp') AND status=0 AND id>" . $id)
+        $next = D('Message')->where("invalid_id=0 AND type in ('plain','group','wx_mp') AND status=0 AND id>" . $id)
             ->order('id asc')->find();
         if ($next) {
             return $next['id'];

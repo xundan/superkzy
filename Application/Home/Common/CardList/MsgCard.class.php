@@ -37,11 +37,12 @@ class MsgCard extends Card
 
     }
 
+    // 基本已经属于抽象方法
     function toLi()
     {
         $li_str = "";
         $message = $this->_message;
-        if ($message['type'] == 'plain'||$message['type'] == 'wx_mp') { // R
+        if ($message['type'] == 'plain'||$message['type'] == 'wx_mp'||$message['type'] == 'group') { // R
             $li_str = "<li>" . $message['content'] . "</li>";
         } else {
             if ($message['category'] == '供应') { // 供应

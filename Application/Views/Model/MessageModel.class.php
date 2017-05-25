@@ -111,8 +111,14 @@ class MessageModel extends Model
         return $this->field("substr(`record_time`,1,10) as a ,COUNT(*) as s")->where("type='plain'")->group('a')->order('a')->select();
     }
 
+    public function group_statistics_by_day(){
+        return $this->field("substr(`record_time`,1,10) as a ,COUNT(*) as s")->where("type='group'")->group('a')->order('a')->select();
+    }
+
     // 信息过期提醒SMS发送
     public function get_expiring_msg($date){
         return $this->field("id,publisher_rid,phone_number,category")->where("deadline like '$date%' and invalid_id=99 and type='web'")->select();
     }
+
+//    public function get_
 }

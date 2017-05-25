@@ -111,6 +111,10 @@
                         <td id="wx_count">0</td>
                     </tr>
                     <tr>
+                        <td>来自微信群</td>
+                        <td id="group_count">0</td>
+                    </tr>
+                    <tr>
                         <td>来自公众号</td>
                         <td id="wx_mp_count">0</td>
                     </tr>
@@ -265,10 +269,14 @@
                 console.log(jsonObj);
                 if (jsonObj) {
                     $('#wx_count').html(0);
+                    $('#group_count').html(0);
                     $('#wx_mp_count').html(0);
                     $('#web_count').html(0);
                     if (jsonObj.wx) {
                         $('#wx_count').html(jsonObj.wx);
+                    }
+                    if (jsonObj.group) {
+                        $('#group_count').html(jsonObj.wx);
                     }
                     if (jsonObj.wx_mp) {
                         $('#wx_mp_count').html(jsonObj.wx_mp);

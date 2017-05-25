@@ -329,7 +329,7 @@ class MessagesModel extends Model
 
     function toSimple()
     {
-        if ($this->_message['type'] == 'plain'||$this->_message['type'] == 'wx_mp') { //微信的消息
+        if ($this->_message['type'] == 'plain'||$this->_message['type'] == 'wx_mp'||$this->_message['type'] == 'group') { //微信的消息
             $new_message['title'] = $this->_message['title'];
             $new_message['phone_number'] = $this->_message['origin'];
             $new_message['content'] = $this->_message['content'];

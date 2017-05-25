@@ -13,7 +13,7 @@
 <script type="text/javascript">
     // 基于准备好的dom，初始化echarts实例
 
-    var date_arr=[],all_arr=[],web_arr=[],wx_mp_arr=[],plain_arr=[];
+    var date_arr=[],all_arr=[],web_arr=[],wx_mp_arr=[],plain_arr=[],group_arr=[];
     $.ajax({
         url:"{:U('MessageStatistic/statistics')}",
         type:"GET",
@@ -50,8 +50,9 @@
                     date_arr.push(n['a']);
                     all_arr.push(n['s']);
                     iterate_by_date(date, plain_arr, data[1]);
-                    iterate_by_date(date, wx_mp_arr, data[2]);
-                    iterate_by_date(date, web_arr, data[3]);
+                    iterate_by_date(date, group_arr, data[2]);
+                    iterate_by_date(date, wx_mp_arr, data[3]);
+                    iterate_by_date(date, web_arr, data[4]);
                 }
             });
             draw();
@@ -131,6 +132,19 @@
                    },
                    areaStyle: {normal: {}},
                    data: plain_arr
+               },
+               {
+                   name: '群消息',
+                   type: 'line',
+                   stack: '总量',
+                   label: {
+                       normal: {
+                           show: true,
+                           position: 'top'
+                       }
+                   },
+                   areaStyle: {normal: {}},
+                   data: group_arr
                },
             {
                 name: '公众号消息',

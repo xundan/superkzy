@@ -93,8 +93,10 @@ class DistributeController extends RestController
             $insert_trans['phone_number'] = $origin;
             if ($insert_trans['type']=="wx_mp"){
                 $insert_trans['vip']="2";
-            }else{
+            }elseif($insert_trans['type']=="plain"){
                 $insert_trans['vip']="1";
+            }else{
+                $insert_trans['vip']="0";
             }
 //            var_dump($insert_trans);
             $check = $Message->add_by_md5($insert_trans);
