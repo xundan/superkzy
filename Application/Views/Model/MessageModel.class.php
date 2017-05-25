@@ -120,5 +120,18 @@ class MessageModel extends Model
         return $this->field("id,publisher_rid,phone_number,category")->where("deadline like '$date%' and invalid_id=99 and type='web'")->select();
     }
 
+    public function del_all_group_msg(){
+        $where_cond = array(
+            "type" => "group",
+            "status" => 0,
+            "invalid_id" => 0,
+        );
+        $update_delete = array(
+            "status" => -1,
+            "invalid_id" => 2,
+        );
+        return $this->where($where_cond)->save($update_delete);
+    }
+
 //    public function get_
 }

@@ -97,4 +97,18 @@ class MsgCard extends Card
         return $this->_message;
     }
 
+    protected function getImgName(){
+        $type = $this->_message['type'];
+        $data['img']="none.png";
+        $data['name']="未知来源";
+        if ($type=="plain"){
+            $data['img']="from_wx.png";
+            $data['name']="来自微信";
+        }elseif($type=="group"){
+            $data['img']="cjkzy_icon.png";
+            $data['name']="其他来源";
+        }else{}
+        return $data;
+    }
+
 }

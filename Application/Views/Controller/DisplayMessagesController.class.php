@@ -10,6 +10,7 @@ namespace Views\Controller;
 
 use Think\Controller;
 use Think\Exception;
+use Views\Model\MessageModel;
 
 class DisplayMessagesController extends Controller
 {
@@ -120,6 +121,15 @@ class DisplayMessagesController extends Controller
         );
 
         if (D('Message')->save($update_delete)) echo 'deleted';
+    }
+
+    /**
+     * 删除所有未审核的群消息
+     */
+    public function delete_all()
+    {
+        $Msg = new MessageModel();
+        if ($Msg->del_all_group_msg()) echo 'deleted';
     }
 
     public function find_prev($id)

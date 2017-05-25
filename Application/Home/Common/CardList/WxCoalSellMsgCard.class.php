@@ -14,17 +14,20 @@ class WxCoalSellMsgCard extends MsgCard
 
     function toLi()
     {
+        $img_name = $this->getImgName();
+        $img = $img_name['img'];
+        $name = $img_name['name'];
         $message = $this->buildCollection();
         $publish_date = date("Y-m-d", $message['publish_time']);
         $li_str = "<li class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
 <div style=\"position: absolute;right: 0px;\"><img src=\"__PUBLIC__/home/images/sell.png\" width=\"50px\"></div>
 <div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
     <div class=\"weui_media_hd\">
-        <img src=\"__PUBLIC__/home/images/from_wx.png\" class=\"weui_media_appmsg_thumb\">
+        <img src=\"__PUBLIC__/home/images/$img\" class=\"weui_media_appmsg_thumb\">
     </div>
     <div class=\"weui_media_bd\">
         <div>
-            <h4 class=\"weui_media_title\">来自微信</h4>
+            <h4 class=\"weui_media_title\">$name</h4>
         </div>
     </div>
     <div class=\"weui_media_bd text-center\" style=\"\">
