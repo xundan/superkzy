@@ -133,5 +133,7 @@ class MessageModel extends Model
         return $this->where($where_cond)->save($update_delete);
     }
 
-//    public function get_
+    public function get_all_history($kw, $category){
+        return $this->field("phone_number,content, update_time")->where("content like '%$kw%' and content not like '%$kw"."元%' and content not like '%$kw"."吨%' and category='$category'")->order("id desc")->select();
+    }
 }

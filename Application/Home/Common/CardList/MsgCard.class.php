@@ -101,7 +101,7 @@ class MsgCard extends Card
         $type = $this->_message['type'];
         $data['img']="none.png";
         $data['name']="未知来源";
-        if ($type=="plain"){
+        if ($type=="plain"||$type=="wx_mp"){
             $data['img']="from_wx.png";
             $data['name']="来自微信";
         }elseif($type=="group"){

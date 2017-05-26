@@ -17,7 +17,7 @@
 
 <table class="table table-hover text-center" style="table-layout: fixed">
     <tr>
-        <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/show')}?s_date={$s_date}&e_date={$e_date}">个人统计总页</a></td>
+        <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/show_all')}?s_date={$s_date}&e_date={$e_date}">个人统计总页</a></td>
         <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/page')}?s_date={$s_date}&e_date={$e_date}">页面统计总页</a></td>
         <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/oper')}?s_date={$s_date}&e_date={$e_date}">操作统计总页</a></td>
         <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/dial')}?s_date={$s_date}&e_date={$e_date}">电话呼入统计总页</a></td>
@@ -29,9 +29,9 @@
 </table>
 <table class="table table-hover text-center" style="table-layout: fixed">
     <tr>
-        <td><a class="btn" href="{:U('Views/LogStatistics/show')}?s_date={$prev_s_date}&e_date={$prev_e_date}">前七天</a></td>
+        <td><a class="btn" href="{:U('Views/LogStatistics/show_all')}?s_date={$prev_s_date}&e_date={$prev_e_date}">前七天</a></td>
         <td><h4>{$s_date}->{$e_date}</h4></td>
-        <td><a class="btn" href="{:U('Views/LogStatistics/show')}?s_date={$next_s_date}&e_date={$next_e_date}">后七天</a></td>
+        <td><a class="btn" href="{:U('Views/LogStatistics/show_all')}?s_date={$next_s_date}&e_date={$next_e_date}">后七天</a></td>
     </tr>
     <tr>
         <td><label for="s_picker">起始日期：</label><input id="s_picker" type="date" value="{$s_date}"/></td>
@@ -157,7 +157,7 @@
     function select_date(){
         var s_date = $("#s_picker").val();
         var e_date = $("#e_picker").val();
-        window.location.href = "{:U('Views/LogStatistics/show')}?s_date="+s_date+"&e_date="+e_date;
+        window.location.href = "{:U('Views/LogStatistics/show_all')}?s_date="+s_date+"&e_date="+e_date;
     }
 </script>
 </html>

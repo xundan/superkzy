@@ -134,9 +134,9 @@
         document.tag_search.submit();
     });
 
-    //点击供应信息标签
+    //点击交易订单标签
     $('#myTab a:eq(1)').click(function () {
-        ck_log("click","点击供应信息标签");
+        ck_log("click","点击交易订单标签");
         //存入所选标签入cookie
         cookie('search_tag', 'trade');
         $('input[name=select_category]').val(cookie('search_tag'));
@@ -373,7 +373,7 @@
             error: function (XMLHttpRequest, textStatus, errorThrown) {
             }
         });
-    };
+    }
 
     function refill(obj,id){
         console.log(id);
@@ -441,45 +441,27 @@
 //            alert('push');
     }
     $(function () {
-        if (false) {
+        if (navigator.userAgent.indexOf('Android') > 0) {
+            pushHistory();
+            window.addEventListener("popstate", function (e) {
+                var url = cookie('last_url_for_history');
+                if (url) {
+                    window.location.href = url;
+                } else {
+                    window.location.href = "{:U('Homepage/homepage')}";
+                }
+            }, false);
         } else {
-            var bool = false;
-//        alert(1+' '+bool);
-            setTimeout(function () {
-                bool = true;
-            }, 1000);
-//        alert(navigator.userAgent);
-            if (navigator.userAgent.indexOf('Android') > 0) {
-                pushHistory();
-                window.addEventListener("popstate", function (e) {
-                    if (true) {
-                        var url = cookie('last_url_for_history');
-                        if(url){
-                            window.location.href = url;
-                        }else{
-                            window.location.href = "{:U('Homepage/homepage')}";
-                        }
-                    } else {
-                        return false;
-                    }
-//                pushHistory();
-                }, false);
-            } else {
-                pushHistory();
-                window.addEventListener("popstate", function (e) {
-                    if (true) {
-                        var url = cookie('last_url_for_history');
-                        if(url){
-                            window.location.href = url;
-                        }else{
-                            window.location.href = "{:U('Homepage/homepage')}";
-                        }
-                    } else {
-                        return false;
-                    }
-                }, false);
-            }
+            pushHistory();
+            window.addEventListener("popstate", function (e) {
+                var url = cookie('last_url_for_history');
+                if (url) {
+                    window.location.href = url;
+                } else {
+                    window.location.href = "{:U('Homepage/homepage')}";
+                }
+            }, false);
         }
-    })
+    });
 </script>
 </html>

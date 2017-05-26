@@ -112,7 +112,7 @@
             <input type="button" id="Button1" name="Button1" onclick="delete_confirm()" value="删除" style="width:10%;height: 30px"><br/>
         </div>
 
-        <div style="text-align: center;margin-top: 20px;margin-bottom: 20px">
+        <div id="sel_all" style="text-align: center;margin-top: 20px;margin-bottom: 20px;display: block">
             <input type="button" id="Button2" name="Button2" onclick="all_choose(this)" value="全选" style="width:10%;height: 30px">
         </div>
 
@@ -218,21 +218,7 @@
         } else {
         }
     }
-    //点击找车车源全选功能 为了方便
-    $('#car_need').click(function () {
-        if ($(this).is(':checked')) {
-            $(".checkbox").prop("checked", true);
-        } else {
-            $(".checkbox").prop("checked", false);
-        }
-    });
-    $('#car_give').click(function () {
-        if ($(this).is(':checked')) {
-            $(".checkbox").prop("checked", true);
-        } else {
-            $(".checkbox").prop("checked", false);
-        }
-    })
+
 </script>
 
 <!--匹配地址-->
@@ -322,11 +308,28 @@
         var type = '{$data["type"]}';
         if (type=='group'){
             $(".checkbox").prop("disabled", "disabled");
-            $("#tag_head").html("群消息，不必选择小标签");
+            $("#tag_head").html('<span style="background-color: orange; font-weight: bold">群消息，不必选择小标签</span>');
             $("#del_all").css("display","block");
+            $("#sel_all").css("display","none");
+        }else{
+            //点击找车车源全选功能 为了方便
+            $('#car_need').click(function () {
+                if ($(this).is(':checked')) {
+                    $(".checkbox").prop("checked", true);
+                } else {
+                    $(".checkbox").prop("checked", false);
+                }
+            });
+            $('#car_give').click(function () {
+                if ($(this).is(':checked')) {
+                    $(".checkbox").prop("checked", true);
+                } else {
+                    $(".checkbox").prop("checked", false);
+                }
+            })
         }
     });
-    function delete_confirm() {
+    function delete_all_confirm() {
         if (!confirm("确认要删除所有群消息？")) {
             window.event.returnValue = false;
         } else {

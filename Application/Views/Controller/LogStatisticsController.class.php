@@ -17,12 +17,12 @@ class LogStatisticsController extends Controller
     public function index(){
         $s_date = date("Y-m-d",strtotime("-7 day"));
         $e_date = date("Y-m-d");
-        $this->redirect('LogStatistics/show', array('s_date' => $s_date,'e_date' => $e_date));
+        $this->redirect('LogStatistics/show_all', array('s_date' => $s_date,'e_date' => $e_date));
 
 
     }
 
-    public function show($s_date, $e_date){
+    public function show_all($s_date, $e_date){
         // 计算前后一天
         $this_s_time = strtotime($s_date);
         $prev_s_date = date("Y-m-d",strtotime("-7 day", $this_s_time));

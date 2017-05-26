@@ -15,13 +15,14 @@
 <h1>{$s_date}->{$e_date}电话被呼统计</h1>
 <table class="table table-hover text-center" style="table-layout: fixed">
     <tr>
-        <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/show_all')}?s_date={$s_date}&e_date={$e_date}">个人统计总页</a></td>
-        <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/page')}?s_date={$s_date}&e_date={$e_date}">页面统计总页</a></td>
-        <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/oper')}?s_date={$s_date}&e_date={$e_date}">操作统计总页</a></td>
-        <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/dial')}?s_date={$s_date}&e_date={$e_date}">电话呼入统计总页</a></td>
-        <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/user_to_dial')}?s_date={$s_date}&e_date={$e_date}">电话呼出统计总页</a></td>
-        <td><a class="btn btn-warning" href="{:U('Views/LogStatistics/dial_web')}?s_date={$s_date}&e_date={$e_date}">电话双向统计总页</a></td>
-        <td><a class="btn btn-warning" href="{:U('Views/MessageStatistic/statistic_all')}">信息总量统计总页</a></td>
+        <td><a class="btn" href="{:U('Views/LogStatistics/page')}?s_date={$prev_s_date}&e_date={$prev_e_date}">前七天</a></td>
+        <td><h4>{$s_date}->{$e_date}</h4></td>
+        <td><a class="btn" href="{:U('Views/LogStatistics/page')}?s_date={$next_s_date}&e_date={$next_e_date}">后七天</a></td>
+    </tr>
+    <tr>
+        <td><label for="s_picker">起始日期：</label><input id="s_picker" type="date" value="{$s_date}"/></td>
+        <td><label for="e_picker">结束日期：</label><input id="e_picker" type="date" value="{$e_date}"/></td>
+        <td><a class="btn btn-primary" href="javascript:void(0);" onclick="select_date()">自定义时长查询(不包含结束日期)</a></td>
     </tr>
 
 </table>
@@ -91,5 +92,12 @@
     $(document).ready(function(){
         color_duration();
     });
+
+
+    function select_date(){
+        var s_date = $("#s_picker").val();
+        var e_date = $("#e_picker").val();
+        window.location.href = "{:U('Views/LogStatistics/page')}?s_date="+s_date+"&e_date="+e_date;
+    }
 </script>
 </html>

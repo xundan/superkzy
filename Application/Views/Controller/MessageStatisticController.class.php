@@ -14,7 +14,7 @@ use Views\Model\MessageModel;
 
 class MessageStatisticController extends Controller
 {
-    public function show(){
+    public function msg_inquiry(){
         $this->display();
     }
 
@@ -103,5 +103,19 @@ class MessageStatisticController extends Controller
         array_push($data, $Msg->wx_mp_statistics_by_day());
         array_push($data, $Msg->web_statistics_by_day());
         echo json_encode($data);
+    }
+
+    public function history_search($kw){
+        $Msg = new MessageModel();
+        $res = $Msg->get_all_history($kw,"供应");
+        $this->assign("res",$res);
+
+
+
+        foreach($res as $message){
+            echo "<br>";
+            var_dump($message);
+            echo "<br>";
+        }
     }
 }
