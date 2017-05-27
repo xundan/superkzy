@@ -2,102 +2,171 @@
 <html lang="en">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
     <!--<link rel="icon" href="../../favicon.ico">-->
-    <link type="text/css"  rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="__PUBLIC__/js/echarts.min.js"></script>
-    <title>{$s_date}->{$e_date}电话被呼统计</title>
+    <title>{$s_date}->{$e_date}历史消息检索</title>
 </head>
+<style type="text/css">
+    div {
+        padding: 10px;
+    }
+</style>
 <body>
-<h1>{$s_date}->{$e_date}电话被呼统计</h1>
-<table class="table table-hover text-center" style="table-layout: fixed">
-    <tr>
-        <td><a class="btn" href="{:U('Views/LogStatistics/page')}?s_date={$prev_s_date}&e_date={$prev_e_date}">前七天</a></td>
-        <td><h4>{$s_date}->{$e_date}</h4></td>
-        <td><a class="btn" href="{:U('Views/LogStatistics/page')}?s_date={$next_s_date}&e_date={$next_e_date}">后七天</a></td>
-    </tr>
-    <tr>
-        <td><label for="s_picker">起始日期：</label><input id="s_picker" type="date" value="{$s_date}"/></td>
-        <td><label for="e_picker">结束日期：</label><input id="e_picker" type="date" value="{$e_date}"/></td>
-        <td><a class="btn btn-primary" href="javascript:void(0);" onclick="select_date()">自定义时长查询(不包含结束日期)</a></td>
-    </tr>
+<div class="col-lg-3">
+    <div class="input-group" style="padding: 0">
+        <input type="text" id="all_search_text" class="form-control" value="{$kw}">
+                    <span class="input-group-btn">
+                        <button class="btn btn-primary" type="button" onclick="search_all()">全局查找</button>
+                    </span>
+    </div><!-- /input-group -->
+</div><!-- /.col-lg-6 -->
+<div class="btn-group col-lg-1">
+    <button type="button" class="btn btn-primary">{$cc}</button>
+    <button type="button" class="btn btn-primary dropdown-toggle"
+            data-toggle="dropdown">
+        <span class="caret"></span>
+        <span class="sr-only">切换下拉菜单</span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li><a href="#" class="category_selector">供应</a></li>
+        <li><a href="#" class="category_selector">求购</a></li>
+        <li><a href="#" class="category_selector">找车</a></li>
+        <li><a href="#" class="category_selector">车源</a></li>
+        <li><a href="#" class="category_selector">其他</a></li>
+    </ul>
+</div>
+<div class="col-lg-6">
+    <strong style="font-size: x-large">{$s_date}->{$e_date}历史消息检索</strong>
+</div>
 
-</table>
-<table class="table table-hover">
-    <tr>
-        <td>序号</td>
-        <td>参数</td>
-        <td>页面</td>
-        <td>时长(秒)</td>
-        <td>用户</td>
-        <td>ip</td>
-        <td>操作对象</td>
-        <td>操作方式</td>
-        <td>操作结果</td>
-        <td>时间</td>
-    </tr>
-    <volist name="details" id="vo">
-        <tr class="success">
-            <td>{$i}</td>
-            <td>{$vo.param}</td>
-            <td>{$vo.title}</td>
-            <td class = "duration">{$vo.duration}</td>
-            <td><a href="{:U('Views/LogStatistics/user_to_dial_detail')}?uid={$vo.uid}&s_date={$s_date}&e_date={$e_date}">{$vo.uid}</a></td>
-            <td>{$vo.ip}</td>
-            <td>{$vo.page}</td>
-            <td>{$vo.oper}</td>
-            <td>{$vo.result}</td>
-            <td>{$vo.now}</td>
+<div>
+    <table class="table table-hover text-center" style="table-layout: fixed">
+        <tr>
+            <td><a class="btn"
+                   href="{:U('Views/MessageStatistic/history_search')}?s_date={$prev_s_date}&e_date={$prev_e_date}&kw={$kw}&cc={$cc}">前七天</a>
+            </td>
+            <td><h4>{$s_date}->{$e_date}</h4></td>
+            <td><a class="btn"
+                   href="{:U('Views/MessageStatistic/history_search')}?s_date={$next_s_date}&e_date={$next_e_date}&kw={$kw}&cc={$cc}">后七天</a>
+            </td>
         </tr>
-    </volist>
-</table>
+        <tr>
+            <td><label for="s_picker">起始日期：</label><input id="s_picker" type="date" value="{$s_date}"/></td>
+            <td><label for="e_picker">结束日期：</label><input id="e_picker" type="date" value="{$e_date}"/></td>
+            <td><a class="btn btn-primary" href="javascript:void(0);" onclick="select_date()">自定义时长查询(不包含结束日期)</a></td>
+        </tr>
+    </table>
+</div>
+<div class="col-lg-3">
+    <div class="input-group" style="padding: 0">
+        <input type="text" id="this_search_text" class="form-control" value="">
+            <span class="input-group-btn">
+                <button class="btn btn-info" type="button" onclick="search_this()">结果查找</button>
+                <button class="btn btn-link" type="button" onclick="reset()">重置</button>
+            </span>
+    </div><!-- /input-group -->
+</div><!-- /.col-lg-6 -->
+<div>
+    <table class="table table-striped table-hover">
+        <tr style="font-weight: bold">
+            <td>序号</td>
+            <td>电话</td>
+            <td>发送者</td>
+            <td>来源</td>
+            <td>内容</td>
+            <td>时间</td>
+        </tr>
+        <volist name="res" id="vo">
+            <tr class="a_row">
+                <td>{$i}</td>
+                <td>{$vo.phone_number}</td>
+                <td>{$vo.sender}</td>
+                <td class="from_type">{$vo.type}</td>
+                <td class="content">{$vo.content}</td>
+                <td>{$vo.update_time}</td>
+            </tr>
+        </volist>
+    </table>
+</div>
 </body>
 <script>
-    function color_duration() {
-        $('.duration').each(function () {
-            var d = parseInt($(this).text());
-            $(this).css("background-color", "white");
-            if (d > 300) {
-                $(this).text("离开(" + d + "s)");
-                $(this).css("background-color", "rgb(255,100,255)");
-            } else if (d == -1) {
-                $(this).text("末次打开(未知)");
-                $(this).css("background-color", "rgb(255,0,255)");
-            } else if (d == -2) {
-                $(this).text("未统计");
-            } else if (d > -1 && d < 2) {
-                $(this).text("极短(" + d + "s)");
-                $(this).css("background-color", "rgb(225,255,225)");
-            } else if (d > 1 && d < 6) {
-                $(this).text("短(" + d + "s)");
-                $(this).css("background-color", "rgb(205,255,205)");
-            } else if (d > 5 && d < 11) {
-                $(this).text("中(" + d + "s)");
-                $(this).css("background-color", "rgb(175,255,175)");
-            } else if (d > 9 && d < 61) {
-                $(this).text("长(" + d + "s)");
-                $(this).css("background-color", "rgb(150,255,150)");
-            } else if (d > 59 && d < 301) {
-                $(this).text("极长(" + d + "s)");
-                $(this).css("background-color", "rgb(120,255,120)");
+
+    function select_date() {
+        var s_date = $("#s_picker").val();
+        var e_date = $("#e_picker").val();
+        window.location.href = "{:U('Views/MessageStatistic/history_search')}?kw={$kw}&cc={$cc}&s_date=" + s_date + "&e_date=" + e_date;
+    }
+
+    function search_all() {
+        var kw = $('#all_search_text').val();
+        if (!kw) kw = "";
+        window.location.href = "{:U('Views/MessageStatistic/history_search')}?kw=" + kw + "&cc={$cc}&s_date={$s_date}&e_date={$e_date}";
+    }
+
+    function search_this() {
+        var this_kw = $('#this_search_text').val();
+        if (!this_kw) return;
+        $('.content').each(function () {
+            var content = $(this).html();
+            var new_content = content.replace(new RegExp(this_kw, 'gm'), '<span style="background-color: orange; font-weight: bold">' + this_kw + "</span>");
+            if (new_content==content){
+                $(this).parent().remove();
+            }else{
+                $(this).html(new_content);
+            }
+        });
+
+        auto_highlight();
+    }
+
+    function reset() {
+        window.location.href = "{:U('Views/MessageStatistic/history_search')}?kw={$kw}&cc={$cc}&s_date={$s_date}&e_date={$e_date}";
+    }
+
+    $(function () {
+        $('.category_selector').click(function () {
+            var cc = $(this).html();
+            window.location.href = "{:U('Views/MessageStatistic/history_search')}?kw={$kw}&cc=" + cc + "&s_date={$s_date}&e_date={$e_date}";
+        });
+        from_type_des();
+        auto_highlight();
+    });
+
+    function from_type_des() {
+        $('.from_type').each(function () {
+            var d = $(this).text();
+            if (d == 'web') {
+                $(this).text("平台网站");
+            } else if (d == "wx_mp") {
+                $(this).text("公众号后台");
+            } else if (d == "plain") {
+                $(this).text("好友");
+            } else if (d == "group") {
+                $(this).text("群");
             } else {
-                $(this).text("报错，请通知开发(" + d + "s)");
-                $(this).css("background-color", "red");
+                $(this).text("未知");
             }
         });
     }
-    $(document).ready(function(){
-        color_duration();
-    });
 
-
-    function select_date(){
-        var s_date = $("#s_picker").val();
-        var e_date = $("#e_picker").val();
-        window.location.href = "{:U('Views/LogStatistics/page')}?s_date="+s_date+"&e_date="+e_date;
+    function auto_highlight(){
+        var this_kw = $('#all_search_text').val();
+        if (!this_kw) return;
+        $('.content').each(function () {
+            var content = $(this).html();
+            var new_content = content.replace(new RegExp(this_kw, 'gm'), '<span style="background-color: greenyellow; font-weight: bold">' + this_kw + "</span>");
+            if (new_content==content){
+                alert("报错，通知开发");
+                $(this).parent().remove();
+            }else{
+                $(this).html(new_content);
+            }
+        });
     }
 </script>
 </html>

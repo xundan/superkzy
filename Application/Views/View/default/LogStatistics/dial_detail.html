@@ -60,27 +60,27 @@
             var d = parseInt($(this).text());
             $(this).css("background-color", "white");
             if (d > 300) {
-                $(this).text("离开(" + d + "s)");
+//                $(this).text("离开(" + d + "s)");
                 $(this).css("background-color", "rgb(255,100,255)");
             } else if (d == -1) {
-                $(this).text("末次打开(未知)");
+//                $(this).text("末次打开(未知)");
                 $(this).css("background-color", "rgb(255,0,255)");
             } else if (d == -2) {
                 $(this).text("未统计");
             } else if (d > -1 && d < 2) {
-                $(this).text("极短(" + d + "s)");
+//                $(this).text("极短(" + d + "s)");
                 $(this).css("background-color", "rgb(225,255,225)");
             } else if (d > 1 && d < 6) {
-                $(this).text("短(" + d + "s)");
+//                $(this).text("短(" + d + "s)");
                 $(this).css("background-color", "rgb(205,255,205)");
             } else if (d > 5 && d < 11) {
-                $(this).text("中(" + d + "s)");
+//                $(this).text("中(" + d + "s)");
                 $(this).css("background-color", "rgb(175,255,175)");
             } else if (d > 9 && d < 61) {
-                $(this).text("长(" + d + "s)");
+//                $(this).text("长(" + d + "s)");
                 $(this).css("background-color", "rgb(150,255,150)");
             } else if (d > 59 && d < 301) {
-                $(this).text("极长(" + d + "s)");
+//                $(this).text("极长(" + d + "s)");
                 $(this).css("background-color", "rgb(120,255,120)");
             } else {
                 $(this).text("报错，请通知开发(" + d + "s)");

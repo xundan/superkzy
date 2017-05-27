@@ -105,17 +105,36 @@ class MessageStatisticController extends Controller
         echo json_encode($data);
     }
 
-    public function history_search($kw){
+    public function history_search($s_date=null,$e_date=null,$kw,$cc="供应"){
+
+        if(!$s_date) $s_date = date("Y-m-d",strtotime("-7 day"));
+        if(!$e_date) $e_date = date("Y-m-d");
+
+        $this_s_time = strtotime($s_date);
+        $prev_s_date = date("Y-m-d",strtotime("-7 day", $this_s_time));
+        $next_s_date = date("Y-m-d",strtotime("+7 day", $this_s_time));
+        $this_e_time = strtotime($e_date);
+        $prev_e_date = date("Y-m-d",strtotime("-7 day", $this_e_time));
+        $next_e_date = date("Y-m-d",strtotime("+7 day", $this_e_time));
+
         $Msg = new MessageModel();
-        $res = $Msg->get_all_history($kw,"供应");
+
+        $res = $Msg->get_all_history($kw,$cc,$s_date, $e_date);
         $this->assign("res",$res);
+        $this->assign("kw",$kw);
+        $this->assign("cc",$cc);
+        $this->assign("s_date",$s_date);
+        $this->assign("e_date",$e_date);
+        $this->assign("prev_s_date",$prev_s_date);
+        $this->assign("next_s_date",$next_s_date);
+        $this->assign("prev_e_date",$prev_e_date);
+        $this->assign("next_e_date",$next_e_date);
 
-
-
-        foreach($res as $message){
-            echo "<br>";
-            var_dump($message);
-            echo "<br>";
-        }
+        $this->display();
+//        foreach($res as $message){
+//            echo "<br>";
+//            var_dump($message);
+//            echo "<br>";
+//        }
     }
 }
