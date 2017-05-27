@@ -74,6 +74,7 @@ class MessagesModel extends Model
             } else {
                 $data['formatted'] = 1;
             }
+            $data['trait'] = implode(',',$subInfo['trait']);
             $data['publisher_rid'] = $_SESSION['user_info']['uid'];
             $data['sender'] = $_SESSION['user_info']['user_name'];
             $data['type'] = "web";

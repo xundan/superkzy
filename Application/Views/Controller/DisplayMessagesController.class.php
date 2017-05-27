@@ -30,6 +30,9 @@ class DisplayMessagesController extends Controller
             $this->assign('username', $username);
             $id_minus = $this->find_prev($id);
             $id_plus = $this->find_next($id);
+            $uncheck_count = $this->uncheckCount($id);
+            $this->assign('uncheck_count',$uncheck_count);
+
             if (!$data) {
                 echo "<h4>没有更多数据了。</h4>";
             }
@@ -152,6 +155,16 @@ class DisplayMessagesController extends Controller
             return $next['id'];
         } else {
             return -1;
+        }
+    }
+
+    public function uncheckCount($id){
+        $result = D('Message')->where("invalid_id=0 AND type in ('plain','group','wx_mp') AND status=0 AND id>" . $id)
+            ->select();
+        if($result){
+            return count($result);
+        }else{
+            return 0;
         }
     }
 

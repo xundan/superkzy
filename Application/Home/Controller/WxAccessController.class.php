@@ -268,16 +268,15 @@ class WxAccessController extends Controller
                         'name' => '会员中心',
                         'sub_button' => array(
                             array('type' => 'view', 'name' => '会员注册', 'url' => 'http://www.kuaimei56.com/index.php/Home/Login/register'),
-//                            array('type' => 'view', 'name' => '送出行险', 'url' => 'https://u.wcar.net.cn/1es'),
-//                            array('type' => 'view', 'name' => '优惠加油', 'url' => 'https://u.wcar.net.cn/1dN'),
-//                            array('type' => 'view', 'name' => '超矿金融', 'url' => 'http://www.kuaimei56.com/index.php/Views/FinancialClient/show'),
-//                            array('type' => 'view', 'name' => '会员活动', 'url' => 'http://www.kuaimei56.com/index.php/Home/Login/register'),
+                            array('type' => 'view', 'name' => '优惠加油', 'url' => 'https://u.wcar.net.cn/1dN'),
+                            array('type' => 'view', 'name' => '超矿金融', 'url' => 'http://www.kuaimei56.com/index.php/Views/FinancialClient/show'),
+                            array('type' => 'view', 'name' => '送出行险', 'url' => 'https://u.wcar.net.cn/1es'),
                         ),
                     ),
                     array(
                         'name' => '发布/查询',
                         'sub_button' => array(
-                            array('type' => 'view', 'name' => '平台网站', 'url' => 'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'),
+                            array('type' => 'view', 'name' => '超矿主页', 'url' => 'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'),
                             array('type' => 'view', 'name' => '发布信息', 'url' => 'http://www.kuaimei56.com/index.php/Home/OwnerPublish/owner_publish'),
                             array('type' => 'view', 'name' => '找车信息', 'url' => 'http://www.kuaimei56.com/index.php/Home/DriverSearch/driver_job_search'),
                             array('type' => 'view', 'name' => '买卖查询', 'url' => 'http://www.kuaimei56.com/index.php/Home/TradeSearch/trade_search'),
@@ -285,15 +284,9 @@ class WxAccessController extends Controller
                         ),
                     ),
                     array(
-                        'name' => '戳我福利',
-                        'sub_button' => array(
-                            //活动链接
-//                            array('type' => 'click', 'name' => '母亲节回馈活动', 'key' => 'activity'),
-                            array('type' => 'view', 'name' => '送出行险', 'url' => 'https://u.wcar.net.cn/1es'),
-                            array('type' => 'view', 'name' => '优惠加油', 'url' => 'https://u.wcar.net.cn/1dN'),
-                            array('type' => 'view', 'name' => '超矿金融', 'url' => 'http://www.kuaimei56.com/index.php/Views/FinancialClient/show'),
-//                            array('type' => 'view', 'name' => '会员活动', 'url' => 'http://www.kuaimei56.com/index.php/Home/Login/register'),
-                        )
+                        'type' => 'view',
+                        'name' => '查煤价',
+                        'url' => 'http://www.kuaimei56.com/index.php/Home/CoalPriceSearch/coal_price_search'
                     )
                 )
         );

@@ -767,4 +767,17 @@
 //            alert('push');
     }
 </script>
+<!--twinkle-->
+<script>
+    var twinkle_flag = false;
+    var i =setInterval(function(){
+        if(!twinkle_flag){
+            $('#twinkle').css('color','red');
+            twinkle_flag=true;
+        }else{
+            $('#twinkle').css('color','black');
+            twinkle_flag=false;
+        }
+    },100)
+</script>
 </html>

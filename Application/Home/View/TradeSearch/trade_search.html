@@ -813,11 +813,9 @@
         if (false) {
         } else {
             var bool = false;
-//        alert(1+' '+bool);
             setTimeout(function () {
                 bool = true;
             }, 1000);
-//        alert(navigator.userAgent);
             if (navigator.userAgent.indexOf('Android') > 0) {
                 pushHistory();
                 window.addEventListener("popstate", function (e) {
@@ -846,11 +844,23 @@
             url: "#"
         };
         window.history.pushState(state, "title", "#");
-//            alert('push');
     }
 </script>
 <!--test-->
 <script>
     document.body.oncopy = true
+</script>
+<!--twinkle-->
+<script>
+    var twinkle_flag = false;
+    var i =setInterval(function(){
+        if(!twinkle_flag){
+            $('#twinkle').css('color','red');
+            twinkle_flag=true;
+        }else{
+            $('#twinkle').css('color','black');
+            twinkle_flag=false;
+        }
+    },100)
 </script>
 </html>

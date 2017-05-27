@@ -1101,7 +1101,9 @@ button.weui_btn_plain_default, input.weui_btn_plain_default {
 }
 
 .weui_navbar_item:active {
-    background-color: #ededed
+    /*background-color: #ededed;*/
+    /*my fault*/
+    background-color: #a1a1a1;
 }
 
 .weui_navbar_item.weui_bar_item_on {
@@ -2185,7 +2187,9 @@ a.weui_media_box:active {
 }
 
 .weui_search_cancel {
-    display: none;
+    /*display: none;*/
+    /*my fault*/
+    display: block;
     margin-left: 10px;
     line-height: 28px;
     white-space: nowrap;

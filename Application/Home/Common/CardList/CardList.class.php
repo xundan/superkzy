@@ -104,7 +104,7 @@ class CardList
     public function addSimilar(){
         $tip['type'] = "tips";
         $tip['title'] = "模糊结果";
-        $tip['content'] = "没有更多的精确消息，现在为您显示近似的消息。";
+        $tip['content'] = "</br>没有更多的精确消息，现在为您显示近似的消息。";
         array_push($this->_array, new TipCard($tip));
         $this->_stage = self::SIMILAR;
     }
@@ -144,8 +144,7 @@ class CardList
             //$url = U('OwnerPublish/owner_publish');
             $tip['type'] = "tips";
             $tip['title'] = "结束";
-            $tip['content'] = "就这些了亲。小矿建议您前去<a id='end_tip' href='".$url."' style='font-size: 1.5em'>发布</a>";
-            //$tip['content'] = "就这些了亲。小矿建议您前去<a id='end_tip' href='#' style='font-size: 1.5em'>发布</a>";
+            $tip['content'] = "<br/>就这些了亲。小矿建议您前去 <a id='end_tip' href='".$url."'  class='btn btn-sm btn-default' style='border-color:#04bfc6'>发布 <span id='twinkle' style='color:black;font-size:1.2em' class='glyphicon glyphicon-hand-left'><span></a><br/><br/></br>";
             array_push($this->_array, new TipCard($tip));
             $this->_stage = self::END;
         }else{

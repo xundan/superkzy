@@ -114,7 +114,7 @@
                             <div class="input-group" style="height:34px;width: 100%">
                                 <span class="input-group-addon"
                                       style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                    <span class="pull-left">品质</span>
+                                    <span class="pull-left">品质(多选)</span>
                                 </span>
                                 <span id="sell_trait_html" style="border: 0" class="form-control"></span>
                                 <span class="input-group-addon"
@@ -128,19 +128,25 @@
                         <div id="collapse_sell_coal_trait" class="collapse" role="tablist" aria-labelledby="">
                             <label class="mybtn mybtn-default"
                                    style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
-                                <input type="radio" class="pull-left" style="display: none" name="trait"
+                                <input type="checkbox" class="pull-left" style="display: none" name="trait[]"
                                        id="sell_trait1"
                                        autocomplete="off" value="无烟煤"> 无烟煤
                             </label>
                             <label class="mybtn mybtn-default"
                                    style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
-                                <input type="radio" class="pull-left" style="display: none" name="trait"
+                                <input type="checkbox" class="pull-left" style="display: none" name="trait[]"
                                        id="sell_trait2"
                                        autocomplete="off" value="水洗煤"> 水洗煤
                             </label>
                             <label class="mybtn mybtn-default"
                                    style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
-                                <input type="radio" class="pull-left" style="display: none" name="trait"
+                                <input type="checkbox" class="pull-left" style="display: none" name="trait[]"
+                                       id="sell_trait4"
+                                       autocomplete="off" value="过筛煤"> 过筛煤
+                            </label>
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
+                                <input type="checkbox" class="pull-left" style="display: none" name="trait[]"
                                        id="sell_trait3"
                                        autocomplete="off" value="普通煤"> 普通煤
                             </label>
@@ -435,7 +441,7 @@
                             <div class="input-group" style="height:34px;width: 100%">
                                 <span class="input-group-addon"
                                       style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                    <span class="pull-left">品质</span>
+                                    <span class="pull-left">品质(多选)</span>
                                 </span>
                                 <span id="buy_trait_html" style="border: 0" class="form-control"></span>
                                 <span class="input-group-addon"
@@ -449,17 +455,26 @@
                         <div id="collapse_buy_coal_trait" class="collapse" role="tablist" aria-labelledby="">
                             <label class="mybtn mybtn-default"
                                    style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
-                                <input type="radio" class="pull-left" style="display: none" name="trait" id="buy_trait1"
+                                <input type="checkbox" class="pull-left" style="display: none" name="trait[]"
+                                       id="buy_trait1"
                                        autocomplete="off" value="无烟煤"> 无烟煤
                             </label>
                             <label class="mybtn mybtn-default"
                                    style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
-                                <input type="radio" class="pull-left" style="display: none" name="trait" id="buy_trait2"
+                                <input type="checkbox" class="pull-left" style="display: none" name="trait[]"
+                                       id="buy_trait2"
                                        autocomplete="off" value="水洗煤"> 水洗煤
                             </label>
                             <label class="mybtn mybtn-default"
                                    style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
-                                <input type="radio" class="pull-left" style="display: none" name="trait" id="buy_trait3"
+                                <input type="checkbox" class="pull-left" style="display: none" name="trait[]"
+                                       id="buy_trait4"
+                                       autocomplete="off" value="过筛煤"> 过筛煤
+                            </label>
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
+                                <input type="checkbox" class="pull-left" style="display: none" name="trait[]"
+                                       id="buy_trait3"
                                        autocomplete="off" value="普通煤"> 普通煤
                             </label>
                         </div>
@@ -1183,6 +1198,21 @@
             temp_html.html('');
         }
     });
+    $('input[type=checkbox]').click(function () {
+        var temp_html = $(this).parent('label').parent('div').parent('td').children('a').children('div').children('span').eq(1);
+        var temp_html_string = '';
+        var checked_checkbox = $(this).parent('label').parent('div').find("input[type=checkbox]:checked");
+        if ($(this).parent('label').hasClass('myactive')) {
+            console.log('cancel_check');
+            $(this).parent('label').removeClass('myactive');
+        } else {
+            $(this).parent('label').addClass('myactive');
+        }
+        $.each(checked_checkbox, function (k, val) {
+            temp_html_string += ' ' + $(val).val();
+        });
+        temp_html.html(temp_html_string);
+    });
 </script>
 
 <!--载入时读取上次发布的信息-->
@@ -1192,9 +1222,9 @@
         //如果是从查询界面来得，改变tag
         var url_path_name = window.location.pathname;
         var url_pram = url_path_name.match(/category\/(\S*)(?=.html)/);
-        if(url_pram){
+        if (url_pram) {
             console.log(decodeURI(url_pram[1]));
-            cookie('tag',decodeURI(url_pram[1]));
+            cookie('tag', decodeURI(url_pram[1]));
         }
         //切标签页
         if (cookie('tag') === '车源') {
@@ -1252,6 +1282,7 @@
             a.tab('show');
             //载入存在cookie中的数据
             if (cookie('coal_buy')) {
+                var temp_html_string = '';
                 var coal_buy = JSON.parse(cookie('coal_buy'));
                 jQuery.each(coal_buy, function (k, val) {
                     if (val.name == 'kind') {   //种类
@@ -1261,12 +1292,12 @@
                         kind.parent('label').siblings().removeClass('myactive');
                         $('#buy_kind_html').html(val.value);
                     }
-                    else if (val.name == 'trait') { //品质
-                        var trait = $(":radio[name=trait][value='" + val.value + "']");
+                    else if (val.name == 'trait[]') { //品质
+                        var trait = $(":checkbox[id*='trait'][value='" + val.value + "']");
+                        console.log(val.value);
                         trait.prop("checked", "checked");
                         trait.parent('label').addClass('myactive');
-                        trait.parent('label').siblings().removeClass('myactive');
-                        $('#buy_trait_html').html(val.value);
+                        temp_html_string += val.value + ' ';
                     }
                     else if (val.name == 'granularity') {   //粒度
                         var granularity = $(":radio[name=granularity][value='" + val.value + "']");
@@ -1305,9 +1336,7 @@
                         $("#buy_" + val.name).val(val.value);
                     }
                 });
-//                console.log($('#buy_area_start').val());
-//                cookie('coal_buy',JSON.stringify($('#form_buy').serializeArray()));
-//                console.log(cookie('coal_buy'));
+                $('#buy_trait_html').html(temp_html_string);
             }
         }
         else if (cookie('tag') == '找车') {
@@ -1366,6 +1395,7 @@
             a.tab('show');
             //载入cookie所存数据
             if (cookie('coal_sell')) {
+                temp_html_string = '';
                 var coal_sell = JSON.parse(cookie('coal_sell'));
                 jQuery.each(coal_sell, function (k, val) {
                     if (val.name == 'kind') {   //种类
@@ -1375,12 +1405,12 @@
                         kind.parent('label').siblings().removeClass('myactive');
                         $('#sell_kind_html').html(val.value);
                     }
-                    else if (val.name == 'trait') { //品质
-                        var trait = $(":radio[name=trait][value='" + val.value + "']");
+                    else if (val.name == 'trait[]') { //品质
+                        var trait = $(":checkbox[id*='trait'][value='" + val.value + "']");
+                        console.log(val.value);
                         trait.prop("checked", "checked");
                         trait.parent('label').addClass('myactive');
-                        trait.parent('label').siblings().removeClass('myactive');
-                        $('#sell_trait_html').html(val.value);
+                        temp_html_string += val.value + ' ';
                     }
                     else if (val.name == 'granularity') {   //粒度
                         var granularity = $(":radio[name=granularity][value='" + val.value + "']");
@@ -1404,6 +1434,7 @@
                         $("#sell_" + val.name).val(val.value);
                     }
                 });
+                $('#sell_trait_html').html(temp_html_string);
             }
         }
     })
@@ -1725,7 +1756,7 @@
         //判断content有无输入，content和煤炭信息不能同时为空
         var content = $('#sell_content').val().trim();
         var kind = $('input[name=kind]:checked').val();
-        var trait = $('input[name=trait]:checked').val();
+        var trait = $("input[type=checkbox][id*='trait']:checked").val();//第一个选择标签的值
         var granularity = $('input[name=granularity]:checked').val();
         if (!content && !kind && !trait && !granularity) {
             $('#sell_content_alert').html('详细描述与煤炭信息不能同时为空');
@@ -1733,7 +1764,6 @@
         }
         //ajax提交表单数据
         var subData = $("#form_sell").serialize();
-//        console.log(subData);
         var url = "{:U('OwnerPublish/coal_sell_action')}";
         $.ajax({
             type: "post",
@@ -1791,7 +1821,7 @@
         //判断content有无输入，content和煤炭信息不能同时为空
         var content = $('#buy_content').val().trim();
         var kind = $('input[name=kind]:checked').val();
-        var trait = $('input[name=trait]:checked').val();
+        var trait = $("input[type=checkbox][id*='trait']:checked").val();//第一个选择标签的值
         var granularity = $('input[name=granularity]:checked').val();
         if (!content && !kind && !trait && !granularity) {
             $('#buy_content_alert').html('详细描述与煤炭信息不能同时为空');
@@ -1799,7 +1829,6 @@
         }
         //ajax提交表单数据
         var subData = $("#form_buy").serialize();
-//        console.log(subData);
         var url = "{:U('OwnerPublish/coal_buy_action')}";
         $.ajax({
             type: "post",
@@ -1831,9 +1860,9 @@
 
 <!--跳转到我的发布时记录当前地址-->
 <script>
-    $('#my_publish').click(function(){
+    $('#my_publish').click(function () {
         var cur_url = window.location.href;
-        cookie('last_url_for_history',cur_url);
+        cookie('last_url_for_history', cur_url);
     })
 </script>
 
@@ -1845,37 +1874,22 @@
             url: "#"
         };
         window.history.pushState(state, "title", "#");
-//            alert('push');
     }
     $(function () {
-        if (false) {
+        var bool = false;
+        setTimeout(function () {
+            bool = true;
+        }, 1000);
+        if (navigator.userAgent.indexOf('Android') > 0) {
+            pushHistory();
+            window.addEventListener("popstate", function (e) {
+                window.location.href = "{:U('Homepage/homepage')}";
+            }, false);
         } else {
-            var bool = false;
-//        alert(1+' '+bool);
-            setTimeout(function () {
-                bool = true;
-            }, 1000);
-//        alert(navigator.userAgent);
-            if (navigator.userAgent.indexOf('Android') > 0) {
-                pushHistory();
-                window.addEventListener("popstate", function (e) {
-                    if (true) {
-                        window.location.href = "{:U('Homepage/homepage')}";
-                    } else {
-                        return false;
-                    }
-//                pushHistory();
-                }, false);
-            } else {
-                pushHistory();
-                window.addEventListener("popstate", function (e) {
-                    if (true) {
-                        window.location.href = "{:U('Homepage/homepage')}";
-                    } else {
-                        return false;
-                    }
-                }, false);
-            }
+            pushHistory();
+            window.addEventListener("popstate", function (e) {
+            window.location.href = "{:U('Homepage/homepage')}";
+            }, false);
         }
     })
 </script>
