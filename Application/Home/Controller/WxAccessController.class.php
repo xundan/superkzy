@@ -233,16 +233,22 @@ class WxAccessController extends Controller
         $data['sex'] = $userInfo["sex"];
         $data['heading_url'] = $userInfo["headimgurl"];
         $data['group_id'] = C("AUTH_VISITOR");
-        $res = $userModel->add($data);
-        if ($res) {
-            $temp['open_id'] = $userInfo["openid"];
-            $user_r = $userModel->where($temp)->find();
-            session('user_info', $user_r);
-            session('role_id', $user_r['role_id']);
+        $r = $userModel->where(array("open_id" => $data['open_id']))->find();
+        if (empty($r)) {//验证用户是否注册
+            $res = $userModel->add($data);
+            if ($res) {
+                $temp['open_id'] = $userInfo["openid"];
+                $user_r = $userModel->where($temp)->find();
+                session('user_info', $user_r);
+                session('role_id', $user_r['role_id']);
+            } else {
+                // todo 此处记录错误日志
+                session('user_info', null);
+                session('role_id', null);
+            }
         } else {
-            // todo 此处记录错误日志
-            session('user_info', null);
-            session('role_id', null);
+            session('user_info', $r);
+            session('role_id', $r['role_id']);
         }
     }
 
