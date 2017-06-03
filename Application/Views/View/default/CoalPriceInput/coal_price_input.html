@@ -333,11 +333,17 @@
                     var jsonObj = eval("(" + data + ")");
                     if(jsonObj.status){
                         alert(jsonObj.msg);
-                    }else{
+                    }else {
                         alert(jsonObj.msg);
                     }
+                    setTimeout(function(){
+                        window.location.reload();
+                    },1000);
                 }else{
                     alert('插入成功');
+                    setTimeout(function(){
+                        window.location.reload();
+                    },1000);
                 }
             }
         })
@@ -413,6 +419,12 @@
         }else{
             return false;
         }
+    })
+</script>
+<!--修改标记设置-->
+<script>
+    $('body').on('input','input',function(){
+        $(this).css('color','red');
     })
 </script>
 </html>

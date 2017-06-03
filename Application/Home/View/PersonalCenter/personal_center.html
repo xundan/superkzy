@@ -187,7 +187,6 @@ $(function(){
         if (false) {
         } else {
             var bool = false;
-//        alert(1+' '+bool);
             setTimeout(function () {
                 bool = true;
             }, 1000);
@@ -205,7 +204,7 @@ $(function(){
             } else {
                 pushHistory();
                 window.addEventListener("popstate", function (e) {
-                    if (true) {
+                    if (bool) {
                         window.location.href = "{:U('Homepage/homepage')}";
                     } else {
                         return false;

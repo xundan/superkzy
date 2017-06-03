@@ -8,7 +8,7 @@
     <meta name="x5-fullscreen" content="true">
     <meta name="full-screen" content="yes">
     <!--<link rel="icon" href="../../favicon.ico">-->
-    <title>选择地址</title>
+    <title>煤矿选择</title>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
@@ -17,6 +17,11 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
 </head>
+<style>
+    .refinery_name{
+        cursor:pointer
+    }
+</style>
 <include file="Common:common"/>
 <body id="aaaa" style="background-color: #efeff4">
 <form name="call_back" id="call_back">
@@ -34,7 +39,7 @@
             </div>
             <label for="search_input" class="weui_search_text" id="search_text">
                 <i class="weui_icon_search"></i>
-                <span>搜索(输入煤矿地址,例如:海弯煤矿)</span>
+                <span>搜索(输入煤矿名称,例如:海湾煤矿)</span>
             </label>
         </form>
         <a href="javascript:" class="weui_search_cancel" id="search_cancel">取消</a>
@@ -90,7 +95,7 @@
     <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">府谷</button>
     <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">横山</button>
     <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">其他</button>
-    <table class="table table-striped text-center" style="table-layout: fixed">
+    <table class="table table-bordered text-center" style="table-layout: fixed;vertical-align: middle">
         <tbody id="show_refinery">
         </tbody>
     </table>
@@ -112,7 +117,7 @@
                 var span = document.createElement('span');
 //                span.innerHTML = "<span class='refinery_name' style='width: 25%;margin: 1% 2.5%'>"+v+"</span>";
                 span.innerHTML = v;
-                span.style.cssText = "width: 20%;margin: 0 2.5%;padding:0;font-size:6px";
+                span.style.cssText = "width: 20%;margin: 0 2.5%;padding:0;font-size:12px";
                 span.setAttribute('class', 'btn btn-sm refinery_name');
                 document.getElementById('last_search').appendChild(span);
             });
@@ -142,7 +147,7 @@
                 var temp_string = "<tr>";
                 var col_count = 0;
                 $.each(jsonObj.refinery_name, function (k, val) {
-                    temp_string += "<td class='refinery_name'>" + val + "</td>";
+                    temp_string += "<td class='refinery_name' style='vertical-align: middle'>" + val + "</td>";
                     col_count++;
                     if (col_count == 4) {
                         temp_string += "</tr><tr>";
@@ -201,7 +206,7 @@
 //            console.log($(this).val());
                         var url = "{:U('CoalPriceSearch/ajax_refinery_search')}";
                         var querystring = $(this).val();
-//            console.log(querystring);
+            //console.log(querystring);
                         for (var i = 0; i < 5; i++) {
                             $('#search' + i).html('');
                             $('#search' + i + '_id').html('');

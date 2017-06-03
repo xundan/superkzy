@@ -105,7 +105,7 @@ class MsgCard extends Card
             $data['img']="from_wx.png";
             $data['name']="来自微信";
         }elseif($type=="group"){
-            $data['img']="cjkzy_icon.png";
+            $data['img']="cjkzy_icon.jpg";
             $data['name']="其他来源";
         }else{}
         return $data;

@@ -36,7 +36,7 @@ class MessagesModel extends Model
 
     public function short_allocate()
     {
-        $short_allocate = I('post.short_allocate', '', 'strip_tags,trim');
+        $short_allocate = I('post.short_allocate', '', 'trim');
         if ($short_allocate) {
             return $short_allocate;
         } else {
@@ -46,7 +46,7 @@ class MessagesModel extends Model
 
     public function join_content()
     {
-        $subInfo = I('post.', '', 'strip_tags,trim');
+        $subInfo = I('post.', '', 'trim');
         //把id释放掉防止污染content_all
         unset($subInfo['id']);
         $data['content_all'] = json_encode($subInfo, JSON_UNESCAPED_UNICODE);
@@ -55,7 +55,7 @@ class MessagesModel extends Model
 
     public function addInto()
     {
-        $subInfo = I('post.', '', 'strip_tags,trim');
+        $subInfo = I('post.', '', 'trim');
         $data = $subInfo;
         // 判断重复
         $data['content_all'] = $this->join_content();
@@ -120,7 +120,7 @@ class MessagesModel extends Model
     }
 
     public function updateMessage(){
-        $subInfo = I('post.', '', 'strip_tags,trim');
+        $subInfo = I('post.', '', 'trim');
         $data = $subInfo;
         if (!$subInfo['area_start'] && !$subInfo['area_end'] && !$subInfo['kind'] && !$subInfo['trait'] && !$subInfo['granularity']) {
             $data['formatted'] = 0;

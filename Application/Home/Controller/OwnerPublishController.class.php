@@ -15,7 +15,7 @@ use Think\Log;
 
 header("Content-type: text/html; charset=utf-8");
 
-class OwnerPublishController extends Controller
+class OwnerPublishController extends ComController
 {
     public function owner_publish()
     {

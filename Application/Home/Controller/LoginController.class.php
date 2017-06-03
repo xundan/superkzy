@@ -22,9 +22,9 @@ class LoginController extends Controller
     {
 //        $user_info = $_SESSION['user_info']['role_id'];
         $user_info = session('user_info');
-        if (!isset($user_info)){
-            cookie("current_url",__SELF__);
-            header('Location: '.C('REDIRECT_URL_BASE'));
+        if (!isset($user_info)) {
+            cookie("current_url", __SELF__);
+            header('Location: ' . C('REDIRECT_URL_BASE'));
         }
         $this->assign('user_info', $user_info);
         $this->display();
@@ -59,10 +59,15 @@ class LoginController extends Controller
 //            $this->success('设置成功'.$temp.'###'.$b, U($temp),30);
             //TODO 如果是订单详情跳转过来的话没有记录参数会查不到从而404
 //            $this->success('设置成功', cookie('last_url_for_auth'));
-            $this->success('设置成功', cookie('current_url'));
-        }else {
+            if (strpos(cookie('current_url'), 'OwnerPublish')) {
+                cookie('PublishTrigger', 'on');
+                redirect(U("OwnerPublish/owner_publish"));
+            } else {
+                redirect(cookie('current_url'));
+            }
+        } else {
             // 否则跳回默认地址
-            $this->success('设置成功', U("Homepage/homepage"));
+            redirect(U("Homepage/homepage"));
         }
     }
 
@@ -88,7 +93,7 @@ class LoginController extends Controller
             $data['phone_number'] = $phone_numbers;
             $data['role_id'] = $role_id;
             $data['invite_id'] = $clients_id;
-            $data['group_id']=C('AUTH_USER');
+            $data['group_id'] = C('AUTH_USER');
             $now_user = session('user_info');
             if ($now_user) {
                 $open_id = $now_user['open_id'];
@@ -103,15 +108,15 @@ class LoginController extends Controller
                     echo jsonEcho($returnArr);
                     exit;
                 } else {
-                    Log::record("user saved error: ".$now_user["uid"], Log::ERR);
+                    Log::record("user saved error: " . $now_user["uid"], Log::ERR);
                     // TODO 日志
                     $returnArr['status'] = 500;
                     $returnArr['msg'] = "注册失败。";
                     echo jsonEcho($returnArr);
                     exit;
                 }
-            }else{
-                Log::record("no user_info in session: ".$now_user["uid"], Log::ERR);
+            } else {
+                Log::record("no user_info in session: " . $now_user["uid"], Log::ERR);
             }
         } else {
             //验证码填写错误

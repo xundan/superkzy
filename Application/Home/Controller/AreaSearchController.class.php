@@ -288,4 +288,16 @@ class AreaSearchController extends Controller
         }
     }
 
+    /**
+     * 查询输入框输入内容整理
+     * @param $str string       输入字符串
+     * @return mixed|string     拆分数组
+     */
+    private function arrange_input($str)
+    {
+        $tempStr = trim($str);
+        $tempStr = preg_replace("/\\s{1,}/", " ", $tempStr);
+        return $tempStr;
+    }
+
 }

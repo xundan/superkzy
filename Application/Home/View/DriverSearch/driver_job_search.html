@@ -24,18 +24,18 @@
            style="color: black;text-decoration: none;font-size: 1.2em;width:30%">
             <span>全&emsp;部</span>
         </a>
-        <a href="#search" class="text-center" data-toggle="tab"
+        <a href="#search" class="text-center mynavbar" data-toggle="tab"
            style="word-wrap:break-word;table-layout:fixed;color: black;text-decoration: none;font-size: 1em;width:27%;padding: 5px 0;height:42px;line-height: 32px">
             <img src="__PUBLIC__/home/images/area_start_text.png" class="" style="height: 20px">
             <span id="area_start_html">点击选择</span>
 
             <div id="area_start" style="display: none"></div>
         </a>
-        <a href="#search" id="area_change" data-toggle="tab" class="text-center"
+        <a href="#search" id="area_change" data-toggle="tab" class="text-center mynavbar"
            style=";color: black;text-decoration: none;font-size: 1.2em;width: 20%">
             <img src="__PUBLIC__/home/images/change.png" class="" style="width: 55px;padding-top: 4px">
         </a>
-        <a href="#search" data-toggle="tab" class="weui_navbar_item"
+        <a href="#search" data-toggle="tab" class="weui_navbar_item mynavbar"
            style="word-wrap:break-word;table-layout:fixed;color: black;text-decoration: none;font-size: 1em;height:42px;line-height: 32px">
             <span id="area_end_html">点击选择</span>
             <img src="__PUBLIC__/home/images/area_end_text.png" class="" style="height: 20px">
@@ -59,7 +59,7 @@
             </div>
             <label for="search_input" class="weui_search_text" id="search_text">
                 <i class="weui_icon_search"></i>
-                <span>请填写您需要的信息</span>
+                <span>请输入关键字(如榆林)</span>
             </label>
             <input type="text" style="display: none">
         </form>
@@ -741,34 +741,31 @@
 //            alert('push');
     }
     $(function () {
-        if (false) {
-        } else {
-            var bool = false;
+        var bool = false;
 //        alert(1+' '+bool);
-            setTimeout(function () {
-                bool = true;
-            }, 1000);
+        setTimeout(function () {
+            bool = true;
+        }, 1000);
 //        alert(navigator.userAgent);
-            if (navigator.userAgent.indexOf('Android') > 0) {
-                pushHistory();
-                window.addEventListener("popstate", function (e) {
-                    if (true) {
-                        window.location.href = "{:U('Homepage/homepage')}";
-                    } else {
-                        return false;
-                    }
+        if (navigator.userAgent.indexOf('Android') > 0) {
+            pushHistory();
+            window.addEventListener("popstate", function (e) {
+                if (true) {
+                    window.location.href = "{:U('Homepage/homepage')}";
+                } else {
+                    return false;
+                }
 //                pushHistory();
-                }, false);
-            } else {
-                pushHistory();
-                window.addEventListener("popstate", function (e) {
-                    if (true) {
-                        window.location.href = "{:U('Homepage/homepage')}";
-                    } else {
-                        return false;
-                    }
-                }, false);
-            }
+            }, false);
+        } else {
+            pushHistory();
+            window.addEventListener("popstate", function (e) {
+                if (bool) {
+                    window.location.href = "{:U('Homepage/homepage')}";
+                } else {
+                    return false;
+                }
+            }, false);
         }
     })
 </script>

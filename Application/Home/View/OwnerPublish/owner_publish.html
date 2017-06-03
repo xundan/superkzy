@@ -1858,6 +1858,24 @@
     }
 </script>
 
+<!--发布触发器自动触发(仅仅是注册后跳转过来的情况)-->
+<script>
+    window.onload = function () {
+        if (cookie('PublishTrigger') == 'on') {
+            cookie('PublishTrigger', 'off');
+            if (cookie('car_give')) {
+                give_sub();
+            } else if (cookie('car_need')) {
+                need_sub();
+            } else if (cookie('coal_buy')) {
+                buy_sub();
+            } else {
+                sell_sub();
+            }
+        }
+    }
+
+</script>
 <!--跳转到我的发布时记录当前地址-->
 <script>
     $('#my_publish').click(function () {
@@ -1888,7 +1906,11 @@
         } else {
             pushHistory();
             window.addEventListener("popstate", function (e) {
-            window.location.href = "{:U('Homepage/homepage')}";
+                if (bool) {
+                    window.location.href = "{:U('Homepage/homepage')}";
+                } else {
+                    return false;
+                }
             }, false);
         }
     })

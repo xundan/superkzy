@@ -82,7 +82,8 @@ class DisplayMessagesController extends Controller
             // 更新消息表状态
             $this->update_message($id, $main_tag, $content);
 
-            $this->success('提交成功', 'showDemo?id=' . $this->find_next($id));
+//            $this->success('提交成功', 'showDemo?id=' . $this->find_next($id));
+            $this->redirect('DisplayMessages/showDemo', array('id' => $this->find_next($id)), 0, "");
         } else {
             $this->error('五个主要类型（求购，供应，找车，车源，其他）至少选一个。', 'showDemo?id=' . $id);
         }

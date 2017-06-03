@@ -54,7 +54,7 @@
             </div>
             <label for="search_input" class="weui_search_text" id="search_text">
                 <i class="weui_icon_search"></i>
-                <span>请填写您需要的信息</span>
+                <span>请输入关键字(如榆林)</span>
             </label>
             <input type="text" style="display: none;">
         </form>
@@ -809,42 +809,83 @@
 </script>
 <!--地址返回操作-->
 <script>
-    $(function () {
-        if (false) {
-        } else {
-            var bool = false;
-            setTimeout(function () {
-                bool = true;
-            }, 1000);
-            if (navigator.userAgent.indexOf('Android') > 0) {
-                pushHistory();
-                window.addEventListener("popstate", function (e) {
-                    if (true) {
-                        window.location.href = "{:U('Homepage/homepage')}";
-                    } else {
-                        return false;
-                    }
-//                pushHistory();
-                }, false);
-            } else {
-                pushHistory();
-                window.addEventListener("popstate", function (e) {
-                    if (bool) {
-                        window.location.href = "{:U('Homepage/homepage')}";
-                    } else {
-                        return false;
-                    }
-                }, false);
-            }
-        }
-    });
-    function pushHistory() {
-        var state = {
-            title: "title",
-            url: "#"
+//    $(function () {
+//        pushHistory();
+//        var bool = false;
+//        setTimeout(function () {
+//            bool = true;
+//        }, 500);
+//        if (navigator.userAgent.indexOf('Android') > 0) {
+//            pushHistory();
+//            window.addEventListener("popstate", function (e) {
+//                    window.location.href = "{:U('Homepage/homepage')}";
+//            }, false);
+//        } else {
+//            pushHistory();
+//            setTimeout(function(){
+//                window.addEventListener("popstate", function (e) {
+//                    if (bool) {
+//                        window.location.href = "{:U('Homepage/homepage')}";
+//                    } else {
+//                        return false;
+//                    }
+//                }, false);
+//            },100);
+//        }
+//
+//    });
+//    function pushHistory() {
+//        var state = {
+//            title: "title",
+//            url: "#"
+//        };
+//        window.history.pushState(state, "title", "#");
+//    }
+
+    $(function() {
+        if (!window.history.pushState || !document.dispatchEvent) return;
+        var href = location.href;
+        var flag = true;
+        var voidFn = function() {};
+        var fn = voidFn;
+        var dispatchFn = function() {
+            console.log(1);
+            var evt = document.createEvent('Event');
+            evt.initEvent('popstate',true,true);
+            window.dispatchEvent(evt);
         };
-        window.history.pushState(state, "title", "#");
-    }
+        console.log('middle');
+        window.addEventListener('load', function() {
+            if (location.hash !== '#flag') {
+                history.replaceState({}, '', "{:U('Homepage/homepage')}");
+                if (href.search('#') === -1) {
+                    history.pushState({}, '', href + '#flag');
+                } else {
+                    history.pushState({}, '', href.replace(/#.*/, '#flag'));
+                }
+
+            }
+            console.log(0,dispatchFn);
+            window.addEventListener('popstate', function() {
+                console.log(2);
+                dispatchFn = voidFn;
+                console.log(3,dispatchFn);
+                flag = !flag;
+                if (flag) {
+                    //alert(123);
+                    location.reload();
+                }
+
+            }, false);
+
+            setTimeout(function() {
+                fn = dispatchFn;
+                console.log(4,dispatchFn);
+                fn();
+            }, 2000);
+        }, false);
+    });
+
 </script>
 <!--test-->
 <script>
