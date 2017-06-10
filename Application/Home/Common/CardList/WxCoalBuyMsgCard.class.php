@@ -18,11 +18,15 @@ class WxCoalBuyMsgCard extends MsgCard
         $img = $img_name['img'];
         $name = $img_name['name'];
         $message = $this->buildCollection();
-        $publish_date = date("Y-m-d", $message['publish_time']);
+        $publish_date = substr($message['update_time'], 0, 10);
+        //标签图片 过期功能
+        if ($message['invalid_id'] == 99) {
+            $imageString = "<img src='__PUBLIC__/home/images/buy_overdue.png' width='50px'>";
+        } else {
+            $imageString = "<img src='__PUBLIC__/home/images/buy.png' width='50px'>";
+        }
         $li_str = "<li class=\"weui_panel weui_panel_access\" style=\";border-radius: 5px\">
-<div style=\"position: absolute;right: 0px;\">
-    <img src=\"__PUBLIC__/home/images/buy.png\" width=\"50px\">
-</div>
+<div style=\"position: absolute;right: 0px;\">".$imageString."</div>
 <div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
     <div class=\"weui_media_hd\">
         <img src=\"__PUBLIC__/home/images/$img\" class=\"weui_media_appmsg_thumb\">

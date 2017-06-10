@@ -10,7 +10,7 @@ namespace Home\Controller;
 
 use Think\Controller;
 
-class CoalPriceSearchController extends Controller
+class CoalPriceSearchController extends ComController
 {
     const countRow = 10;
     private $_asc = "vip desc,update_time desc";

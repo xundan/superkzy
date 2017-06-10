@@ -63,16 +63,18 @@ class TradeSearchController extends SearchController
         if($input['filter_granularity']){
             $whereCond->pushSearchCond("content_all",implode(' ',$input['filter_granularity']),'or');
         }else{}
-        if($input['filter_heat_min']){
-            $whereCond->pushSearchCond("content_all",$input['filter_heat_min'],'or');
-        }else{}
-        if($input['filter_heat_max']){
-            $whereCond->pushSearchCond("content_all",$input['filter_heat_max'],'or');
-        }else{}
+//        if($input['filter_heat_min']){
+//            $whereCond->pushSearchCond("content_all",$input['filter_heat_min'],'or');
+//        }else{}
+//        if($input['filter_heat_max']){
+//            $whereCond->pushSearchCond("content_all",$input['filter_heat_max'],'or');
+//        }else{}
         $whereCond->pushCond("kind","in",$input['filter_kind']);
         $whereCond->pushCond("granularity","in",$input['filter_granularity']);
         $whereCond->pushCond("heat_value_min","egt",$input['filter_heat_min']);
         $whereCond->pushCond("heat_value_max","elt",$input['filter_heat_max']);
+        $whereCond->pushCond("heat_value_max","egt",$input['filter_heat_min']);
+        $whereCond->pushCond("heat_value_min","elt",$input['filter_heat_max']);
 
         return $whereCond;
     }

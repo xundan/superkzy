@@ -21,11 +21,11 @@
 <div class="panel-title" style="margin:0;padding: 0;background-color: white">
     <div id="myTab" class="weui_navbar" style=";margin-bottom: 0;">
         <a href="#transport" data-toggle="tab" class="weui_navbar_item weui_bar_item_on"
-           style="color: black;text-decoration: none;font-size: 1.2em">
+           style="text-decoration: none;font-size: 1.2em">
             <span>运输收藏</span>
         </a>
         <a href="#trade" data-toggle="tab" class="weui_navbar_item"
-           style="color: black;text-decoration: none;font-size: 1.2em">
+           style="text-decoration: none;font-size: 1.2em">
             <span>交易收藏</span>
         </a>
     </div>
@@ -339,44 +339,39 @@
 //            alert('push');
     }
     $(function () {
-        if (false) {
-        } else {
-            var bool = false;
-//        alert(1+' '+bool);
-            setTimeout(function () {
-                bool = true;
-            }, 1000);
-//        alert(navigator.userAgent);
-            if (navigator.userAgent.indexOf('Android') > 0) {
-                pushHistory();
-                window.addEventListener("popstate", function (e) {
-                    if (true) {
-                        var url = cookie('last_url_for_history');
-                        if(url){
-                            window.location.href = url;
-                        }else{
-                            window.location.href = "{:U('Homepage/homepage')}";
-                        }
-                    } else {
-                        return false;
+        var bool = false;
+        setTimeout(function () {
+            bool = true;
+        }, 1000);
+        if (navigator.userAgent.indexOf('Android') > 0) {
+            pushHistory();
+            window.addEventListener("popstate", function (e) {
+                if (true) {
+                    var url = cookie('last_url_for_history');
+                    if(url){
+                        window.location.href = url;
+                    }else{
+                        window.location.href = "{:U('Homepage/homepage')}";
                     }
+                } else {
+                    return false;
+                }
 //                pushHistory();
-                }, false);
-            } else {
-                pushHistory();
-                window.addEventListener("popstate", function (e) {
-                    if (true) {
-                        var url = cookie('last_url_for_history');
-                        if(url){
-                            window.location.href = url;
-                        }else{
-                            window.location.href = "{:U('Homepage/homepage')}";
-                        }
-                    } else {
-                        return false;
+            }, false);
+        } else {
+            pushHistory();
+            window.addEventListener("popstate", function (e) {
+                if (bool) {
+                    var url = cookie('last_url_for_history');
+                    if(url){
+                        window.location.href = url;
+                    }else{
+                        window.location.href = "{:U('Homepage/homepage')}";
                     }
-                }, false);
-            }
+                } else {
+                    return false;
+                }
+            }, false);
         }
     })
 </script>

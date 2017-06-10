@@ -24,25 +24,25 @@
 <div class="panel-title" style="margin:0;padding: 0;background-color: white">
     <div id="myTab" class="weui_navbar" role="" style="position: inherit;margin-bottom: 0;">
         <a href="#coal_sell" name="coal_sell" class="weui_navbar_item weui_bar_item_on" data-toggle="tab"
-           style="color: black;text-decoration: none">
+           style=";text-decoration: none">
             <span role="presentation" class="" style=";font-size: 1.2em">
                 发布供货
             </span>
         </a>
         <a href="#coal_buy" name="coal_buy" class="weui_navbar_item" data-toggle="tab"
-           style="color: black;text-decoration: none">
+           style=";text-decoration: none">
             <span role="presentation" class="" style=";font-size: 1.2em">
                 发布求购
             </span>
         </a>
         <a href="#car_need" name="car_need" class="weui_navbar_item" data-toggle="tab"
-           style="color: black;text-decoration: none">
+           style=";text-decoration: none">
             <span role="presentation" class="" style=";font-size: 1.2em">
                 发布求车
             </span>
         </a>
         <a href="#car_give" name="car_give" class="weui_navbar_item" data-toggle="tab"
-           style="color: black;text-decoration: none">
+           style=";text-decoration: none">
             <span role="presentation" class="" style=";font-size: 1.2em">
                 发布车源
             </span>
@@ -574,10 +574,10 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div class="input-group" style="width: 100%">
+                        <div class="input-group" style="width: 100%;background-color: white">
                             <span class="input-group-addon"
                                   style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                期望价格
+                                <span class="pull-left">期望价格</span>
                             </span>
                             <input type="number" name="price_min" id="buy_price_min" class="form-control"
                                    placeholder="最低价" style=";width:46%;border-radius: 0;border: 0">
@@ -1752,6 +1752,15 @@
         } else if (phone.length != 11 || !phone.match(/^(-?\d+)(\.\d+)?$/)) {
             $('#sell_phone_alert').html('请输入正确的电话号码');
             return;
+        }
+        //热值高位必须大于热值低位指标(如果有值)
+        var sell_heat_value_max = $('#sell_heat_value_max').val();
+        var sell_heat_value_min = $('#sell_heat_value_min').val();
+        if(sell_heat_value_max && sell_heat_value_min){
+            if(sell_heat_value_max < sell_heat_value_min){
+                $('#sell_content_alert').html('高位热值不能低于低位热值');
+                return false;
+            }
         }
         //判断content有无输入，content和煤炭信息不能同时为空
         var content = $('#sell_content').val().trim();

@@ -73,7 +73,7 @@
                                         <span style="">拨打电话</span>
                                     </h4>
                                 </a>
-                                <empty name="data['content'][0][detailed_index][1].index_name">
+                                <empty name="data['content'][0]['detailed_index'][1].index_name">
                                     <div>
                                         <a href="{:U('CoalPriceSearch/coal_price_detail',array('message_id'=>$data['message_id']))}"
                                            class="detail btn btn-xs btn-default disabled" style="width: 70%;border-color: #04bfc6;color:
@@ -93,14 +93,15 @@
                             <thead>
                             <tr>
                                 <th class="text-center" style="border: none;">类别</th>
-                                <empty name="data['content'][0][detailed_index][0].index_name">
+                                <empty name="data['content'][0]['detailed_index'][0].index_name">
                                     <th class="text-center" style="border: none;">热量</th>
                                     <else/>
                                     <th class="text-center" style="border: none;">
-                                        {$data['content'][0][detailed_index][0].index_name}
+                                        {$data['content'][0]['detailed_index'][0].index_name}
                                     </th>
                                 </empty>
                                 <th class="text-center" style="border: none;">价格</th>
+                                <th class="text-center" style="border: none;">含税价</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -121,6 +122,13 @@
                                                 <else/>
                                                 {$vo.price}
                                             </if>
+                                        </td>
+                                        <td class="text-center" style="border: none;">
+                                            <empty name="vo.tax">
+                                                &mdash;
+                                                <else/>
+                                                {$vo.tax}
+                                            </empty>
                                         </td>
                                     </notempty>
                                 </tr>
@@ -154,7 +162,7 @@
                                         <span style="">拨打电话</span>
                                     </h4>
                                 </a>
-                                <empty name="data['content'][0][detailed_index][1].index_name">
+                                <empty name="data['content'][0]['detailed_index'][1].index_name">
                                     <div>
                                         <a href="{:U('CoalPriceSearch/coal_price_detail',array('message_id'=>$data['message_id']))}"
                                            class="detail btn btn-xs btn-default disabled" style="width: 70%;border-color: #04bfc6;color:
@@ -174,14 +182,15 @@
                             <thead>
                             <tr>
                                 <th class="text-center" style="border: none;">类别</th>
-                                <empty name="data['content'][0][detailed_index][0].index_name">
+                                <empty name="data['content'][0]['detailed_index'][0].index_name">
                                     <th class="text-center" style="border: none;">热量</th>
                                     <else/>
                                     <th class="text-center" style="border: none;">
-                                        {$data['content'][0][detailed_index][0].index_name}
+                                        {$data['content'][0]['detailed_index'][0].index_name}
                                     </th>
                                 </empty>
                                 <th class="text-center" style="border: none;">价格</th>
+                                <th class="text-center" style="border: none;">含税价</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -197,7 +206,15 @@
                                             </empty>
                                         </td>
                                         <td class="text-center" style="border: none;">
-                                            {$vo.price}</td>
+                                            {$vo.price}
+                                        </td>
+                                        <td class="text-center" style="border: none;">
+                                            <empty name="vo.tax">
+                                                &mdash;
+                                                <else/>
+                                                {$vo.tax}
+                                            </empty>
+                                        </td>
                                     </notempty>
                                 </tr>
                             </volist>
@@ -247,8 +264,9 @@
             <thead>
             <tr>
                 <th class="text-center" style="border: none;">类别</th>
-                <th class="text-center" style="border: none;">{$data['content'][0][detailed_index][0].index_name}</th>
+                <th class="text-center" style="border: none;">{$data['content'][0]['detailed_index'][0].index_name}</th>
                 <th class="text-center" style="border: none;">价格</th>
+                <th class="text-center" style="border: none;">含税价</th>
             </tr>
             </thead>
             <tbody>
@@ -264,6 +282,7 @@
                             </empty>
                         </td>
                         <td class="text-center" style="border: none;">{$vo.price}</td>
+                        <td class="text-center" style="border: none;">{$vo.tax}</td>
                     </notempty>
                 </tr>
             </volist>
@@ -398,7 +417,9 @@
                     tempObj.children('div').children('div').eq(1).children('a').attr('href', 'tel:' + val.phone_number);
                     //tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').attr('href',"__CONTROLLER__/coal_price_detail/message_id/"+val.message_id);
                     if (val.content[0].detailed_index[0].index_name) {
+                        //如果第一个详细指标有值的话就取这个值
                         if (!val.content[0].detailed_index[1].index_name) {
+                            //如果详细指标中第二个指标还是空的话则认为后续也没有详细指标
                             tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').addClass('disabled');
                             tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').text('无详细指标');
                         } else {
@@ -406,7 +427,9 @@
                         }
                         tempObj.children('table').children('thead').children('tr').children('th').eq(1).html(val.content[0].detailed_index[0].index_name);
                     } else {
+                        //如果第一个详细指标无值的话就写成热量
                         if (!val.content[0].detailed_index[1].index_name) {
+                            //如果详细指标中第二个指标还是空的话则认为后续也没有详细指标
                             tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').addClass('disabled');
                             tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').text('无详细指标');
                         } else {
@@ -417,10 +440,11 @@
                     tempObj.children('span').html('发布时间:' + val.update_time.substr(0, 10));
                     var temp_string = '';
                     $.each(val.content, function (key, value) {
-                        if (value.kind_name == '') return true;
+                        if (value.kind_name == '') return true;//如果无类别名，则continue
                         var temp_value = '';
                         $.each(value.detailed_index, function (i, j) {
                             if (i == 0) {
+                                //详细指标第一列(热值列)如有值则显示如没有则-
                                 if (j.index_value) {
                                     temp_value = j.index_value;
                                 } else {
@@ -429,9 +453,17 @@
                                 return false;
                             }
                         });
+                        if (value.tax && (value.tax != '0')) {
+                            //含税价有值则显示
+                        } else {
+                            //含税价无值显示-
+                            value.tax = '&mdash;'
+                        }
+                        //拼装类别行
                         temp_string += "<tr><td class='text-center' style='border: none;'>" +
                                 value.kind_name + "</td><td class='text-center' style='border: none;'>" + temp_value +
-                                "</td><td class='text-center' style='border: none;'>" + value.price + "</td></tr>";
+                                "</td><td class='text-center' style='border: none;'>" + value.price + "</td>" +
+                                "<td class='text-center' style='border: none;'>" + value.tax + "</td></tr>";
                     });
                     tempObj.find('tbody').html(temp_string);
                     if (select_category == 'all') {
@@ -451,9 +483,9 @@
      */
     function pullUpAction() {
 //        setTimeout(function () {
-        if(load_state == 1){
+        if (load_state == 1) {
             return false;
-        }else{
+        } else {
             load_state = 1;
             console.log('up');
             //日志记录
@@ -484,7 +516,9 @@
                         tempObj.children('div').children('div').eq(0).children('h2').html(val.supply_company);
                         tempObj.children('div').children('div').eq(1).children('a').attr('href', 'tel:' + val.phone_number);
                         if (val.content[0].detailed_index[0].index_name) {
+                            //如果第一个详细指标有值的话就取这个值
                             if (!val.content[0].detailed_index[1].index_name) {
+                                //如果详细指标中第二个指标还是空的话则认为后续也没有详细指标
                                 tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').addClass('disabled');
                                 tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').text('无详细指标');
                             } else {
@@ -492,7 +526,9 @@
                             }
                             tempObj.children('table').children('thead').children('tr').children('th').eq(1).html(val.content[0].detailed_index[0].index_name);
                         } else {
+                            //如果第一个详细指标无值的话就写成热量
                             if (!val.content[0].detailed_index[1].index_name) {
+                                //如果详细指标中第二个指标还是空的话则认为后续也没有详细指标
                                 tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').addClass('disabled');
                                 tempObj.children('div').children('div').eq(1).children('div').eq(0).children('a').text('无详细指标');
                             } else {
@@ -503,10 +539,11 @@
                         tempObj.children('span').html('发布时间:' + val.update_time.substr(0, 10));
                         var temp_string = '';
                         $.each(val.content, function (key, value) {
-                            if (value.kind_name == '') return true;
+                            if (value.kind_name == '') return true;//如果无类别名，则continue
                             var temp_value = '';
                             $.each(value.detailed_index, function (i, j) {
                                 if (i == 0) {
+                                    //详细指标第一列(热值列)如有值则显示如没有则-
                                     if (j.index_value) {
                                         temp_value = j.index_value;
                                     } else {
@@ -515,9 +552,17 @@
                                     return false;
                                 }
                             });
+                            if (value.tax && (value.tax != '0')) {
+                                //含税价有值则显示
+                            } else {
+                                //含税价无值显示-
+                                value.tax = '&mdash;'
+                            }
+                            //拼装类别行
                             temp_string += "<tr><td class='text-center' style='border: none;'>" +
                                     value.kind_name + "</td><td class='text-center' style='border: none;'>" + temp_value +
-                                    "</td><td class='text-center' style='border: none;'>" + value.price + "</td></tr>";
+                                    "</td><td class='text-center' style='border: none;'>" + value.price + "</td>" +
+                                    "<td class='text-center' style='border: none;'>" + value.tax + "</td></tr>";
                         });
                         tempObj.find('tbody').html(temp_string);
                         if (select_category == 'all') {
@@ -674,28 +719,28 @@
 </script>
 <!--记录位置-->
 <script>
-//    window.onunload = function () {
-//        var str = window.location.href;
-//        str = str.substring(str.lastIndexOf("/") + 1) + '_scroll';
-//        var scroll_offset = myScroll.y;
-//        sessionStorage.setItem(str, scroll_offset);
-//    }
+    //    window.onunload = function () {
+    //        var str = window.location.href;
+    //        str = str.substring(str.lastIndexOf("/") + 1) + '_scroll';
+    //        var scroll_offset = myScroll.y;
+    //        sessionStorage.setItem(str, scroll_offset);
+    //    }
 </script>
 <script>
-//    window.onload = function () {
-//        var select_category = $('input[name=select_category]').val();
-//        var str = window.location.href;
-//        var str_data = str.substring(str.lastIndexOf("/") + 1) + '_data';
-//        var str_scroll = str.substring(str.lastIndexOf("/") + 1) + '_scroll';
-//        var scroll_data = sessionStorage.getItem(str_data);
-//        if (scroll_data) {
-//            renderData(scroll_data, select_category);
-//        }
-//        var scroll_offset = sessionStorage.getItem(str_scroll);
-//        if (scroll_offset) {
-//            myScroll.scrollTo(0, scroll_offset, 0);
-//        }
-//    };
+    //    window.onload = function () {
+    //        var select_category = $('input[name=select_category]').val();
+    //        var str = window.location.href;
+    //        var str_data = str.substring(str.lastIndexOf("/") + 1) + '_data';
+    //        var str_scroll = str.substring(str.lastIndexOf("/") + 1) + '_scroll';
+    //        var scroll_data = sessionStorage.getItem(str_data);
+    //        if (scroll_data) {
+    //            renderData(scroll_data, select_category);
+    //        }
+    //        var scroll_offset = sessionStorage.getItem(str_scroll);
+    //        if (scroll_offset) {
+    //            myScroll.scrollTo(0, scroll_offset, 0);
+    //        }
+    //    };
 </script>
 <!--渲染数据-->
 <script>
@@ -799,11 +844,11 @@
             imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
             success: function () {
                 // 用户确认分享后执行的回调函数
-                ck_log("share",'分享煤价查询系统至朋友圈');
+                ck_log("share", '分享煤价查询系统至朋友圈');
             },
             cancel: function () {
                 // 用户取消分享后执行的回调函数
-                ck_log("share",'取消分享煤价查询系统至朋友圈');
+                ck_log("share", '取消分享煤价查询系统至朋友圈');
             }
         });
         //分享给朋友
@@ -816,11 +861,11 @@
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function () {
                 // 用户确认分享后执行的回调函数
-                ck_log("share",'分享煤价查询系统给好友');
+                ck_log("share", '分享煤价查询系统给好友');
             },
             cancel: function () {
                 // 用户取消分享后执行的回调函数
-                ck_log("share",'取消分享煤价查询系统给好友');
+                ck_log("share", '取消分享煤价查询系统给好友');
             }
         });
     });

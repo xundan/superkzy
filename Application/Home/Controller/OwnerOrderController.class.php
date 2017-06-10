@@ -175,7 +175,8 @@ class OwnerOrderController extends ComController
         } else if($category == "transport") {
             $whereCond->pushCond("category", "in", array("找车", "车源"));
         } else {}
-        $messages = $Msg->findWhere($whereCond);
+//        需要把过期信息也找出来
+        $messages = $Msg->findWhereForPublishHistory($whereCond);
         return $messages;
     }
 

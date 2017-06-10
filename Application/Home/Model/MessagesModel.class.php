@@ -147,7 +147,7 @@ class MessagesModel extends Model
             //验证没通过
 //            exit($Msg->getError());
             $returnArr['status'] = 2;
-            $returnArr['msg'] = $Msg->getError();
+            $returnArr['msg'] = $this->getError();
             echo json_encode($returnArr);
 //            throw new Exception;
 //            $this->display('Common:403');

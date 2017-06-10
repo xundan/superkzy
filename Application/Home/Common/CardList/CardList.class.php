@@ -144,7 +144,7 @@ class CardList
             //$url = U('OwnerPublish/owner_publish');
             $tip['type'] = "tips";
             $tip['title'] = "结束";
-            $tip['content'] = "<br/>就这些了亲。小矿建议您前去 <a id='end_tip' href='".$url."'  class='btn btn-sm btn-default' style='border-color:#04bfc6'>发布 <span id='twinkle' style='color:black;font-size:1.2em' class='glyphicon glyphicon-hand-left'><span></a><br/><br/></br>";
+            $tip['content'] = "<br/>就这些了亲。小矿建议您前去 <a id='end_tip' href='".$url."' onclick='ck_log(\"click\",\"前往发布\");'  class='btn btn-sm btn-default' style='border-color:#04bfc6'>发布 <span id='twinkle' style='color:black;font-size:1.2em' class='glyphicon glyphicon-hand-left'><span></a><br/><br/></br>";
             array_push($this->_array, new TipCard($tip));
             $this->_stage = self::END;
         }else{

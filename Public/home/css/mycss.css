@@ -5,7 +5,9 @@ body, html {
 
 body {
     overflow-x: hidden;
-    background-color: #fbf9fe
+    /*background-color: #fbf9fe*/
+    /*background-color: #efeff4*/
+    background-color: #eaeaea;
 }
 
 .container {
@@ -480,6 +482,65 @@ a{
     border-color: #ccc
 }
 
-body{
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+/*from微信CSS and change it*/
+a:hover{
+    color:inherit;
+}
+
+/*卡片边框*/
+.weui_panel {
+    border: 0.5px solid #d0cfcd !important;
+    margin-right: 1px;
+}
+
+/*头像*/
+.weui_media_box.weui_media_appmsg .weui_media_hd {
+    margin-left: 5px;
+}
+
+.weui_media_box.weui_media_appmsg .weui_media_bd {
+    margin-left: -5px;
+}
+
+/*滑动选择框*/
+.weui_switch:checked {
+    border-color: #04bfc6;
+    background-color: #04bfc6
+
+}
+
+.weui_navbar_item{
+    padding: 5px 0;
+    color:black;
+    /*border-bottom: 1px solid #eaeaea;*/
+}
+
+.mynavbar{
+    color:black
+}
+
+.weui_bar_item_on{
+    font-weight: bold;
+    color:black !important;
+}
+
+.weui_navbar_item.weui_bar_item_on {
+    background-color: #eaeaea;
+}
+
+.weui_navbar_item:active,.mynavbar:active {
+    background-color: #a1a1a1;
+}
+
+.weui_bar_item_on_extra{
+    background-color: #eaeaea;
+    color:black !important;
+}
+
+.weui_search_cancel {
+    display: block;
+    margin-left: 10px;
+    line-height: 28px;
+    white-space: nowrap;
+    color: white;
 }
