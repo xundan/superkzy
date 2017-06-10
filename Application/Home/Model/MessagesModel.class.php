@@ -433,4 +433,62 @@ class MessagesModel extends Model
         $count = $this->query("select count(*) AS a from ck_messages where to_days(record_time) = to_days(now()) AND category IN ('找车', '车源') AND invalid_id = 0");
         return $count[0]['a'];
     }
+
+    /**
+     * @param $categoryArr
+     * @param $searchArr
+     * @return array
+     */
+    public function selectSearch($categoryArr, $searchArr)
+    {
+        $res = array(); // 默认返回值
+        $map = array(); // 如果没有map就不执行sql
+        if ($categoryArr) $map['category'] = array("IN",implode(",",$categoryArr));
+        if ($searchArr){
+            $query = array();
+            array_push($query,'like');
+            // 为关键字数组$tempStr
+            foreach ($searchArr as &$item) {
+//            $query[] = array('like', '%' . $item . '%');
+                $item = "%".$item."%";
+            }
+            array_push($query,$searchArr);
+            array_push($query,"AND");
+            $map['content_all']=$query;
+        }
+        if ($map){
+            $map['invalid_id']=array("EQ",0);
+            $res=$this->where($map)->select();
+        }
+//        return $this->getLastSql();
+        return $res;
+    }
+
+    /**
+     * @param $categoryArr
+     * @param $granularityArr
+     * @param $kindArr
+     * @param $digitsArr
+     * @return array
+     */
+    public function selectQuery($categoryArr,$granularityArr,$kindArr,$digitsArr)
+    {
+        $res = array(); // 默认返回值
+        $map = array(); // 如果没有map就不执行sql
+        if ($categoryArr) $map['category'] = array("IN",implode(",",$categoryArr));
+        if ($granularityArr) $map['granularity'] = array("IN",implode(",",$granularityArr));
+        if ($kindArr) $map['kind'] = array("IN",implode(",",$kindArr));
+        if ($digitsArr){
+            // todo 这里的逻辑需要再考虑
+            $map['heat_value_max'] = array("IN",implode(",",$digitsArr));
+            $map['heat_value_min'] = array("IN",implode(",",$digitsArr));
+            $map['price_min'] = array("IN",implode(",",$digitsArr));
+            $map['price_max'] = array("IN",implode(",",$digitsArr));
+        }
+        if ($map){
+            $map['invalid_id']=array("EQ",0);
+            $res=$this->where($map)->select();
+        }
+        return $res;
+    }
 }

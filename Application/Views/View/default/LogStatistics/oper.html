@@ -40,7 +40,15 @@
     </tr>
 
 </table>
-
+<div class="col-lg-3">
+    <div class="input-group" style="padding: 0">
+        <input type="text" id="this_search_text" class="form-control" value="">
+            <span class="input-group-btn">
+                <button class="btn btn-info" type="button" onclick="search_this()">结果查找</button>
+                <button class="btn btn-link" type="button" onclick="reset()">重置</button>
+            </span>
+    </div><!-- /input-group -->
+</div><!-- /.col-lg-6 -->
 <table class="table table-hover">
 
     <tr>
@@ -54,9 +62,9 @@
     <volist name="res" id="vo">
         <tr class="success">
             <td>{$i}</td>
-            <td>{$vo.title}</td>
+            <td class="page_title">{$vo.title}</td>
             <td class="operation">{$vo.oper}</td>
-            <td>{$vo.param}</td>
+            <td class="param">{$vo.param}</td>
             <td>{$vo.c}</td>
             <!--<td class="duration">{$vo.a}</td>-->
             <td><a href="{:U('Views/LogStatistics/oper_detail')}?title={$vo.title}&oper={$vo.oper}&s_date={$s_date}&e_date={$e_date}">详细</a></td>
@@ -65,6 +73,49 @@
 </table>
 </body>
 <script>
+
+
+    function search_this() {
+        var this_kw = $('#this_search_text').val();
+        if (!this_kw) return;
+        $('.success').each(function () {
+            var flag1 = false;
+            var flag2 = false;
+            var flag3 = false;
+            var content1 = $(this).children(".page_title").html();
+            var new_content1 = content1.replace(new RegExp(this_kw, 'gm'), '<span style="background-color: white; font-weight: bold">' + this_kw + "</span>");
+            if (new_content1==content1){
+                flag1=true;
+            }else{
+                $(this).children(".page_title").html(new_content1);
+            }
+            var content2 = $(this).children(".param").html();
+            var new_content2 = content2.replace(new RegExp(this_kw, 'gm'), '<span style="background-color: white; font-weight: bold">' + this_kw + "</span>");
+            if (new_content2==content2){
+                flag2=true;
+            }else{
+                $(this).children(".param").html(new_content2);
+            }
+            var content3 = $(this).children(".operation").html();
+            var new_content3 = content3.replace(new RegExp(this_kw, 'gm'), '<span style="background-color: white; font-weight: bold">' + this_kw + "</span>");
+            if (new_content3==content3){
+                flag3=true;
+            }else{
+                $(this).children(".operation").html(new_content3);
+            }
+            if(flag1&&flag2&&flag3){
+                $(this).remove();
+            }
+        });
+
+    }
+
+
+    function reset() {
+        window.location.href = "{:U('Views/LogStatistics/oper')}?s_date={$s_date}&e_date={$e_date}";
+    }
+
+
     function color_bg() {
         $('.operation').each(function () {
             var d = $(this).text();
@@ -85,6 +136,8 @@
                 $(this).css("background-color", "orange");
             } else if (d == 'search') {
                 $(this).css("background-color", "coral");
+            } else if (d == 'load') {
+                $(this).css("background-color", "purple");
             } else {
                 $(this).css("background-color", "brown");
             }

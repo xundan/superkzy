@@ -41,7 +41,8 @@ class SMSController extends RestController
                 for ($i=0;$i<count($send_list);$i++){
                     if ($send_list[$i]['user_id']==$row['publisher_rid']){
                         $send_list[$i]['amount']++;
-                        if($send_list[$i]['remark']!=$row['category']){
+                        // strpos 找得到返回位置（包括0），找不到返回false
+                        if((strpos($send_list[$i]['remark'], $row['category']))===false){
                             $send_list[$i]['remark'].='/'.$row['category'];
                         }
                         $exist = true;

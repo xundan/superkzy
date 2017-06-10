@@ -379,27 +379,28 @@ class WhereConditions
     private function search_method($queryString,$relation)
     {
         $tempStr = $this->arrange_input($queryString);
-        $tempStr = explode(" ", $tempStr);
+        $keywordArr = explode(" ", $tempStr);
         $query = array();
         array_push($query,'like');
-        foreach ($tempStr as &$item) {
+        // 为关键字数组$tempStr
+        foreach ($keywordArr as &$item) {
 //            $query[] = array('like', '%' . $item . '%');
             $item = "%".$item."%";
         }
-        array_push($query,$tempStr);
+        array_push($query,$keywordArr);
         array_push($query,$relation);
         return $query;
     }
 
     /**
-     * 查询输入框输入内容整理
+     * 查询输入框输入内容整理，把分隔符统一成空格
      * @param $str string       输入字符串
-     * @return mixed|string     拆分数组
+     * @return string  替换后的字符串
      */
     private function arrange_input($str)
     {
         $tempStr = trim($str);
-        $tempStr = preg_replace("/\\s{1,}/", " ", $tempStr);
+        $tempStr = preg_replace("/[\\s,，]{1,}/", " ", $tempStr);
         return $tempStr;
     }
 }
