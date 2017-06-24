@@ -10,10 +10,14 @@
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/city-picker.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/city-picker.data.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/city-picker.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/loading.js"></script>
 </head>
 <body>
 <!--导航标签-->
@@ -35,22 +39,19 @@
         <table class="table table-responsive" style="border: 0">
             <tr>
                 <td style="padding: 0">
-                    <div onclick="give_get_area_start()" style="background-color: white;color:black">
-                        <div class="input-group" style="height:34px;width: 100%">
-                                <span class="input-group-addon"
-                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                    <span class="pull-left">出发地址</span>
-                                </span>
-                            <span id="give_area_start_html" style="border: 0" class="form-control"></span>
-                            <input type="hidden" id="give_area_start" name="area_start">
-                            <input type="hidden" id="give_area_start_name" name="area_start_name">
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
-                                         style="width: 10px">
-                                </span>
-                        </div>
+                    <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                            <span class="pull-left">出发地址</span>
+                            </span>
+                            <span style=""><!-- container -->
+                                <input readonly type="text" data-toggle="city-picker" name="give_area_start"
+                                       id="give_area_start" style="width: 75%;;padding:6px 12px;" value=""
+                                       placeholder="点击选择出发地址">
+                            </span>
                     </div>
+                    <input type="hidden" name="area_start" id="give_area_start_id">
+                    <input type="hidden" name="area_start_name" id="give_area_start_name">
                 </td>
             </tr>
             <tr>
@@ -67,22 +68,20 @@
             </tr>
             <tr>
                 <td style="padding: 0">
-                    <div onclick="give_get_area_end()" style="background-color: white;color:black">
-                        <div class="input-group" style="height:34px;width: 100%">
-                                <span class="input-group-addon"
-                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                    <span class="pull-left">目的地址</span>
-                                </span>
-                            <span id="give_area_end_html" style="border: 0" class="form-control"></span>
-                            <input type="hidden" id="give_area_end" name="area_end">
-                            <input type="hidden" id="give_area_end_name" name="area_end_name">
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
-                                         style="width: 10px">
-                                </span>
-                        </div>
+
+                    <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                            <span class="pull-left">目的地址</span>
+                            </span>
+                            <span style=""><!-- container -->
+                                <input readonly type="text" data-toggle="city-picker" name="give_area_end"
+                                       id="give_area_end" style="width: 75%;;padding:6px 12px;" value=""
+                                       placeholder="点击选择目的地址">
+                            </span>
                     </div>
+                    <input type="hidden" name="area_end" id="give_area_end_id">
+                    <input type="hidden" name="area_end_name" id="give_area_end_name">
                 </td>
             </tr>
             <tr>
@@ -129,16 +128,15 @@
                     <a data-toggle="collapse" href="#collapse_give_car_type"
                        style="text-decoration: none;color:black">
                         <div class="input-group" style="height:34px;width: 100%">
-                                <span class="input-group-addon"
-                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                    <span class="pull-left">车辆类型</span>
-                                </span>
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">车辆类型</span>
+                            </span>
                             <span id="give_car_type_html" style="border: 0" class="form-control"></span>
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
-                                         style="width: 20px">
-                                </span>
+                            <span class="input-group-addon"
+                                  style="border-radius: 0;border:0;background-color: white;position: relative;">
+                                <span class="dropdown-arrow"></span>
+                            </span>
                         </div>
                     </a>
 
@@ -261,7 +259,8 @@
     </div>
 </div>
 <!--发布成功模态框-->
-<div class="modal fade" id="publish_success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="publish_success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" style="top:30%">
         <div class="modal-content">
             <div class="modal-header">
@@ -298,43 +297,41 @@
         $(this).parent('label').toggleClass('myactive');
         var temp_html = $(this).parent('label').parent('div').parent('td').children('a').children('div').children('span').eq(1);
         temp_html.html(check_val);
-        if(!$(this).parent('label').hasClass('myactive')){
+        if (!$(this).parent('label').hasClass('myactive')) {
             console.log('cancel_check');
-            $(this).attr('checked',false);
+            $(this).attr('checked', false);
             temp_html.html('');
         }
     });
 </script>
+<!--折叠下拉箭头变换效果-->
+<script>
+    $("[data-toggle='collapse']").on('click', function () {
+//        console.log($(this).find('.dropdown-arrow').get(0));
+        $(this).find('.dropdown-arrow').toggleClass('dropdown-arrow-open');
+    });
+</script>
 <!--载入订单信息-->
 <script>
-    $(function(){
+    $(function () {
         console.log(cookie('car_give_modify'));
         if (cookie('car_give_modify')) {
             var car_give_modify = JSON.parse(cookie('car_give_modify'));
             jQuery.each(car_give_modify, function (k, val) {
                 if (val.name == 'area_start') { //出发地址
-//                        val.value = cookie('area_start');
-//                        $('#give_area_start_html').html(val.value);
-////                        $('#give_area_start').val(val.value);
-//                        $('#give_area_start').val(cookie('area_start_id'));
-                    $('#give_area_start').val(val.value);
+                    $('#give_area_start_id').val(val.value);
                 }
                 else if (val.name == 'area_start_name') { //出发地址名
-//                        $('#give_area_start_name').val(cookie('area_start'));
                     $('#give_area_start_name').val(val.value);
-                    $('#give_area_start_html').html(val.value);
+                    //TODO(only show name and have not init the citypicker correctly)
+                    $('#give_area_start').next().html('<span class="placeholder" style="padding: 12px; display: none;">点击选择产地</span><span class="title" style="display: inline;"><span>' + val.value + '</span></span><div class="arrow"></div>');
                 }
                 else if (val.name == 'area_end') {  //目的地址
-//                        val.value = cookie('area_end');
-//                        $('#give_area_end_html').html(val.value);
-////                        $('#give_area_end').val(val.value);
-//                        $('#give_area_end').val(cookie('area_end_id'));
-                    $('#give_area_end').val(val.value);
+                    $('#give_area_end_id').val(val.value);
                 }
                 else if (val.name == 'area_end_name') { //目的地址名
-//                        $('#give_area_end_name').val(cookie('area_end'));
                     $('#give_area_end_name').val(val.value);
-                    $('#give_area_end_html').html(val.value);
+                    $('#give_area_end').next().html('<span class="placeholder" style="padding: 12px; display: none;">点击选择产地</span><span class="title" style="display: inline;"><span>' + val.value + '</span></span><div class="arrow"></div>');
                 }
                 else if (val.name == 'car_type') {  //车辆类型
                     var car_type = $(":radio[name=car_type][value='" + val.value + "']");
@@ -363,8 +360,8 @@
         cookie('car_give_modify', JSON.stringify($('#form_give').serializeArray()));
 
         //告诉area_search 要改的来源
-        var temp = {name:'car_give_modify',value:cookie('car_give_modify')};
-        cookie('source',JSON.stringify(temp));
+        var temp = {name: 'car_give_modify', value: cookie('car_give_modify')};
+        cookie('source', JSON.stringify(temp));
 
         //地址跳转
         window.location.href = goto_url;
@@ -379,8 +376,8 @@
         cookie('car_give_modify', JSON.stringify($('#form_give').serializeArray()));
 
         //告诉area_search 要改的来源
-        var temp = {name:'car_give_modify',value:cookie('car_give_modify')};
-        cookie('source',JSON.stringify(temp));
+        var temp = {name: 'car_give_modify', value: cookie('car_give_modify')};
+        cookie('source', JSON.stringify(temp));
 
         //地址跳转
         window.location.href = goto_url;
@@ -400,11 +397,17 @@
     });
     function give_sub() {
         var short_allocate = $('input[name=short_allocate]:checked').val();
-        console.log(short_allocate);
-        //获取表单数据
-        var car_give_modify = JSON.stringify($('#form_give').serializeArray());
-//        //表单数据存入cookie便于加载时显示
-        cookie('car_give_modify', car_give_modify);
+        ck_log("submit", "车源-发布-修改");
+        //填充地址
+        var input_start = $('#give_area_start');
+        var input_end = $('#give_area_end');
+        //发收地id
+        if (input_start.data('citypicker').getCode()) {
+            $('#give_area_start_id').val(input_start.data('citypicker').getCode());
+        }
+        if (input_end.data('citypicker').getCode()) {
+            $('#give_area_end_id').val(input_end.data('citypicker').getCode());
+        }
         //联系电话验证
         var phone = $('#give_phone_number').val().trim();
         if (!phone) {
@@ -415,8 +418,8 @@
             return;
         }
         //判断content有无输入，content和煤炭信息不能同时为空
-        var area_start = $('#give_area_start').val().trim();
-        var area_end = $('#give_area_end').val().trim();
+        var area_start = input_start.val().trim();
+        var area_end = input_end.val().trim();
         var content = $('#give_content').val().trim();
         if (!content && !area_start && !area_end) {
             $('#give_content_alert').html('详细描述与地址信息不能同时为空');

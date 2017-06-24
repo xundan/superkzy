@@ -15,49 +15,88 @@ use Views\Model\MessageModel;
 class DisplayMessagesController extends Controller
 {
 
-    public function showDemo($id)
+    public function showDemo($id, $group = null)
     {
 
 //        dump($_SESSION['cur_user']);
         if (true) {
 //        if ($_SESSION['cur_user']) {
             // 有where包装的时候不要直接find($id)，否则where会失效
-            $data = D('Message')->where("invalid_id=0 AND type in ('plain','group','wx_mp') AND status=0 AND id=%d", $id)->find();
-            $this->assign("data", $data);
-            $this->assign("id", $id);
-            $cur_user = $_SESSION['cur_user'];
-            $username = $cur_user['name'];
-            $this->assign('username', $username);
-            $id_minus = $this->find_prev($id);
-            $id_plus = $this->find_next($id);
-            $uncheck_count = $this->uncheckCount($id);
-            $this->assign('uncheck_count',$uncheck_count);
+            if ($group == 'off') {
+                $data = D('Message')->where("invalid_id=0 AND type in ('plain','wx_mp') AND status=0 AND id=%d", $id)->find();
+                $this->assign("data", $data);
+                $this->assign("id", $id);
+                $this->assign("group", 'off');
+                $cur_user = $_SESSION['cur_user'];
+                $username = $cur_user['name'];
+                $this->assign('username', $username);
+                $id_minus = $this->find_prev($id, $group);
+                $id_plus = $this->find_next($id, $group);
+                //审核进度
+                $uncheck_count = $this->uncheckCount($id);
+                $this->assign('uncheck_count', $uncheck_count);
+                //$group_count = $this->uncheckGroupCount();
+                //$this->assign('group_count',$group_count);
 
-            if (!$data) {
-                echo "<h4>没有更多数据了。</h4>";
-            }
+                if (!$data) {
+                    echo "<h4>没有更多数据了。</h4>";
+                }
 
-            if ($id_minus == -1) {
-                echo "<h4>已经是第一条了。</h4>";
-                $id_minus = $id;
-            }
-            if ($id_plus == -1) {
-                echo "<h4>已经是最后一条了。</h4>";
-                $id_plus = $id;
-            }
-            $url_prev = U('Views/DisplayMessages/showDemo') . "?id=$id_minus";
-            $url_next = U('Views/DisplayMessages/showDemo') . "?id=$id_plus";
+                if ($id_minus == -1) {
+                    echo "<h4>已经是第一条了。</h4>";
+                    $id_minus = $id;
+                }
+                if ($id_plus == -1) {
+                    echo "<h4>已经是最后一条了。</h4>";
+                    $id_plus = $id;
+                }
+                $url_prev = U('Views/DisplayMessages/showDemo') . "?id=$id_minus" . "&group=off";
+                $url_next = U('Views/DisplayMessages/showDemo') . "?id=$id_plus" . "&group=off";
 //        $url_delete = U('Views/DisplayMessages/delete')."?id=$id";
-            $this->assign("prev", $url_prev);
-            $this->assign("next", $url_next);
-            $this->display();
+                $this->assign("prev", $url_prev);
+                $this->assign("next", $url_next);
+                $this->display();
+            } else {
+                $data = D('Message')->where("invalid_id=0 AND type in ('plain','group','wx_mp') AND status=0 AND id=%d", $id)->find();
+                $this->assign("data", $data);
+                $this->assign("id", $id);
+                $cur_user = $_SESSION['cur_user'];
+                $username = $cur_user['name'];
+                $this->assign('username', $username);
+                $id_minus = $this->find_prev($id);
+                $id_plus = $this->find_next($id);
+                //审核进度
+                $uncheck_count = $this->uncheckCount($id);
+                $this->assign('uncheck_count', $uncheck_count);
+                //$group_count = $this->uncheckGroupCount();
+                //$this->assign('group_count',$group_count);
+
+                if (!$data) {
+                    echo "<h4>没有更多数据了。</h4>";
+                }
+
+                if ($id_minus == -1) {
+                    echo "<h4>已经是第一条了。</h4>";
+                    $id_minus = $id;
+                }
+                if ($id_plus == -1) {
+                    echo "<h4>已经是最后一条了。</h4>";
+                    $id_plus = $id;
+                }
+                $url_prev = U('Views/DisplayMessages/showDemo') . "?id=$id_minus";
+                $url_next = U('Views/DisplayMessages/showDemo') . "?id=$id_plus";
+//        $url_delete = U('Views/DisplayMessages/delete')."?id=$id";
+                $this->assign("prev", $url_prev);
+                $this->assign("next", $url_next);
+                $this->display();
+            }
         } else {
             header("Content-Type:text/html; charset=utf-8");//解决乱码
             $this->redirect('StaffsLogin/Login', '', 3, "您并没有登录，正在返回登录");
         }
     }
 
-    public function check($id)
+    public function check($id,$group)
     {
         $tags = I('post.tag');
         $content = I('post.content');
@@ -67,10 +106,10 @@ class DisplayMessagesController extends Controller
         $main_tag = $this->is_check_valid($tags);
 
         // 删掉内容里的标签
-        try{
-            $content = preg_replace("/<span.*?span>|<b.*?>/"," ",$content);
-            $content = preg_replace("/&lt;span.*?span&gt;|&lt;b.*?&gt;/"," ",$content);
-        }catch (Exception $e){
+        try {
+            $content = preg_replace("/<span.*?span>|<b.*?>/", " ", $content);
+            $content = preg_replace("/&lt;span.*?span&gt;|&lt;b.*?&gt;/", " ", $content);
+        } catch (Exception $e) {
             // todo sth here
         }
 
@@ -83,7 +122,8 @@ class DisplayMessagesController extends Controller
             $this->update_message($id, $main_tag, $content);
 
 //            $this->success('提交成功', 'showDemo?id=' . $this->find_next($id));
-            $this->redirect('DisplayMessages/showDemo', array('id' => $this->find_next($id)), 0, "");
+            $this->redirect('DisplayMessages/showDemo', array('id' => $this->find_next($id,$group),'group'=>$group), 0, "");
+//            redirect(U('DisplayMessages/showDemo','id='.$this->find_next($id,$group).'&group='.$group), 0, "");
         } else {
             $this->error('五个主要类型（求购，供应，找车，车源，其他）至少选一个。', 'showDemo?id=' . $id);
         }
@@ -136,37 +176,77 @@ class DisplayMessagesController extends Controller
         if ($Msg->del_all_group_msg()) echo 'deleted';
     }
 
-    public function find_prev($id)
+    public function find_prev($id, $group = null)
     {
-        if ($id < 1) return -1;
-        $prev = D('Message')->where("invalid_id=0 AND type in ('plain','group','wx_mp') AND status=0 AND id<" . $id)
-            ->order('id desc')->find();
-        if ($prev) {
-            return $prev['id'];
+        if ($group == 'off') {
+            if ($id < 1) return -1;
+            $prev = D('Message')->where("invalid_id=0 AND type in ('plain','wx_mp') AND status=0 AND id<" . $id)
+                ->order('id desc')->find();
+            if ($prev) {
+                return $prev['id'];
+            } else {
+                return -1;
+            }
         } else {
-            return -1;
+            if ($id < 1) return -1;
+            $prev = D('Message')->where("invalid_id=0 AND type in ('plain','group','wx_mp') AND status=0 AND id<" . $id)
+                ->order('id desc')->find();
+            if ($prev) {
+                return $prev['id'];
+            } else {
+                return -1;
+            }
         }
     }
 
-    public function find_next($id)
+    public function find_next($id, $group = null)
     {
-        $next = D('Message')->where("invalid_id=0 AND type in ('plain','group','wx_mp') AND status=0 AND id>" . $id)
-            ->order('id asc')->find();
-        if ($next) {
-            return $next['id'];
+        if ($group == 'off') {
+            $next = D('Message')->where("invalid_id=0 AND type in ('plain','wx_mp') AND status=0 AND id>" . $id)
+                ->order('id asc')->find();
+            if ($next) {
+                return $next['id'];
+            } else {
+                return -1;
+            }
         } else {
-            return -1;
+            $next = D('Message')->where("invalid_id=0 AND type in ('plain','group','wx_mp') AND status=0 AND id>" . $id)
+                ->order('id asc')->find();
+            if ($next) {
+                return $next['id'];
+            } else {
+                return -1;
+            }
         }
     }
 
-    public function uncheckCount($id){
+    /**
+     *获取未审核信息条数
+     */
+    public function uncheckCount($id)
+    {
         $result = D('Message')->where("invalid_id=0 AND type in ('plain','group','wx_mp') AND status=0 AND id>" . $id)
             ->select();
-        if($result){
+        if ($result) {
             return count($result);
-        }else{
+        } else {
             return 0;
         }
+    }
+
+    /**
+     * 获取未审核群信息条数和今日已审核信息条数
+     */
+    public function uncheckGroupCount()
+    {
+        $resultGroupAll = D('Message')->where("invalid_id=0 AND type ='group' AND status=0")
+            ->select();
+        $resultGroupChecked = D('Message')->where("invalid_id=0 AND type ='group' AND status=102 AND update_time>substr(CURRENT_DATE ,1,10)")
+            ->select();
+        $result['group_all'] = count($resultGroupAll);
+        $result['group_checked'] = count($resultGroupChecked);
+//        $result['group_checked'] = M()->getLastSql();
+        return $result;
     }
 
     /**
@@ -285,7 +365,8 @@ class DisplayMessagesController extends Controller
         return $valid_check;
     }
 
-    public function freightSubmit(){
+    public function freightSubmit()
+    {
         $subInfo = I('post.', '', 'strip_tags,trim');
 
         $data['message_id'] = $subInfo['message_id'];
@@ -296,20 +377,20 @@ class DisplayMessagesController extends Controller
         $data['area_end_name'] = $subInfo['area_end_name'];
         $data['freight_price'] = $subInfo['freight_price'];
         $data['invalid_id'] = 0;
-        if($subInfo['area_start_id']){
-            $result = M('ck_districts')->where("id=%d",array($subInfo['area_start_id']))->find();
+        if ($subInfo['area_start_id']) {
+            $result = M('ck_districts')->where("id=%d", array($subInfo['area_start_id']))->find();
             $data['area_start_name'] = $result['name'];
         }
-        if($subInfo['area_end_id']){
-            $result = M('ck_districts')->where("id=%d",array($subInfo['area_end_id']))->find();
+        if ($subInfo['area_end_id']) {
+            $result = M('ck_districts')->where("id=%d", array($subInfo['area_end_id']))->find();
             $data['area_end_name'] = $result['name'];
         }
         $result = M('ck_freight')->add($data);
-        if($result){
+        if ($result) {
             $returnArr['status'] = 1;
             $returnArr['msg'] = "发布成功";
             echo json_encode($returnArr);
-        }else{
+        } else {
         }
     }
 

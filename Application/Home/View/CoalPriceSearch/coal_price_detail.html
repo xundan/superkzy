@@ -42,7 +42,7 @@
                     <tr>
                         <th class="text-center" style="border-bottom: 1px solid #ddd;width: 5em">类别</th>
                         <th class="text-center" style="border-bottom: 1px solid #ddd;width: 5em">价格</th>
-                        <th class="text-center" style="border-bottom: 1px solid #ddd;width: 5em">含税价</th>
+                        <!--<th class="text-center" style="border-bottom: 1px solid #ddd;width: 5em">含税</th>-->
                         <volist name="data['content'][0]['detailed_index']" id="val">
                             <empty name="val.index_name">
                                 <else/>
@@ -62,13 +62,13 @@
                                 <td class="text-center" style="border: none;">
                                     {$vo.price}
                                 </td>
-                                <td class="text-center" style="border: none;">
-                                    <empty name="vo.tax">
-                                        &mdash;
-                                        <else/>
-                                        {$vo.tax}
-                                    </empty>
-                                </td>
+                                <!--<td class="text-center" style="border: none;">-->
+                                    <!--<empty name="vo.tax">-->
+                                        <!--&mdash;-->
+                                        <!--<else/>-->
+                                        <!--{$vo.tax}-->
+                                    <!--</empty>-->
+                                <!--</td>-->
                                 <volist name="vo['detailed_index']" id="val">
                                     <empty name="val.index_name">
                                         <else/>

@@ -15,6 +15,7 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/loading.js"></script>
 </head>
 <style>
     .table-striped > tbody > tr:nth-of-type(odd) {
@@ -101,7 +102,7 @@
                                     </th>
                                 </empty>
                                 <th class="text-center" style="border: none;">价格</th>
-                                <th class="text-center" style="border: none;">含税价</th>
+                                <!--<th class="text-center" style="border: none;">含税</th>-->
                             </tr>
                             </thead>
                             <tbody>
@@ -119,17 +120,21 @@
                                         <td class="text-center" style="border: none;">
                                             <if condition="$vo.price eq -1">
                                                 无货
+                                                <elseif condition="$vo.price eq -2"/>
+                                                停产
+                                                <elseif condition="$vo.price eq '0'"/>
+                                                &mdash;
                                                 <else/>
                                                 {$vo.price}
                                             </if>
                                         </td>
-                                        <td class="text-center" style="border: none;">
-                                            <empty name="vo.tax">
-                                                &mdash;
-                                                <else/>
-                                                {$vo.tax}
-                                            </empty>
-                                        </td>
+                                        <!--<td class="text-center" style="border: none;">-->
+                                        <!--<empty name="vo.tax">-->
+                                        <!--&mdash;-->
+                                        <!--<else/>-->
+                                        <!--{$vo.tax}-->
+                                        <!--</empty>-->
+                                        <!--</td>-->
                                     </notempty>
                                 </tr>
                             </volist>
@@ -190,7 +195,7 @@
                                     </th>
                                 </empty>
                                 <th class="text-center" style="border: none;">价格</th>
-                                <th class="text-center" style="border: none;">含税价</th>
+                                <!--<th class="text-center" style="border: none;">含税</th>-->
                             </tr>
                             </thead>
                             <tbody>
@@ -206,15 +211,23 @@
                                             </empty>
                                         </td>
                                         <td class="text-center" style="border: none;">
-                                            {$vo.price}
-                                        </td>
-                                        <td class="text-center" style="border: none;">
-                                            <empty name="vo.tax">
+                                            <if condition="$vo.price eq -1">
+                                                无货
+                                                <elseif condition="$vo.price eq -2"/>
+                                                停产
+                                                <elseif condition="$vo.price eq '0'"/>
                                                 &mdash;
                                                 <else/>
-                                                {$vo.tax}
-                                            </empty>
+                                                {$vo.price}
+                                            </if>
                                         </td>
+                                        <!--<td class="text-center" style="border: none;">-->
+                                        <!--<empty name="vo.tax">-->
+                                        <!--&mdash;-->
+                                        <!--<else/>-->
+                                        <!--{$vo.tax}-->
+                                        <!--</empty>-->
+                                        <!--</td>-->
                                     </notempty>
                                 </tr>
                             </volist>
@@ -266,7 +279,7 @@
                 <th class="text-center" style="border: none;">类别</th>
                 <th class="text-center" style="border: none;">{$data['content'][0]['detailed_index'][0].index_name}</th>
                 <th class="text-center" style="border: none;">价格</th>
-                <th class="text-center" style="border: none;">含税价</th>
+                <!--<th class="text-center" style="border: none;">含税</th>-->
             </tr>
             </thead>
             <tbody>
@@ -282,7 +295,7 @@
                             </empty>
                         </td>
                         <td class="text-center" style="border: none;">{$vo.price}</td>
-                        <td class="text-center" style="border: none;">{$vo.tax}</td>
+                        <!--<td class="text-center" style="border: none;">{$vo.tax}</td>-->
                     </notempty>
                 </tr>
             </volist>
@@ -325,7 +338,10 @@
         console.log(JSON.stringify($('#tag_search').serializeArray()));
         if ($('input[name=select_category]').val() == 'search') {
             //信息查询
+            console.log('search');
             $('#myTab a:eq(0)').removeClass('weui_bar_item_on').siblings('a').addClass('weui_bar_item_on weui_bar_item_on_extra').tab('show');
+            $('#all').removeClass('active');
+            $('#search').addClass('active');
             if ($('input[name=refinery_name]').val()) {
                 $('#refinery_name_html').html($('input[name=refinery_name]').val());
             } else {
@@ -453,17 +469,26 @@
                                 return false;
                             }
                         });
-                        if (value.tax && (value.tax != '0')) {
-                            //含税价有值则显示
+                        if (value.price == '-1') {
+                            value.price = '无货';
+                        } else if (value.price == '-2') {
+                            value.price = '停产';
+                        } else if (value.price == '0') {
+                            value.price = '&mdash;'
                         } else {
-                            //含税价无值显示-
-                            value.tax = '&mdash;'
                         }
+//                        if (value.tax && (value.tax != '0')) {
+//                            //含税价有值则显示
+//                        } else {
+//                            //含税价无值显示-
+//                            value.tax = '&mdash;'
+//                        }
                         //拼装类别行
                         temp_string += "<tr><td class='text-center' style='border: none;'>" +
                                 value.kind_name + "</td><td class='text-center' style='border: none;'>" + temp_value +
                                 "</td><td class='text-center' style='border: none;'>" + value.price + "</td>" +
-                                "<td class='text-center' style='border: none;'>" + value.tax + "</td></tr>";
+//                                "<td class='text-center' style='border: none;'>" + value.tax + "</td>" +
+                                "</tr>";
                     });
                     tempObj.find('tbody').html(temp_string);
                     if (select_category == 'all') {
@@ -552,17 +577,26 @@
                                     return false;
                                 }
                             });
-                            if (value.tax && (value.tax != '0')) {
-                                //含税价有值则显示
+                            if (value.price == '-1') {
+                                value.price = '无货';
+                            } else if (value.price == '-2') {
+                                value.price = '停产';
+                            } else if (value.price == '0') {
+                                value.price = '&mdash;'
                             } else {
-                                //含税价无值显示-
-                                value.tax = '&mdash;'
                             }
+//                            if (value.tax && (value.tax != '0')) {
+//                                //含税价有值则显示
+//                            } else {
+//                                //含税价无值显示-
+//                                value.tax = '&mdash;'
+//                            }
                             //拼装类别行
                             temp_string += "<tr><td class='text-center' style='border: none;'>" +
                                     value.kind_name + "</td><td class='text-center' style='border: none;'>" + temp_value +
                                     "</td><td class='text-center' style='border: none;'>" + value.price + "</td>" +
-                                    "<td class='text-center' style='border: none;'>" + value.tax + "</td></tr>";
+//                                    "<td class='text-center' style='border: none;'>" + value.tax + "</td>" +
+                                    "</tr>";
                         });
                         tempObj.find('tbody').html(temp_string);
                         if (select_category == 'all') {
@@ -869,5 +903,10 @@
             }
         });
     });
+</script>
+<script>
+    window.onload = function () {
+        $('#loadingToast').hide();
+    }
 </script>
 </html>

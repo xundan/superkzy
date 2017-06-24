@@ -282,12 +282,13 @@ class WxAccessController extends Controller
             "button" =>
                 array(
                     array(
-                        'name' => '会员中心',
+                        'name' => '会员/加群',
                         'sub_button' => array(
                             array('type' => 'view', 'name' => '会员注册', 'url' => 'http://www.kuaimei56.com/index.php/Home/Login/register'),
-                            array('type' => 'view', 'name' => '优惠加油', 'url' => 'https://u.wcar.net.cn/1dN'),
+                            array('type' => 'view', 'name' => '加煤炭群', 'url' => 'http://mp.weixin.qq.com/s/YKhMHB5yyK4WhzXn2sJzjg'),
+                            array('type' => 'view', 'name' => '车主福利', 'url' => 'http://www.kuaimei56.com/index.php/Home/CooperatePage/WeChe'),
                             array('type' => 'view', 'name' => '超矿金融', 'url' => 'http://www.kuaimei56.com/index.php/Views/FinancialClient/show'),
-                            array('type' => 'view', 'name' => '送出行险', 'url' => 'https://u.wcar.net.cn/1es'),
+//                            array('type' => 'view', 'name' => '送出行险', 'url' => 'https://u.wcar.net.cn/1es'),
                         ),
                     ),
                     array(

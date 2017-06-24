@@ -7,28 +7,31 @@
  */
 
 namespace Home\Controller;
+
 use Think\Controller;
 use Home\Common\CardList\WhereConditions;
 use Home\Model\MessagesModel;
+
 header("Content-type: text/html; charset=utf-8");
 
 class AreaSearchController extends Controller
 {
-    public function area_search(){
+    public function area_search()
+    {
         //最近常用地区 从cookie中读取
         $last_area_temp = cookie('last_area');
         $last_area_temp_php = json_decode($last_area_temp);
-        foreach($last_area_temp_php as $item){
+        foreach ($last_area_temp_php as $item) {
             $item->name = urldecode($item->name);
         }
         //保证cookie长度为10
-        if(count($last_area_temp_php) > 10){
-            $last_area_temp_php = array_slice($last_area_temp_php,-10);
+        if (count($last_area_temp_php) > 10) {
+            $last_area_temp_php = array_slice($last_area_temp_php, -10);
         }
 //        倒序排列输出
 //        krsort($lastarea_temp_php,false);  //保留key
         $last_area = array_reverse($last_area_temp_php);
-        $this->assign('last_area',$last_area);
+        $this->assign('last_area', $last_area);
 
         //热点地区 is_hot字段更新
 
@@ -36,11 +39,11 @@ class AreaSearchController extends Controller
         //热点地区 is_hot字段判断
         $where_hot['is_hot'] = 1;
 //        $where_hot['lever_type'] = array('gt',1);
-        $where_hot['lever_type'] = array('eq',2);
+        $where_hot['lever_type'] = array('eq', 2);
         $result_hot = M('districts')->where($where_hot)->select();
 
         //所有地区列表 默认A开始 每个字母开头assign一下
-        if(I('post.signal') == 1) {
+        if (I('post.signal') == 1) {
 //        $where['level_type'] = array('gt',1);   //二级地区
             $where['level_type'] = array('eq', 2);   //二级地区
             if (empty(S('resultsA'))) {
@@ -225,10 +228,11 @@ class AreaSearchController extends Controller
             } else {
                 $resultZ = S('resultZ');
             }
-            echo json_encode(array('A'=>$resultA,'B'=>$resultB,'C'=>$resultC,'D'=>$resultD,'E'=>$resultE,'F'=>$resultF,'G'=>$resultG,
-                'H'=>$resultH,'I'=>$resultI,'J'=>$resultJ,'K'=>$resultK,'L'=>$resultL,'M'=>$resultM,'N'=>$resultN,'O'=>$resultO,
-                'P'=>$resultP,'Q'=>$resultQ,'R'=>$resultR,'S'=>$resultS,'T'=>$resultT,'U'=>$resultU,'V'=>$resultV,'W'=>$resultW,
-                'X'=>$resultX,'Y'=>$resultY,'Z'=>$resultZ,));exit;
+            echo json_encode(array('A' => $resultA, 'B' => $resultB, 'C' => $resultC, 'D' => $resultD, 'E' => $resultE, 'F' => $resultF, 'G' => $resultG,
+                'H' => $resultH, 'I' => $resultI, 'J' => $resultJ, 'K' => $resultK, 'L' => $resultL, 'M' => $resultM, 'N' => $resultN, 'O' => $resultO,
+                'P' => $resultP, 'Q' => $resultQ, 'R' => $resultR, 'S' => $resultS, 'T' => $resultT, 'U' => $resultU, 'V' => $resultV, 'W' => $resultW,
+                'X' => $resultX, 'Y' => $resultY, 'Z' => $resultZ,));
+            exit;
 //            $this->assign('resultA', $resultA);
 //            $this->assign('resultB', $resultB);
 //            $this->assign('resultC', $resultC);
@@ -255,7 +259,7 @@ class AreaSearchController extends Controller
 //            $this->assign('resultX', $resultX);
 //            $this->assign('resultY', $resultY);
 //            $this->assign('resultZ', $resultZ);
-        }else{
+        } else {
 
         }
         $this->display();
@@ -264,9 +268,9 @@ class AreaSearchController extends Controller
     public function ajax_area_search($querystr)
     {
         $querystring = $this->arrange_input($querystr);
-        $where['level_type'] = array('gt',1);
+        $where['level_type'] = array('gt', 1);
 //        $where['level_type'] = array('eq',2);
-        if(preg_match('/^[a-zA-Z\s]+$/',$querystr)){
+        if (preg_match('/^[a-zA-Z\s]+$/', $querystr)) {
 //            echo '全部为英文或者字母！';
 //            $where['_string'] = '(pinyin_i like "%'.$querystring.'%") OR (pinyin like "%'.$querystring.'%")';
 //            $where['pinyin_i'] = $querystr;
@@ -277,14 +281,16 @@ class AreaSearchController extends Controller
 //            $where['name'] = array('notlike','%区');
             $result = M('districts')->where($where)->limit(5)->select();
             count($result);
-            echo json_encode($result);exit;
-        }else{
+            echo json_encode($result);
+            exit;
+        } else {
 //            echo "有中文，或者数字，特殊符号存在！";
 //            $where['merger_name'] = array('like','%'.$querystring.'%');
 //            $where['name'] = array(array('like','%'.$querystring.'%'),array('notlike','%区'),'and');
-            $where['name'] =array('like','%'.$querystring.'%');
+            $where['name'] = array('like', '%' . $querystring . '%');
             $result = M('districts')->where($where)->limit(5)->select();
-            echo json_encode($result);exit;
+            echo json_encode($result);
+            exit;
         }
     }
 
@@ -298,6 +304,89 @@ class AreaSearchController extends Controller
         $tempStr = trim($str);
         $tempStr = preg_replace("/\\s{1,}/", " ", $tempStr);
         return $tempStr;
+    }
+
+    public function getLastArea()
+    {
+        $user = session('user_info');
+        $where['uid'] = $user['uid'];
+        $result = D('user_action')->where($where)->find();
+        if ($result) {
+            echo $result['last_area'];
+        } else {
+            echo 'none';
+        }
+    }
+
+    public function setLastArea()
+    {
+//        echo $_POST['lastArea'];
+//        exit;
+//        dump(session('user_info'));
+//        exit;
+//        $a = '重庆市/两江新区/北部新区,山西省/太原市/阳曲县,陕西省/榆林市/神木县/瓷窑塔煤矿';
+//        $a = '1';
+//        dump(empty($a));
+//        $b = explode(',',$a);
+//        dump($b);
+//        array_unshift($b,'2','3','2','4');
+//        $d = array_slice($b,0,2);
+//        dump($b);
+//        dump($d);
+//        $aa = array_unique($b);
+//        dump($aa);
+//        dump(count($b));
+//        $c = implode(',',$b);
+//        dump($c);
+////
+//        exit;
+//        $_POST['lastArea'] = 2;
+        $user = session('user_info');
+        $where['uid'] = $user['uid'];
+        $userAction = D('user_action')->where($where)->find();
+        if($userAction){
+            $lastArea = $userAction['last_area'];
+            $data = array();
+            if(empty($lastArea)){
+                $data['last_area'] = $_POST['lastArea'];
+            }else{
+                $lastAreaArr = explode(',',$lastArea);
+                array_unshift($lastAreaArr,$_POST['lastArea']);
+                $lastAreaArr = array_unique($lastAreaArr);
+                $lastAreaArr = array_slice($lastAreaArr,0,4);
+                $data['last_area'] = implode(',',$lastAreaArr);
+            }
+            $result = D('user_action')->where($where)->save($data);
+            if ($result) {
+                echo 1;
+            } else {
+                echo 2;
+            }
+        }else{
+            $data = array();
+            $data['uid'] = $user['uid'];
+            $data['last_area'] = $_POST['lastArea'];
+            $result = D('user_action')->add($data);
+            if ($result) {
+                echo 1;
+            } else {
+                echo 2;
+            }
+        }
+
+    }
+
+    public function test(){
+        $lastArea ='河南省,宁夏,内蒙古,江苏省';
+        $lastAreaArr = explode(',',$lastArea);
+        array_unshift($lastAreaArr,'内蒙古');
+        dump($lastAreaArr);
+        $lastAreaArr = array_unique($lastAreaArr);
+        dump($lastAreaArr);
+        $lastAreaArr = array_slice($lastAreaArr,0,4);
+        dump($lastAreaArr);
+        $data['last_area'] = implode(',',$lastAreaArr);
+        dump($data['last_area']);
     }
 
 }

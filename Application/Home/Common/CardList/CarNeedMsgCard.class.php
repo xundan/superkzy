@@ -46,7 +46,7 @@ class CarNeedMsgCard extends MsgCard
         </div>
     </a>
     <div class=\"weui_media_bd\">
-            <h4 class=\"weui_media_title highlight\"><span onclick='window.location.href=\"{$personal_page}\"'>{$message['user']['user_name']}</span></h4>
+            <h4 class=\"weui_media_title\"><span class='highlight' onclick='window.location.href=\"{$personal_page}\"'>{$message['user']['user_name']}</span></h4>
     ".$areastring."</div>
     <div class=\"weui_media_bd\" style=\"\">
         <a href=\"tel:{$message['phone_number']}\" onclick=\"ck_log('dial', {$message['phone_number']})\" class=\"\" style='text-decoration: none;color: black'>
@@ -80,7 +80,7 @@ class CarNeedMsgCard extends MsgCard
         </div>
     </a>
     <div class=\"weui_media_bd\">
-            <h4 class=\"weui_media_title highlight\"><span onclick='window.location.href=\"{$personal_page}\"'>{$message['user']['user_name']}</span></h4>
+            <h4 class=\"weui_media_title\"><span class='highlight' onclick='window.location.href=\"{$personal_page}\"'>{$message['user']['user_name']}</span></h4>
         ".$areastring."</div>
     <div class=\"weui_media_bd\" style=\"\">
         <a href=\"tel:{$message['phone_number']}\" onclick=\"ck_log('dial', {$message['phone_number']})\" class=\"\" style='text-decoration: none;color: black'>

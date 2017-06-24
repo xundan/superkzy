@@ -65,8 +65,11 @@ class PersonalCenterController extends ComController
                 }
                 // 如果有地理信息，载入之
                 if ($user_owner['district_id']) {
-                    $user_district = M('Districts')->where(array("id" => $user_owner['district_id']))->find();
-                    $this->assign('user_district', $user_district['name']);
+//                    $user_district = M('Districts')->where(array("id" => $user_owner['district_id']))->find();
+                    $this->assign('user_district_id', $user_owner['district_id']);
+                }
+                if ($user_owner['district_name']) {
+                    $this->assign('user_district_name', $user_owner['district_name']);
                 }
                 // 如果id是本人id，进入设置页面，否则进入展示页面
                 if ($uid == session('user_info')['uid']) {
@@ -106,7 +109,9 @@ class PersonalCenterController extends ComController
         $user['birthday'] = $subInfo['birthday'];
         $company['name'] = $subInfo['supply_company'];
         $user['company_id'] = $this->save_company($company);
-        $user['district_id'] = $this->get_area_id($subInfo['reside_area']);
+//        $user['district_id'] = $this->get_area_id($subInfo['reside_area']);
+        $user['district_id'] = $subInfo['reside_area_id'];
+        $user['district_name'] = $subInfo['reside_area_name'];
         $user['area_detail'] = $subInfo['area_detail'];
         $user['invite_id'] = $subInfo['invite_id'];
         //插入

@@ -10,10 +10,14 @@
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/city-picker.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/city-picker.data.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/city-picker.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/loading.js"></script>
 </head>
 <body>
 <!--导航标签-->
@@ -44,9 +48,8 @@
                                 </span>
                             <span id="buy_kind_html" style="border: 0" class="form-control"></span>
                                 <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
-                                         style="width: 20px">
+                                      style="border-radius: 0;border:0;background-color: white;position: relative;">
+                                    <span class="dropdown-arrow"></span>
                                 </span>
                         </div>
                     </a>
@@ -92,13 +95,12 @@
                         <div class="input-group" style="height:34px;width: 100%">
                                 <span class="input-group-addon"
                                       style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                    <span class="pull-left">品质</span>
+                                    <span class="pull-left">品质(多选)</span>
                                 </span>
                             <span id="buy_trait_html" style="border: 0" class="form-control"></span>
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
-                                         style="width: 20px">
+                                 <span class="input-group-addon"
+                                       style="border-radius: 0;border:0;background-color: white;position: relative;">
+                                    <span class="dropdown-arrow"></span>
                                 </span>
                         </div>
                     </a>
@@ -106,17 +108,26 @@
                     <div id="collapse_buy_coal_trait" class="collapse" role="tablist" aria-labelledby="">
                         <label class="mybtn mybtn-default"
                                style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
-                            <input type="radio" class="pull-left" style="display: none" name="trait" id="buy_trait1"
+                            <input type="checkbox" class="pull-left" style="display: none" name="trait[]"
+                                   id="buy_trait1"
                                    autocomplete="off" value="无烟煤"> 无烟煤
                         </label>
                         <label class="mybtn mybtn-default"
                                style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
-                            <input type="radio" class="pull-left" style="display: none" name="trait" id="buy_trait2"
+                            <input type="checkbox" class="pull-left" style="display: none" name="trait[]"
+                                   id="buy_trait2"
                                    autocomplete="off" value="水洗煤"> 水洗煤
                         </label>
                         <label class="mybtn mybtn-default"
                                style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
-                            <input type="radio" class="pull-left" style="display: none" name="trait" id="buy_trait3"
+                            <input type="checkbox" class="pull-left" style="display: none" name="trait[]"
+                                   id="buy_trait4"
+                                   autocomplete="off" value="过筛煤"> 过筛煤
+                        </label>
+                        <label class="mybtn mybtn-default"
+                               style="margin-left: 8%;width:22%;margin-top:5px;text-align: center">
+                            <input type="checkbox" class="pull-left" style="display: none" name="trait[]"
+                                   id="buy_trait3"
                                    autocomplete="off" value="普通煤"> 普通煤
                         </label>
                     </div>
@@ -133,9 +144,8 @@
                                 </span>
                             <span id="buy_granularity_html" style="border: 0" class="form-control"></span>
                                 <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
-                                         style="width: 20px">
+                                      style="border-radius: 0;border:0;background-color: white;position: relative;">
+                                    <span class="dropdown-arrow"></span>
                                 </span>
                         </div>
                     </a>
@@ -161,22 +171,19 @@
             </tr>
             <tr>
                 <td style="padding: 0">
-                    <div onclick="buy_get_area_start()" style="background-color: white;color:black">
-                        <div class="input-group" style="height:34px;width: 100%">
-                                <span class="input-group-addon"
-                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                    <span class="pull-left">产地</span>
-                                </span>
-                            <span id="buy_area_start_html" style="border: 0" class="form-control"></span>
-                            <input type="hidden" name="area_start" id="buy_area_start">
-                            <input type="hidden" name="area_start_name" id="buy_area_start_name">
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
-                                         style="width: 10px">
-                                </span>
-                        </div>
+                    <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                            <span class="pull-left">产地</span>
+                            </span>
+                            <span style=""><!-- container -->
+                                <input readonly type="text" data-toggle="city-picker" name="buy_area_start"
+                                       id="buy_area_start" style="width: 75%;;padding:6px 12px;" value=""
+                                       placeholder="点击选择产地">
+                            </span>
                     </div>
+                    <input type="hidden" name="area_start" id="buy_area_start_id">
+                    <input type="hidden" name="area_start_name" id="buy_area_start_name">
                 </td>
             </tr>
             <tr>
@@ -237,9 +244,8 @@
                                 </span>
                             <span id="buy_pay_type_html" style="border: 0" class="form-control"></span>
                                 <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
-                                         style="width: 20px">
+                                      style="border-radius: 0;border:0;background-color: white;position: relative;">
+                                    <span class="dropdown-arrow"></span>
                                 </span>
                         </div>
                     </a>
@@ -330,7 +336,8 @@
     </div>
 </div>
 <!--发布成功模态框-->
-<div class="modal fade" id="publish_success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="publish_success" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" style="top:30%">
         <div class="modal-content">
             <div class="modal-header">
@@ -367,16 +374,37 @@
         $(this).parent('label').toggleClass('myactive');
         var temp_html = $(this).parent('label').parent('div').parent('td').children('a').children('div').children('span').eq(1);
         temp_html.html(check_val);
-        if(!$(this).parent('label').hasClass('myactive')){
+        if (!$(this).parent('label').hasClass('myactive')) {
             console.log('cancel_check');
-            $(this).attr('checked',false);
+            $(this).attr('checked', false);
             temp_html.html('');
         }
+    });
+    $('input[type=checkbox]').click(function () {
+        var temp_html = $(this).parent('label').parent('div').parent('td').children('a').children('div').children('span').eq(1);
+        var temp_html_string = '';
+        var checked_checkbox = $(this).parent('label').parent('div').find("input[type=checkbox]:checked");
+        if ($(this).parent('label').hasClass('myactive')) {
+            console.log('cancel_check');
+            $(this).parent('label').removeClass('myactive');
+        } else {
+            $(this).parent('label').addClass('myactive');
+        }
+        $.each(checked_checkbox, function (k, val) {
+            temp_html_string += ' ' + $(val).val();
+        });
+        temp_html.html(temp_html_string);
+    });
+</script>
+<!--折叠下拉箭头变换效果-->
+<script>
+    $("[data-toggle='collapse']").on('click', function () {
+        $(this).find('.dropdown-arrow').toggleClass('dropdown-arrow-open');
     });
 </script>
 <!--载入订单信息-->
 <script>
-    $(function(){
+    $(function () {
         console.log(cookie('coal_buy_modify'));
         if (cookie('coal_buy_modify')) {
             var coal_buy_modify = JSON.parse(cookie('coal_buy_modify'));
@@ -389,11 +417,15 @@
                     $('#buy_kind_html').html(val.value);
                 }
                 else if (val.name == 'trait') { //品质
-                    var trait = $(":radio[name=trait][value='" + val.value + "']");
-                    trait.prop("checked", "checked");
-                    trait.parent('label').addClass('myactive');
-                    trait.parent('label').siblings().removeClass('myactive');
-                    $('#buy_trait_html').html(val.value);
+                    if (val.value) {
+                        var temp_trait_arr = val.value.split(',');
+                        $.each(temp_trait_arr, function (i, v) {
+                            var trait = $(":checkbox[id*='trait'][value='" + v + "']");
+                            trait.prop("checked", "checked");
+                            trait.parent('label').addClass('myactive');
+                        });
+                        $('#buy_trait_html').html(val.value);
+                    }
                 }
                 else if (val.name == 'granularity') {   //粒度
                     var granularity = $(":radio[name=granularity][value='" + val.value + "']");
@@ -403,17 +435,12 @@
                     $('#buy_granularity_html').html(val.value);
                 }
                 else if (val.name == 'area_start') { //产地
-//                        val.value = cookie('area_start');
-//                        $('#buy_area_start_html').html(val.value);
-////                        $('#buy_area_start').val(val.value);
-//                        $('#buy_area_start').val(cookie('area_start_id'));
-                    $('#buy_area_start').val(val.value);
+                    $('#buy_area_start_id').val(val.value);
                 }
                 else if (val.name == 'area_start_name') { //产地名
-//                        $('#buy_area_start_name').val(cookie('area_start'));
                     $('#buy_area_start_name').val(val.value);
-                    $('#buy_area_start_html').html(val.value);
-
+                    //TODO(only show name and have not init the citypicker correctly)
+                    $('#buy_area_start').next().html('<span class="placeholder" style="padding: 12px; display: none;">点击选择产地</span><span class="title" style="display: inline;"><span>' + val.value + '</span></span><div class="arrow"></div>');
                 }
                 else if (val.name == 'car_type') {  //车辆类型
                     var car_type = $(":radio[name=car_type][value='" + val.value + "']");
@@ -448,8 +475,8 @@
         cookie('coal_buy_modify', JSON.stringify($('#form_buy').serializeArray()));
 
         //告诉area_search 要改的来源
-        var temp = {name:'coal_buy_modify',value:cookie('coal_buy_modify')};
-        cookie('source',JSON.stringify(temp));
+        var temp = {name: 'coal_buy_modify', value: cookie('coal_buy_modify')};
+        cookie('source', JSON.stringify(temp));
 
         //地址跳转
         window.location.href = goto_url;
@@ -468,10 +495,13 @@
         $('#buy_content_alert').html('');
     });
     function buy_sub() {
-        //获取表单数据
-        var coal_buy_modify = JSON.stringify($('#form_buy').serializeArray());
-        //表单数据存入cookie便于加载时显示
-        cookie('coal_buy_modify', coal_buy_modify);
+        ck_log("submit", "求购-发布-修改");
+        //填充地址
+        var input = $('#buy_area_start');
+        //产地id
+        if (input.data('citypicker').getCode()) {
+            $('#buy_area_start_id').val(input.data('citypicker').getCode());
+        }
         //联系电话验证
         var phone = $('#buy_phone_number').val().trim();
         if (!phone) {
@@ -484,7 +514,7 @@
         //判断content有无输入，content和煤炭信息不能同时为空
         var content = $('#buy_content').val().trim();
         var kind = $('input[name=kind]:checked').val();
-        var trait = $('input[name=trait]:checked').val();
+        var trait = $("input[type=checkbox][id*='trait']:checked").val();//第一个选择标签的值
         var granularity = $('input[name=granularity]:checked').val();
         if (!content && !kind && !trait && !granularity) {
             $('#buy_content_alert').html('详细描述与煤炭信息不能同时为空');

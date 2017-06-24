@@ -20,13 +20,13 @@
 <!--导航标签-->
 <div class="panel-title" style="margin:0;padding: 0;background-color: white">
     <div id="myTab" class="weui_navbar" style=";margin-bottom: 0;">
-        <a href="#transport" data-toggle="tab" class="weui_navbar_item weui_bar_item_on"
-           style="text-decoration: none;font-size: 1.2em">
-            <span>运输收藏</span>
-        </a>
-        <a href="#trade" data-toggle="tab" class="weui_navbar_item"
+        <a href="#trade" data-toggle="tab" class="weui_navbar_item weui_bar_item_on"
            style="text-decoration: none;font-size: 1.2em">
             <span>交易收藏</span>
+        </a>
+        <a href="#transport" data-toggle="tab" class="weui_navbar_item"
+           style="text-decoration: none;font-size: 1.2em">
+            <span>运输收藏</span>
         </a>
     </div>
 </div>
@@ -45,13 +45,13 @@
             <span class="pullDownLabel" style="margin-left: -48px">下拉刷新...</span>
         </div>
         <div class="tab-content" style="">
-            <ul id="transport" class="tab-pane active" style="margin-top: 40px;list-style-type: none">
-                <volist name="transport_li_array" id="vo">
+            <ul id="trade" class="tab-pane active" style="margin-top: 40px;list-style-type: none">
+                <volist name="trade_li_array" id="vo">
                     {$vo}
                 </volist>
             </ul>
-            <ul id="trade" class="tab-pane" style="margin-top: 40px;list-style-type: none">
-                <volist name="trade_li_array" id="vo">
+            <ul id="transport" class="tab-pane" style="margin-top: 40px;list-style-type: none">
+                <volist name="transport_li_array" id="vo">
                     {$vo}
                 </volist>
             </ul>
@@ -84,12 +84,12 @@
             //运输订单
             //避免为空或者false
             //标签选中
-            $('#myTab a:eq(0)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on');
+            $('#myTab a:eq(1)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on');
         } else if (cookie('search_tag') == 'trade') {
             //交易订单
-            $('#myTab a:eq(1)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on');
+            $('#myTab a:eq(0)').addClass('weui_bar_item_on').tab('show').siblings('a').removeClass('weui_bar_item_on');
         } else {
-            cookie('search_tag', 'transport');
+            cookie('search_tag', 'trade');
         }
         $('input[name=select_category]').val(cookie('search_tag'));
         console.log($('input[name=select_category]').val());
@@ -99,7 +99,7 @@
 <!--点击标签查询-->
 <script>
     //点击运输订单标签
-    $('#myTab a:eq(0)').click(function () {
+    $('#myTab a:eq(1)').click(function () {
         //存入所选标签入cookie
         cookie('search_tag', 'transport');
         $('input[name=select_category]').val(cookie('search_tag'));
@@ -112,7 +112,7 @@
     });
 
     //点击供应信息标签
-    $('#myTab a:eq(1)').click(function () {
+    $('#myTab a:eq(0)').click(function () {
         //存入所选标签入cookie
         cookie('search_tag', 'trade');
         $('input[name=select_category]').val(cookie('search_tag'));

@@ -47,7 +47,7 @@ class CoalBuyMsgCard extends MsgCard
         </div>
     </a>
     <div class=\"weui_media_bd\">
-        <h4 class=\"weui_media_title highlight\"><span onclick='window.location.href=\"{$personal_page}\"'>{$message['user']['user_name']}</span></h4>
+        <h4 class=\"weui_media_title\"><span class='highlight' onclick='window.location.href=\"{$personal_page}\"'>{$message['user']['user_name']}</span></h4>
         <p class=\"weui_media_desc\"><img src=\"__PUBLIC__/home/images/area_start.png\" style=\"width: 10px;height: 15px\">" . $message['user']['city'] . "</p>
     </div>
     <div class=\"weui_media_bd text-center\" style=\"\">
@@ -93,7 +93,7 @@ class CoalBuyMsgCard extends MsgCard
         </div>
     </a>
     <div class=\"weui_media_bd\">
-        <h4 class=\"weui_media_title highlight\"><span onclick='window.location.href=\"{$personal_page}\"'>{$message['user']['user_name']}</span></h4>
+        <h4 class=\"weui_media_title\"><span class='highlight' onclick='window.location.href=\"{$personal_page}\"'>{$message['user']['user_name']}</span></h4>
         <p class=\"weui_media_desc\">" . $message["user"]["city"] . "</p>
     </div>
     <div class=\"weui_media_bd text-center\" style=\"\">

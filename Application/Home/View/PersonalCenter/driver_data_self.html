@@ -96,9 +96,8 @@
                                 </span>
                                 <span id="sex" style="border: 0" class="form-control"></span>
                                 <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
-                                         style="width: 20px">
+                                      style="border-radius: 0;border:0;background-color: white;position: relative;">
+                                    <span class="dropdown-arrow"></span>
                                 </span>
                             </div>
                         </a>
@@ -166,9 +165,8 @@
                                 </span>
                                 <span id="car_type_html" style="border: 0" class="form-control"></span>
                                 <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
-                                         style="width: 20px">
+                                      style="border-radius: 0;border:0;background-color: white;position: relative;">
+                                    <span class="dropdown-arrow"></span>
                                 </span>
                             </div>
                         </a>
@@ -332,6 +330,12 @@
 </div>
 <?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
 </body>
+<!--折叠下拉箭头变换效果-->
+<script>
+    $("[data-toggle='collapse']").on('click', function () {
+        $(this).find('.dropdown-arrow').toggleClass('dropdown-arrow-open');
+    });
+</script>
 <!--导航功能-->
 <script>
     $('#myTab a').click(function (e) {

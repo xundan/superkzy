@@ -10,10 +10,13 @@
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/city-picker.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/city-picker.data.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/city-picker.js"></script>
 </head>
 <body onload="onload()">
 <include file="Common:common"/>
@@ -94,9 +97,8 @@
                                 </span>
                                 <span id="sex" style="border: 0" class="form-control"></span>
                                 <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
-                                         style="width: 20px">
+                                      style="border-radius: 0;border:0;background-color: white;position: relative;">
+                                    <span class="dropdown-arrow"></span>
                                 </span>
                             </div>
                         </a>
@@ -145,22 +147,19 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div onclick="get_area()">
-                            <div class="input-group" style="height:34px;width: 100%">
-                                <span class="input-group-addon"
-                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                    <span class="pull-left">所在地区</span>
-                                </span>
-                                <span id="reside_area" style="border: 0" class="form-control">{$user_district}</span>
-                                <input type="hidden" name="reside_area">
-                                <input type="hidden" name="area_start_name" id="sell_area_start_name">
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
-                                         style="width: 10px">
-                                </span>
-                            </div>
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                            <span class="pull-left">所在地区</span>
+                            </span>
+                            <span style=""><!-- container -->
+                                <input readonly type="text" data-toggle="city-picker" name="reside_area"
+                                       id="reside_area" style="width: 75%;;padding:6px 12px;" value=""
+                                       placeholder="选择所在地区">
+                            </span>
                         </div>
+                        <input type="hidden" name="reside_area_id" id="reside_area_id">
+                        <input type="hidden" name="reside_area_name" id="reside_area_name">
                     </td>
                 </tr>
                 <tr>
@@ -323,6 +322,12 @@
 </div>
 <?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
 </body>
+<!--折叠下拉箭头变换效果-->
+<script>
+    $("[data-toggle='collapse']").on('click', function () {
+        $(this).find('.dropdown-arrow').toggleClass('dropdown-arrow-open');
+    });
+</script>
 <!--导航功能-->
 <script>
     $('#myTab a').click(function (e) {
@@ -358,8 +363,23 @@
     $(function () {
         // 组装已有数据
         // 地址
-        $('#reside_area').html(cookie('area_start'));
-        $('input[name=reside_area]').val(cookie('area_start'));
+        if("{$user_district_id}"){
+            $('#reside_area_id').val("{$user_district_id}");
+        }
+        if("{$user_district_name}"){
+            var $reside_area = $('#reside_area');
+            $reside_area.citypicker('reset');
+            $reside_area.citypicker('destroy');
+            var initAreaArr = "{$user_district_name}".split('/');
+            $reside_area.citypicker({
+                province: initAreaArr[0],
+                city: initAreaArr[1],
+                district: initAreaArr[2],
+                area: initAreaArr[3]
+            });
+        }
+//        $('#reside_area').html(cookie('area_start'));
+//        $('input[name=reside_area]').val(cookie('area_start'));
         // 性别
         if ("{$user_owner['sex']}" == "1") {
             $("#rdo1").attr("checked", "checked");
@@ -377,7 +397,7 @@
         if (cookie('form_basic_data')) {
             var basic_obj = JSON.parse(cookie('form_basic_data'));
             for (var i = 0; i < basic_obj.length; i++) {
-                $("#" + basic_obj[i].name).val(basic_obj[i].value)
+                $("#" + basic_obj[i].name).val(basic_obj[i].value);
                 console.log(basic_obj[i].name + "->" + basic_obj[i].value);
             }
         }
@@ -385,7 +405,7 @@
         if (cookie('form_exp_data')) {
             var exp_obj = JSON.parse(cookie('form_exp_data'));
             for (var i = 0; i < exp_obj.length; i++) {
-                $("#" + exp_obj[i].name).val(exp_obj[i].value)
+                $("#" + exp_obj[i].name).val(exp_obj[i].value);
                 console.log(exp_obj[i].name + "->" + exp_obj[i].value);
             }
         }
@@ -416,6 +436,10 @@
     function submit_basic_form() {
         cookie('form_basic_data', null);
         ck_log("submit","货主-提交个人基本信息");
+        //填充所在地地址表单
+        var input = $('#reside_area');
+        $('#reside_area_id').val(input.data('citypicker').getCode());
+        $('#reside_area_name').val(input.val());
         document.getElementById('form_owner_basic_data').submit();
     }
 

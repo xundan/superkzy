@@ -65,14 +65,81 @@
     }
     .lable2{
     }
+    .group-btn{
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+
+        background-color:red;
+        color:white;
+    }
+    .btn-active{
+        background-color:green;
+        color:white;
+    }
 </style>
 <body>
-    <span style="font-size: 25px">您好 <i>{$username}！</i>还有{$uncheck_count}条信息未审核</span>
-    <a href="__ROOT__/Views/StaffsLogin/logout" style="float: right;font-size: 15px">登出</a>
+<span style="font-size: 25px">您好 <i>{$username}！</i>还有{$uncheck_count}条信息未审核</span>
+    <!--其中群信息{$group_count['group_all']}条,今日已审核{$group_count['group_checked']}条群信息-->
+<a href="__ROOT__/Views/StaffsLogin/logout" style="float: right;font-size: 15px">登出</a>
+<button id="show_group" class="group-btn btn-active">显示群消息中</button>
+<script type="text/javascript">
+    $(function () {
+        var url = location.href;
+        var show_group = $('#show_group');
+        if(url.indexOf('group')>0){
+            show_group.removeClass('btn-active');
+            show_group.html('隐藏群消息中');
+        }else{
+            show_group.addClass('btn-active');
+            show_group.html('显示群消息中');
+        }
+    });
+    $('#show_group').click(function(){
+        var url = location.href;
+        if($(this).hasClass('btn-active')){
+            $(this).removeClass('btn-active');
+            $(this).html('隐藏群消息中');
+            if(url.indexOf('id/')>0){
+                location.href = url.replace('.html','/group/off.html');
+            }else{
+                location.href = url+"&group=off";
+            }
+        }else{
+            $(this).addClass('btn-active');
+            $(this).html('显示群消息中');
+            if(url.indexOf('id/')>0){
+                location.href = url.replace('/group/off','');
+            }else {
+                location.href = url.replace(/&group=off/gi, '');
+            }
+        }
+    });
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]); return null;
+    }
+</script>
 
 
-
-    <form action="{:U('Views/DisplayMessages/check')}?id={$id}" method="post">
+    <form action="{:U('Views/DisplayMessages/check')}?id={$id}&group={$group}" method="post">
         <table class="gridtable" style="font-size: 25px">
             <thead>
             <tr>

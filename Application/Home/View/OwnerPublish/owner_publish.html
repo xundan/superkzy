@@ -10,10 +10,14 @@
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/city-picker.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/city-picker.data.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/city-picker.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/loading.js"></script>
 </head>
 <body>
 <include file="Common:common"/>
@@ -38,7 +42,7 @@
         <a href="#car_need" name="car_need" class="weui_navbar_item" data-toggle="tab"
            style=";text-decoration: none">
             <span role="presentation" class="" style=";font-size: 1.2em">
-                发布求车
+                发布找车
             </span>
         </a>
         <a href="#car_give" name="car_give" class="weui_navbar_item" data-toggle="tab"
@@ -66,9 +70,8 @@
                                 </span>
                                 <span id="sell_kind_html" style="border: 0" class="form-control"></span>
                                 <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
-                                         style="width: 20px">
+                                      style="border-radius: 0;border:0;background-color: white;position: relative;">
+                                    <span class="dropdown-arrow"></span>
                                 </span>
                             </div>
                         </a>
@@ -118,9 +121,8 @@
                                 </span>
                                 <span id="sell_trait_html" style="border: 0" class="form-control"></span>
                                 <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
-                                         style="width: 20px">
+                                      style="border-radius: 0;border:0;background-color: white;position: relative;">
+                                    <span class="dropdown-arrow"></span>
                                 </span>
                             </div>
                         </a>
@@ -164,9 +166,8 @@
                                 </span>
                                 <span id="sell_granularity_html" style="border: 0" class="form-control"></span>
                                 <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
-                                         style="width: 20px">
+                                      style="border-radius: 0;border:0;background-color: white;position: relative;">
+                                    <span class="dropdown-arrow"></span>
                                 </span>
                             </div>
                         </a>
@@ -209,22 +210,20 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div onclick="sell_get_area_start()" style="text-decoration: none;color:black">
-                            <div class="input-group" style="height:34px;width: 100%">
-                                <span class="input-group-addon"
-                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                    <span class="pull-left">产地</span>
-                                </span>
-                                <span id="sell_area_start_html" style="border: 0" class="form-control"></span>
-                                <input type="hidden" name="area_start" id="sell_area_start">
-                                <input type="hidden" name="area_start_name" id="sell_area_start_name">
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
-                                         style="width: 10px">
-                                </span>
-                            </div>
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                            <span class="pull-left">产地</span>
+                            </span>
+                            <span style=""><!-- container -->
+                                <input readonly type="text" data-toggle="city-picker" name="sell_area_start"
+                                       id="sell_area_start" style="width: 75%;;padding:6px 12px;" value=""
+                                       placeholder="点击选择产地">
+                            </span>
                         </div>
+                        <input type="hidden" name="area_start" id="sell_area_start_id">
+                        <input type="hidden" name="area_start_name" id="sell_area_start_name">
+
                     </td>
                 </tr>
                 <tr>
@@ -283,9 +282,8 @@
                                     <span class="pull-left">详细指标</span>
                                 </span>
                                 <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
-                                         style="width: 20px">
+                                      style="border-radius: 0;border:0;background-color: white;position: relative;">
+                                    <span class="dropdown-arrow"></span>
                                 </span>
                             </div>
                         </a>
@@ -392,10 +390,9 @@
                                     <span class="pull-left">煤炭种类</span>
                                 </span>
                                 <span id="buy_kind_html" style="border: 0" class="form-control"></span>
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
-                                         style="width: 20px">
+                                 <span class="input-group-addon"
+                                       style="border-radius: 0;border:0;background-color: white;position: relative;">
+                                    <span class="dropdown-arrow"></span>
                                 </span>
                             </div>
                         </a>
@@ -444,10 +441,9 @@
                                     <span class="pull-left">品质(多选)</span>
                                 </span>
                                 <span id="buy_trait_html" style="border: 0" class="form-control"></span>
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
-                                         style="width: 20px">
+                                 <span class="input-group-addon"
+                                       style="border-radius: 0;border:0;background-color: white;position: relative;">
+                                    <span class="dropdown-arrow"></span>
                                 </span>
                             </div>
                         </a>
@@ -490,10 +486,9 @@
                                     <span class="pull-left">粒度</span>
                                 </span>
                                 <span id="buy_granularity_html" style="border: 0" class="form-control"></span>
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
-                                         style="width: 20px">
+                                 <span class="input-group-addon"
+                                       style="border-radius: 0;border:0;background-color: white;position: relative;">
+                                    <span class="dropdown-arrow"></span>
                                 </span>
                             </div>
                         </a>
@@ -524,22 +519,19 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div onclick="buy_get_area_start()" style="background-color: white;color:black">
-                            <div class="input-group" style="height:34px;width: 100%">
-                                <span class="input-group-addon"
-                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                    <span class="pull-left">产地</span>
-                                </span>
-                                <span id="buy_area_start_html" style="border: 0" class="form-control"></span>
-                                <input type="hidden" name="area_start" id="buy_area_start">
-                                <input type="hidden" name="area_start_name" id="buy_area_start_name">
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
-                                         style="width: 10px">
-                                </span>
-                            </div>
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                            <span class="pull-left">产地</span>
+                            </span>
+                            <span style=""><!-- container -->
+                                <input readonly type="text" data-toggle="city-picker" name="buy_area_start"
+                                       id="buy_area_start" style="width: 75%;;padding:6px 12px;" value=""
+                                       placeholder="点击选择产地">
+                            </span>
                         </div>
+                        <input type="hidden" name="area_start" id="buy_area_start_id">
+                        <input type="hidden" name="area_start_name" id="buy_area_start_name">
                     </td>
                 </tr>
                 <tr>
@@ -599,10 +591,9 @@
                                     <span class="pull-left">付款方式</span>
                                 </span>
                                 <span id="buy_pay_type_html" style="border: 0" class="form-control"></span>
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
-                                         style="width: 20px">
+                                 <span class="input-group-addon"
+                                       style="border-radius: 0;border:0;background-color: white;position: relative;">
+                                    <span class="dropdown-arrow"></span>
                                 </span>
                             </div>
                         </a>
@@ -612,7 +603,7 @@
                             <label class="mybtn mybtn-default"
                                    style="margin-left: 7%;width:26%;margin-top:5px;text-align: center">
                                 <input type="radio" style="display: none" class="pull-left" name="pay_type"
-                                       autocomplete="off" value="预先付款">预先付款
+                                       autocomplete="off" value="装车付款">装车付款
                             </label>
                             <label class="mybtn mybtn-default"
                                    style="margin-left: 3%;width:26%;margin-top:5px;text-align: center">
@@ -673,22 +664,19 @@
             <table class="table table-responsive" style="border: 0">
                 <tr>
                     <td style="padding: 0">
-                        <div onclick="need_get_area_start()" style="background-color: white;color:black">
-                            <div class="input-group" style="height:34px;width: 100%">
-                                <span class="input-group-addon"
-                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                    <span class="pull-left">发货地址</span>
-                                </span>
-                                <span id="need_area_start_html" style="border: 0" class="form-control"></span>
-                                <input type="hidden" id="need_area_start" name="area_start">
-                                <input type="hidden" id="need_area_start_name" name="area_start_name">
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
-                                         style="width: 10px">
-                                </span>
-                            </div>
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                            <span class="pull-left">发货地址</span>
+                            </span>
+                            <span style=""><!-- container -->
+                                <input readonly type="text" data-toggle="city-picker" name="need_area_start"
+                                       id="need_area_start" style="width: 75%;;padding:6px 12px;" value=""
+                                       placeholder="点击选择发货地址">
+                            </span>
                         </div>
+                        <input type="hidden" name="area_start" id="need_area_start_id">
+                        <input type="hidden" name="area_start_name" id="need_area_start_name">
                     </td>
                 </tr>
                 <tr>
@@ -705,22 +693,19 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div onclick="need_get_area_end()" style="background-color: white;color:black">
-                            <div class="input-group" style="height:34px;width: 100%">
-                                <span class="input-group-addon"
-                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                    <span class="pull-left">收货地址</span>
-                                </span>
-                                <span id="need_area_end_html" style="border: 0" class="form-control"></span>
-                                <input type="hidden" id="need_area_end" name="area_end">
-                                <input type="hidden" id="need_area_end_name" name="area_end_name">
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
-                                         style="width: 10px">
-                                </span>
-                            </div>
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                            <span class="pull-left">收货地址</span>
+                            </span>
+                            <span style=""><!-- container -->
+                                <input readonly type="text" data-toggle="city-picker" name="need_area_end"
+                                       id="need_area_end" style="width: 75%;;padding:6px 12px;" value=""
+                                       placeholder="点击选择收货地址">
+                            </span>
                         </div>
+                        <input type="hidden" name="area_end" id="need_area_end_id">
+                        <input type="hidden" name="area_end_name" id="need_area_end_name">
                     </td>
                 </tr>
                 <tr>
@@ -775,10 +760,9 @@
                                     <span class="pull-left">粒度</span>
                                 </span>
                                 <span id="need_granularity_html" style="border: 0" class="form-control"></span>
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
-                                         style="width: 20px">
+                                 <span class="input-group-addon"
+                                       style="border-radius: 0;border:0;background-color: white;position: relative;">
+                                    <span class="dropdown-arrow"></span>
                                 </span>
                             </div>
                         </a>
@@ -911,22 +895,19 @@
             <table class="table table-responsive" style="border: 0">
                 <tr>
                     <td style="padding: 0">
-                        <div onclick="give_get_area_start()" style="background-color: white;color:black">
-                            <div class="input-group" style="height:34px;width: 100%">
-                                <span class="input-group-addon"
-                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                    <span class="pull-left">出发地址</span>
-                                </span>
-                                <span id="give_area_start_html" style="border: 0" class="form-control"></span>
-                                <input type="hidden" id="give_area_start" name="area_start">
-                                <input type="hidden" id="give_area_start_name" name="area_start_name">
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
-                                         style="width: 10px">
-                                </span>
-                            </div>
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                            <span class="pull-left">出发地址</span>
+                            </span>
+                            <span style=""><!-- container -->
+                                <input readonly type="text" data-toggle="city-picker" name="give_area_start"
+                                       id="give_area_start" style="width: 75%;;padding:6px 12px;" value=""
+                                       placeholder="点击选择出发地址">
+                            </span>
                         </div>
+                        <input type="hidden" name="area_start" id="give_area_start_id">
+                        <input type="hidden" name="area_start_name" id="give_area_start_name">
                     </td>
                 </tr>
                 <tr>
@@ -943,22 +924,20 @@
                 </tr>
                 <tr>
                     <td style="padding: 0">
-                        <div onclick="give_get_area_end()" style="background-color: white;color:black">
-                            <div class="input-group" style="height:34px;width: 100%">
-                                <span class="input-group-addon"
-                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
-                                    <span class="pull-left">目的地址</span>
-                                </span>
-                                <span id="give_area_end_html" style="border: 0" class="form-control"></span>
-                                <input type="hidden" id="give_area_end" name="area_end">
-                                <input type="hidden" id="give_area_end_name" name="area_end_name">
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/goto.png" class="pull-right"
-                                         style="width: 10px">
-                                </span>
-                            </div>
+
+                        <div class="input-group" style="height:34px;width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                            <span class="pull-left">目的地址</span>
+                            </span>
+                            <span style=""><!-- container -->
+                                <input readonly type="text" data-toggle="city-picker" name="give_area_end"
+                                       id="give_area_end" style="width: 75%;;padding:6px 12px;" value=""
+                                       placeholder="点击选择目的地址">
+                            </span>
                         </div>
+                        <input type="hidden" name="area_end" id="give_area_end_id">
+                        <input type="hidden" name="area_end_name" id="give_area_end_name">
                     </td>
                 </tr>
                 <tr>
@@ -1010,10 +989,9 @@
                                     <span class="pull-left">车辆类型</span>
                                 </span>
                                 <span id="give_car_type_html" style="border: 0" class="form-control"></span>
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    <img src="__PUBLIC__/home/images/down_arrow.png" class="pull-rights"
-                                         style="width: 20px">
+                                 <span class="input-group-addon"
+                                       style="border-radius: 0;border:0;background-color: white;position: relative;">
+                                    <span class="dropdown-arrow"></span>
                                 </span>
                             </div>
                         </a>
@@ -1215,6 +1193,14 @@
     });
 </script>
 
+<!--折叠下拉箭头变换效果-->
+<script>
+    $("[data-toggle='collapse']").on('click', function () {
+//        console.log($(this).find('.dropdown-arrow').get(0));
+        $(this).find('.dropdown-arrow').toggleClass('dropdown-arrow-open');
+    });
+</script>
+
 <!--载入时读取上次发布的信息-->
 <script>
     $(function () {
@@ -1237,29 +1223,47 @@
             if (cookie('car_give')) {
                 var car_give = JSON.parse(cookie('car_give'));
                 jQuery.each(car_give, function (k, val) {
-                    if (val.name == 'area_start') { //出发地址
-//                        val.value = cookie('area_start');
-//                        $('#give_area_start_html').html(val.value);
-////                        $('#give_area_start').val(val.value);
-//                        $('#give_area_start').val(cookie('area_start_id'));
-                        $('#give_area_start').val(val.value);
+                    if (val.name == 'give_area_start') {
+                        if (val.value) {
+                            var $give_area_start = $('#give_area_start');
+                            $give_area_start.citypicker('reset');
+                            $give_area_start.citypicker('destroy');
+                            var initAreaStartArr = val.value.split('/');
+                            $give_area_start.citypicker({
+                                province: initAreaStartArr[0],
+                                city: initAreaStartArr[1],
+                                district: initAreaStartArr[2],
+                                area: initAreaStartArr[3]
+                            });
+                        } else {
+                        }
+                    }
+                    else if (val.name == 'area_start') { //出发地址
+                        $('#give_area_start_id').val(val.value);
                     }
                     else if (val.name == 'area_start_name') { //出发地址名
-//                        $('#give_area_start_name').val(cookie('area_start'));
                         $('#give_area_start_name').val(val.value);
-                        $('#give_area_start_html').html(val.value);
+                    }
+                    else if (val.name == 'give_area_end') {
+                        if (val.value) {
+                            var $give_area_end = $('#give_area_end');
+                            $give_area_end.citypicker('reset');
+                            $give_area_end.citypicker('destroy');
+                            var initAreaEndArr = val.value.split('/');
+                            $give_area_end.citypicker({
+                                province: initAreaEndArr[0],
+                                city: initAreaEndArr[1],
+                                district: initAreaEndArr[2],
+                                area: initAreaEndArr[3]
+                            });
+                        } else {
+                        }
                     }
                     else if (val.name == 'area_end') {  //目的地址
-//                        val.value = cookie('area_end');
-//                        $('#give_area_end_html').html(val.value);
-////                        $('#give_area_end').val(val.value);
-//                        $('#give_area_end').val(cookie('area_end_id'));
-                        $('#give_area_end').val(val.value);
+                        $('#give_area_end_id').val(val.value);
                     }
                     else if (val.name == 'area_end_name') { //目的地址名
-//                        $('#give_area_end_name').val(cookie('area_end'));
                         $('#give_area_end_name').val(val.value);
-                        $('#give_area_end_html').html(val.value);
                     }
                     else if (val.name == 'car_type') {  //车辆类型
                         var car_type = $(":radio[name=car_type][value='" + val.value + "']");
@@ -1306,18 +1310,26 @@
                         granularity.parent('label').siblings().removeClass('myactive');
                         $('#buy_granularity_html').html(val.value);
                     }
+                    else if (val.name == 'buy_area_start') {
+                        if (val.value) {
+                            var $buy_area_start = $('#buy_area_start');
+                            $buy_area_start.citypicker('reset');
+                            $buy_area_start.citypicker('destroy');
+                            var initAreaArr = val.value.split('/');
+                            $buy_area_start.citypicker({
+                                province: initAreaArr[0],
+                                city: initAreaArr[1],
+                                district: initAreaArr[2],
+                                area: initAreaArr[3]
+                            });
+                        } else {
+                        }
+                    }
                     else if (val.name == 'area_start') { //产地
-//                        val.value = cookie('area_start');
-//                        $('#buy_area_start_html').html(val.value);
-////                        $('#buy_area_start').val(val.value);
-//                        $('#buy_area_start').val(cookie('area_start_id'));
-                        $('#buy_area_start').val(val.value);
+                        $('#buy_area_start_id').val(val.value);
                     }
                     else if (val.name == 'area_start_name') { //产地名
-//                        $('#buy_area_start_name').val(cookie('area_start'));
                         $('#buy_area_start_name').val(val.value);
-                        $('#buy_area_start_html').html(val.value);
-
                     }
                     else if (val.name == 'car_type') {  //车辆类型
                         var car_type = $(":radio[name=car_type][value='" + val.value + "']");
@@ -1349,27 +1361,46 @@
             if (cookie('car_need')) {
                 var car_need = JSON.parse(cookie('car_need'));
                 jQuery.each(car_need, function (k, val) {
-                    if (val.name == 'area_start') { //出发地址
-//                        val.value = cookie('area_start');
-//                        $('#need_area_start_html').html(val.value);
-//                        $('#need_area_start').val(cookie('area_start_id'));
-                        $('#need_area_start').val(val.value);
+                    if (val.name == 'need_area_start') {
+                        if (val.value) {
+                            var $need_area_start = $('#need_area_start');
+                            $need_area_start.citypicker('reset');
+                            $need_area_start.citypicker('destroy');
+                            var initAreaStartArr = val.value.split('/');
+                            $need_area_start.citypicker({
+                                province: initAreaStartArr[0],
+                                city: initAreaStartArr[1],
+                                district: initAreaStartArr[2],
+                                area: initAreaStartArr[3]
+                            });
+                        } else {
+                        }
+                    }
+                    else if (val.name == 'area_start') { //出发地址
+                        $('#need_area_start_id').val(val.value);
                     }
                     else if (val.name == 'area_start_name') { //出发地址名
-//                        $('#need_area_start_name').val(cookie('area_start'));
                         $('#need_area_start_name').val(val.value);
-                        $('#need_area_start_html').html(val.value);
+                    }
+                    else if (val.name == 'need_area_end') {
+                        if (val.value) {
+                            var $need_area_end = $('#need_area_end');
+                            $need_area_end.citypicker('reset');
+                            $need_area_end.citypicker('destroy');
+                            var initAreaEndArr = val.value.split('/');
+                            $need_area_end.citypicker({
+                                province: initAreaEndArr[0],
+                                city: initAreaEndArr[1],
+                                district: initAreaEndArr[2],
+                                area: initAreaEndArr[3]
+                            });
+                        } else {
+                        }
                     }
                     else if (val.name == 'area_end') {  //目的地址
-//                        val.value = cookie('area_end');
-//                        $('#need_area_end_html').html(val.value);
-////                        $('#need_area_end').val(val.value);
-//                        $('#need_area_end').val(cookie('area_end_id'));
-                        $('#need_area_end').val(val.value);
+                        $('#need_area_end_id').val(val.value);
                     }
                     else if (val.name == 'area_end_name') { //目的地址名
-//                        $('#need_area_end_name').val(cookie('area_end'));
-                        $('#need_area_end_html').html(val.value);
                         $('#need_area_end_name').val(val.value);
                     }
                     else if (val.name == 'granularity') {   //粒度
@@ -1419,16 +1450,27 @@
                         granularity.parent('label').siblings().removeClass('myactive');
                         $('#sell_granularity_html').html(val.value);
                     }
+                    else if (val.name == 'sell_area_start') {
+                        if (val.value) {
+                            var $sell_area_start = $('#sell_area_start');
+                            $sell_area_start.citypicker('reset');
+                            $sell_area_start.citypicker('destroy');
+                            var initAreaArr = val.value.split('/');
+                            $sell_area_start.citypicker({
+                                province: initAreaArr[0],
+                                city: initAreaArr[1],
+                                district: initAreaArr[2],
+                                area: initAreaArr[3]
+                            });
+                        } else {
+//                            $('#sell_area_start').citypicker();
+                        }
+                    }
                     else if (val.name == 'area_start') { //产地
-//                        val.value = cookie('area_start');
-//                        $('#sell_area_start_html').html(val.value);
-//                        $('#sell_area_start').val(cookie('area_start_id'));
-                        $('#sell_area_start').val(val.value);
+                        $('#sell_area_start_id').val(val.value);
                     }
                     else if (val.name == 'area_start_name') { //产地名
-//                        $('#sell_area_start_name').val(cookie('area_start'));
                         $('#sell_area_start_name').val(val.value);
-                        $('#sell_area_start_html').html(val.value);
                     }
                     else {
                         $("#sell_" + val.name).val(val.value);
@@ -1591,14 +1633,26 @@
     });
     function give_sub() {
         ck_log("submit", "车源-发布");
+        //填充地址
+        var input_start = $('#give_area_start');
+        var input_end = $('#give_area_end');
+        //发收地id
+        $('#give_area_start_id').val(input_start.data('citypicker').getCode());
+        $('#give_area_end_id').val(input_end.data('citypicker').getCode());
+        //发收地名
+        var areaStartArr = input_start.val().split('/');
+        $('#give_area_start_name').val(areaStartArr[areaStartArr.length - 1]);
+        var areaEndArr = input_end.val().split('/');
+        $('#give_area_end_name').val(areaEndArr[areaEndArr.length - 1]);
+        //短途调配值
         var short_allocate = $('input[name=short_allocate]:checked').val();
         console.log(short_allocate);
         //获取表单数据
         var car_give = JSON.stringify($('#form_give').serializeArray());
-//        //表单数据存入cookie便于加载时显示
+        //表单数据存入cookie便于加载时显示
         cookie('tag', '车源');
         cookie('car_give', car_give);
-//        //其他字段置为空
+        //其他字段置为空
         cookie('car_need', null);
         cookie('coal_sell', null);
         cookie('coal_buy', null);
@@ -1612,8 +1666,8 @@
             return;
         }
         //判断content有无输入，content和煤炭信息不能同时为空
-        var area_start = $('#give_area_start').val().trim();
-        var area_end = $('#give_area_end').val().trim();
+        var area_start = input_start.val().trim();
+        var area_end = input_end.val().trim();
         var content = $('#give_content').val().trim();
         if (!content && !area_start && !area_end) {
             $('#give_content_alert').html('详细描述与地址信息不能同时为空');
@@ -1660,12 +1714,23 @@
     function need_sub() {
         //获取表单数据
         ck_log("submit", "求车-发布");
+        //填充地址
+        var input_start = $('#need_area_start');
+        var input_end = $('#need_area_end');
+        //发收地id
+        $('#need_area_start_id').val(input_start.data('citypicker').getCode());
+        $('#need_area_end_id').val(input_end.data('citypicker').getCode());
+        //发收地名
+        var areaStartArr = input_start.val().split('/');
+        $('#need_area_start_name').val(areaStartArr[areaStartArr.length - 1]);
+        var areaEndArr = input_end.val().split('/');
+        $('#need_area_end_name').val(areaEndArr[areaEndArr.length - 1]);
+        //获取表单数据
         var car_need = JSON.stringify($('#form_need').serializeArray());
-//        var area_start = $('extarea[name=need_content]').val().trim();
-//        //表单数据存入cookie便于加载时显示
+        //表单数据存入cookie便于加载时显示
         cookie('tag', '找车');
         cookie('car_need', car_need);
-//        //其他字段置为空
+        //其他字段置为空
         cookie('car_give', null);
         cookie('coal_sell', null);
         cookie('coal_buy', null);
@@ -1679,8 +1744,8 @@
             return;
         }
         //判断content有无输入，content和煤炭信息不能同时为空
-        var area_start = $('#need_area_start').val().trim();
-        var area_end = $('#need_area_end').val().trim();
+        var area_start = input_start.val().trim();
+        var area_end = input_end.val().trim();
         var content = $('#need_content').val().trim();
         if (!content && !area_start && !area_end) {
             $('#need_content_alert').html('详细描述与地址信息不能同时为空');
@@ -1735,6 +1800,13 @@
     });
     function sell_sub() {
         ck_log("submit", "供应-发布");
+        //填充地址
+        var input = $('#sell_area_start');
+        //产地id
+        $('#sell_area_start_id').val(input.data('citypicker').getCode());
+        //产地名
+        var areaArr = input.val().split('/');
+        $('#sell_area_start_name').val(areaArr[areaArr.length - 1]);
         //获取表单数据
         var coal_sell = JSON.stringify($('#form_sell').serializeArray());
         //表单数据存入cookie便于加载时显示
@@ -1756,8 +1828,8 @@
         //热值高位必须大于热值低位指标(如果有值)
         var sell_heat_value_max = $('#sell_heat_value_max').val();
         var sell_heat_value_min = $('#sell_heat_value_min').val();
-        if(sell_heat_value_max && sell_heat_value_min){
-            if(sell_heat_value_max < sell_heat_value_min){
+        if (sell_heat_value_max && sell_heat_value_min) {
+            if (sell_heat_value_max < sell_heat_value_min) {
                 $('#sell_content_alert').html('高位热值不能低于低位热值');
                 return false;
             }
@@ -1773,6 +1845,8 @@
         }
         //ajax提交表单数据
         var subData = $("#form_sell").serialize();
+        console.log(subData);
+//        return false;
         var url = "{:U('OwnerPublish/coal_sell_action')}";
         $.ajax({
             type: "post",
@@ -1809,6 +1883,13 @@
     });
     function buy_sub() {
         ck_log("submit", "求购-发布");
+        //填充地址
+        var input = $('#buy_area_start');
+        //产地id
+        $('#buy_area_start_id').val(input.data('citypicker').getCode());
+        //产地名
+        var areaArr = input.val().split('/');
+        $('#buy_area_start_name').val(areaArr[areaArr.length - 1]);
         //获取表单数据
         var coal_buy = JSON.stringify($('#form_buy').serializeArray());
         //表单数据存入cookie便于加载时显示
@@ -1924,5 +2005,4 @@
         }
     })
 </script>
-
 </html>
