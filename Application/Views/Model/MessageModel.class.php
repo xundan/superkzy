@@ -137,4 +137,62 @@ class MessageModel extends Model
         return $this->field("phone_number,content,type,sender,update_time")->where("content like '%$kw%' and content not like '%$kw"
             ."元%' and content not like '%$kw"."吨%' and category='$category' and update_time>'$s_date' and update_time<'$e_date'")->order("id desc")->select();
     }
+
+    /**
+     * @param $categoryArr
+     * @param $searchArr
+     * @return array
+     */
+    public function selectSearch($categoryArr, $searchArr, $page)
+    {
+        $res = array(); // 默认返回值
+        $map = array(); // 如果没有map就不执行sql
+        if ($categoryArr) $map['category'] = array("IN",implode(",",$categoryArr));
+        if ($searchArr){
+            $query = array();
+            array_push($query,'like');
+            // 为关键字数组$tempStr
+            foreach ($searchArr as &$item) {
+//            $query[] = array('like', '%' . $item . '%');
+                $item = "%".$item."%";
+            }
+            array_push($query,$searchArr);
+            array_push($query,"AND");
+            $map['content_all']=$query;
+        }
+        if ($map){
+            $map['invalid_id']=array("EQ",0);
+            $res=$this->where($map)->order('update_time desc')->page($page,5)->select();
+        }
+//        return $this->getLastSql();
+        return $res;
+    }
+
+    /**
+     * @param $categoryArr
+     * @param $granularityArr
+     * @param $kindArr
+     * @param $digitsArr
+     * @return array
+     */
+    public function selectQuery($categoryArr,$granularityArr,$kindArr,$digitsArr)
+    {
+        $res = array(); // 默认返回值
+        $map = array(); // 如果没有map就不执行sql
+        if ($categoryArr) $map['category'] = array("IN",implode(",",$categoryArr));
+        if ($granularityArr) $map['granularity'] = array("IN",implode(",",$granularityArr));
+        if ($kindArr) $map['kind'] = array("IN",implode(",",$kindArr));
+        if ($digitsArr){
+            // todo 这里的逻辑需要再考虑
+            $map['heat_value_max'] = array("IN",implode(",",$digitsArr));
+            $map['heat_value_min'] = array("IN",implode(",",$digitsArr));
+            $map['price_min'] = array("IN",implode(",",$digitsArr));
+            $map['price_max'] = array("IN",implode(",",$digitsArr));
+        }
+        if ($map){
+            $map['invalid_id']=array("EQ",0);
+            $res=$this->where($map)->select();
+        }
+        return $res;
+    }
 }

@@ -45,7 +45,7 @@
     <tr>
 
         <td>序号</td>
-        <td>头像</td>
+        <td>注册时间</td>
         <td>用户</td>
         <td>用户名</td>
         <td>注册手机号</td>
@@ -57,7 +57,7 @@
     <volist name="res" id="vo">
         <tr class="success">
             <td>{$i}</td>
-            <td><img src="{$vo.heading_url}" height="40" width="40"></td>
+            <td>{$vo.update_time}</td>
             <td>{$vo.uid}</td>
             <td>{$vo.user_name}</td>
             <td>{$vo.phone_number}</td>

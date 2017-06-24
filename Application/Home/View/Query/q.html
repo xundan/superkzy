@@ -13,34 +13,38 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
     <!--<script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>-->
-    <!--<script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>-->
+    <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
 </head>
 <body style="touch-action: none">
 <!--订单展示栏-->
-<div id="wrapper" style="top: 52px;margin-left: 2.5%;">
+<div id="wrapper" style="top: 2px;margin-left: 2.5%;">
     <div id="scroller">
         <div id="pullDown">
             <span class="pullDownIcon" style="float: left"></span>
             <span class="pullDownLabel" style="margin-left: -48px">下拉刷新...</span>
         </div>
         <div class="tab-content">
-            <ul id="buy" class="tab-pane active" style="margin-top: 40px;list-style-type: none">
+            <ul id="main_ul" class="tab-pane active" style="margin-top: 40px;list-style-type: none">
                 <volist name="data" id="vo">
                     <li class="weui_panel weui_panel_access" style="border-radius: 5px">
-                        <div class="weui_media_box weui_media_appmsg" style="margin: 0;padding-left: 0;padding-right: 0">
+                        <div class="weui_media_box weui_media_appmsg"
+                             style="margin: 0;padding-left: 0;padding-right: 0">
                             <div class="weui_media_bd">
                                 <div>
                                     <h4 class="weui_media_title">{$vo.id}</h4>
                                 </div>
                             </div>
                             <div class="weui_media_bd" style="">
-                                <a href="tel:{$vo.phone_number}" onclick="ck_log('dial', '{$vo.phone_number}')" class="" style='text-decoration: none;color: black'>
+                                <a class="li_tel" href="tel:{$vo.phone_number}"
+                                   onclick="ck_log('dial', '{$vo.phone_number}')"
+                                   style='text-decoration: none;color: black'>
                                     <h4><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">
                                         <span style="">拨打电话</span></h4>
                                 </a>
                             </div>
                         </div>
-                        <div class="highlight">{$vo.content}</div><div class='pull-right'>发布时间:{$vo.update_time}</div>
+                        <div class="highlight li_content">{$vo.content}</div>
+                        <div class='pull-right li_time'>发布时间:{$vo.update_time}</div>
                     </li>
                 </volist>
             </ul>
@@ -51,152 +55,35 @@
         </div>
     </div>
 </div>
-<?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
+<!--隐藏的li原型-->
+<div hidden>
+    <ul>
+        <li id="hidden_li" class="weui_panel weui_panel_access" style="border-radius: 5px">
+            <div class="weui_media_box weui_media_appmsg" style="margin: 0;padding-left: 0;padding-right: 0">
+                <div class="weui_media_bd">
+                    <div>
+                        <h4 class="weui_media_title">title</h4>
+                    </div>
+                </div>
+                <div class="weui_media_bd" style="">
+                    <a class="li_tel" style='text-decoration: none;color: black'>
+                        <h4><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">
+                            <span style="">拨打电话</span></h4>
+                    </a>
+                </div>
+            </div>
+            <div class="highlight li_content">content</div>
+            <div class='pull-right li_time'>发布时间:update_time</div>
+        </li>
+    </ul>
+    <input type="hidden" name="page" id="page" value="1">
+</div>
+<?php require_once 'cs.php';?>
 </body>
 <script>
-    function ck_log(a,b){
-        console.log("To be deleted.")
-    }
-</script>
-<script>
-    <!--滚动功能-->
     var myScroll, pullDownEl, pullDownOffset, pullUpEl, pullUpOffset;
     var time_now, update_time;
-    /**下拉刷新 （自定义实现此方法）
-     *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
-     */
-    function pullDownAction() {
-        console.log('down');
-//        location.reload();
-        var subData = $('#tag_search').serialize();
-        var search_input = cookie('search_input') ? cookie('search_input') : '';
-        var select_category = cookie('search_tag');
-        var filter_kind = cookie('trade_search_filter_kind') ? cookie('trade_search_filter_kind') : '';
-        var filter_granularity = cookie('trade_search_filter_granularity') ? cookie('trade_search_filter_granularity') : '';
-        var filter_heat_min = cookie('trade_search_filter_heat_min') ? cookie('trade_search_filter_heat_min') : '';
-        var filter_heat_max = cookie('trade_search_filter_heat_max') ? cookie('trade_search_filter_heat_max') : '';
-        filter_kind = filter_kind ? filter_kind.split(',') : '';
-        filter_granularity = filter_granularity ? filter_granularity.split(',') : '';
-        $.ajax({
-            type: "post",
-            url: "{:U('TradeSearch/trade_search')}",
-            data: {
-                isAjax: 1,
-                search_input: search_input,
-                select_category: select_category,
-                filter_kind: filter_kind,
-                filter_granularity: filter_granularity,
-                filter_heat_min: filter_heat_min,
-                filter_heat_max: filter_heat_max
-            },
-            success: function (data) {
-                console.log('success');
-//                console.log(data);
-//                return;
-                var jsonObj = eval("(" + data + ")");
-                console.log(jsonObj);
-//                    return;
-                if (jsonObj.msg) {
-                    //重置筛选条件组成
-                    $('#page').val(1);
-                    $('#where_cond_json').html(jsonObj.where_cond_json);
-                    $('#stage').html(jsonObj.stage);
-                    if (cookie('search_tag') == '求购') {
-                        document.getElementById('buy').innerHTML = '';
-                    }
-                    else if (cookie('search_tag') == '供应') {
-                        document.getElementById('sell').innerHTML = '';
-                    }
-                    jQuery.each(jsonObj.li_array, function (k, val) {
-                        var li = document.createElement('li');
-                        li.innerHTML = val;
-                        console.log(cookie('search_tag'));
-                        if (cookie('search_tag') == '求购') {
-                            document.getElementById('buy').appendChild(li);
-                        }
-                        else if (cookie('search_tag') == '供应') {
-                            document.getElementById('sell').appendChild(li);
-                        }
-                        else {
-                        }
-                    });
-                }
-                else {
-                }
-                myScroll.refresh();
-                refresh_hl();
-                ck_log("scroll", "下滑-刷新");
-            }
-        });
-        myScroll.refresh();
-    }
-    /**滚动翻页 （自定义实现此方法）
-     *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
-     */
-    function pullUpAction() {
-        setTimeout(function () {
-            console.log('up');
-//            var a = $('#tag_search').serialize();
-//            console.log(a);
-            var page = $('#page').val();
-            var request_page = parseInt(page) + 1;
-            var select_category = cookie('search_tag');
-            var where_cond_json = $('#where_cond_json').html().trim();
-            var stage = $('#stage').html().trim();
-            console.log(where_cond_json);
-            console.log(stage);
-            console.log(page);
-            console.log(request_page);
-            console.log(select_category);
-            //==========================================
-            $.ajax({
-                type: "post",
-                url: "{:U('TradeSearch/trade_search_more')}",
-                data: {
-                    page: request_page,
-                    select_category: select_category,
-                    where_cond_json: where_cond_json,
-                    stage: stage
-                },
-                success: function (data) {
-                    console.log('success');
-                    var jsonObj = eval("(" + data + ")");
-                    console.log(jsonObj);
-                    var endAjax = jsonObj.EOA;
-                    if (endAjax == 0) {
-                        return false;
-                    }
-//                    return;
-                    if (jsonObj.msg) {
-                        page++;
-                        $('#page').val(page);
-                        $('#where_cond_json').html(jsonObj.where_cond_json);
-                        $('#stage').html(jsonObj.stage);
-                        jQuery.each(jsonObj.li_array, function (k, val) {
-                            var li = document.createElement('li');
-                            li.innerHTML = val;
-                            console.log(cookie('search_tag'));
-                            if (cookie('search_tag') == '求购') {
-                                document.getElementById('buy').appendChild(li);
-                            }
-                            else if (cookie('search_tag') == '供应') {
-                                document.getElementById('sell').appendChild(li);
-                            }
-                            else {
-                            }
-                        });
-                    }
-                    else {
-                    }
-                    myScroll.refresh();
-                    refresh_hl();
-                    ck_log("scroll", "上滑-加载");
-                }
-            });
-            //============================================
-            myScroll.refresh(); // 数据加载完成后，调用界面更新方法 Remember to refresh when contents are loaded (ie: on ajax completion)
-        }, 1000); // <-- Simulate network congestion, remove setTimeout from production!
-    }
+
     /**
      * 初始化iScroll控件
      */
@@ -282,6 +169,96 @@
             console.dir(myScroll.options);
         }, 100);
     }
+
+    /**
+     * 以每个数据项拼装li标签
+     */
+    function putOnLi(li, val) {
+        li.find('.weui_media_title').html(val.id);
+        li.find('.li_content').html(val.content);
+        li.find('.li_time').html(val.update_time);
+        li.find('.li_tel').attr('href', 'tel:' + val.phone_number);
+        li.find('.li_tel').attr('onclick', "ck_log('dial', '" + val.phone_number + "')");
+    }
+
+    /**下拉刷新 （自定义实现此方法）
+     *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
+     */
+    function pullDownAction() {
+        var kw = '{$kw}';
+        $.ajax({
+            type: "post",
+            url: "{:U('Query/qAjax')}",
+            data: {
+                kw: kw
+            },
+            success: function (data) {
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+//                    return;
+                if (kw) {
+                    //重置筛选条件组成
+                    $('#page').val(1);
+
+                    var main_ul = $("#main_ul");
+                    main_ul.empty();
+                    jQuery.each(jsonObj, function (k, val) {
+                        var li = $("#hidden_li").clone();
+                        // 组装li
+                        putOnLi(li, val);
+                        main_ul.append(li);
+                    });
+                }
+                else {
+                }
+                myScroll.refresh();
+//                refresh_hl();
+                ck_log("scroll", "下滑-刷新");
+            }
+        });
+        myScroll.refresh();
+    }
+    /**滚动翻页 （自定义实现此方法）
+     *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
+     */
+    function pullUpAction() {
+        setTimeout(function () {
+            var page = $('#page').val();
+            var request_page = parseInt(page) + 1;
+            var kw = '{$kw}';
+            $.ajax({
+                type: "post",
+                url: "{:U('Query/qMore')}",
+                data: {
+                    page: request_page,
+                    kw: kw
+                },
+                success: function (data) {
+                    var jsonObj = eval("(" + data + ")");
+                    if (!jsonObj) {
+                        return false;
+                    }
+//                    return;
+                    page++;
+                    $('#page').val(page);
+                    var main_ul = $("#main_ul");
+                    jQuery.each(jsonObj, function (k, val) {
+                        var li = $("#hidden_li").clone();
+                        // 组装li
+                        putOnLi(li, val);
+                        main_ul.append(li);
+                    });
+
+                    myScroll.refresh();
+//                    refresh_hl();
+                    ck_log("scroll", "上滑-加载");
+                }
+            });
+            //============================================
+            myScroll.refresh(); // 数据加载完成后，调用界面更新方法 Remember to refresh when contents are loaded (ie: on ajax completion)
+        }, 1000); // <-- Simulate network congestion, remove setTimeout from production!
+    }
+
     //初始化绑定iScroll控件
     document.addEventListener('touchmove', function (event) {
         // 判断默认行为是否可以被禁用

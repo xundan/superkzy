@@ -33,6 +33,7 @@ class WxAccessController extends Controller
     public function reply(){
         $emoji = unicode2utf8('\ue022');
         $activity_flag = false;
+        $interaction_flag = false;
         $this->getWeObj()->valid();
         $type = $this->getWeObj()->getRev()->getRevType();
         switch($type) {
@@ -55,6 +56,7 @@ class WxAccessController extends Controller
                     exit;
                 }
                 if ($content=="你好"){
+                    $this->getWeObj()->text("你好，这里是超级矿资源，感谢您的支持！")->reply();
                     $this->getWeObj()->text("你好，这里是超级矿资源，感谢您的支持！")->reply();
                     exit;
                 }
@@ -84,16 +86,25 @@ class WxAccessController extends Controller
                     }
 
                     exit;
-                }
+                }else{
 
-                if ($activity_flag){
-                    $this->getWeObj()->text($emoji.$emoji.$emoji."回复“我爱母亲”，即可参加母亲节赢iPhone7中国红手机活动。".$emoji.$emoji.$emoji."
+                    $Query = new QueryController();
+                    $response_text = $Query->q_text($content);
+
+                    if($interaction_flag&&$response_text){
+                        $this->getWeObj()->text($response_text)->reply();
+                        exit;
+                    }elseif ($activity_flag){
+                        $this->getWeObj()->text($emoji.$emoji.$emoji."回复“我爱母亲”，即可参加母亲节赢iPhone7中国红手机活动。".$emoji.$emoji.$emoji."
 
  回复带有联系方式（手机号）的供应/求购/找车/车源信息，我们会为您公示转发。")->reply();
-                    exit;
-                }else{
-                    $this->getWeObj()->text("回复带有联系方式（手机号）的供应/求购/找车/车源信息，我们会为您公示转发。")->reply();
-                    exit;
+                        exit;
+                    }else{
+                        $this->getWeObj()->text("回复带有联系方式（手机号）的供应/求购/找车/车源信息，我们会为您公示转发。")->reply();
+                        exit;
+                    }
+
+
                 }
 
                 break;

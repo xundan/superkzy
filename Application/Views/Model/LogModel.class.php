@@ -32,7 +32,7 @@ class LogModel extends Model
     // 统计的方法
 
     public function all_by_date($s_date,$e_date){
-        $res = $this->join('ck_user on ck_user.uid = ck_log.uid')->field('ck_log.uid,user_name,phone_number,heading_url,role_id,max(now) as a,count(*) as b')->where("now>'$s_date' and now<'$e_date'")->group('uid')->order("a")->select();
+        $res = $this->join('ck_user on ck_user.uid = ck_log.uid')->field('ck_log.uid,update_time,user_name,phone_number,heading_url,role_id,max(now) as a,count(*) as b')->where("now>'$s_date' and now<'$e_date'")->group('uid')->order("a")->select();
         return $res;
     }
 

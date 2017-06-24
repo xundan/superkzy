@@ -439,7 +439,7 @@ class MessagesModel extends Model
      * @param $searchArr
      * @return array
      */
-    public function selectSearch($categoryArr, $searchArr)
+    public function selectSearch($categoryArr, $searchArr, $page)
     {
         $res = array(); // 默认返回值
         $map = array(); // 如果没有map就不执行sql
@@ -458,7 +458,7 @@ class MessagesModel extends Model
         }
         if ($map){
             $map['invalid_id']=array("EQ",0);
-            $res=$this->where($map)->select();
+            $res=$this->where($map)->order('update_time desc')->page($page,5)->select();
         }
 //        return $this->getLastSql();
         return $res;
