@@ -24,8 +24,66 @@
     .table-striped > tbody > tr:nth-of-type(odd) {
         background-color: #f7f7f7
     }
+    @-moz-keyframes myMove {
+    0% {padding-right:10px;}
+    100% {padding-right:30px;}
+    }
+    @-webkit-keyframes myMove {
+    0% {padding-right:10px;}
+    100% {padding-right:30px;}
+    }
+    @-o-keyframes myMove {
+    0% {padding-right:10px;}
+    100% {padding-right:30px;}
+    }
+    @keyframes myMove {
+    0% {padding-right:10px;}
+    100% {padding-right:30px;}
+    }
+    #down {
+    /*text-align: center;*/
+    height: 25px;
+    -moz-animation: myMove 1s linear infinite alternate;
+    -webkit-animation: myMove 1s linear infinite alternate;
+    -o-animation: myMove 1s linear infinite alternate;
+    animation: myMove 1s linear infinite alternate;
+    }
+
 </style>
 <body style="background-color: #efeff4">
+<span id="down" style="position: absolute;z-index: 2;right: 0;">
+    <canvas id="downCanvas" width="25" height="25">你的浏览器不支持canvas，请下载更新版本的浏览器
+    </canvas>
+</span>
+<script>
+    function drawDown() {
+        var c = document.getElementById("downCanvas"),
+                cxt = c.getContext("2d");
+        cxt.beginPath();
+        cxt.moveTo(10, 2.5);
+        cxt.lineTo(22.5, 12.5);
+        cxt.lineTo(10, 22.5);
+        cxt.lineWidth = 2.5;
+        cxt.strokeStyle = "gray";
+        cxt.lineCap = 'round';
+        cxt.lineJoin = "round";
+        cxt.stroke();
+        cxt.moveTo(2.5, 2.5);
+        cxt.lineTo(15, 12.5);
+        cxt.lineTo(2.5, 22.5);
+        cxt.lineWidth = 2.5;
+        cxt.strokeStyle = "gray";
+        cxt.lineCap = 'round';
+        cxt.lineJoin = "round";
+        cxt.stroke();
+    }
+    function clearCanvas(){
+        var c = document.getElementById("downCanvas"),
+                cxt = c.getContext("2d");
+        cxt.clearRect(0,0,c.width,c.height);
+    }
+</script>
+
 <!--订单展示栏-->
 <div class="tab-content">
     <volist name="message" id="data">
@@ -36,7 +94,7 @@
             </div>
             <hr style="margin-top: 0;margin-bottom: 8px;color: #ddd"/>
             <div style="width: 97%;overflow: scroll;">
-                <table class="table table-condensed table-striped"
+                <table class="table table-condensed table-striped" id="detail_table"
                        style="margin-bottom: 0;margin-left: 2.5%;table-layout: fixed">
                     <thead>
                     <tr>
@@ -101,6 +159,35 @@
 </div>
 <?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
 </body>
+<!--载入时定位箭头-->
+<script>
+    $(function () {
+        var pageWidth = document.body.clientWidth;
+        var tableWidth = $('#detail_table').width();
+        if(tableWidth/pageWidth > 1){
+            drawDown();
+            var arrowOffsetTop = 67+($('table').height()/2);
+            $('#down').css('top',arrowOffsetTop+'px');
+        }
+    });
+
+
+    $('#detail_table').bind('touchmove',function(e){
+        if($(this).offset().left<0){
+            clearCanvas();
+        }
+//        console.log(e.target.offsetLeft);
+////        console.log(e.pageX);
+////        console.log(e.clientX);
+//        var cw = $(document).width();
+////        console.log(document.body.clientWidth);
+//        console.log(cw);
+//        if(e.target.offsetLeft > cw){
+//            clearCanvas();
+//        }
+    });
+
+</script>
 <!--微信分享-->
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
