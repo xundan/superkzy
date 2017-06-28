@@ -23,11 +23,14 @@ class WxCoalSellMsgCard extends MsgCard
         //标签图片 过期功能
         if ($message['invalid_id'] == 99) {
             $imageString = "<img src='__PUBLIC__/home/images/sell_overdue.png' width='50px'>";
+            $invalidImage = "<img src='__PUBLIC__/home/images/invalid.png' width='80px' style='opacity: 0.5'>";
         } else {
             $imageString = "<img src='__PUBLIC__/home/images/sell.png' width='50px'>";
+            $invalidImage = "";
         }
         $li_str = "<li class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
 <div style=\"position: absolute;right: 0px;\">".$imageString."</div>
+<div style='position: absolute;right: 20px;bottom:20px;z-index:2'>" . $invalidImage . "</div>
 <div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
     <div class=\"weui_media_hd\">
         <img src=\"__PUBLIC__/home/images/$img\" class=\"weui_media_appmsg_thumb\">

@@ -119,7 +119,8 @@ class DisplayMessagesController extends Controller
             // 更新与微信关系表
             $this->add_relation_wx($id, $wx_arr);
             // 更新消息表状态
-            $this->update_message($id, $main_tag, $content);
+            $subInfo = I('post.', '', 'trim');
+            $this->update_message($id, $main_tag, $content,$subInfo);
 
 //            $this->success('提交成功', 'showDemo?id=' . $this->find_next($id));
             $this->redirect('DisplayMessages/showDemo', array('id' => $this->find_next($id,$group),'group'=>$group), 0, "");
@@ -320,7 +321,7 @@ class DisplayMessagesController extends Controller
      * @param $main_tag
      * @param $new_content
      */
-    private function update_message($id, $main_tag, $new_content)
+    private function update_message($id, $main_tag, $new_content,$subInfo)
     {
         // 如果没有主标签，就不处理内容了
         $update_trans = array(
@@ -346,6 +347,17 @@ class DisplayMessagesController extends Controller
                 "content_all" => $content,
             );
         }
+        //组装额外细化的字段
+        if (!$subInfo['area_start'] && !$subInfo['area_end'] && !$subInfo['kind'] && !$subInfo['trait'] && !$subInfo['granularity']) {
+            $update_trans['formatted'] = 0;
+        } else {
+            $update_trans['formatted'] = 1;
+        }
+        $update_trans['kind'] = $subInfo['kind'];
+        $update_trans['granularity'] = $subInfo['granularity'];
+        $update_trans['heat_value_max'] = $subInfo['heat_value_max'];
+        $update_trans['heat_value_min'] = $subInfo['heat_value_min'];
+        $update_trans['sulfur'] = $subInfo['sulfur'];
         D('Message')->save($update_trans);
     }
 
@@ -391,6 +403,30 @@ class DisplayMessagesController extends Controller
             $returnArr['msg'] = "发布成功";
             echo json_encode($returnArr);
         } else {
+        }
+    }
+
+    public function area_check(){
+        $area_name = I('post.area_name','','trim');
+        $flag = true;
+        $where['name'] = $area_name;
+        $nameResult = M('ck_districts')->where($where)->find();
+        if($nameResult){
+            echo $nameResult['id'];
+            exit;
+        }else{
+            $flag = false;
+        }
+        $where2['short_name'] = $area_name;
+        $shortNameResult = M('ck_districts')->where($where2)->find();
+        if($shortNameResult){
+            echo $shortNameResult['id'];
+            exit;
+        }else{
+            $flag = false;
+        }
+        if(!$flag){
+            echo 0;
         }
     }
 

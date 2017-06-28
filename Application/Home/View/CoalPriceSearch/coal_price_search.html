@@ -101,8 +101,8 @@
                                         {$data['content'][0]['detailed_index'][0].index_name}
                                     </th>
                                 </empty>
-                                <th class="text-center" style="border: none;">价格</th>
-                                <!--<th class="text-center" style="border: none;">含税</th>-->
+                                <th class="text-center" style="border: none;">一票价</th>
+                                <th class="text-center" style="border: none;">二票价</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -128,13 +128,13 @@
                                                 {$vo.price}
                                             </if>
                                         </td>
-                                        <!--<td class="text-center" style="border: none;">-->
-                                        <!--<empty name="vo.tax">-->
-                                        <!--&mdash;-->
-                                        <!--<else/>-->
-                                        <!--{$vo.tax}-->
-                                        <!--</empty>-->
-                                        <!--</td>-->
+                                        <td class="text-center" style="border: none;">
+                                            <empty name="vo.tax">
+                                                &mdash;
+                                            <else/>
+                                                {$vo.tax}
+                                            </empty>
+                                        </td>
                                     </notempty>
                                 </tr>
                             </volist>
@@ -194,8 +194,8 @@
                                         {$data['content'][0]['detailed_index'][0].index_name}
                                     </th>
                                 </empty>
-                                <th class="text-center" style="border: none;">价格</th>
-                                <!--<th class="text-center" style="border: none;">含税</th>-->
+                                <th class="text-center" style="border: none;">一票价</th>
+                                <th class="text-center" style="border: none;">二票价</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -221,13 +221,13 @@
                                                 {$vo.price}
                                             </if>
                                         </td>
-                                        <!--<td class="text-center" style="border: none;">-->
-                                        <!--<empty name="vo.tax">-->
-                                        <!--&mdash;-->
-                                        <!--<else/>-->
-                                        <!--{$vo.tax}-->
-                                        <!--</empty>-->
-                                        <!--</td>-->
+                                        <td class="text-center" style="border: none;">
+                                            <empty name="vo.tax">
+                                                &mdash;
+                                            <else/>
+                                                {$vo.tax}
+                                            </empty>
+                                        </td>
                                     </notempty>
                                 </tr>
                             </volist>
@@ -278,8 +278,8 @@
             <tr>
                 <th class="text-center" style="border: none;">类别</th>
                 <th class="text-center" style="border: none;">{$data['content'][0]['detailed_index'][0].index_name}</th>
-                <th class="text-center" style="border: none;">价格</th>
-                <!--<th class="text-center" style="border: none;">含税</th>-->
+                <th class="text-center" style="border: none;">一票价</th>
+                <th class="text-center" style="border: none;">二票价</th>
             </tr>
             </thead>
             <tbody>
@@ -295,7 +295,7 @@
                             </empty>
                         </td>
                         <td class="text-center" style="border: none;">{$vo.price}</td>
-                        <!--<td class="text-center" style="border: none;">{$vo.tax}</td>-->
+                        <td class="text-center" style="border: none;">{$vo.tax}</td>
                     </notempty>
                 </tr>
             </volist>
@@ -477,17 +477,17 @@
                             value.price = '&mdash;'
                         } else {
                         }
-//                        if (value.tax && (value.tax != '0')) {
-//                            //含税价有值则显示
-//                        } else {
-//                            //含税价无值显示-
-//                            value.tax = '&mdash;'
-//                        }
+                        if (value.tax && (value.tax != '0')) {
+                            //含税价有值则显示
+                        } else {
+                            //含税价无值显示-
+                            value.tax = '&mdash;'
+                        }
                         //拼装类别行
                         temp_string += "<tr><td class='text-center' style='border: none;'>" +
                                 value.kind_name + "</td><td class='text-center' style='border: none;'>" + temp_value +
                                 "</td><td class='text-center' style='border: none;'>" + value.price + "</td>" +
-//                                "<td class='text-center' style='border: none;'>" + value.tax + "</td>" +
+                                "<td class='text-center' style='border: none;'>" + value.tax + "</td>" +
                                 "</tr>";
                     });
                     tempObj.find('tbody').html(temp_string);
@@ -585,17 +585,17 @@
                                 value.price = '&mdash;'
                             } else {
                             }
-//                            if (value.tax && (value.tax != '0')) {
-//                                //含税价有值则显示
-//                            } else {
-//                                //含税价无值显示-
-//                                value.tax = '&mdash;'
-//                            }
+                            if (value.tax && (value.tax != '0')) {
+                                //含税价有值则显示
+                            } else {
+                                //含税价无值显示-
+                                value.tax = '&mdash;'
+                            }
                             //拼装类别行
                             temp_string += "<tr><td class='text-center' style='border: none;'>" +
                                     value.kind_name + "</td><td class='text-center' style='border: none;'>" + temp_value +
                                     "</td><td class='text-center' style='border: none;'>" + value.price + "</td>" +
-//                                    "<td class='text-center' style='border: none;'>" + value.tax + "</td>" +
+                                    "<td class='text-center' style='border: none;'>" + value.tax + "</td>" +
                                     "</tr>";
                         });
                         tempObj.find('tbody').html(temp_string);

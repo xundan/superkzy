@@ -31,15 +31,18 @@ class CarNeedMsgCard extends MsgCard
 
         if($message['invalid_id'] == 99){
             $imageString = "<img src='__PUBLIC__/home/images/need_overdue.png' width='50px'>";
+            $invalidImage = "<img src='__PUBLIC__/home/images/invalid.png' width='80px' style='opacity: 0.5'>";
             $disableString = 'disabled';
         }else{
             $imageString = "<img src='__PUBLIC__/home/images/need.png' width='50px'>";
+            $invalidImage = "";
             $disableString = '';
         }
 
         if ($message['formatted']) { // 如果用户按照标准格式填写
             $li_str = "<li class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
 <div style=\"position: absolute;right: 0px;\">".$imageString."</div>
+<div style='position: absolute;right: 20px;bottom:20px;z-index:2'>" . $invalidImage . "</div>
 <div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
     <a href=\"{$personal_page}\">
         <div class=\"weui_media_hd\">
@@ -74,6 +77,7 @@ class CarNeedMsgCard extends MsgCard
         } else {
             $li_str = "<li class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
 <div style=\"position: absolute;right: 0px;\">".$imageString."</div>
+<div style='position: absolute;right: 20px;bottom:20px;z-index:2'>" . $invalidImage . "</div>
 <div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
     <a href=\"{$personal_page}\">
         <div class=\"weui_media_hd\">

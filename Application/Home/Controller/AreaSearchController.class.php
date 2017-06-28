@@ -309,11 +309,16 @@ class AreaSearchController extends Controller
     public function getLastArea()
     {
         $user = session('user_info');
-        $where['uid'] = $user['uid'];
-        $result = D('user_action')->where($where)->find();
-        if ($result) {
-            echo $result['last_area'];
-        } else {
+        if($user['uid']){
+            $where['uid'] = $user['uid'];
+            $result = D('user_action')->where($where)->find();
+            if ($result) {
+                echo $result['last_area'];
+            } else {
+                echo 'none';
+            }
+        }
+        else{
             echo 'none';
         }
     }

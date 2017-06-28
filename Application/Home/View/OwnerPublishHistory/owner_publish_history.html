@@ -368,6 +368,9 @@
                 if(data){
 //                    img_src.attr('src','__PUBLIC__/home/images/sell_overdue.png');
                     img.attr('src',img_src_overdue);
+                    var invalid_img = '<img width="80px" style="opacity:0.5">';
+                    $(obj).parent('div').prev('li').children('div').eq(1).html(invalid_img);
+                    $(obj).parent('div').prev('li').children('div').eq(1).children('img').attr('src','__PUBLIC__/home/images/invalid.png');
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -395,6 +398,9 @@
                 if(data){
 //                    $(obj).parent('div').prev('li').children('div').eq(0).children('img').attr('src','__PUBLIC__/home/images/sell.png');
                     img.attr('src',img_src_refill);
+                    var invalid_img = '<img width="80px" style="opacity:0.5">';
+                    $(obj).parent('div').prev('li').children('div').eq(1).html('');
+//                    $(obj).parent('div').prev('li').children('div').eq(1).children('img').attr('src','');
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
