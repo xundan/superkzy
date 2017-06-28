@@ -18,6 +18,7 @@ class WxCoalSellMsgCard extends MsgCard
         $img = $img_name['img'];
         $name = $img_name['name'];
         $message = $this->buildCollection();
+        $dial_param = ''.$message['phone_number'].','.$message['id'];
         $publish_date = substr($message['update_time'], 0, 10);
         //标签图片 过期功能
         if ($message['invalid_id'] == 99) {
@@ -37,7 +38,7 @@ class WxCoalSellMsgCard extends MsgCard
         </div>
     </div>
     <div class=\"weui_media_bd text-center\" style=\"\">
-        <a href=\"tel:{$message['phone_number']}\" onclick=\"ck_log('dial', {$message['phone_number']})\" class=\"\" style='text-decoration: none;color: black'>
+        <a href=\"tel:{$message['phone_number']}\" onclick=\"ck_log('dial', '{$dial_param}')\" class=\"\" style='text-decoration: none;color: black'>
             <h4><img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
                 <span style=\"\">拨打电话</span></h4>
         </a>

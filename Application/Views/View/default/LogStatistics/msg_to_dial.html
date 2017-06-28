@@ -10,10 +10,10 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/js/echarts.min.js"></script>
-    <title>{$s_date}->{$e_date}电话关系统计</title>
+    <title>{$s_date}->{$e_date}电话消息统计</title>
 </head>
 <body>
-<h1>{$s_date}->{$e_date}电话关系统计（不要过于频繁刷新本页面）</h1>
+<h1>{$s_date}->{$e_date}电话消息统计</h1>
 <table class="table table-hover text-center" style="table-layout: fixed">
     <tr>
         <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/show_all')}?s_date={$s_date}&e_date={$e_date}">个人统计总页</a></td>
@@ -29,9 +29,9 @@
 </table>
 <table class="table table-hover text-center" style="table-layout: fixed">
     <tr>
-        <td><a class="btn" href="{:U('Views/LogStatistics/dial_web')}?s_date={$prev_s_date}&e_date={$prev_e_date}">前七天</a></td>
+        <td><a class="btn" href="{:U('Views/LogStatistics/msg_to_dial')}?s_date={$prev_s_date}&e_date={$prev_e_date}">前七天</a></td>
         <td><h4>{$s_date}->{$e_date}</h4></td>
-        <td><a class="btn" href="{:U('Views/LogStatistics/dial_web')}?s_date={$next_s_date}&e_date={$next_e_date}">后七天</a></td>
+        <td><a class="btn" href="{:U('Views/LogStatistics/msg_to_dial')}?s_date={$next_s_date}&e_date={$next_e_date}">后七天</a></td>
     </tr>
     <tr>
         <td><label for="s_picker">起始日期：</label><input id="s_picker" type="date" value="{$s_date}"/></td>
@@ -46,23 +46,17 @@
 
     <tr>
         <td>序号</td>
-        <td>呼出者</td>
-        <td>呼出者ID</td>
-        <td>被呼号码</td>
-        <td>被呼消息来源</td>
+        <td>类型</td>
+        <td>消息ID</td>
         <td>总操作数量</td>
-        <!--<td>详细</td>-->
     </tr>
     <volist name="res" id="vo">
-        <tr class="warning">
+        <tr class="success">
             <td>{$i}</td>
-            <td>{$vo.user_name}</td>
-            <td><a href="{:U('Views/LogStatistics/user_to_dial')}?uid={$vo.u}&s_date={$s_date}&e_date={$e_date}">{$vo.u}</a></td>
-            <td><a href="{:U('Views/LogStatistics/dial_detail')}?phone={$vo.param}&s_date={$s_date}&e_date={$e_date}">{$vo.param}</a></td>
-            <td>{$vo.s}</td>
+            <td>{$vo.category}</td>
+            <td><a href="{:U('Views/LogStatistics/msg_to_dial_detail')}?id={$vo.u}&s_date={$s_date}&e_date={$e_date}">{$vo.u}</a></td>
             <td>{$vo.c}</td>
             <!--<td class="duration">{$vo.a}</td>-->
-            <!--<td><a href="{:U('Views/LogStatistics/dial_detail')}?phone={$vo.param}&s_date={$s_date}&e_date={$e_date}">详细</a></td>-->
         </tr>
     </volist>
 </table>
@@ -71,7 +65,7 @@
     function select_date(){
         var s_date = $("#s_picker").val();
         var e_date = $("#e_picker").val();
-        window.location.href = "{:U('Views/LogStatistics/dial_web')}?s_date="+s_date+"&e_date="+e_date;
+        window.location.href = "{:U('Views/LogStatistics/msg_to_dial')}?s_date="+s_date+"&e_date="+e_date;
     }
 </script>
 </html>

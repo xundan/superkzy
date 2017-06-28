@@ -19,7 +19,7 @@ class LogController
         $data['param'] = $subInfo['param']?$subInfo['param']:null;
         $data['title'] = $subInfo['title']?$subInfo['title']:null;
         $data['oper'] = $subInfo['oper']?$subInfo['oper']:"browse";
-        $data['result'] = $subInfo['result']?$subInfo['result']:"OK";
+        $data['result'] = $subInfo['result']?$subInfo['result']:"1";
         $res = M('log')->data($data)->add();
         if($res){
             $returnArr['status'] = 1;

@@ -11,6 +11,7 @@ namespace Views\Controller;
 
 use Think\Controller;
 use Views\Model\LogModel;
+use Views\Model\MessageModel;
 
 class LogStatisticsController extends Controller
 {
@@ -138,6 +139,7 @@ class LogStatisticsController extends Controller
         $this->display();
     }
 
+
     public function dial($s_date, $e_date){
         $this_s_time = strtotime($s_date);
         $prev_s_date = date("Y-m-d",strtotime("-7 day", $this_s_time));
@@ -169,7 +171,11 @@ class LogStatisticsController extends Controller
         $this->display();
     }
 
-
+    /**
+     * 按呼出电话统计用户
+     * @param $s_date
+     * @param $e_date
+     */
     public function user_to_dial($s_date, $e_date){
         $this_s_time = strtotime($s_date);
         $prev_s_date = date("Y-m-d",strtotime("-7 day", $this_s_time));
@@ -201,6 +207,49 @@ class LogStatisticsController extends Controller
     }
 
 
+    /**
+     * 按电话统计小消息
+     * @param $s_date
+     * @param $e_date
+     */
+    public function msg_to_dial($s_date, $e_date){
+        $this_s_time = strtotime($s_date);
+        $prev_s_date = date("Y-m-d",strtotime("-7 day", $this_s_time));
+        $next_s_date = date("Y-m-d",strtotime("+7 day", $this_s_time));
+        $this_e_time = strtotime($e_date);
+        $prev_e_date = date("Y-m-d",strtotime("-7 day", $this_e_time));
+        $next_e_date = date("Y-m-d",strtotime("+7 day", $this_e_time));
+
+        $Logs = new LogModel();
+        $res = $Logs->all_msg_to_dial($s_date, $e_date);
+        $this->assign("res",$res);
+        $this->assign("s_date",$s_date);
+        $this->assign("e_date",$e_date);
+        $this->assign("prev_s_date",$prev_s_date);
+        $this->assign("next_s_date",$next_s_date);
+        $this->assign("prev_e_date",$prev_e_date);
+        $this->assign("next_e_date",$next_e_date);
+        $this->display();
+    }
+
+    public function msg_to_dial_detail($id,$s_date, $e_date)
+    {
+        if($id==1){
+            echo '旧数据，未记录消息ID';
+        }else{
+            $Logs =  new LogModel();
+            $details = $Logs->detail_msg_to_dial($id,$s_date, $e_date);
+            $Msg = new MessageModel();
+            $message = $Msg->getById($id);
+            $this->assign("details",$details);
+            $this->assign("message",$message);
+            $this->assign("s_date",$s_date);
+            $this->assign("e_date",$e_date);
+            $this->display();
+        }
+    }
+
+
     public function dial_web($s_date, $e_date){
         $this_s_time = strtotime($s_date);
         $prev_s_date = date("Y-m-d",strtotime("-7 day", $this_s_time));
@@ -220,4 +269,6 @@ class LogStatisticsController extends Controller
         $this->assign("next_e_date",$next_e_date);
         $this->display();
     }
+
+    // todo 根据电话找到信息，然后找到所有打电话的人
 }

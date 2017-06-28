@@ -21,6 +21,7 @@ class CoalBuyMsgCard extends MsgCard
         $personal_page = $this->getPersonalUrl();
 //        $publish_date = date("Y-m-d", $message['publish_time']);
         $publish_date = substr($message['update_time'], 0, 10);
+        $dial_param = ''.$message['phone_number'].','.$message['id'];
         $message_detail = U('OwnerOrder/owner_order_trade_buy_detail', array('id' => $message['id']));
         //标签图片 过期功能
         if ($message['invalid_id'] == 99) {
@@ -51,7 +52,7 @@ class CoalBuyMsgCard extends MsgCard
         <p class=\"weui_media_desc\"><img src=\"__PUBLIC__/home/images/area_start.png\" style=\"width: 10px;height: 15px\">" . $message['user']['city'] . "</p>
     </div>
     <div class=\"weui_media_bd text-center\" style=\"\">
-        <a href=\"tel:{$message['phone_number']}\" onclick=\"ck_log('dial', {$message['phone_number']})\" class=\"\" style='text-decoration: none;color: black'>
+        <a href=\"tel:{$message['phone_number']}\" onclick=\"ck_log('dial', '{$dial_param}')\" class=\"\" style='text-decoration: none;color: black'>
             <h4>
                 <img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
                 <span style=\"\">拨打电话</span>
@@ -97,7 +98,7 @@ class CoalBuyMsgCard extends MsgCard
         <p class=\"weui_media_desc\">" . $message["user"]["city"] . "</p>
     </div>
     <div class=\"weui_media_bd text-center\" style=\"\">
-        <a href=\"tel:{$message['phone_number']}\" onclick=\"ck_log('dial', {$message['phone_number']})\" class=\"\" style='text-decoration: none;color: black'>
+        <a href=\"tel:{$message['phone_number']}\" onclick=\"ck_log('dial', '{$dial_param}')\" class=\"\" style='text-decoration: none;color: black'>
             <h4>
                 <img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
                 <span style=\"\">拨打电话</span>

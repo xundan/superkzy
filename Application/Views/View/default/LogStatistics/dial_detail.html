@@ -20,6 +20,7 @@
         <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/oper')}?s_date={$s_date}&e_date={$e_date}">操作统计总页</a></td>
         <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/dial')}?s_date={$s_date}&e_date={$e_date}">电话呼入统计总页</a></td>
         <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/user_to_dial')}?s_date={$s_date}&e_date={$e_date}">电话呼出统计总页</a></td>
+        <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/msg_to_dial')}?s_date={$s_date}&e_date={$e_date}">电话消息统计总页</a></td>
         <td><a class="btn btn-warning" href="{:U('Views/LogStatistics/dial_web')}?s_date={$s_date}&e_date={$e_date}">电话双向统计总页</a></td>
         <td><a class="btn btn-warning" href="{:U('Views/MessageStatistic/statistic_all')}">信息总量统计总页</a></td>
     </tr>
@@ -48,7 +49,7 @@
             <td>{$vo.ip}</td>
             <td>{$vo.page}</td>
             <td>{$vo.oper}</td>
-            <td>{$vo.result}</td>
+            <td><a href="{:U('Views/LogStatistics/msg_to_dial_detail')}?id={$vo.result}&s_date={$s_date}&e_date={$e_date}">{$vo.result}</a></td>
             <td>{$vo.now}</td>
         </tr>
     </volist>

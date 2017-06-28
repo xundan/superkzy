@@ -20,6 +20,7 @@ class CarNeedMsgCard extends MsgCard
 //        $publish_date = date("Y-m-d", $message['publish_time']);
         $publish_date = substr($message['update_time'],0,10);
         $areastring = '';
+        $dial_param = ''.$message['phone_number'].','.$message['id'];
         if($message['district_start']['name']!=='空' || $message['district_end']['name']!=='空'){
             $areastring = "<p class=\"weui_media_desc\">
             <img src=\"__PUBLIC__/home/images/area_start.png\" style=\"width: 15px;height: 20px\">
@@ -49,7 +50,7 @@ class CarNeedMsgCard extends MsgCard
             <h4 class=\"weui_media_title\"><span class='highlight' onclick='window.location.href=\"{$personal_page}\"'>{$message['user']['user_name']}</span></h4>
     ".$areastring."</div>
     <div class=\"weui_media_bd\" style=\"\">
-        <a href=\"tel:{$message['phone_number']}\" onclick=\"ck_log('dial', {$message['phone_number']})\" class=\"\" style='text-decoration: none;color: black'>
+        <a href=\"tel:{$message['phone_number']}\" onclick=\"ck_log('dial', '{$dial_param}')\" class=\"\" style='text-decoration: none;color: black'>
             <h4><img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
             <span style=\"\">拨打电话</span></h4>
         </a>
@@ -83,7 +84,7 @@ class CarNeedMsgCard extends MsgCard
             <h4 class=\"weui_media_title\"><span class='highlight' onclick='window.location.href=\"{$personal_page}\"'>{$message['user']['user_name']}</span></h4>
         ".$areastring."</div>
     <div class=\"weui_media_bd\" style=\"\">
-        <a href=\"tel:{$message['phone_number']}\" onclick=\"ck_log('dial', {$message['phone_number']})\" class=\"\" style='text-decoration: none;color: black'>
+        <a href=\"tel:{$message['phone_number']}\" onclick=\"ck_log('dial', '{$dial_param}')\" class=\"\" style='text-decoration: none;color: black'>
             <h4><img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
             <span style=\"\">拨打电话</span></h4>
         </a>

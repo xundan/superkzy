@@ -91,6 +91,16 @@ class LogModel extends Model
         return $res;
     }
 
+    public function all_msg_to_dial($s_date,$e_date){
+        return $this->join('ck_messages on ck_messages.id = ck_log.result')->field("category, ck_log.result as u,count(param) as c")->where("oper='dial'and result>1 and now>'$s_date' and now<'$e_date'")->group('u')->order('c desc')->select();
+    }
+
+    public function detail_msg_to_dial($id, $s_date,$e_date){
+        if (!$id) return false;
+        $res = $this->field("uid,ip,title,page,param,oper,result,now,duration")->where("result = '$id' and oper='dial' and now>'$s_date' and now<'$e_date'")->order("now")->select();
+        return $res;
+    }
+
     public function dial_web($s_date,$e_date){
         $res = $this->join('ck_user on ck_user.uid = ck_log.uid')->join('ck_messages on ck_messages.owner = ck_log.param')->field('user_name, ck_log.uid as u,param, ck_messages.sender as s,count(param) as c')->where("oper='dial'and now>'$s_date' and now<'$e_date'")->group('param,ck_log.uid')->order("c desc")->select();
         return $res;

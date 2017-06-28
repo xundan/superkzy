@@ -9,10 +9,10 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/js/echarts.min.js"></script>
-    <title>{$s_date}->{$e_date}用户呼出统计</title>
+    <title>{$s_date}->{$e_date}被呼消息统计</title>
 </head>
 <body>
-<h1>{$s_date}->{$e_date}用户呼出统计</h1>
+<h1>{$s_date}->{$e_date}被呼消息统计</h1>
 <table class="table table-hover text-center" style="table-layout: fixed">
     <tr>
         <td><a class="btn btn-primary" href="{:U('Views/LogStatistics/show_all')}?s_date={$s_date}&e_date={$e_date}">个人统计总页</a></td>
@@ -26,6 +26,13 @@
     </tr>
 
 </table>
+<p><strong>
+    {$message['content']}
+</strong>
+</p>
+<p>
+    {$message['content_all']}
+</p>
 <table class="table table-hover">
     <tr>
         <td>序号</td>
@@ -49,7 +56,7 @@
             <td>{$vo.ip}</td>
             <td>{$vo.page}</td>
             <td>{$vo.oper}</td>
-            <td><a href="{:U('Views/LogStatistics/msg_to_dial_detail')}?id={$vo.result}&s_date={$s_date}&e_date={$e_date}">{$vo.result}</a></td>
+            <td>{$vo.result}</td>
             <td>{$vo.now}</td>
         </tr>
     </volist>

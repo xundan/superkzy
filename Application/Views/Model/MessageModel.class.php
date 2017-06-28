@@ -195,4 +195,12 @@ class MessageModel extends Model
         }
         return $res;
     }
+
+    public function getById($id)
+    {
+        $res=$this->where("id=".$id)->find();
+        return $res;
+    }
+
+
 }

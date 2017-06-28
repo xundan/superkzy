@@ -4,7 +4,7 @@ function ck_log(operation,param){
     // 参数可以不写
 
     if (!operation) operation = "browse";
-    var result="OK";
+    var result="1";
     var page = window.location.pathname;
     if (!param) param = window.location.search;
     var title = $("title").html();
@@ -12,6 +12,11 @@ function ck_log(operation,param){
         title = "空";
     }else if(title.indexOf("weixin")==0){
         title = "微信跳转";
+    }
+    if(operation=='dial'){
+        var array = param.split(",");
+        if (array[0]) param = array[0];
+        if (array[1]) result = array[1];
     }
     var subData = {
         "page":page,
