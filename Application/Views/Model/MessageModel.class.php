@@ -79,7 +79,7 @@ class MessageModel extends Model
 
     public function add_by_md5($data){
         $md5 = $data['content_all_md5'];
-        $exist = $this->where("content_all_md5='%s' and invalid_id=0",$md5)->find();
+        $exist = $this->where("content_all_md5='%s' and invalid_id=0",$md5)->order("publish_time desc")->find();
         if ($exist) {
             if ($exist['publish_time']+(86400*3)<time()){ // 三天前的不考虑去重（会导致MD5重复）
                 return $this->add($data);
