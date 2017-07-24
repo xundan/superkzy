@@ -44,6 +44,7 @@ class QueryRestController extends RestController
                     $user = $object2['user'];
                     $self = $object2['self'];
 
+                    // 融合过程
                     $cc = $this->checkCompleteness($kw);
 
                     $Query = new QueryModel();
