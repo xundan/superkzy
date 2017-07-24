@@ -61,8 +61,11 @@ class CoalSellMsgCard extends MsgCard
             <button class=\"btn btn-xs btn-default\" style=\"width: 70%;border-color: #04bfc6;color: #04bfc6\" onclick='collection_switch(this,{$message['id']})'>{$message['in_collection']}</button>
         </div>
     </div>
+    <div style=\"position: absolute;bottom: -10px;left: 0;color: red;z-index: 9;\">
+    <span class=\"glyphicon glyphicon-arrow-down detail_click\" style='display:none'>详情</span>
+    </div>
 </div>
-<table class=\"table table-condensed\" onclick='window.location.href=\"{$message_detail}\"'   style=\"margin: 0\">
+<table class=\"table table-condensed\" onclick='window.location.href=\"{$message_detail}\"'   style=\"margin: 0;\">
     <tbody>
         <tr><td class=\"highlight\">煤炭种类:{$message['kind']}</td><td class=\"highlight\">" . $priceString . "</td></tr>
         <tr><td class=\"highlight\">煤炭品质:{$message['trait']}</td><td class=\"highlight\">产地:{$message['district_start']['name']}</td></tr>
@@ -71,7 +74,7 @@ class CoalSellMsgCard extends MsgCard
     </tbody>
 </table>
 </li>" . "<div class='time-limit' style='margin-top:3px;margin-right:1px;text-align:right;display:none'>
-<button class='btn btn-sm btn-info' onclick='refill(this,{$message["id"]})'>续时</button>
+<button class='btn btn-sm btn-info' onclick='refill(this,{$message["id"]})'>一键重发</button>
 <button style='margin-left:5px' class='btn btn-sm btn-default " . $disableString . "' onclick='overdue(this,{$message["id"]})'>下架</button>
 <button style='margin-left:5px' class='btn btn-sm btn-danger' onclick='delete_modal(this,{$message["id"]})'>删除</button>
 </div>";
@@ -99,10 +102,13 @@ class CoalSellMsgCard extends MsgCard
             <button class=\"btn btn-xs btn-default\" style=\"width: 70%;border-color: #04bfc6;color: #04bfc6\" onclick='collection_switch(this,{$message['id']})'>{$message['in_collection']}</button>
         </div>
     </div>
+    <div style=\"position: absolute;bottom: -10px;left: 0;color: red;z-index: 9\">
+    <span class=\"glyphicon glyphicon-arrow-down detail_click\" style='display:none'>详情</span>
+    </div>
 </div>
 <div class=\"highlight\" onclick='window.location.href=\"{$message_detail}\"' >{$message['content']}</div><div class='pull-right'>发布时间:{$publish_date}</div>
 </li>" . "<div class='time-limit' style='margin-top:3px;margin-right:1px;text-align:right;display:none'>
-<button class='btn btn-sm btn-info' onclick='refill(this,{$message["id"]})'>续时</button>
+<button class='btn btn-sm btn-info' onclick='refill(this,{$message["id"]})'>一键重发</button>
 <button style='margin-left:5px' class='btn btn-sm btn-default " . $disableString . "' onclick='overdue(this,{$message["id"]})'>下架</button>
 <button style='margin-left:5px' class='btn btn-sm btn-danger' onclick='delete_modal(this,{$message["id"]})'>删除</button>
 </div>";

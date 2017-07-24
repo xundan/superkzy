@@ -130,8 +130,14 @@
                 </a>
             </td>
             <td class="text-center" style="vertical-align: middle;text-align: center">
-                <a href="{:U('OwnerPublishHistory/owner_publish_history')}" style="text-decoration: none;color: white">
-                    <div>
+                <a href="{:U('OwnerPublishHistory/owner_publish_history')}" style=";text-decoration: none;color: white">
+                    <div style="position: relative">
+                        <notempty name="publishCount">
+                            <span class="badge"
+                                  style="position: absolute;background-color: red;right: 0;top: 0;padding: 1px 3px">
+                            {$publishCount}
+                        </span>
+                        </notempty>
                         <img src="__PUBLIC__/home/images/my_publish.png" style="width: 40px;height: 40px;">
 
                         <p style="margin: 5% 0;font-size: 1em">我的发布</p>
@@ -157,17 +163,17 @@
                 </a>
             </td>
             <!--<td class="text-center" style="vertical-align: middle;text-align: center">-->
-                <!--<if condition="session('user_info')['role_id'] eq 2">-->
-                    <!--<div data-toggle="modal" data-target="#more" style="text-decoration: none;color: white">-->
-                        <!--<img src="__PUBLIC__/home/images/more.png" style="width: 40px;height: 40px;">-->
-                        <!--<p style="margin: 5% 0;font-size: 1em">更&emsp;&emsp;多</p>-->
-                    <!--</div>-->
-                    <!--<else />-->
-                    <!--<div onclick="window.location.href='{:U(\'CooperatePage/WeChe\')}'" style="color:white">-->
-                        <!--<img src="__PUBLIC__/home/images/more.png" style="width: 40px;height: 40px;">-->
-                        <!--<p style="margin: 5% 0;font-size: 1em">车主福利</p>-->
-                    <!--</div>-->
-                <!--</if>-->
+            <!--<if condition="session('user_info')['role_id'] eq 2">-->
+            <!--<div data-toggle="modal" data-target="#more" style="text-decoration: none;color: white">-->
+            <!--<img src="__PUBLIC__/home/images/more.png" style="width: 40px;height: 40px;">-->
+            <!--<p style="margin: 5% 0;font-size: 1em">更&emsp;&emsp;多</p>-->
+            <!--</div>-->
+            <!--<else />-->
+            <!--<div onclick="window.location.href='{:U(\'CooperatePage/WeChe\')}'" style="color:white">-->
+            <!--<img src="__PUBLIC__/home/images/more.png" style="width: 40px;height: 40px;">-->
+            <!--<p style="margin: 5% 0;font-size: 1em">车主福利</p>-->
+            <!--</div>-->
+            <!--</if>-->
             <!--</td>-->
         </tr>
     </table>

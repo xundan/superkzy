@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <title>煤价煤矿查询结果</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/loading.js"></script>
+</head>
+<style>
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background-color: #f7f7f7
+    }
+</style>
+<body style="background-color: #efeff4">
+<!--导航标签-->
+<div class="panel-title" style="height: 40px;margin:0;padding: 0;background-color: white;display: block">
+    <div id="myTab" class="weui_navbar" style=";margin-bottom: 0;">
+        <a href="#all" data-toggle="tab" class="weui_navbar_item"
+           style="color: black;text-decoration: none;font-size: 1.2em;width:50%">
+            <span>点击选择煤矿</span>
+        </a>
+        <a href="#all" data-toggle="tab" class="weui_navbar_item"
+           style="color: black;text-decoration: none;font-size: 1.2em;width:50%">
+            <span>点击筛选指标</span>
+        </a>
+        <!--<a href="#search" class="text-center" data-toggle="tab"-->
+        <!--style="word-wrap:break-word;table-layout:fixed;color: black;text-decoration: none;font-size: 1em;width:50%;padding: 5px 0;height:42px">-->
+        <!--<img src="__PUBLIC__/home/images/area_start.png" class="" style="height: 20px">-->
+        <!--<span id="refinery_name_html">点击选择煤矿</span>-->
+        <!--</a>-->
+    </div>
+</div>
+<!--订单展示栏-->
+<div class="tab-content">
+    <ul id="all" class="tab-pane active" style=";list-style-type: none">
+        <volist name="message" id="data">
+            <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
+                <div class="weui_media_box weui_media_appmsg"
+                     style="margin: 0;padding-left: 0;padding-right: 0">
+                    <div class="weui_media_bd" style="margin-left: 20px">
+                        <p class="weui_media_desc">
+                            <span>{$data.area_name}</span>
+                            <span>{$data.refinery_name}</span>
+                        </p>
+
+                        <h2 class="" style="font-size: 1.5em;color: red;margin:0">
+                            {$data.supply_company}
+                        </h2>
+                    </div>
+                    <div class="weui_media_bd text-center" style="">
+                        <a href="tel:{$data.phone_number}" onclick='event.stopPropagation();' class="dial"
+                           style='text-decoration: none;color: black'>
+                            <h4>
+                                <img src="__PUBLIC__/home/images/phone.png" class="dial" style="width: 20px">
+                                <span style="">拨打电话</span>
+                            </h4>
+                        </a>
+                        <empty name="data['content'][0]['detailed_index'][1].index_name">
+                            <div>
+                                <a href="{:U('CoalPriceSearch/coal_price_detail',array('message_id'=>$data['message_id']))}"
+                                   class="detail btn btn-xs btn-default disabled" style="width: 70%;border-color: #04bfc6;color:
+                                        #04bfc6">无详细指标</a>
+                            </div>
+                            <else/>
+                            <div>
+                                <a href="{:U('CoalPriceSearch/coal_price_detail',array('message_id'=>$data['message_id']))}"
+                                   class="detail btn btn-xs btn-default" style="width: 70%;border-color: #04bfc6;color:
+                                    #04bfc6">详细指标</a>
+                            </div>
+                        </empty>
+                    </div>
+                </div>
+                <hr style="margin-top: 0;margin-bottom: 8px"/>
+                <table class="table table-condensed table-striped" style="margin: 0;table-layout: fixed">
+                    <thead>
+                    <tr>
+                        <th class="text-center" style="border: none;">类别</th>
+                        <empty name="data['content'][0]['detailed_index'][0].index_name">
+                            <th class="text-center" style="border: none;">热量</th>
+                            <else/>
+                            <th class="text-center" style="border: none;">
+                                {$data['content'][0]['detailed_index'][0].index_name}
+                            </th>
+                        </empty>
+                        <th class="text-center" style="border: none;">一票价</th>
+                        <th class="text-center" style="border: none;">二票价</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <volist name="data['content']" id="vo">
+                        <tr>
+                            <notempty name="vo.kind_name">
+                                <td class="text-center" style="border: none;">{$vo.kind_name}</td>
+                                <td class="text-center" style="border: none;">
+                                    <empty name="vo['detailed_index'][0].index_value">
+                                        &mdash;
+                                        <else/>
+                                        {$vo['detailed_index'][0].index_value}
+                                    </empty>
+                                </td>
+                                <td class="text-center" style="border: none;">
+                                    <if condition="$vo.price eq -1">
+                                        无货
+                                        <elseif condition="$vo.price eq -2"/>
+                                        停产
+                                        <elseif condition="$vo.price eq '0'"/>
+                                        &mdash;
+                                        <else/>
+                                        {$vo.price}
+                                    </if>
+                                </td>
+                                <td class="text-center" style="border: none;">
+                                    <empty name="vo.tax">
+                                        &mdash;
+                                        <else/>
+                                        {$vo.tax}
+                                    </empty>
+                                </td>
+                            </notempty>
+                        </tr>
+                    </volist>
+                    </tbody>
+                </table>
+                <span class="pull-right help-block"
+                      style="font-size: 12px">发布时间:{$data['update_time']|substr=0,10}</span>
+            </li>
+        </volist>
+        <span id="insert_point"></span>
+    </ul>
+</div>
+<?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
+</body>
+
+<!--载入读取上次标签-->
+<script>
+    $(function () {
+    });
+</script>
+<!--点击标签查询-->
+<script>
+    //点击全部标签
+    $('#myTab a:eq(1)').click(function () {
+        //日志记录
+        ck_log('click', '点击筛选指标');
+        window.location.href = '{:U("CoalPriceSearch/coal_filter",array("message_ids"=>$message_ids))}';
+    });
+    //点击地址选择标签
+    //起始地
+    $('#myTab a:eq(0)').click(function () {
+        //日志记录
+        ck_log('click', '点击选择煤矿');
+        //地址跳转
+        window.location.href = "{:U('CoalPriceSearch/refinery_search_multiple')}";
+    });
+</script>
+<!--日志记录-->
+<script>
+    $('.dial').on('click', function () {
+        var temp = $(this).attr('href');
+        var phone_number = temp.match(/tel:(\d*)/)[1];
+        console.log(phone_number);
+        ck_log('dial', phone_number);
+    });
+    $('.detail').on('click', function () {
+        var temp = $(this).attr('href');
+        var message_id = temp.match(/message_id\/(\d*)/)[1];
+        console.log(message_id);
+        ck_log('click', '详细指标' + message_id);
+    });
+</script>
+<!--微信分享-->
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    wx.config({
+        debug: false,
+        appId: '{$signPackage["appId"]}',
+        timestamp: {$signPackage["timestamp"]},
+        nonceStr: '{$signPackage["nonceStr"]}',
+        signature: '{$signPackage["signature"]}',
+        jsApiList: [
+            // 所有要调用的 API 都要加到这个列表中
+            'onMenuShareTimeline', 'onMenuShareAppMessage',
+            'hideOptionMenu',
+            'showOptionMenu',
+            'hideMenuItems',
+            'showMenuItems',
+            'hideAllNonBaseMenuItem',
+            'showAllNonBaseMenuItem'
+        ]
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+        // 分享到朋友圈
+        wx.onMenuShareTimeline({
+            title: '超级矿资源煤价查询系统', // 分享标题
+            link: "http://www.kuaimei56.com/index.php/Home/CoalPriceSearch/coal_price_search_filter", // 分享链接
+            imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                ck_log("share", '分享煤价查询系统至朋友圈');
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                ck_log("share", '取消分享煤价查询系统至朋友圈');
+            }
+        });
+        //分享给朋友
+        wx.onMenuShareAppMessage({
+            title: '超级矿资源煤价查询系统', // 分享标题
+            desc: '超级矿资源官方认证的煤矿煤价查询系统，点击进入，畅享查询', // 分享描述
+            link: "http://www.kuaimei56.com/index.php/Home/CoalPriceSearch/coal_price_search_filter", // 分享链接
+            imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                ck_log("share", '分享煤价查询系统给好友');
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                ck_log("share", '取消分享煤价查询系统给好友');
+            }
+        });
+    });
+</script>
+<script>
+    window.onload = function () {
+        $('#loadingToast').hide();
+    }
+</script>
+</html>

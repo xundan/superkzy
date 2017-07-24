@@ -16,6 +16,52 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
 </head>
+<style>
+    @-moz-keyframes myMove {
+        0% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+
+    @-webkit-keyframes myMove {
+        0% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+
+    @-o-keyframes myMove {
+        0% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+
+    @keyframes myMove {
+        0% {
+            opacity: 1;
+        }
+        100% {
+            opacity: 0;
+        }
+    }
+
+    .detail_click {
+        /*text-align: center;*/
+        height: 25px;
+        -moz-animation: myMove 2s linear infinite alternate;
+        -webkit-animation: myMove 2s linear infinite alternate;
+        -o-animation: myMove 2s linear infinite alternate;
+        animation: myMove 2s linear infinite alternate;
+    }
+</style>
 <body>
 <include file="Common:common"/>
 <!--导航标签-->
@@ -469,5 +515,18 @@
             }, false);
         }
     });
+</script>
+<!--指引用户点击详情-->
+<script>
+    $(function(){
+        var device_width = $(window).width();
+        $('.detail_click').css('left',device_width/2-42).show();
+
+//        if(cookie('detail_click')){
+//            $('.detail_click').css('left',device_width/2-42).show();
+//        }else{
+//        }
+//        cookie('detail_click',null);
+    })
 </script>
 </html>

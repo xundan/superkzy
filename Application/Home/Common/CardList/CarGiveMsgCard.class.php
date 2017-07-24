@@ -69,7 +69,7 @@ class CarGiveMsgCard extends MsgCard
 </table>
 <div class='pull-right'>发布时间:{$publish_date}</div>
 </li>"."<div class='time-limit' style='margin-top:3px;margin-right:1px;text-align:right;display:none'>
-<button class='btn btn-sm btn-info' onclick='refill(this,{$message["id"]})'>续时</button>
+<button class='btn btn-sm btn-info' onclick='refill(this,{$message["id"]})'>一键重发</button>
 <button style='margin-left:5px' class='btn btn-sm btn-default ".$disableString."' onclick='overdue(this,{$message["id"]})'>下架</button>
 <button style='margin-left:5px' class='btn btn-sm btn-danger' onclick='delete_modal(this,{$message["id"]})'>删除</button>
 </div>";
@@ -98,7 +98,7 @@ class CarGiveMsgCard extends MsgCard
 </div>
 <div class=\"highlight\" onclick='window.location.href=\"{$message_detail}\"' >{$message['content']}</div><div class='pull-right'>发布时间:{$publish_date}</div>
 </li>"."<div class='time-limit' style='margin-top:3px;margin-right:1px;text-align:right;display:none'>
-<button class='btn btn-sm btn-info' onclick='refill(this,{$message["id"]})'>续时</button>
+<button class='btn btn-sm btn-info' onclick='refill(this,{$message["id"]})'>一键重发</button>
 <button style='margin-left:5px' class='btn btn-sm btn-default ".$disableString."' onclick='overdue(this,{$message["id"]})'>下架</button>
 <button style='margin-left:5px' class='btn btn-sm btn-danger' onclick='delete_modal(this,{$message["id"]})'>删除</button>
 </div>";

@@ -186,6 +186,15 @@ class MessagesModel extends Model
     }
 
     /**
+     * @param WhereConditions $cond
+     * @return int 用户已发布且未删除的信息数
+     */
+    public function publishCount(WhereConditions $cond){
+        $this->_message = $this->where($cond->getWhereConditions())->where('invalid_id=0 or invalid_id=99')->select();
+        return count($this->_message);
+    }
+
+    /**
      * 用来方便测试
      * @param WhereConditions $cond
      * @return string

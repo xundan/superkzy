@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <title>煤价指标筛选</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
+</head>
+<include file="Common:common"/>
+<body>
+<!--筛选栏-->
+<!--<div class="container">-->
+<form name="filter" id="filter" action="" method="post" class="form-inline">
+    <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading1">
+                <a data-toggle="collapse" href="#collapse2" aria-expanded="true" aria-controls="collapse2"
+                   style="text-decoration: none;color: black;">
+                    <h4 class="panel-title">
+                        粒度(多选)
+                    </h4>
+                </a>
+            </div>
+            <div id="collapse1" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading2">
+                <div class="panel-body">
+                    <label class="mybtn mybtn-default"
+                           style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                        <input type="checkbox" class="pull-left" style="display: none" name="filter_granularity[]"
+                               id="granularity1" autocomplete="off" value="原煤">原 煤
+                    </label>
+                    <label class="mybtn mybtn-default"
+                           style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                        <input type="checkbox" class="pull-left" style="display: none" name="filter_granularity[]"
+                               id="granularity2" autocomplete="off" value="沫煤">面 煤
+                    </label>
+                    <label class="mybtn mybtn-default"
+                           style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                        <input type="checkbox" class="pull-left" style="display: none" name="filter_granularity[]"
+                               id="granularity3" autocomplete="off" value="一三籽">一三籽
+                    </label>
+                    <label class="mybtn mybtn-default"
+                           style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                        <input type="checkbox" class="pull-left" style="display: none" name="filter_granularity[]"
+                               id="granularity4" autocomplete="off" value="二五籽">二五籽
+                    </label>
+                    <label class="mybtn mybtn-default"
+                           style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                        <input type="checkbox" class="pull-left" style="display: none" name="filter_granularity[]"
+                               id="granularity5" autocomplete="off" value="三八块">三八快
+                    </label>
+                    <label class="mybtn mybtn-default"
+                           style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                        <input type="checkbox" class="pull-left" style="display: none" name="filter_granularity[]"
+                               id="granularity6" autocomplete="off" value="中大块">中大块
+                    </label>
+                    <label class="mybtn mybtn-default"
+                           style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                        <input type="checkbox" class="pull-left" style="display: none" name="filter_granularity[]"
+                               id="granularity7" autocomplete="off" value="其他">其他
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading2">
+                <a data-toggle="collapse" href="#collapse2" aria-expanded="true" aria-controls="collapse2"
+                   style="text-decoration: none;color:black">
+                    <h4 class="panel-title">
+                        热值区间
+                        <span id="filter_heat_alert" class="text-danger" style="font-size: .8em"></span>
+                    </h4>
+                </a>
+            </div>
+            <div id="collapse2" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading2">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-xs-5" style="padding-right: 0">
+                            <div class="input-group" style="">
+                                <input type="number" name="filter_heat_min" class="form-control" placeholder="最低值">
+                                <span class="input-group-addon">卡</span>
+                            </div>
+                        </div>
+                        <div class="col-xs-2 text-center" style="">
+                            <!--——-->
+                            <!--&mdash;&mdash;-->
+                            <hr style="border-color: black;margin: 16px 0"/>
+                        </div>
+                        <div class="col-xs-5" style="padding-left: 0">
+                            <div class="input-group">
+                                <input type="number" name="filter_heat_max" class="form-control" placeholder="最高值">
+                                <span class="input-group-addon">卡</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading3">
+                <a data-toggle="collapse" href="#collapse3" aria-expanded="true" aria-controls="collapse3"
+                   style="text-decoration: none;color: black;">
+                    <h4 class="panel-title">
+                        硫(多选)
+                    </h4>
+                </a>
+            </div>
+            <div id="collapse3" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading3">
+                <div class="panel-body">
+                    <label class="mybtn mybtn-default"
+                           style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                        <input type="checkbox" class="pull-left" style="display: none" name="filter_sulfur[]"
+                               id="sulfur1" autocomplete="off" value="1">0.5以下
+                    </label>
+                    <label class="mybtn mybtn-default"
+                           style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                        <input type="checkbox" class="pull-left" style="display: none" name="filter_sulfur[]"
+                               id="sulfur2" autocomplete="off" value="2">0.5-1.5
+                    </label>
+                    <label class="mybtn mybtn-default"
+                           style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                        <input type="checkbox" class="pull-left" style="display: none" name="filter_sulfur[]"
+                               id="sulfur3" autocomplete="off" value="3">1.5-2
+                    </label>
+                    <label class="mybtn mybtn-default"
+                           style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                        <input type="checkbox" class="pull-left" style="display: none" name="filter_sulfur[]"
+                               id="sulfur4" autocomplete="off" value="4">2以上
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading4">
+                <a data-toggle="collapse" href="#collapse4" aria-expanded="true" aria-controls="collapse4"
+                   style="text-decoration: none;color: black;">
+                    <h4 class="panel-title">
+                        挥发(多选)
+                    </h4>
+                </a>
+            </div>
+            <div id="collapse4" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading4">
+                <div class="panel-body">
+                    <label class="mybtn mybtn-default"
+                           style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                        <input type="checkbox" class="pull-left" style="display: none" name="filter_volatile[]"
+                               id="volatile1" autocomplete="off" value="1">小于25
+                    </label>
+                    <label class="mybtn mybtn-default"
+                           style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                        <input type="checkbox" class="pull-left" style="display: none" name="filter_volatile[]"
+                               id="volatile2" autocomplete="off" value="2">25-30
+                    </label>
+                    <label class="mybtn mybtn-default"
+                           style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
+                        <input type="checkbox" class="pull-left" style="display: none" name="filter_volatile[]"
+                               id="volatile3" autocomplete="off" value="3">大于30
+                    </label>
+                    <!--<label class="mybtn mybtn-default"-->
+                    <!--style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">-->
+                    <!--<input type="checkbox" class="pull-left" style="display: none" name="filter_volatile[]"-->
+                    <!--id="volatile4" autocomplete="off" value="4">33以上-->
+                    <!--</label>-->
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!--隐藏提交筛选条件-->
+    <input type="hidden" name="message_ids" value="{$message_ids}">
+
+    <div class="btn-group btn-group-justified btn-group-sm" style="">
+        <div class="btn-group" style="">
+            <input class="btn btn-default" type="reset" value="重&emsp;&emsp;置" id="filter_reset"
+                   style="border: none;font-size: 1.3em;color:#fb3e1e;background-color: #ffe1dd">
+        </div>
+        <div class="btn-group">
+            <a href="#" id="filter_submit" class="btn btn-default"
+               style="border: none;color:white;font-size: 1.3em;background-color: #fb3e1e">
+                确&emsp;&emsp;认
+            </a>
+        </div>
+    </div>
+</form>
+<!--</div>-->
+<?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
+</body>
+<!--按钮选择样式-->
+<script>
+
+    $('input[type=checkbox]').click(function () {
+        if ($(this).parent('label').hasClass('myactive')) {
+            $(this).parent('label').removeClass('myactive');
+        } else {
+            $(this).parent('label').addClass('myactive');
+        }
+    });
+
+</script>
+<!--强制刷新页面-->
+<script>
+    $(function () {
+        var isPageHide = false;
+        window.addEventListener('pageshow', function () {
+            if (isPageHide) {
+                window.location.reload();
+            }
+        });
+        window.addEventListener('pagehide', function () {
+            isPageHide = true;
+        });
+    })
+</script>
+<!--载入时读取上次选的cookie-->
+<script>
+    $(function () {
+        //粒度
+        if (cookie('coal_price_search_filter_granularity')) {
+            var filter_granularity_value = cookie('coal_price_search_filter_granularity').split(',');
+            var filter_granularity = $('input[name="filter_granularity[]"]');
+            for (var i = 0; i < filter_granularity.length; i++) {
+                for (var j = 0; j < filter_granularity_value.length; j++) {
+                    if (filter_granularity[i].value == filter_granularity_value[j]) {
+                        filter_granularity[i].checked = true;
+                        break
+                    }
+                }
+            }
+        }
+        console.log($('input[name="filter_granularity[]"]:checked'));
+
+        $('input[name="filter_granularity[]"]:checked').parent('label').addClass('myactive');
+        //热值
+        if (cookie('coal_price_search_filter_heat_min')) {
+            var filter_heat_min_value = cookie('coal_price_search_filter_heat_min');
+            $('input[name=filter_heat_min]').val(filter_heat_min_value);
+        }
+        if (cookie('coal_price_search_filter_heat_max')) {
+            var filter_heat_max_value = cookie('coal_price_search_filter_heat_max');
+            $('input[name=filter_heat_max]').val(filter_heat_max_value);
+        }
+        //硫
+        if (cookie('coal_price_search_filter_sulfur')) {
+            var filter_sulfur_value = cookie('coal_price_search_filter_sulfur').split(',');
+            var filter_sulfur = $('input[name="filter_sulfur[]"]');
+            for (var i = 0; i < filter_sulfur.length; i++) {
+                for (var j = 0; j < filter_sulfur_value.length; j++) {
+                    if (filter_sulfur[i].value == filter_sulfur_value[j]) {
+                        filter_sulfur[i].checked = true;
+                        break
+                    }
+                }
+            }
+        }
+        $('input[name="filter_sulfur[]"]:checked').parent('label').addClass('myactive');
+        //挥发
+        if (cookie('coal_price_search_filter_volatile')) {
+            var filter_volatile_value = cookie('coal_price_search_filter_volatile').split(',');
+            var filter_volatile = $('input[name="filter_volatile[]"]');
+            for (var i = 0; i < filter_volatile.length; i++) {
+                for (var j = 0; j < filter_volatile_value.length; j++) {
+                    if (filter_volatile[i].value == filter_volatile_value[j]) {
+                        filter_volatile[i].checked = true;
+                        break
+                    }
+                }
+            }
+        }
+        $('input[name="filter_volatile[]"]:checked').parent('label').addClass('myactive');
+    })
+</script>
+
+<!--输入非法提示重置-->
+<script>
+    $('input[name=filter_heat_min]').focus(function () {
+        if ($('#filter_heat_alert').html()) {
+            $(this).val('');
+            $('#filter_heat_alert').html('');
+        }
+    });
+    $('input[name=filter_heat_max]').focus(function () {
+        if ($('#filter_heat_alert').html()) {
+            $(this).val('');
+            $('#filter_heat_alert').html('');
+        }
+    });
+</script>
+
+<!--重置按钮重置选中样式-->
+<script>
+    $('#filter_reset').click(function () {
+        ck_log("filter", "重置");
+        $('input[type=checkbox]:checked').parent('label').removeClass('myactive');
+    });
+</script>
+
+<!--所选筛选条件存入cookie，跳转到买卖查询-->
+<script>
+    $('#filter_submit').click(function () {
+        var filter_heat_min = $('input[name=filter_heat_min]').val().trim();
+        var filter_heat_max = $('input[name=filter_heat_max]').val().trim();
+        //检测输入合法性 高位热值不小于低位热值
+        if (filter_heat_max) {
+            if (parseInt(filter_heat_max) < parseInt(filter_heat_min)) {
+                $('#filter_heat_alert').html('热值区间不正确！');
+                return false;
+            }
+        }
+        //筛选条件存入cookie
+        var filter_granularity = [];
+        $('input[name="filter_granularity[]"]:checked').each(function () {
+            filter_granularity.push($(this).val());
+        });
+        var filter_sulfur = [];
+        $('input[name="filter_sulfur[]"]:checked').each(function () {
+            filter_sulfur.push($(this).val());
+        });
+        var filter_volatile = [];
+        $('input[name="filter_volatile[]"]:checked').each(function () {
+            filter_volatile.push($(this).val());
+        });
+        cookie('coal_price_search_filter_granularity', filter_granularity.join(','));
+        cookie('coal_price_search_filter_sulfur', filter_sulfur.join(','));
+        cookie('coal_price_search_filter_volatile', filter_volatile.join(','));
+        cookie('coal_price_search_filter_heat_min', filter_heat_min);
+        cookie('coal_price_search_filter_heat_max', filter_heat_max);
+        //检测所选条件是否为空，为空默认全选速度太慢，故必须做出选择
+//        if ((!filter_heat_max) && (!filter_heat_min) && (filter_granularity.length == 0) && (filter_sulfur.length == 0) && (filter_volatile.length == 0)) {
+//            showToast2('您还没有进行指标筛选,请至少选中一项');
+//            return false;
+//        }
+        // 写入分析日志
+        ck_log("filter", "[" + filter_granularity.join(',') + "," + filter_sulfur.join(',') + "," + filter_volatile.join(',') + "," + filter_heat_min + "," + filter_heat_max + "]");
+        //提交
+        document.filter.method = "post";
+        document.filter.action = "{:U('CoalPriceSearch/filtered_result_show')}";
+        document.filter.submit();
+    });
+</script>
+
+</html>

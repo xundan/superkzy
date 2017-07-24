@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="full-screen" content="yes">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <title>煤价煤矿选择</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
+</head>
+<style>
+    .refinery_name {
+        cursor: pointer
+    }
+
+    .refinery_name:active {
+        background-color: #eaeaea;
+    }
+
+    .clear {
+        clear: both;
+    }
+
+    .mybtn {
+        white-space: nowrap;
+        font-size: 12px;
+        vertical-align: middle;
+        /*height: 38px;*/
+        text-overflow: ellipsis;
+        border-radius: 200px;
+    }
+
+</style>
+<include file="Common:common"/>
+<body style="background-color: white">
+<form name="call_back" id="call_back">
+    <input type="hidden" name="select_category">
+    <input type="hidden" name="refinery_name">
+</form>
+<!--搜索框-->
+<div class="bd">
+    <div class="weui_search_bar" id="search_bar">
+        <form class="weui_search_outer">
+            <div class="weui_search_inner">
+                <i class="weui_icon_search"></i>
+                <input type="search" class="weui_search_input" id="search_input" placeholder="搜索" required/>
+                <a href="javascript:" class="weui_icon_clear" id="search_clear"></a>
+            </div>
+            <label for="search_input" class="weui_search_text" id="search_text">
+                <i class="weui_icon_search"></i>
+                <span>搜索(输入煤矿名称,例如:海湾煤矿)</span>
+            </label>
+        </form>
+        <a href="javascript:" class="weui_search_cancel" id="search_cancel">取消</a>
+    </div>
+    <div class="weui_cells weui_cells_access search_show" id="search_show">
+        <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p id="search0" class="refinery_name" style="margin-bottom: 0"></p>
+                </div>
+            </div>
+        </a>
+        <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p id="search1" class="refinery_name" style="margin-bottom: 0"></p>
+                </div>
+            </div>
+        </a>
+        <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p id="search2" class="refinery_name" style="margin-bottom: 0"></p>
+                </div>
+            </div>
+        </a>
+        <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p id="search3" class="refinery_name" style="margin-bottom: 0"></p>
+                </div>
+            </div>
+        </a>
+        <a href="javascript:void(0)" name="real_time_area" style="text-decoration: none;color:black;">
+            <div class="weui_cell">
+                <div class="weui_cell_bd weui_cell_primary">
+                    <p id="search4" class="refinery_name" style="margin-bottom: 0"></p>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="" style="padding: 0;height: auto">
+    <button class="btn pull-left area_name" style="padding: 6px 0;margin:1% 2.5%;width: 20%;">全部</button>
+    <!--<button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">榆林</button>-->
+    <button class="btn pull-left area_name" style="padding: 6px 0;;margin:1% 2.5%;width: 20%">鄂尔多斯</button>
+    <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">山西</button>
+    <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">神木</button>
+    <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">榆阳</button>
+    <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">府谷</button>
+    <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">横山</button>
+    <button class="btn pull-left area_name" style="margin:1% 2.5%;width: 20%">其他</button>
+    <div class="clear"></div>
+</div>
+<form name="refinery_choose">
+    <div id="last_search" style="background-color: #efeff4;padding-bottom: 2%">
+        &emsp;最近搜索<br/>
+        <!--<button type="button" class="close"><span>&times;</span></button>-->
+    </div>
+    <!--<table class="table table-bordered text-center" style="table-layout: fixed;vertical-align: middle">-->
+    <!--<tbody id="show_refinery">-->
+    <!--</tbody>-->
+    <!--</table>-->
+    <div id="show_refinery" style="">
+    </div>
+    <div class="pull-right" style="margin-top: 2%;margin-bottom: 12%">
+        <a href="{:U('Feedback/feedback')}" style="text-decoration: underline !important;">
+            煤矿不全,煤价不准,或其他问题请点击这里哦
+        </a>
+
+        <div class="clear"></div>
+    </div>
+
+    <div class="btn-group btn-group-justified btn-group-sm" style="position: fixed;bottom: 0;">
+        <div class="btn-group" style="">
+            <input class="btn btn-default" type="reset" value="重&emsp;&emsp;置" id="filter_reset"
+                   style="border: none;font-size: 1.3em;color:#fb3e1e;background-color: #ffe1dd">
+        </div>
+        <div class="btn-group">
+            <a href="#" id="filter_submit" class="btn btn-default"
+               style="border: none;color:white;font-size: 1.3em;background-color: #fb3e1e">
+                确&emsp;&emsp;认
+            </a>
+        </div>
+    </div>
+</form>
+<div id="loadingToast" class="weui_loading_toast" style="display:none;">
+    <div class="weui_mask_transparent"></div>
+    <div class="weui_toast">
+        <div class="weui_loading">
+            <div class="weui_loading_leaf weui_loading_leaf_0"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_1"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_2"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_3"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_4"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_5"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_6"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_7"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_8"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_9"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_10"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_11"></div>
+        </div>
+        <p class="weui_toast_content">数据加载中</p>
+    </div>
+</div>
+
+
+<?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
+</body>
+
+<!--按钮选择样式-->
+<script>
+    $('body').on('click', 'input[type=checkbox]', function () {
+        if ($(this).parent('label').hasClass('myactive')) {
+            $(this).parent('label').removeClass('myactive');
+        } else {
+            $(this).parent('label').addClass('myactive');
+        }
+    })
+</script>
+<!--重置按钮重置选中样式-->
+<script>
+    $('#filter_reset').click(function () {
+        ck_log("filter", "重置");
+        $('input[type=checkbox]:checked').parent('label').removeClass('myactive');
+    });
+</script>
+<!--页面载入-->
+<script>
+    $(function () {
+        if (cookie('last_refinery')) {
+            var temp_last_refinery = cookie('last_refinery').split(',');
+            temp_last_refinery.forEach(function (v, k) {
+                var temp_string = '';
+                temp_string += "<label class='mybtn mybtn-default' style='margin-left: 2.5%;width:30%;margin-top:5px;text-align: center;'>" +
+                        "<input type='checkbox' class='pull-left' style='display: none' name='refinery_name[]' value=" + v + ">" + v +
+                        "</label>";
+                var span = document.createElement('span');
+//                span.innerHTML = "<span class='refinery_name' style='width: 25%;margin: 1% 2.5%'>"+v+"</span>";
+                span.innerHTML = temp_string;
+//                span.style.cssText = "width: 20%;margin: 0 2.5%;padding:0;font-size:12px";
+//                span.setAttribute('class', 'btn btn-sm refinery_name');
+                document.getElementById('last_search').appendChild(span);
+            });
+        } else {
+        }
+    })
+</script>
+
+<!--地址按钮选择样式及点选出现矿名-->
+<script>
+    $('.area_name').click(function () {
+        $(this).addClass('myactive');
+        $(this).siblings('button').removeClass('myactive');
+        var area_name = $(this).html().trim();
+        //日志记录
+        ck_log('click', '地区名:' + area_name);
+        $.ajax({
+            type: "post",
+            url: "{:U('CoalPriceSearch/area_search')}",
+            data: {area_name: area_name},
+            beforeSend: function () {
+                $('#loadingToast').show();
+            },
+            success: function (data) {
+                var insert_node = $('#show_refinery');
+//                var a = insert_node.html();
+                insert_node.html('');
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+                var temp_string = "";
+                var col_count = 0;
+                $.each(jsonObj.refinery_name, function (k, val) {
+                    temp_string += "<label class='mybtn mybtn-default' style='margin-left: 2.5%;width:30%;margin-top:5px;text-align: center;'>" +
+                            "<input type='checkbox' class='pull-left' style='display: none' name='refinery_name[]' value=" + val + ">" + val +
+                            "</label>";
+                    col_count++;
+                    if (col_count == 4) {
+                        temp_string += "";
+                        col_count = 0;
+                    } else {
+                    }
+                });
+                while ((4 - col_count) > 0 && col_count != 0) {
+                    temp_string += "<td></td>";
+                    col_count++;
+                }
+                temp_string += "</tr>";
+//                a += temp_string;
+                insert_node.html(temp_string);
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            },
+            complete: function () {
+                $('#loadingToast').hide();
+            }
+        });
+    });
+</script>
+
+<!--搜索框功能-->
+<script>
+    $(function () {
+        var $searchBar = $('#search_bar'),
+                $searchText = $('#search_text'),
+                $searchInput = $('#search_input'),
+                $searchShow = $('#search_show'),
+                $searchClear = $('#search_clear'),
+                $searchCancel = $('#search_cancel');
+
+        function hideSearchResult() {
+            $searchInput.val('');
+        }
+
+        function cancelSearch() {
+            hideSearchResult();
+            $searchBar.removeClass('weui_search_focusing');
+            $searchText.show();
+            $searchShow.hide();
+        }
+
+        $searchText.on('click', function () {
+            //日志记录
+            ck_log('click', '开始搜索');
+            $searchBar.addClass('weui_search_focusing');
+            $searchInput.focus();
+        });
+        $searchInput
+                .on('blur', function () {
+                    if (!this.value.length) cancelSearch();
+                })
+                .on('input', function (event) {
+                    var $searchShow = $("#search_show");
+                    if ($(this).val()) {
+//            console.log($(this).val());
+                        var url = "{:U('CoalPriceSearch/ajax_refinery_search')}";
+                        var querystring = $(this).val();
+                        //console.log(querystring);
+                        for (var i = 0; i < 5; i++) {
+                            $('#search' + i).html('');
+                            $('#search' + i + '_id').html('');
+                        }
+                        $.ajax({
+                            type: 'post',
+                            url: url,
+                            data: {refinery_name: querystring},
+                            dataType: 'json',
+                            success: function (data) {
+//                console. eval("("+data+")");
+                                console.log(data);
+                                jQuery.each(data, function (k, val) {
+                                    $('#search' + k).html(val.refinery_name);
+                                });
+                            }
+                        });
+                        $searchShow.show();
+                    } else {
+                        $searchShow.hide();
+                    }
+                });
+        $searchClear.on('click', function () {
+            //日志记录
+            ck_log('click', '清空搜索');
+            hideSearchResult();
+            $searchInput.focus();
+        });
+        $searchCancel.on('click', function () {
+            //日志记录
+            ck_log('click', '取消搜索');
+            cancelSearch();
+            $searchInput.blur();
+        });
+    });
+</script>
+
+<!--地址cookie存储函数-->
+<script>
+    function setCookie(value, cookieName, cookieLength) {
+        if (typeof value != 'string' && typeof cookieName != 'string' && cookieLength != 'number')
+            return false;
+        if (cookie(cookieName)) {
+            var temp_cookie_value = cookie(cookieName);
+            var temp_cookie_array = temp_cookie_value.split(',');
+            var old_value_index = temp_cookie_array.indexOf(value);
+            if (old_value_index >= 0) {
+                temp_cookie_array.splice(old_value_index, 1);
+            } else {
+            }
+            temp_cookie_array.splice(0, 0, value);
+            var new_cookie_array = temp_cookie_array.slice(0, cookieLength-1);
+            var new_cookie_value = new_cookie_array.join(',');
+            cookie(cookieName, new_cookie_value);
+        } else {
+            cookie(cookieName, value);
+        }
+    }
+</script>
+
+<!--点击矿名跳转-->
+<script>
+    $('body').on("click", ".refinery_name", function () {
+        var refinery_name = $(this).html().trim();
+        //日志记录
+        ck_log('click', '矿名:' + refinery_name);
+        //存入历史cookie
+        setCookie(refinery_name, 'last_refinery', 6);
+        //填写表单
+        $('input[name=refinery_name]').val(refinery_name);
+//        $('input[name=select_category]').val('search');
+        //地址跳转
+        document.call_back.method = "post";
+        document.call_back.action = "{:U('CoalPriceSearch/coal_price_search_filter')}";
+        document.call_back.submit();
+    });
+</script>
+
+<!--点击确定提交多选矿名-->
+<script>
+    $('#filter_submit').click(function () {
+        //检测所选条件是否为空，为空默认全选速度太慢，故必须做出选择
+        var refinery_checked = $("input[type=checkbox][name*='refinery_name']:checked");
+        if (!refinery_checked.val()) {
+            showToast2('您还没有选择煤矿,请至少选中一项');
+            return false;
+        }
+        //日志记录
+        ck_log('click', '提交煤矿查询');
+        //选择的煤矿名存入cookie
+        for (var i = 0; i <= refinery_checked.length - 1; i++) {
+            console.log($(refinery_checked[i]).val());
+            setCookie($(refinery_checked[i]).val(), 'last_refinery', 6);
+        }
+        //日志记录
+        //提交
+        document.refinery_choose.method = "get";
+        document.refinery_choose.action = "{:U('CoalPriceSearch/coal_price_search_filter')}";
+        document.refinery_choose.submit();
+    })
+</script>
+</html>

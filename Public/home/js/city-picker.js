@@ -563,10 +563,19 @@
                 $this = this,
                 simple = this.options.simple;
             list.push('<dl class="clearfix"><dd>');
+            var allChooseString;
+            if(type == CITY){
+                allChooseString = '全省';
+            }else if(type == DISTRICT){
+                allChooseString = '全市';
+            }else if(type == AREA){
+                allChooseString = '全区';
+            }
             list.push(
                 '<a' +
                 ' class="city-picker-count-all">' +
-                '全部' +
+                    allChooseString +
+                //'全部' +
                 '</a>');
             $.each(data, function (i, n) {
                 list.push(

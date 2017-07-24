@@ -15,6 +15,22 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
 </head>
+<style>
+    .overlay {
+        width: 100%;
+        height: 100%;
+        background-color: #000;
+        filter: alpha(opacity=50);
+        -moz-opacity: 0.5;
+        opacity: 0.8;
+        position: fixed;
+        left: 0;
+        top: 0;
+        display: block;
+        z-index: 1000;
+        cursor: pointer;
+    }
+</style>
 <body onload="onload()">
 <include file="Common:common"/>
 <!--订单展示栏-->
@@ -40,6 +56,11 @@
     <input name="phone_number" value="{$message['phone_number']}">
     <input name="content" value="{$message['content']}">
 </form>
+<if condition="session('user_info')['uid'] eq $message['publisher_rid']">
+    <div class="overlay">
+        <img src="__PUBLIC__/home/images/newcomer_guide.png" style="right: 20px;position: absolute;width: 50%;">
+    </div>
+</if>
 <div class="container">
     <div class="tab-content" style="">
         <div id="transport" class="tab-pane active" style="background-color: #efeff4">
@@ -281,6 +302,23 @@
 </div>
 <?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
 </body>
+<!--遮罩显示-->
+<script>
+//    $(function () {
+//        if(cookie('new_commer')){
+//            $('.overlay').show();
+//            cookie('new_commer',null);
+//        }else{
+//            $('.overlay').hide();
+//        }
+//    })
+</script>
+<!--取消遮罩-->
+<script>
+    $('body').click(function(){
+        $('.overlay').hide();
+    });
+</script>
 <script>
     function collection_switch(obj, id) {
         event.stopPropagation();

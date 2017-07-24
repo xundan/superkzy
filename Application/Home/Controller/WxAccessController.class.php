@@ -112,13 +112,13 @@ class WxAccessController extends Controller
                 $event = $this->getWeObj()->getRevEvent();
                 switch ($event['event']){
                     case "subscribe":
-                        $welcome_str = "感谢关注【超级矿资源】微信公众平台！
+                        $welcome_str = "感谢关注【超级矿资源】煤炭信息平台！
 
-您可以点击<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>超矿主页</a>开始 <a href='http://www.kuaimei56.com/index.php/Home/OwnerPublish/owner_publish'>发布</a>或 <a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>查询</a> 运单、订单信息。也可以在这里回复直接提出您的问题。
+如需发布煤炭消息，请直接回复带有联系方式（手机号）的煤炭供求找车信息到公众号，我们会为您公示转发。
 
-在公众号直接回复您要转发的消息，我们会为您转发到我们的<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>超矿主页</a>和所有超矿微信的朋友圈。
+您也可以进入<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>超矿主页</a>，点击<a href='http://www.kuaimei56.com/index.php/Home/OwnerPublish/owner_publish'>发布</a>/<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>查询</a>煤炭买卖和找车信息。
 
-您可以加cjkzy010微信号好友进入我们的超矿煤炭群,群里有各种煤炭供求信息和我们的活动资讯。";
+如果您想加大煤炭信息发布范围，做付费推广，请联系<a href='tel:17083425332'>17083425332(微信同号)</a>客服号进行咨询";
                         if($activity_flag){
                             $welcome_str = "感谢关注【超级矿资源】微信公众平台！
 
@@ -304,7 +304,8 @@ class WxAccessController extends Controller
                     array(
                         'type' => 'view',
                         'name' => '查煤价',
-                        'url' => 'http://www.kuaimei56.com/index.php/Home/CoalPriceSearch/coal_price_search'
+//                        'url' => 'http://www.kuaimei56.com/index.php/Home/CoalPriceSearch/coal_price_search'
+                        'url' => 'http://www.kuaimei56.com/index.php/Home/CoalPriceSearch/search_method'
                     )
                 )
         );

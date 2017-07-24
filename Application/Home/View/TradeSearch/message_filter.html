@@ -15,6 +15,7 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
 </head>
+<body>
 <!--筛选栏-->
 <!--<div class="container">-->
 <form name="filter" id="filter" action="" method="post" class="form-inline">
@@ -32,32 +33,38 @@
                 <div class="panel-body">
                     <label class="mybtn mybtn-default"
                            style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
-                        <input type="checkbox" class="pull-left" style="display: none" name="filter_kind[]" id="buy_kind1"
+                        <input type="checkbox" class="pull-left" style="display: none" name="filter_kind[]"
+                               id="buy_kind1"
                                autocomplete="off" value="动力煤">动力煤
                     </label>
                     <label class="mybtn mybtn-default"
                            style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
-                        <input type="checkbox" class="pull-left" style="display: none" name="filter_kind[]" id="buy_kind2"
+                        <input type="checkbox" class="pull-left" style="display: none" name="filter_kind[]"
+                               id="buy_kind2"
                                autocomplete="off" value="喷吹煤">喷吹煤
                     </label>
                     <label class="mybtn mybtn-default"
                            style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
-                        <input type="checkbox" class="pull-left" style="display: none" name="filter_kind[]" id="buy_kind3"
+                        <input type="checkbox" class="pull-left" style="display: none" name="filter_kind[]"
+                               id="buy_kind3"
                                autocomplete="off" value="炼焦煤">炼焦煤
                     </label>
                     <label class="mybtn mybtn-default"
                            style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
-                        <input type="checkbox" class="pull-left" style="display: none" name="filter_kind[]" id="buy_kind4"
+                        <input type="checkbox" class="pull-left" style="display: none" name="filter_kind[]"
+                               id="buy_kind4"
                                autocomplete="off" value="焦炭">焦 炭
                     </label>
                     <label class="mybtn mybtn-default"
                            style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
-                        <input type="checkbox" class="pull-left" style="display: none" name="filter_kind[]" id="buy_kind5"
+                        <input type="checkbox" class="pull-left" style="display: none" name="filter_kind[]"
+                               id="buy_kind5"
                                autocomplete="off" value="气化煤">气化煤
                     </label>
                     <label class="mybtn mybtn-default"
                            style="margin-left: 8%;width:22%;margin-top:5px;text-align: center;">
-                        <input type="checkbox" class="pull-left" style="display: none" name="filter_kind[]" id="buy_kind6"
+                        <input type="checkbox" class="pull-left" style="display: none" name="filter_kind[]"
+                               id="buy_kind6"
                                autocomplete="off" value="煤泥"> 煤 泥
                     </label>
                 </div>
@@ -208,32 +215,35 @@
         if (cookie('trade_search_filter_heat_min')) {
             var filter_heat_min_value = cookie('trade_search_filter_heat_min');
             $('input[name=filter_heat_min]').val(filter_heat_min_value);
+        }
+        if (cookie('trade_search_filter_heat_max')) {
             var filter_heat_max_value = cookie('trade_search_filter_heat_max');
             $('input[name=filter_heat_max]').val(filter_heat_max_value);
         }
+
     })
 </script>
 
 <!--输入非法提示重置-->
 <script>
-        $('input[name=filter_heat_min]').focus(function () {
-            if ($('#filter_heat_alert').html()) {
-                $(this).val('');
-                $('#filter_heat_alert').html('');
-            }
-        });
-        $('input[name=filter_heat_max]').focus(function () {
-            if ($('#filter_heat_alert').html()) {
-                $(this).val('');
-                $('#filter_heat_alert').html('');
-            }
-        });
+    $('input[name=filter_heat_min]').focus(function () {
+        if ($('#filter_heat_alert').html()) {
+            $(this).val('');
+            $('#filter_heat_alert').html('');
+        }
+    });
+    $('input[name=filter_heat_max]').focus(function () {
+        if ($('#filter_heat_alert').html()) {
+            $(this).val('');
+            $('#filter_heat_alert').html('');
+        }
+    });
 </script>
 
 <!--重置按钮重置选中样式-->
 <script>
     $('#filter_reset').click(function () {
-        ck_log("filter","重置");
+        ck_log("filter", "重置");
         $('input[type=checkbox]:checked').parent('label').removeClass('myactive');
     });
 </script>
@@ -270,7 +280,7 @@
             $('input[name=search_input]').val(cookie('search_input'));
         }
         // 写入分析日志
-        ck_log("filter","["+filter_kind+","+filter_granularity+","+filter_heat_min+","+filter_heat_max+"]");
+        ck_log("filter", "[" + filter_kind + "," + filter_granularity + "," + filter_heat_min + "," + filter_heat_max + "]");
         //提交
         document.filter.method = "post";
         document.filter.action = "{:U('TradeSearch/trade_search')}";
@@ -279,10 +289,10 @@
 </script>
 
 <script>
-    $(function(){
-        if(navigator.userAgent.indexOf('Android') > 0){
+    $(function () {
+        if (navigator.userAgent.indexOf('Android') > 0) {
 
-        }else{
+        } else {
             //返回操作
             function pushHistory() {
                 var state = {
@@ -291,10 +301,11 @@
                 };
                 window.history.pushState(state, "title", "#");
             }
+
             pushHistory();
             window.addEventListener("popstate", function (e) {
-                window.location=document.referrer;
-            },false);
+                window.location = document.referrer;
+            }, false);
         }
     })
 </script>

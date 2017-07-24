@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <!--<script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>-->
+    <title>煤矿合作</title>
+</head>
+<include file="Common:common"/>
+<body style="background: url('__PUBLIC__/home/images/coal_cooperate_background.jpg') no-repeat;background-size: cover">
+<div class="container text-center">
+    <img src="__PUBLIC__/home/images/gaolei.jpg" style="width: 30%;position: absolute;bottom: 0;left: 5%;">
+
+    <div style="margin-top: 80%" id="form_content">
+        <form id="form">
+            <textarea id="content" name="content" rows="6" class="form-control" style="resize: none;border-color: black"
+                      placeholder="您可以扫描左下方二维码添加我们客服人员进行咨询，也可在此输入您的联系方式,稍后我们客服人员会联系您商量合作事宜"></textarea>
+            <input type="button" id="form_submit" class="btn btn-default"
+                   style="margin-top: 5%;border-color: red;background-color: #fb3e1e;color: white;" value="提交">
+        </form>
+    </div>
+</div>
+</body>
+<!--提交表单及结果处理-->
+<script>
+    $('#form_submit').click(function () {
+        var content = $('#content').val();
+        if(!content){
+            return false;
+        }
+        //ajax提交表单数据
+        var subData = $("#form").serialize();
+        var url = "{:U('CoalPriceSearch/coal_cooperate_record')}";
+        $.ajax({
+            type: "post",
+            url: url,
+            data: subData,
+            success: function (data) {
+                var jsonObj = eval("(" + data + ")");
+                if (jsonObj.status == 1) {
+                    $('#form_content').html("<p style='font-size: 1.5em;color: red;'>提交成功！</p>");
+                }
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+                alert('不可棱！！');
+            }
+        });
+    })
+</script>
+</html>

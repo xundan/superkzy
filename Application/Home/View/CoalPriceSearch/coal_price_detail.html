@@ -64,7 +64,7 @@
         cxt.lineTo(22.5, 12.5);
         cxt.lineTo(10, 22.5);
         cxt.lineWidth = 2.5;
-        cxt.strokeStyle = "gray";
+        cxt.strokeStyle = "black";
         cxt.lineCap = 'round';
         cxt.lineJoin = "round";
         cxt.stroke();
@@ -72,7 +72,7 @@
         cxt.lineTo(15, 12.5);
         cxt.lineTo(2.5, 22.5);
         cxt.lineWidth = 2.5;
-        cxt.strokeStyle = "gray";
+        cxt.strokeStyle = "black";
         cxt.lineCap = 'round';
         cxt.lineJoin = "round";
         cxt.stroke();
@@ -163,7 +163,8 @@
 <script>
     $(function () {
         var pageWidth = document.body.clientWidth;
-        var tableWidth = $('#detail_table').width();
+//        var tableWidth = $('#detail_table').width();
+        var tableWidth = document.getElementById('detail_table').scrollWidth;
         if(tableWidth/pageWidth > 1){
             drawDown();
             var arrowOffsetTop = 67+($('table').height()/2);

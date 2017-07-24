@@ -1137,7 +1137,7 @@
                 </span>
             </div>
             <div class="modal-footer">
-                <a href="{:U('OwnerPublishHistory/owner_publish_history')}" type="button" class="btn btn-primary"
+                <a href="{:U('OwnerPublishHistory/owner_publish_history')}" id="jump_to_my_publish" type="button" class="btn btn-primary"
                    style="border-color: #ccc;background-color: #04bfc6">
                     查看已发布订单
                 </a>
@@ -1971,7 +1971,13 @@
     $('#my_publish').click(function () {
         var cur_url = window.location.href;
         cookie('last_url_for_history', cur_url);
-    })
+        cookie('detail_click','show');
+    });
+    $('#jump_to_my_publish').click(function () {
+        var cur_url = window.location.href;
+        cookie('last_url_for_history', cur_url);
+        cookie('detail_click','show');
+    });
 </script>
 
 <!--地址返回操作-->
