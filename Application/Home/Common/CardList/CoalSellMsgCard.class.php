@@ -18,7 +18,7 @@ class CoalSellMsgCard extends MsgCard
         $personal_page = $this->getPersonalUrl();
         $message_detail = U('OwnerOrder/owner_order_trade_detail', array('id' => $message['id']));
 //        $publish_date = date("Y-m-d", $message['publish_time']);
-        $dial_param = ''.$message['phone_number'].','.$message['id'];
+        $dial_param = '' . $message['phone_number'] . ',' . $message['id'];
         $publish_date = substr($message['update_time'], 0, 10);
         $deadline_date = substr($message['deadline'], 0, 10);
         //标签图片 过期功能
@@ -36,6 +36,18 @@ class CoalSellMsgCard extends MsgCard
             $priceString = '价格:' . $message['price'] . '元/吨';
         } else {
             $priceString = '价格:面议';
+        }
+        //热值字符串
+        if ($message['heat_value_max'] == '0') {
+            $heatValueMaxString = '高位热值:空';
+        } else {
+            $heatValueMaxString = '高位热值:' . $message['heat_value_max'];
+        }
+        //含税字符串
+        if ($message['short_allocate'] == 1) {
+            $taxString = '含税:含税';
+        } else {
+            $taxString = '含税:不含税';
         }
 
         if ($message['formatted']) { // 如果用户按照标准格式填写
@@ -61,18 +73,17 @@ class CoalSellMsgCard extends MsgCard
             <button class=\"btn btn-xs btn-default\" style=\"width: 70%;border-color: #04bfc6;color: #04bfc6\" onclick='collection_switch(this,{$message['id']})'>{$message['in_collection']}</button>
         </div>
     </div>
-    <div style=\"position: absolute;bottom: -10px;left: 0;color: red;z-index: 9;\">
-    <span class=\"glyphicon glyphicon-arrow-down detail_click\" style='display:none'>详情</span>
-    </div>
 </div>
 <table class=\"table table-condensed\" onclick='window.location.href=\"{$message_detail}\"'   style=\"margin: 0;\">
     <tbody>
-        <tr><td class=\"highlight\">煤炭种类:{$message['kind']}</td><td class=\"highlight\">" . $priceString . "</td></tr>
-        <tr><td class=\"highlight\">煤炭品质:{$message['trait']}</td><td class=\"highlight\">产地:{$message['district_start']['name']}</td></tr>
+        <tr><td class=\"highlight\">煤炭种类:{$message['kind']}</td><td class=\"highlight\">产地:{$message['district_start']['name']}</td></tr>
+        <tr><td class=\"highlight\">" . $heatValueMaxString . "</td><td class=\"highlight\">煤炭品质:{$message['trait']}</td></tr>
+        <tr><td class=\"highlight\">" . $priceString . "</td><td class=\"highlight\">" . $taxString . "</td></tr>
+        <tr><td class=\"highlight\">价格类型:{$message['price_type']}</td><td class=\"highlight\">付款方式:{$message['pay_type']}</td></tr>
         <tr><td class=\"highlight\">煤炭粒度:{$message['granularity']}</td><td class=\"highlight\">吨数:{$message['quantity']}吨</td></tr>
-        <tr><td>有效期至:{$deadline_date}</td><td>发布时间:{$publish_date}</td></tr>
     </tbody>
 </table>
+<div class='pull-right'>发布时间:{$publish_date}</div>
 </li>" . "<div class='time-limit' style='margin-top:3px;margin-right:1px;text-align:right;display:none'>
 <button class='btn btn-sm btn-info' onclick='refill(this,{$message["id"]})'>一键重发</button>
 <button style='margin-left:5px' class='btn btn-sm btn-default " . $disableString . "' onclick='overdue(this,{$message["id"]})'>下架</button>
@@ -101,9 +112,6 @@ class CoalSellMsgCard extends MsgCard
         <div>
             <button class=\"btn btn-xs btn-default\" style=\"width: 70%;border-color: #04bfc6;color: #04bfc6\" onclick='collection_switch(this,{$message['id']})'>{$message['in_collection']}</button>
         </div>
-    </div>
-    <div style=\"position: absolute;bottom: -10px;left: 0;color: red;z-index: 9\">
-    <span class=\"glyphicon glyphicon-arrow-down detail_click\" style='display:none'>详情</span>
     </div>
 </div>
 <div class=\"highlight\" onclick='window.location.href=\"{$message_detail}\"' >{$message['content']}</div><div class='pull-right'>发布时间:{$publish_date}</div>

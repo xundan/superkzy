@@ -112,11 +112,13 @@ class WxAccessController extends Controller
                 $event = $this->getWeObj()->getRevEvent();
                 switch ($event['event']){
                     case "subscribe":
-                        $welcome_str = "感谢关注【超级矿资源】煤炭信息平台！
+                        $welcome_str = "感谢关注【超级矿资源】!
+
+点击<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>超矿主页</a>进入信息量最大的煤炭信息平台！每天千条煤炭供求、找车信息更新！
 
 如需发布煤炭消息，请直接回复带有联系方式（手机号）的煤炭供求找车信息到公众号，我们会为您公示转发。
 
-您也可以进入<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>超矿主页</a>，点击<a href='http://www.kuaimei56.com/index.php/Home/OwnerPublish/owner_publish'>发布</a>/<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>查询</a>煤炭买卖和找车信息。
+您也可以点击屏幕下方发布/查询中<a href='http://www.kuaimei56.com/index.php/Home/TradeSearch/trade_search'>买卖查询</a>和<a href='http://www.kuaimei56.com/index.php/Home/DriverSearch/driver_job_search'>找车信息</a>。
 
 如果您想加大煤炭信息发布范围，做付费推广，请联系<a href='tel:17083425332'>17083425332(微信同号)</a>客服号进行咨询";
                         if($activity_flag){

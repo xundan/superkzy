@@ -26,10 +26,11 @@
 <!--信息统计-->
 <ul style="margin-top: 0;margin-bottom: 0;margin-left: 10%;padding: 3%;width: 80%;color: #04bfc6;height: 5%">
     <li><span style="color: black">最近一周平台信息总量：<span style="color:red">{$todayCount}条</span></span></li>
+    <a href="https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzIzMjQ0NjE4MA==&scene=123&from=singlemessage#wechat_redirect">点击关注</a>
+    <a href="#" onclick="WeiXinAddContact('maltLTD')">关注</a>
     <!--<li><span style="color: black">运输订单信息量：<span style="color:red">{$todayTrade}条</span></span></li>-->
     <!--<li><span style="color: black">交易订单信息量：<span style="color:red">{$todayTrans}条</span></span></li>-->
 </ul>
-
 <!--顶部功能栏-->
 <div class="" style="margin:auto auto;width: 100%;height:70%;vertical-align: middle;display:flex;
             justify-content:center;
@@ -202,6 +203,12 @@
 
 <?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
 </body>
+<script>
+//    $('a').click(function(e){
+//        e.preventDefault();
+//        window.location.href = 'https://mp.weixin.qq.com/mp/profile_ext?action=home&__biz=MzIzMjQ0NjE4MA==&scene=123&from=singlemessage#wechat_redirect';
+//    })
+</script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
     wx.config({
@@ -220,7 +227,7 @@
         // 分享到朋友圈
         wx.onMenuShareTimeline({
             title: '【超级矿资源】信息量最大的煤炭平台', // 分享标题
-            link: "http://www.kuaimei56.com/index.php/Home/Homepage/homepage", // 分享链接
+            link: "http://www.kuaimei56.com/index.php/Home/Homepage/homepagePromotion", // 分享链接
             imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
             success: function () {
                 // 用户确认分享后执行的回调函数
@@ -237,7 +244,7 @@
 //            title: '来自{$user["user_name"]}('+role+')的{$message["category"]}消息', // 分享标题
             title: '【超级矿资源】信息量最大的煤炭平台', // 分享标题
             desc: '点击进入信息量最大的煤炭信息平台,最近一周已有{$todayCount}条信息', // 分享描述
-            link: "http://www.kuaimei56.com/index.php/Home/Homepage/homepage", // 分享链接
+            link: "http://www.kuaimei56.com/index.php/Home/Homepage/homepagePromotion", // 分享链接
             imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
             type: '', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
@@ -251,5 +258,16 @@
             }
         });
     });
+    function weixinAddContact(name){
+        WeixinJSBridge.invoke("addContact", {webtype: "1",username: name}, function(e) {
+            WeixinJSBridge.log(e.err_msg);
+            //e.err_msg:add_contact:added 已经添加
+            //e.err_msg:add_contact:cancel 取消添加
+            //e.err_msg:add_contact:ok 添加成功
+            if(e.err_msg == 'add_contact:added' || e.err_msg == 'add_contact:ok'){
+                //关注成功，或者已经关注过
+            }
+        })
+    }
 </script>
 </html>

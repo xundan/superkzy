@@ -15,22 +15,6 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
 </head>
-<style>
-    .overlay {
-        width: 100%;
-        height: 100%;
-        background-color: #000;
-        filter: alpha(opacity=50);
-        -moz-opacity: 0.5;
-        opacity: 0.8;
-        position: fixed;
-        left: 0;
-        top: 0;
-        display: block;
-        z-index: 1000;
-        cursor: pointer;
-    }
-</style>
 <body onload="onload()">
 <include file="Common:common"/>
 <!--订单展示栏-->
@@ -46,6 +30,9 @@
     <input name="area_start" value="{$area_start['id']}">
     <input name="area_start_name" value="{$area_start['name']}">
     <input type="number" name="price" value="{$message['price']}">
+    <input name="short_allocate" value="{$message['short_allocate']}">
+    <input name="price_type" value="{$message['price_type']}">
+    <input name="pay_type" value="{$message['pay_type']}">
     <input type="number" name="quantity" value="{$message['quantity']}">
     <input type="number" name="heat_value_max" value="{$message['heat_value_max']}">
     <input type="number" name="heat_value_min" value="{$message['heat_value_min']}">
@@ -68,22 +55,22 @@
                 <li class="weui_panel weui_panel_access" style=";border-radius: 5px">
                     <div class="weui_media_box weui_media_appmsg" style="margin: 0;padding-left: 0;padding-right: 0">
                         <!--<a href="{:U('PersonalCenter/owner_data',array('uid'=>$user['uid']))}">-->
-                            <div class="weui_media_hd">
-                                <if condition="$user['heading_url']"><img
-                                        src="{$user['heading_url']}" style="width: 50px"
-                                        class="weui_media_appmsg_thumb">
-                                    <else/>
-                                    <img src="__PUBLIC__/home/images/headimg_background.png" style="width: 50px"
-                                         class="weui_media_appmsg_thumb">
-                                </if>
-                            </div>
+                        <div class="weui_media_hd">
+                            <if condition="$user['heading_url']"><img
+                                    src="{$user['heading_url']}" style="width: 50px"
+                                    class="weui_media_appmsg_thumb">
+                                <else/>
+                                <img src="__PUBLIC__/home/images/headimg_background.png" style="width: 50px"
+                                     class="weui_media_appmsg_thumb">
+                            </if>
+                        </div>
                         <!--</a>-->
 
                         <div class="weui_media_bd">
                             <!--<a href="{:U('PersonalCenter/owner_data',array('uid'=>$user['uid']))}">-->
-                                <h4 class="weui_media_title">{$user['user_name']}<img
-                                        src="__PUBLIC__/home/images/medal.png"
-                                        style="width: 15px;height: 20px"></h4>
+                            <h4 class="weui_media_title">{$user['user_name']}<img
+                                    src="__PUBLIC__/home/images/medal.png"
+                                    style="width: 15px;height: 20px"></h4>
                             <!--</a>-->
 
                             <p class="weui_media_desc">
@@ -91,12 +78,14 @@
                             </p>
                         </div>
                         <div class="weui_media_bd text-center" style="">
-                            <a href="tel:{$message['phone_number']}" onclick="ck_log('dial', {$message['phone_number']})" class="">
+                            <a href="tel:{$message['phone_number']}"
+                               onclick="ck_log('dial', {$message['phone_number']})" class="">
                                 <h4><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 20px">
                                     <span style="">拨打电话</span></h4>
                             </a>
-                                <button class="btn btn-xs btn-info" style="background-color: #04bfc6;width: 70%"
-                                        onclick="collection_switch(this,{$message['id']})">{$message['in_collection']}</button>
+                            <button class="btn btn-xs btn-info" style="background-color: #04bfc6;width: 70%"
+                                    onclick="collection_switch(this,{$message['id']})">{$message['in_collection']}
+                            </button>
                         </div>
                     </div>
                     <div class="text-center">
@@ -127,6 +116,15 @@
                             </tr>
                             <tr>
                                 <td style="border: none">
+                                    热值(高位):
+                                    <empty name="message['heat_value_max']">
+                                        空
+                                        <else/>
+                                        {$message['heat_value_max']}
+                                        <span style="">卡</span>
+                                    </empty>
+                                </td>
+                                <td style="border: none">
                                     煤炭品质:
                                     <empty name="message['trait']">
                                         空
@@ -134,6 +132,8 @@
                                         {$message['trait']}
                                     </empty>
                                 </td>
+                            </tr>
+                            <tr>
                                 <td style="border: none">
                                     价格:
                                     <empty name="message['price']">
@@ -141,6 +141,32 @@
                                         <else/>
                                         {$message['price']}
                                         <span style="">元</span>
+                                    </empty>
+                                </td>
+                                <td style="border: none">
+                                    含税:
+                                    <empty name="message['short_allocate']">
+                                        不含税
+                                        <else/>
+                                        含税
+                                    </empty>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="border: none">
+                                    价格类型:
+                                    <empty name="message['price_type']">
+                                        空
+                                        <else/>
+                                        {$message['price_type']}
+                                    </empty>
+                                </td>
+                                <td style="border: none">
+                                    付款方式:
+                                    <empty name="message['pay_type']">
+                                        空
+                                        <else/>
+                                        {$message['pay_type']}
                                     </empty>
                                 </td>
                             </tr>
@@ -164,15 +190,6 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td style="border: none">
-                                    煤炭热值(高位):
-                                    <empty name="message['heat_value_max']">
-                                        空
-                                        <else/>
-                                        {$message['heat_value_max']}
-                                        <span style="">卡</span>
-                                    </empty>
-                                </td>
                                 <td style="border: none">
                                     供货公司:
                                     <empty name="message['supply_company']">
@@ -276,7 +293,8 @@
     </div>
 </if>
 <!--删除模态框-->
-<div class="modal fade" id="delete_succsee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="delete_succsee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" style="top:30%">
         <div class="modal-content">
             <div class="modal-header">
@@ -290,7 +308,8 @@
                 <span style="color:black">该操作会彻底删除您的信息，确定删除该信息吗？</span>
             </div>
             <div class="modal-footer">
-                <a href="javascript:void(0);" onclick="delete_message(this,{$message['id']})" type="button" class="btn btn-primary"
+                <a href="javascript:void(0);" onclick="delete_message(this,{$message['id']})" type="button"
+                   class="btn btn-primary"
                    style="background-color: #04bfc6">
                     确定
                 </a>
@@ -304,18 +323,19 @@
 </body>
 <!--遮罩显示-->
 <script>
-//    $(function () {
-//        if(cookie('new_commer')){
-//            $('.overlay').show();
-//            cookie('new_commer',null);
-//        }else{
-//            $('.overlay').hide();
-//        }
-//    })
+    $(function () {
+        if (cookie('new_comer') && cookie('new_comer') == 'yes') {
+            $('.overlay').show();
+            cookie('new_comer', 'no');
+        } else {
+            $('.overlay').hide();
+        }
+//        $('.overlay').show();
+    })
 </script>
 <!--取消遮罩-->
 <script>
-    $('body').click(function(){
+    $('body').click(function () {
         $('.overlay').hide();
     });
 </script>
@@ -332,7 +352,7 @@
                 success: function (data) {
                     if (data) {
                         $(obj).html('收藏');
-                        ck_log("collect","撤销收藏-"+id);
+                        ck_log("collect", "撤销收藏-" + id);
                     } else {
                     }
                 }
@@ -346,7 +366,7 @@
                 success: function (data) {
                     if (data) {
                         $(obj).html('撤销收藏');
-                        ck_log("collect","收藏-"+id);
+                        ck_log("collect", "收藏-" + id);
                     } else {
                     }
                 }
@@ -356,35 +376,35 @@
         return false;
     }
 
-    function delete_modal(){
+    function delete_modal() {
         $('#delete_succsee').modal();
     }
 
-    function delete_message(obj,id){
-        ck_log("click",'删除{$message["category"]}消息{$message["id"]}');
-        var url="{:U('OwnerOrder/del_message')}";
-            $.ajax({
-                type: "post",
-                url: url,
-                data: {id: id},
-                success: function (data) {
-                    if (data) {
-                        $('#delete_succsee').modal('hide');
-                        showToast('删除成功');
-                        setTimeout(function(){
-                            window.location.href = "{:U('OwnerPublishHistory/owner_publish_history')}";
-                        },1000);
-                    } else {
-                    }
+    function delete_message(obj, id) {
+        ck_log("click", '删除{$message["category"]}消息{$message["id"]}');
+        var url = "{:U('OwnerOrder/del_message')}";
+        $.ajax({
+            type: "post",
+            url: url,
+            data: {id: id},
+            success: function (data) {
+                if (data) {
+                    $('#delete_succsee').modal('hide');
+                    showToast('删除成功');
+                    setTimeout(function () {
+                        window.location.href = "{:U('OwnerPublishHistory/owner_publish_history')}";
+                    }, 1000);
+                } else {
                 }
-            });
+            }
+        });
         return false;
     }
 </script>
 <script>
     // 使微信验证后还能跳回本界面
-    function onload(){
-        cookie("current_action","OwnerOrder/owner_order_trade_detail?id={$message['id']}");
+    function onload() {
+        cookie("current_action", "OwnerOrder/owner_order_trade_detail?id={$message['id']}");
     }
 </script>
 <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
@@ -404,31 +424,31 @@
         // 在这里调用 API
         // 分享到朋友圈
         var role = "游客";
-        if('{$user["role_id"]}'=='1'){
+        if ('{$user["role_id"]}' == '1') {
             role = "车主";
-        }else{
+        } else {
             role = "货主";
         }
         var title_string = '';
-        if("{$message['kind']}" == '' && "{$message['price']}" == '' && ("{$message['heat_value_max']}" == 0 || "{$message['heat_value_max']}" == '') && ("{$message['heat_value_min']}" == 0 || "{$message['heat_value_min']}" =='' ) ) {
+        if ("{$message['kind']}" == '' && "{$message['price']}" == '' && ("{$message['heat_value_max']}" == 0 || "{$message['heat_value_max']}" == '') && ("{$message['heat_value_min']}" == 0 || "{$message['heat_value_min']}" == '' )) {
             title_string += '{$message["content"]|mb_substr=0,20,"utf-8"}' + '...';
-        }else {
+        } else {
             if ("{$area_start['name']}" != '') {
-                title_string += "{$area_start['name']}"+".";
+                title_string += "{$area_start['name']}" + ".";
             } else {
             }
             if ("{$message['kind']}" != '') {
-                title_string += "{$message['kind']}"+".";
+                title_string += "{$message['kind']}" + ".";
             } else {
             }
             if ("{$message['heat_value_max']}" != '' && "{$message['heat_value_max']}" != 0) {
-                title_string += "高热" + "{$message['heat_value_max']}"+"卡.";
+                title_string += "高热" + "{$message['heat_value_max']}" + "卡.";
             } else if ("{$message['heat_value_min']}" != '' && "{$message['heat_value_min']}" != 0) {
-                title_string += "低热" + "{$message['heat_value_min']}"+"卡.";
+                title_string += "低热" + "{$message['heat_value_min']}" + "卡.";
             } else {
             }
             if ("{$message['price']}" != '') {
-                title_string += "{$message['price']}"+'元.';
+                title_string += "{$message['price']}" + '元.';
             } else {
             }
 
@@ -436,44 +456,44 @@
 
         wx.onMenuShareTimeline({
 
-            title: '[{$message["category"]}]'+title_string, // 分享标题
+            title: '[{$message["category"]}]' + title_string, // 分享标题
             link: "http://www.kuaimei56.com/index.php/Home/OwnerOrder/owner_order_trade_detail?id={$message['id']}", // 分享链接
             imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
             success: function () {
                 // 用户确认分享后执行的回调函数
-                ck_log("share",'分享{$message["category"]}消息{$message["id"]}至朋友圈');
+                ck_log("share", '分享{$message["category"]}消息{$message["id"]}至朋友圈');
             },
             cancel: function () {
                 // 用户取消分享后执行的回调函数
-                ck_log("share",'取消分享{$message["category"]}消息{$message["id"]}至朋友圈');
+                ck_log("share", '取消分享{$message["category"]}消息{$message["id"]}至朋友圈');
             }
         });
 
         //分享给朋友
         wx.onMenuShareAppMessage({
 //            title: '来自{$user["user_name"]}('+role+')的{$message["category"]}消息', // 分享标题
-            title: '[{$message["category"]}]'+title_string, // 分享标题
-            desc: '{$user["user_name"]}('+role+')在超级矿资源发布了最新消息，点击了解更多信息', // 分享描述
+            title: '[{$message["category"]}]' + title_string, // 分享标题
+            desc: '{$user["user_name"]}(' + role + ')在超级矿资源发布了最新消息，点击了解更多信息', // 分享描述
             link: "http://www.kuaimei56.com/index.php/Home/OwnerOrder/owner_order_trade_detail?id={$message['id']}", // 分享链接
             imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
             type: '', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function () {
                 // 用户确认分享后执行的回调函数
-                ck_log("share",'分享{$message["category"]}消息{$message["id"]}给好友');
+                ck_log("share", '分享{$message["category"]}消息{$message["id"]}给好友');
             },
             cancel: function () {
                 // 用户取消分享后执行的回调函数
-                ck_log("share",'取消分享{$message["category"]}消息{$message["id"]}给好友');
+                ck_log("share", '取消分享{$message["category"]}消息{$message["id"]}给好友');
             }
         });
     });
 </script>
 <script>
-    $(function(){
-        if(navigator.userAgent.indexOf('Android') > 0){
+    $(function () {
+        if (navigator.userAgent.indexOf('Android') > 0) {
 
-        }else{
+        } else {
             //返回操作
             function pushHistory() {
                 var state = {
@@ -482,18 +502,19 @@
                 };
                 window.history.pushState(state, "title", "#");
             }
+
             pushHistory();
             window.addEventListener("popstate", function (e) {
-                window.location=document.referrer;
-            },false);
+                window.location = document.referrer;
+            }, false);
         }
     })
 </script>
 <!--修改信息-->
 <script>
-    function modify(){
+    function modify() {
         cookie('coal_sell_modify', JSON.stringify($('#form_sell_modify').serializeArray()));
-        ck_log("click",'修改{$message["category"]}消息{$message["id"]}');
+        ck_log("click", '修改{$message["category"]}消息{$message["id"]}');
         console.log(cookie('coal_sell_modify'));
         //地址跳转
         window.location.href = "{:U('OwnerPublish/order_coal_sell_modify')}";

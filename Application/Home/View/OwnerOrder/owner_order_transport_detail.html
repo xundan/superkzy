@@ -36,6 +36,11 @@
     <input name="phone_number" value="{$message['phone_number']}">
     <input name="content" value="{$message['content']}">
 </form>
+<if condition="session('user_info')['uid'] eq $message['publisher_rid']">
+    <div class="overlay">
+        <img src="__PUBLIC__/home/images/newcomer_guide.png" style="right: 20px;position: absolute;width: 50%;">
+    </div>
+</if>
 <div class="container">
     <div class="tab-content" style="">
         <div id="transport" class="tab-pane active" style="background-color: #efeff4">
@@ -206,6 +211,23 @@
 </div>
 <?php require_once 'cs.php';echo '<img src="'._cnzzTrackPageView(1261341628).'" width="0" height="0"/>';?>
 </body>
+<!--遮罩显示-->
+<script>
+    $(function () {
+        if (cookie('new_comer') && cookie('new_comer') == 'yes') {
+            $('.overlay').show();
+            cookie('new_comer', 'no');
+        } else {
+            $('.overlay').hide();
+        }
+    })
+</script>
+<!--取消遮罩-->
+<script>
+    $('body').click(function () {
+        $('.overlay').hide();
+    });
+</script>
 <script>
     function collection_switch(obj, id) {
         event.stopImmediatePropagation();

@@ -28,8 +28,28 @@ class HomepageController extends ComController
             $this->assign('publishCount', $Msg->publishCount($where));
         } else {
         }
+        vendor("jssdk.signPackage");
+        $this->assign("signPackage", getSignPackage());
         $this->display();
     }
+
+    public function homepagePromotion()
+    {
+        $Msg = new MessagesModel();
+        $this->assign('todayCount', $Msg->todayCount());
+        $this->assign('todayTrade', $Msg->todayTradeCount());
+        $this->assign('todayTrans', $Msg->todayTransportCount());
+        if (session('user_info')) {
+            $where = new WhereConditions();
+            $where->pushCond('publisher_rid', 'EQ', session('user_info')['uid']);
+            $this->assign('publishCount', $Msg->publishCount($where));
+        } else {
+        }
+        vendor("jssdk.signPackage");
+        $this->assign("signPackage", getSignPackage());
+        $this->display();
+    }
+
 //
 //    public function homepage_visitor(){
 //        $this->display();

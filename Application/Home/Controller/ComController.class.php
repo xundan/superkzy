@@ -19,6 +19,11 @@ class ComController extends Controller
         $module_name = CONTROLLER_NAME.'/'.ACTION_NAME;
         cookie("last_url_for_auth",U($module_name));
         cookie("current_url",__SELF__);
+        //判断是否是新手
+        if(cookie('new_comer') && cookie('new_comer')=='no'){
+        }else{
+            cookie('new_comer','yes');
+        }
         if(!isset($user['uid'])){
             //判断是否有uid，如果没有分两种情况
             // 如果是本机测试，从数据库取uid=1的用户登录

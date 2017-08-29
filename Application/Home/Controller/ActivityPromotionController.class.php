@@ -12,9 +12,12 @@ use Think\Controller;
 
 class ActivityPromotionController extends ComController
 {
+    const SUCCESS_NEW = 1;
+    const FAILURE = -1;
+    const SUCCESS_USED = 2;
     const CHANCE = 1;
     const CHANCE_FUNC_SWITCH = false;
-    const ACTIVITY_FLAG = false;
+    const ACTIVITY_FLAG = true;
 
     /**
      * 奖项数组
@@ -23,14 +26,14 @@ class ActivityPromotionController extends ComController
      * v 中奖权重
      * v总和越大越平衡
      */
-    private $_prize_arr = array(
-        '0' => array('id' => 1, 'prize' => 'iPhone7Plus中国红', 'v' => 0),
-        '1' => array('id' => 2, 'prize' => '黄金VIP1天', 'v' => 86),
-        '2' => array('id' => 3, 'prize' => '20元手机话费', 'v' => 2),
-        '3' => array('id' => 4, 'prize' => '黄金VIP7天', 'v' => 10),
-        '4' => array('id' => 5, 'prize' => 'iPhone7Plus中国红', 'v' => 0),
-        '5' => array('id' => 6, 'prize' => '20元手机话费', 'v' => 2),
-    );
+//    private $_prize_arr = array(
+//        '0' => array('id' => 1, 'prize' => 'iPhone7Plus中国红', 'v' => 0),
+//        '1' => array('id' => 2, 'prize' => '黄金VIP1天', 'v' => 86),
+//        '2' => array('id' => 3, 'prize' => '20元手机话费', 'v' => 2),
+//        '3' => array('id' => 4, 'prize' => '黄金VIP7天', 'v' => 10),
+//        '4' => array('id' => 5, 'prize' => 'iPhone7Plus中国红', 'v' => 0),
+//        '5' => array('id' => 6, 'prize' => '20元手机话费', 'v' => 2),
+//    );
 
 //    private $prize_arr = array(
 //        '0' => array('id'=>1,'prize'=>'iPhone7Plus中国红','v'=>100),
@@ -40,6 +43,17 @@ class ActivityPromotionController extends ComController
 //        '4' => array('id'=>5,'prize'=>'iPhone7Plus中国红','v'=>0),
 //        '5' => array('id'=>6,'prize'=>'20元手机话费','v'=>0),
 //    );
+
+    private $_prize_arr = array(
+        '0' => array('id' => 1, 'prize' => '20元红包', 'v' => 100),
+        '1' => array('id' => 2, 'prize' => '150元红包', 'v' => 1),
+        '2' => array('id' => 3, 'prize' => '80元红包', 'v' => 8),
+        '3' => array('id' => 4, 'prize' => '200元红包', 'v' => 0),
+        '4' => array('id' => 5, 'prize' => '15元红包', 'v' => 880),
+        '5' => array('id' => 6, 'prize' => '10元红包', 'v' => 0),
+        '6' => array('id' => 7, 'prize' => '100元红包', 'v' => 1),
+        '7' => array('id' => 8, 'prize' => '50元红包', 'v' => 10),
+    );
 
     public function turn_plate_lottery()
     {
@@ -172,7 +186,7 @@ class ActivityPromotionController extends ComController
         $subInfo = I('post.', '', 'strip_tags,trim');
         $data['uid'] = $_SESSION['user_info']['uid'];
         $data['prize_id'] = session('prize_id');
-        $data['prize_name'] = $this->prize_arr[session('prize_id') - 1]['prize'];
+        $data['prize_name'] = $this->_prize_arr[session('prize_id') - 1]['prize'];
         $data['contact'] = $subInfo['contact'];
         $where['uid'] = $_SESSION['user_info']['uid'];
 //        if(empty($subInfo))
@@ -205,6 +219,136 @@ class ActivityPromotionController extends ComController
         } else {
             return true;
         }
+    }
+
+    public function destiny()
+    {
+        $this->display();
+    }
+
+    /**
+     * 付费客户抽奖页面
+     */
+    public function payingClientLottery()
+    {
+        vendor("jssdk.signPackage");
+        $this->assign("signPackage", getSignPackage());
+        $this->display();
+    }
+
+    public function getPrize()
+    {
+        $prize_arr = $this->_prize_arr;
+        $arr = array();
+        foreach ($prize_arr as $key => $val) {
+            $arr[$val['id']] = $val['v'];
+        }
+        $rid = $this->get_rand($arr);
+        //抽奖成功存入奖品表
+        $user = session('user_info');
+//        $where['open_id'] = $user['open_id'];
+        $where['open_id'] = $user['open_id'];
+        $resultUser = M('paying_client')->where($where)->find();
+        //判断是否已经抽过再存
+        $detect['phone_number'] = $resultUser['phone_number'];
+        $resultDetect = M('activity_paying_client_2017_08')->where($detect)->find();
+        if($resultDetect){
+            echo self::FAILURE;
+            exit;
+        }
+        $Prize['uid'] = $user['uid'];
+        $Prize['paying_client_id'] = $resultUser['id'];
+        $Prize['phone_number'] = $resultUser['phone_number'];
+        $Prize['prize_id'] = $rid;
+        $Prize['prize_name'] = $prize_arr[$rid - 1]['prize'];
+        $Prize['count'] = 1;
+        $resultPrize = M('activity_paying_client_2017_08')->add($Prize);
+        if ($resultPrize) {
+            $returnArray = array();
+            $returnArray['prize_id'] = $rid;
+            $returnArray['prize_name'] = $prize_arr[$rid - 1]['prize'];
+            echo json_encode($returnArray);
+        }
+    }
+
+    /**
+     * 验证用户输入号码是否在已有名单中，伪登录
+     */
+    public function loginAction()
+    {
+        $user = session('user_info');
+        $subInfo = I('post.', '', 'strip_tags,trim');
+        $where['phone_number'] = $subInfo['phone_number'];
+        if (!$subInfo['phone_number']) {
+            echo self::FAILURE;
+            exit;
+        }
+        //已付费但到期用户不能参与抽奖
+        $whereInvalid['phone_number'] = $subInfo['phone_number'];
+        $whereInvalid['invalid_id'] = 0;
+        $result = M('paying_client')->where($whereInvalid)->order('phone_number asc')->find();
+        if ($result) {
+            //验证通过,检测结果是否有open_id
+            if ($result['open_id']) {
+                //用户信息在user表已经更新
+                //判断该用户是否在奖品表里有数据
+                $resultPrize = M('activity_paying_client_2017_08')->where($where)->find();
+                if ($resultPrize) {
+                    //有则说明验证通过的该用户已抽过奖
+                    echo self::SUCCESS_USED;
+                    exit;
+                } else {
+                    echo self::SUCCESS_NEW;
+                    exit;
+                }
+            } else {
+                //说明号码第一次被输入，保存更新用户表
+                //号码第一次被输入不代表用户是第一次来，检测用户以前是否更新过用户表
+                $userData['open_id'] = $user['open_id'];
+                $userData['nickname'] = $user['nickname'];
+                $resultUserOld = M('paying_client')->where($userData)->order('phone_number asc')->find();
+                if ($resultUserOld) {
+                    echo self::SUCCESS_USED;
+                    exit;
+                } else {
+                    $resultUser = M('paying_client')->where($where)->save($userData);
+                    if ($resultUser) {
+                        //成功登录
+                        echo self::SUCCESS_NEW;
+                        exit;
+                    } else {
+                        //数据库错误
+                        echo self::FAILURE;
+                        exit;
+                    }
+                }
+            }
+        } else {
+            //验证未通过，用户号码非付费客户
+            echo self::FAILURE;
+            exit;
+        }
+    }
+
+    public function test()
+    {
+        $where['phone_number'] = '';
+//        $where= array();
+//        $userData['nickname'] = 'SB';
+//        $a = M('paying_client')->where($where)->save($userData);
+        $a = M('paying_client')->where($where)->select();
+        dump(M()->getLastSql());
+        if ($a) {
+            dump(123123);
+        } else {
+            dump(555556);
+        }
+        dump($a);
+        $b[1] = 2;
+        $b[2] = 3;
+        $b[3] = 4;
+        dump(array_sum($b));
+        dump($b);
     }
 
 }

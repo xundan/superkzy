@@ -70,15 +70,19 @@ class CoalBuyMsgCard extends MsgCard
     <tbody>
     <tr>
         <td class=\"highlight\">煤炭种类:{$message['kind']}</td>
-        <td class=\"highlight\">" . $priceString . "</td>
-    </tr>
-    <tr>
-        <td class=\"highlight\">煤炭品质:{$message['trait']}</td>
         <td class=\"highlight\">产地:{$message['district_start']['name']}</td>
     </tr>
     <tr>
-        <td class=\"highlight\">煤炭粒度:{$message['granularity']}</td>
-        <td class=\"highlight\">吨数:{$message['quantity']}</td>
+        <td class=\"highlight\">热值:{$message['heat_value_min']}</td>
+        <td class=\"highlight\">煤炭品质:{$message['trait']}</td>
+    </tr>
+    <tr>
+        <td class=\"highlight\">" . $priceString . "</td>
+        <td class=\"highlight\">付款方式:{$message['pay_type']}</td>
+    </tr>
+    <tr>
+        <td class=\"highlight\">交割地:{$message['detail_area_end']}</td>
+        <td class=\"highlight\">吨数:{$message['quantity']}吨</td>
     </tr>
 </tbody>
 </table>

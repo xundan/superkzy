@@ -56,10 +56,11 @@
     .detail_click {
         /*text-align: center;*/
         height: 25px;
-        -moz-animation: myMove 2s linear infinite alternate;
-        -webkit-animation: myMove 2s linear infinite alternate;
-        -o-animation: myMove 2s linear infinite alternate;
-        animation: myMove 2s linear infinite alternate;
+        display: none;
+        -moz-animation: myMove 1.5s linear infinite alternate;
+        -webkit-animation: myMove 1.5s linear infinite alternate;
+        -o-animation: myMove 1.5s linear infinite alternate;
+        animation: myMove 1.5s linear infinite alternate;
     }
 </style>
 <body>
@@ -85,6 +86,9 @@
 </form>
 
 <!--订单展示栏-->
+<div class="detail_click" style="position: absolute;z-index: 9;top: 152px;">
+    <img src="__PUBLIC__/home/images/publish_history_detail_guide.png" width="30px">
+</div>
 <div id="wrapper" style="top: 10px;margin-left: 2.5%">
     <div id="scroller">
         <div id="pullDown">
@@ -302,7 +306,7 @@
                 },
                 onScrollMove: function () {
 //            document.getElementById("show").innerHTML="onScrollMove: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
-
+                    $('.detail_click').hide();
                     if (this.y > 0) {
                         pullDownEl.className = 'flip';
                         pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...</br>' + '最后更新时间：' + update_time;
@@ -324,7 +328,6 @@
                         pullUpEl.className = '';
                         pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
                     }
-
                 },
                 onScrollEnd: function () {
 //            document.getElementById("show").innerHTML="onScrollEnd: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
@@ -520,13 +523,16 @@
 <script>
     $(function(){
         var device_width = $(window).width();
-        $('.detail_click').css('left',device_width/2-42).show();
-
-//        if(cookie('detail_click')){
-//            $('.detail_click').css('left',device_width/2-42).show();
-//        }else{
-//        }
-//        cookie('detail_click',null);
-    })
+//        $('.detail_click').css('left',device_width/2-10).show();
+        if(cookie('detail_click')){
+            $('.detail_click').css('left',device_width/2-10).show();
+        }else{
+        }
+        cookie('detail_click',null);
+    });
+    //点击或滑动隐藏提示图片，滑动写在onScrollMove里了
+    $('body').click(function (e) {
+        $('.detail_click').hide();
+    });
 </script>
 </html>

@@ -271,6 +271,18 @@
                 </td>
             </tr>
             <tr>
+                <td style="padding: 0">
+                    <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">交割地</span>
+                            </span>
+                        <input id="buy_detail_area_end" name="detail_area_end" class="form-control"
+                               placeholder="请填写交割地地址" style="border-radius: 0;border: 0">
+                    </div>
+                </td>
+            </tr>
+            <tr>
                 <td class="text-center" style="background-color: white">
                     有效期7天
                 </td>
@@ -540,10 +552,6 @@
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-//                console.log(123456);
-//                console.log(XMLHttpRequest);
-//                console.log(textStatus);
-//                console.log(errorThrown);
                 alert('不可棱！！');
             }
         });

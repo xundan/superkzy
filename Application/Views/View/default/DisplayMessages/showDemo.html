@@ -138,17 +138,65 @@
         -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
         transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
     }
+    .input-style{
+        margin-top: 10px;
+        height: 34px;
+        padding: 6px 12px;
+        font-size: 14px;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+    }
+    .radio-style{
+        margin-left: 10px;
+        margin-bottom: 5px;
+        font-size: 24px;
+        border: 1px solid black;
+    }
+    .btn{
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px
+    }
+    .btn-default {
+        color: #333;
+        background-color: #fff;
+        border-color: #ccc
+    }
 </style>
 <body>
-<span style="font-size: 25px">您好 <i>{$username}！</i>还有{$uncheck_count}条信息未审核</span>
-    <!--其中群信息{$group_count['group_all']}条,今日已审核{$group_count['group_checked']}条群信息-->
+<span style="font-size: 25px">
+    还有{$uncheck_count}条信息未审核</span>
 <a href="__ROOT__/Views/StaffsLogin/logout" style="float: right;font-size: 15px">登出</a>
 <button id="show_group" class="group-btn btn-active">显示群消息中</button>
 <script type="text/javascript">
     $(function () {
         var url = location.href;
         var show_group = $('#show_group');
-        if(url.indexOf('group')>0){
+        if(url.indexOf('off')>0){
             show_group.removeClass('btn-active');
             show_group.html('隐藏群消息中');
         }else{
@@ -162,7 +210,7 @@
             $(this).removeClass('btn-active');
             $(this).html('隐藏群消息中');
             if(url.indexOf('id/')>0){
-                location.href = url.replace('.html','/group/off.html');
+                location.href = url.replace('/group/on.html','/group/off.html');
             }else{
                 location.href = url+"&group=off";
             }
@@ -205,20 +253,42 @@
                     <textarea  rows="5" style=" overflow:visible;" name="content" id="content_id">{$data['content']}</textarea>
                 </td>
             </tr>
-            <tr style="display: none">
-                <td colspan="3">
-                    <fieldset>
-                        <legend>运费筛选(未启用)</legend>
-                        <div id="phone_number" style="display: none">{$data['phone_number']}</div>
-                        <div id="area_start_select">起始地:</div><input type="text" name="area_start" id="area_start_text" placeholder="起始地">
-                        <div id="area_end_select">终止地:</div><input type="text" name="area_end" id="area_end_text" placeholder="终止地">
-                        <div id="freight">运费:</div><input type="number" name="freight" id="freight_text" placeholder="运费">
-                        <button type="button" id="freight_submit">提交</button>
-                    </fieldset>
-                </td>
-            </tr>
+            <!--<tr style="display: none" id="freight_form">-->
+                <!--<td colspan="3">-->
+                <!--</td>-->
+            <!--</tr>-->
             </tbody>
         </table>
+        <!--运费提交-->
+        <div style="display: none" id="freight_form">
+            <fieldset>
+                <legend>运费筛选</legend>
+                <div id="phone_number" style="display: none">{$data['phone_number']}</div>
+                <!--<div id="area_start_select">起始地:</div><input type="text" name="area_start" id="area_start_text" placeholder="起始地">-->
+                <!--<div id="area_end_select">终止地:</div><input type="text" name="area_end" id="area_end_text" placeholder="终止地">-->
+
+                <input class="input-style" type="text" name="freight_area_start_name" id="freight_area_start_name" placeholder="起始地">
+                <button type="button" id="freight_area_check_start">检测地址合法</button>
+                <input type="hidden" name="freight_area_start" id="freight_area_start">
+                <span id="freight_area_check_start_result"></span>
+                <input class="input-style" type="text" name="freight_area_start_detail" id="freight_area_start_detail" placeholder="详细地址">
+                <br/>
+
+                <input class="input-style" type="text" name="freight_area_end_name" id="freight_area_end_name" placeholder="目的地">
+                <button type="button" id="freight_area_check_end">检测地址合法</button>
+                <input type="hidden" name="freight_area_end" id="freight_area_end">
+                <span id="freight_area_check_end_result"></span>
+                <input class="input-style" type="text" name="freight_area_end_detail" id="freight_area_end_detail" placeholder="详细地址">
+
+                <div id="freight" style="margin-top: 5px">运费:</div><input class="input-style" type="number" name="freight" id="freight_text" placeholder="运费">
+                <br/>
+                <div style="margin-top: 5px;text-align: center">
+                    <button type="button" class="btn btn-default" id="freight_submit">提交</button>
+                </div>
+
+            </fieldset>
+        </div>
+
         <!--详细表单提交-->
         <div id="form_detail">
             <!--供应-->
@@ -227,7 +297,7 @@
                     <legend>供应</legend>
                     <!--<p>产地 煤种 粒度 热值 硫</p>-->
                     <input type="hidden" name="category">
-                    <input type="text" name="area_start_name" placeholder="产地">
+                    <input class="input-style" type="text" name="area_start_name" placeholder="产地">
                     <button type="button" id="area_check">检测地址合法</button>
                     <input type="hidden" name="area_start" id="sell_area_start">
                     <span id="area_check_result" class="area_check_result"></span>
@@ -448,24 +518,39 @@
 
 <!--细分审核-->
 <script>
-    $('#area_check').click(function(){
-        var $this = $(this);
-        var area_name = $this.prev().val();
-        $('.area_check_result').html('');
+    //地址检测函数
+    function areaCheck(area){
+        var areaObj;
         $.ajax({
             type: "post",
             url:"{:U('DisplayMessages/area_check')}",
-            data: {area_name:area_name},
+            data: {area_name:area},
+            async: false,
             success:function(data){
                 console.log(data);
-                if(data != 0 && data != 41900000 && data){
-                    $this.next().val(data);
-                    console.log( $this, $this.next(), $this.next().val());
+                if(data != 0){
+                    areaObj = eval('('+data+')');
                 }else{
-                    $('.area_check_result').html("<span style='color:red'>不合法，可以填详细地址</span>");
+                    areaObj = false;
                 }
             }
         });
+        return areaObj;
+    }
+    //供应地址检测按钮
+    $('#area_check').click(function(){
+        var $this = $(this);
+        var area_name = $this.prev().val();
+        if(!area_name){
+            return false;
+        }
+        $('.area_check_result').html('');
+        var result = areaCheck(area_name);
+        if(result){
+            $this.next().val(result['id']);
+        }else{
+            $('.area_check_result').html("<span style='color:red'>不合法，可以填详细地址</span>");
+        }
     });
     $('input[type=radio]').click(function(){
        var $this = $(this);
@@ -475,7 +560,6 @@
             $this.parent('label').siblings().removeClass('selected');
         }else {
         }
-
     });
     $('.checkbox2').click(function () {
         var $this = $(this);
@@ -494,6 +578,8 @@
             else if(category == '找车'){
                 console.log(3);
                 $('#form_need').addClass('on');
+                priceAutoMatch();
+                $('#freight_form').css('display','block');
             }
             else if(category == '车源'){
                 console.log(4);
@@ -513,17 +599,17 @@
             else if(category == '找车'){
                 console.log(33);
                 $('#form_need').removeClass('on');
+                $('#freight_form').css('display','none');
             }
             else if(category == '车源'){
                 console.log(44);
                 $('#form_give').removeClass('on');
             }else{
-
             }
         }
     })
 </script>
-
+<!--删除信息-->
 <script>
     function delete_confirm() {
         if (!confirm("确认要删除？")) {
@@ -576,9 +662,38 @@
 
 <!--匹配地址-->
 <script>
-//    $(function () {
-//        var areaMatch = document.getElementById('content_id');
-//        var areaMatchContent = areaMatch.innerHTML;
+    $('#freight_area_check_start').click(function(){
+        var $this = $(this);
+        var area_name = $this.prev().val();
+        if(!area_name){
+            return false;
+        }
+        console.log(area_name);
+        $('#freight_area_check_start_result').html('');
+        var result = areaCheck(area_name);
+        if(result){
+            $this.next().val(result['id']);
+        }else{
+            $('#freight_area_check_start_result').html("<span style='color:red'>不合法</span>");
+        }
+    });
+    $('#freight_area_check_end').click(function(){
+        var $this = $(this);
+        var area_name = $this.prev().val();
+        if(!area_name){
+            return false;
+        }
+        $('#freight_area_check_end_result').html('');
+        var result = areaCheck(area_name);
+        if(result){
+            $this.next().val(result['id']);
+        }else{
+            $('#freight_area_check_end_result').html("<span style='color:red'>不合法</span>");
+        }
+    });
+    function priceAutoMatch() {
+        var areaMatch = document.getElementById('content_id');
+        var areaMatchContent = areaMatch.innerHTML;
 //        var temp_start = document.getElementById('area_start_select');
 //        var temp_end = document.getElementById('area_end_select');
 //        $.getJSON('__PUBLIC__/freight_area.json', function (data) {
@@ -595,11 +710,19 @@
 //                }
 //            });
 //        });
-//        //运费数字
-//        var temp_freight = document.getElementById('freight');
+        //运费数字
+        var temp_freight = document.getElementById('freight');
 //        //var result = areaMatchContent.match(/\d{1,}(?=\D)/g);
 //        var result = areaMatchContent.match(/\d+(\.\d+)?/g);
-//
+//        var result = areaMatchContent.match(/[\D](\d{2,3})(?!\d)/g);
+        var reg = /[\D](\d{2,3})(?!\d)/g;
+        var result;
+        while(result = reg.exec(areaMatchContent)){
+            console.log(result[1]);
+            var select_freight = document.createElement('span');
+            select_freight.innerHTML = "<label class='radio-style'><input type='radio' value=" + result[1] + " name='freight'>" + result[1] + "</label>";
+            temp_freight.appendChild(select_freight);
+        }
 //        if (result) {
 //            $.each(result, function (k, val) {
 //                if (val.length == 2 || val.length == 3) {
@@ -610,20 +733,33 @@
 //                }
 //            })
 //        }
-//    })
+    }
 </script>
 <!--运费表单提交-->
 <script>
     $('#freight_submit').click(function () {
-        var area_start_text = $('#area_start_text').val();
-        var area_start = $('input[name=area_start]:checked').val();
-        var area_end_text = $('#area_end_text').val();
-        var area_end = $('input[name=area_end]:checked').val();
+        $('#freight_area_check_start').click();
+        $('#freight_area_check_end').click();
+
+        var area_start_name = $('#freight_area_start_name').val();
+
+        var area_start = $('#freight_area_start').val();
+        var area_start_detail = $('#freight_area_start_detail').val();
+
+        var area_end_name = $('#freight_area_end_name').val();
+        var area_end = $('#freight_area_end').val();
+        var area_end_detail = $('#freight_area_end_detail').val();
+
         var freight_text = $('#freight_text').val();
         var freight = $('input[name=freight]:checked').val();
 
-        area_start = parseInt(area_start) / 100;
-        area_end = parseInt(area_end) / 100;
+        console.log(area_start,area_end);
+
+        var $now_selected = $('input[name=freight]:checked');
+        var $next_selected = $now_selected.parent('label').parent('span').next().children('label').children('input');
+
+//        area_start = parseInt(area_start) / 100;
+//        area_end = parseInt(area_end) / 100;
         var result_freight;
         if (freight_text) {
             result_freight = freight_text;
@@ -640,15 +776,27 @@
                 message_id: message_id,
                 phone_number: phone_number,
                 area_start_id: area_start,
-                area_start_name: area_start_text,
+                area_start_name: area_start_name,
+                area_start_detail: area_start_detail,
                 area_end_id: area_end,
-                area_end_name: area_end_text,
+                area_end_name: area_end_name,
+                area_end_detail: area_end_detail,
                 freight_price: result_freight
             },
             success: function (data) {
-                $('#area_start_text').val('');
-                $('#area_end_text').val('');
+                console.log(data);
+
+//                $('#freight_area_start').val('');
+//                $('#freight_area_start_name').val('');
+                $('#freight_area_start_detail').val('');
+
+//                $('#freight_area_end').val('');
+//                $('#freight_area_end_name').val('');
+                $('#freight_area_end_detail').val('');
                 $('#freight_text').val('');
+
+                $now_selected.prop('checked',false);
+                $next_selected.prop('checked','checked');
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
             }

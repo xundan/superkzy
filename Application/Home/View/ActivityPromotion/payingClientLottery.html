@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <!--<meta name="viewport"-->
+    <!--content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>-->
+    <!--<meta name="viewport"-->
+    <!--content="width=device-width,initial-scale=0.5"/>-->
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <title>抽奖页面</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
+    <style>
+        #lottery {
+            width: 570px;
+            height: 510px;
+            /*margin: 40% auto;*/
+            /*border: 4px solid #ba1809;*/
+            position: absolute;
+            top: 37px;
+            left: 40px;
+        }
+
+        #lottery table {
+            background-color: white;
+        }
+
+        #lottery table td {
+            position: relative;
+            width: 190px;
+            height: 170px;
+            text-align: center;
+            color: #333;
+        }
+
+        #lottery table td img {
+            display: block;
+            width: 190px;
+            height: 170px;
+        }
+
+        #lottery table td a {
+            width: 190px;
+            height: 170px;
+            display: block;
+            text-decoration: none;
+            background: url("__PUBLIC__/home/images/payingClientLottery/lottery1.jpg") no-repeat top center;
+        }
+
+        #lottery table td a:hover {
+            background-image: url("__PUBLIC__/home/images/payingClientLottery/lottery2.jpg");
+        }
+
+        #lottery table td.active .mask {
+            display: block;
+        }
+
+        .mask {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-color: rgba(252, 211, 4, 0.5);
+            display: none;
+        }
+
+        #lottery_container {
+            width: 655px;
+            height: 585px;
+            margin: 5% auto;
+            background: url('__PUBLIC__/home/images/payingClientLottery/border.png') no-repeat;
+        }
+
+        #activity_instruction {
+            margin-left: 5%;
+            font-size: 3rem;
+            color: white;
+            position: relative;
+        }
+
+        .keBody {
+            margin: 0;
+            background: url('__PUBLIC__/home/images/payingClientLottery/background.jpg') no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body class="keBody">
+<!--效果html开始-->
+<div id="login" style="margin: 6% auto;text-align: center;height: 180px">
+    <input id="phone_number" type="text" name="phone_number" class="form-control"
+           style="margin: 0 auto;height: 3em;font-size: 2em;width:60%" placeholder="请输入手机号">
+    <button id="login_check" class="btn btn-default btn-lg" style="font-size: 2em;margin-top: 1%">确定</button>
+</div>
+<div style="margin: 0 auto;text-align: center">
+    <img src="__PUBLIC__/home/images/payingClientLottery/123.png">
+</div>
+<div id="lottery_container" style="position: relative">
+    <div id="lottery" style="position: absolute;top: 37px;left: 40px;">
+        <table border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td class="lottery-unit lottery-unit-0">
+                    <img src="__PUBLIC__/home/images/payingClientLottery/20.jpg">
+
+                    <div class="mask"></div>
+                </td>
+                <td class="lottery-unit lottery-unit-1">
+                    <img src="__PUBLIC__/home/images/payingClientLottery/150.png">
+
+                    <div class="mask"></div>
+                </td>
+                <td class="lottery-unit lottery-unit-2">
+                    <img src="__PUBLIC__/home/images/payingClientLottery/80.png">
+
+                    <div class="mask"></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="lottery-unit lottery-unit-7">
+                    <img src="__PUBLIC__/home/images/payingClientLottery/50.png">
+
+                    <div class="mask"></div>
+                </td>
+                <td><a id="start" href="#"></a></td>
+                <td class="lottery-unit lottery-unit-3">
+                    <img src="__PUBLIC__/home/images/payingClientLottery/200.png">
+
+                    <div class="mask"></div>
+                </td>
+            </tr>
+            <tr>
+                <td class="lottery-unit lottery-unit-6">
+                    <img src="__PUBLIC__/home/images/payingClientLottery/100.png">
+
+                    <div class="mask"></div>
+                </td>
+                <td class="lottery-unit lottery-unit-5">
+                    <img src="__PUBLIC__/home/images/payingClientLottery/10.png">
+
+                    <div class="mask"></div>
+                </td>
+                <td class="lottery-unit lottery-unit-4">
+                    <img src="__PUBLIC__/home/images/payingClientLottery/15.png">
+
+                    <div class="mask"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div id="activity_instruction">
+    <p style="font-size: 5rem">活动说明</p>
+
+    <p>只有付费客户且处于服务期限内才有资格进行抽奖</p>
+
+    <p>每个付费手机号只有一次抽奖机会</p>
+
+    <p>输入付费时微信绑定的手机号进行验证登录</p>
+
+    <p>点击立即抽奖进行抽奖</p>
+
+    <p>领奖方式:截图给超矿客服:17083425332(微信同号)</p>
+
+    <p>如有任何疑问，请扫右侧二维码加客服进行咨询</p>
+
+    <img src="__PUBLIC__/home/images/payingClientLottery/custom_service_qrcode.png"
+         style="position: absolute;bottom: 10px;right: 10px;">
+</div>
+
+</body>
+<!--微信分享-->
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    wx.config({
+        debug: false,
+        appId: '{$signPackage["appId"]}',
+        timestamp: {$signPackage["timestamp"]},
+        nonceStr: '{$signPackage["nonceStr"]}',
+        signature: '{$signPackage["signature"]}',
+        jsApiList: [
+            // 所有要调用的 API 都要加到这个列表中
+            'onMenuShareTimeline', 'onMenuShareAppMessage',
+            'hideOptionMenu',
+            'showOptionMenu',
+            'hideMenuItems',
+            'showMenuItems',
+            'hideAllNonBaseMenuItem',
+            'showAllNonBaseMenuItem'
+        ]
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+        wx.hideAllNonBaseMenuItem();
+        // 分享到朋友圈
+        wx.onMenuShareTimeline({
+            title: '超级矿资源煤价查询系统', // 分享标题
+            link: "http://www.kuaimei56.com/index.php/Home/CoalPriceSearch/coal_price_search", // 分享链接
+            imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        //分享给朋友
+        wx.onMenuShareAppMessage({
+            title: '超级矿资源煤价查询系统', // 分享标题
+            desc: '超级矿资源官方认证的煤矿煤价查询系统，点击进入，畅享查询', // 分享描述
+            link: "http://www.kuaimei56.com/index.php/Home/CoalPriceSearch/coal_price_search", // 分享链接
+            imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+    });
+</script>
+<!--手机号登陆-->
+<script>
+    $('#login').on('click', '#login_check_back', function () {
+        var $login_check = '<input id="phone_number" type="text" name="phone_number" class="form-control" style="margin: 0 auto;height: 3em;font-size: 2em;width:60%" placeholder="请输入手机号">' +
+                '<button id="login_check" class="btn btn-default btn-lg" style="font-size: 2em;margin-top: 1%">确定</button>';
+        $('#login').html($login_check);
+    }).on('click', '#login_check', function () {
+        var phone_number = $('#phone_number').val();
+        var $loginFailure = "<p style='font-size: 2.5rem;color:white'>该号码还不是我们的收费客户或者服务期限已过！</br>点击返回按钮重新输入</p>" +
+                "<button id='login_check_back' class='btn btn-default btn-lg' style='font-size: 2em;margin-top: 1%'>返回</button>";
+        var $loginAlready = "<p style='font-size: 2.5em;color: white;'>该微信号已经抽过奖了</br>您还可已留意我们其他的活动哦</p>";
+        var $loginSuccess = "<p style='font-size: 2.5em;color: white;'>您好，欢迎参加付费返利活动！</br>请仔细阅读活动说明并点击“立即抽奖”按钮进行抽奖</p>";
+        $.ajax({
+            type: "post",
+            url: "{:U('ActivityPromotion/loginAction')}",
+            data: {
+                isAjax: 1,
+                phone_number: phone_number
+            },
+            success: function (data) {
+                if (data == 1) {
+                    //成功登录
+                    console.log(data);
+                    login_check = true;
+                    $('#login').html($loginSuccess);
+                } else if (data == 2) {
+                    //已经抽过奖
+                    $('#login').html($loginAlready);
+                } else {
+                    //验证失败
+                    $('#login').html($loginFailure);
+                }
+            },
+            error: function () {
+            }
+        });
+    });
+</script>
+<!--lottery-->
+<script type="text/javascript">
+    var lottery = {
+        index: -1,    //当前转动到哪个位置，起点位置
+        count: 0,    //总共有多少个位置
+        timer: 0,    //setTimeout的ID，用clearTimeout清除
+        speed: 20,    //初始转动速度
+        times: 0,    //转动次数
+        cycle: 50,    //转动基本次数：即至少需要转动多少次再进入抽奖环节
+        prize: -1,    //中奖位置
+        init: function (id) {
+            if ($("#" + id).find(".lottery-unit").length > 0) {
+                $lottery = $("#" + id);
+                $units = $lottery.find(".lottery-unit");
+                this.obj = $lottery;
+                this.count = $units.length;
+                $lottery.find(".lottery-unit-" + this.index).addClass("active");
+            }
+        },
+        roll: function () {
+            var index = this.index;
+            var count = this.count;
+            var lottery = this.obj;
+            $(lottery).find(".lottery-unit-" + index).removeClass("active");
+            index += 1;
+            if (index > count - 1) {
+                index = 0;
+            }
+            $(lottery).find(".lottery-unit-" + index).addClass("active");
+            this.index = index;
+            return false;
+        },
+        stop: function (index) {
+            this.prize = index;
+            return false;
+        }
+    };
+
+    function roll() {
+        lottery.times += 1;
+        lottery.roll();//转动过程调用的是lottery的roll方法，这里是第一次调用初始化
+        if (lottery.times > lottery.cycle + 10 && lottery.prize == lottery.index) {
+            clearTimeout(lottery.timer);
+            lottery.prize = -1;
+            lottery.times = 0;
+            click = false;
+            alert('恭喜您抽中【' + prize_name + '】!');
+        } else {
+            if (lottery.times < lottery.cycle) {
+                lottery.speed -= 10;
+            } else if (lottery.times == lottery.cycle) {
+                //开始抽奖
+            } else {
+                if (lottery.times > lottery.cycle + 10 && ((lottery.prize == 0 && lottery.index == 7) || lottery.prize == lottery.index + 1)) {
+                    lottery.speed += 110;
+                } else {
+                    lottery.speed += 20;
+                }
+            }
+            if (lottery.speed < 40) {
+                lottery.speed = 40;
+            }
+//            console.log(lottery.times+'^^^^^^'+lottery.speed+'^^^^^^^'+lottery.prize);
+            lottery.timer = setTimeout(roll, lottery.speed);//循环调用
+        }
+        return false;
+    }
+
+    var click = false;
+    var login_check = false;
+    var prize_name = '';
+    window.onload = function () {
+        lottery.init('lottery');
+    };
+</script>
+<!--抽奖点击-->
+<script>
+    $("#start").click(function () {
+        if (login_check) {
+            //登录成功
+            if (click) {  //click控制一次抽奖过程中不能重复点击抽奖按钮，后面的点击不响应
+                return false;
+            } else {
+                $.ajax({
+                    type: "post",
+                    url: "{:U('ActivityPromotion/getPrize')}",
+                    data: {
+                        isAjax: 1
+                    },
+                    success: function (data) {
+                        if(data == -1){
+                            //已经抽过
+                            alert('抽奖机会只有一次哦！请将结果截图至合作客服领取红包吧！');
+                            return false;
+                        }
+                        var jsonObj = eval('(' + data + ')');
+                        lottery.prize = jsonObj['prize_id'] - 1;
+                        prize_name = jsonObj['prize_name'];
+                        lottery.speed = 100;
+                        roll();    //转圈过程不响应click事件，会将click置为false
+                        click = true; //一次抽奖完成后，设置click为true，可继续抽奖
+                    },
+                    error: function () {
+                    }
+                });
+                return false;
+            }
+        } else {
+            console.log('login_false');
+            alert('请输入付费微信所绑定的手机号进行抽奖');
+            return false;
+        }
+    });
+</script>
+</html>

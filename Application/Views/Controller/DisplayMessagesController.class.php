@@ -35,8 +35,6 @@ class DisplayMessagesController extends Controller
                 //审核进度
                 $uncheck_count = $this->uncheckCount($id);
                 $this->assign('uncheck_count', $uncheck_count);
-                //$group_count = $this->uncheckGroupCount();
-                //$this->assign('group_count',$group_count);
 
                 if (!$data) {
                     echo "<h4>没有更多数据了。</h4>";
@@ -60,16 +58,15 @@ class DisplayMessagesController extends Controller
                 $data = D('Message')->where("invalid_id=0 AND type in ('plain','group','wx_mp') AND status=0 AND id=%d", $id)->find();
                 $this->assign("data", $data);
                 $this->assign("id", $id);
-                $cur_user = $_SESSION['cur_user'];
-                $username = $cur_user['name'];
-                $this->assign('username', $username);
+                $this->assign("group", 'on');
+//                $cur_user = $_SESSION['cur_user'];
+//                $username = $cur_user['name'];
+//                $this->assign('username', $username);
                 $id_minus = $this->find_prev($id);
                 $id_plus = $this->find_next($id);
                 //审核进度
                 $uncheck_count = $this->uncheckCount($id);
                 $this->assign('uncheck_count', $uncheck_count);
-                //$group_count = $this->uncheckGroupCount();
-                //$this->assign('group_count',$group_count);
 
                 if (!$data) {
                     echo "<h4>没有更多数据了。</h4>";
@@ -385,18 +382,20 @@ class DisplayMessagesController extends Controller
         $data['phone_number'] = $subInfo['phone_number'];
         $data['area_start_id'] = $subInfo['area_start_id'];
         $data['area_start_name'] = $subInfo['area_start_name'];
-        $data['area_end_id'] = $subInfo['area_end'];
+        $data['area_start_detail'] = $subInfo['area_start_detail'];
+        $data['area_end_id'] = $subInfo['area_end_id'];
         $data['area_end_name'] = $subInfo['area_end_name'];
+        $data['area_end_detail'] = $subInfo['area_end_detail'];
         $data['freight_price'] = $subInfo['freight_price'];
         $data['invalid_id'] = 0;
-        if ($subInfo['area_start_id']) {
-            $result = M('ck_districts')->where("id=%d", array($subInfo['area_start_id']))->find();
-            $data['area_start_name'] = $result['name'];
-        }
-        if ($subInfo['area_end_id']) {
-            $result = M('ck_districts')->where("id=%d", array($subInfo['area_end_id']))->find();
-            $data['area_end_name'] = $result['name'];
-        }
+//        if ($subInfo['area_start_id']) {
+//            $result = M('ck_districts')->where("id=%d", array($subInfo['area_start_id']))->find();
+//            $data['area_start_name'] = $result['name'];
+//        }
+//        if ($subInfo['area_end_id']) {
+//            $result = M('ck_districts')->where("id=%d", array($subInfo['area_end_id']))->find();
+//            $data['area_end_name'] = $result['name'];
+//        }
         $result = M('ck_freight')->add($data);
         if ($result) {
             $returnArr['status'] = 1;
@@ -408,25 +407,14 @@ class DisplayMessagesController extends Controller
 
     public function area_check(){
         $area_name = I('post.area_name','','trim');
-        $flag = true;
-        $where['name'] = $area_name;
-        $nameResult = M('ck_districts')->where($where)->find();
-        if($nameResult){
-            echo $nameResult['id'];
+        $where['name|short_name'] = $area_name;
+        $result = M('ck_districts')->where($where)->find();
+        if($result){
+            echo json_encode($result);
             exit;
         }else{
-            $flag = false;
-        }
-        $where2['short_name'] = $area_name;
-        $shortNameResult = M('ck_districts')->where($where2)->find();
-        if($shortNameResult){
-            echo $shortNameResult['id'];
-            exit;
-        }else{
-            $flag = false;
-        }
-        if(!$flag){
             echo 0;
+            exit;
         }
     }
 

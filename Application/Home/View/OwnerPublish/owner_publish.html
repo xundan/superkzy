@@ -23,7 +23,7 @@
 <include file="Common:common"/>
 <!--我的发布-->
 <a href="{:U('OwnerPublishHistory/owner_publish_history')}" id="my_publish" class="btn btn-default"
-   style="background-color: #04bfc6;color: white;right: 0;top: 80%;position: fixed;position: absolute;z-index: 5">我的发布</a>
+   style="background-color: #04bfc6;color: white;right: 0;top: 80%;position: fixed;z-index: 5">我的发布</a>
 <!--导航标签-->
 <div class="panel-title" style="margin:0;padding: 0;background-color: white">
     <div id="myTab" class="weui_navbar" role="" style="position: inherit;margin-bottom: 0;">
@@ -229,16 +229,102 @@
                 <tr>
                     <td style="padding: 0">
                         <div class="input-group" style="width: 100%">
-                                <span class="input-group-addon"
-                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
                                 <span class="pull-left">价格</span>
                             </span>
                             <input type="number" name="price" id="sell_price" class="form-control" placeholder="请输入煤炭价格"
-                                   style="border-radius: 0;border: 0">
-                                <span class="input-group-addon"
-                                      style="border-radius: 0;border:0;background-color: white">
-                                    元/吨
+                                   style=";border-radius: 0;border: 0">
+                            <span class="input-group-addon"
+                                  style=";border-radius: 0;border:0;background-color: white;border-right: 1px #efefef solid;">
+                                元/吨
+                            </span>
+                            <span class="input-group-addon"
+                                  style="border-radius: 0;border:0;background-color: white">
+                                含税
+                            </span>
+                            <span class="input-group-addon"
+                                  style="padding: 0;;border-radius: 0;border:0;background-color: white">
+                                <span class="weui_cell_ft">
+                                    <input id="sell_short_allocate_switch" name="short_allocate_switch" class="weui_switch" style=""
+                                           type="checkbox">
+                                    <input id="sell_short_allocate" name="short_allocate" style="display: none">
                                 </span>
+                            </span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <a data-toggle="collapse" href="#collapse_sell_price_type"
+                           style="text-decoration: none;color:black">
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">价格类型</span>
+                                </span>
+                                <span id="sell_price_type_html" style="border: 0" class="form-control"></span>
+                                 <span class="input-group-addon"
+                                       style="border-radius: 0;border:0;background-color: white;position: relative;">
+                                    <span class="dropdown-arrow"></span>
+                                </span>
+                            </div>
+                        </a>
+
+                        <div id="collapse_sell_price_type" class="collapse" role="tablist" aria-labelledby="">
+                            <!--style="position: absolute;clip:rect(0,0,0,0)"-->
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 7%;width:26%;margin-top:5px;text-align: center">
+                                <input type="radio" style="display: none" class="pull-left" name="price_type"
+                                       autocomplete="off" value="装车价">装车价
+                            </label>
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 3%;width:26%;margin-top:5px;text-align: center">
+                                <input type="radio" style="display: none" class="pull-left" name="price_type"
+                                       autocomplete="off" value="车板价">车板价
+                            </label>
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 3%;width:26%;margin-top:5px;text-align: center">
+                                <input type="radio" style="display: none" class="pull-left" name="price_type"
+                                       autocomplete="off" value="站台价">站台价
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="padding: 0">
+                        <a data-toggle="collapse" href="#collapse_sell_method"
+                           style="text-decoration: none;color:black">
+                            <div class="input-group" style="height:34px;width: 100%">
+                                <span class="input-group-addon"
+                                      style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                    <span class="pull-left">付款方式</span>
+                                </span>
+                                <span id="sell_pay_type_html" style="border: 0" class="form-control"></span>
+                                 <span class="input-group-addon"
+                                       style="border-radius: 0;border:0;background-color: white;position: relative;">
+                                    <span class="dropdown-arrow"></span>
+                                </span>
+                            </div>
+                        </a>
+
+                        <div id="collapse_sell_method" class="collapse" role="tablist" aria-labelledby="">
+                            <!--style="position: absolute;clip:rect(0,0,0,0)"-->
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 7%;width:26%;margin-top:5px;text-align: center">
+                                <input type="radio" style="display: none" class="pull-left" name="pay_type"
+                                       autocomplete="off" value="装车付款">装车付款
+                            </label>
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 3%;width:26%;margin-top:5px;text-align: center">
+                                <input type="radio" style="display: none" class="pull-left" name="pay_type"
+                                       autocomplete="off" value="货到付款">货到付款
+                            </label>
+                            <label class="mybtn mybtn-default"
+                                   style="margin-left: 3%;width:26%;margin-top:5px;text-align: center">
+                                <input type="radio" style="display: none" class="pull-left" name="pay_type"
+                                       autocomplete="off" value="电话沟通">电话沟通
+                            </label>
                         </div>
                     </td>
                 </tr>
@@ -619,6 +705,18 @@
                     </td>
                 </tr>
                 <tr>
+                    <td style="padding: 0">
+                        <div class="input-group" style="width: 100%">
+                            <span class="input-group-addon"
+                                  style="width: 25%;border-radius: 0;border:0;background-color: white">
+                                <span class="pull-left">交割地</span>
+                            </span>
+                            <input id="buy_detail_area_end" name="detail_area_end" class="form-control"
+                                   placeholder="请填写交割地地址" style="border-radius: 0;border: 0">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
                     <td class="text-center" style="background-color: white">
                         有效期7天
                     </td>
@@ -973,8 +1071,9 @@
                             </span>
 
                             <div class="weui_cell_ft">
-                                <input id="give_short_allocate" name="short_allocate" class="weui_switch" style=""
+                                <input id="give_short_allocate_switch" name="short_allocate_switch" class="weui_switch" style=""
                                        type="checkbox" checked>
+                                <input id="give_short_allocate" name="short_allocate" style="display: none">
                             </div>
                         </div>
                     </td>
@@ -1137,7 +1236,8 @@
                 </span>
             </div>
             <div class="modal-footer">
-                <a href="{:U('OwnerPublishHistory/owner_publish_history')}" id="jump_to_my_publish" type="button" class="btn btn-primary"
+                <a href="{:U('OwnerPublishHistory/owner_publish_history')}" id="jump_to_my_publish" type="button"
+                   class="btn btn-primary"
                    style="border-color: #ccc;background-color: #04bfc6">
                     查看已发布订单
                 </a>
@@ -1191,6 +1291,13 @@
         });
         temp_html.html(temp_html_string);
     });
+    $('.weui_switch').click(function(){
+        if($(this).prop('checked')){
+            $(this).next('input').val(1);
+        }else{
+            $(this).next('input').val(0);
+        }
+    })
 </script>
 
 <!--折叠下拉箭头变换效果-->
@@ -1265,6 +1372,10 @@
                     else if (val.name == 'area_end_name') { //目的地址名
                         $('#give_area_end_name').val(val.value);
                     }
+                    else if (val.name == 'short_allocate' && val.value == 1) { //调配与否
+                        $('#give_short_allocate_switch').prop("checked", "checked");
+                        $('#give_short_allocate').val(val.value);
+                    }
                     else if (val.name == 'car_type') {  //车辆类型
                         var car_type = $(":radio[name=car_type][value='" + val.value + "']");
                         car_type.prop("checked", "checked");
@@ -1290,21 +1401,21 @@
                 var coal_buy = JSON.parse(cookie('coal_buy'));
                 jQuery.each(coal_buy, function (k, val) {
                     if (val.name == 'kind') {   //种类
-                        var kind = $(":radio[name=kind][value='" + val.value + "']");
+                        var kind = $(":radio[name=kind][id*='buy'][value='" + val.value + "']");
                         kind.prop("checked", "checked");
                         kind.parent('label').addClass('myactive');
                         kind.parent('label').siblings().removeClass('myactive');
                         $('#buy_kind_html').html(val.value);
                     }
                     else if (val.name == 'trait[]') { //品质
-                        var trait = $(":checkbox[id*='trait'][value='" + val.value + "']");
+                        var trait = $(":checkbox[name='trait[]'][id*='buy'][value='" + val.value + "']");
                         console.log(val.value);
                         trait.prop("checked", "checked");
                         trait.parent('label').addClass('myactive');
                         temp_html_string += val.value + ' ';
                     }
                     else if (val.name == 'granularity') {   //粒度
-                        var granularity = $(":radio[name=granularity][value='" + val.value + "']");
+                        var granularity = $(":radio[name=granularity][id*='buy'][value='" + val.value + "']");
                         granularity.prop("checked", "checked");
                         granularity.parent('label').addClass('myactive');
                         granularity.parent('label').siblings().removeClass('myactive');
@@ -1338,7 +1449,7 @@
                         car_type.parent('label').siblings().removeClass('myactive');
                     }
                     else if (val.name == 'pay_type') {  //付款方式
-                        var pay_type = $(":radio[name=pay_type][value='" + val.value + "']");
+                        var pay_type = $(":radio[name=pay_type][id*='buy'][value='" + val.value + "']");
                         pay_type.prop("checked", "checked");
                         pay_type.parent('label').addClass('myactive');
                         pay_type.parent('label').siblings().removeClass('myactive');
@@ -1430,21 +1541,21 @@
                 var coal_sell = JSON.parse(cookie('coal_sell'));
                 jQuery.each(coal_sell, function (k, val) {
                     if (val.name == 'kind') {   //种类
-                        var kind = $(":radio[name=kind][value='" + val.value + "']");
+                        var kind = $(":radio[name=kind][id*='sell'][value='" + val.value + "']");
                         kind.prop("checked", "checked");
                         kind.parent('label').addClass('myactive');
                         kind.parent('label').siblings().removeClass('myactive');
                         $('#sell_kind_html').html(val.value);
                     }
                     else if (val.name == 'trait[]') { //品质
-                        var trait = $(":checkbox[id*='trait'][value='" + val.value + "']");
+                        var trait = $(":checkbox[name='trait[]'][id*='sell'][value='" + val.value + "']");
                         console.log(val.value);
                         trait.prop("checked", "checked");
                         trait.parent('label').addClass('myactive');
                         temp_html_string += val.value + ' ';
                     }
                     else if (val.name == 'granularity') {   //粒度
-                        var granularity = $(":radio[name=granularity][value='" + val.value + "']");
+                        var granularity = $(":radio[name=granularity][id*='sell'][value='" + val.value + "']");
                         granularity.prop("checked", "checked");
                         granularity.parent('label').addClass('myactive');
                         granularity.parent('label').siblings().removeClass('myactive');
@@ -1471,6 +1582,24 @@
                     }
                     else if (val.name == 'area_start_name') { //产地名
                         $('#sell_area_start_name').val(val.value);
+                    }
+                    else if (val.name == 'short_allocate' && val.value == 1) { //含税与否
+                        $('#sell_short_allocate_switch').prop("checked", "checked");
+                        $('#sell_short_allocate').val(val.value);
+                    }
+                    else if (val.name == 'price_type') {  //价格类型
+                        var price_type = $(":radio[name=price_type][value='" + val.value + "']");
+                        price_type.prop("checked", "checked");
+                        price_type.parent('label').addClass('myactive');
+                        price_type.parent('label').siblings().removeClass('myactive');
+                        $('#sell_price_type_html').html(val.value);
+                    }
+                    else if (val.name == 'pay_type') {  //付款方式
+                        var pay_type = $(":radio[name=pay_type][id*='sell'][value='" + val.value + "']");
+                        pay_type.prop("checked", "checked");
+                        pay_type.parent('label').addClass('myactive');
+                        pay_type.parent('label').siblings().removeClass('myactive');
+                        $('#sell_pay_type_html').html(val.value);
                     }
                     else {
                         $("#sell_" + val.name).val(val.value);
@@ -1938,10 +2067,6 @@
                 }
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
-//                console.log(123456);
-//                console.log(XMLHttpRequest);
-//                console.log(textStatus);
-//                console.log(errorThrown);
                 alert('不可棱！！');
             }
         });
@@ -1971,12 +2096,12 @@
     $('#my_publish').click(function () {
         var cur_url = window.location.href;
         cookie('last_url_for_history', cur_url);
-        cookie('detail_click','show');
+        cookie('detail_click', 'show');
     });
     $('#jump_to_my_publish').click(function () {
         var cur_url = window.location.href;
         cookie('last_url_for_history', cur_url);
-        cookie('detail_click','show');
+        cookie('detail_click', 'show');
     });
 </script>
 

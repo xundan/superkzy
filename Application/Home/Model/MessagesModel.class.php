@@ -31,18 +31,7 @@ class MessagesModel extends Model
         array('publish_time', 'time', '1', 'function'),
 //        array('area_start', 'get_area_id', '1', 'function'),
 //        array('area_end', 'get_area_id', '1', 'function'),
-        array('short_allocate', 'short_allocate', '3', 'callback'),
     );
-
-    public function short_allocate()
-    {
-        $short_allocate = I('post.short_allocate', '', 'trim');
-        if ($short_allocate) {
-            return $short_allocate;
-        } else {
-            return 0;
-        }
-    }
 
     public function join_content()
     {
@@ -59,22 +48,22 @@ class MessagesModel extends Model
         $data = $subInfo;
         // 判断重复
         $data['content_all'] = $this->join_content();
-        $data['content_all_md5']=md5($data['content_all']);
-        $origin = $this->where("content_all_md5='%s' and invalid_id=0",$data['content_all_md5'])->find();
-        if ($origin){
+        $data['content_all_md5'] = md5($data['content_all']);
+        $origin = $this->where("content_all_md5='%s' and invalid_id=0", $data['content_all_md5'])->find();
+        if ($origin) {
             //重复的消息直接更新截止日期
-            $this->updateMessageState($origin['id'],3,true);
+            $this->updateMessageState($origin['id'], 3, true);
             $returnArr['status'] = 3;
             $returnArr['msg'] = '发布内容已更新';
             echo json_encode($returnArr);
-        }else{
+        } else {
             // 拼装数据并插入
             if (!$subInfo['area_start'] && !$subInfo['area_end'] && !$subInfo['kind'] && !$subInfo['trait'] && !$subInfo['granularity']) {
                 $data['formatted'] = 0;
             } else {
                 $data['formatted'] = 1;
             }
-            $data['trait'] = implode(',',$subInfo['trait']);
+            $data['trait'] = implode(',', $subInfo['trait']);
             $data['publisher_rid'] = $_SESSION['user_info']['uid'];
             $data['sender'] = $_SESSION['user_info']['user_name'];
             $data['type'] = "web";
@@ -104,14 +93,15 @@ class MessagesModel extends Model
         }
     }
 
-    public function updateMessageState($id,$state,$refill=false){
-        if($refill){
+    public function updateMessageState($id, $state, $refill = false)
+    {
+        if ($refill) {
             $msg['invalid_id'] = 0;
             $msg['deadline'] = set_deadline();
             $temp = D('messages')->where(array("id" => $id))->save($msg);
             if ($temp === false) return 0;
             return 1;
-        }else{
+        } else {
             $msg['invalid_id'] = $state;
             $temp = D('messages')->where(array("id" => $id))->save($msg);
             if ($temp === false) return 0;
@@ -119,7 +109,8 @@ class MessagesModel extends Model
         }
     }
 
-    public function updateMessage(){
+    public function updateMessage()
+    {
         $subInfo = I('post.', '', 'trim');
         $data = $subInfo;
         if (!$subInfo['area_start'] && !$subInfo['area_end'] && !$subInfo['kind'] && !$subInfo['trait'] && !$subInfo['granularity']) {
@@ -127,19 +118,19 @@ class MessagesModel extends Model
         } else {
             $data['formatted'] = 1;
         }
-        if ($this->create($data,2)) {
+        if ($this->create($data, 2)) {
             $result = $this->save();
             if ($result) {
                 // 成功后返回值是影响行数
                 $returnArr['status'] = 1;
                 $returnArr['msg'] = "修改成功";
                 echo json_encode($returnArr);
-            } elseif($result == 0){
+            } elseif ($result == 0) {
                 // 成功后返回值是影响行数
                 $returnArr['status'] = 2;
                 $returnArr['msg'] = "未进行修改";
                 echo json_encode($returnArr);
-            }else{
+            } else {
                 //todo 数据库错误
 //                $this->display('Common:403');
             }
@@ -189,7 +180,8 @@ class MessagesModel extends Model
      * @param WhereConditions $cond
      * @return int 用户已发布且未删除的信息数
      */
-    public function publishCount(WhereConditions $cond){
+    public function publishCount(WhereConditions $cond)
+    {
         $this->_message = $this->where($cond->getWhereConditions())->where('invalid_id=0 or invalid_id=99')->select();
         return count($this->_message);
     }
@@ -263,7 +255,7 @@ class MessagesModel extends Model
         return $this->_message;
     }
 
-    public function toAll($message,$current_user)
+    public function toAll($message, $current_user)
     {
         $message = $this->toUser($message);
         $message = $this->toDistrictStart($message);
@@ -339,7 +331,7 @@ class MessagesModel extends Model
 
     function toSimple()
     {
-        if ($this->_message['type'] == 'plain'||$this->_message['type'] == 'wx_mp'||$this->_message['type'] == 'group') { //微信的消息
+        if ($this->_message['type'] == 'plain' || $this->_message['type'] == 'wx_mp' || $this->_message['type'] == 'group') { //微信的消息
             $new_message['title'] = $this->_message['title'];
             $new_message['phone_number'] = $this->_message['origin'];
             $new_message['content'] = $this->_message['content'];
@@ -426,18 +418,23 @@ class MessagesModel extends Model
         }
     }
 
-    public function todayCount(){
+    public function todayCount()
+    {
         // select count(*) from `ck_messages` where to_days(`record_time`) = to_days(now());
 //        $count = $this->query("select count(*) AS a from ck_messages where to_days(record_time) = to_days(now()) AND category IN ('求购', '供应', '找车', '车源') AND invalid_id = 0");
         $count = $this->query("select count(*) AS a from ck_messages where category IN ('求购', '供应', '找车', '车源') AND invalid_id = 0");
-        return floor((int)$count[0]['a']*1.5);
+        return floor((int)$count[0]['a'] * 1.5);
     }
-    public function todayTradeCount(){
+
+    public function todayTradeCount()
+    {
         // select count(*) from `ck_messages` where to_days(`record_time`) = to_days(now());
         $count = $this->query("select count(*) AS a from ck_messages where to_days(record_time) = to_days(now()) AND category IN ('求购', '供应') AND invalid_id = 0");
         return $count[0]['a'];
     }
-    public function todayTransportCount(){
+
+    public function todayTransportCount()
+    {
         // select count(*) from `ck_messages` where to_days(`record_time`) = to_days(now());
         $count = $this->query("select count(*) AS a from ck_messages where to_days(record_time) = to_days(now()) AND category IN ('找车', '车源') AND invalid_id = 0");
         return $count[0]['a'];
@@ -452,22 +449,22 @@ class MessagesModel extends Model
     {
         $res = array(); // 默认返回值
         $map = array(); // 如果没有map就不执行sql
-        if ($categoryArr) $map['category'] = array("IN",implode(",",$categoryArr));
-        if ($searchArr){
+        if ($categoryArr) $map['category'] = array("IN", implode(",", $categoryArr));
+        if ($searchArr) {
             $query = array();
-            array_push($query,'like');
+            array_push($query, 'like');
             // 为关键字数组$tempStr
             foreach ($searchArr as &$item) {
 //            $query[] = array('like', '%' . $item . '%');
-                $item = "%".$item."%";
+                $item = "%" . $item . "%";
             }
-            array_push($query,$searchArr);
-            array_push($query,"AND");
-            $map['content_all']=$query;
+            array_push($query, $searchArr);
+            array_push($query, "AND");
+            $map['content_all'] = $query;
         }
-        if ($map){
-            $map['invalid_id']=array("EQ",0);
-            $res=$this->where($map)->order('update_time desc')->page($page,5)->select();
+        if ($map) {
+            $map['invalid_id'] = array("EQ", 0);
+            $res = $this->where($map)->order('update_time desc')->page($page, 5)->select();
         }
 //        return $this->getLastSql();
         return $res;
@@ -480,23 +477,23 @@ class MessagesModel extends Model
      * @param $digitsArr
      * @return array
      */
-    public function selectQuery($categoryArr,$granularityArr,$kindArr,$digitsArr)
+    public function selectQuery($categoryArr, $granularityArr, $kindArr, $digitsArr)
     {
         $res = array(); // 默认返回值
         $map = array(); // 如果没有map就不执行sql
-        if ($categoryArr) $map['category'] = array("IN",implode(",",$categoryArr));
-        if ($granularityArr) $map['granularity'] = array("IN",implode(",",$granularityArr));
-        if ($kindArr) $map['kind'] = array("IN",implode(",",$kindArr));
-        if ($digitsArr){
+        if ($categoryArr) $map['category'] = array("IN", implode(",", $categoryArr));
+        if ($granularityArr) $map['granularity'] = array("IN", implode(",", $granularityArr));
+        if ($kindArr) $map['kind'] = array("IN", implode(",", $kindArr));
+        if ($digitsArr) {
             // todo 这里的逻辑需要再考虑
-            $map['heat_value_max'] = array("IN",implode(",",$digitsArr));
-            $map['heat_value_min'] = array("IN",implode(",",$digitsArr));
-            $map['price_min'] = array("IN",implode(",",$digitsArr));
-            $map['price_max'] = array("IN",implode(",",$digitsArr));
+            $map['heat_value_max'] = array("IN", implode(",", $digitsArr));
+            $map['heat_value_min'] = array("IN", implode(",", $digitsArr));
+            $map['price_min'] = array("IN", implode(",", $digitsArr));
+            $map['price_max'] = array("IN", implode(",", $digitsArr));
         }
-        if ($map){
-            $map['invalid_id']=array("EQ",0);
-            $res=$this->where($map)->select();
+        if ($map) {
+            $map['invalid_id'] = array("EQ", 0);
+            $res = $this->where($map)->select();
         }
         return $res;
     }

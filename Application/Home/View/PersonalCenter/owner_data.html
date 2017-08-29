@@ -330,22 +330,22 @@
 <!--浏览地址回退刷新-->
 <script>
     $(function(){
-        if(navigator.userAgent.indexOf('Android') > 0){
-
-        }else{
-            //返回操作
-            function pushHistory() {
-                var state = {
-                    title: "title",
-                    url: "#"
-                };
-                window.history.pushState(state, "title", "#");
-            }
-            pushHistory();
-            window.addEventListener("popstate", function (e) {
-                window.location=document.referrer;
-            },false);
-        }
+//        if(navigator.userAgent.indexOf('Android') > 0){
+//
+//        }else{
+//            //返回操作
+//            function pushHistory() {
+//                var state = {
+//                    title: "title",
+//                    url: "#"
+//                };
+//                window.history.pushState(state, "title", "#");
+//            }
+//            pushHistory();
+//            window.addEventListener("popstate", function (e) {
+//                window.location=document.referrer;
+//            },false);
+//        }
     })
 </script>
 </html>

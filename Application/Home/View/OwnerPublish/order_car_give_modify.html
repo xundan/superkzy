@@ -117,8 +117,9 @@
                             </span>
 
                         <div class="weui_cell_ft">
-                            <input id="give_short_allocate" name="short_allocate" class="weui_switch" style=""
+                            <input id="give_short_allocate_switch" name="short_allocate_switch" class="weui_switch" style=""
                                    type="checkbox" checked>
+                            <input id="give_short_allocate" name="short_allocate" class="weui_switch" style="display: none">
                         </div>
                     </div>
                 </td>
@@ -303,6 +304,13 @@
             temp_html.html('');
         }
     });
+    $('.weui_switch').click(function(){
+        if($(this).prop('checked')){
+            $(this).next('input').val(1);
+        }else{
+            $(this).next('input').val(0);
+        }
+    })
 </script>
 <!--折叠下拉箭头变换效果-->
 <script>
@@ -332,6 +340,10 @@
                 else if (val.name == 'area_end_name') { //目的地址名
                     $('#give_area_end_name').val(val.value);
                     $('#give_area_end').next().html('<span class="placeholder" style="padding: 12px; display: none;">点击选择产地</span><span class="title" style="display: inline;"><span>' + val.value + '</span></span><div class="arrow"></div>');
+                }
+                else if (val.name == 'short_allocate' && val.value == 1) { //调配与否
+                    $('#give_short_allocate_switch').prop("checked", "checked");
+                    $('#give_short_allocate').val(val.value);
                 }
                 else if (val.name == 'car_type') {  //车辆类型
                     var car_type = $(":radio[name=car_type][value='" + val.value + "']");
