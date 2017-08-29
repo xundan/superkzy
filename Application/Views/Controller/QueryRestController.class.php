@@ -151,10 +151,10 @@ class QueryRestController extends RestController
         } else {
             $data = $this->prepareList($kw, 1);
 
-            $res = "$kw:<br><br>";
+            $res = "$kw:\n\n";
             foreach ($data as $row) {
                 $content = $this->formatRow($row);
-                $res .= $content . "<br><br>";
+                $res .= $content . "\n\n";
             }
 //            echo $res;
             return $res;

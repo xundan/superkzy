@@ -117,7 +117,7 @@ class MessageModel extends Model
 
     // 信息过期提醒SMS发送
     public function get_expiring_msg($date){
-        return $this->field("id,publisher_rid,phone_number,category")->where("deadline like '$date%' and invalid_id=99 and type='web'")->select();
+        return $this->field("id,publisher_rid,phone_number,category,content")->where("deadline like '$date%' and invalid_id=99 and type='web'")->select();
     }
 
     public function del_all_group_msg(){

@@ -25,7 +25,9 @@ class SMSModel extends Model
         "send_time",
         "invalid_id",
         "remark",
+        "title",
+        "open_id",
+        "overdue",
         '_pk' => "id",
     );
-
 }
