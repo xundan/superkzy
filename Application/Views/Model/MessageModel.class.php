@@ -84,11 +84,21 @@ class MessageModel extends Model
             if ($exist['publish_time']+(86400*3)<time()){ // 三天前的不考虑去重（会导致MD5重复）
                 return $this->add($data);
             }else{
-                return 0;
+                // 重复直接更新update_time
+                return $this->update_time($exist);
             }
         }else{
             return $this->add($data);
         }
+    }
+
+    public function update_time($row){
+        $data['id'] = $row['id'];
+        $now = time();
+//        $data['update_time'] = date('Y-m-d H:i:s', $now);
+        $data['deadline'] = date("Y-m-d H:i:s",strtotime("+7 day",$now));
+        $data['invalid_id'] = 0;
+        return $this->save($data);
     }
 
     // 信息总量统计

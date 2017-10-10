@@ -59,7 +59,7 @@ class RawController extends RestController
                 if ($object2) {
                     $content = $object2['content'];
                     $sender = $object2['sender'];
-                    $sender_wx = $object2['sender_wx'];
+                    $sender_wx = $object2['wx_sender'];
                     $owner = $object2['owner'];
                     date_default_timezone_set('PRC');
                     $title = date('y-m-d_H:i', time());

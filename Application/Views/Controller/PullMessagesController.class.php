@@ -94,7 +94,7 @@ class PullMessagesController extends RestController
         $where['type'] = array("IN",array('plain','wx_mp')); // 拉取朋友圈和公众号的消息，此处不拉group
         $where['status'] = 102;
         $where['category']=$category;
-        $where['record_time'] = array("BETWEEN", array($date1, $date2));
+        $where['update_time'] = array("BETWEEN", array($date1, $date2));
         $results = D('message')->distinct(true)->field("content")->where($where)->select();
 //        $results = D('message')->field("content")->where($where)->select();
         $results_str = "";
