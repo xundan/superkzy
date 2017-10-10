@@ -306,10 +306,10 @@ body {
     -o-transform: translateZ(0);
     transform: translateZ(0);
     -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
+    /*-webkit-user-select: none;*/
+    /*-moz-user-select: none;*/
+    /*-ms-user-select: none;*/
+    /*user-select: none;*/
     -webkit-text-size-adjust: none;
     -moz-text-size-adjust: none;
     -ms-text-size-adjust: none;
@@ -635,4 +635,264 @@ a:hover{
     display: none;
     z-index: 1000;
     cursor: pointer;
+}
+
+/*picture layer point event*/
+.pic-layer{
+    pointer-events: none;
+}
+
+/*MessageShare css*/
+.li_item {
+    list-style-type: none;
+    margin-bottom: 20px;
+}
+
+.text-gradient {
+    margin-top: 0;
+    display: inline-block;
+    color: dodgerblue;
+    /*background-image: -webkit-gradient(linear, 0 0, 0 bottom, from(rgba(0, 128, 0, 1)), to(rgba(255, 0, 0, 1)));*/
+    /*-webkit-background-clip: text;*/
+    /*-webkit-text-fill-color: transparent;*/
+}
+
+/*nav button list*/
+.nav-menu{
+    position: absolute;
+    top:60%;
+    z-index: 2;
+    right: 0;
+}
+.btn-float {
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    display: inline-block;
+    border: none;
+    font-size: 14px;
+    color: #fff;
+    text-align: center;
+    position: relative;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.11);
+}
+.btn-trigger{
+    opacity: 0.5;
+    right: -20px;
+}
+.btn-trigger.ready{
+    opacity: 1;
+    right: 0;
+}
+.btn-float:hover {
+    text-decoration: none;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15), 0 4px 15px rgba(0, 0, 0, 0.13);
+}
+.btn-float:active, .btn-float:focus {
+    outline: none;
+}
+.btn-float + .btn-float {
+    margin-left: 5px;
+}
+.homepage{
+    width: 100px;
+    border-radius: 20px 0 0 20px;
+}
+.homepage:after{
+    content: '';
+    display: inline-block;
+    background: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: -30px;
+}
+.feedback{
+    width: 100px;
+    border-radius: 20px 0 0 20px;
+}
+.feedback:after{
+     content: '';
+     display: inline-block;
+     background: #fff;
+     width: 40px;
+     height: 40px;
+     border-radius: 50%;
+     position: absolute;
+     top: 0;
+     right: -30px;
+ }
+.order{
+    width: 100px;
+    border-radius: 20px 0 0 20px;
+}
+.order:after{
+    content: '';
+    display: inline-block;
+    background: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    position: absolute;
+    top: 0;
+    right: -30px;
+}
+.yellow {
+    background: #ffa000;
+}
+
+.blue {
+    background: #40c4ff;
+}
+
+.green {
+    background: #00e676;
+}
+
+.purple {
+    background: #8e24aa;
+}
+
+.pink {
+    background: #e91e63;
+}
+
+.icon-bars {
+    background: #fff;
+    height: 1px;
+    width: 16px;
+    margin: auto;
+    display: block;
+    position: relative;
+    -moz-transition: 0.3s 0.3s;
+    -o-transition: 0.3s 0.3s;
+    -webkit-transition: 0.3s;
+    -webkit-transition-delay: 0.3s;
+    -webkit-transition: 0.3s 0.3s;
+    transition: 0.3s 0.3s;
+}
+.icon-bars:after {
+    content: '';
+    position: absolute;
+    height: 16px;
+    width: 1px;
+    background: #fff;
+    top: -8px;
+}
+.float-btn-group {
+    position: relative;
+    float: right;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+}
+.float-btn-group .btn-trigger {
+    z-index: 15;
+    float: left;
+}
+.nav-menu .float-btn-group .btn-list {
+    position: absolute;
+    right: 0;
+    width: 0;
+    height: 40px;
+    -webkit-transition: 0.3s 0.9s;
+    transition: 0.3s 0.9s;
+}
+.float-btn-group .btn-list a{
+    display: inline-block;
+}
+.float-btn-group.open .icon-bars {
+    -ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    transform: rotate(45deg);
+}
+.nav-menu .float-btn-group .icon-bars {
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
+}
+/*.model-4 .float-btn-group .btn-list {*/
+/*background: #fff;*/
+/*border-radius: 50px;*/
+/*width: 50px;*/
+/*height: 50px;*/
+/*left: 0;*/
+/*overflow: hidden;*/
+/*opacity: 0;*/
+/*}*/
+.nav-menu .float-btn-group .btn-list .btn-float {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width:0;
+    opacity: 0;
+}
+.nav-menu .float-btn-group .btn-list .btn-float:nth-child(1) {
+    -moz-transition: 0.3s 0.9s;
+    -o-transition: 0.3s 0.9s;
+    -webkit-transition: 0.3s;
+    -webkit-transition-delay: 0.9s;
+    -webkit-transition: 0.3s 0.9s;
+    transition: 0.3s 0.9s;
+}
+.nav-menu .float-btn-group .btn-list .btn-float:nth-child(2) {
+    -moz-transition: 0.3s 0.6s;
+    -o-transition: 0.3s 0.6s;
+    -webkit-transition: 0.3s;
+    -webkit-transition-delay: 0.6s;
+    -webkit-transition: 0.3s 0.6s;
+    transition: 0.3s 0.6s;
+}
+.nav-menu .float-btn-group .btn-list .btn-float:nth-child(3) {
+    -moz-transition: 0.3s 0.3s;
+    -o-transition: 0.3s 0.3s;
+    -webkit-transition: 0.3s;
+    -webkit-transition-delay: 0.3s;
+    -webkit-transition: 0.3s 0.3s;
+    transition: 0.3s 0.3s;
+}
+.nav-menu .float-btn-group.open .btn-list {
+    background: white;
+    /*background-color: gold;*/
+    border-radius: 40px;
+    width: 312px;
+    height: 40px;
+    transition: 0.9s;
+    -moz-transition: 0.9s;
+    -webkit-transition-duration: 0.9s;
+}
+.nav-menu .float-btn-group.open .btn-list .btn-float {
+    width: 100px;
+    opacity: 1;
+}
+.nav-menu .float-btn-group.open .btn-list .btn-float:nth-child(1) {
+    right: 212px;
+    -moz-transition: 0.3s 0.3s;
+    -o-transition: 0.3s 0.3s;
+    -webkit-transition: 0.3s;
+    -webkit-transition-delay: 0.3s;
+    -webkit-transition: 0.3s 0.3s;
+    transition: 0.3s 0.3s;
+}
+.nav-menu .float-btn-group.open .btn-list .btn-float:nth-child(2) {
+    right: 122px;
+    -moz-transition: 0.3s 0.6s;
+    -o-transition: 0.3s 0.6s;
+    -webkit-transition: 0.3s;
+    -webkit-transition-delay: 0.6s;
+    -webkit-transition: 0.3s 0.6s;
+    transition: 0.3s 0.6s;
+}
+.nav-menu .float-btn-group.open .btn-list .btn-float:nth-child(3) {
+    right: 32px;
+    -moz-transition: 0.3s 0.9s;
+    -o-transition: 0.3s 0.9s;
+    -webkit-transition: 0.3s;
+    -webkit-transition-delay: 0.9s;
+    -webkit-transition: 0.3s 0.9s;
+    transition: 0.3s 0.9s;
 }

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <title>扫二维码加群</title>
+</head>
+<body style="background: url('__PUBLIC__/home/images/promotion/fission_qrcode_background.png') no-repeat;background-size: cover">
+<div id="qrcode" style="margin: 20% auto;text-align: center">
+    <img id="hn" src="__PUBLIC__/home/images/promotion/qrcode-hn.jpg" title="加群二维码" alt="二维码" style="width: 50%">
+    <img id="xn" src="__PUBLIC__/home/images/promotion/qrcode-xn.jpg" title="加群二维码" alt="二维码" style="width: 50%">
+    <img id="sx" src="__PUBLIC__/home/images/promotion/qrcode-sx.jpg" title="加群二维码" alt="二维码" style="width: 50%">
+</div>
+</body>
+<script>
+    $(function () {
+        var a = Math.random() * 3;
+        var $hn = $('#hn');
+        var $xn = $('#xn');
+        var $sx = $('#sx');
+        if (a < 1) {
+            $xn.css('display', 'none');
+            $sx.css('display', 'none');
+        } else if (a > 1 && a < 2) {
+            $hn.css('display', 'none');
+            $sx.css('display', 'none');
+        } else if (a > 2) {
+            $hn.css('display', 'none');
+            $xn.css('display', 'none');
+        }
+    })
+</script>
+</html>

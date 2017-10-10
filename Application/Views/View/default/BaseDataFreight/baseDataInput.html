@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <title>运费基础数据</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-2.2.4.min.js"></script>
+</head>
+<style>
+    .input-style{
+        width: 80%;
+        height: 2.5em;
+        padding: 6px 12px;
+        font-size: 1.5em;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+    }
+</style>
+<body>
+<div id="freight_form">
+    <div class="row text-center" style="margin-top: 5%">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            <input class="input-style" style="" type="text" name="freight_area_start_name" id="freight_area_start_name" placeholder="起始地">
+            <input type="hidden" name="freight_area_start" id="freight_area_start">
+        </div>
+        <!--<div class="col-md-2 col-sm-2 col-xs-2">-->
+        <!--<span class="glyphicon glyphicon-arrow-right" style="font-size: 2em"></span>-->
+        <!--</div>-->
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            <input class="input-style" style="" type="text" name="freight_area_end_name" id="freight_area_end_name" placeholder="目的地">
+            <input type="hidden" name="freight_area_end" id="freight_area_end">
+        </div>
+    </div>
+    <div class="row text-center" style="margin-top: 5%">
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            <input class="input-style" style="" type="text" name="freight_area_start_detail" id="freight_area_start_detail" placeholder="起始地详细地址">
+        </div>
+        <!--<div class="col-md-2 col-sm-2 col-xs-2">-->
+        <!--<span class="glyphicon glyphicon-arrow-right" style="font-size: 2em"></span>-->
+        <!--</div>-->
+        <div class="col-md-6 col-sm-6 col-xs-6">
+            <input class="input-style" style="" type="text" name="freight_area_end_detail" id="freight_area_end_detail" placeholder="终止地详细地址">
+        </div>
+    </div>
+
+    <div class="row text-center" style="margin-top: 5%">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <input class="input-style" style="" type="number" name="freight" id="freight_text" placeholder="运费">
+        </div>
+    </div>
+    <div style="margin-top: 25px;text-align: center">
+        <button type="button" class="btn btn-default" id="freight_submit">提交</button>
+        <p id="result" style="margin-top: 1%;color: green;font-size: 1.5em"></p>
+    </div>
+</div>
+</body>
+<script>
+    //地址检测函数
+    function areaCheck(area){
+        var areaObj;
+        $.ajax({
+            type: "post",
+            url:"{:U('DisplayMessages/area_check')}",
+            data: {area_name:area},
+            async: false,
+            success:function(data){
+                console.log(data);
+                if(data != 0){
+                    areaObj = eval('('+data+')');
+                }else{
+                    areaObj = false;
+                }
+            }
+        });
+        return areaObj;
+    }
+    //检测出错focus恢复原样
+    $('input').focus(function(){
+        $(this).css('border','1px solid #ccc');
+        $('#result').html('');
+    });
+    <!--运费表单提交-->
+    $('#freight_submit').click(function () {
+        var area_start_name = $('#freight_area_start_name').val();4
+        if(!area_start_name){
+            $('#freight_area_start_name').css('border','1px solid red');
+            return false;
+        }
+        var result = areaCheck(area_start_name);
+        if(result){
+            console.log(1);
+            $('#freight_area_start').val(result['id']);
+        }else{
+            console.log(2);
+            $('#freight_area_start_name').css('border','1px solid red');
+            return false;
+        }
+        var area_end_name = $('#freight_area_end_name').val();
+        if(!area_end_name){
+            $('#freight_area_end_name').css('border','1px solid red');
+            return false;
+        }
+        result = areaCheck(area_end_name);
+        if(result){
+            console.log(3);
+            $('#freight_area_end').val(result['id']);
+        }else{
+            console.log(4);
+            $('#freight_area_end_name').css('border','1px solid red');
+            return false;
+        }
+        //检测通过，提交表单
+        var area_start = $('#freight_area_start').val();
+        var area_start_detail = $('#freight_area_start_detail').val();
+
+        var area_end = $('#freight_area_end').val();
+        var area_end_detail = $('#freight_area_end_detail').val();
+
+        var freight_text = $('#freight_text').val();
+        if(!freight_text){
+            console.log(5);
+            $('#freight_text').css('border','1px solid red');
+            return false;
+        }
+        console.log(area_start,area_end);
+        $.ajax({
+            type: "post",
+            url: "{:U('BaseDataFreight/freightSubmit')}",
+            data: {
+                area_start_id: area_start,
+                area_start_name: area_start_name,
+                area_start_detail: area_start_detail,
+                area_end_id: area_end,
+                area_end_name: area_end_name,
+                area_end_detail: area_end_detail,
+                freight_price: freight_text
+            },
+            success: function (data) {
+                console.log(data);
+                $('#freight_area_start_detail').val('');
+                $('#freight_area_end_detail').val('');
+                $('#freight_text').val('');
+                $('#result').html('success!')
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    })
+</script>
+</html>

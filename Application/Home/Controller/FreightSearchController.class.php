@@ -16,7 +16,7 @@ use Think\Log;
 
 class FreightSearchController extends Controller
 {
-    const countRow = 2;
+    const countRow = 10;
     private $__resultReply = array();
     private $__existArray = array();
     public function show(){

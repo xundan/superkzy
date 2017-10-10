@@ -20,6 +20,11 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/city-picker-search.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/loading.js"></script>
 </head>
+<style>
+    .detail{
+        font-size:0.8em
+    }
+</style>
 <body>
 <include file="Common:common"/>
 <!--标签隐藏表单提交-->
@@ -32,38 +37,6 @@
     <input type="hidden" name="area_end_val">
     <input type="hidden" name="page" id="page" value="1">
 </form>
-<!--导航标签-->
-<!--<div class="panel-title" style="height: 50px;background-color: white;display: block;">-->
-    <!--<div id="myTab" class="row" style="height: 100%;">-->
-        <!--<div class="text-center col-xs-5" id="area_start_click" style="line-height: 40px;color: black;font-size: 1.2em;padding: 5px 0;font-weight: 100">-->
-            <!--<img src="__PUBLIC__/home/images/area_start_text.png" class="" style="height: 20px">-->
-            <!--<span id="area_start_html">点击选择</span>-->
-            <!--&lt;!&ndash;<span id="area_start_remove" class="" style="font-size:1em;color:darkgrey">X</span>&ndash;&gt;-->
-            <!--&lt;!&ndash;<span class="weui_icon_clear_no_circle" style="color: black"></span>&ndash;&gt;-->
-            <!--<span id="area_start_remove" style="line-height: 40px">-->
-                <!--&lt;!&ndash;<img src="__PUBLIC__/home/images/remove.png" style="position: absolute;right: 0;top:33%;width: 1em">&ndash;&gt;-->
-                <!--<img src="__PUBLIC__/home/images/remove.png" style="margin-top: -4px;width: 1em">-->
-            <!--</span>-->
-            <!--&lt;!&ndash;<a href="javascript:" class="weui_icon_clear" id="search_clear"></a>&ndash;&gt;-->
-            <!--<div id="area_start" style="display: none"></div>-->
-        <!--</div>-->
-        <!--<div class="text-center col-xs-2" style="line-height: 40px;color: black;padding: 5px 0;">-->
-            <!--&lt;!&ndash;<hr style="border-color: red;width: 10%;margin: 16px 0;display: inline"/>&ndash;&gt;-->
-            <!--&lt;!&ndash;<span class="glyphicon glyphicon-arrow-right" style="color: red;font-size: 35px;"></span>&ndash;&gt;-->
-            <!--<img src="__PUBLIC__/home/images/arrow-right.png" style="margin-top: -4px;width: 4em">-->
-            <!--&lt;!&ndash; ->&ndash;&gt;-->
-        <!--</div>-->
-        <!--<div class="text-center col-xs-5" id="area_end_click" style="line-height: 40px;color: black;font-size: 1.2em;padding: 5px 0;">-->
-            <!--<span id="area_end_html">点击选择</span>-->
-            <!--&lt;!&ndash;<span id="area_end_remove" class="glyphicon glyphicon-remove"></span>&ndash;&gt;-->
-            <!--<span id="area_end_remove" style="line-height: 40px">-->
-                <!--<img src="__PUBLIC__/home/images/remove.png" style="margin-top: -4px;width: 1em">-->
-            <!--</span>-->
-            <!--<img src="__PUBLIC__/home/images/area_end_text.png" class="" style="height: 20px">-->
-            <!--<div id="area_end" style="display: none"></div>-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</div>-->
 <!--导航标签-->
 <div class="panel-title" style=";margin:0;padding: 0;background-color: white;display: block;">
     <div class="weui_navbar" style="position: relative;">
@@ -92,7 +65,7 @@
 </div>
 
 <!--订单展示栏-->
-<div id="wrapper" style="top: 60px;margin-left: 2.5%;">
+<div id="wrapper" style="top: 50px;margin-left: 2.5%;">
     <div id="scroller">
         <div id="pullDown">
             <span class="pullDownIcon" style="float: left"></span>
@@ -108,42 +81,43 @@
                 </if>
                 <volist name="message" id="data">
                     <div style=";background-color: white;border-radius: 5px;">
-                        <table style="width: 100%" onclick="window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/'+{$data['message_id']};">
+                        <table class="text-center" style="width: 100%;" onclick="window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/'+{$data['message_id']};">
                             <tr>
+                                <td></td>
                                 <td></td>
                                 <td class="help-block text-right" style="margin: 0">
                                     {$data['record_time']|substr=0,10}
                                 </td>
                             </tr>
                             <tr>
-                                <td style="padding: 0 10px;font-size: 1.2em">
-                                    <img src="__PUBLIC__/home/images/area_start_text.png" class="" style="height: 20px">
-                                    <span class="highlight">{$data['area_start_name']}</span>
+                                <td style="width: 45%">
+                                    <!--<img src="__PUBLIC__/home/images/area_start_text.png" class="" style="height: 20px">-->
+                                    <p class="highlight">{$data['area_start_name']}</p>
+                                    <p class="highlight detail">{$data['area_start_detail']}123</p>
                                 </td>
-                                <td rowspan="2" class="text-right" style="padding: 0 10px;font-size: 2em;color: red">
-                                    ¥{$data['freight_price']}
+                                <td rowspan="1" class="" style="width: 10%">
+                                    <!--¥{$data['freight_price']}-->
+                                    <span class="glyphicon glyphicon-arrow-right" style="padding: 3px;border: 1px solid #eaeaea;border-radius: 50%"></span>
                                 </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0 10px;font-size: 1.2em">
-                                    <img src="__PUBLIC__/home/images/area_end_text.png" class="" style="height: 20px">
-                                    <span class="highlight">{$data['area_end_name']}</span>
+                                <td style="width: 45%">
+                                    <p class="highlight">{$data['area_end_name']}</p>
+                                    <p class="highlight detail">{$data['area_end_detail']}123</p>
                                 </td>
                             </tr>
                         </table>
                         <hr style="margin: 8px 0">
                         <div style="margin-left: 3%;margin-bottom: 1%;padding-bottom: 2%">
-                            <a href="tel:{$data.phone_number}" onclick='event.stopPropagation();' class="btn btn-default" style='padding: 3px;text-decoration: none;color: #04bfc6;border-color: #04bfc6'>
-                                <span><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 15px">
-                                <span style="font-size: 1.2em">拨打电话</span></span>
-                            </a>
-                            <div class="pull-right" style="padding: 0 3px;">
+                            <!--<a href="tel:{$data.phone_number}" onclick='event.stopPropagation();' class="btn btn-default" style='padding: 3px;text-decoration: none;color: #04bfc6;border-color: #04bfc6'>-->
+                                <!--<span><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 15px">-->
+                                <!--<span style="font-size: 1.2em">拨打电话</span></span>-->
+                            <!--</a>-->
+                            <button style="padding: 4px 8px;margin-left: 12px;color: #04bfc6;border-color: #04bfc6" class="btn btn-default" data-toggle="modal" data-target="#feedback" data-whatever="{$data['id']}">查看详情</button>
+
                                 <!--<span>-->
                                     <!--<img src="__PUBLIC__/home/images/useless.png" style="height: 30px" onclick="asd(this)">-->
                                     <!--<span style="color:#fb3e1e;margin-left: -3px" id="useful_count">123</span>-->
                                 <!--</span>-->
-                                <button style="padding: 4px 8px;margin-left: 12px;color: #04bfc6;border-color: #04bfc6" class="btn btn-default" data-toggle="modal" data-target="#feedback" data-whatever="{$data['id']}">报错</button>
-                            </div>
+                            <button style="padding: 4px 8px;margin-left: 12px;color: #04bfc6;border-color: #04bfc6" class="btn btn-default pull-right" data-toggle="modal" data-target="#feedback" data-whatever="{$data['id']}">报错</button>
                             <!--<button class="btn btn-default" style="background-color: red;color: blue;"><span class="glyphicon glyphicon-user"></span> asd</button>-->
                             <!--<div style="background: url('__PUBLIC__/home/images/useless.png') no-repeat;"></div>-->
                         </div>
@@ -158,7 +132,7 @@
     </div>
 </div>
 <!--克隆-->
-<span id="cloneObj" style="display: none;">
+<div id="cloneObj" style="display: none;">
     <div style=";background-color: white;border-radius: 5px;">
         <table style="width: 100%" onclick="window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/'+{$data['message_id']};">
             <tr>
@@ -171,6 +145,7 @@
                 <td style="padding: 0 10px;font-size: 1.2em">
                     <img src="__PUBLIC__/home/images/area_start_text.png" class="" style="height: 20px">
                     <span class="highlight">{$data['area_start_name']}</span>
+                    <span class="highlight detail">{$data['area_start_detail']}</span>
                 </td>
                 <td rowspan="2" class="text-right" style="padding: 0 10px;font-size: 2em;color: red">
                     ¥{$data['freight_price']}
@@ -180,6 +155,7 @@
                 <td style="padding: 0 10px;font-size: 1.2em">
                     <img src="__PUBLIC__/home/images/area_end_text.png" class="" style="height: 20px">
                     <span class="highlight">{$data['area_end_name']}</span>
+                    <span class="highlight detail">{$data['area_start_detail']}</span>
                 </td>
             </tr>
         </table>
@@ -200,7 +176,7 @@
             <!--<div style="background: url('__PUBLIC__/home/images/useless.png') no-repeat;"></div>-->
         </div>
     </div>
-</span>
+</div>
 <!-- Modal -->
 <div class="modal fade bs-example-modal-lg" id="feedback" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" style="top:30%">
@@ -227,65 +203,65 @@
 <!--载入读取上次标签-->
 <script>
     $(function () {
-        var temp_load = cookie('freight_search');
-        var temp_load_obj = JSON.parse(cookie('freight_search'));
-        console.log(temp_load_obj);
-        jQuery.each(temp_load_obj,function(k,val){
-            if(val.name == 'area_start'){
-                if(val.value != '') {
-                    $('input[name=area_start]').val(val.value);
-                }else{}
-            }
-            else if(val.name == 'area_start_name'){
-                if(val.value != ''){
-                    $('input[name=area_start_name]').val(val.value);
-                    $('#area_start_html').html(val.value);
-                }else{}
-            }
-            else if (val.name == 'area_start_val') {
-                if (val.value != '') {
-                    $('input[name=area_start_val]').val(val.value);
-                    var AreaArr_start = val.value.split('/');
-                    $('#area_start').citypicker('destroy');
-                    $('#area_start').citypicker({
-                        province: AreaArr_start[0],
-                        city: AreaArr_start[1],
-                        district: AreaArr_start[2],
-                        area: AreaArr_start[3]
-                    });
-                } else {
-                }
-            }
-            else if(val.name == 'area_end'){
-                if(val.value != ''){
-                    $('input[name=area_end]').val(val.value);
-                }else{}
-            }
-            else if(val.name == 'area_end_name'){
-                if(val.value != ''){
-                    $('input[name=area_end_name]').val(val.value);
-                    $('#area_end_html').html(val.value);
-                }
-            }
-            else if (val.name == 'area_end_val') {
-                if (val.value != '') {
-                    $('input[name=area_end_val]').val(val.value);
-                    var AreaArr_end = val.value.split('/');
-                    $('#area_end').citypicker('destroy');
-                    $('#area_end').citypicker({
-                        province: AreaArr_end[0],
-                        city: AreaArr_end[1],
-                        district: AreaArr_end[2],
-                        area: AreaArr_end[3]
-                    });
-                } else {
-                }
-            }
-        });
-        console.log('form');
-        console.log(JSON.stringify($('#tag_search').serializeArray()));
-        refresh_hl();
-    });
+//        var temp_load = cookie('freight_search');
+//        var temp_load_obj = JSON.parse(cookie('freight_search'));
+//        console.log(temp_load_obj);
+//        jQuery.each(temp_load_obj,function(k,val){
+//            if(val.name == 'area_start'){
+//                if(val.value != '') {
+//                    $('input[name=area_start]').val(val.value);
+//                }else{}
+//            }
+//            else if(val.name == 'area_start_name'){
+//                if(val.value != ''){
+//                    $('input[name=area_start_name]').val(val.value);
+//                    $('#area_start_html').html(val.value);
+//                }else{}
+//            }
+//            else if (val.name == 'area_start_val') {
+//                if (val.value != '') {
+//                    $('input[name=area_start_val]').val(val.value);
+//                    var AreaArr_start = val.value.split('/');
+//                    $('#area_start').citypicker('destroy');
+//                    $('#area_start').citypicker({
+//                        province: AreaArr_start[0],
+//                        city: AreaArr_start[1],
+//                        district: AreaArr_start[2],
+//                        area: AreaArr_start[3]
+//                    });
+//                } else {
+//                }
+//            }
+//            else if(val.name == 'area_end'){
+//                if(val.value != ''){
+//                    $('input[name=area_end]').val(val.value);
+//                }else{}
+//            }
+//            else if(val.name == 'area_end_name'){
+//                if(val.value != ''){
+//                    $('input[name=area_end_name]').val(val.value);
+//                    $('#area_end_html').html(val.value);
+//                }
+//            }
+//            else if (val.name == 'area_end_val') {
+//                if (val.value != '') {
+//                    $('input[name=area_end_val]').val(val.value);
+//                    var AreaArr_end = val.value.split('/');
+//                    $('#area_end').citypicker('destroy');
+//                    $('#area_end').citypicker({
+//                        province: AreaArr_end[0],
+//                        city: AreaArr_end[1],
+//                        district: AreaArr_end[2],
+//                        area: AreaArr_end[3]
+//                    });
+//                } else {
+//                }
+//            }
+//        });
+//        console.log('form');
+//        console.log(JSON.stringify($('#tag_search').serializeArray()));
+//        refresh_hl();
+//    });
 </script>
 <!--功能抽离用于不同情况刷新页面-->
 <script>
@@ -319,8 +295,10 @@
                     tempObj.children('table').attr('onclick',"window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/"+val.message_id+"';");
                     tempObj.children('table').children('tbody').children('tr').eq(0).children('td').eq(1).html(val.record_time.substr(0,10));
                     tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(0).children('span').html(val.area_start_name);
+                    tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(0).children('span').eq(1).html(val.area_start_detail);
                     tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(1).html('¥'+val.freight_price);
                     tempObj.children('table').children('tbody').children('tr').eq(2).children('td').children('span').html(val.area_end_name);
+                    tempObj.children('table').children('tbody').children('tr').eq(2).children('td').children('span').eq(1).html(val.area_end_detail);
                     tempObj.children('div').children('a').attr('href','tel:'+val.phone_number);
                     tempObj.children('div').children('div').children('button').attr('data-whatever',val.id);
                     tempObj.appendTo("#search");

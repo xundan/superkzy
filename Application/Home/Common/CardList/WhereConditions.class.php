@@ -15,7 +15,7 @@ class WhereConditions
     const INIT = -2;
     private $_whereConditions = array();
     private $_page = 1;
-    private $_asc = "vip desc,record_time desc";
+    private $_asc = "vip desc,update_time desc";
     private $_exist_arr = array();
     private $_last_count = self::INIT;
 

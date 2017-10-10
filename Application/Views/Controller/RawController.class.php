@@ -167,13 +167,13 @@ class RawController extends RestController
                             $data['error_code'] = "0";
                             $data['message_id'] = $name . $mdate;
                             $data['result'] = $name . $mdate;
-                        } elseif ($update===0){
+                        } elseif ($update === 0) {
                             $data['result_code'] = "202";
                             $data['reason'] = "数据库已是最新";
                             $data['error_code'] = "0";
                             $data['message_id'] = $name . $mdate;
                             $data['result'] = $name . $mdate;
-                        }else{
+                        } else {
                             $data['result_code'] = "106";
                             $data['reason'] = "数据库操作错误";
                             $data['error_code'] = "10006";
@@ -222,13 +222,13 @@ class RawController extends RestController
     public function createRaw($title, $content, $owner, $sender, $sender_wx)
     {
         //解决短时间内重复调用问题
-        $duplicate_data = D('Raw')->where("rid = '$title'")->find();
-        if ($duplicate_data) {
-            return $duplicate_data;
-        }
+//        $duplicate_data = D('Raw')->where("rid = '$title'")->find();
+//        if ($duplicate_data) {
+//            return $duplicate_data;
+//        }
 
         $type = 'plain';
-        if (substr($sender,0,3) == '[q]') $type = 'group';
+        if (substr($sender, 0, 3) == '[q]') $type = 'group';
 
         $rawAttribute = array(
             'rid' => $title,

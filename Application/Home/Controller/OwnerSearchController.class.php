@@ -83,6 +83,7 @@ class OwnerSearchController extends SearchController
         }
 
         $whereCond = new WhereConditions();
+        $whereCond->pushCond("vip","not in",array('5','6','7','8'));
         if ($input['searchTag'] == "all") {
             $whereCond->pushSearchCond("content_all", $input['searchInput']);
             return $whereCond;

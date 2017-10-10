@@ -77,15 +77,19 @@ class MessageModel extends Model
         '_pk' => "id",
     );
 
-    public function add_by_md5($data){
-        $md5 = $data['content_all_md5'];
-        $exist = $this->where("content_all_md5='%s' and invalid_id=0",$md5)->order("publish_time desc")->find();
-        if ($exist) {
-            if ($exist['publish_time']+(86400*3)<time()){ // 三天前的不考虑去重（会导致MD5重复）
-                return $this->add($data);
+    public function add_by_md5($data,$switch = false){
+        if($switch){
+            $md5 = $data['content_all_md5'];
+            $exist = $this->where("content_all_md5='%s' and invalid_id=0",$md5)->order("publish_time desc")->find();
+            if ($exist) {
+                if ($exist['publish_time']+(86400*3)<time()){ // 三天前的不考虑去重（会导致MD5重复）
+                    return $this->add($data);
+                }else{
+                    // 重复直接更新update_time
+                    return $this->update_time($exist);
+                }
             }else{
-                // 重复直接更新update_time
-                return $this->update_time($exist);
+                return $this->add($data);
             }
         }else{
             return $this->add($data);

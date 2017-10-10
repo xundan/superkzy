@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <title>超矿平台信息推广M</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/scroll-initial.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
+</head>
+<style>
+    body {
+        background-color: white;
+    }
+
+    ul {
+        padding: 0;
+    }
+</style>
+<body>
+<input type="hidden" id="page" name="page" value="1">
+
+<div id="wrapper" style="top: 0px;margin:0 auto;">
+    <div id="scroller">
+        <div id="pullDown">
+            <span class="pullDownIcon" style="float: left"></span>
+            <span class="pullDownLabel" style="margin-left: -48px">下拉刷新...</span>
+        </div>
+        <ul id="content">
+            <li class="text-gradient">
+                【超级矿资源】信息量最大的煤炭信息平台（每日千条煤炭信息更新）
+                <br/>
+                【发布煤炭信息方法】超矿微信号留言(需要发布的煤炭信息+手机号)
+            </li>
+            <volist name="resultMsg" id="msg">
+                <li class="li_item">{$msg['content']}</li>
+            </volist>
+        </ul>
+        <div id="pullUp">
+            <span class="pullUpIcon"></span>
+            <span class="pullUpLabel" style="margin-left: -48px">上拉加载更多...</span>
+        </div>
+    </div>
+</div>
+</body>
+<!--滚动功能-->
+<script>
+    var load_state = 0;
+    var flag = true;
+    /**下拉刷新 （自定义实现此方法）
+     *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
+     */
+    function pullDownAction() {
+        //日志记录
+        ck_log('scroll', '下拉刷新');
+        $.ajax({
+            type: "post",
+            url: "{:U('MessageShare/vipMonth')}",
+            data: {
+                isAjax: 1,
+                page: 1
+            },
+            success: function (data) {
+                var jsonObj = JSON.parse(data);
+                var $ad = $('.text-gradient').prop('outerHTML');
+                $('#content').html($ad);
+                var $li;
+                $.each(jsonObj.data, function (k, val) {
+                    $li = "<li class='li_item'>" + text_format(val.content) + "</li>";
+                    $('#content').append($li);
+                });
+                $('#page').val(1);
+                myScroll.refresh();
+            }
+        });
+        myScroll.refresh();
+    }
+    /**滚动翻页 （自定义实现此方法）
+     *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
+     */
+    function pullUpAction() {
+        if (load_state == 1) {
+            return false
+        } else {
+            load_state = 1;
+            //日志记录
+            ck_log('scroll', '下拉刷新');
+            var page = $('#page').val();
+            var request_page = parseInt(page) + 1;
+            console.log(page, request_page);
+            $.ajax({
+                type: "post",
+                url: "{:U('MessageShare/vipMonthMore')}",
+                data: {
+                    isAjax: 1,
+                    page: request_page
+                },
+                success: function (data) {
+                    var jsonObj = JSON.parse(data);
+                    var $li;
+                    $.each(jsonObj.data, function (k, val) {
+                        $li = "<li class='li_item'>" + text_format(val.content) + "</li>";
+                        $('#content').append($li);
+                    });
+                    if (jsonObj.end_tag == 'end') {
+                        if (flag) {
+                            var div = document.createElement('div');
+                            div.style.cssText = 'margin-top:2.5%;color:red;text-align:center';
+                            div.innerHTML = '小矿查不到更多消息啦!';
+                            document.getElementById('content').appendChild(div);
+                            flag = false;
+                            $('#page').val(request_page);
+                        }
+                    } else if (jsonObj.end_tag == 'continue') {
+                        $('#page').val(request_page);
+                    }
+                    load_state = 0;
+                    myScroll.refresh();
+                }
+            });
+            myScroll.refresh();
+        }
+    }
+</script>
+<!--特化每条信息-->
+<script>
+    $(function () {
+        $('.li_item').each(function () {
+            var $this = $(this);
+            var $text = $this.html();
+            $text = text_format($text);
+            $this.html($text);
+        });
+    });
+    function text_format(string) {
+        var result = string;
+        if (typeof result == 'string') {
+            result = result.replace(/【供应】/, "<b style='color:brown'>【供应】</b>");
+            result = result.replace(/【求购】/, "<b style='color:brown'>【供应】</b>");
+            result = result.replace(/【找车】/, "<b style='color:brown'>【供应】</b>");
+            result = result.replace(/【车源】/, "<b style='color:brown'>【供应】</b>");
+            result = result.replace(/(\d{11})/g, "<a href='tel:$1'>$1</a>");
+        }
+        return result;
+    }
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    wx.config({
+        debug: false,
+        appId: '{$signPackage["appId"]}',
+        timestamp: {$signPackage["timestamp"]},
+        nonceStr: '{$signPackage["nonceStr"]}',
+        signature: '{$signPackage["signature"]}',
+        jsApiList: [
+            // 所有要调用的 API 都要加到这个列表中
+            'onMenuShareTimeline', 'onMenuShareAppMessage'
+        ]
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+        // 分享到朋友圈
+        var d = new Date();
+        var dateString = d.toLocaleDateString();
+        dateString = dateString.replace(/(\d{4})\/(\d+)\/(\d+)/, '$2月$3日');
+        wx.onMenuShareTimeline({
+            title: dateString + '超矿优质煤炭信息推荐III', // 分享标题
+            link: "http://www.kuaimei56.com/index.php/Home/MessageShare/vipMonth", // 分享链接
+            imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                ck_log("share", '分享月费至朋友圈');
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                ck_log("share", '取消分享月费至朋友圈');
+            }
+        });
+
+        //分享给朋友
+        wx.onMenuShareAppMessage({
+            title: dateString + '超矿优质煤炭信息推荐III', // 分享标题
+            desc: '超矿优质最新煤炭信息推荐', // 分享描述
+            link: "http://www.kuaimei56.com/index.php/Home/MessageShare/vipMonth", // 分享链接
+            imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                ck_log("share", '分享月费给好友');
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                ck_log("share", '取消分享月费给好友');
+            }
+        });
+    });
+</script>
+</html>

@@ -24,29 +24,50 @@
     .table-striped > tbody > tr:nth-of-type(odd) {
         background-color: #f7f7f7
     }
+
     @-moz-keyframes myMove {
-    0% {padding-right:10px;}
-    100% {padding-right:30px;}
+        0% {
+            padding-right: 10px;
+        }
+        100% {
+            padding-right: 30px;
+        }
     }
+
     @-webkit-keyframes myMove {
-    0% {padding-right:10px;}
-    100% {padding-right:30px;}
+        0% {
+            padding-right: 10px;
+        }
+        100% {
+            padding-right: 30px;
+        }
     }
+
     @-o-keyframes myMove {
-    0% {padding-right:10px;}
-    100% {padding-right:30px;}
+        0% {
+            padding-right: 10px;
+        }
+        100% {
+            padding-right: 30px;
+        }
     }
+
     @keyframes myMove {
-    0% {padding-right:10px;}
-    100% {padding-right:30px;}
+        0% {
+            padding-right: 10px;
+        }
+        100% {
+            padding-right: 30px;
+        }
     }
+
     #down {
-    /*text-align: center;*/
-    height: 25px;
-    -moz-animation: myMove 1s linear infinite alternate;
-    -webkit-animation: myMove 1s linear infinite alternate;
-    -o-animation: myMove 1s linear infinite alternate;
-    animation: myMove 1s linear infinite alternate;
+        /*text-align: center;*/
+        height: 25px;
+        -moz-animation: myMove 1s linear infinite alternate;
+        -webkit-animation: myMove 1s linear infinite alternate;
+        -o-animation: myMove 1s linear infinite alternate;
+        animation: myMove 1s linear infinite alternate;
     }
 
 </style>
@@ -77,10 +98,10 @@
         cxt.lineJoin = "round";
         cxt.stroke();
     }
-    function clearCanvas(){
+    function clearCanvas() {
         var c = document.getElementById("downCanvas"),
                 cxt = c.getContext("2d");
-        cxt.clearRect(0,0,c.width,c.height);
+        cxt.clearRect(0, 0, c.width, c.height);
     }
 </script>
 
@@ -91,6 +112,11 @@
             <div class="container">
                 <div style="font-size: 1.2em;color:grey;background-color: white">{$data.refinery_name}</div>
                 <div style="font-size: 1.5em;color:red;background-color: white">{$data.supply_company}</div>
+                <a class="btn btn-default dial" href="tel:{$data.phone_number}"
+                   style="border-color: #04bfc6;position: absolute;right: 5%;top: 5%;">
+                    <img src="__PUBLIC__/home/images/phone.png" class="dial" style="width: 12px">
+                    拨打电话
+                </a>
             </div>
             <hr style="margin-top: 0;margin-bottom: 8px;color: #ddd"/>
             <div style="width: 97%;overflow: scroll;">
@@ -165,16 +191,16 @@
         var pageWidth = document.body.clientWidth;
 //        var tableWidth = $('#detail_table').width();
         var tableWidth = document.getElementById('detail_table').scrollWidth;
-        if(tableWidth/pageWidth > 1){
+        if (tableWidth / pageWidth > 1) {
             drawDown();
-            var arrowOffsetTop = 67+($('table').height()/2);
-            $('#down').css('top',arrowOffsetTop+'px');
+            var arrowOffsetTop = 67 + ($('table').height() / 2);
+            $('#down').css('top', arrowOffsetTop + 'px');
         }
     });
 
 
-    $('#detail_table').bind('touchmove',function(e){
-        if($(this).offset().left<0){
+    $('#detail_table').bind('touchmove', function (e) {
+        if ($(this).offset().left < 0) {
             clearCanvas();
         }
 //        console.log(e.target.offsetLeft);
@@ -212,11 +238,11 @@
             imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
             success: function () {
                 // 用户确认分享后执行的回调函数
-                ck_log("share",'分享{$message[0]["refinery_name"]}消息至朋友圈');
+                ck_log("share", '分享{$message[0]["refinery_name"]}消息至朋友圈');
             },
             cancel: function () {
                 // 用户取消分享后执行的回调函数
-                ck_log("share",'取消分享{$message[0]["refinery_name"]}消息至朋友圈');
+                ck_log("share", '取消分享{$message[0]["refinery_name"]}消息至朋友圈');
             }
         });
         //分享给朋友
@@ -229,13 +255,22 @@
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function () {
                 // 用户确认分享后执行的回调函数
-                ck_log("share",'分享{$message[0]["refinery"]}消息给好友');
+                ck_log("share", '分享{$message[0]["refinery"]}消息给好友');
             },
             cancel: function () {
                 // 用户取消分享后执行的回调函数
-                ck_log("share",'取消分享{$message[0]["refinery"]}消息给好友');
+                ck_log("share", '取消分享{$message[0]["refinery"]}消息给好友');
             }
         });
+    });
+</script>
+<!--日志记录-->
+<script>
+    $('.dial').on('click', function () {
+        var temp = $(this).attr('href');
+        var phone_number = temp.match(/tel:(\d*)/)[1];
+        console.log(phone_number);
+        ck_log('dial', phone_number);
     });
 </script>
 </html>

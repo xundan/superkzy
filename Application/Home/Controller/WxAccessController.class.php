@@ -60,6 +60,10 @@ class WxAccessController extends Controller
                     $this->getWeObj()->text("你好，这里是超级矿资源，感谢您的支持！")->reply();
                     exit;
                 }
+                if (preg_match('/谢谢/',$content) > 0){
+                    $this->getWeObj()->text("不客气，超矿全体员工竭诚为您提供优质信息服务".$emoji)->reply();
+                    exit;
+                }
                 if ($content=="查看结构"){
                     $str = json_encode($this->getWeObj()->getRevData());
                     $this->getWeObj()->text($str)->reply();
@@ -112,15 +116,13 @@ class WxAccessController extends Controller
                 $event = $this->getWeObj()->getRevEvent();
                 switch ($event['event']){
                     case "subscribe":
-                        $welcome_str = "感谢关注【超级矿资源】!
+                        $welcome_str = "【超级矿资源】—信息量最大的煤炭信息平台
 
-点击<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>超矿主页</a>进入信息量最大的煤炭信息平台！每天千条煤炭供求、找车信息更新！
+【发布煤炭信息】请直接在公众号留言(煤炭信息+手机号)，我们会为您公示转发
 
-如需发布煤炭消息，请直接回复带有联系方式（手机号）的煤炭供求找车信息到公众号，我们会为您公示转发。
+【查询煤炭信息】点击<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>超矿主页</a>，查询煤炭供求、找车信息(每日更新千条)
 
-您也可以点击屏幕下方发布/查询中<a href='http://www.kuaimei56.com/index.php/Home/TradeSearch/trade_search'>买卖查询</a>和<a href='http://www.kuaimei56.com/index.php/Home/DriverSearch/driver_job_search'>找车信息</a>。
-
-如果您想加大煤炭信息发布范围，做付费推广，请联系<a href='tel:17083425332'>17083425332(微信同号)</a>客服号进行咨询";
+【付费推广业务】加大煤炭信息发布范围，请联系<a href='tel:17083425332'>17083425332(微信同号)</a>";
                         if($activity_flag){
                             $welcome_str = "感谢关注【超级矿资源】微信公众平台！
 
@@ -135,6 +137,11 @@ class WxAccessController extends Controller
                         break;
                     case "CLICK":
                         switch($event['key']){
+                            case 'publish_method':
+                                $tempReplyString = "【公众号留言】煤炭信息+手机号
+【自助发布】点击<a href='http://www.kuaimei56.com/index.php/Home/OwnerPublish/owner_publish'>发布信息</a>";
+                                $this->getWeObj()->text($tempReplyString)->reply();
+                                break;
                             case 'activity':
                                 $n =array(
                                     "0"=>array(
@@ -284,10 +291,11 @@ class WxAccessController extends Controller
             "button" =>
                 array(
                     array(
-                        'name' => '会员/加群',
+//                        'name' => '会员/加群',
+                        'name' => '加煤炭群',
                         'sub_button' => array(
+                            array('type' => 'view', 'name' => '加煤炭群', 'url' => 'http://mp.weixin.qq.com/s/LEZmYPX6LtNHVQUraiZpbg'),
                             array('type' => 'view', 'name' => '会员注册', 'url' => 'http://www.kuaimei56.com/index.php/Home/Login/register'),
-                            array('type' => 'view', 'name' => '加煤炭群', 'url' => 'http://mp.weixin.qq.com/s/YKhMHB5yyK4WhzXn2sJzjg'),
                             array('type' => 'view', 'name' => '车主福利', 'url' => 'http://www.kuaimei56.com/index.php/Home/CooperatePage/WeChe'),
                             array('type' => 'view', 'name' => '超矿金融', 'url' => 'http://www.kuaimei56.com/index.php/Views/FinancialClient/show'),
 //                            array('type' => 'view', 'name' => '送出行险', 'url' => 'https://u.wcar.net.cn/1es'),
@@ -297,7 +305,8 @@ class WxAccessController extends Controller
                         'name' => '发布/查询',
                         'sub_button' => array(
                             array('type' => 'view', 'name' => '超矿主页', 'url' => 'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'),
-                            array('type' => 'view', 'name' => '发布信息', 'url' => 'http://www.kuaimei56.com/index.php/Home/OwnerPublish/owner_publish'),
+//                            array('type' => 'view', 'name' => '发布信息', 'url' => 'http://www.kuaimei56.com/index.php/Home/OwnerPublish/owner_publish'),
+                            array('type' => 'click', 'name' => '发布信息', 'key' => 'publish_method'),
                             array('type' => 'view', 'name' => '找车信息', 'url' => 'http://www.kuaimei56.com/index.php/Home/DriverSearch/driver_job_search'),
                             array('type' => 'view', 'name' => '买卖查询', 'url' => 'http://www.kuaimei56.com/index.php/Home/TradeSearch/trade_search'),
 //                            array('type' => 'view', 'name' => '推荐好友', 'url' => 'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'),

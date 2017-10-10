@@ -46,6 +46,13 @@ class MessagesModel extends Model
     {
         $subInfo = I('post.', '', 'trim');
         $data = $subInfo;
+        //清除热值默认值
+        if(!$subInfo['heat_value_max']){
+            unset($data['heat_value_max']);
+        }
+        if(!$subInfo['heat_value_min']){
+            unset($data['heat_value_min']);
+        }
         // 判断重复
         $data['content_all'] = $this->join_content();
         $data['content_all_md5'] = md5($data['content_all']);
@@ -158,6 +165,7 @@ class MessagesModel extends Model
         $asc = $cond->getAsc();
         $beginStr = ($page - 1) * $countRow;
         $this->_message = $this->where($cond->getWhereConditions())->where('invalid_id=0')->limit($beginStr, $countRow)->order($asc)->select();
+//        $this->_message = $this->where($cond->getWhereConditions())->where('invalid_id=0')->limit($beginStr, $countRow)->order($asc)->cache(true,60)->select();
         return $this->_message;
     }
 

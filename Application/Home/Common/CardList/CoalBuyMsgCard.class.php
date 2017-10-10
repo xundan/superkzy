@@ -42,8 +42,8 @@ class CoalBuyMsgCard extends MsgCard
 
         if ($message['formatted']) { // 如果用户按照标准格式填写
             $li_str = "<li class=\"weui_panel weui_panel_access\" style=\";border-radius: 5px\">
-<div style=\"position: absolute;right: 0px;\">" . $imageString . "</div>
-<div style='position: absolute;right: 20px;bottom:20px;z-index:2'>" . $invalidImage . "</div>
+<div class='pic-layer' style=\"position: absolute;right: 0px;\">" . $imageString . "</div>
+<div class='pic-layer' style='position: absolute;right: 20px;bottom:20px;z-index:2'>" . $invalidImage . "</div>
 <div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
     <a href=\"{$personal_page}\">
         <div class=\"weui_media_hd\">
@@ -93,8 +93,8 @@ class CoalBuyMsgCard extends MsgCard
 </div>";
         } else {
             $li_str = "<li class=\"weui_panel weui_panel_access\" style=\";border-radius: 5px\">
-<div style=\"position: absolute;right: 0px;\">" . $imageString . "</div>
-<div style='position: absolute;right: 20px;bottom:20px;z-index:2'>" . $invalidImage . "</div>
+<div class='pic-layer' style=\"position: absolute;right: 0px;\">" . $imageString . "</div>
+<div class='pic-layer' style='position: absolute;right: 20px;bottom:20px;z-index:2'>" . $invalidImage . "</div>
 <div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
     <a href=\"{$personal_page}\">
         <div class=\"weui_media_hd\">

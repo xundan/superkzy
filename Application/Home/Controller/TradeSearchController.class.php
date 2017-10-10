@@ -9,7 +9,6 @@
 namespace Home\Controller;
 use Home\Common\CardList\WhereConditions;
 use Think\Controller;
-
 class TradeSearchController extends SearchController
 {
 
@@ -56,6 +55,7 @@ class TradeSearchController extends SearchController
     function createNewWhereConditions($input)
     {
         $whereCond = new WhereConditions();
+        $whereCond->pushCond("vip","not in",array('5','6','7','8'));
         $whereCond->pushSearchCond("content_all", $input['searchInput']);
         if($input['filter_kind']){
             $whereCond->pushSearchCond("content_all",implode(' ',$input['filter_kind']),'or');
@@ -71,11 +71,19 @@ class TradeSearchController extends SearchController
 //        }else{}
         $whereCond->pushCond("kind","in",$input['filter_kind']);
         $whereCond->pushCond("granularity","in",$input['filter_granularity']);
-        $whereCond->pushCond("heat_value_min","egt",$input['filter_heat_min']);
-        $whereCond->pushCond("heat_value_max","elt",$input['filter_heat_max']);
-        $whereCond->pushCond("heat_value_max","egt",$input['filter_heat_min']);
-        $whereCond->pushCond("heat_value_min","elt",$input['filter_heat_max']);
+        if($input['filter_heat_max'] && $input['filter_heat_min']){
+            $whereCond->pushCond("heat_value_min","egt",$input['filter_heat_min']);
+            $whereCond->pushCond("heat_value_max","elt",$input['filter_heat_max']);
+            $whereCond->pushCond("heat_value_max","egt",$input['filter_heat_min']);
+            $whereCond->pushCond("heat_value_min","elt",$input['filter_heat_max']);
+        }
+        else if($input['filter_heat_max']){
+            $whereCond->pushCond("heat_value_max","elt",$input['filter_heat_max']);
+        }else if($input['filter_heat_min']){
+            $whereCond->pushCond("heat_value_min","egt",$input['filter_heat_min']);
+        }else{
 
+        }
         return $whereCond;
     }
 

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <title>运费基础数据</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/js/jquery-2.2.4.min.js"></script>
+</head>
+<style>
+    .input-style{
+        width: 80%;
+        height: 2.5em;
+        padding: 6px 12px;
+        font-size: 1.5em;
+        line-height: 1.42857143;
+        color: #555;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, .075);
+        -webkit-transition: border-color ease-in-out .15s, -webkit-box-shadow ease-in-out .15s;
+        -o-transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+        transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s
+    }
+</style>
+<body>
+<div class="text-center" style="margin-top: 100px">
+    <input type="text" class="form-controller">
+    <button type="button" class="btn btn-sm btn-default" onclick="areaCheck()">检测</button>
+</div>
+</body>
+<script>
+    //地址检测函数
+    function areaCheck(){
+        var areaObj;
+        var area = $('input').val();
+        $.ajax({
+            type: "post",
+            url:"{:U('BaseDataFreight/area_check')}",
+            data: {area_name:area},
+            async: false,
+            success:function(data){
+                console.log(data);
+                if(data != 0){
+                    areaObj = eval('('+data+')');
+                    $('input').css('border','3px solid green');
+                }else{
+                    $('input').css('border','3px solid red');
+                }
+            }
+        });
+        return areaObj;
+    }
+    //检测出错focus恢复原样
+    $('input').focus(function(){
+        $(this).css('border','1px solid #ccc');
+        $('#result').html('');
+    });
+</script>
+</html>
