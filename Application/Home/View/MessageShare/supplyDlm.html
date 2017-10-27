@@ -26,6 +26,31 @@
 </style>
 <body>
 <input type="hidden" id="page" name="page" value="1">
+<div class="overlay"></div>
+<div id="qrcode_show" class="qrcode_show">
+    <img src="__PUBLIC__/home/images/promotion/qrcode-gzh-test.jpg" width="50%" style="">
+</div>
+<script>
+    function qr_show() {
+        ck_log('click','scan_qrcode');
+        $('.overlay').toggle();
+        $('#qrcode_show').toggle();
+    }
+    $('.overlay').click(function () {
+        $('.overlay').toggle();
+        $('#qrcode_show').toggle();
+    });
+    var twinkle_flag = false;
+    var i = setInterval(function () {
+        if (!twinkle_flag) {
+            $('#twinkle').css('color', 'red');
+            twinkle_flag = true;
+        } else {
+            $('#twinkle').css('color', 'dodgerblue');
+            twinkle_flag = false;
+        }
+    }, 300)
+</script>
 
 <div id="wrapper" style="top: 0px;margin:0 auto;">
     <div id="scroller">
@@ -38,6 +63,8 @@
                 【超级矿资源】信息量最大的煤炭信息平台（每日千条煤炭信息更新）
                 <br/>
                 【发布煤炭信息方法】超矿微信号留言(需要发布的煤炭信息+手机号)
+                <br/>
+                <span id="twinkle" onclick="qr_show()">>>>>>点击此处,长按识别弹出的二维码进入超矿公众号<<<<<</span>
             </li>
             <volist name="resultMsg" id="msg">
                 <li class="li_item">{$msg['content']}</li>
@@ -170,8 +197,15 @@
         // 在这里调用 API
         // 分享到朋友圈
         var d = new Date();
-        var dateString = d.toLocaleDateString();
-        dateString = dateString.replace(/(\d{4})\/(\d+)\/(\d+)/, '$2月$3日');
+        var dateString;
+        dateString = getQueryString("date");
+        if (dateString) {
+            dateString = dateString.replace(/(\d{4})-(\d+)-(\d+)/, '$2月$3日');
+        } else {
+            dateString = d.toLocaleDateString();
+            dateString = dateString.replace(/(\d{4})\/(\d+)\/(\d+)/, '$2月$3日');
+        }
+
         var url = window.location.href;
         wx.onMenuShareTimeline({
             title: dateString + '煤炭供应信息(动力煤)', // 分享标题

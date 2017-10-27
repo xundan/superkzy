@@ -11,6 +11,7 @@ namespace Home\Controller;
 use Think\Controller;
 use Home\Model\MessagesModel;
 use Home\Common\CardList\WhereConditions;
+use Home\Model\MessageHistoryModel;
 
 class MessageShareController extends Controller
 {
@@ -26,19 +27,20 @@ class MessageShareController extends Controller
         //WechatJDK
         vendor("jssdk.signPackage");
         $this->assign("signPackage", getSignPackage());
-        $subInfo = I('post.', '', 'trim,strip_tags');
+        //获取Ajax数据
+        $subInfo = I('get.', '', 'trim,strip_tags');
+        //确定消息模型
+        $msg = $this->msgModelCreator($date);
+        //设置条件
+        $where = $this->setWhere('supplyAll', $date);
         //下拉刷新
         if ($subInfo['isAjax'] == 1) {
             //AssembleData
-            $where = $this->setWhere('supplyAll', $date);
-            $msg = new MessagesModel();
             $result['data'] = $msg->findWhere($where);
             echo json_encode($result);
             return;
         } else {
             //AssembleData
-            $where = $this->setWhere('supplyAll', $date);
-            $msg = new MessagesModel();
             $result = $msg->findWhere($where);
             $this->assign('resultMsg', $result);
         }
@@ -47,11 +49,16 @@ class MessageShareController extends Controller
 
     public function supplyAllMore()
     {
-        $subInfo = I('post.', '', 'trim,strip_tags');
+        //获取Ajax数据
+        $subInfo = I('get.', '', 'trim,strip_tags');
+        //确定消息模型
+        $date = $subInfo['date'];
+        //确定消息模型
+        $msg = $this->msgModelCreator($date);
+        //设置条件
+        $where = $this->setWhere('supplyAll', $subInfo['date'], $subInfo['page']);
         if ($subInfo['isAjax'] == 1) {
             //AssembleData
-            $where = $this->setWhere('supplyAll', $subInfo['date'], $subInfo['page']);
-            $msg = new MessagesModel();
             $result['data'] = $msg->findWhere($where);
             if (count($result['data']) < self::COUNT_ROW) {
                 $result['end_tag'] = 'end';
@@ -68,36 +75,46 @@ class MessageShareController extends Controller
         //WechatJDK
         vendor("jssdk.signPackage");
         $this->assign("signPackage", getSignPackage());
+        //获取Ajax数据
         $subInfo = I('get.', '', 'trim,strip_tags');
+        //确定消息模型
+        $msg = $this->msgModelCreator($date);
+        //设置条件
+        $where = $this->setWhere('supplyDlm', $date);
         //下拉刷新
         if ($subInfo['isAjax'] == 1) {
             //AssembleData
-            $where = $this->setWhere('supplyDlm', $date);
-            $msg = new MessagesModel();
             $result['data'] = $msg->findWhere($where);
             echo json_encode($result);
             return;
         } else {
             //AssembleData
-            $where = $this->setWhere('supplyDlm', $date);
-            $msg = new MessagesModel();
             $result = $msg->findWhere($where);
-//            $a = M()->getLastSql();
-//            echo $a;
-//            dump(array($date,date('Y-m-d', strtotime($date) + 24 * 3600)));
-//            exit;
             $this->assign('resultMsg', $result);
         }
         $this->display();
     }
 
+    public function supplyDlmStatic()
+    {
+        echo __ROOT__;
+//        echo __METHOD__;
+        echo '<br/>';
+        $this->buildHtml('supplyDlm.html', './', 'MessageShare/supplyDlm');
+        echo 2;
+    }
+
     public function supplyDlmMore()
     {
+        //获取Ajax数据
         $subInfo = I('get.', '', 'trim,strip_tags');
+        //确定消息模型
+        $date = $subInfo['date'];
+        $msg = $this->msgModelCreator($date);
+        //设置条件
+        $where = $this->setWhere('supplyDlm', $subInfo['date'], $subInfo['page']);
         if ($subInfo['isAjax'] == 1) {
             //AssembleData
-            $where = $this->setWhere('supplyDlm', $subInfo['date'], $subInfo['page']);
-            $msg = new MessagesModel();
             $result['data'] = $msg->findWhere($where);
             if (count($result['data']) < self::COUNT_ROW) {
                 $result['end_tag'] = 'end';
@@ -109,24 +126,25 @@ class MessageShareController extends Controller
         }
     }
 
-    public function buy()
+    public function buy($date = null)
     {
         //WechatJDK
         vendor("jssdk.signPackage");
         $this->assign("signPackage", getSignPackage());
-        $subInfo = I('post.', '', 'trim,strip_tags');
+        //获取Ajax数据
+        $subInfo = I('get.', '', 'trim,strip_tags');
+        //确定消息模型
+        $msg = $this->msgModelCreator($date);
+        //设置条件
+        $where = $this->setWhere('buy', $date);
         //下拉刷新
         if ($subInfo['isAjax'] == 1) {
             //AssembleData
-            $where = $this->setWhere('buy');
-            $msg = new MessagesModel();
             $result['data'] = $msg->findWhere($where);
             echo json_encode($result);
             return;
         } else {
             //AssembleData
-            $where = $this->setWhere('buy');
-            $msg = new MessagesModel();
             $result = $msg->findWhere($where);
             $this->assign('resultMsg', $result);
         }
@@ -135,11 +153,15 @@ class MessageShareController extends Controller
 
     public function buyMore()
     {
-        $subInfo = I('post.', '', 'trim,strip_tags');
+        //获取Ajax数据
+        $subInfo = I('get.', '', 'trim,strip_tags');
+        //确定消息模型
+        $date = $subInfo['date'];
+        $msg = $this->msgModelCreator($date);
+        //设置条件
+        $where = $this->setWhere('buy', $subInfo['date'], $subInfo['page']);
         if ($subInfo['isAjax'] == 1) {
             //AssembleData
-            $where = $this->setWhere('buy', $subInfo['date'], $subInfo['page']);
-            $msg = new MessagesModel();
             $result['data'] = $msg->findWhere($where);
             if (count($result['data']) < self::COUNT_ROW) {
                 $result['end_tag'] = 'end';
@@ -151,24 +173,25 @@ class MessageShareController extends Controller
         }
     }
 
-    public function searchCar()
+    public function searchCar($date = null)
     {
         //WechatJDK
         vendor("jssdk.signPackage");
         $this->assign("signPackage", getSignPackage());
-        $subInfo = I('post.', '', 'trim,strip_tags');
+        //获取Ajax数据
+        $subInfo = I('get.', '', 'trim,strip_tags');
+        //确定消息模型
+        $msg = $this->msgModelCreator($date);
+        //设置条件
+        $where = $this->setWhere('searchCar', $date);
         //下拉刷新
         if ($subInfo['isAjax'] == 1) {
             //AssembleData
-            $where = $this->setWhere('searchCar');
-            $msg = new MessagesModel();
             $result['data'] = $msg->findWhere($where);
             echo json_encode($result);
             return;
         } else {
             //AssembleData
-            $where = $this->setWhere('searchCar');
-            $msg = new MessagesModel();
             $result = $msg->findWhere($where);
             $this->assign('resultMsg', $result);
         }
@@ -177,11 +200,15 @@ class MessageShareController extends Controller
 
     public function searchCarMore()
     {
-        $subInfo = I('post.', '', 'trim,strip_tags');
+        //获取Ajax数据
+        $subInfo = I('get.', '', 'trim,strip_tags');
+        //确定消息模型
+        $date = $subInfo['date'];
+        $msg = $this->msgModelCreator($date);
+        //设置条件
+        $where = $this->setWhere('searchCar', $subInfo['date'], $subInfo['page']);
         if ($subInfo['isAjax'] == 1) {
             //AssembleData
-            $where = $this->setWhere('searchCar', $subInfo['date'], $subInfo['page']);
-            $msg = new MessagesModel();
             $result['data'] = $msg->findWhere($where);
             if (count($result['data']) < self::COUNT_ROW) {
                 $result['end_tag'] = 'end';
@@ -193,24 +220,25 @@ class MessageShareController extends Controller
         }
     }
 
-    public function carSource()
+    public function carSource($date = null)
     {
         //WechatJDK
         vendor("jssdk.signPackage");
         $this->assign("signPackage", getSignPackage());
-        $subInfo = I('post.', '', 'trim,strip_tags');
+        //获取Ajax数据
+        $subInfo = I('get.', '', 'trim,strip_tags');
+        //确定消息模型
+        $msg = $this->msgModelCreator($date);
+        //设置条件
+        $where = $this->setWhere('carSource', $date);
         //下拉刷新
         if ($subInfo['isAjax'] == 1) {
             //AssembleData
-            $where = $this->setWhere('carSource');
-            $msg = new MessagesModel();
             $result['data'] = $msg->findWhere($where);
             echo json_encode($result);
             return;
         } else {
             //AssembleData
-            $where = $this->setWhere('carSource');
-            $msg = new MessagesModel();
             $result = $msg->findWhere($where);
             $this->assign('resultMsg', $result);
         }
@@ -219,11 +247,15 @@ class MessageShareController extends Controller
 
     public function carSourceMore()
     {
-        $subInfo = I('post.', '', 'trim,strip_tags');
+        //获取Ajax数据
+        $subInfo = I('get.', '', 'trim,strip_tags');
+        //确定消息模型
+        $date = $subInfo['date'];
+        $msg = $this->msgModelCreator($date);
+        //设置条件
+        $where = $this->setWhere('carSource', $subInfo['date'], $subInfo['page']);
         if ($subInfo['isAjax'] == 1) {
             //AssembleData
-            $where = $this->setWhere('carSource', $subInfo['date'], $subInfo['page']);
-            $msg = new MessagesModel();
             $result['data'] = $msg->findWhere($where);
             if (count($result['data']) < self::COUNT_ROW) {
                 $result['end_tag'] = 'end';
@@ -235,24 +267,25 @@ class MessageShareController extends Controller
         }
     }
 
-    public function vipYear()
+    public function vipYear($date = null)
     {
         //WechatJDK
         vendor("jssdk.signPackage");
         $this->assign("signPackage", getSignPackage());
-        $subInfo = I('post.', '', 'trim,strip_tags');
+        //获取Ajax数据
+        $subInfo = I('get.', '', 'trim,strip_tags');
+        //确定消息模型
+        $msg = $this->msgModelCreator($date);
+        //设置条件
+        $where = $this->setWhere('vipYear', $date);
         //下拉刷新
         if ($subInfo['isAjax'] == 1) {
             //AssembleData
-            $where = $this->setWhere('vipYear');
-            $msg = new MessagesModel();
             $result['data'] = $msg->findWhere($where);
             echo json_encode($result);
             return;
         } else {
             //AssembleData
-            $where = $this->setWhere('vipYear');
-            $msg = new MessagesModel();
             $result = $msg->findWhere($where);
             $this->assign('resultMsg', $result);
         }
@@ -261,11 +294,15 @@ class MessageShareController extends Controller
 
     public function vipYearMore()
     {
-        $subInfo = I('post.', '', 'trim,strip_tags');
+        //获取Ajax数据
+        $subInfo = I('get.', '', 'trim,strip_tags');
+        //确定消息模型
+        $date = $subInfo['date'];
+        $msg = $this->msgModelCreator($date);
+        //设置条件
+        $where = $this->setWhere('vipYear', $subInfo['date'], $subInfo['page']);
         if ($subInfo['isAjax'] == 1) {
             //AssembleData
-            $where = $this->setWhere('vipYear', $subInfo['date'], $subInfo['page']);
-            $msg = new MessagesModel();
             $result['data'] = $msg->findWhere($where);
             if (count($result['data']) < self::COUNT_ROW) {
                 $result['end_tag'] = 'end';
@@ -277,24 +314,25 @@ class MessageShareController extends Controller
         }
     }
 
-    public function vipSeason()
+    public function vipSeason($date = null)
     {
         //WechatJDK
         vendor("jssdk.signPackage");
         $this->assign("signPackage", getSignPackage());
-        $subInfo = I('post.', '', 'trim,strip_tags');
+        //获取Ajax数据
+        $subInfo = I('get.', '', 'trim,strip_tags');
+        //确定消息模型
+        $msg = $this->msgModelCreator($date);
+        //设置条件
+        $where = $this->setWhere('vipSeason', $date);
         //下拉刷新
         if ($subInfo['isAjax'] == 1) {
             //AssembleData
-            $where = $this->setWhere('vipSeason');
-            $msg = new MessagesModel();
             $result['data'] = $msg->findWhere($where);
             echo json_encode($result);
             return;
         } else {
             //AssembleData
-            $where = $this->setWhere('vipSeason');
-            $msg = new MessagesModel();
             $result = $msg->findWhere($where);
             $this->assign('resultMsg', $result);
         }
@@ -303,11 +341,15 @@ class MessageShareController extends Controller
 
     public function vipSeasonMore()
     {
-        $subInfo = I('post.', '', 'trim,strip_tags');
+        //获取Ajax数据
+        $subInfo = I('get.', '', 'trim,strip_tags');
+        //确定消息模型
+        $date = $subInfo['date'];
+        $msg = $this->msgModelCreator($date);
+        //设置条件
+        $where = $this->setWhere('vipSeason', $subInfo['date'], $subInfo['page']);
         if ($subInfo['isAjax'] == 1) {
             //AssembleData
-            $where = $this->setWhere('vipSeason', $subInfo['date'], $subInfo['page']);
-            $msg = new MessagesModel();
             $result['data'] = $msg->findWhere($where);
             if (count($result['data']) < self::COUNT_ROW) {
                 $result['end_tag'] = 'end';
@@ -319,24 +361,25 @@ class MessageShareController extends Controller
         }
     }
 
-    public function vipMonth()
+    public function vipMonth($date = null)
     {
         //WechatJDK
         vendor("jssdk.signPackage");
         $this->assign("signPackage", getSignPackage());
-        $subInfo = I('post.', '', 'trim,strip_tags');
+        //获取Ajax数据
+        $subInfo = I('get.', '', 'trim,strip_tags');
+        //确定消息模型
+        $msg = $this->msgModelCreator($date);
+        //设置条件
+        $where = $this->setWhere('vipMonth', $date);
         //下拉刷新
         if ($subInfo['isAjax'] == 1) {
             //AssembleData
-            $where = $this->setWhere('vipMonth');
-            $msg = new MessagesModel();
             $result['data'] = $msg->findWhere($where);
             echo json_encode($result);
             return;
         } else {
             //AssembleData
-            $where = $this->setWhere('vipMonth');
-            $msg = new MessagesModel();
             $result = $msg->findWhere($where);
             $this->assign('resultMsg', $result);
         }
@@ -345,11 +388,15 @@ class MessageShareController extends Controller
 
     public function vipMonthMore()
     {
-        $subInfo = I('post.', '', 'trim,strip_tags');
+        //获取Ajax数据
+        $subInfo = I('get.', '', 'trim,strip_tags');
+        //确定消息模型
+        $date = $subInfo['date'];
+        $msg = $this->msgModelCreator($date);
+        //设置条件
+        $where = $this->setWhere('vipMonth', $subInfo['date'], $subInfo['page']);
         if ($subInfo['isAjax'] == 1) {
             //AssembleData
-            $where = $this->setWhere('vipMonth', $subInfo['date'], $subInfo['page']);
-            $msg = new MessagesModel();
             $result['data'] = $msg->findWhere($where);
             if (count($result['data']) < self::COUNT_ROW) {
                 $result['end_tag'] = 'end';
@@ -359,6 +406,20 @@ class MessageShareController extends Controller
             echo json_encode($result);
             return;
         }
+    }
+
+    private function msgModelCreator($date)
+    {
+        if ($date) {
+            if ($date < date("Y-m-d", time())) {
+                $msg = new MessageHistoryModel();
+            } else {
+                $msg = new MessagesModel();
+            }
+        } else {
+            $msg = new MessagesModel();
+        }
+        return $msg;
     }
 
     private function setWhere($category, $date = null, $page = 1)

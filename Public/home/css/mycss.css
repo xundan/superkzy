@@ -657,6 +657,16 @@ a:hover{
     /*-webkit-text-fill-color: transparent;*/
 }
 
+#qrcode_show {
+    margin-top: 30%;
+    text-align: center;
+    z-index: 9999;
+    opacity: 1;
+    width: 100%;
+    position: relative;
+    display: none;
+}
+
 /*nav button list*/
 .nav-menu{
     position: absolute;

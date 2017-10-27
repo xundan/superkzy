@@ -12,6 +12,7 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/scroll-initial.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/common.js"></script>
 </head>
 <style>
     body {
@@ -21,9 +22,46 @@
     ul {
         padding: 0;
     }
+
+    #qrcode_show {
+        margin-top: 30%;
+        text-align: center;
+        z-index: 9999;
+        opacity: 1;
+        width: 100%;
+        position: relative;
+        display: none;
+    }
 </style>
 <body>
 <input type="hidden" id="page" name="page" value="1">
+
+<div class="overlay"></div>
+<div id="qrcode_show">
+    <img src="__PUBLIC__/home/images/promotion/qrcode-gzh-test.jpg" width="50%" style="">
+    <p style="color: white">长按识别二维码</p>
+</div>
+<script>
+    function qr_show() {
+        ck_log('click','scan_qrcode');
+        $('.overlay').toggle();
+        $('#qrcode_show').toggle();
+    }
+    $('.overlay').click(function () {
+        $('.overlay').toggle();
+        $('#qrcode_show').toggle();
+    });
+    var twinkle_flag = false;
+    var i = setInterval(function () {
+        if (!twinkle_flag) {
+            $('#twinkle').css('color', 'red');
+            twinkle_flag = true;
+        } else {
+            $('#twinkle').css('color', 'dodgerblue');
+            twinkle_flag = false;
+        }
+    }, 300)
+</script>
 
 <div id="wrapper" style="top: 0px;margin:0 auto;">
     <div id="scroller">
@@ -36,6 +74,10 @@
                 【超级矿资源】信息量最大的煤炭信息平台（每日千条煤炭信息更新）
                 <br/>
                 【发布煤炭信息方法】超矿微信号留言(需要发布的煤炭信息+手机号)
+                <br/>
+                <div style="text-align: center">
+                    <span id="twinkle" onclick="qr_show()">>>>>>点我，查煤价、运费<<<<<</span>
+                </div>
             </li>
             <volist name="resultMsg" id="msg">
                 <li class="li_item">{$msg['content']}</li>
@@ -58,12 +100,14 @@
     function pullDownAction() {
         //日志记录
         ck_log('scroll', '下拉刷新');
+        var date = getQueryString('date');
         $.ajax({
-            type: "post",
+            type: "get",
             url: "{:U('MessageShare/vipMonth')}",
             data: {
                 isAjax: 1,
-                page: 1
+                page: 1,
+                date: date
             },
             success: function (data) {
                 var jsonObj = JSON.parse(data);
@@ -92,13 +136,15 @@
             ck_log('scroll', '下拉刷新');
             var page = $('#page').val();
             var request_page = parseInt(page) + 1;
+            var date = getQueryString('date');
             console.log(page, request_page);
             $.ajax({
-                type: "post",
+                type: "get",
                 url: "{:U('MessageShare/vipMonthMore')}",
                 data: {
                     isAjax: 1,
-                    page: request_page
+                    page: request_page,
+                    date: date
                 },
                 success: function (data) {
                     var jsonObj = JSON.parse(data);
@@ -136,6 +182,16 @@
             $text = text_format($text);
             $this.html($text);
         });
+        var d = new Date();
+        var dateString;
+        dateString = getQueryString("date");
+        if (dateString) {
+            dateString = dateString.replace(/(\d{4})-(\d+)-(\d+)/, '$2月$3日');
+        } else {
+            dateString = d.toLocaleDateString();
+            dateString = dateString.replace(/(\d{4})\/(\d+)\/(\d+)/, '$2月$3日');
+        }
+        $('title').html(dateString + '超矿优质煤炭信息推荐III');
     });
     function text_format(string) {
         var result = string;
@@ -166,11 +222,19 @@
         // 在这里调用 API
         // 分享到朋友圈
         var d = new Date();
-        var dateString = d.toLocaleDateString();
-        dateString = dateString.replace(/(\d{4})\/(\d+)\/(\d+)/, '$2月$3日');
+        var dateString;
+        dateString = getQueryString("date");
+        if (dateString) {
+            dateString = dateString.replace(/(\d{4})-(\d+)-(\d+)/, '$2月$3日');
+        } else {
+            dateString = d.toLocaleDateString();
+            dateString = dateString.replace(/(\d{4})\/(\d+)\/(\d+)/, '$2月$3日');
+        }
+
+        var url = window.location.href;
         wx.onMenuShareTimeline({
             title: dateString + '超矿优质煤炭信息推荐III', // 分享标题
-            link: "http://www.kuaimei56.com/index.php/Home/MessageShare/vipMonth", // 分享链接
+            link: url, // 分享链接
             imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
             success: function () {
                 // 用户确认分享后执行的回调函数
@@ -186,7 +250,7 @@
         wx.onMenuShareAppMessage({
             title: dateString + '超矿优质煤炭信息推荐III', // 分享标题
             desc: '超矿优质最新煤炭信息推荐', // 分享描述
-            link: "http://www.kuaimei56.com/index.php/Home/MessageShare/vipMonth", // 分享链接
+            link: url, // 分享链接
             imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
             type: '', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空

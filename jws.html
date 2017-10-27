@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<script src="./Public/home/js/jquery-2.2.4.min.js"></script>-->
+    <!--<script src="./Public/home/js/clipboard.js"></script>-->
+    <title>转发链接</title>
+</head>
+<style type="text/css">
+    .btn-div {
+        width: 100%;
+        text-align: center;
+    }
+
+    p {
+        margin: 0;
+        word-wrap: break-word;
+    }
+</style>
+<body>
+<!--<div id="container">-->
+<!--<label for="supplyAll">-->
+<!--供应链接：-->
+<!--</label>-->
+<!--<textarea cols="40" rows="2" id="supplyAll"-->
+<!--class="url_input">http://www.kuaimei56.com/Home/MessageShare/supplyAll</textarea>-->
+
+<!--<label for="buy">-->
+<!--求购链接：-->
+<!--</label>-->
+<!--<textarea cols="40" rows="2" id="buy" class="url_input">http://www.kuaimei56.com/Home/MessageShare/buy</textarea>-->
+
+<!--<label for="carSource">-->
+<!--车源链接：-->
+<!--</label>-->
+<!--<textarea cols="40" rows="2" id="carSource"-->
+<!--class="url_input">http://www.kuaimei56.com/Home/MessageShare/carSource</textarea>-->
+
+<!--<label for="searchCar">-->
+<!--找车链接：-->
+<!--</label>-->
+<!--<textarea cols="40" rows="2" id="searchCar"-->
+<!--class="url_input">http://www.kuaimei56.com/Home/MessageShare/searchCar</textarea>-->
+
+<!--<label for="vipYear">-->
+<!--年费链接：-->
+<!--</label>-->
+<!--<textarea cols="40" rows="2" id="vipYear"-->
+<!--class="url_input">http://www.kuaimei56.com/Home/MessageShare/vipYear</textarea>-->
+
+<!--<label for="vipSeason">-->
+<!--季费链接：-->
+<!--</label>-->
+<!--<textarea cols="40" rows="2" id="vipSeason"-->
+<!--class="url_input">http://www.kuaimei56.com/Home/MessageShare/vipSeason</textarea>-->
+
+<!--<label for="vipMonth">-->
+<!--月费链接：-->
+<!--</label>-->
+<!--<textarea cols="40" rows="2" id="vipMonth"-->
+<!--class="url_input">http://www.kuaimei56.com/Home/MessageShare/vipMonth</textarea>-->
+<!--</div>-->
+<div id="container">
+    <p id="supplyAll" class="url_input">供应链接：http://www.kuaimei56.com/Home/MessageShare/supplyAll</p>
+
+    <p id="buy" class="url_input">求购链接：http://www.kuaimei56.com/Home/MessageShare/buy</p>
+
+    <p id="carSource" class="url_input">车源链接：http://www.kuaimei56.com/Home/MessageShare/carSource</p>
+
+    <p id="searchCar" class="url_input">找车链接：http://www.kuaimei56.com/Home/MessageShare/searchCar</p>
+
+    <p id="vipYear" class="url_input">年费链接：http://www.kuaimei56.com/Home/MessageShare/vipYear</p>
+
+    <p id="vipSeason" class="url_input">季费链接：http://www.kuaimei56.com/Home/MessageShare/vipSeason</p>
+
+    <p id="vipMonth" class="url_input">月费链接：http://www.kuaimei56.com/Home/MessageShare/vipMonth</p>
+</div>
+
+<div id="copyObj" style="display: none">
+
+</div>
+
+<div class="btn-div">
+    <!--<button onclick="copyToClipboard()">点击复制</button>-->
+    <button onclick="copyToClipboard2()">点击复制2</button>
+    <!--<button class="btn" data-clipboard-action="copy" data-clipboard-target="#copyObj">点击复制3</button>-->
+</div>
+</body>
+<script type="text/javascript">
+    var todayDate = new Date().toLocaleDateString();
+    todayDate = todayDate.replace(/\//g, '-');
+    console.log(todayDate);
+    var temp = document.getElementsByClassName('url_input');
+    //    var copyString = '';
+    //    for (var i = 0; i < temp.length; i++) {
+    //        temp[i].value += '?date=' + todayDate;
+    //        switch (i) {
+    //            case 0 :
+    //                copyString += '供应链接：' + '<br/>';
+    //                break;
+    //            case 1 :
+    //                copyString += '求购链接：' + '<br/>';
+    //                break;
+    //            case 2 :
+    //                copyString += '车源链接：' + '<br/>';
+    //                break;
+    //            case 3 :
+    //                copyString += '找车链接：' + '<br/>';
+    //                break;
+    //            case 4 :
+    //                copyString += '年费链接：' + '<br/>';
+    //                break;
+    //            case 5 :
+    //                copyString += '季费链接：' + '<br/>';
+    //                break;
+    //            case 6 :
+    //                copyString += '月费链接：' + '<br/>';
+    //                break;
+    //        }
+    //        copyString += temp[i].value + '<br/>';
+    //    }
+    //    document.getElementById('copyObj').innerHTML = copyString;
+
+    for (var i = 0; i < temp.length; i++) {
+        temp[i].innerHTML = temp[i].innerHTML.replace('www.kuaimei56.com','120.76.134.7');
+        temp[i].innerHTML += '?date=' + todayDate;
+    }
+
+    function copyToClipboard() {
+//        var copySource = document.getElementById('container');
+        var copySource = document.getElementById('copyObj');
+        copySource.style.display = 'block';
+        var copyValue = copySource.value;
+//        copySource.select();
+        var range = document.createRange();
+        range.selectNode(copySource);
+        window.getSelection().addRange(range);
+        document.execCommand("Copy");
+    }
+
+    function copyToClipboard2() {
+        var copySource = document.getElementById('container');
+        var range = document.createRange();
+        range.selectNode(copySource);
+        window.getSelection().addRange(range);
+        document.execCommand("Copy");
+    }
+
+    //    var clipboard = new Clipboard('.btn');
+</script>
+</html>
