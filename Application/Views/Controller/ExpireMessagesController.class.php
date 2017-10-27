@@ -10,6 +10,8 @@
 namespace Views\Controller;
 
 use Think\Controller\RestController;
+use Think\Log;
+use Views\Model\MessageHistoryModel;
 
 class ExpireMessagesController extends RestController
 {
@@ -73,6 +75,7 @@ class ExpireMessagesController extends RestController
         D('Distribute')->add($record);
     }
 
+
     /**
      * 返回所有超过两天的M2W记录
      * @return array
@@ -96,5 +99,22 @@ class ExpireMessagesController extends RestController
         $now = date("Y-m-d H:i:s", time());
         $oldMessage = $Message->where("invalid_id=0 AND deadline<'$now'")->select();
         return $oldMessage;
+    }
+
+    /**
+     * 将所有当天的VIP消息归档至history表
+     * @return array
+     */
+    public function archiveMessageByDay()
+    {
+        $Message=D('Message');
+        $now = date("Y-m-d", time());
+        $end = $now." 01:00:00"; // 归档时间为凌晨1点
+        $yesterday = date("Y-m-d", strtotime("-1 day"));
+        $start = $yesterday." 01:00:00";
+        $todayMessage = $Message->where("update_time >'$start' and update_time <'$end' and status=102")->select();
+        $History=new MessageHistoryModel();
+        $lastID=$History->archive($todayMessage);
+        Log::record("ExpireMessages: History archived to id: $lastID. ", Log::DEBUG);
     }
 }
