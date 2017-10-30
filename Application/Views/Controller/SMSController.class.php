@@ -152,7 +152,7 @@ class SMSController extends RestController
 //            "touser"=>"o5DarwPJb6a2i9Iex1I2skl3ewtM",
             "touser"=>$msg['open_id'],
             "template_id"=>"8Tiln-riqpC_s42AiDGbH3PMGxom2B4wKN2z_sm0ZsI",
-            "url"=>"http://www.kuaimei56.com/index.php/Home/OwnerPublishHistory/owner_publish_history",
+            "url"=>"http://www.xuncl.com/index.php/Home/OwnerPublishHistory/owner_publish_history",
             "data"=>$data
         );
 //        echo "123<br>";

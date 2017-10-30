@@ -337,10 +337,10 @@
         cookie('coal_price_search_filter_heat_min', filter_heat_min);
         cookie('coal_price_search_filter_heat_max', filter_heat_max);
         //检测所选条件是否为空，为空默认全选速度太慢，故必须做出选择
-//        if ((!filter_heat_max) && (!filter_heat_min) && (filter_granularity.length == 0) && (filter_sulfur.length == 0) && (filter_volatile.length == 0)) {
-//            showToast2('您还没有进行指标筛选,请至少选中一项');
-//            return false;
-//        }
+        if ((!filter_heat_max) && (!filter_heat_min) && (filter_granularity.length == 0) && (filter_sulfur.length == 0) && (filter_volatile.length == 0)) {
+            showToast2('您还没有进行指标筛选,请至少选中一项');
+            return false;
+        }
         // 写入分析日志
         ck_log("filter", "[" + filter_granularity.join(',') + "," + filter_sulfur.join(',') + "," + filter_volatile.join(',') + "," + filter_heat_min + "," + filter_heat_max + "]");
         //提交

@@ -14,6 +14,7 @@ class MessageHistoryModel extends Model
 {
     protected $tableName = "ck_messages_history";
 
+
     protected $fields = array( //辅助模型识别字段，不会影响查询，会影响增改
         "id",
         "title",

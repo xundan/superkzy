@@ -25,7 +25,7 @@ class QueryControllerTest extends PHPUnit_Framework_TestCase
     }
 
     public function testRestfulAPI(){
-//        $url = "http://www.kuaimei56.com/index.php/Views/QueryRest/q_text";
+//        $url = "http://www.xuncl.com/index.php/Views/QueryRest/q_text";
         $url = "http://localhost/superkzy/index.php/Views/QueryRest/q_text";
         $params = array(
 //            "kw"=>'\u6c42\u8d2d', //求购

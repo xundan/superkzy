@@ -26,7 +26,7 @@ function ck_log(operation,param){
         "result":result
     };
     //var url = "http://localhost/superkzy/index.php/Home/Log/fetch";
-    var url = "http://www.kuaimei56.com/index.php/Home/Log/fetch";
+    var url = "http://www.xuncl.com/index.php/Home/Log/fetch";
     $.ajax({
         type:"post",
         url:url,

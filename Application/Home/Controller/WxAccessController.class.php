@@ -48,7 +48,7 @@ class WxAccessController extends Controller
                         "0"=>array(
                             'Title'=>'母亲节超矿煤炭平台送iPhone7中国红啦！！！',
                             'Description'=>'感恩母亲节大回馈，超级矿资源送iPhone7中国红啦！！！',
-                            'PicUrl'=>'http://www.kuaimei56.com/redphone.jpg',
+                            'PicUrl'=>'http://www.xuncl.com/redphone.jpg',
                             'Url'=>'http://mp.weixin.qq.com/s/02N7S_GcQ-UK-17eNSGAcA'
                         )
                     );
@@ -120,18 +120,17 @@ class WxAccessController extends Controller
 
 【发布煤炭信息】请直接在公众号留言(煤炭信息+手机号)，我们会为您公示转发
 
-【加煤炭群】点击公众号下方\"加煤炭群\"按钮，长按识别二维码进群
+【查询煤炭信息】点击<a href=\'http://www.xuncl.com/index.php/Home/Homepage/homepage\'>超矿主页</a>，查询煤炭供求、找车信息(每日更新千条)
 
 【付费推广业务】加大煤炭信息发布范围，请联系<a href='tel:17083425332'>17083425332(微信同号)</a>";
-                        $tempString = "【查询煤炭信息】点击<a href=\'http://www.kuaimei56.com/index.php/Home/Homepage/homepage\'>超矿主页</a>，查询煤炭供求、找车信息(每日更新千条)";
                         if($activity_flag){
                             $welcome_str = "感谢关注【超级矿资源】微信公众平台！
 
 ".$emoji.$emoji.$emoji."母亲节期间，公众号回复“我爱母亲”，即可参加母亲节赢iPhone7中国红手机活动。".$emoji.$emoji.$emoji."
 
-您可以点击<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>平台网站</a>开始 <a href='http://www.kuaimei56.com/index.php/Home/OwnerPublish/owner_publish'>发布</a>或 <a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>查询</a> 运单、订单信息。也可以在这里回复直接提出您的问题。
+您可以点击<a href='http://www.xuncl.com/index.php/Home/Homepage/homepage'>平台网站</a>开始 <a href='http://www.xuncl.com/index.php/Home/OwnerPublish/owner_publish'>发布</a>或 <a href='http://www.xuncl.com/index.php/Home/Homepage/homepage'>查询</a> 运单、订单信息。也可以在这里回复直接提出您的问题。
 
-在公众号直接回复您要转发的消息，我们会为您转发到我们的<a href='http://www.kuaimei56.com/index.php/Home/Homepage/homepage'>平台网站</a>和所有超矿微信的朋友圈。";
+在公众号直接回复您要转发的消息，我们会为您转发到我们的<a href='http://www.xuncl.com/index.php/Home/Homepage/homepage'>平台网站</a>和所有超矿微信的朋友圈。";
                         }
                         $this->getWeObj()->text($welcome_str)->reply();
                         exit;
@@ -140,7 +139,7 @@ class WxAccessController extends Controller
                         switch($event['key']){
                             case 'publish_method':
                                 $tempReplyString = "【公众号留言】煤炭信息+手机号
-【自助发布】点击<a href='http://www.kuaimei56.com/index.php/Home/OwnerPublish/owner_publish'>发布信息</a>";
+【自助发布】点击<a href='http://www.xuncl.com/index.php/Home/OwnerPublish/owner_publish'>发布信息</a>";
                                 $this->getWeObj()->text($tempReplyString)->reply();
                                 break;
                             case 'activity':
@@ -148,7 +147,7 @@ class WxAccessController extends Controller
                                     "0"=>array(
                                         'Title'=>'母亲节超矿煤炭平台送iPhone7中国红啦！！！',
                                         'Description'=>'感恩母亲节大回馈，超级矿资源送iPhone7中国红啦！！！',
-                                        'PicUrl'=>'http://www.kuaimei56.com/redphone.jpg',
+                                        'PicUrl'=>'http://www.xuncl.com/redphone.jpg',
                                         'Url'=>'http://mp.weixin.qq.com/s/02N7S_GcQ-UK-17eNSGAcA'
                                     )
                                 );
@@ -172,8 +171,8 @@ class WxAccessController extends Controller
                         "0"=>array(
                             'Title'=>'恭喜您获得抽奖资格,点击领取中国红！',
                             'Description'=>'超矿煤炭平台母亲节感恩大回馈活动',
-                            'PicUrl'=>'http://www.kuaimei56.com/redphone.jpg',
-                            'Url'=>'http://www.kuaimei56.com/index.php/Home/ActivityPromotion/turn_plate_lottery'
+                            'PicUrl'=>'http://www.xuncl.com/redphone.jpg',
+                            'Url'=>'http://www.xuncl.com/index.php/Home/ActivityPromotion/turn_plate_lottery'
                         )
                     );
                     $this->getWeObj()->news($n)->reply();
@@ -297,35 +296,35 @@ class WxAccessController extends Controller
             "button" =>
                 array(
                     array(
-//                        'name' => '会员/加群',
-                        'name' => '加煤炭群',
-                        'type' => 'view',
-                        'url' => 'http://mp.weixin.qq.com/s/LEZmYPX6LtNHVQUraiZpbg'
-//                        'sub_button' => array(
-//                            array('type' => 'view', 'name' => '加煤炭群', 'url' => 'http://mp.weixin.qq.com/s/LEZmYPX6LtNHVQUraiZpbg'),
-//                            array('type' => 'view', 'name' => '会员注册', 'url' => 'http://www.kuaimei56.com/index.php/Home/Login/register'),
-//                            array('type' => 'view', 'name' => '车主福利', 'url' => 'http://www.kuaimei56.com/index.php/Home/CooperatePage/WeChe'),
-//                            array('type' => 'view', 'name' => '超矿金融', 'url' => 'http://www.kuaimei56.com/index.php/Views/FinancialClient/show'),
-//                            array('type' => 'view', 'name' => '送出行险', 'url' => 'https://u.wcar.net.cn/1es'),
-//                        ),
-                    ),
-//                    array(
-//                        'name' => '发布/查询',
-//                        'sub_button' => array(
-//                            array('type' => 'view', 'name' => '超矿主页', 'url' => 'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'),
-////                            array('type' => 'view', 'name' => '发布信息', 'url' => 'http://www.kuaimei56.com/index.php/Home/OwnerPublish/owner_publish'),
-//                            array('type' => 'click', 'name' => '发布信息', 'key' => 'publish_method'),
-//                            array('type' => 'view', 'name' => '找车信息', 'url' => 'http://www.kuaimei56.com/index.php/Home/DriverSearch/driver_job_search'),
-//                            array('type' => 'view', 'name' => '买卖查询', 'url' => 'http://www.kuaimei56.com/index.php/Home/TradeSearch/trade_search'),
-////                            array('type' => 'view', 'name' => '推荐好友', 'url' => 'http://www.kuaimei56.com/index.php/Home/Homepage/homepage'),
-//                        ),
-//                    ),
-//                    array(
+                        'name' => '会员/加群',
+//                        'name' => '加煤炭群',
 //                        'type' => 'view',
-//                        'name' => '查煤价',
-////                        'url' => 'http://www.kuaimei56.com/index.php/Home/CoalPriceSearch/coal_price_search'
-//                        'url' => 'http://www.kuaimei56.com/index.php/Home/CoalPriceSearch/search_method'
-//                    )
+//                        'url' => 'http://mp.weixin.qq.com/s/LEZmYPX6LtNHVQUraiZpbg'
+                        'sub_button' => array(
+                            array('type' => 'view', 'name' => '加煤炭群', 'url' => 'http://mp.weixin.qq.com/s/LEZmYPX6LtNHVQUraiZpbg'),
+                            array('type' => 'view', 'name' => '会员注册', 'url' => 'http://www.xuncl.com/index.php/Home/Login/register'),
+                            array('type' => 'view', 'name' => '车主福利', 'url' => 'http://www.xuncl.com/index.php/Home/CooperatePage/WeChe'),
+                            array('type' => 'view', 'name' => '超矿金融', 'url' => 'http://www.xuncl.com/index.php/Views/FinancialClient/show'),
+                            array('type' => 'view', 'name' => '送出行险', 'url' => 'https://u.wcar.net.cn/1es'),
+                        ),
+                    ),
+                    array(
+                        'name' => '发布/查询',
+                        'sub_button' => array(
+                            array('type' => 'view', 'name' => '超矿主页', 'url' => 'http://www.xuncl.com/index.php/Home/Homepage/homepage'),
+//                            array('type' => 'view', 'name' => '发布信息', 'url' => 'http://www.xuncl.com/index.php/Home/OwnerPublish/owner_publish'),
+                            array('type' => 'click', 'name' => '发布信息', 'key' => 'publish_method'),
+                            array('type' => 'view', 'name' => '找车信息', 'url' => 'http://www.xuncl.com/index.php/Home/DriverSearch/driver_job_search'),
+                            array('type' => 'view', 'name' => '买卖查询', 'url' => 'http://www.xuncl.com/index.php/Home/TradeSearch/trade_search'),
+//                            array('type' => 'view', 'name' => '推荐好友', 'url' => 'http://www.xuncl.com/index.php/Home/Homepage/homepage'),
+                        ),
+                    ),
+                    array(
+                        'type' => 'view',
+                        'name' => '查煤价',
+//                        'url' => 'http://www.xuncl.com/index.php/Home/CoalPriceSearch/coal_price_search'
+                        'url' => 'http://www.xuncl.com/index.php/Home/CoalPriceSearch/search_method'
+                    )
                 )
         );
         $result = $weObj->createMenu($newmenu);

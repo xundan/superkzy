@@ -326,8 +326,8 @@
         wx.onMenuShareTimeline({
 
             title: '[{$message["category"]}]'+title_string, // 分享标题
-            link: "http://www.kuaimei56.com/index.php/Home/OwnerOrder/owner_order_transport_detail?id={$message['id']}", // 分享链接
-            imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
+            link: "http://www.xuncl.com/index.php/Home/OwnerOrder/owner_order_transport_detail?id={$message['id']}", // 分享链接
+            imgUrl: 'http://www.xuncl.com/cjkzy_icon.png', // 分享图标
             success: function () {
                 // 用户确认分享后执行的回调函数
                 ck_log("share",'分享{$message["category"]}消息{$message["id"]}至朋友圈');
@@ -342,8 +342,8 @@
         wx.onMenuShareAppMessage({
             title: '来自{$user["user_name"]}('+role+')的{$message["category"]}消息', // 分享标题
             desc: '{$user["user_name"]}('+role+')在超级矿资源发布了最新消息，点击了解更多信息', // 分享描述
-            link: "http://www.kuaimei56.com/index.php/Home/OwnerOrder/owner_order_transport_detail?id={$message['id']}", // 分享链接
-            imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
+            link: "http://www.xuncl.com/index.php/Home/OwnerOrder/owner_order_transport_detail?id={$message['id']}", // 分享链接
+            imgUrl: 'http://www.xuncl.com/cjkzy_icon.png', // 分享图标
             type: '', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function () {

@@ -659,7 +659,7 @@
                 var url = "{:U('AreaSearch/getLastArea')}";
                 //url = 'http://localhost:8080/superkzy/index.php/Home/areaSearch/getLastArea';
                 //url = 'http://192.168.23.100:8080/superkzy/index.php/Home/areaSearch/getLastArea';
-                url = "http://www.kuaimei56.com/index.php/Home/AreaSearch/getLastArea";
+                url = "http://www.xuncl.com/index.php/Home/AreaSearch/getLastArea";
                 var result='';
                 $.ajax({
                     type: "post",
@@ -693,7 +693,7 @@
             var url = "{:U('AreaSearch/setLastArea')}";
             //url = 'http://localhost:8080/superkzy/index.php/Home/areaSearch/setLastArea';
             //url = 'http://192.168.23.100:8080/superkzy/index.php/Home/areaSearch/setLastArea';
-            url = "http://www.kuaimei56.com/index.php/Home/areaSearch/setLastArea";
+            url = "http://www.xuncl.com/index.php/Home/areaSearch/setLastArea";
             $.ajax({
                 type: "post",
                 url: url,
