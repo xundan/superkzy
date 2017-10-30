@@ -40,68 +40,91 @@ class CarNeedMsgCard extends MsgCard
         }
 
         if ($message['formatted']) { // 如果用户按照标准格式填写
-            $li_str = "<li class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
-<div class='pic-layer' style=\"position: absolute;right: 0px;\">".$imageString."</div>
-<div class='pic-layer' style='position: absolute;right: 20px;bottom:20px;z-index:2'>" . $invalidImage . "</div>
-<div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
-    <a href=\"{$personal_page}\">
-        <div class=\"weui_media_hd\">
-            <img src=\"{$message['user']['heading_url']}\" class=\"weui_media_appmsg_thumb img-circle\">
+            $li_str =
+"<li class='weui_panel weui_panel_access' style='border-radius: 5px'>
+    <div class='pic-layer' style='position: absolute;right: 0'>" . $imageString . "</div>
+    <div class='pic-layer' style='position: absolute;right: 20px;bottom:20px;z-index:2'>" . $invalidImage . "</div>
+    <div class='card-container'>
+        <div class='card-head'>
+            <div class='name text-center'>
+                <span class='highlight' onclick=\"window.location.href='{$personal_page}'\">
+                {$message['user']['user_name']}
+                </span>
+            </div>
+            <div class='dial text-center'>
+                <a href='tel:{$message['phone_number']}' onclick=\"ck_log('dial', '{$dial_param}')\">
+                    <img src='__PUBLIC__/home/images/phone.png'>
+                    <span>拨打电话</span>
+                </a>
+            </div>
+            <div class='function_button collapse text-center'>
+                <button class='btn btn-xs btn-ck' style='width: 5.5em' onclick=\"collection_switch(this,{$message['id']})\">{$message['in_collection']}</button>
+                <button class='btn btn-xs btn-ck' style='width: 3.5em' onclick=\"window . location . href = '{$message_detail}'\">分享</button>
+            </div>
         </div>
-    </a>
-    <div class=\"weui_media_bd\">
-            <h4 class=\"weui_media_title\"><span class='highlight' onclick='window.location.href=\"{$personal_page}\"'>{$message['user']['user_name']}</span></h4>
-    ".$areastring."</div>
-    <div class=\"weui_media_bd\" style=\"\">
-        <a href=\"tel:{$message['phone_number']}\" onclick=\"ck_log('dial', '{$dial_param}')\" class=\"\" style='text-decoration: none;color: black'>
-            <h4><img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
-            <span style=\"\">拨打电话</span></h4>
-        </a>
-        <div>
-            <button class=\"btn btn-xs btn-default\" style=\"width: 70%;border-color: #04bfc6;color: #04bfc6\" onclick='collection_switch(this,{$message['id']})'>{$message['in_collection']}</button>
+        <div class='card-content'>
+            <div class='card_item'>
+                <img src='__PUBLIC__/home/images/area_start.png' style='width: 15px;height: 20px'>
+                <span class='highlight'>{$message['district_start']['name']}</span>
+            </div>
+            <div class='card_item'>
+                <img src='__PUBLIC__/home/images/area_end.png' style='width: 15px;height: 20px'>
+                <span class='highlight'>{$message['district_end']['name']}</span>
+            </div>
+            <div class='card_item highlight'>出发地详址:{$message['detail_area_start']}</div>
+            <div class='card_item highlight'>目的地详址:{$message['detail_area_end']}</div>
+            <div class='card_item highlight'>发煤量:{$message['quantity']}</div>
+            <div class='card_item highlight'>运费:{$message['price']}</div>
+            <div class='card_item highlight'>粒度:{$message['granularity']}</div>
+            <div class='card_item highlight'>装车时间:{$message['loading_time']}</div>
+            <div class='card_item highlight collapse'>需要车辆:{$message['car_quantity']}</div>
+            <div class='card_item highlight collapse'>装车费用:{$message['loading_cost']}</div>
+            <div class='card_item highlight collapse'>卸车费用:{$message['unloading_cost']}</div>
+            <div class='card_item highlight collapse'>有效期:7天</div>
+            <div class='card_item collapse' style='width:100%'>详细描述</div>
+            <div class='card_item detail highlight collapse'>{$message['content']}</div>
         </div>
+        <div class='card-foot pull-right help-block'>发布时间:\" . $publish_date . \"</div>
     </div>
-</div>
-<table onclick='window.location.href=\"{$message_detail}\"' class=\"table table-condensed\" style=\"margin: 0\">
-    <tbody>
-        <tr><td width='50%' class=\"highlight\">发煤量:{$message['quantity']}</td><td width='50%' class=\"highlight\" style='color:red'>运费:{$message['price']}</td></tr>
-        <tr><td width='50%' class=\"highlight\">粒度:{$message['granularity']}</td><td width='50%' class=\"highlight\">装车时间:{$message['loading_time']}</td></tr>
-    </tbody>
-</table>
-<div class='pull-right'>发布时间:{$publish_date}</div>
-</li>"."<div class='time-limit' style='margin-top:3px;margin-right:1px;text-align:right;display:none'>
-<button class='btn btn-sm btn-info' onclick='refill(this,{$message["id"]})'>一键重发</button>
-<button style='margin-left:5px' class='btn btn-sm btn-default ".$disableString."' onclick='overdue(this,{$message["id"]})'>下架</button>
-<button style='margin-left:5px' class='btn btn-sm btn-danger' onclick='delete_modal(this,{$message["id"]})'>删除</button>
+    <div class='collapse-switch'><span class='collapse-arrow'>+</span></div>
+</li>
+<div class='time-limit'>
+    <button class='btn btn-sm btn-info' onclick='refill(this,{$message["id"]})'>一键重发</button>
+    <button style='margin-left:5px' class='btn btn-sm btn-default ".$disableString."' onclick='overdue(this,{$message["id"]})'>下架</button>
+    <button style='margin-left:5px' class='btn btn-sm btn-danger' onclick='delete_modal(this,{$message["id"]})'>删除</button>
 </div>";
         } else {
-            $li_str = "<li class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
-<div class='pic-layer' style=\"position: absolute;right: 0px;\">".$imageString."</div>
-<div class='pic-layer' style='position: absolute;right: 20px;bottom:20px;z-index:2'>" . $invalidImage . "</div>
-<div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
-    <a href=\"{$personal_page}\">
-        <div class=\"weui_media_hd\">
-            <img src=\"{$message['user']['heading_url']}\" class=\"weui_media_appmsg_thumb img-circle\">
+            $li_str =
+"<li class='weui_panel weui_panel_access' style=';border-radius: 5px'>
+    <div class='pic-layer' style='position: absolute;right: 0'>" . $imageString . "</div>
+    <div class='pic-layer' style='position: absolute;right: 20px;bottom:20px;z-index:2'>" . $invalidImage . "</div>
+    <div class='card-container'>
+        <div class='card-head'>
+            <div class='name text-center'>
+                <span class='highlight' onclick=\"window.location.href='{$personal_page}'\">
+                {$message['user']['user_name']}
+                </span>
+            </div>
+            <div class='dial text-center'>
+                <a href='tel:{$message['phone_number']}' onclick=\"ck_log('dial', '{$dial_param}')\">
+                    <img src='__PUBLIC__/home/images/phone.png'>
+                    <span>拨打电话</span>
+                </a>
+            </div>
+            <div class='function_button collapse text-center'>
+                <button class='btn btn-xs btn-ck' style='width: 5.5em' onclick=\"collection_switch(this,{$message['id']})\">{$message['in_collection']}</button>
+                <button class='btn btn-xs btn-ck' style='width: 3.5em' onclick=\"window . location . href = '{$message_detail}'\">分享</button>
+            </div>
         </div>
-    </a>
-    <div class=\"weui_media_bd\">
-            <h4 class=\"weui_media_title\"><span class='highlight' onclick='window.location.href=\"{$personal_page}\"'>{$message['user']['user_name']}</span></h4>
-        ".$areastring."</div>
-    <div class=\"weui_media_bd\" style=\"\">
-        <a href=\"tel:{$message['phone_number']}\" onclick=\"ck_log('dial', '{$dial_param}')\" class=\"\" style='text-decoration: none;color: black'>
-            <h4><img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
-            <span style=\"\">拨打电话</span></h4>
-        </a>
-        <div>
-            <button class=\"btn btn-xs btn-default\" style=\"width: 70%;border-color: #04bfc6;color: #04bfc6\" onclick='collection_switch(this,{$message['id']})'>{$message['in_collection']}</button>
-        </div>
+        <div class='highlight content brief_content'>{$message['content']}</div>
+        <div class='card-foot pull-right help-block'>发布时间:" . $publish_date . "</div>
     </div>
-</div>
-<div class=\"highlight\" onclick='window.location.href=\"{$message_detail}\"' >{$message['content']}</div><div class='pull-right'>发布时间:{$publish_date}</div>
-</li>"."<div class='time-limit' style='margin-top:3px;margin-right:1px;text-align:right;display:none'>
-<button class='btn btn-sm btn-info' onclick='refill(this,{$message["id"]})'>一键重发</button>
-<button style='margin-left:5px' class='btn btn-sm btn-default ".$disableString."' onclick='overdue(this,{$message["id"]})'>下架</button>
-<button style='margin-left:5px' class='btn btn-sm btn-danger' onclick='delete_modal(this,{$message["id"]})'>删除</button>
+    <div class='collapse-switch'><span class='collapse-arrow'>+</span></div>
+</li>
+<div class='time-limit'>
+    <button class='btn btn-sm btn-info' onclick='refill(this,{$message["id"]})'>一键重发</button>
+    <button style='margin-left:5px' class='btn btn-sm btn-default " . $disableString . "' onclick='overdue(this,{$message["id"]})'>下架</button>
+    <button style='margin-left:5px' class='btn btn-sm btn-danger' onclick='delete_modal(this,{$message["id"]})'>删除</button>
 </div>";
         }
         return $this->replacePublicString($li_str);
