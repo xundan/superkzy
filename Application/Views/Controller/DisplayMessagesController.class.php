@@ -15,7 +15,7 @@ use Views\Model\MessageModel;
 class DisplayMessagesController extends Controller
 {
 
-    public function showDemo($id, $group = null)
+    public function showDemo($id, $r = null, $group = null)
     {
 
 //        dump($_SESSION['cur_user']);
@@ -48,8 +48,8 @@ class DisplayMessagesController extends Controller
                     echo "<h4>已经是最后一条了。</h4>";
                     $id_plus = $id;
                 }
-                $url_prev = U('Views/DisplayMessages/showDemo') . "?id=$id_minus" . "&group=off";
-                $url_next = U('Views/DisplayMessages/showDemo') . "?id=$id_plus" . "&group=off";
+                $url_prev = U('Views/DisplayMessages/showDemo') . "?id=$id_minus&r=$r&group=off";
+                $url_next = U('Views/DisplayMessages/showDemo') . "?id=$id_plus&r=$r&group=off";
 //        $url_delete = U('Views/DisplayMessages/delete')."?id=$id";
                 $this->assign("prev", $url_prev);
                 $this->assign("next", $url_next);
@@ -59,6 +59,7 @@ class DisplayMessagesController extends Controller
                 $this->assign("data", $data);
                 $this->assign("id", $id);
                 $this->assign("group", 'on');
+                $this->assign("r", $r);
 //                $cur_user = $_SESSION['cur_user'];
 //                $username = $cur_user['name'];
 //                $this->assign('username', $username);
@@ -80,8 +81,8 @@ class DisplayMessagesController extends Controller
                     echo "<h4>已经是最后一条了。</h4>";
                     $id_plus = $id;
                 }
-                $url_prev = U('Views/DisplayMessages/showDemo') . "?id=$id_minus";
-                $url_next = U('Views/DisplayMessages/showDemo') . "?id=$id_plus";
+                $url_prev = U('Views/DisplayMessages/showDemo') . "?id=$id_minus&r=$r";
+                $url_next = U('Views/DisplayMessages/showDemo') . "?id=$id_plus&r=$r";
 //        $url_delete = U('Views/DisplayMessages/delete')."?id=$id";
                 $this->assign("prev", $url_prev);
                 $this->assign("next", $url_next);
@@ -93,7 +94,7 @@ class DisplayMessagesController extends Controller
         }
     }
 
-    public function check($id,$group)
+    public function check($id,$r,$group)
     {
         $tags = I('post.tag');
         $content = I('post.content');
@@ -111,16 +112,20 @@ class DisplayMessagesController extends Controller
         }
 
         if ($main_tag) {
+            /** deprecated: 因为不拉取了，所以不再更新relation相关的表 20180125*/
+            /*
             // 更新与标签关系表
             $wx_arr = $this->update_relation_label($id, $tags);
             // 更新与微信关系表
             $this->add_relation_wx($id, $wx_arr);
+            */
             // 更新消息表状态
             $subInfo = I('post.', '', 'trim');
             $this->update_message($id, $main_tag, $content,$subInfo);
 
 //            $this->success('提交成功', 'showDemo?id=' . $this->find_next($id));
-            $this->redirect('DisplayMessages/showDemo', array('id' => $this->find_next($id,$group),'group'=>$group), 0, "");
+            $this->redirect('DisplayMessages/showDemo', array('id' => $this->find_next($id,$group),'r'=>$r,'group'=>$group), 0, "");
+//            $this->redirect('DisplayMessages/showDemo', 'id=$this->find_next($id,$group)&r=$r&group=$group', 0, "");
 //            redirect(U('DisplayMessages/showDemo','id='.$this->find_next($id,$group).'&group='.$group), 0, "");
         } else {
             $this->error('五个主要类型（求购，供应，找车，车源，其他）至少选一个。', 'showDemo?id=' . $id);
@@ -378,14 +383,17 @@ class DisplayMessagesController extends Controller
     {
         $subInfo = I('post.', '', 'strip_tags,trim');
 
+        $data['recorder']  = $subInfo['recorder'];
         $data['message_id'] = $subInfo['message_id'];
         $data['phone_number'] = $subInfo['phone_number'];
         $data['area_start_id'] = $subInfo['area_start_id'];
         $data['area_start_name'] = $subInfo['area_start_name'];
         $data['area_start_detail'] = $subInfo['area_start_detail'];
+        $data['area_start_merger_name'] = $subInfo['area_start_merger_name'];
         $data['area_end_id'] = $subInfo['area_end_id'];
         $data['area_end_name'] = $subInfo['area_end_name'];
         $data['area_end_detail'] = $subInfo['area_end_detail'];
+        $data['area_end_merger_name'] = $subInfo['area_end_merger_name'];
         $data['freight_price'] = $subInfo['freight_price'];
         $data['invalid_id'] = 0;
 //        if ($subInfo['area_start_id']) {
@@ -407,6 +415,9 @@ class DisplayMessagesController extends Controller
 
     public function area_check(){
         $area_name = I('post.area_name','','trim');
+        if($area_name == '天津'){
+            $area_name = '天津市';
+        }
         $where['name|short_name'] = $area_name;
         $result = M('ck_districts')->where($where)->find();
         if($result){

@@ -284,7 +284,6 @@
                     $select.data('item', {
                         address: $(this).attr('title'), code: $(this).data('code')
                     });
-                    console.log('选择不同地址',$select);
                     $(this).trigger(EVENT_CHANGE);
                     if (($(this).data('code') === undefined)) {
                         $(this).parents('.city-select').data('item', null);
@@ -307,10 +306,10 @@
                     if ($(this).data('code') === undefined){
 
                     }else{
-                        console.log('点击相同');
                         $(this).removeClass('active');
                         $(this).click();
                     }
+
                 }
                 //}
             }).on('click', '.city-select-tab a', function () {
@@ -331,7 +330,7 @@
                 $input.citypicker({
                     province: LastAreaArr[0],
                     city: LastAreaArr[1],
-                    district: LastAreaArr[2]
+                    district: LastAreaArr[2],
                 });
                 console.log($this);
                 $this.saveLastArea(lastArea);

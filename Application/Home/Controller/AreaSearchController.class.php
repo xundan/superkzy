@@ -363,7 +363,7 @@ class AreaSearchController extends Controller
             }
             $result = D('user_action')->where($where)->save($data);
             if ($result) {
-                echo 1;
+                echo $data['last_area'];
             } else {
                 echo 2;
             }
@@ -373,7 +373,7 @@ class AreaSearchController extends Controller
             $data['last_area'] = $_POST['lastArea'];
             $result = D('user_action')->add($data);
             if ($result) {
-                echo 1;
+                echo $data['last_area'];
             } else {
                 echo 2;
             }

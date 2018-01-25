@@ -10,7 +10,10 @@ function sendCode($phone,$code)
     $req->setExtend("123456");
     $req->setSmsType("normal");
     $req->setSmsFreeSignName('迅单网络');
-    $req->setSmsParam("{\"code\":$code,\"product\":\"超级矿资源\"}");
+    $data['code']=$code;
+    $data['product']="超级矿资源";
+//    $req->setSmsParam("{\"code\":\"$code\",\"product\":\"超级矿资源\"}");
+    $req->setSmsParam(json_encode($data));
     $req->setRecNum("$phone");
     $req->setSmsTemplateCode("SMS_12951206");
     $resp = $c->execute($req);

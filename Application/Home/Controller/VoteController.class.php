@@ -101,9 +101,7 @@ class VoteController extends ComController
 //        $a = mkdir($path."/13/",0777,true);
 //        dump($a);
 //        dump(is_dir($path."/13/"));
-        $date = '2018-1-22';
-        dump(date('Y-m-d', strtotime($date) + 24 * 3600));
-        dump(date("Y-m-d", time()));
+
 
     }
 

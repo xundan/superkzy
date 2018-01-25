@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <!--<script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>-->
+    <title>工作总结查询</title>
+    <style>
+        body {
+            width: 1000px;
+            margin: auto;
+            margin-top: 50px;
+            background-color: #f0f5f6;
+        }
+
+        div {
+            margin-top: 50px;
+        }
+
+        table {
+            width: 1000px;
+        }
+
+        th {
+            height: 32px;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        span {
+            font-size: 20px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        select {
+            width: 115px;
+            margin-right: 15px;
+        }
+    </style>
+</head>
+<body>
+<h1>周工作总结记录</h1>
+<!--选择信息-->
+<div style="text-align: center">
+    <span>查询日期</span>
+    <input type="date" name="user_date" style="margin-right:215px;" id="date">
+    <span>姓名</span>
+    <select id="name">
+        <option></option>
+        <option>gaolei</option>
+        <option>gls</option>
+        <option>jws</option>
+        <option>liuxuan</option>
+        <option>lx</option>
+        <option>menglili</option>
+        <option>mengwenping</option>
+        <option>rz</option>
+        <option>sundandan</option>
+        <option>lxc</option>
+        <option>wangpeng</option>
+        <option>xunchenlong</option>
+        <option>zhangxu</option>
+        <option>全部</option>
+    </select>
+</div>
+<!--展示信息-->
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>姓名</th>
+            <th>上周工作</th>
+            <th>本周计划</th>
+            <th>问题</th>
+            <th>建议</th>
+            <th>时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<!--查询按钮-->
+<div style="text-align: center;margin: 80px 0 30px 0;">
+    <input type="button" value="查询"
+           style="width: 112px;height: 42px;"
+           id="info_search" class="btn btn-primary">
+</div>
+<!--返回-->
+<div id="goback" style="text-align: center;margin-top: 1em">
+    <button type="submit" style="width: 112px;height: 42px;" class="btn btn-warning">返回</button>
+</div>
+</body>
+<script type="text/javascript">
+    //获取选择信息
+    $("#info_search").click(function () {
+        var date = $('#date').val();
+        var name = $('#name').val();
+        console.log(date, name);
+            $.ajax({
+                type: 'post',
+                url: "{:U('StaffsLogin/summaryInp')}",
+                data: {
+                    record_time: date,
+                    name: name
+                },
+                success: function (data) {
+                    console.log(data);
+                        //展示信息
+                                $('tbody').html('');
+                                console.log("tbody");
+//                return false;
+                                var obj = JSON.parse(data);
+                                console.log(obj);
+                                if (obj["msg"] == "yes") {
+                                    var $recordString = '';
+                                    $.each(obj['data'], function (k, y) {
+                                        $recordString += "<tr class='place_add'><td style='border: 1px solid #ddd;background-color: #fff;text-align: center;'>" + y['name'] + "</td>" + "<td style='border: 1px solid #ddd;background-color: #fff;text-align: center;'>" + y['process'] + "</td>"
+                                                + "<td style='border: 1px solid #ddd;background-color: #fff;text-align: center;'>" + y['project'] + "</td>"
+                                                + "<td style='border: 1px solid #ddd;background-color: #fff;text-align: center;'>" + y['problem'] + "</td>"
+                                                + "<td style='border: 1px solid #ddd;background-color: #fff;text-align: center;'>" + y['propose'] + "</td>"
+                                                + "<td style='border: 1px solid #ddd;background-color: #fff;text-align: center;'>" + y['record_time'] + "</td>";
+                                        $recordString += "</tr>";
+                                    });
+//                    $('.place_add').after($recordString);
+                                    $('tbody').append($recordString)
+                                }
+                }
+            })
+    })
+    //    返回
+    $('.btn-warning').click(function(){
+        window.location.href = "{:U('StaffsLogin/UserProfile')}";
+    })
+</script>
+</html>

@@ -42,16 +42,40 @@
 <div class="title" style="text-align: center;line-height: 9em">
     <h1>周工作总结</h1>
 </div>
+<div style="position: absolute;top: 30px;right: 288px;">
+    <span>时间</span>
+    <input type="date" style="width: 140px;" id="time">
+</div>
+<div style="position: absolute;top: 80px;right: 288px;">
+    <span>姓名</span>
+    <select id="name" style='width: 140px'>
+        <option></option>
+        <option>gaolei</option>
+        <option>gls</option>
+        <option>jws</option>
+        <option>liuxuan</option>
+        <option>lx</option>
+        <option>menglili</option>
+        <option>mengwenping</option>
+        <option>rz</option>
+        <option>sundandan</option>
+        <option>lxc</option>
+        <option>wangpeng</option>
+        <option>xunchenlong</option>
+        <option>zhangxu</option>
+        <option>全部</option>
+    </select>
+</div>
 <div id="content">
     <div class="container">
-        <input type="hidden" id="user_id" value="{$cur_user['id']}">
-        <input type="hidden" id="user_name" value="{$cur_user['user_name']}">
+        <!--<input type="hidden" id="user_id" value="{$cur_user['id']}">-->
+        <!--<input type="hidden" id="user_name" value="{$cur_user['user_name']}">-->
         <div class="typ">
             <label for="process">上周进展</label>
             <textarea cols="139" rows="4" name="textarea" id="process"></textarea>
         </div>
         <div class="typ">
-            <label for="process">本周计划</label>
+            <label for="project">本周计划</label>
             <textarea cols="139" rows="4" name="textarea" id="project"></textarea>
         </div>
         <div class="typ">
@@ -68,41 +92,45 @@
     <button type="submit" class="btn btn-primary">提交</button>
 </div>
 <div id="goback" style="text-align: center;margin-top: 1em">
-    <button type="submit" class="btn btn-warning">返回</button>
+    <button type="submit" class="btn btn-warning">刷新</button>
 </div>
-
+<div style="text-align: center;margin: 1em 0">
+    <button class="btn btn-default btn-summary" style="background-color: #6b6e86;color: #fff;">工作总结记录</button>
+</div>
 </body>
 <script>
     //    提交
     $('.btn-primary').click(function () {
         //获取表单数据
         var $this = $(this);
-        var user_id = $('#user_id').val();
-        var user_name = $('#user_name').val();
+//        var user_id = $('#user_id').val();
+//        var user_name = $('#user_name').val();
         var process = $('#process').val();
         var project = $('#project').val();
         var problem = $('#problem').val();
         var propose = $('#propose').val();
-        console.log(user_id,process,project,problem,propose);
+        var time = $('#time').val();
+        var name = $('#name').val();
+        console.log( process, project, problem, propose, time,name);
 //        return false;
         $.ajax({
-            type:'post',
-            url:"{:U('StaffsLogin/summary_submit')}",
-            data:{
-                uid: user_id,
-                name: user_name,
+            type: 'post',
+            url: "{:U('StaffsLogin/summary_submit')}",
+            data: {
+                name: name,
                 process: process,
                 project: project,
                 problem: problem,
-                propose: propose
+                propose: propose,
+                record_time: time
             },
-            success: function(data){
+            success: function (data) {
                 console.log(data);
-                if(data == 'success'){
+                if (data == 'success') {
                     alert('提交成功！');
                     $this.addClass('disabled');
-                    $this.attr('disabled','disabled');
-                }else{
+                    $this.attr('disabled', 'disabled');
+                } else {
                     alert('提交失败！')
                 }
             }
@@ -110,8 +138,11 @@
 
     });
     //    返回
-    $('.btn-warning').click(function(){
-        window.location.href = "{:U('StaffsLogin/UserProfile')}";
-    })
+    $('.btn-warning').click(function () {
+        window.location.reload();
+    });
+    $('.btn-summary').click(function(){
+        window.location.href = "{:U('StaffsLogin/summary_history')}";
+    });
 </script>
 </html>

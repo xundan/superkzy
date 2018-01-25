@@ -24,13 +24,10 @@ $(function () {
             }, 3000);
         }
     }).on('click', '.card-container', function () {
-        //console.log('click before:',myScroll.maxScrollY,myScroll.y);
         var $this = $(this);
         $this.parent('li').find('.collapse-arrow').toggleClass('arrow-expanded');
         $this.parent('li').find('.collapse').slideToggle('in');
         $this.parent('li').find('.content').toggleClass('brief_content');
-        myScroll.refresh();
-        //console.log('click after:',myScroll.maxScrollY,myScroll.y);
     });
 });
 

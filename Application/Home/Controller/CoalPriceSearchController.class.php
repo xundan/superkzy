@@ -190,7 +190,7 @@ class CoalPriceSearchController extends ComController
     {
         vendor("jssdk.signPackage");
         $this->assign("signPackage", getSignPackage());
-        $subInfo = I('get.', '', 'trim,strip_tags');
+        $subInfo = I('post.', '', 'trim,strip_tags');
         $where = array();
         if ($subInfo) {
             $where['refinery_name'] = array('in', $subInfo['refinery_name']);
@@ -450,12 +450,6 @@ class CoalPriceSearchController extends ComController
         $this->display();
     }
 
-    public function coal_price_show_excel_eeds(){
-
-    }
-
-
-
 
     public function testArea()
     {
@@ -466,23 +460,7 @@ class CoalPriceSearchController extends ComController
 //        dump($a <= $h2);
 //
 //        dump(array('gt', 3));
-        $a = [1, 2, 3, 4, 5];
-        $b = '34';
-        dump(in_array($b, $a));
-        dump(explode(',', $b));
-        unset($a[0]);
-        dump($a);
-        unset($a[1]);
-        unset($a[2]);
-        unset($a[3]);
-        unset($a[4]);
-        dump($a);
-        dump(empty($a));
-        dump(count($a));
 
-        $subInfo = I('post.', '', 'trim');
-        dump($subInfo['refinery_name']);
-        $this->display();
     }
 
 }

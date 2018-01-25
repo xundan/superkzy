@@ -196,14 +196,14 @@
 <!--重置按钮重置选中样式-->
 <script>
     $('#filter_reset').click(function () {
-//        ck_log("filter", "重置");
+        ck_log("filter", "重置");
         $('input[type=checkbox]:checked').parent('label').removeClass('myactive');
     });
 </script>
 <!--全选按钮样式-->
 <script>
     $('#filter_choose_all').click(function () {
-//        ck_log("filter", "全选");
+        ck_log("filter", "全选");
         $('.area_refinery').prop("checked", true).parent('label').addClass('myactive');;
     });
 </script>
@@ -414,7 +414,7 @@
         }
         //日志记录
         //提交
-        document.refinery_choose.method = "get";
+        document.refinery_choose.method = "post";
         document.refinery_choose.action = "{:U('CoalPriceSearch/coal_price_search_filter')}";
         document.refinery_choose.submit();
     })

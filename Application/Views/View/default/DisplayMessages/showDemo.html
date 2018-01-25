@@ -232,7 +232,7 @@
 </script>
 
 
-    <form action="{:U('Views/DisplayMessages/check')}?id={$id}&group={$group}" method="post">
+    <form action="{:U('Views/DisplayMessages/check')}?id={$id}&r={$r}&group={$group}" method="post">
         <table class="gridtable" style="font-size: 25px">
             <thead>
             <tr>
@@ -270,6 +270,7 @@
                 <input class="input-style" type="text" name="freight_area_start_name" id="freight_area_start_name" placeholder="起始地">
                 <button type="button" id="freight_area_check_start">检测地址合法</button>
                 <input type="hidden" name="freight_area_start" id="freight_area_start">
+                <input type="hidden" name="freight_area_start_merger_name" id="freight_area_start_merger_name">
                 <span id="freight_area_check_start_result"></span>
                 <input class="input-style" type="text" name="freight_area_start_detail" id="freight_area_start_detail" placeholder="详细地址">
                 <br/>
@@ -277,6 +278,7 @@
                 <input class="input-style" type="text" name="freight_area_end_name" id="freight_area_end_name" placeholder="目的地">
                 <button type="button" id="freight_area_check_end">检测地址合法</button>
                 <input type="hidden" name="freight_area_end" id="freight_area_end">
+                <input type="hidden" name="freight_area_end_merger_name" id="freight_area_end_merger_name">
                 <span id="freight_area_check_end_result"></span>
                 <input class="input-style" type="text" name="freight_area_end_detail" id="freight_area_end_detail" placeholder="详细地址">
 
@@ -662,34 +664,49 @@
 
 <!--匹配地址-->
 <script>
-    $('#freight_area_check_start').click(function(){
-        var $this = $(this);
-        var area_name = $this.prev().val();
-        if(!area_name){
-            return false;
+    function areaCheckClick(str){
+        if(str == 'start'){
+            var $this = $('#freight_area_check_start');
+            var area_name = $this.prev().val();
+            if (!area_name) {
+                return false;
+            }
+            console.log('start_click', area_name);
+            $('#freight_area_check_start_result').html('');
+            var result = areaCheck(area_name);
+            if (result) {
+                $this.next().val(result['id']);
+                $('#freight_area_start_merger_name').val(result['merger_name']);
+                console.log('start_click', result['merger_name'], ' input ', $('#freight_area_start_merger_name').val());
+                return true;
+            } else {
+                $('#freight_area_check_start_result').html("<span style='color:red'>不合法</span>");
+                return false;
+            }
+
+        } else if(str == 'end'){
+            $this = $('#freight_area_check_end');
+            area_name = $this.prev().val();
+            if (!area_name) {
+                return false;
+            }
+            $('#freight_area_check_end_result').html('');
+            result = areaCheck(area_name);
+            if (result) {
+                $this.next().val(result['id']);
+                $('#freight_area_end_merger_name').val(result['merger_name']);
+                return true;
+            } else {
+                $('#freight_area_check_end_result').html("<span style='color:red'>不合法</span>");
+                return false;
+            }
         }
-        console.log(area_name);
-        $('#freight_area_check_start_result').html('');
-        var result = areaCheck(area_name);
-        if(result){
-            $this.next().val(result['id']);
-        }else{
-            $('#freight_area_check_start_result').html("<span style='color:red'>不合法</span>");
-        }
+    }
+    $('#freight_area_check_start').click(function () {
+        areaCheckClick('start');
     });
-    $('#freight_area_check_end').click(function(){
-        var $this = $(this);
-        var area_name = $this.prev().val();
-        if(!area_name){
-            return false;
-        }
-        $('#freight_area_check_end_result').html('');
-        var result = areaCheck(area_name);
-        if(result){
-            $this.next().val(result['id']);
-        }else{
-            $('#freight_area_check_end_result').html("<span style='color:red'>不合法</span>");
-        }
+    $('#freight_area_check_end').click(function () {
+        areaCheckClick('end')
     });
     function priceAutoMatch() {
         var areaMatch = document.getElementById('content_id');
@@ -738,17 +755,22 @@
 <!--运费表单提交-->
 <script>
     $('#freight_submit').click(function () {
-        $('#freight_area_check_start').click();
-        $('#freight_area_check_end').click();
-
+        var a = areaCheckClick('start');
+        var b = areaCheckClick('end');
+        if(!a || !b){
+            return false;
+        }
         var area_start_name = $('#freight_area_start_name').val();
 
         var area_start = $('#freight_area_start').val();
         var area_start_detail = $('#freight_area_start_detail').val();
+        var area_start_merger_name = $('#freight_area_start_merger_name').val();
+        console.log('submit:',area_start_merger_name);
 
         var area_end_name = $('#freight_area_end_name').val();
         var area_end = $('#freight_area_end').val();
         var area_end_detail = $('#freight_area_end_detail').val();
+        var area_end_merger_name = $('#freight_area_end_merger_name').val();
 
         var freight_text = $('#freight_text').val();
         var freight = $('input[name=freight]:checked').val();
@@ -769,18 +791,33 @@
         var message_id = {$data['id']};
         var phone_number = {$data['phone_number']};
 
+        if(area_start == 0 || area_end == 0 || !result_freight){
+            alert('操作错误！');
+            return false;
+        }
+        var recorder = '';
+        var urlStr = location.href;
+        if(urlStr.indexOf('id/')>0){
+            var tempStr = urlStr.substr(urlStr.indexOf('r/')).substr(2);
+            recorder = tempStr.substr(0,tempStr.indexOf('/'));
+        }else{
+            recorder = urlStr.split('&')[1].replace('r=','')
+        }
         $.ajax({
             type: "post",
             url: "{:U('DisplayMessages/freightSubmit')}",
             data: {
+                recorder: recorder,
                 message_id: message_id,
                 phone_number: phone_number,
                 area_start_id: area_start,
                 area_start_name: area_start_name,
                 area_start_detail: area_start_detail,
+                area_start_merger_name: area_start_merger_name,
                 area_end_id: area_end,
                 area_end_name: area_end_name,
                 area_end_detail: area_end_detail,
+                area_end_merger_name: area_end_merger_name,
                 freight_price: result_freight
             },
             success: function (data) {

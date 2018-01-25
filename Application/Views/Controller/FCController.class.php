@@ -173,9 +173,7 @@ class FCController extends Controller
     public function getDistanceByAddress($start, $end)
     {
         $origins = $this->getGeocoder($start);
-        dump($origins);
         $destinations = $this->getGeocoder($end);
-        dump($destinations);
         $distance = $this->getDistance($origins,$destinations);
         return $distance;
     }
@@ -196,8 +194,8 @@ class FCController extends Controller
 
 //        $t = $this->getGeocoder('中国,陕西省,榆林市,神木县,凉水井煤矿');
 //        dump($t);
-        $start = '中国,内蒙古自治区,鄂尔多斯市,伊金霍洛旗,兴隆煤矿';
-        $end = '中国,吉林省,白城市';
+        $start = '中国,新疆维吾尔自治区,阿克苏地区,库车县';
+        $end = '中国,青海省,海西蒙古族藏族自治州,格尔木市';
         $origins = $this->getGeocoder($start);
         dump($origins);
         $destinations = $this->getGeocoder($end);

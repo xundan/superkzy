@@ -562,7 +562,7 @@ class PHPExcel_Calculation_Functions
                 if ((strlen($value) > 0) && ($value{0} == '#')) {
                     return $value;
                 }
-                break;
+//                break;
         }
         return 0;
     }

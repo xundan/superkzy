@@ -287,7 +287,7 @@
             $('#search_text').html(cookie('search_input'));
         }
         //自动刷新
-//        setTimeout(pullDownAction2, 200);
+        setTimeout(pullDownAction2, 200);
     });
     function pullDownAction2() {
         console.log('auto-down');
@@ -774,73 +774,38 @@
 </script>
 <!--地址返回操作-->
 <script>
-    window.onunload = function () {
-        sessionStorage.setItem('unload', '1');
-        leaveCurView();
-    };
-
-    function leaveCurView() {
-        window.sessionStorage.setItem('scrollX', myScroll.x);
-        window.sessionStorage.setItem('scrollY', myScroll.y);
-    }
-    $(function () {
-        console.log('userAgent', navigator.userAgent);
-        //手机系统类型
-//        alert('document.referrer:'+document.referrer);
-        if (navigator.userAgent.indexOf('Android') > 0 || true) {
-            //安卓手机
-            //判断跳转到该页面的来源
-            if (window.sessionStorage.getItem('order_detail')) {
-                window.sessionStorage.removeItem('order_detail');
-                //加载并定位
-
-            }
-            var x = parseFloat(window.sessionStorage.getItem('scrollX')) ? parseFloat(window.sessionStorage.getItem('scrollX')) : 0;
-            var y = parseFloat(window.sessionStorage.getItem('scrollY')) ? parseFloat(window.sessionStorage.getItem('scrollY')) : 0;
-            console.log('map', x, y);
-            setTimeout(function () {
-                myScroll.scrollTo(x, y);
-                console.log('scroll');
-            }, 300);
-        } else {
-            //苹果手机
-        }
-
-    });
-
-
-    //    $(function () {
-    //        pushHistory();
-    //        var bool = false;
-    //        setTimeout(function () {
-    //            bool = true;
-    //        }, 500);
-    //        if (navigator.userAgent.indexOf('Android') > 0) {
-    //            pushHistory();
-    //            window.addEventListener("popstate", function (e) {
-    //                    window.location.href = "{:U('Homepage/homepage')}";
-    //            }, false);
-    //        } else {
-    //            pushHistory();
-    //            setTimeout(function(){
-    //                window.addEventListener("popstate", function (e) {
-    //                    if (bool) {
-    //                        window.location.href = "{:U('Homepage/homepage')}";
-    //                    } else {
-    //                        return false;
-    //                    }
-    //                }, false);
-    //            },100);
-    //        }
-    //
-    //    });
-    //    function pushHistory() {
-    //        var state = {
-    //            title: "title",
-    //            url: "#"
-    //        };
-    //        window.history.pushState(state, "title", "#");
-    //    }
+//    $(function () {
+//        pushHistory();
+//        var bool = false;
+//        setTimeout(function () {
+//            bool = true;
+//        }, 500);
+//        if (navigator.userAgent.indexOf('Android') > 0) {
+//            pushHistory();
+//            window.addEventListener("popstate", function (e) {
+//                    window.location.href = "{:U('Homepage/homepage')}";
+//            }, false);
+//        } else {
+//            pushHistory();
+//            setTimeout(function(){
+//                window.addEventListener("popstate", function (e) {
+//                    if (bool) {
+//                        window.location.href = "{:U('Homepage/homepage')}";
+//                    } else {
+//                        return false;
+//                    }
+//                }, false);
+//            },100);
+//        }
+//
+//    });
+//    function pushHistory() {
+//        var state = {
+//            title: "title",
+//            url: "#"
+//        };
+//        window.history.pushState(state, "title", "#");
+//    }
 
     //    $(function() {
     //        if (!window.history.pushState || !document.dispatchEvent) return;

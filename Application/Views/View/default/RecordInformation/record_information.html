@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <title>信息审核记录</title>
+    <style>
+        body {
+            width: 1000px;
+            margin: auto;
+            margin-top: 50px;
+            background-color: #f0f5f6;
+        }
+
+        div {
+            margin-top: 50px;
+        }
+
+        table {
+            width: 1000px;
+        }
+
+        th {
+            height: 32px;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+
+    </style>
+</head>
+<body>
+<h1>信息审核记录</h1>
+<!--条件-->
+<div style="text-align: center">
+    <span>日期</span>
+    <input type="date" name="user_date" style="margin-right:300px;width: 150px;" id="date_start">
+    <!--<span>截止日期</span>-->
+    <!--<input type="date" name="user_date" style="margin-right:145px;width: 119px;" id="date_end">-->
+    <span>姓名</span>
+    <select style=" width: 150px;" id="name">
+        <option></option>
+        <option>gaolei</option>
+        <option>gls</option>
+        <option>jws</option>
+        <option>liuxuan</option>
+        <option>lx</option>
+        <option>menglili</option>
+        <option>mengwenping</option>
+        <option>rz</option>
+        <option>sundandan</option>
+        <option>lxc</option>
+        <option>wangpeng</option>
+        <option>xunchenlong</option>
+        <option>zhangxu</option>
+        <option>全部</option>
+    </select>
+</div>
+<!--内容-->
+<div style="margin: 70px 0 0 13px;">
+    <table>
+        <thead>
+        <tr>
+            <th>姓名</th>
+            <th>信息审核条数</th>
+            <th>运费审核条数</th>
+            <th>总条数</th>
+            <th>审核时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+<!--按钮-->
+<div style="text-align: center;margin-top: 120px;" id="selection">
+    <button style="width: 112px;height: 42px;" class="btn btn-primary">查询</button>
+</div>
+<div id="goback" style="text-align: center;;">
+    <button type="submit" style="width: 112px;height: 42px;" class="btn btn-warning">返回</button>
+</div>
+</body>
+<script>
+    //单人查询
+    $('#selection').click(function () {
+        var date_start = $('#date_start').val();
+        var name = $('#name').val();
+        console.log(date_start, name);
+        if (!date_start) {
+            alert('请输入时间！');
+        } else if (!name) {
+            alert('请输入名称！');
+        } else {
+            $.ajax({
+                type: 'post',
+                url: "{:U('RecordInformation/infoShowAction')}",
+                data: {
+                    date_start: date_start,
+                    name: name
+                },
+                success: function (data) {
+                    if (data == 0) {
+                        alert('未查询到该名称！');
+                    } else {
+                        $('tbody').html('');
+                        console.log(data);
+                        var obj = JSON.parse(data);
+                        console.log(obj);
+                        if (obj["msg"] == 1 ||obj["msg"] == 0) {
+                            var $recordString = '';
+                            $.each(obj['data'], function (index, val) {
+                                $recordString += "<tr class='place_add'><td style='border: 1px solid #ddd;background-color: #fff;text-align: center;'>" + val['user_name'] + "</td>"
+                                        + "<td style='border: 1px solid #ddd;background-color: #fff;text-align: center;'>" + val['msg_count'] + "</td>"
+                                        + "<td style='border: 1px solid #ddd;background-color: #fff;text-align: center;'>" + val['freight_count'] + "</td>"
+                                        + "<td style='border: 1px solid #ddd;background-color: #fff;text-align: center;'>" + val['msg_count_all'] + "</td>"
+                                        + "<td style='border: 1px solid #ddd;background-color: #fff;text-align: center;'>" + val['time_count'] + "</td>";
+                                $recordString += "</tr>";
+                                console.log(val['user_name']);
+                            });
+                            $('tbody').append($recordString)
+                        }
+                    }
+                }
+            })
+        }
+    });
+    //返回
+    $('#goback').click(function () {
+        window.location.href = "{:U('StaffsLogin/UserProfile')}";
+    })
+</script>
+</html>

@@ -12,6 +12,9 @@ use Think\Controller;
 
 class StaffsLoginController extends Controller
 {
+    const SUCCESS = 1;
+    const FAIL = -1;
+
     public function Login()
     {
         $this->display();
@@ -19,7 +22,11 @@ class StaffsLoginController extends Controller
 
     public function test()
     {
-        dump($_SESSION['cur_user']);
+        $where = [];
+        $subInfo['name']='gaolei';
+        $where['user_name'] = $subInfo['name'];
+        $result_name = M('ck_staffs')->where($where)->find();
+        dump($result_name);
     }
 
     public function doRegister()
@@ -89,26 +96,91 @@ class StaffsLoginController extends Controller
     public function summary_submit()
     {
         $subInfo = I('post.', '', 'trim,strip_tags');
-        $data = $subInfo;
-        $result = M('ck_summary')->add($data);
-        if($result){
-            echo 'success';
-        }else{
-            echo 'failure';
+        $where = [];
+        $where['user_name'] = $subInfo['name'];
+        $result_name = M('ck_staffs')->where($where)->find();
+        if ($result_name) {
+            $data['uid'] = $result_name['id'];
+            $data['name'] = $subInfo['name'];
+            $data['process'] = $subInfo['process'];
+            $data['project'] = $subInfo['project'];
+            $data['problem'] = $subInfo['problem'];
+            $data['propose'] = $subInfo['propose'];
+            if (!$subInfo['record_time']) {
+            } else {
+                $data['record_time'] = $subInfo['record_time'];
+            }
+            $result = M('ck_summary')->add($data);
+            if ($result) {
+                echo 'success';
+            } else {
+                echo 'failure1';
+            }
+        } else {
+            echo 'failure2';
         }
     }
 
     //登出
-    public function logout()
+    public
+    function logout()
     {
         unset($_SESSION['cur_user']);
         $this->redirect('StaffsLogin/Login');
     }
 
-    public function after_success()
+    public
+    function after_success()
     {
         header("Location: UserProfile.html"); /* 跳转 */
         exit;/* 确保其他php代码不会执行. */
+    }
+
+    //查询信息
+    public
+    function summaryInp()
+    {
+        $subInfo = I('post.', '', 'trim');
+        $where = [];
+        if ($subInfo['record_time'] == NULL) {
+            if ($subInfo['name'] == NULL & $subInfo['name'] == '全部') {
+            } else {
+                $where['name'] = $subInfo['name'];
+            }
+        } else {
+            if ($subInfo['name'] == NULL & $subInfo['name'] == '全部') {
+                $where['record_time'] = array('like', $subInfo['record_time'] . "%");
+            } else {
+                $where['name'] = $subInfo['name'];
+                $where['record_time'] = array('like', $subInfo['record_time'] . "%");
+            }
+        }
+        $result = M('ck_summary')->where($where)->select();
+        $returnArr = array();
+        if ($result) {
+            $returnArr['msg'] = 'yes';
+            $returnArr['data'] = $result;
+        } else {
+            $returnArr['msg'] = 'no';
+        }
+        echo json_encode($returnArr);
+    }
+
+    //信息展示
+    public
+    function summaryShow()
+    {
+        $subInfo = I('post.', '', 'trim,strip_tags');
+        $result = M('ck_summary')->select();
+        $returnArr = array();
+        if ($result) {
+            $returnArr['msg'] = 'yes';
+            $returnArr['data'] = $result;
+        } else {
+            $returnArr['msg'] = 'no';
+        }
+        echo json_encode($returnArr);
+
     }
 
 }

@@ -647,9 +647,9 @@
                 return cookie('last_area_select');
             } else {
                 var url = "{:U('AreaSearch/getLastArea')}";
-                url = 'http://localhost:8080/superkzy/index.php/Home/areaSearch/getLastArea';
+                //url = 'http://localhost:8080/superkzy/index.php/Home/areaSearch/getLastArea';
                 //url = 'http://192.168.23.100:8080/superkzy/index.php/Home/areaSearch/getLastArea';
-                //url = "http://www.xuncl.com/index.php/Home/AreaSearch/getLastArea";
+                url = "http://www.xuncl.com/index.php/Home/AreaSearch/getLastArea";
                 var result='';
                 $.ajax({
                     type: "post",
@@ -681,9 +681,9 @@
             //选完地址了，记录终结操作
             ck_log('district','选择了地址：'+lastAreaString);
             var url = "{:U('AreaSearch/setLastArea')}";
-            url = 'http://localhost:8080/superkzy/index.php/Home/areaSearch/setLastArea';
+            //url = 'http://localhost:8080/superkzy/index.php/Home/areaSearch/setLastArea';
             //url = 'http://192.168.23.100:8080/superkzy/index.php/Home/areaSearch/setLastArea';
-            //url = "http://www.xuncl.com/index.php/Home/areaSearch/setLastArea";
+            url = "http://www.xuncl.com/index.php/Home/areaSearch/setLastArea";
             $.ajax({
                 type: "post",
                 url: url,

@@ -48,7 +48,10 @@
         <button class="btn btn-default btn-check">信息审核</button>
     </div>
     <div style="margin-top: 2em">
-        <button class="btn btn-default btn-summary">周工作总结</button>
+        <button class="btn btn-default btn-summary">工作总结记录</button>
+    </div>
+    <div style="margin-top: 2em">
+        <button class="btn btn-default btn-information">信息审核记录</button>
     </div>
 </div>
 </body>
@@ -77,6 +80,9 @@
         window.location.href = "{:U('MsgCheck/show')}";
     });
     $('.btn-summary').click(function(){
-        window.location.href = "{:U('StaffsLogin/summary')}";
+        window.location.href = "{:U('StaffsLogin/summary_history')}";
+    });
+    $('.btn-information').click(function(){
+        window.location.href = "{:U('RecordInformation/record_information')}";
     })
 </script>

@@ -36,7 +36,7 @@
                                 <h4 class="weui_media_title">来自微信</h4>
                             </div>
                         </div>
-                        <div class="weui_media_bd text-center">
+                        <div class="weui_media_bd">
                             <a href="tel:{$message['phone_number']}"  onclick="ck_log('dial', {$message['phone_number']})" style='text-decoration: none;color: black'>
                                 <h4><img src="__PUBLIC__/home/images/phone.png" style="width: 20px">
                                     <span>拨打电话</span></h4>
@@ -48,10 +48,10 @@
                         <span class="" style=";color: #737373;line-height: 3em">&nbsp订单详情&nbsp</span>
                         <hr style="border-color: #04bfc6;width: 35%;display: inline-flex;float:right">
                     </div>
-                    <div style="text-indent: 1em;word-wrap: break-word;margin: 0 0.4em">
+                    <div>
                         {$message['content']}
                     </div>
-                    <div class="pull-right help-block" style="font-size: 12px;margin-right: .4em">
+                    <div class="pull-right help-block" style="font-size: 12px">
                         发布时间:{$message['update_time']|substr=0,10}
                     </div>
                 </li>
