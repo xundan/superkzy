@@ -61,7 +61,24 @@ class WxAccessController extends Controller
                     exit;
                 }
                 if (preg_match('/谢谢/',$content) > 0){
-                    $this->getWeObj()->text("不客气，超矿全体员工竭诚为您提供优质信息服务".$emoji)->reply();
+                    $this->getWeObj()->text("不客气，我们将竭诚为您提供优质信息服务".$emoji)->reply();
+                    exit;
+                }
+                import('Home.Common.Chinese2Pin');
+                $pin = new \Chinese2Pin();
+                $tempPy = $pin->Pinyin($content,'UTF8');
+//                if (preg_match('/(警示|天才|近视|竟是|骗子|近似|金石|晶石|经视|今世|惊世|净视)/',$tempPy) > 0){
+                if (preg_match('/(jingshi|jingsi|jinshi|jinsi)/',$tempPy) > 0){
+                    $n =array(
+                        "0"=>array(
+                            'Title'=>'公布你身边的骗子，让他们去死！',
+                            'Description'=>'不管是最深沉的心机，还是最拙劣的演技，当这些丑恶公布于众，我们相信，会让更多的人免于相似的骗局。',
+                            'PicUrl'=>'http://www.xuncl.com/jingshi.jpg',
+//                            'Url'=>'https://mp.weixin.qq.com/s?__biz=MzIzMjQ0NjE4MA==&tempkey=OTMxX1ZRMUtQZlQ5dzhOSzFBaHhBUWpMb1VwTmpJWFNILVM0YVg4VUJxRWxIVG95YjRfaTB1RTE0bGZPV0REVERIdEU0UnYxQ0hzRUdhOVI2VFN4YTgxcDFqdVB2T25RZjlmOWdqMXFCZjlReWV5bFNKUWdYZFFpdjBzX3BVXy14ZllzS0F4UFVBVFRNRVVlNFpBaWlUeUVDNG9jdWNXdWpoLUR2YmFaX2d%2Bfg%3D%3D&chksm=689583fe5fe20ae80dfac3c339d446430da333b5de0be1931cd538aaeadc25eaadafca198f42#rd'
+                            'Url'=>'http://mp.weixin.qq.com/s/jnub6cmq78RALx5o8JDTRA'
+                        )
+                    );
+                    $this->getWeObj()->news($n)->reply();
                     exit;
                 }
                 if ($content=="查看结构"){
@@ -84,7 +101,8 @@ class WxAccessController extends Controller
 
                     $insert = $this->createMpRaw($title, $content, $owner, $sender, $sender_wx);
                     if ($insert) {
-                        $this->getWeObj()->text("您的消息已经收到，我们将及时为您转发。")->reply();
+                        $tempReply = "您的消息已经收到，我们将及时为您转发。";
+                        $this->getWeObj()->text($tempReply)->reply();
                     } else {
                         Log::record("WxAccess: insert_raw() failed. ", Log::ERR);
                     }
@@ -104,7 +122,8 @@ class WxAccessController extends Controller
  回复带有联系方式（手机号）的供应/求购/找车/车源信息，我们会为您公示转发。")->reply();
                         exit;
                     }else{
-                        $this->getWeObj()->text("回复带有联系方式（手机号）的供应/求购/找车/车源信息，我们会为您公示转发。")->reply();
+                        $tempReply = "回复带有联系方式（手机号）的供应/求购/找车/车源信息，我们会为您公示转发。";
+                        $this->getWeObj()->text($tempReply)->reply();
                         exit;
                     }
 
@@ -120,9 +139,14 @@ class WxAccessController extends Controller
 
 【发布煤炭信息】请直接在公众号留言(煤炭信息+手机号)，我们会为您公示转发
 
-【查询煤炭信息】点击<a href=\'http://www.xuncl.com/index.php/Home/Homepage/homepage\'>超矿主页</a>，查询煤炭供求、找车信息(每日更新千条)
+【查询煤炭信息】点击<a href='http://www.xuncl.com/index.php/Home/Homepage/homepage'>超矿主页</a>，查询煤炭供求、找车信息(每日更新千条)
 
-【付费推广业务】加大煤炭信息发布范围，请联系<a href='tel:17083425332'>17083425332(微信同号)</a>";
+【付费推广业务】加大煤炭信息发布范围，请联系<a href='tel:17083425332'>17083425332(微信同号)</a>
+
+【高质量煤炭群】点击<a href='http://mp.weixin.qq.com/s/XM5OE7DgKN4mU4L0t4shnw'>全国高级煤炭圈</a>，共享资源你我他
+
+加全国煤炭、物流群
+☟☟☟☟";                        ;
                         if($activity_flag){
                             $welcome_str = "感谢关注【超级矿资源】微信公众平台！
 
@@ -296,15 +320,16 @@ class WxAccessController extends Controller
             "button" =>
                 array(
                     array(
-                        'name' => '会员/加群',
-//                        'name' => '加煤炭群',
+                        'name' => '加煤炭群',
 //                        'type' => 'view',
 //                        'url' => 'http://mp.weixin.qq.com/s/LEZmYPX6LtNHVQUraiZpbg'
                         'sub_button' => array(
-                            array('type' => 'view', 'name' => '加煤炭群', 'url' => 'http://mp.weixin.qq.com/s/LEZmYPX6LtNHVQUraiZpbg'),
+                            array('type' => 'view', 'name' => '加煤炭群', 'url' => 'http://mp.weixin.qq.com/s/XM5OE7DgKN4mU4L0t4shnw'),
                             array('type' => 'view', 'name' => '会员注册', 'url' => 'http://www.xuncl.com/index.php/Home/Login/register'),
                             array('type' => 'view', 'name' => '车主福利', 'url' => 'http://www.xuncl.com/index.php/Home/CooperatePage/WeChe'),
-                            array('type' => 'view', 'name' => '超矿金融', 'url' => 'http://www.xuncl.com/index.php/Views/FinancialClient/show'),
+//                            array('type' => 'view', 'name' => '超矿金融', 'url' => 'http://www.xuncl.com/index.php/Views/FinancialClient/show'),
+//                            array('type' => 'view', 'name' => '物流金融', 'url' => 'http://www.xuncl.com/index.php/Views/FinancialClient/show_wl'),
+                            array('type' => 'view', 'name' => '煤炭金融', 'url' => 'http://www.xuncl.com/index.php/Views/FinancialClient/show_tp'),
                             array('type' => 'view', 'name' => '送出行险', 'url' => 'https://u.wcar.net.cn/1es'),
                         ),
                     ),
@@ -320,14 +345,16 @@ class WxAccessController extends Controller
                         ),
                     ),
                     array(
-                        'type' => 'view',
-                        'name' => '查煤价',
-//                        'url' => 'http://www.xuncl.com/index.php/Home/CoalPriceSearch/coal_price_search'
-                        'url' => 'http://www.xuncl.com/index.php/Home/CoalPriceSearch/search_method'
+                        'name' => '查煤价/运费',
+                        'sub_button' => array(
+                            array('type' => 'view', 'name' => '查煤价', 'url' => 'http://www.xuncl.com/index.php/Home/CoalPriceSearch/search_method'),
+                            array('type' => 'view', 'name' => '查运费', 'url' => 'http://www.xuncl.com/Home/FreightSearch/show'),
+                        ),
                     )
                 )
         );
         $result = $weObj->createMenu($newmenu);
+//        $result = $weObj->deleteMenu();
         echo $result;
 //        echo $weObj->deleteMenu();
     }

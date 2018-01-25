@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <title>test</title>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="/superkzy/Application/Home/View/Vote/jquery.qrcode.min.js"></script>
+
+</head>
+<body>
+    <p>Render in table</p>
+    <div id="qrcodeTable"></div>
+    <p>Render in canvas</p>
+    <div id="qrcodeCanvas"></div>
+    <script>
+        //jQuery('#qrcode').qrcode("this plugin is great");
+        $('#qrcodeTable').qrcode({
+            render	: "table",
+            text	: "http://192.168.23.102:8080/superkzy/home/Vote/test"
+        });
+        $('#qrcodeCanvas').qrcode({
+            text	: "http://192.168.23.102:8080/superkzy/home/Vote/test"
+        },function(){
+            var img = new Image();
+            img = $('#qrcodeCanvas canvas').toDataURL('img/png');
+            $('#qrcodeCanvas').html("<img src='"+img+"'>");
+        });
+        var img = new Image();
+        img = $('#qrcodeCanvas canvas').toDataURL('img/png');
+        $('#qrcodeCanvas').html("<img src='"+img+"'>");
+    </script>
+    <div id="output"></div>
+
+    <script>
+        $(function() {
+            $('#output').qrcode({width: 64, height: 64, text: "http://192.168.23.102:8080/superkzy/home/Vote/test"});
+            $.ajax({
+                type: "post",
+                url: "{:U('Vote/testAction')}",
+                data: {
+                    asd: 1
+                },
+                success: function (data) {
+                    console.log(data);
+                }
+            });
+        })
+    </script>
+</body>
+</html>

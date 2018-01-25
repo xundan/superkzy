@@ -188,6 +188,7 @@ class PayingClientManagementController extends Controller
         $data['pay_type'] = $subInfo['info_pay_type'];
         $data['money'] = $subInfo['info_money'];
         $data['out_of_service_time'] = $subInfo['info_out_of_service_time'];
+        $data['invalid_id'] = $subInfo['info_invalid_id'];
 
         $result = M('ck_paying_client')->where($where)->save($data);
         $returnArr = array();
@@ -245,6 +246,24 @@ class PayingClientManagementController extends Controller
     {
         $result = M('ck_activity_paying_client_2017_08')->join('LEFT JOIN ck_paying_client ON ck_paying_client.id=ck_activity_paying_client_2017_08.paying_client_id')->select();
         echo json_encode($result);
+    }
+
+    public function queryByPhone(){
+        $subInfo = I('post.','','trim,strip_tags');
+        if($subInfo['phone_number']){
+            $where['phone_number'] = $subInfo['phone_number'];
+            $result = M('ck_paying_client')->where($where)->field('id,wx_name')->find();
+            if($result){
+                echo json_encode($result);
+                exit;
+            }else{
+                echo 'failure';
+                exit;
+            }
+        }else{
+            echo 'failure';
+            exit;
+        }
     }
 
 }

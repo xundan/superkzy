@@ -20,6 +20,10 @@ class FreightSearchController extends Controller
     private $__resultReply = array();
     private $__existArray = array();
     public function show(){
+        //WechatJDK
+        vendor("jssdk.signPackage");
+        $this->assign("signPackage", getSignPackage());
+
         $where = array();
         $subInfo = I('post.', '', 'strip_tags,trim');
 //        dump($subInfo);
@@ -37,14 +41,12 @@ class FreightSearchController extends Controller
             return;
         }else{
             //页面提交
-            $where = $this->setWhere();
-            $result = $this->getOrder($where);
-//            dump($where);
-//            dump($result);exit;
-            $this->assign('message',$result);
-            if(count($result) == 0){
-                $this->assign('none','empty');
-            }
+//            $where = $this->setWhere();
+//            $result = $this->getOrder($where);
+//            $this->assign('message',$result);
+//            if(count($result) == 0){
+//                $this->assign('none','empty');
+//            }
         }
         $this->display();
     }
@@ -97,11 +99,13 @@ class FreightSearchController extends Controller
             $levelType = $this->getLevelType($subInfo['area_end']);
             $where['area_end_id'] = array('like',substr($subInfo['area_end'],0,$levelType*2)."%");
         }
+        $month = date('Y-m-d',(time()-24*3600*30));
+        $where['record_time'] = array('gt',$month);
         return $where;
     }
 
     private function getOrder($where=null,$start=0,$count=self::countRow){
-        $result = M('freight')->where($where)->limit($start,self::countRow)->select();
+        $result = M('freight')->where($where)->limit($start,self::countRow)->order('record_time desc')->select();
         return $result;
     }
 

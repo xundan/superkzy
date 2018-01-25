@@ -11,13 +11,17 @@
     <title>煤价煤矿选择</title>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
-    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss-v1107.css?v=1"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
 </head>
 <style>
+    body,html {
+        overflow-x: hidden;
+    }
+
     .refinery_name {
         cursor: pointer
     }
@@ -28,6 +32,10 @@
 
     .clear {
         clear: both;
+    }
+
+    .btn, .mybtn{
+        box-shadow: 2px 2px 2px #e1e1e1;
     }
 
     .mybtn {
@@ -113,8 +121,8 @@
     <div class="clear"></div>
 </div>
 <form name="refinery_choose">
-    <div id="last_search" style="background-color: #efeff4;padding-bottom: 2%">
-        &emsp;最近搜索<br/>
+    <div id="last_search" style="background-color: #efeff4;">
+        <div style="margin-left: 1em">最近搜索</div>
         <!--<button type="button" class="close"><span>&times;</span></button>-->
     </div>
     <!--<table class="table table-bordered text-center" style="table-layout: fixed;vertical-align: middle">-->
@@ -135,6 +143,12 @@
         <div class="btn-group" style="">
             <input class="btn btn-default" type="reset" value="重&emsp;&emsp;置" id="filter_reset"
                    style="border: none;font-size: 1.3em;color:#fb3e1e;background-color: #ffe1dd">
+        </div>
+        <div class="btn-group">
+            <a class="btn btn-default" id="filter_choose_all"
+                    style="border: none;font-size: 1.3em;color:#fb3e1e;background-color: #ffb0a6">
+                地区全选
+            </a>
         </div>
         <div class="btn-group">
             <a href="#" id="filter_submit" class="btn btn-default"
@@ -182,8 +196,15 @@
 <!--重置按钮重置选中样式-->
 <script>
     $('#filter_reset').click(function () {
-        ck_log("filter", "重置");
+//        ck_log("filter", "重置");
         $('input[type=checkbox]:checked').parent('label').removeClass('myactive');
+    });
+</script>
+<!--全选按钮样式-->
+<script>
+    $('#filter_choose_all').click(function () {
+//        ck_log("filter", "全选");
+        $('.area_refinery').prop("checked", true).parent('label').addClass('myactive');;
     });
 </script>
 <!--页面载入-->
@@ -193,8 +214,8 @@
             var temp_last_refinery = cookie('last_refinery').split(',');
             temp_last_refinery.forEach(function (v, k) {
                 var temp_string = '';
-                temp_string += "<label class='mybtn mybtn-default' style='margin-left: 2.5%;width:30%;margin-top:5px;text-align: center;'>" +
-                        "<input type='checkbox' class='pull-left' style='display: none' name='refinery_name[]' value=" + v + ">" + v +
+                temp_string += "<label class='mybtn mybtn-default' style='margin-left: 2.5%;width:30%;margin-bottom:5px;text-align: center;'>" +
+                        "<input type='checkbox' class='pull-left history' style='display: none' name='refinery_name[]' value=" + v + ">" + v +
                         "</label>";
                 var span = document.createElement('span');
 //                span.innerHTML = "<span class='refinery_name' style='width: 25%;margin: 1% 2.5%'>"+v+"</span>";
@@ -230,23 +251,23 @@
                 var jsonObj = eval("(" + data + ")");
                 console.log(jsonObj);
                 var temp_string = "";
-                var col_count = 0;
+//                var col_count = 0;
                 $.each(jsonObj.refinery_name, function (k, val) {
                     temp_string += "<label class='mybtn mybtn-default' style='margin-left: 2.5%;width:30%;margin-top:5px;text-align: center;'>" +
-                            "<input type='checkbox' class='pull-left' style='display: none' name='refinery_name[]' value=" + val + ">" + val +
+                            "<input type='checkbox' class='pull-left area_refinery' style='display: none' name='refinery_name[]' value=" + val + ">" + val +
                             "</label>";
-                    col_count++;
-                    if (col_count == 4) {
-                        temp_string += "";
-                        col_count = 0;
-                    } else {
-                    }
+//                    col_count++;
+//                    if (col_count == 4) {
+//                        temp_string += "";
+//                        col_count = 0;
+//                    } else {
+//                    }
                 });
-                while ((4 - col_count) > 0 && col_count != 0) {
-                    temp_string += "<td></td>";
-                    col_count++;
-                }
-                temp_string += "</tr>";
+//                while ((4 - col_count) > 0 && col_count != 0) {
+//                    temp_string += "<td></td>";
+//                    col_count++;
+//                }
+//                temp_string += "</tr>";
 //                a += temp_string;
                 insert_node.html(temp_string);
             },

@@ -84,7 +84,7 @@ class CarNeedMsgCard extends MsgCard
             <div class='card_item collapse' style='width:100%'>详细描述</div>
             <div class='card_item detail highlight collapse'>{$message['content']}</div>
         </div>
-        <div class='card-foot pull-right help-block'>发布时间:\" . $publish_date . \"</div>
+        <div class='card-foot pull-right help-block'>发布时间:" . $publish_date . "</div>
     </div>
     <div class='collapse-switch'><span class='collapse-arrow'>+</span></div>
 </li>

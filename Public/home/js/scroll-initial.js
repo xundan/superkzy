@@ -8,8 +8,7 @@ function loaded() {
     pullDownOffset = pullDownEl.offsetHeight;
     pullUpEl = document.getElementById('pullUp');
     pullUpOffset = pullUpEl.offsetHeight;
-    console.log(pullDownOffset);
-    console.log(pullUpOffset);
+    console.log('PDO:'+pullDownOffset,'PUO:'+pullUpOffset);
     setTimeout(function () {
         myScroll = new iScroll('wrapper', {
 //        scrollbarClass: 'myScrollbar', /* 重要样式 */
@@ -58,6 +57,7 @@ function loaded() {
                 }
 
                 if (this.scrollerH < this.wrapperH && this.y < (this.minScrollY - pullUpOffset) || this.scrollerH > this.wrapperH && this.y < (this.maxScrollY - pullUpOffset)) {
+                //if (this.scrollerH < this.wrapperH && this.y < (this.minScrollY - pullUpOffset) || this.scrollerH > this.wrapperH && this.y < (this.maxScrollY - pullUpOffset/2)) {
                     document.getElementById("pullUp").style.display = "";
                     pullUpEl.className = 'flip';
                     pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...</br>' + '最后更新时间：' + update_time;
@@ -68,6 +68,10 @@ function loaded() {
                     pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
                 }
 
+                //console.log('scrollerH:'+this.scrollerH,'wrapperH:'+this.wrapperH,'maxScrollY:'+this.maxScrollY,'y:'+this.y);
+                //if (this.y <= this.maxScrollY) {
+                //    pullUpAction();
+                //}
             },
             onScrollEnd: function () {
 //            document.getElementById("show").innerHTML="onScrollEnd: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";

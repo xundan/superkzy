@@ -7,43 +7,33 @@
     <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
     <!--<link rel="icon" href="../../favicon.ico">-->
     <title>超矿平台信息推广S</title>
-    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss-v1107.css?v=1"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/message-share.css?v=1208"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/scroll-initial.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
-    <script type="text/javascript" src="__PUBLIC__/home/js/common.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/common-v1030.js"></script>
 </head>
-<style>
-    body {
-        background-color: white;
-    }
-
-    ul {
-        padding: 0;
-    }
-
-    #qrcode_show {
-        margin-top: 30%;
-        text-align: center;
-        z-index: 9999;
-        opacity: 1;
-        width: 100%;
-        position: relative;
-        display: none;
-    }
-</style>
 <body>
 <input type="hidden" id="page" name="page" value="1">
 
 <div class="overlay"></div>
 <div id="qrcode_show">
-    <img src="__PUBLIC__/home/images/promotion/qrcode-gzh-test.jpg" width="50%" style="">
+    <img class="img-gzh" src="__PUBLIC__/home/images/promotion/qrcode-gzh-test.jpg" width="50%">
+    <img class="img-group" src="__PUBLIC__/home/images/promotion/qrcode-group.jpg" width="50%">
     <p style="color: white">长按识别二维码</p>
 </div>
 <script>
-    function qr_show() {
+    function qr_show(a) {
         ck_log('click','scan_qrcode');
+        if(a == 'group'){
+            $('.img-gzh').css('display','none');
+            $('.img-group').css('display','');
+        }else{
+            $('.img-gzh').css('display','');
+            $('.img-group').css('display','none');
+        }
         $('.overlay').toggle();
         $('#qrcode_show').toggle();
     }
@@ -51,36 +41,34 @@
         $('.overlay').toggle();
         $('#qrcode_show').toggle();
     });
-    var twinkle_flag = false;
-    var i = setInterval(function () {
-        if (!twinkle_flag) {
-            $('#twinkle').css('color', 'red');
-            twinkle_flag = true;
-        } else {
-            $('#twinkle').css('color', 'dodgerblue');
-            twinkle_flag = false;
-        }
-    }, 300)
 </script>
 
-<div id="wrapper" style="top: 0px;margin:0 auto;">
+<div id="wrapper">
     <div id="scroller">
         <div id="pullDown">
             <span class="pullDownIcon" style="float: left"></span>
             <span class="pullDownLabel" style="margin-left: -48px">下拉刷新...</span>
         </div>
         <ul id="content">
-            <li class="text-gradient">
-                【超级矿资源】信息量最大的煤炭信息平台（每日千条煤炭信息更新）
-                <br/>
-                【发布煤炭信息方法】超矿微信号留言(需要发布的煤炭信息+手机号)
-                <br/>
-                <div style="text-align: center">
-                    <span id="twinkle" onclick="qr_show()">>>>>>点我，查煤价、运费<<<<<</span>
+            <li class="title">
+                <img class="title-logo" src="__PUBLIC__/home/images/logo.png">
+                <p class="title-name">超级矿资源信息平台</p>
+                <div class="title-desc">
+                    <button class="btn" onclick="qr_show()">
+                        查煤价、查运费
+                    </button>
+                    <button class="btn group" onclick="qr_show('group')">
+                        加煤炭群
+                    </button>
+                    <img class="click-button" src="__PUBLIC__/home/images/publish_history_detail_guide.png">
+                    <p>【超级矿资源】信息量最大的煤炭信息平台</p>
+                    <p>(每日千条煤炭信息更新)</p>
+                    <p>【发布方法】超矿微信号留言</p>
+                    <p>(需要发布的煤炭信息+手机号)</p>
                 </div>
             </li>
             <volist name="resultMsg" id="msg">
-                <li class="li_item">{$msg['content']}</li>
+                <li>{$msg['content']}</li>
             </volist>
         </ul>
         <div id="pullUp">
@@ -111,11 +99,11 @@
             },
             success: function (data) {
                 var jsonObj = JSON.parse(data);
-                var $ad = $('.text-gradient').prop('outerHTML');
+                var $ad = $('.title').prop('outerHTML');
                 $('#content').html($ad);
                 var $li;
                 $.each(jsonObj.data, function (k, val) {
-                    $li = "<li class='li_item'>" + text_format(val.content) + "</li>";
+                    $li = "<li>" + text_format(val.content) + "</li>";
                     $('#content').append($li);
                 });
                 $('#page').val(1);
@@ -150,7 +138,7 @@
                     var jsonObj = JSON.parse(data);
                     var $li;
                     $.each(jsonObj.data, function (k, val) {
-                        $li = "<li class='li_item'>" + text_format(val.content) + "</li>";
+                        $li = "<li>" + text_format(val.content) + "</li>";
                         $('#content').append($li);
                     });
                     if (jsonObj.end_tag == 'end') {
@@ -176,7 +164,7 @@
 <!--特化每条信息-->
 <script>
     $(function () {
-        $('.li_item').each(function () {
+        $('li').each(function () {
             var $this = $(this);
             var $text = $this.html();
             $text = text_format($text);
@@ -196,10 +184,10 @@
     function text_format(string) {
         var result = string;
         if (typeof result == 'string') {
-            result = result.replace(/【供应】/, "<b style='color:brown'>【供应】</b>");
-            result = result.replace(/【求购】/, "<b style='color:brown'>【供应】</b>");
-            result = result.replace(/【找车】/, "<b style='color:brown'>【供应】</b>");
-            result = result.replace(/【车源】/, "<b style='color:brown'>【供应】</b>");
+            result = result.replace(/【供应】/, "<b class='tag-name'>【供应】</b>");
+            result = result.replace(/【求购】/, "<b class='tag-name'>【求购】</b>");
+            result = result.replace(/【找车】/, "<b class='tag-name'>【找车】</b>");
+            result = result.replace(/【车源】/, "<b class='tag-name'>【车源】</b>");
             result = result.replace(/(\d{11})/g, "<a href='tel:$1'>$1</a>");
         }
         return result;

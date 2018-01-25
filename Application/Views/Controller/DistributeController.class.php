@@ -103,7 +103,7 @@ class DistributeController extends RestController
                 $insert_trans['vip'] = $this->vipSet($origin);
                 $check = $Message->add_by_md5($insert_trans, true);
             } else {
-                $check = $Message->add_by_md5($insert_trans, true);
+                $check = $Message->add_by_md5($insert_trans, false);
             }
 //            var_dump($insert_trans);
             if ($check === false) {
@@ -140,7 +140,7 @@ class DistributeController extends RestController
     {
         $whereClient['invalid_id'] = 0;
         $whereClient['phone_number'] = $phoneNumber;
-        $payingClient = M('ck_paying_client')->where($whereClient)->find();
+        $payingClient = M('ck_paying_client')->where($whereClient)->order('update_time desc')->find();
         if ($payingClient) {
             switch ($payingClient['pay_type']) {
                 case '年费':

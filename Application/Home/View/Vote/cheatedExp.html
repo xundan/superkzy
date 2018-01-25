@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <title>投票页面</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/sweet-alert.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/sweet-alert.min.js"></script>
+</head>
+<style>
+    body{
+        background: -webkit-linear-gradient(dodgerblue, #ffffff); /* Safari 5.1 - 6.0 */
+        background: -o-linear-gradient(dodgerblue, #ffffff); /* Opera 11.1 - 12.0 */
+        background: -moz-linear-gradient(dodgerblue, #ffffff); /* Firefox 3.6 - 15 */
+        background: linear-gradient(dodgerblue, #ffffff); /* 标准的语法 */
+        background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(dodgerblue), to(#ffffff));/*谷歌*/
+        font-family: "PingHei", "Helvetica Neue", "Helvetica", "Arial", "Verdana", "sans-serif";
+    }
+
+    .clearfix:before, .clearfix:after {
+        content: "";
+        display: table;
+    }
+
+    .clearfix:after {
+        clear: both;
+    }
+
+    .clearfix {
+        *zoom: 1;
+    }
+
+    .content_title_desc {
+        text-shadow: 1px 1px 5px #000;
+        font-size: 1.5em;
+        font-weight: bolder;
+        letter-spacing: 2px;
+        color: #fff;
+        padding: 0.8em;
+    }
+
+    #declaration h5{
+        width: 90%;
+        margin: auto;
+        color: #fff;
+    }
+
+    #closing-date h5{
+        width: 90%;
+        margin: auto;
+        padding-top: 0.5em;
+        color: #fff;
+    }
+
+    #content_list {
+    }
+
+    .content_list_li {
+        width: 90%;
+        margin: auto;
+        margin-top: 1em;
+        word-wrap: break-word;
+        /*background: #fff;*/
+        /*border-radius: 5px;*/
+        /*padding: 5px;*/
+    }
+
+    .content_desc{
+        text-indent: 2em;
+        text-align: justify;
+        letter-spacing: 1.8px;
+    }
+
+    .divider{
+        height: 1px;
+        margin: 9px 0;
+        overflow: hidden;
+        background-color: #e5e5e5;
+    }
+
+    .function{
+        height: 2.2em;
+        line-height: 1.2em;
+    }
+
+    .expInfo{
+        width: 30%;
+    }
+
+    .expNum,.voteNum{
+        /*line-height: 30px;*/
+        display: inline-block;
+        width: 100%;
+    }
+
+    .btn-default{
+        margin-right: 1em;
+    }
+
+    .comment-item{
+        word-wrap: break-word;
+    }
+
+    .content_list_li .content_list_li_left span {
+        display: inline-block;
+        background: #fff;
+        border-radius: 50%;
+        box-shadow: 0px 0px 7px #FBB03B;
+        overflow: hidden;
+        height: 50%;
+        width: 55%;
+        border: #FBB03B solid 6px;
+    }
+
+    .result{
+        margin-bottom: 1em;
+    }
+
+    /*.confirm{*/
+        /*background-color: #f0ad4e !important;*/
+    /*}*/
+
+    .sweet-alert button.cancel {
+        background-color: #337ab7;
+    }
+
+    .modal-open{
+        /*overflow: hidden;*/
+        /*padding-right: 17px;*/
+    }
+</style>
+<body>
+    <div id="content_title" class="text-center clearfix">
+        <div class="content_title_desc">
+            参与投票
+        </div>
+    </div>
+    <div id="declaration" style="font-size: 12px">
+        <h5 style="text-indent: 2em">声明：为实践保护用户个人隐私承诺，本平台对必要的个人信息进行了相关处理，避免对用户造成困扰。</h5>
+    </div>
+    <div id="closing-date" style="font-size: 1.2em;text-align: center">
+        <h5 style="text-indent: 2em;">投票截止日期：2017年12月16日18:00</h5>
+    </div>
+    <div class="clearfix"></div>
+    <div id="content_list" class="clearfix">
+        <div class="content_list_li well well-sm">
+            <div class="content_desc">前年我在河北开的煤厂，朋友托朋友介绍了当地一个混社会的人姓王，拉了一万吨煤放在我这里，一放就是两个月，一分租金也没给我。厂子上手底下兄弟们还指着我给发钱养家糊口。年前实在没辙了，那会正好是最难的时候，投资了其他几笔生意都赔了，我拉了几千吨出去给他卖了，卖了大概也就是二三十万吧，跟租金大概正好就抵了。我给姓王的打电话，他表面上心平气和地让我过去，我心里清楚这顿打肯定是免不了了，一进门话都没说七八个人把我按到地上打，肋骨打断了三根。我怕手底下弟兄跟着我吃亏，让他们都放假回家了，我自己从医院出来在煤场守着，砍刀就放在枕头下面。前面的事就算两清了，后面的事如果他们要是过来玩硬的我也只能奉陪。最后姓王的派了几个人过来，我看那几个小伙子也算客气就让他们把剩下的煤拉走了。</div>
+            <div class="divider"></div>
+            <div class="function">
+                <div class="expInfo pull-left">
+                    <span class="expNum">编号:1</span>
+                    <span class="glyphicon glyphicon-thumbs-up voteNum">{$voteData[0]['num']}票</span>
+                </div>
+                <a class="btn btn-sm btn-primary pull-right btn-vote">投票</a>
+                <a class="btn btn-sm btn-default pull-right btn-comment" data-toggle="modal" data-target="#comment_modal" data-whatever="1">评论</a>
+            </div>
+        </div>
+        <div class="content_list_li well well-sm">
+            <div class="content_desc">大约十年前吧，我跟一个朋友一起往济南一个电厂供煤，他找的电厂。一开始合作的很好大家都赚钱了，业务就从一个月几千吨到了两三万吨。中途朋友压了我20车的货款，考虑到关系都不错，我还是继续给他上，结果一直上了四千多吨人消失了，至今都没找到，一下把前面赚的二百多万全部亏进去了。找到电厂，电厂也不管，打官司也没用。关键车子也没给人家结钱，弟兄们都不容易，我把房子抵押宝马车当了给人家结的款。这么多年了，周围朋友也都对我两肋插刀，靠的就是咱诚信俩字。</div>
+            <div class="divider"></div>
+            <div class="function">
+                <div class="expInfo pull-left">
+                    <span class="expNum">编号:2</span>
+                    <span class="glyphicon glyphicon-thumbs-up voteNum">{$voteData[1]['num']}票</span>
+                </div>
+                <a class="btn btn-sm btn-primary pull-right btn-vote">投票</a>
+                <a class="btn btn-sm btn-default pull-right btn-comment" data-toggle="modal" data-target="#comment_modal" data-whatever="2">评论</a>
+            </div>
+        </div>
+        <div class="content_list_li well well-sm">
+            <div class="content_desc">营口鲅鱼圈的大骗子，他让我给装了一车中块，晚上装的车，他说先让车走，明早上打钱，我就让车走了，可第二天他用各种理由没也打钱给我，我打电话给拉煤的车上，这时侯车到北京了，我让车把货拉到锦州市一个客户那里，车让我把运费打给他，我说，你把车开到煤场我给你运费，车不同意，车是营口鲅鱼圈货主叫来的，无论我怎么说，车主收不到运费不去锦州，结果车还是去了鲅鱼圈，那天我要打了运费会是什么样子，不用我在说了吧，各位明白。</div>
+            <div class="divider"></div>
+            <div class="function">
+                <div class="expInfo pull-left">
+                    <span class="expNum">编号:3</span>
+                    <span class="glyphicon glyphicon-thumbs-up voteNum">{$voteData[2]['num']}票</span>
+                </div>
+                <a class="btn btn-sm btn-primary pull-right btn-vote">投票</a>
+                <a class="btn btn-sm btn-default pull-right btn-comment" data-toggle="modal" data-target="#comment_modal" data-whatever="3">评论</a>
+            </div>
+        </div>
+        <div class="content_list_li well well-sm">
+            <div class="content_desc">零二年那会我跟几个南方老板一起往私人电厂上煤，我家这边有亲戚在矿上，几乎就是暴利。一零年国家政策改革那家电厂倒闭了，上千万货款没结给那个南方老板，他也因为外债太多也进去了。欠的我300多万货款还不上，带着他一家老小扑通一下就跪下了，一把鼻涕一把泪地说，哥我对不起你。我一看是三角债，这事也没办法只能认倒霉。直到今天，我每次去一万一万的还到现在，还剩下200多万。</div>
+            <div class="divider"></div>
+            <div class="function">
+                <div class="expInfo pull-left">
+                    <span class="expNum">编号:4</span>
+                    <span class="glyphicon glyphicon-thumbs-up voteNum">{$voteData[3]['num']}票</span>
+                </div>
+                <a class="btn btn-sm btn-primary pull-right btn-vote">投票</a>
+                <a class="btn btn-sm btn-default pull-right btn-comment" data-toggle="modal" data-target="#comment_modal" data-whatever="4">评论</a>
+            </div>
+        </div>
+        <div class="content_list_li well well-sm">
+            <div class="content_desc">给几个东北人开的煤厂上煤，朋友托朋友认识的。那会赚钱太容易，花钱也大手大脚，叫着朋友整天一起胡吃海喝，特别瞧不起那些没钱的朋友。一直到前年，赚了不少，也没攒下几个，那家伙突然消失了，我信任他先给他的货，这不五百万的煤款一下子都打水漂了。闹到现在，老婆也跑了，也成网黑了，还欠了一屁股债。那会有钱一起吃吃喝喝的朋友现在也不来往了。那些看不上的穷朋友人家也都慢慢有钱了，反倒瞧不起我了。那会年轻太狂，人只有经历一些事之后才能变得成熟。</div>
+            <div class="divider"></div>
+            <div class="function">
+                <div class="expInfo pull-left">
+                    <span class="expNum">编号:5</span>
+                    <span class="glyphicon glyphicon-thumbs-up voteNum">{$voteData[4]['num']}票</span>
+                </div>
+                <a class="btn btn-sm btn-primary pull-right btn-vote">投票</a>
+                <a class="btn btn-sm btn-default pull-right btn-comment" data-toggle="modal" data-target="#comment_modal" data-whatever="5">评论</a>
+            </div>
+        </div>
+        <div class="content_list_li well well-sm">
+            <div class="content_desc">我是甘肃省平凉市人，09年12月份我当时就职的公司法人骗走一起合作的煤矿85万元，是假传真的方式骗走的，矿上逼着让我还款，我老公是委托人，东挪西凑的还了煤矿的款，最后没人在管理这个事，2012年我老公压力太大去世了，我跑当地市公安局，没人管理，又跑到煤矿所在的县公安局，还是没人管，跑了7年了还没人管理这个事。</div>
+            <div class="divider"></div>
+            <div class="function">
+                <div class="expInfo pull-left">
+                    <span class="expNum">编号:6</span>
+                    <span class="glyphicon glyphicon-thumbs-up voteNum">{$voteData[5]['num']}票</span>
+                </div>
+                <a class="btn btn-sm btn-primary pull-right btn-vote">投票</a>
+                <a class="btn btn-sm btn-default pull-right btn-comment" data-toggle="modal" data-target="#comment_modal" data-whatever="6">评论</a>
+            </div>
+        </div>
+        <div class="content_list_li well well-sm">
+            <div class="content_desc">前年5月,我经人介绍认识了李某,李某谎称自己和市里某水泥厂有合作供煤协议,利润相当可观,邀我合作，还伪造了煤炭购销协议,骗取了我的信任。8月我们签订经营煤炭的合作协议,我负责投资,他则负责对外揽业务。协议签订后,我立刻支付给他20万元合伙款。但是钱到手后,他便玩起了失踪，我到这家水泥厂打听之后,才知该厂根本没有和他有任何业务往来。找到他后我给了他机会,让他还钱就不报警,他还款2万元后,和我签下还款协议,余款分期偿还。但后来,他又玩起了失踪。去年7月,我忍无可忍,向警方报案。今年8月,他终于被抓获。为了减轻处罚才让家人筹集资金把余下的18万元归还了我，最后判了四年。</div>
+            <div class="divider"></div>
+            <div class="function">
+                <div class="expInfo pull-left">
+                    <span class="expNum">编号:7</span>
+                    <span class="glyphicon glyphicon-thumbs-up voteNum">{$voteData[6]['num']}票</span>
+                </div>
+                <a class="btn btn-sm btn-primary pull-right btn-vote">投票</a>
+                <a class="btn btn-sm btn-default pull-right btn-comment" data-toggle="modal" data-target="#comment_modal" data-whatever="7">评论</a>
+            </div>
+        </div>
+        <div class="content_list_li well well-sm">
+            <div class="content_desc">山西大同人张某，16年趁煤炭市场混乱高价卖煤低价出售，刚开始一两千吨打钱的时候挺正常。取得信任后打了两万吨的钱，由于没有合同公安不给立案。人有找不到骗了好几个洗煤厂六七百万。多宣传一下以防别人再上当受骗。</div>
+            <div class="divider"></div>
+            <div class="function">
+                <div class="expInfo pull-left">
+                    <span class="expNum">编号:8</span>
+                    <span class="glyphicon glyphicon-thumbs-up voteNum">{$voteData[7]['num']}票</span>
+                </div>
+                <a class="btn btn-sm btn-primary pull-right btn-vote">投票</a>
+                <a class="btn btn-sm btn-default pull-right btn-comment" data-toggle="modal" data-target="#comment_modal" data-whatever="8">评论</a>
+            </div>
+        </div>
+        <div class="content_list_li well well-sm">
+            <div class="content_desc">骗子王某在江湖上名叫三十，鄂尔多斯煤炭江湖负责人，加盟的煤炭江湖店在内蒙新庙，扛煤炭江湖的大旗出来行骗，专门以资金周转不过来，或者周末承兑无法兑换，公户出不了款为理由向自己身边的朋友或者合作伙伴以借钱、骗钱，有借无还。我被他骗了二十万，已经报警，还有几个人也被骗了，都是他的合作伙伴或者朋友，叫他供货也是质量不达标的，千万小心。</div>
+            <div class="divider"></div>
+            <div class="function">
+                <div class="expInfo pull-left">
+                    <span class="expNum">编号:9</span>
+                    <span class="glyphicon glyphicon-thumbs-up voteNum">{$voteData[8]['num']}票</span>
+                </div>
+                <a class="btn btn-sm btn-primary pull-right btn-vote">投票</a>
+                <a class="btn btn-sm btn-default pull-right btn-comment" data-toggle="modal" data-target="#comment_modal" data-whatever="9">评论</a>
+            </div>
+        </div>
+        <div class="content_list_li well well-sm">
+            <div class="content_desc">山东临朐的骗子，王某，于2017年5月31日，自己安排车过来霍洛湾拉了一车四九块，当时，咱们跟他说的就是石头保证捡干净，面子一点没有，硬质煤一车有一吨左右，那个任何人也没法捡干净，它和煤一个颜色，捡一会儿看着就眼花了，皮带转着看不清楚，他当时答应很好，装好车煤款直接发过来了，6月1日，他打电话说煤里有硬质煤，他自己说的也没事，让抓紧联系车装一车三六块，6月3日，咱们联系了一个车，等装好后，打电话让打款，他说，你先让车走，他现在正在卸货，晚上打，等晚上打电话，他说今天不行了，明天下午一定打，等6月4日，他把煤卸了，我给打电话，他说这车三六块没问题挺好的上车煤不行，没法打款，他这句话只要做傻子都明白，都知道四九永远比三六好捡，这样的谎言编的有点太低下了，再一个，只要是发煤的敢把煤赊给你，说明敢保证煤质的，自己煤不保证质量也不敢赊给你，这都很简单的道理。一直推脱到6月7日，打电话他说人家扣他5000元，说是捡出来的硬质煤有一吨，跟我说这个煤燃烧，就是烧不透，我说你让他别动煤，咱们山东有很多客户要这个煤，我自己贴钱把煤拉走，他说煤已经和他的煤掺和起来了，拉不走，（打个比方，咱们上街买肉，你都把肉吃到肚里了，反过来找卖肉的，说肉质有问题，他能给你退款么）我说咱们可以在咱们当地报警，一共两回交易，他这个属于诈骗，他又改变话题说是扣2000，专门抓咱们心理呢！有些事咱们觉得没必要，嫌走法律程序麻烦，所以我们无形中被骗2000元，好在运费没把司机骗了，这不是明显的骗子么，本人慎重提示，咱们发煤的不容易，一车也就挣个几十块钱，希望大家都谨慎一些，我不希望咱们发煤的和司机朋友被这样的货色上当受骗，让这样的骗子影响我们正常生意，搞得有好的客户让咱们调车，咱们都不敢调，即使煤款打了，回去以后不给结运费，给自己添没必要的麻烦，请看到的发煤老板以及司机朋友相互转发点赞，引以为戒。</div>
+            <div class="divider"></div>
+            <div class="function">
+                <div class="expInfo pull-left">
+                    <span class="expNum">编号:10</span>
+                    <span class="glyphicon glyphicon-thumbs-up voteNum">{$voteData[9]['num']}票</span>
+                </div>
+                <a class="btn btn-sm btn-primary pull-right btn-vote">投票</a>
+                <a class="btn btn-sm btn-default pull-right btn-comment" data-toggle="modal" data-target="#comment_modal" data-whatever="10">评论</a>
+            </div>
+        </div>
+        <div class="content_list_li well well-sm">
+            <div class="content_desc">各位朋友，大家好！我是山东淄博的，也做着煤炭，现向大家分享一个煤炭骗子的事，谨防受骗！他叫李某，是山东烟台的，老家是潍坊安丘的，我是在2011年在山西发煤时通过山东老乡（也是战友）认识的，当时认为都是山东老乡，又都是背井离乡的在山西发煤，就感到特别亲切！并且通过交谈和沟通感觉有点大哥的味道，因为他总是以老大哥的姿态和老煤炭的前辈在告诫我说，做煤炭一定要注意安全，一定要做到先打款后发货等等，我很是感动！于时就留他在我那里白吃白喝白住了半个月（当时我在山西租住的房子，他刚去没地住），然后又坐我的车从山西回到了山东，临走时我把自己的一套乔丹运动服送给了他（因为当时天冷了他一直还穿着短裤），我就是这样对他的！后来朋友们听了我与他相遇相识到被骗的经过后，说我上演了一场：新世纪“农夫与蛇”的故事！2012年3月他让我给他发一车锅炉煤到高密，说货到就给我煤款，并口口声声说：你还不相信我吗！我就给在河北的朋友打了个电话，按照他对煤炭的具体指标和要求把煤发过去了，就这样他就上演了一场骗煤大戏：货到的当天我在淄博，我说我赶过去接货，他说有我在这里呢，你过来干啥啊？当时我正好在淄博给另一个客户卸煤，一想算了，都认识半年多了，他还能骗我吗！就这样，他就开始找种种借口一再拖延给我煤款！我在想啊就一车煤啊，才20000来块钱！人就变成这样了！当时他说明天一定给打钱、下周一、煤炭质量有问题、老板要扣款、我得把煤给人家掺杂着烧完了，这一晃就是半月过去了！其实老板已经在煤到一个星期就把钱给他了！再打电话，他就说我回烟台给你弄钱去、我正在通过银行贷款给你钱（这些我有电话录音）！再后来就联系不上了.....！电话不接、拉黑、换号！直到我找到了高密的那家企业，知道了全部真相，并通过这家企业的老板转告，他才跟我联系！我去了烟台找到了他，可他百般抵赖，说没有钱，并且欠条也不打.......,直到现在人也一直联系不上！无奈之下，特将此事发到网上，希望广大朋友能相互转告，不要再重走我这样的被骗路！！！！</div>
+            <div class="divider"></div>
+            <div class="function">
+                <div class="expInfo pull-left">
+                    <span class="expNum">编号:11</span>
+                    <span class="glyphicon glyphicon-thumbs-up voteNum">{$voteData[10]['num']}票</span>
+                </div>
+                <a class="btn btn-sm btn-primary pull-right btn-vote">投票</a>
+                <a class="btn btn-sm btn-default pull-right btn-comment" data-toggle="modal" data-target="#comment_modal" data-whatever="11">评论</a>
+            </div>
+        </div>
+        <div class="content_list_li well well-sm">
+            <div class="content_desc">山东高密的骗子，宫某，对外有时也自称宫某某。五月份给我电话，说是水泥厂大量求购烟煤，通过朋友给他发了一车，当时谈好的0.104，化验出结果付全款，车到付运费。现在三个多月过去了，从五月份开始已多次催要，一直说厂里没钱，又说厂里检修，就找多种借口推脱，7月24日给我发个短信，说是26日厂里给承兑，让我在等两天，8月1日给他打电话就停机了，一直到八月中旬，通过朋友打听到她老公的电话，给她老公打电话，她老公说不知道这件事，说她住院了，第二天又给他打电话，说马上出院，出院后把钱打给我，最晚9月3日。9月3日再给她老公打电话拒接，然后发短信说是开车，下午再打电话还是拒接，给他发短信也不回 ，直到今天这一车货款已经三个多月了，现在人也联系不到。昨天朋友说这个宫某就是个骗子，今年就有网友给她曝光过 从网上找了下还真找到了，希望做煤炭的朋友千万小心。</div>
+            <div class="divider"></div>
+            <div class="function">
+                <div class="expInfo pull-left">
+                    <span class="expNum">编号:12</span>
+                    <span class="glyphicon glyphicon-thumbs-up voteNum">{$voteData[11]['num']}票</span>
+                </div>
+                <a class="btn btn-sm btn-primary pull-right btn-vote">投票</a>
+                <a class="btn btn-sm btn-default pull-right btn-comment" data-toggle="modal" data-target="#comment_modal" data-whatever="12">评论</a>
+            </div>
+        </div>
+        <div class="content_list_li well well-sm">
+            <div class="content_desc">山西张某去年给（王冲）王曲电厂派过车也上过煤/在四门沟煤矿也装过</div>
+            <div class="divider"></div>
+            <div class="function">
+                <div class="expInfo pull-left">
+                    <span class="expNum">编号:13</span>
+                    <span class="glyphicon glyphicon-thumbs-up voteNum">{$voteData[12]['num']}票</span>
+                </div>
+                <a class="btn btn-sm btn-primary pull-right btn-vote">投票</a>
+                <a class="btn btn-sm btn-default pull-right btn-comment" data-toggle="modal" data-target="#comment_modal" data-whatever="13">评论</a>
+            </div>
+        </div>
+        <div class="content_list_li well well-sm">
+            <div class="content_desc">以买卖朝鲜煤炭为名，男子薛某飞虚构事实与日照某储运公司签订了购销合同，但是在收到对方打款后，薛某飞却迟迟不履行合同要求，反而将日照公司所打的170余万元用于偿还个人欠债，在对方公司一再催促下，薛某飞不仅将手机停用，而且在警方侦查之前便出境至邻国朝鲜。</div>
+            <div class="divider"></div>
+            <div class="function">
+                <div class="expInfo pull-left">
+                    <span class="expNum">编号:14</span>
+                    <span class="glyphicon glyphicon-thumbs-up voteNum">{$voteData[13]['num']}票</span>
+                </div>
+                <a class="btn btn-sm btn-primary pull-right btn-vote">投票</a>
+                <a class="btn btn-sm btn-default pull-right btn-comment" data-toggle="modal" data-target="#comment_modal" data-whatever="14">评论</a>
+            </div>
+        </div>
+        <div class="content_list_li well well-sm">
+            <div class="content_desc">遵义商人黄某没有想到,与之合伙做煤生意的江某竟是骗子,骗了他16万元后人间蒸发。江某落网后,经播州区检察院提起公诉,12月8日,被该区法院一审以诈骗罪判处有期徒刑3年,缓刑4年,处罚金3万元。经查,家住播州区的江某游手好闲。2008年7月,江某经人介绍认识了商人黄某,谎称自己和遵义某水泥厂有合作供煤协议,利润相当可观,力邀黄某合作。事后,江某伪造了煤炭购销协议,取得了黄某的信任。同年8月,双方签订经营煤炭的合作协议,由黄某负责投资,江某则负责对外揽业务。协议签订后,黄某即支付给江某16万元合伙款。而钱到手后,江某便玩起了失踪。黄某到新蒲新区这家水泥厂打听之后,才知该厂根本没有和江某有任何业务往来。但黄某还是给了江某机会,让其还钱便不会报警,江某还款2万元后,和黄某签下还款协议,余款分期偿还。但后来,江某玩起了失踪。2015年5月,黄某忍无可忍,向播州区警方报案。今年7月,江某被抓获。为了减轻处罚,江某让家人筹集资金把余下的14万元及时归还了黄某,取得了黄的谅解。鉴此,法院从轻作出了上述判决。</div>
+            <div class="divider"></div>
+            <div class="function">
+                <div class="expInfo pull-left">
+                    <span class="expNum">编号:15</span>
+                    <span class="glyphicon glyphicon-thumbs-up voteNum">{$voteData[14]['num']}票</span>
+                </div>
+                <a class="btn btn-sm btn-primary pull-right btn-vote">投票</a>
+                <a class="btn btn-sm btn-default pull-right btn-comment" data-toggle="modal" data-target="#comment_modal" data-whatever="15">评论</a>
+            </div>
+        </div>
+        <div class="content_list_li well well-sm">
+            <div class="content_desc">王则湾塞北停车场背后的煤场，大家小心了，我前几天装车付款拉了一车沫煤，老板说是6000以上的，单价160，拉回来一看是五千左右的煤，害我一车煤赔了九千多块，想在这里曝光他，名字(已被隐藏)</div>
+            <div class="divider"></div>
+            <div class="function">
+                <div class="expInfo pull-left">
+                    <span class="expNum">编号:16</span>
+                    <span class="glyphicon glyphicon-thumbs-up voteNum">{$voteData[15]['num']}票</span>
+                </div>
+                <a class="btn btn-sm btn-primary pull-right btn-vote">投票</a>
+                <a class="btn btn-sm btn-default pull-right btn-comment" data-toggle="modal" data-target="#comment_modal" data-whatever="16">评论</a>
+            </div>
+        </div>
+        <div class="content_list_li well well-sm">
+            <div class="content_desc">山西高平李某是骗子，钱我打过去了，给我的都是石头和沫子。</div>
+            <div class="divider"></div>
+            <div class="function">
+                <div class="expInfo pull-left">
+                    <span class="expNum">编号:17</span>
+                    <span class="glyphicon glyphicon-thumbs-up voteNum">{$voteData[16]['num']}票</span>
+                </div>
+                <a class="btn btn-sm btn-primary pull-right btn-vote">投票</a>
+                <a class="btn btn-sm btn-default pull-right btn-comment" data-toggle="modal" data-target="#comment_modal" data-whatever="17">评论</a>
+            </div>
+        </div>
+        <div class="content_list_li well well-sm">
+            <div class="content_desc">我来自四川省内江市威远县两河镇凉山村五社，姓李，我于2O14年12月7日被陕西省榆林市吴堡县岔上乡高上焉村薜某骗去2万煤款，至今天无着落，报了警也不管用</div>
+            <div class="divider"></div>
+            <div class="function">
+                <div class="expInfo pull-left">
+                    <span class="expNum">编号:18</span>
+                    <span class="glyphicon glyphicon-thumbs-up voteNum">{$voteData[17]['num']}票</span>
+                </div>
+                <a class="btn btn-sm btn-primary pull-right btn-vote">投票</a>
+                <a class="btn btn-sm btn-default pull-right btn-comment" data-toggle="modal" data-target="#comment_modal" data-whatever="18">评论</a>
+            </div>
+        </div>
+        <div class="content_list_li well well-sm">
+            <div class="content_desc">骗子：山西平遥张某，客户给了定金不给发货。人渣！</div>
+            <div class="divider"></div>
+            <div class="function">
+                <div class="expInfo pull-left">
+                    <span class="expNum">编号:19</span>
+                    <span class="glyphicon glyphicon-thumbs-up voteNum">{$voteData[18]['num']}票</span>
+                </div>
+                <a class="btn btn-sm btn-primary pull-right btn-vote">投票</a>
+                <a class="btn btn-sm btn-default pull-right btn-comment" data-toggle="modal" data-target="#comment_modal" data-whatever="19">评论</a>
+            </div>
+        </div>
+        <div class="content_list_li well well-sm">
+            <div class="content_desc">白家焉骗子姓庞，他家冒充武家塔实际是卖煤干石大家千万注意！</div>
+            <div class="divider"></div>
+            <div class="function">
+                <div class="expInfo pull-left">
+                    <span class="expNum">编号:20</span>
+                    <span class="glyphicon glyphicon-thumbs-up voteNum">{$voteData[19]['num']}票</span>
+                </div>
+                <a class="btn btn-sm btn-primary pull-right btn-vote">投票</a>
+                <a class="btn btn-sm btn-default pull-right btn-comment" data-toggle="modal" data-target="#comment_modal" data-whatever="20">评论</a>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="clearfix" style="height:2em;"></div>
+    <div class="result text-center">
+        <a class="btn btn-warning">查看投票结果</a>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade bs-example-modal-lg" id="comment_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" style="top:10%">
+            <div class="modal-content">
+                <div class="modal-header" style="border: none">
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span aria-hidden="true">&times;</span>
+                        <span class="sr-only">Close</span>
+                    </button>
+                    <h5 class="modal-title" id="myModalLabel" style="color: grey;">评论留言</h5>
+                </div>
+                <div class="comment modal-body" style="height: 200px;overflow: scroll">
+
+                </div>
+                <div class="modal-body" style="padding-top: 0;padding-bottom: 0">
+                    <input id="exp_id" type="hidden">
+                    <textarea id="exp_comment" class="form-control" rows="2" placeholder="请说点什么吧" style="resize: none;width: 100%"></textarea>
+                </div>
+                <div class="modal-footer" style="border: none">
+                    <button id="comment_submit" type="button" class="btn btn-primary" style="border-color: #ccc;background-color: #04bfc6">提交</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    $(function(){
+        alert('投票活动已结束');
+        console.log({$voteData[3]});
+        if(cookie('voteArr')){
+            var voteArr = cookie('voteArr').split('-');
+            voteArr.forEach(function(value,index){
+                if(value && value != 0){
+                    console.log(value);
+                    $($('.btn-primary')[index]).addClass('disabled').text('已投票');
+                }
+            })
+        }else{
+            cookie('voteArr','0');
+        }
+    });
+    $('.btn-vote').click(function(){
+        alert('投票活动已结束');
+        return false;
+//        swal({
+//            title: "投票成功!",
+//            text: "非常感谢！",
+//            type: "success",
+//            showCancelButton: true,
+//            confirmButtonColor: "#f0ad4e",
+//            confirmButtonText: "查看投票结果",
+//            cancelButtonColor: "#337ab7",
+//            cancelButtonText: "确定",
+//            closeOnConfirm: false,
+//            allowOutsideClick: true
+//        }, function () {
+//            console.log(1);
+//            location.href = "{:U('Vote/voteResult')}";
+//        });
+//
+//        return false;
+
+
+        var $this= $(this);
+        var url = "{:U('Vote/voteSub')}";
+        var id = $this.parent('.function').find('.expNum').text().trim().substr(3);
+        console.log(id);
+        $.ajax({
+            type:"post",
+            url:url,
+            data:{
+                id:id,
+                vote:1
+            },
+            success:function(data){
+                var voteNumNode = $this.parent('.function').find('.voteNum');
+                var voteNum = (voteNumNode.text()=='票')?1:parseInt(voteNumNode.text())+1;
+                voteNumNode.text(voteNum + '票');
+                var voteArr = cookie('voteArr').split('-');
+                voteArr[id-1] = 1;
+                cookie('voteArr',voteArr.join('-'));
+                $this.addClass('disabled').text('已投票');
+                swal({
+                    title: "投票成功!",
+                    text: "非常感谢！",
+                    type: "success",
+                    showCancelButton: true,
+                    confirmButtonColor: "#f0ad4e",
+                    confirmButtonText: "查看投票结果",
+                    cancelButtonColor: "#337ab7",
+                    cancelButtonText: "确定",
+                    closeOnConfirm: false,
+                    allowOutsideClick: true
+                }, function () {
+                    console.log(1);
+                    location.href = "{:U('Vote/voteResult')}";
+                });
+            },
+            error:function(XMLHttpRequest,textStatus,errorThrown){
+            }
+        });
+    });
+    $('.confirm').click(function(){
+        console.log(123123);
+        location.href = "{:U('Vote/voteResult')}";
+    });
+    $('.btn-warning').click(function(){
+        location.href = "{:U('Vote/voteResult')}";
+    });
+    $('.btn-comment').click(function(){
+        //禁止滚动条
+//        $(document.body).css({
+//            "overflow":"hidden",
+//            "padding-right":"17px"
+//        });
+//        $('body').css('overflow','hidden');
+        var exp_id = $(this).data('whatever');
+        console.log(exp_id);
+        $.ajax({
+            type: "post",
+            url: "{:U('Vote/commentShow')}",
+            data: {
+                id:exp_id
+            },
+            success: function (data) {
+                $('.comment').html('');
+                if(data && data != '0'){
+                    var commentArr = data.split('#');
+                    console.log(commentArr);
+                    console.log(commentArr.reverse());
+                    $.each(commentArr,function(index,value){
+                        $('.comment').append("<div class='comment-item'>"+value+"</div><div class='divider'></div>");
+                    });
+                }else{
+                    $('.comment').append("<div class='comment-item text-center'>暂时还没有人评论</div>");
+                }
+            }
+        });
+    });
+    //自动对焦
+    $('#comment_modal').on('shown.bs.modal', function (event) {
+        $('#exp_comment').val('');
+        var button = $(event.relatedTarget);
+        var recipient = button.data('whatever');
+        var modal = $(this);
+        modal.find('.modal-title').text('编号' + recipient + '评论');
+        modal.find('.modal-body input').val(recipient);
+    });
+    $('#comment_submit').click(function(){
+        var exp_id = $('#exp_id').val();
+        var exp_comment = $('#exp_comment').val();
+        $.ajax({
+            type: "post",
+            url: "{:U('Vote/commentSub')}",
+            data: {
+                id:exp_id,
+                comment:exp_comment
+            },
+            success: function (data) {
+                $('.comment').prepend("<div class='comment-item'>"+exp_comment+"</div><div class='divider'></div>")
+            }
+        });
+    });
+</script>
+</html>

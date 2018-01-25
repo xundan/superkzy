@@ -9,20 +9,133 @@
     <title>运费查询</title>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
-    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss-v1107.css?v=1"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/city-picker.css"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/scroll-initial.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/city-picker.data.js"></script>
-    <script type="text/javascript" src="__PUBLIC__/home/js/city-picker-search.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/city-picker2.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/loading.js"></script>
 </head>
 <style>
-    .detail{
-        font-size:0.8em
+    .mynavbar:active {
+        background-color: #fafafa;
+    }
+
+    .li-item {
+        margin-bottom: 0.5em;
+        background-color: white;
+        border-radius: 5px;
+        padding: 0.6em 0.6em 0 0.6em;
+        box-shadow: 4px 4px 4px #e1e1e1;
+    }
+
+    .help-block {
+        float: right;
+        margin: 0 10px;
+        font-size: 12px;
+    }
+
+    .area_start,.area_end{
+        font-weight: 600;
+    }
+
+    p {
+        margin-bottom: 0;
+        font-size: 1.1em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .detail {
+        font-size: 0.8em
+    }
+
+    .arrow {
+        padding: 3px;
+        border: 1px solid transparent;
+        border-radius: 50%
+    }
+
+    .divider {
+        height: 1px;
+        margin: 6px 0 0 0;
+        overflow: hidden;
+        background-color: #e5e5e5;
+    }
+
+    .function-bar {
+        height: 2.8em;
+        line-height: 2.8em;
+        position: relative;
+    }
+
+    .time {
+        margin-left: 0.5em;
+        font-size: 12px;
+    }
+
+    .price {
+        font-size: 1.2em;
+        color: red;
+        margin-right: 0.5em;
+    }
+
+    .detail-button {
+        font-size: 12px;
+        padding: 1px 3px;
+        color: #04bfc6;
+        border-color: #04bfc6;
+        margin-right: 0.5em;
+    }
+
+    .feedback-button {
+        font-size: 12px;
+        padding: 2px 8px;
+        color: #04bfc6;
+        border-color: #04bfc6;
+        border-radius: 0.7em;
+        box-shadow: 2px 2px 2px #eee;
+        margin-top: 0.6em;
+    }
+
+    #change_tag .text-center {
+        width: 15%;
+        position: relative;
+        vertical-align: middle;
+    }
+
+    .triangle{
+        width: 0;
+        height: 0;
+        border-top: 0.1em solid transparent;
+        border-right: 1.1em solid transparent;
+        border-bottom:0.2em solid #f30f0f;
+        border-left: 0.1em solid transparent;
+        margin-left: 40px;margin-top: 0.8em;
+    }
+
+    .rectangle{
+        width: 0;
+        height: 0;
+        border-width: 1px 30px;
+        border-style: solid;
+        border-color: #f30f0f;
+    }
+
+    .triangle-bottom{
+        width: 0;
+        height: 0;
+        border-top: 0.2em solid #f30f0f;
+        border-right: 1.1em solid transparent;
+        border-bottom:0.1em solid transparent;
+        border-left: 0.1em solid transparent;
+        margin-left: 40px;"
     }
 </style>
 <body>
@@ -49,9 +162,11 @@
                    style="width: 100%;padding:6px 12px;" value=""
                    placeholder="起始地">
         </span>
-        <span id="change_tag" class="text-center mynavbar area-search" style="width: 15%;">
-            <img src="__PUBLIC__/home/images/arrow-right.png" style="margin-top: 10px;width: 45px">
-        </span>
+        <div id="change_tag" class="text-center mynavbar area-search" >
+            <div class="triangle"></div>
+            <div class="rectangle"></div>
+            <div class="triangle-bottom"></div>
+        </div>
         <span id="end_tag" class="area-search"
               style="width: 43%;display: inline-block;line-height: 40px;font-size: 1.2em">
             <img src="__PUBLIC__/home/images/area_end_text.png" class=""
@@ -80,46 +195,42 @@
                     </div>
                 </if>
                 <volist name="message" id="data">
-                    <div style=";background-color: white;border-radius: 5px;">
-                        <table class="text-center" style="width: 100%;" onclick="window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/'+{$data['message_id']};">
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td class="help-block text-right" style="margin: 0">
-                                    {$data['record_time']|substr=0,10}
-                                </td>
-                            </tr>
+                    <div class="li-item">
+                        <div class="help-block time">{$data['record_time']|substr=0,10}</div>
+                        <table class="text-center" style="width: 100%;">
                             <tr>
                                 <td style="width: 45%">
                                     <!--<img src="__PUBLIC__/home/images/area_start_text.png" class="" style="height: 20px">-->
-                                    <p class="highlight">{$data['area_start_name']}</p>
-                                    <p class="highlight detail">{$data['area_start_detail']}123</p>
+                                    <p class="highlight area_start">{$data['area_start_name']}</p>
+
+                                    <p class="highlight detail area_start_detail">{$data['area_start_detail']}</p>
                                 </td>
-                                <td rowspan="1" class="" style="width: 10%">
-                                    <!--¥{$data['freight_price']}-->
-                                    <span class="glyphicon glyphicon-arrow-right" style="padding: 3px;border: 1px solid #eaeaea;border-radius: 50%"></span>
+                                <td rowspan="1" style="width: 10%;color: #04bfc6;">
+                                    <span>>>></span>
+                                    <!--<span class="glyphicon glyphicon-arrow-right arrow"></span>-->
                                 </td>
                                 <td style="width: 45%">
-                                    <p class="highlight">{$data['area_end_name']}</p>
-                                    <p class="highlight detail">{$data['area_end_detail']}123</p>
+                                    <p class="highlight area_end">{$data['area_end_name']}</p>
+
+                                    <p class="highlight detail area_end_detail">{$data['area_end_detail']}</p>
                                 </td>
                             </tr>
                         </table>
-                        <hr style="margin: 8px 0">
-                        <div style="margin-left: 3%;margin-bottom: 1%;padding-bottom: 2%">
-                            <!--<a href="tel:{$data.phone_number}" onclick='event.stopPropagation();' class="btn btn-default" style='padding: 3px;text-decoration: none;color: #04bfc6;border-color: #04bfc6'>-->
-                                <!--<span><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 15px">-->
-                                <!--<span style="font-size: 1.2em">拨打电话</span></span>-->
-                            <!--</a>-->
-                            <button style="padding: 4px 8px;margin-left: 12px;color: #04bfc6;border-color: #04bfc6" class="btn btn-default" data-toggle="modal" data-target="#feedback" data-whatever="{$data['id']}">查看详情</button>
-
-                                <!--<span>-->
-                                    <!--<img src="__PUBLIC__/home/images/useless.png" style="height: 30px" onclick="asd(this)">-->
-                                    <!--<span style="color:#fb3e1e;margin-left: -3px" id="useful_count">123</span>-->
-                                <!--</span>-->
-                            <button style="padding: 4px 8px;margin-left: 12px;color: #04bfc6;border-color: #04bfc6" class="btn btn-default pull-right" data-toggle="modal" data-target="#feedback" data-whatever="{$data['id']}">报错</button>
-                            <!--<button class="btn btn-default" style="background-color: red;color: blue;"><span class="glyphicon glyphicon-user"></span> asd</button>-->
-                            <!--<div style="background: url('__PUBLIC__/home/images/useless.png') no-repeat;"></div>-->
+                        <div class="divider"></div>
+                        <div class="function-bar">
+                            <span class="price">¥{$data['freight_price']}元/吨</span>
+                            <!--<span>-->
+                            <!--<img src="__PUBLIC__/home/images/useless.png" style="height: 30px" onclick="asd(this)">-->
+                            <!--<span style="color:#fb3e1e;margin-left: -3px" id="useful_count">123</span>-->
+                            <!--</span>-->
+                            <button class="btn btn-default feedback-button pull-right" data-toggle="modal"
+                                    data-target="#feedback" data-whatever="{$data['id']}">
+                                报错
+                            </button>
+                            <!--<button class="btn btn-default detail-button pull-right"-->
+                            <!--onclick="window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/'+{$data['message_id']};">-->
+                            <!--查看详情-->
+                            <!--</button>-->
                         </div>
                     </div>
                 </volist>
@@ -133,52 +244,42 @@
 </div>
 <!--克隆-->
 <div id="cloneObj" style="display: none;">
-    <div style=";background-color: white;border-radius: 5px;">
-        <table style="width: 100%" onclick="window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/'+{$data['message_id']};">
+    <div class="li-item">
+        <table class="text-center" style="width: 100%;">
             <tr>
-                <td></td>
-                <td class="help-block text-right" style="margin: 0">
-                    {$data['record_time']|substr=0,10}
+                <td style="width: 45%">
+                    <p class="highlight area_start">{$data['area_start_name']}</p>
+
+                    <p class="highlight detail area_start_detail">{$data['area_start_detail']}</p>
                 </td>
-            </tr>
-            <tr>
-                <td style="padding: 0 10px;font-size: 1.2em">
-                    <img src="__PUBLIC__/home/images/area_start_text.png" class="" style="height: 20px">
-                    <span class="highlight">{$data['area_start_name']}</span>
-                    <span class="highlight detail">{$data['area_start_detail']}</span>
+                <td rowspan="1" style="width: 10%">
+                    <span>>>></span>
                 </td>
-                <td rowspan="2" class="text-right" style="padding: 0 10px;font-size: 2em;color: red">
-                    ¥{$data['freight_price']}
-                </td>
-            </tr>
-            <tr>
-                <td style="padding: 0 10px;font-size: 1.2em">
-                    <img src="__PUBLIC__/home/images/area_end_text.png" class="" style="height: 20px">
-                    <span class="highlight">{$data['area_end_name']}</span>
-                    <span class="highlight detail">{$data['area_start_detail']}</span>
+                <td style="width: 45%">
+                    <p class="highlight area_end">{$data['area_end_name']}</p>
+
+                    <p class="highlight detail area_end_detail">{$data['area_end_detail']}</p>
                 </td>
             </tr>
         </table>
-        <hr style="margin: 8px 0">
-        <div style="margin-left: 3%;margin-bottom: 1%;padding-bottom: 2%">
-            <a href="tel:{$data.phone_number}" onclick='event.stopPropagation();' class="btn btn-default" style='padding: 3px;text-decoration: none;color: #04bfc6;border-color: #04bfc6'>
-                                <span><img src="__PUBLIC__/home/images/phone.png" class="" style="width: 15px">
-                                <span style="font-size: 1.2em">拨打电话</span></span>
-            </a>
-            <div class="pull-right" style="padding: 0 3px;">
-                <!--<span>-->
-                <!--<img src="__PUBLIC__/home/images/useless.png" style="height: 30px" onclick="asd(this)">-->
-                <!--<span style="color:#fb3e1e;margin-left: -3px" id="useful_count">123</span>-->
-                <!--</span>-->
-                <button style="padding: 4px 8px;margin-left: 12px;color: #04bfc6;border-color: #04bfc6" class="btn btn-default" data-toggle="modal" data-target="#feedback" data-whatever="{$data['id']}">报错</button>
-            </div>
-            <!--<button class="btn btn-default" style="background-color: red;color: blue;"><span class="glyphicon glyphicon-user"></span> asd</button>-->
-            <!--<div style="background: url('__PUBLIC__/home/images/useless.png') no-repeat;"></div>-->
+        <div class="divider"></div>
+        <div class="function-bar">
+            <span class="time pull-left"></span>
+            <button class="btn btn-default feedback-button pull-right" data-toggle="modal" data-target="#feedback"
+                    data-whatever="{$data['id']}">
+                报 错
+            </button>
+            <span class="price pull-right"></span>
+            <!--<button class="btn btn-default detail-button pull-right"-->
+                    <!--onclick="window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/'+{$data['message_id']};">-->
+                <!--查看详情-->
+            <!--</button>-->
         </div>
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade bs-example-modal-lg" id="feedback" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade bs-example-modal-lg" id="feedback" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog" style="top:30%">
         <div class="modal-content">
             <div class="modal-header" style="border: none">
@@ -190,10 +291,13 @@
             </div>
             <div class="modal-body" style="padding-top: 0;padding-bottom: 0">
                 <input id="freight_id" name="freight_id" type="hidden">
-                <textarea name="feedback" id="feedback_input" class="form-control" rows="5" placeholder="您可以输入报错信息，也可以直接提交" style="resize: none;width: 100%"></textarea>
+                <textarea name="feedback" id="feedback_input" class="form-control" rows="5"
+                          placeholder="您可以输入实际运费，也可以直接提交" style="resize: none;width: 100%"></textarea>
             </div>
             <div class="modal-footer" style="border: none">
-                <button id="feedback_submit" type="button" class="btn btn-primary" style="border-color: #ccc;background-color: #04bfc6">提交</button>
+                <button id="feedback_submit" type="button" class="btn btn-primary"
+                        style="border-color: #ccc;background-color: #04bfc6">提交
+                </button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
             </div>
         </div>
@@ -203,65 +307,63 @@
 <!--载入读取上次标签-->
 <script>
     $(function () {
-//        var temp_load = cookie('freight_search');
-//        var temp_load_obj = JSON.parse(cookie('freight_search'));
-//        console.log(temp_load_obj);
-//        jQuery.each(temp_load_obj,function(k,val){
-//            if(val.name == 'area_start'){
-//                if(val.value != '') {
-//                    $('input[name=area_start]').val(val.value);
-//                }else{}
-//            }
-//            else if(val.name == 'area_start_name'){
-//                if(val.value != ''){
-//                    $('input[name=area_start_name]').val(val.value);
-//                    $('#area_start_html').html(val.value);
-//                }else{}
-//            }
-//            else if (val.name == 'area_start_val') {
-//                if (val.value != '') {
-//                    $('input[name=area_start_val]').val(val.value);
-//                    var AreaArr_start = val.value.split('/');
-//                    $('#area_start').citypicker('destroy');
-//                    $('#area_start').citypicker({
-//                        province: AreaArr_start[0],
-//                        city: AreaArr_start[1],
-//                        district: AreaArr_start[2],
-//                        area: AreaArr_start[3]
-//                    });
-//                } else {
-//                }
-//            }
-//            else if(val.name == 'area_end'){
-//                if(val.value != ''){
-//                    $('input[name=area_end]').val(val.value);
-//                }else{}
-//            }
-//            else if(val.name == 'area_end_name'){
-//                if(val.value != ''){
-//                    $('input[name=area_end_name]').val(val.value);
-//                    $('#area_end_html').html(val.value);
-//                }
-//            }
-//            else if (val.name == 'area_end_val') {
-//                if (val.value != '') {
-//                    $('input[name=area_end_val]').val(val.value);
-//                    var AreaArr_end = val.value.split('/');
-//                    $('#area_end').citypicker('destroy');
-//                    $('#area_end').citypicker({
-//                        province: AreaArr_end[0],
-//                        city: AreaArr_end[1],
-//                        district: AreaArr_end[2],
-//                        area: AreaArr_end[3]
-//                    });
-//                } else {
-//                }
-//            }
-//        });
-//        console.log('form');
-//        console.log(JSON.stringify($('#tag_search').serializeArray()));
-//        refresh_hl();
-//    });
+        var temp_load = cookie('freight_search');
+        var temp_load_obj = JSON.parse(cookie('freight_search'));
+        console.log(temp_load_obj);
+        jQuery.each(temp_load_obj,function(k,val){
+            if(val.name == 'area_start'){
+                if(val.value != '') {
+                    $('input[name=area_start]').val(val.value);
+                }else{}
+            }
+            else if(val.name == 'area_start_name'){
+                if(val.value != ''){
+                    $('input[name=area_start_name]').val(val.value);
+                    $('#area_start_html').html(val.value);
+                }else{}
+            }
+            else if (val.name == 'area_start_val') {
+                if (val.value != '') {
+                    $('input[name=area_start_val]').val(val.value);
+                    var AreaArr_start = val.value.split('/');
+                    $('#area_start').citypicker('destroy');
+                    $('#area_start').citypicker({
+                        province: AreaArr_start[0],
+                        city: AreaArr_start[1],
+                        district: AreaArr_start[2],
+                    });
+                } else {
+                }
+            }
+            else if(val.name == 'area_end'){
+                if(val.value != ''){
+                    $('input[name=area_end]').val(val.value);
+                }else{}
+            }
+            else if(val.name == 'area_end_name'){
+                if(val.value != ''){
+                    $('input[name=area_end_name]').val(val.value);
+                    $('#area_end_html').html(val.value);
+                }
+            }
+            else if (val.name == 'area_end_val') {
+                if (val.value != '') {
+                    $('input[name=area_end_val]').val(val.value);
+                    var AreaArr_end = val.value.split('/');
+                    $('#area_end').citypicker('destroy');
+                    $('#area_end').citypicker({
+                        province: AreaArr_end[0],
+                        city: AreaArr_end[1],
+                        district: AreaArr_end[2],
+                    });
+                } else {
+                }
+            }
+        });
+        console.log('form');
+        console.log(JSON.stringify($('#tag_search').serializeArray()));
+        setTimeout(requestAndRendering,1000);
+    });
 </script>
 <!--功能抽离用于不同情况刷新页面-->
 <script>
@@ -287,30 +389,35 @@
             success: function (data) {
                 console.log('success');
                 var jsonObj = eval("(" + data + ")");
-                console.log(jsonObj);
+                if (jsonObj.data.length == 0) {
+                    $('#search').html("<div class='text-center'>" +
+                            "<img src='__PUBLIC__/home/images/no_more_message.jpg' style='width: 100%;'>" +
+                            "</div>");
+                    return false;
+                }
                 $('#search').html('');
                 $('#page').val(1);
-                $.each(jsonObj.data,function(k,val){
-                    var tempObj=$("#cloneObj").children("div").clone(true);
-                    tempObj.children('table').attr('onclick',"window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/"+val.message_id+"';");
-                    tempObj.children('table').children('tbody').children('tr').eq(0).children('td').eq(1).html(val.record_time.substr(0,10));
-                    tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(0).children('span').html(val.area_start_name);
-                    tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(0).children('span').eq(1).html(val.area_start_detail);
-                    tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(1).html('¥'+val.freight_price);
-                    tempObj.children('table').children('tbody').children('tr').eq(2).children('td').children('span').html(val.area_end_name);
-                    tempObj.children('table').children('tbody').children('tr').eq(2).children('td').children('span').eq(1).html(val.area_end_detail);
-                    tempObj.children('div').children('a').attr('href','tel:'+val.phone_number);
-                    tempObj.children('div').children('div').children('button').attr('data-whatever',val.id);
+                $.each(jsonObj.data, function (k, val) {
+                    var tempObj = $("#cloneObj").children("div").clone(true);
+                    tempObj.find('.time').html(showTime(val.record_time));
+                    tempObj.find('.area_start').html(areaStrSplit(val.area_start_merger_name));
+                    tempObj.find('.area_start_detail').html(val.area_start_name+' '+(val.area_start_detail?val.area_start_detail:''));
+                    tempObj.find('.area_end').html(areaStrSplit(val.area_end_merger_name));
+                    tempObj.find('.area_end_detail').html(val.area_end_name+' '+(val.area_end_detail?val.area_end_detail:''));
+                    tempObj.find('.price').html(val.freight_price + '元/吨');
+                    tempObj.find('.feedback-button').attr('data-whatever', val.id);
+//                    tempObj.find('.detail-button').attr('onclick', "window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/" + val.message_id + "';");
                     tempObj.appendTo("#search");
                 });
                 myScroll.refresh();
-                refresh_hl();
+//                refresh_hl();
             },
             complete: function () {
                 $('#loadingToast').hide();
             }
         });
         myScroll.refresh();
+        flag = true;
     }
 </script>
 <!--地址选择-->
@@ -365,149 +472,15 @@
         cookie('area_tag', 'end');
     });
 </script>
-
-<!--点击地址选择(旧)-->
-<script>
-    //起始地
-    $('#area_start_click').click(function () {
-        var goto_url = "{:U('areaSearch/area_search')}";
-        var current_url = window.location.href;
-        cookie('start_or_end', 'start');
-        cookie('last_url', current_url);
-        //填写表单数据
-        //更新页面cookie
-        cookie('freight_search',JSON.stringify($('#tag_search').serializeArray()));
-        //告诉area_search要改什么
-        var source = {name:'freight_search',value:cookie('freight_search')};
-        cookie('source',JSON.stringify(source));
-        //地址跳转
-        window.location.href = goto_url;
-    });
-    //目的地
-    $('#area_end_click').click(function () {
-        var goto_url = "{:U('areaSearch/area_search')}";
-        var current_url = window.location.href;
-        cookie('start_or_end', 'end');
-        cookie('last_url', current_url);
-        //填写表单数据
-        //更新页面cookie
-        cookie('freight_search',JSON.stringify($('#tag_search').serializeArray()));
-        //告诉area_search要改什么
-        var source = {name:'freight_search',value:cookie('freight_search')};
-        cookie('source',JSON.stringify(source));
-        //地址跳转
-        window.location.href = goto_url;
-    });
-    //删除起始地
-    $('#area_start_remove').click(function(event){
-        event.stopPropagation();
-        console.log('remove_start_area');
-        //更改表单数据
-        $('input[name=area_start]').val('');
-        $('input[name=area_start_name]').val('');
-        //更新页面cookie
-        cookie('freight_search',JSON.stringify($('#tag_search').serializeArray()));
-        //取表单数据
-        var area_start = $('input[name=area_start]').val();
-        var area_start_name = $('input[name=area_start_name]').val();
-        var area_end = $('input[name=area_end]').val();
-        var area_end_name = $('input[name=area_end_name]').val();
-        $.ajax({
-            type: "post",
-            url: "{:U('FreightSearch/show')}",
-            data: {
-                isAjax: 1,
-                area_start:area_start,
-                area_start_name:area_start_name,
-                area_end:area_end,
-                area_end_name:area_end_name
-            },
-            success: function (data) {
-                console.log('success');
-                var jsonObj = eval("(" + data + ")");
-                console.log(jsonObj);
-                $('#search').html('');
-                $('#area_start_html').html('点击选择');
-                $('#page').val(1);
-                $.each(jsonObj.data,function(k,val){
-                    var tempObj=$("#cloneObj").children("div").clone(true);
-                    tempObj.children('table').attr('onclick',"window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/"+val.message_id+"';");
-                    tempObj.children('table').children('tbody').children('tr').eq(0).children('td').eq(1).html(val.record_time.substr(0,10));
-                    tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(0).children('span').html(val.area_start_name);
-                    tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(1).html('¥'+val.freight_price);
-                    tempObj.children('table').children('tbody').children('tr').eq(2).children('td').children('span').html(val.area_end_name);
-                    tempObj.children('div').children('a').attr('href','tel:'+val.phone_number);
-                    tempObj.children('div').children('div').children('button').attr('data-whatever',val.id);
-                    tempObj.appendTo("#search");
-                });
-                myScroll.refresh();
-                refresh_hl();
-                flag = true;
-            }
-        });
-        myScroll.refresh();
-    });
-    //删除目的地
-    $('#area_end_remove').click(function(event){
-        event.stopPropagation();
-        console.log('remove_end_area',flag);
-        //更改表单数据
-        $('input[name=area_end]').val('');
-        $('input[name=area_end_name]').val('');
-        //更新页面cookie
-        cookie('freight_search',JSON.stringify($('#tag_search').serializeArray()));
-        //取表单数据
-        var area_start = $('input[name=area_start]').val();
-        var area_start_name = $('input[name=area_start_name]').val();
-        var area_end = $('input[name=area_end]').val();
-        var area_end_name = $('input[name=area_end_name]').val();
-        $.ajax({
-            type: "post",
-            url: "{:U('FreightSearch/show')}",
-            data: {
-                isAjax: 1,
-                area_start:area_start,
-                area_start_name:area_start_name,
-                area_end:area_end,
-                area_end_name:area_end_name
-            },
-            success: function (data) {
-                console.log('success',flag);
-                var jsonObj = eval("(" + data + ")");
-                console.log(jsonObj);
-                $('#search').html('');
-                $('#area_end_html').html('点击选择');
-                $('#page').val(1);
-                $.each(jsonObj.data,function(k,val){
-                    var tempObj=$("#cloneObj").children("div").clone(true);
-                    tempObj.children('table').attr('onclick',"window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/"+val.message_id+"';");
-                    tempObj.children('table').children('tbody').children('tr').eq(0).children('td').eq(1).html(val.record_time.substr(0,10));
-                    tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(0).children('span').html(val.area_start_name);
-                    tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(1).html('¥'+val.freight_price);
-                    tempObj.children('table').children('tbody').children('tr').eq(2).children('td').children('span').html(val.area_end_name);
-                    tempObj.children('div').children('a').attr('href','tel:'+val.phone_number);
-                    tempObj.children('div').children('div').children('button').attr('data-whatever',val.id);
-                    tempObj.appendTo("#search");
-                });
-                myScroll.refresh();
-                refresh_hl();
-                flag = true;
-            }
-        });
-        myScroll.refresh();
-    });
-
-</script>
 <!--滚动功能-->
 <script>
+    var load_state = 0;
     var flag = true;
-    var myScroll, pullDownEl, pullDownOffset, pullUpEl, pullUpOffset;
-    var time_now, update_time;
     /**下拉刷新 （自定义实现此方法）
      *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
      */
     function pullDownAction() {
-        console.log('down',flag);
+        console.log('down', flag);
         var area_start = $('input[name=area_start]').val();
         var area_start_name = $('input[name=area_start_name]').val();
         var area_end = $('input[name=area_end]').val();
@@ -517,30 +490,37 @@
             url: "{:U('FreightSearch/show')}",
             data: {
                 isAjax: 1,
-                area_start:area_start,
-                area_start_name:area_start_name,
-                area_end:area_end,
-                area_end_name:area_end_name
+                area_start: area_start,
+                area_start_name: area_start_name,
+                area_end: area_end,
+                area_end_name: area_end_name
             },
             success: function (data) {
-                console.log('success',flag);
+                console.log('success', flag);
                 var jsonObj = eval("(" + data + ")");
-                console.log(jsonObj);
+                console.log(jsonObj, jsonObj.data, jsonObj.data.length);
+                if (jsonObj.data.length == 0) {
+                    $('#search').html("<div class='text-center'>" +
+                            "<img src='__PUBLIC__/home/images/no_more_message.jpg' style='width: 100%;'>" +
+                            "</div>");
+                    return false;
+                }
                 $('#search').html('');
                 $('#page').val(1);
-                $.each(jsonObj.data,function(k,val){
-                    var tempObj=$("#cloneObj").children("div").clone(true);
-                    tempObj.children('table').attr('onclick',"window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/"+val.message_id+"';");
-                    tempObj.children('table').children('tbody').children('tr').eq(0).children('td').eq(1).html(val.record_time.substr(0,10));
-                    tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(0).children('span').html(val.area_start_name);
-                    tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(1).html('¥'+val.freight_price);
-                    tempObj.children('table').children('tbody').children('tr').eq(2).children('td').children('span').html(val.area_end_name);
-                    tempObj.children('div').children('a').attr('href','tel:'+val.phone_number);
-                    tempObj.children('div').children('div').children('button').attr('data-whatever',val.id);
+                $.each(jsonObj.data, function (k, val) {
+                    var tempObj = $("#cloneObj").children("div").clone(true);
+                    tempObj.find('.time').html(showTime(val.record_time));
+                    tempObj.find('.area_start').html(areaStrSplit(val.area_start_merger_name));
+                    tempObj.find('.area_start_detail').html(val.area_start_name+' '+(val.area_start_detail?val.area_start_detail:''));
+                    tempObj.find('.area_end').html(areaStrSplit(val.area_end_merger_name));
+                    tempObj.find('.area_end_detail').html(val.area_end_name+' '+(val.area_end_detail?val.area_end_detail:''));
+                    tempObj.find('.price').html(val.freight_price + '元/吨');
+                    tempObj.find('.feedback-button').attr('data-whatever', val.id);
+//                    tempObj.find('.detail-button').attr('onclick', "window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/" + val.message_id + "';");
                     tempObj.appendTo("#search");
                 });
                 myScroll.refresh();
-                refresh_hl();
+//                refresh_hl();
                 flag = true;
             }
         });
@@ -550,152 +530,66 @@
      *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
      */
     function pullUpAction() {
-        console.log('up',flag);
-        var a = $('#tag_search').serialize();
-        var area_start = $('input[name=area_start]').val();
-        var area_start_name = $('input[name=area_start_name]').val();
-        var area_end = $('input[name=area_end]').val();
-        var area_end_name = $('input[name=area_end_name]').val();
-        var page = $('#page').val();
-        console.log('cur_page',page);
-        var request_page = parseInt(page) + 1;
-        console.log('rq_page',request_page);
-        $.ajax({
-            type: "post",
-            url: "{:U('FreightSearch/show_more')}",
-            data: {
-                area_start:area_start,
-                area_start_name:area_start_name,
-                area_end:area_end,
-                area_end_name:area_end_name,
-                page:request_page
-            },
-            success: function (data) {
-                console.log('success',flag);
-                var jsonObj = eval("(" + data + ")");
-                console.log(jsonObj);
-                $.each(jsonObj.data,function(k,val){
-                    var tempObj=$("#cloneObj").children("div").clone(true);
-                    tempObj.children('table').attr('onclick',"window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/"+val.message_id+"';");
-                    tempObj.children('table').children('tbody').children('tr').eq(0).children('td').eq(1).html(val.record_time.substr(0,10));
-                    tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(0).children('span').html(val.area_start_name);
-                    tempObj.children('table').children('tbody').children('tr').eq(1).children('td').eq(1).html('¥'+val.freight_price);
-                    tempObj.children('table').children('tbody').children('tr').eq(2).children('td').children('span').html(val.area_end_name);
-                    tempObj.children('div').children('a').attr('href','tel:'+val.phone_number);
-                    tempObj.children('div').children('div').children('button').attr('data-whatever',val.id);
-                    tempObj.appendTo("#search");
-                });
-                if(jsonObj.end_tag == 'end'){
-                    if(flag){
-                        var div = document.createElement('div');
-                        div.style.cssText = 'margin-top:2.5%;color:red;text-align:center';
-                        div.innerHTML = '小矿查不到更多消息啦!';
-                        document.getElementById('search').appendChild(div);
-                        flag = false;
-                    }
-                    $('#page').val(jsonObj.page);
-                }else if(jsonObj.end_tag == 'continue'){
-                    $('#page').val(jsonObj.page);
-                }
-                myScroll.refresh();
-                refresh_hl();
-            }
-        });
-        //============================================
-        myScroll.refresh(); // 数据加载完成后，调用界面更新方法 Remember to refresh when contents are loaded (ie: on ajax completion)
-    }
-    /**
-     * 初始化iScroll控件
-     */
-    function loaded() {
-        pullDownEl = document.getElementById('pullDown');
-        pullDownOffset = pullDownEl.offsetHeight;
-        pullUpEl = document.getElementById('pullUp');
-        pullUpOffset = pullUpEl.offsetHeight;
-//        console.log(pullDownOffset);
-//        console.log(pullUpOffset);
-        setTimeout(function () {
-            myScroll = new iScroll('wrapper', {
-//        scrollbarClass: 'myScrollbar', /* 重要样式 */
-                useTransition: true,
-                topOffset: pullDownOffset,
-//        probeType: 3,
-//        mouseWheel: false,
-                scrollbars: true,
-//                vScrollbar:false,
-//        disableMouse: false,
-//        disablePointer: false,
-                //点击事件
-                click: false,
-                taps: false,
-//        tap: true,
-                preventDefault: false,//（把这句加上去哦）
-                preventDefaultException: {tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|A)$/},
-                onRefresh: function () {
-                    console.log('refresh');
-                    if (pullDownEl.className.match('loading')) {
-                        pullDownEl.className = '';
-                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
-//                pullDownEl.querySelector('.pullDownLabel').innerHTML = '数据更新时间：' + update_time+'下拉刷新';
-                    } else if (pullUpEl.className.match('loading')) {
-                        pullUpEl.className = '';
-                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
-                    }
-                    document.getElementById("pullUp").style.display = "none";
-                    time_now = new Date();
-                    update_time = time_now.toLocaleString();
-//            document.getElementById("show").innerHTML="onRefresh: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
-
+        if (load_state == 1) {
+            return false;
+        } else {
+            load_state = 1;
+            console.log('up', flag);
+            var a = $('#tag_search').serialize();
+            var area_start = $('input[name=area_start]').val();
+            var area_start_name = $('input[name=area_start_name]').val();
+            var area_end = $('input[name=area_end]').val();
+            var area_end_name = $('input[name=area_end_name]').val();
+            var page = $('#page').val();
+            console.log('cur_page', page);
+            var request_page = parseInt(page) + 1;
+            console.log('rq_page', request_page);
+            $.ajax({
+                type: "post",
+                url: "{:U('FreightSearch/show_more')}",
+                data: {
+                    area_start: area_start,
+                    area_start_name: area_start_name,
+                    area_end: area_end,
+                    area_end_name: area_end_name,
+                    page: request_page
                 },
-                onScrollMove: function () {
-//            document.getElementById("show").innerHTML="onScrollMove: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
-                    if (this.y > 0) {
-                        pullDownEl.className = 'flip';
-                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '松手开始更新...</br>' + '最后更新时间：' + update_time;
-                        this.minScrollY = 0;
+                success: function (data) {
+                    console.log('success', flag);
+                    var jsonObj = eval("(" + data + ")");
+                    console.log(jsonObj, jsonObj.data, jsonObj.data.length);
+                    $.each(jsonObj.data, function (k, val) {
+                        var tempObj = $("#cloneObj").children("div").clone(true);
+                        tempObj.find('.time').html(showTime(val.record_time));
+                        tempObj.find('.area_start').html(areaStrSplit(val.area_start_merger_name));
+                        tempObj.find('.area_start_detail').html(val.area_start_name+' '+(val.area_start_detail?val.area_start_detail:''));
+                        tempObj.find('.area_end').html(areaStrSplit(val.area_end_merger_name));
+                        tempObj.find('.area_end_detail').html(val.area_end_name+' '+(val.area_end_detail?val.area_end_detail:''));
+                        tempObj.find('.price').html(val.freight_price + '元/吨');
+                        tempObj.find('.feedback-button').attr('data-whatever', val.id);
+//                        tempObj.find('.detail-button').attr('onclick', "window.location.href='__MODULE__/OwnerOrder/wx_order_detail/id/" + val.message_id + "';");
+                        tempObj.appendTo("#search");
+                    });
+                    if (jsonObj.end_tag == 'end') {
+                        if (flag) {
+                            var div = document.createElement('div');
+                            div.style.cssText = 'margin-top:2.5%;color:red;text-align:center';
+                            div.innerHTML = '小矿查不到更多消息啦!';
+                            document.getElementById('search').appendChild(div);
+                            flag = false;
+                        }
+                        $('#page').val(jsonObj.page);
+                    } else if (jsonObj.end_tag == 'continue') {
+                        $('#page').val(jsonObj.page);
                     }
-                    if (this.y < 0 && pullDownEl.className.match('flip')) {
-                        pullDownEl.className = '';
-                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '下拉刷新...';
-                        this.minScrollY = -pullDownOffset;
-                    }
-
-                    if (this.scrollerH < this.wrapperH && this.y < (this.minScrollY - pullUpOffset) || this.scrollerH > this.wrapperH && this.y < (this.maxScrollY - pullUpOffset)) {
-                        document.getElementById("pullUp").style.display = "";
-                        pullUpEl.className = 'flip';
-                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '松手开始更新...</br>' + '最后更新时间：' + update_time;
-                    }
-                    if (this.scrollerH < this.wrapperH && this.y > (this.minScrollY - pullUpOffset) && pullUpEl.className.match('flip') || this.scrollerH > this.wrapperH && this.y > (this.maxScrollY - pullUpOffset) && pullUpEl.className.match('flip')) {
-                        document.getElementById("pullUp").style.display = "none";
-                        pullUpEl.className = '';
-                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '上拉加载更多...';
-                    }
-                },
-                onScrollEnd: function () {
-//            document.getElementById("show").innerHTML="onScrollEnd: up["+pullUpEl.className+"],down["+pullDownEl.className+"],Y["+this.y+"],maxScrollY["+this.maxScrollY+"],minScrollY["+this.minScrollY+"],scrollerH["+this.scrollerH+"],wrapperH["+this.wrapperH+"]";
-                    if (pullDownEl.className.match('flip')) {
-                        pullDownEl.className = 'loading';
-                        pullDownEl.querySelector('.pullDownLabel').innerHTML = '加载中...';
-                        pullDownAction(); // Execute custom function (ajax call?)
-                    } else if (pullUpEl.className.match('flip')) {
-                        pullUpEl.className = 'loading';
-                        pullUpEl.querySelector('.pullUpLabel').innerHTML = '加载中...';
-                        pullUpAction(); // Execute custom function (ajax call?)
-                    }
+                    load_state = 0;
+                    myScroll.refresh();
                 }
             });
-            console.dir(myScroll.options);
-        }, 100);
-//    setTimeout(function(){
-//        document.getElementById('wrapper').style.left = '0';
-//    },800);
+            //============================================
+            myScroll.refresh(); // 数据加载完成后，调用界面更新方法 Remember to refresh when contents are loaded (ie: on ajax completion)
+        }
     }
-    //初始化绑定iScroll控件
-    document.addEventListener('touchmove', function (e) {
-        e.preventDefault();
-    }, false);
-    document.addEventListener('DOMContentLoaded', loaded, false);
-    //    window.onload = loaded()
 </script>
 <!--点赞功能-->
 <script>
@@ -729,6 +623,7 @@
 <script>
     //自动对焦
     $('#feedback').on('shown.bs.modal', function (event) {
+        ck_log('click_feedback','运费按钮点击');
         $('#feedback_input').focus();
         var button = $(event.relatedTarget);
         var recipient = button.data('whatever');
@@ -736,59 +631,115 @@
 //        modal.find('.modal-title').text('New message to ' + recipient);
         modal.find('.modal-body input').val(recipient)
     });
-    $('#feedback_submit').click(function(){
+    $('#feedback_submit').click(function () {
         var freight_id = $('#freight_id').val();
         var content = $('#feedback_input').val();
-        var feedback_string = '运费ID为'+freight_id+"的报错信息:"+content;
+        var feedback_string = '运费ID为' + freight_id + "的报错信息:" + content;
         $.ajax({
             type: "post",
             url: "{:U('Feedback/feedback_action')}",
             data: {
-                contact:freight_id,
-                feedback:feedback_string
+                contact: freight_id,
+                feedback: feedback_string
             },
             success: function (data) {
                 $('#feedback').modal('hide');
             }
         });
     });
-
 </script>
-
-<!--高亮-->
+<!--处理地址全称字符串-->
 <script>
-
-    function refresh_hl() {
-        var keywords = [];
-
-        var str = $('input[name=area_start_name]').val();
-        keywords.push(str ? str : '');
-        str = $('input[name=area_end_name]').val();
-        keywords.push(str ? str : '');
-        show_highlight(keywords);
-    }
-
-    function replace_with_highlight(str, keyword){
-        if (keyword=='') return str;
-        keyword=keyword.replace(new RegExp("市|区|县|镇",'gm'),'');
-        return str.replace(new RegExp(keyword,'gm'),'<span style="background-color: orange; font-weight: bold">'+keyword+"</span>");
-    }
-
-    function show_highlight(keywords){
-        function show_hl_by_element(element){
-            var str = element.innerHTML;
-            element.innerHTML = keywords.reduce(replace_with_highlight,str);
+    function areaStrSplit(areaStr) {
+        if (areaStr == null || areaStr == ''){
+            return false;
         }
-        collectionToArray(document.getElementsByClassName('highlight')).map(show_hl_by_element);
-//    $('.highlight').map(show_hl_by_element);
-
-    }
-
-    function collectionToArray(collection){
-        var ary = [];
-        for(var i=0, len = collection.length; i < len; i++){
-            ary.push(collection[i]);
+        var areaArr = areaStr.split(',');
+        if(areaArr[3]){
+            areaStr = areaArr[2]+' '+areaArr[3];
+        }else if(areaArr[2]){
+            areaStr = areaArr[2];
+        }else{
+            areaStr = areaArr[1];
         }
-        return ary;
+        return areaStr;
     }
+</script>
+<!--判断发布时间并处理时间字符串-->
+<script>
+    function showTime(timeStr) {
+        if (timeStr == null || timeStr == '') {
+            return;
+        }
+        var end_str = (timeStr).replace(/-/g, "/");
+        var class_time = new Date(end_str);   //将时间字符串转换为时间.
+        var now_time = new Date();
+        var totalSecs = (now_time - class_time) / 1000;   //获得两个时间的总毫秒数. 靠前的就调换再减。
+        var days = Math.floor(totalSecs / 3600 / 24);
+        var hours = Math.floor((totalSecs - days * 24 * 3600) / 3600);
+        var mins = Math.floor((totalSecs - days * 24 * 3600 - hours * 3600) / 60);
+        var secs = Math.floor((totalSecs - days * 24 * 3600 - hours * 3600 - mins * 60));
+        if (days <= 7) {
+            if (days != 0 || days < 0) {
+                timeStr = days + "天前";
+            } else if (hours == 0 && mins == 0) {
+                timeStr = "刚刚发布";
+            } else if (hours == 0 && mins != 0) {
+                timeStr = mins + "分前";
+            } else if (hours != 0) {
+                timeStr = hours + "小时前";
+            }
+        } else {
+            timeStr = timeStr.substr(0,10);
+        }
+        return timeStr;
+    }
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    wx.config({
+        debug: false,
+        appId: '{$signPackage["appId"]}',
+        timestamp: {$signPackage["timestamp"]},
+        nonceStr: '{$signPackage["nonceStr"]}',
+        signature: '{$signPackage["signature"]}',
+        jsApiList: [
+            // 所有要调用的 API 都要加到这个列表中
+            'onMenuShareTimeline', 'onMenuShareAppMessage',
+            'hideOptionMenu',
+            'showOptionMenu',
+            'hideMenuItems',
+            'showMenuItems',
+            'hideAllNonBaseMenuItem',
+            'showAllNonBaseMenuItem'
+        ]
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+        // 分享到朋友圈
+        var url = window.location.href;
+        wx.onMenuShareTimeline({
+            title: '超矿平台运费查询', // 分享标题
+            link: url, // 分享链接
+            imgUrl: 'http://www.xuncl.com/cjkzy_icon.png', // 分享图标
+            success: function () {
+            },
+            cancel: function () {
+            }
+        });
+
+        //分享给朋友
+        wx.onMenuShareAppMessage({
+            title: '超矿平台运费查询', // 分享标题
+            desc: '超级矿资源官方认证的运费查询系统，数据精确可靠', // 分享描述
+            link: "http://www.xuncl.com/index.php/Home/FreightSearch/show", // 分享链接
+            imgUrl: 'http://www.xuncl.com/cjkzy_icon.png', // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+            },
+            cancel: function () {
+            }
+        });
+    });
 </script>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <title>信息审核</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css">
+</head>
+<body>
+<form id="form" action="{:U('Vote/signUpAction')}" method="post" enctype="multipart/form-data">
+    <input type="text" name="test" id="test">
+    <!--<input type="file" name="file">-->
+    <div class="weui_uploader_input_wrp">
+        <img id="img_prew" class="weui_uploader_input" style="opacity: 1">
+        <input class="weui_uploader_input upload_image" type="file" name="file" id="pic" accept="image/*">
+        <p id="status">13</p>
+    </div>
+    <input type="file" accept="video/*;capture=camcorder">
+    <input type="file" accept="audio/*;capture=microphone">
+    <input type="file" accept="image/*;capture=camera">直接调用相机
+    <input type="file" accept="image/*" name="pic"/>调用相机 图片或者相册
+    <input class="btn btn-primary btn-submit" type="submit">
+</form>
+<div style="margin: 3em;">
+    <button class="a btn">a</button>
+    <button class="b btn">b</button>
+    <button class="c btn">c</button>
+    <script>
+        function test(str){
+            console.log('test');
+            if(str == 'start'){
+                console.log('test_start');
+            }else{
+                console.log('test_end');
+            }
+
+            return false;
+        }
+        $('.a').click(function(){
+            test('start');
+        }
+        );
+        $('.b').click(test('end'));
+        $('.c').click(function(){
+            var a = $('.a').click();
+            var b = $('.b').click();
+            var aa = test('start');
+            if(!aa){
+                return false;
+            }
+            console.log(a,b);
+            console.log('c');
+        })
+    </script>
+    <img src="__PUBLIC__/home/images/403.jpg">
+</div>
+</body>
+<script>
+    var uploading_flag = false;
+    $('#pic').on('change',function(){
+        console.log($(this).val());
+//        var formData = new FormData($('#form')[0]);
+        var formData = new FormData();
+        formData.append('file',$(this)[0].files[0]);
+        console.log(formData);
+        console.log($('#form')[0]);
+        if(uploading_flag){
+
+        }
+        $.ajax({
+            type: 'post',
+            url: "{:U('Vote/picUpload')}",
+            processData: false,
+            contentType: false,
+            data: formData,
+            beforeSend: function(){
+                $('#status').html('上传中');
+                $('#img_prew').attr('src','')
+            },
+            success: function(data){
+                $('#status').html('');
+                console.log(data);
+                alert(data);
+                data = JSON.parse(data)['url'];
+                var a = data.replace('./Public','__PUBLIC__');
+                $('#img_prew').attr('src',a)
+            }
+        })
+    });
+    $('.btn-submit1').click(function (e) {
+//        var a = $("#form").serializeArray();
+        var formData = new FormData($('#form')[0]);
+        console.log(formData);
+        e.preventDefault();
+        $.ajax({
+            type: 'post',
+            url: "{:U('Vote/signUpAction')}",
+            processData: false,
+            contentType: false,
+            data: formData,
+            success: function(data){
+                console.log(data);
+                data = JSON.parse(data)['url'];
+                var a = data.replace('./Public','__PUBLIC__');
+                console.log(a);
+                alert(a);
+                $('#img_prew').attr('src',a)
+            }
+        })
+    })
+</script>
+</html>

@@ -33,6 +33,7 @@
         <div class="col-md-6 col-sm-6 col-xs-6">
             <input class="input-style" style="" type="text" name="freight_area_start_name" id="freight_area_start_name" placeholder="起始地">
             <input type="hidden" name="freight_area_start" id="freight_area_start">
+            <input type="hidden" name="freight_area_start_merger_name" id="freight_area_start_merger_name">
         </div>
         <!--<div class="col-md-2 col-sm-2 col-xs-2">-->
         <!--<span class="glyphicon glyphicon-arrow-right" style="font-size: 2em"></span>-->
@@ -40,6 +41,7 @@
         <div class="col-md-6 col-sm-6 col-xs-6">
             <input class="input-style" style="" type="text" name="freight_area_end_name" id="freight_area_end_name" placeholder="目的地">
             <input type="hidden" name="freight_area_end" id="freight_area_end">
+            <input type="hidden" name="freight_area_end_merger_name" id="freight_area_end_merger_name">
         </div>
     </div>
     <div class="row text-center" style="margin-top: 5%">
@@ -92,7 +94,7 @@
     });
     <!--运费表单提交-->
     $('#freight_submit').click(function () {
-        var area_start_name = $('#freight_area_start_name').val();4
+        var area_start_name = $('#freight_area_start_name').val();
         if(!area_start_name){
             $('#freight_area_start_name').css('border','1px solid red');
             return false;
@@ -101,6 +103,7 @@
         if(result){
             console.log(1);
             $('#freight_area_start').val(result['id']);
+            $('#freight_area_start_merger_name').val(result['merger_name']);
         }else{
             console.log(2);
             $('#freight_area_start_name').css('border','1px solid red');
@@ -115,6 +118,7 @@
         if(result){
             console.log(3);
             $('#freight_area_end').val(result['id']);
+            $('#freight_area_end_merger_name').val(result['merger_name']);
         }else{
             console.log(4);
             $('#freight_area_end_name').css('border','1px solid red');
@@ -122,9 +126,11 @@
         }
         //检测通过，提交表单
         var area_start = $('#freight_area_start').val();
+        var area_start_merger_name = $('#freight_area_start_merger_name').val();
         var area_start_detail = $('#freight_area_start_detail').val();
 
         var area_end = $('#freight_area_end').val();
+        var area_end_merger_name = $('#freight_area_end_merger_name').val();
         var area_end_detail = $('#freight_area_end_detail').val();
 
         var freight_text = $('#freight_text').val();
@@ -141,9 +147,11 @@
                 area_start_id: area_start,
                 area_start_name: area_start_name,
                 area_start_detail: area_start_detail,
+                area_start_merger_name: area_start_merger_name,
                 area_end_id: area_end,
                 area_end_name: area_end_name,
                 area_end_detail: area_end_detail,
+                area_end_merger_name: area_end_merger_name,
                 freight_price: freight_text
             },
             success: function (data) {

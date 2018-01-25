@@ -32,6 +32,7 @@
                     <thead>
                     <tr>
                         <th>地区名</th>
+                        <th>地区详址</th>
                         <th>煤矿名</th>
                         <th>公司名</th>
                         <th>煤矿编号</th>
@@ -80,6 +81,7 @@
                         </ul>
                     </div>
                 </div>
+                <input id="area_detail" name="area_detail" class="form-control" type="text" placeholder="地区详址">
                 <input id="refinery_name" name="refinery_name" class="form-control" type="text" placeholder="矿名">
                 <input id="supply_company" name="supply_company" class="form-control" type="text" placeholder="供应商">
                 <input id="supply_company_level" name="supply_company_level" class="form-control" type="text" placeholder="供应商等级">
@@ -230,6 +232,7 @@
                 $.each(jsonObj,function(k,val){
                     var li = document.createElement('tr');
                     li.innerHTML = '<td>'+val.area_name+'</td>'
+                            +'<td>'+val.area_detail+'</td>'
                             +'<td>'+val.refinery_name+'</td>'
                             +'<td>'+val.supply_company+'</td>'
                             +'<td>'+val.message_id+'###'+val.invalid_id+'###'+val.vip
@@ -272,6 +275,7 @@
                 //赋值数据
                 //煤矿信息
                 $("#area_name").val(jsonObj[0].Msg.area_name);
+                $("#area_detail").val(jsonObj[0].Msg.area_detail);
                 $('#refinery_name').val(jsonObj[0].Msg.refinery_name);
                 $('#supply_company').val(jsonObj[0].Msg.supply_company);
                 $('#supply_company_level').val(jsonObj[0].Msg.supply_company_level);
@@ -352,7 +356,7 @@
 <!--删除消息-->
 <script>
     $('body').on("click",".delete",function(){
-        var message_id = $(this).parent('td').parent('tr').children('td').eq(3).html();
+        var message_id = $(this).parent('td').parent('tr').children('td').eq(4).html();
         console.log(message_id);
         $.ajax({
             type: "post",
@@ -376,7 +380,7 @@
 <script>
     $('body').on("click",".recovery",function(){
         console.log($(this));
-        var message_id = $(this).parent('td').parent('tr').children('td').eq(3).html();
+        var message_id = $(this).parent('td').parent('tr').children('td').eq(4).html();
         console.log(message_id);
         $.ajax({
             type: "post",
@@ -399,7 +403,7 @@
     $('body').on("keyup",".vip-set",function(event){
         event = event || window.event;
         if (event.keyCode == 13) {
-            var message_id = $(this).parent('td').parent('tr').children('td').eq(3).html();
+            var message_id = $(this).parent('td').parent('tr').children('td').eq(4).html();
             var vip = $(this).val();
             console.log(message_id);
             $.ajax({

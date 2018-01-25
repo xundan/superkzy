@@ -34,7 +34,7 @@ class MessageShareController extends Controller
         //设置条件
         $where = $this->setWhere('supplyAll', $date);
         //下拉刷新
-        if ($subInfo['isAjax'] == 1) {
+        if ($subInfo && $subInfo['isAjax'] == 1) {
             //AssembleData
             $result['data'] = $msg->findWhere($where);
             echo json_encode($result);
@@ -82,7 +82,7 @@ class MessageShareController extends Controller
         //设置条件
         $where = $this->setWhere('supplyDlm', $date);
         //下拉刷新
-        if ($subInfo['isAjax'] == 1) {
+        if ($subInfo && $subInfo['isAjax'] == 1) {
             //AssembleData
             $result['data'] = $msg->findWhere($where);
             echo json_encode($result);
@@ -138,7 +138,7 @@ class MessageShareController extends Controller
         //设置条件
         $where = $this->setWhere('buy', $date);
         //下拉刷新
-        if ($subInfo['isAjax'] == 1) {
+        if ($subInfo && $subInfo['isAjax'] == 1) {
             //AssembleData
             $result['data'] = $msg->findWhere($where);
             echo json_encode($result);
@@ -185,7 +185,7 @@ class MessageShareController extends Controller
         //设置条件
         $where = $this->setWhere('searchCar', $date);
         //下拉刷新
-        if ($subInfo['isAjax'] == 1) {
+        if ($subInfo && $subInfo['isAjax'] == 1) {
             //AssembleData
             $result['data'] = $msg->findWhere($where);
             echo json_encode($result);
@@ -232,7 +232,7 @@ class MessageShareController extends Controller
         //设置条件
         $where = $this->setWhere('carSource', $date);
         //下拉刷新
-        if ($subInfo['isAjax'] == 1) {
+        if ($subInfo && $subInfo['isAjax'] == 1) {
             //AssembleData
             $result['data'] = $msg->findWhere($where);
             echo json_encode($result);
@@ -279,7 +279,7 @@ class MessageShareController extends Controller
         //设置条件
         $where = $this->setWhere('vipYear', $date);
         //下拉刷新
-        if ($subInfo['isAjax'] == 1) {
+        if ($subInfo && $subInfo['isAjax'] == 1) {
             //AssembleData
             $result['data'] = $msg->findWhere($where);
             echo json_encode($result);
@@ -326,7 +326,7 @@ class MessageShareController extends Controller
         //设置条件
         $where = $this->setWhere('vipSeason', $date);
         //下拉刷新
-        if ($subInfo['isAjax'] == 1) {
+        if ($subInfo && $subInfo['isAjax'] == 1) {
             //AssembleData
             $result['data'] = $msg->findWhere($where);
             echo json_encode($result);
@@ -373,7 +373,7 @@ class MessageShareController extends Controller
         //设置条件
         $where = $this->setWhere('vipMonth', $date);
         //下拉刷新
-        if ($subInfo['isAjax'] == 1) {
+        if ($subInfo && $subInfo['isAjax'] == 1) {
             //AssembleData
             $result['data'] = $msg->findWhere($where);
             echo json_encode($result);

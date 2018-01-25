@@ -24,9 +24,11 @@ class BaseDataFreightController extends Controller
         $data['area_start_id'] = $subInfo['area_start_id'];
         $data['area_start_name'] = $subInfo['area_start_name'];
         $data['area_start_detail'] = $subInfo['area_start_detail'];
+        $data['area_start_merger_name'] = $subInfo['area_start_merger_name'];
         $data['area_end_id'] = $subInfo['area_end_id'];
         $data['area_end_name'] = $subInfo['area_end_name'];
         $data['area_end_detail'] = $subInfo['area_end_detail'];
+        $data['area_end_merger_name'] = $subInfo['area_end_merger_name'];
         $data['freight_price'] = $subInfo['freight_price'];
         $data['invalid_id'] = 0;
         $result = M('ck_freight')->add($data);
@@ -42,7 +44,7 @@ class BaseDataFreightController extends Controller
     {
         $area_name = I('post.area_name', '', 'trim');
         $where['name|short_name'] = $area_name;
-        $result = M('ck_test')->where($where)->find();
+        $result = M('ck_districts')->where($where)->find();
         if ($result) {
             echo json_encode($result);
             exit;

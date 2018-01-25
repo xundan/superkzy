@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <title>信息审核</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+</head>
+<style type="text/css">
+
+    .fit {
+        line-height: 36px;
+        height: 36px;
+    }
+
+    fieldset {
+        padding: .05em .5em .15em;
+        margin: 0 2px;
+        border: 1px solid silver
+    }
+
+    legend {
+        padding: .5em;
+        border: 0;
+        width: auto;
+        margin-bottom: 0;
+    }
+
+    table {
+        margin-bottom: 0.5em;
+    }
+
+    table th, table td {
+        text-align: center;
+    }
+
+    table th {
+        background-color: #ccc;
+    }
+
+    .msg_type {
+        background-color: deeppink;
+        color: white;
+    }
+
+    .radio-style {
+        margin-left: 1em;
+        font-size: 1.5em;
+        padding: 0 5px 0 5px;
+    }
+
+    .radio-style input {
+        /*display: none;*/
+    }
+
+    .radio-style.selected {
+        background-color: green;
+        color: white
+    }
+
+    label.label1 {
+        width: 17%;
+    }
+
+    .form-detail {
+        display: none;
+    }
+
+    .form-detail.on {
+        display: block;
+    }
+
+    .label1 {
+        text-align: center;
+        border: 1px solid #e1e1e1
+    }
+
+    .main-tag {
+        display: none;
+    }
+
+    .selected {
+        background-color: green;
+        color: white
+    }
+
+    .danger {
+        background-color: #d9534f;
+    }
+
+</style>
+<body>
+<!--<div style="margin: 1em 1em">-->
+<div class="row" style="font-size: 1.5em;margin: 0.5em 0.5em">
+    <div class="col-md-2 fit">
+        欢迎<span class="user_name" style="color: red">{$cur_user['user_name']}</span>！
+    </div>
+    <div class="col-md-2">
+        <button class="btn btn-sm btn-default btn-remain">剩余条数：</button>
+        <span class="msg_remain" style="vertical-align: middle"></span>
+    </div>
+    <div class="col-md-2" style="text-align: center">
+        <button class="btn btn-sm btn-success btn-group">显示群消息中</button>
+    </div>
+    <div class="col-md-2 text-center fit">
+        当前位置：<span class="msg_index"></span>/<span
+            class="msg_length">{$cur_user['msg_step']?$cur_user['msg_step']:30}</span>
+    </div>
+    <div class="col-md-2" style="text-align: center">
+        <button class="btn btn-sm btn-success btn-time">休息计时</button>
+        <span class="stop_time" style="margin-left: 1em;color: red;vertical-align: middle">0</span>
+    </div>
+    <div class="col-md-2 fit" style="text-align: end">
+        <!--<a href="__ROOT__/Views/StaffsLogin/logout" style="float: right;">登出</a>-->
+        <a href="{:U('StaffsLogin/UserProfile')}">配置</a>
+        <a href="{:U('StaffsLogin/logout')}" style="margin-left: 1em">登出</a>
+    </div>
+</div>
+<input type="hidden" name="user_id" id="user_id" value="{$cur_user['id']}">
+<input type="hidden" name="msg_id" id="msg_id">
+<input type="hidden" name="phone_number" id="phone_number">
+<input type="hidden" name="group_button" id="group_button" value="on">
+<table class="table table-bordered msg-table">
+    <thead>
+    <tr>
+        <th>id</th>
+        <th>标题</th>
+        <th>记录时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr class="data-header">
+        <td class="data-id">{$data['id']}</td>
+        <td class="data-title">{$data['title']}</td>
+        <td class="data-time">{$data['record_time']}</td>
+    </tr>
+    <tr>
+        <td colspan="3" style="background-color: #ccc">内容</td>
+    </tr>
+    <tr class="data-content">
+        <td colspan="3" align="center">
+            <textarea rows="4" name="content" id="content"
+                      style="width: 100%;font-size: 1.5em">{$data['content']}</textarea>
+        </td>
+    </tr>
+</table>
+
+<div style="text-align: center;">
+    <input type="button" id="Button1" class="btn btn-danger" name="Button1" onclick="delete_confirm()" value="删除"
+           style="width:10%;"><br/>
+</div>
+
+<div id="del_all" style="text-align: center;margin-top: 20px;margin-bottom: 20px;display: none">
+    <input type="button" id="Button3" name="Button3" onclick="delete_all_confirm()" value="删除剩余所有群消息"
+           style="width:10%;height: 30px"><br/>
+</div>
+
+<!--标签复选框-->
+<fieldset style="font-size: 30px">
+    <legend id="tag_head">
+        选择标签
+        <span class="msg_type"></span>
+    </legend>
+    <label class="label1">
+        <input type="checkbox" name="tag[]" value="求购" class="main-tag"/>
+        求购
+    </label>
+    <label class="label1">
+        <input type="checkbox" name="tag[]" value="供应" class="main-tag"/>
+        供应
+    </label>
+    <label class="label1">
+        <input type="checkbox" id="car_need" name="tag[]" value="找车" class="main-tag"/>
+        找车
+    </label>
+    <label class="label1">
+        <input type="checkbox" id="car_give" name="tag[]" value="车源" class="main-tag"/>
+        车源
+    </label>
+    <label class="label1">
+        <input type="checkbox" name="tag[]" value="其他" class="main-tag"/>
+        其他
+    </label>
+</fieldset>
+<!--运费提交-->
+<div style="display: none;position: relative" id="freight_form">
+    <fieldset style="">
+        <legend>运费筛选</legend>
+        <div style="display: inline-block">
+            <div class="start">
+                <input class="form-control" style="width: 12em;display: inline-block" type="text"
+                       name="freight_area_start_name" id="freight_area_start_name"
+                       placeholder="起始地">
+                <button type="button" class="btn btn-default" id="freight_area_check_start">检测地址合法</button>
+                <input type="hidden" name="freight_area_start" id="freight_area_start">
+                <input type="hidden" name="freight_area_start_merger_name" id="freight_area_start_merger_name">
+                <span id="freight_area_check_start_result"></span>
+                <input class="form-control" style="width: 12em;display: inline-block" type="text"
+                       name="freight_area_start_detail" id="freight_area_start_detail"
+                       placeholder="详细地址">
+            </div>
+            <div class="end" style="margin-top: 1em">
+                <input class="form-control" style="width: 12em;display: inline-block" type="text"
+                       name="freight_area_end_name" id="freight_area_end_name"
+                       placeholder="目的地">
+                <button type="button" class="btn btn-default" id="freight_area_check_end">检测地址合法</button>
+                <input type="hidden" name="freight_area_end" id="freight_area_end">
+                <input type="hidden" name="freight_area_end_merger_name" id="freight_area_end_merger_name">
+                <span id="freight_area_check_end_result"></span>
+                <input class="form-control" style="width: 12em;display: inline-block" type="text"
+                       name="freight_area_end_detail" id="freight_area_end_detail"
+                       placeholder="详细地址">
+            </div>
+        </div>
+        <div style="display: inline-block;font-size: 2em;color: red;margin-left: 4em">
+            <span id="freight_show"></span>
+            <input class="form-control" style="width: 12em;display: block;margin-top: 1em" type="number" name="freight"
+                   id="freight_text" placeholder="运费">
+        </div>
+        <div style="display: inline-block;margin-left: 8em">
+
+            <button style="display: block;font-size: 1.5em" type="button" class="btn btn-default btn-info" id="freight_submit">提交
+            </button>
+
+        </div>
+        <div id="freight" style="margin-top: 5px">运费:</div>
+        <br/>
+
+
+        <div style="position: absolute;right: 2em;top: 3em">
+            成功插入id:<span class="freight_id_prev"></span>
+
+            <div>
+                <input type="number" name="freight_id_prev" id="freight_id_prev">
+            </div>
+            <div style="text-align: center">
+                <span class="freight_sub_result"></span>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<div style="display: flex;justify-content: space-around;align-items: baseline;margin-top: 0.5em;">
+    <button class="btn btn-lg btn-default btn-prev" style="width: 20%;margin-top: 1.5em;">上一条</button>
+    <button class="btn btn-lg btn-primary btn-submit" style="width: 30%;height: 3em;">提交</button>
+    <button class="btn btn-lg btn-default btn-next" style="width: 20%;margin-top: 1.5em;">下一条</button>
+</div>
+<div class="text-center" style="display: flex;justify-content: space-around;margin-top: 1em">
+    <button class="btn btn-lg btn-info btn-get" style="width: 40%">拉取</button>
+    <button class="btn btn-lg btn-warning btn-abort" style="width: 40%">放弃/终止</button>
+</div>
+<button class="btn btn-lg btn-danger btn-delete-group" style="display: none;width: 20%;margin: 2em auto 1em auto">
+    删除群信息
+</button>
+</body>
+</html>
+<!--页面载入处理-->
+<script>
+    const STATE_DELETE = 2;
+    const STATE_CHECKED = 1;
+    var data_arr, msg_index, timer, timer_count = 0;
+    $(function () {
+        var user_id = $('#user_id').val();
+        console.log(user_id);
+        if (window.localStorage.getItem('msg_data') && (user_id == window.localStorage.getItem('user_id'))) {
+            //赋值给全局变量data_arr
+            data_arr = JSON.parse(window.localStorage.getItem('msg_data'));
+            console.log(data_arr, data_arr[0]['id']);
+            //获取msg_index
+            msg_index = window.localStorage.getItem('msg_index');
+            render(data_arr[msg_index]);
+        } else {
+            //没有数据，上次审完或第一次进入或用户换人登录
+            //向后台请求拉取数据
+            $.ajax({
+                type: "post",
+                url: "{:U('MsgCheck/getData')}",
+                data: null,
+                success: function (data) {
+                    console.log(data);
+                    var data_obj = JSON.parse(data);
+                    console.log(data_obj);
+                    if (data_obj['feedback'] == '信息拉取成功') {
+                        //将拉取到的数据存入本地
+                        window.localStorage.setItem('msg_data', JSON.stringify(data_obj['data']));
+                        window.localStorage.setItem('msg_index', 0);
+                        //存入当前用户
+                        window.localStorage.setItem('user_id', user_id);
+                        //将数据放入data_arr全局变量,索引置为1
+                        data_arr = data_obj['data'];
+                        msg_index = 0;
+                        //渲染页面
+                        render(data_arr[msg_index]);
+                    } else {
+                        alert(data_obj['feedback']);
+                    }
+                }
+            })
+        }
+    })
+</script>
+<!--渲染数据-->
+<script>
+    function render(data) {
+        if (data) {
+            //清除前面所选结果
+            //状态栏
+            $('th').removeClass();
+            //隐藏额外弹出的表单
+            $('#freight_form').css('display', 'none');
+            //重置选择的标签
+            $('.main-tag:checked').parent('label').removeClass('selected');
+            $('.main-tag:checked').attr('checked', false);
+            //判断数据状态以方便辨别
+            if (data['state'] == STATE_CHECKED) {
+                //已审核
+                $('th').addClass('btn-primary');
+            } else if (data['state'] == STATE_DELETE) {
+                //已删除
+                $('th').addClass('btn-danger');
+            } else {
+            }
+            // 渲染数据
+            if ($.inArray(data['vip'], ['5', '6', '7', '8']) > -1) {
+                $('.msg_type').html('VIP信息');
+            } else if (data['type'] == 'group') {
+                $('.msg_type').html('群信息');
+            } else if (data['type'] == 'plain') {
+                $('.msg_type').html('微信号信息');
+            } else if (data['type'] == 'wx_mp') {
+                $('.msg_type').html('公众号信息');
+            } else {
+                $('.msg_type').html('');
+            }
+            $('#msg_id').val(data['id']);
+            $('#phone_number').val(data['phone_number']);
+            $('.data-id').html(data['id']);
+            $('.data-title').html(data['title']);
+            $('.data-time').html(data['record_time']);
+            $('#content').val(data['content']);
+            $('.msg_index').html(parseInt(msg_index) + 1);
+            $('.msg_length').html(data_arr.length);
+            //更新localStorage的msg_index
+            window.localStorage.setItem('msg_index', msg_index);
+        } else {
+            return false;
+        }
+    }
+    $('.btn-prev').click(function () {
+        if (msg_index == 0) {
+            alert('没有信息了!');
+            return false;
+        } else {
+            msg_index--;
+            render(data_arr[msg_index]);
+        }
+    });
+    $('.btn-next').click(function () {
+        if (msg_index == (data_arr.length - 1)) {
+            alert('没有信息了!');
+            return false;
+        } else {
+            msg_index++;
+            render(data_arr[msg_index]);
+        }
+    });
+    $('.btn-submit').click(function () {
+        var tag_selected = $('.main-tag:checked');
+        if (tag_selected.length == 0) {
+            alert('请选择标签');
+            return false;
+        } else if (tag_selected.length > 1) {
+            alert('选择了多个标签');
+            return false;
+        }
+        var handler_id = $('#user_id').val();
+        var id = $('#msg_id').val();
+        var tag = tag_selected.val();
+        var content = $('#content').val();
+        $.ajax({
+            type: "post",
+            url: "{:U('MsgCheck/check_sub')}",
+            data: {
+                handler: handler_id,
+                id: id,
+                tag: tag,
+                content: content
+            },
+            success: function (data) {
+                if (data == 'success') {
+                    //审核修改成功
+                    //在前台修改该信息状态方便标识
+                    data_arr[msg_index]['state'] = STATE_CHECKED;
+                    //跳到下一条信息
+                    if (msg_index == (data_arr.length - 1)) {
+                        //数据块审核完毕，提示拉取
+                        alert('当前拉取信息审核完毕！点击拉取更多信息');
+                    } else {
+                        msg_index++;
+                        //渲染下一条信息
+                        render(data_arr[msg_index]);
+                    }
+                } else {
+                    alert('更新失败(更上次提交相同)!');
+                }
+            }
+        });
+    });
+    $('.btn-get').click(function () {
+        if (msg_index < data_arr.length - 1) {
+            alert('信息没有审核完，请审完再进行拉取！');
+            return false;
+        }
+        var id = $('#msg_id').val();
+        var stop_time = parseInt($('.stop_time').html());
+        var group = $('#group_button').val();
+        //向后台请求拉取数据
+        $.ajax({
+            type: "post",
+            url: "{:U('MsgCheck/getData')}",
+            data: {
+                id: id,
+                group: group,
+                stop_time: stop_time
+            },
+            success: function (data) {
+                console.log(data);
+                var data_obj = JSON.parse(data);
+                console.log(data_obj);
+                if (data_obj['feedback'] == '信息拉取成功') {
+                    //将拉取到的数据存入本地
+                    window.localStorage.setItem('msg_data', JSON.stringify(data_obj['data']));
+                    window.localStorage.setItem('msg_index', 0);
+                    //将数据放入data_arr全局变量,索引置为1
+                    data_arr = data_obj['data'];
+                    msg_index = 0;
+                    //计时器清0
+                    timer_count = 0;
+                    //渲染页面
+                    render(data_arr[msg_index]);
+                } else {
+                    alert(data_obj['feedback']);
+                }
+            }
+        })
+    });
+    $('.btn-abort').click(function () {
+        var id = $('#msg_id').val();
+        var stop_time = parseInt($('.stop_time').html());
+        $.ajax({
+            type: "post",
+            url: "{:U('MsgCheck/release')}",
+            data: {
+                id: id,
+                stop_time: stop_time
+            },
+            success: function (data) {
+                if (data == 'success') {
+                    alert('放弃成功!');
+                    //将localStorage清空
+                    window.localStorage.setItem('msg_data', '');
+                } else {
+                    alert('放弃失败!');
+                }
+            }
+        });
+    });
+    $('.btn-remain').click(function () {
+        var msg_id = $('#msg_id').val();
+        $.ajax({
+            type: "post",
+            url: "{:U('MsgCheck/uncheckCount')}",
+            data: {
+                id: msg_id
+            },
+            success: function (data) {
+                $('.msg_remain').html(data);
+            }
+        });
+    });
+    $('.btn-time').click(function () {
+        var $this = $(this);
+        if ($this.hasClass('btn-success')) {
+            //开始计时
+            //使页面上所有按钮失效
+            $('.btn').attr('disabled', 'disabled');
+            //解锁自己并修改状态
+            $this.removeClass('btn-success').addClass('btn-danger').html('停止计时');
+            $this.attr('disabled', false);
+            //显示计时
+            timer = setInterval(function () {
+                timer_count++;
+                $('.stop_time').html(timer_count + 's');
+            }, 1000);
+        } else {
+            //停止计时
+            //解锁按钮
+            $('.btn').attr('disabled', false);
+            //修改状态
+            $this.removeClass('btn-danger').addClass('btn-success').html('休息计时');
+            //停止计时器
+            clearInterval(timer);
+        }
+    });
+    $('.btn-group').click(function () {
+        var $this = $(this);
+        if ($this.hasClass('btn-success')) {
+            //修改隐藏表单
+            $('#group_button').val('off');
+            //修改显示状态
+            $this.removeClass('btn-success').addClass('btn-danger');
+            $this.html('隐藏群消息中');
+            alert('下次拉取生效！');
+        } else {
+            //修改隐藏表单
+            $('#group_button').val('on');
+            //修改显示状态
+            $this.removeClass('btn-danger').addClass('btn-success');
+            $this.html('显示群消息中');
+            alert('下次拉取生效！');
+        }
+    })
+</script>
+<!--细分审核-->
+<script>
+    //地址检测函数
+    function areaCheck(area) {
+        var areaObj;
+        $.ajax({
+            type: "post",
+            url: "{:U('MsgCheck/area_check')}",
+            data: {area_name: area},
+            async: false,
+            success: function (data) {
+                console.log(data);
+                if (data != 0) {
+                    areaObj = eval('(' + data + ')');
+                } else {
+                    areaObj = false;
+                }
+            }
+        });
+        return areaObj;
+    }
+    //TODO 运费单选框UI改进
+    $('#freight').on('click', 'input[type=radio]', function () {
+        var $this = $(this).parent('label');
+        $(this).children('input').prop('checked','checked');
+        $this.addClass('selected');
+        $this.parent('span').siblings().children('label').removeClass('selected');
+        $('#freight_show').html($(this).val());
+//        return false;
+    });
+    $('#freight_text').on('input',function(){
+        $('#freight_show').html($(this).val());
+    });
+    //标签选择
+    $('.main-tag').click(function () {
+        var $this = $(this);
+        $this.parent('label').toggleClass('selected');
+        var category = $this.val();
+        var modalFlag = $this.prop('checked');
+        if (modalFlag) {
+            if (category == '找车') {
+                priceAutoMatch();
+                $('#freight_form').css('display', 'block');
+            }
+        } else {
+            if (category == '找车') {
+                $('#freight_form').css('display', 'none');
+            }
+        }
+    })
+</script>
+<!--删除信息-->
+<script>
+    function delete_confirm() {
+        if (!confirm("确认要删除？")) {
+            return false;
+        } else {
+            var id = $('#msg_id').val();
+            var handler_id = $('#user_id').val();
+            $.ajax({
+                url: "__CONTROLLER__/delete",
+                type: "POST",
+                data: {
+                    id: id,
+                    handler: handler_id
+                },
+                error: function () {
+                    alert('Error!');
+                },
+                success: function (data) {
+                    //删除成功
+                    //在前台修改该信息状态方便标识
+                    data_arr[msg_index]['state'] = STATE_DELETE;
+                    //跳到下一条信息
+                    if (msg_index == (data_arr.length - 1)) {
+                        //数据块审核完毕，提示拉取
+                        alert('当前拉取信息审核完毕！点击拉取更多信息');
+                    } else {
+                        msg_index++;
+                        //渲染下一条信息
+                        render(data_arr[msg_index]);
+                    }
+                }
+            });
+        }
+    }
+</script>
+<!--匹配地址-->
+<script>
+    function areaCheckClick(str){
+        if(str == 'start'){
+            var $this = $('#freight_area_check_start');
+            var area_name = $this.prev().val();
+            if (!area_name) {
+                return false;
+            }
+            console.log('start_click', area_name);
+            $('#freight_area_check_start_result').html('');
+            var result = areaCheck(area_name);
+            if (result) {
+                $this.next().val(result['id']);
+                $('#freight_area_start_merger_name').val(result['merger_name']);
+                console.log('start_click', result['merger_name'], ' input ', $('#freight_area_start_merger_name').val());
+                return true;
+            } else {
+                $('#freight_area_check_start_result').html("<span style='color:red'>不合法</span>");
+                return false;
+            }
+        } else if(str == 'end'){
+            $this = $('#freight_area_check_end');
+            area_name = $this.prev().val();
+            if (!area_name) {
+                return false;
+            }
+            $('#freight_area_check_end_result').html('');
+            result = areaCheck(area_name);
+            if (result) {
+                $this.next().val(result['id']);
+                $('#freight_area_end_merger_name').val(result['merger_name']);
+                return true;
+            } else {
+                $('#freight_area_check_end_result').html("<span style='color:red'>不合法</span>");
+                return false;
+            }
+        }
+    }
+    $('#freight_area_check_start').click(function () {
+        areaCheckClick('start');
+    });
+    $('#freight_area_check_end').click(function () {
+        areaCheckClick('end');
+    });
+    function priceAutoMatch() {
+        //清空运费匹配出的价格
+        $('#freight').html('运费：');
+        console.log(1);
+//        var areaMatch = document.getElementById('content');
+        var areaMatchContent = $('#content').val();
+        //运费数字
+        var temp_freight = document.getElementById('freight');
+        var reg = /[\D](\d{2,3})(?!\d)/g;
+        var result;
+        while (result = reg.exec(areaMatchContent)) {
+            console.log(result[1]);
+            var select_freight = document.createElement('span');
+            select_freight.innerHTML = "<label class='radio-style'><input type='radio' value=" + result[1] + " name='freight'>" + result[1] + "</label>";
+            temp_freight.appendChild(select_freight);
+        }
+    }
+</script>
+<!--运费表单提交-->
+<script>
+    $('#freight_submit').click(function () {
+        var a = areaCheckClick('start');
+        var b = areaCheckClick('end');
+        if(!a || !b){
+            console.log('area_error');
+            return false;
+        }
+        var area_start_name = $('#freight_area_start_name').val();
+
+        var area_start = $('#freight_area_start').val();
+        var area_start_detail = $('#freight_area_start_detail').val();
+        var area_start_merger_name = $('#freight_area_start_merger_name').val();
+        console.log('submit:', area_start_merger_name);
+
+        var area_end_name = $('#freight_area_end_name').val();
+        var area_end = $('#freight_area_end').val();
+        var area_end_detail = $('#freight_area_end_detail').val();
+        var area_end_merger_name = $('#freight_area_end_merger_name').val();
+
+        var freight_text = $('#freight_text').val();
+        var freight = $('input[name=freight]:checked').val();
+
+        console.log(area_start, area_end);
+
+        var $now_selected = $('input[name=freight]:checked');
+        var $next_selected = $now_selected.parent('label').parent('span').next().children('label').children('input');
+
+        var result_freight;
+        if (freight_text) {
+            result_freight = freight_text;
+        } else {
+            result_freight = freight;
+        }
+        var message_id = $('#msg_id').val();
+        var phone_number = $('#phone_number').val();
+
+        if (area_start == 0 || area_end == 0 || !result_freight) {
+            alert('操作错误！');
+            return false;
+        }
+        var recorder = $('#user_id').val();
+        var freight_id_prev = $('#freight_id_prev').val() ? $('#freight_id_prev').val() : '';
+        $.ajax({
+            type: "post",
+            url: "{:U('MsgCheck/freightSubmit')}",
+            data: {
+                id: freight_id_prev,
+                recorder: recorder,
+                message_id: message_id,
+                phone_number: phone_number,
+                area_start_id: area_start,
+                area_start_name: area_start_name,
+                area_start_detail: area_start_detail,
+                area_start_merger_name: area_start_merger_name,
+                area_end_id: area_end,
+                area_end_name: area_end_name,
+                area_end_detail: area_end_detail,
+                area_end_merger_name: area_end_merger_name,
+                freight_price: result_freight
+            },
+            success: function (data) {
+                console.log(data);
+                if (data) {
+                    var dataObj = JSON.parse(data);
+                    console.log(dataObj);
+                    if (dataObj['id'] == 1) {
+                        $('.freight_sub_result').html('更新成功')
+                    } else {
+                        $('.freight_id_prev').html(dataObj['id']);
+                    }
+                } else {
+                    //未进行差异性更新
+                    $('.freight_sub_result').html('未进行差异性更新')
+                }
+                $('#freight_id_prev').val('');
+                $('#freight_area_start_detail').val('');
+                $('#freight_area_end_detail').val('');
+                $('#freight_text').val('');
+
+//                $now_selected.prop('checked', false);
+                $next_selected.click();
+            },
+            error: function (XMLHttpRequest, textStatus, errorThrown) {
+            }
+        });
+    })
+</script>
+<!--删除所有群信息-->
+<script>
+    $('.btn-delete-group').click(function () {
+        if (!confirm("确认要删除所有群消息？")) {
+            window.event.returnValue = false;
+        } else {
+            $.ajax({
+                url: "__CONTROLLER__/delete_all",
+                type: "GET",
+                error: function () {
+                    alert('Error');
+                },
+                success: function (data) {
+                    alert('删除成功,下次拉取生效！');
+                }
+            });
+        }
+    })
+</script>
+<script type="text/javascript">
+    function getQueryString(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+</script>

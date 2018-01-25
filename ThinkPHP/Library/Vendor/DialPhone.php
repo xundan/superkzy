@@ -64,3 +64,5 @@ function getRecordPages($phone,$date){
     $resp = $c->execute($req);
     return $resp;
 }
+
+?>

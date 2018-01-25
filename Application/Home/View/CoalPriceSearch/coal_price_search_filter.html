@@ -9,7 +9,7 @@
     <title>煤价煤矿查询结果</title>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
-    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss-v1107.css?v=1"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
@@ -51,6 +51,7 @@
                     <div class="weui_media_bd" style="margin-left: 20px">
                         <p class="weui_media_desc">
                             <span>{$data.area_name}</span>
+                            <span>{$data.area_detail}</span>
                             <span>{$data.refinery_name}</span>
                         </p>
 
@@ -93,8 +94,13 @@
                                 {$data['content'][0]['detailed_index'][0].index_name}
                             </th>
                         </empty>
-                        <th class="text-center" style="border: none;">一票价</th>
-                        <th class="text-center" style="border: none;">二票价</th>
+                        <if condition="$data.area_name eq '山西'">
+                            <th class="text-center" style="border: none;">不含税价</th>
+                            <th class="text-center" style="border: none;">含税价</th>
+                            <else/>
+                            <th class="text-center" style="border: none;">一票价</th>
+                            <th class="text-center" style="border: none;">二票价</th>
+                        </if>
                     </tr>
                     </thead>
                     <tbody>
@@ -145,7 +151,7 @@
 <!--载入读取上次标签-->
 <script>
     $(function () {
-        $('.help-block').html('发布时间:' + new Date().toLocaleDateString());
+//        $('.help-block').html('发布时间:' + new Date().toLocaleDateString());
     });
 </script>
 <!--点击标签查询-->

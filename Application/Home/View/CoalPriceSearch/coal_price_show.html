@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <title>煤矿报价</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss-v1107.css?v=1"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/loading.js"></script>
+</head>
+<style>
+    .table-striped > tbody > tr:nth-of-type(odd) {
+        background-color: #f7f7f7
+    }
+    .arrow {
+        position: absolute;
+        top: 50%;
+        right: 8px;
+        width: 10px;
+        margin-top: -3px;
+        height: 5px;
+        background: url('__PUBLIC__/home/images/sort_arrow.png') -10px -25px no-repeat;
+    }
+
+    .open {
+        background: url('__PUBLIC__/home/images/sort_arrow.png') -10px -10px no-repeat;
+    }
+
+</style>
+<body style="background-color: #efeff4">
+
+<!--订单展示栏-->
+<div class="tab-content">
+    <if condition="$message eq -1">
+        <div class="text-center">
+            <p class="" style="color:#999;padding-top: 10%">
+                亲，没有找到你要的信息哦
+            </p>
+            <img src="__PUBLIC__/home/images/no_result.png" style="width: 30%">
+            <br/>
+            <br/>
+            <a id="jump_to_trade" href="{:U('TradeSearch/trade_search')}" style="margin-top: 2%">点击这里前往超矿平台查看发布的供应信息</a>
+        </div>
+
+        <else/>
+        <div style="width: 97%;overflow: scroll;">
+            <table class="table table-condensed table-striped" id="detail_table"
+                   style="margin-bottom: 0;margin-left: 2.5%;table-layout: fixed">
+                <thead>
+                <tr>
+                    <th class="text-center" style="border-bottom: 1px solid #ddd;width: 7em;position: relative;">
+                        矿名
+                        <span class="glyphicon glyphicon-arrow-up" style="color: red;"></span>
+                        <!--<span class="arrow"></span>-->
+                    </th>
+                    <th class="text-center" style="border-bottom: 1px solid #ddd;width: 5em;position: relative;">
+                        产地
+                        <span class="glyphicon" style="color: red;"></span>
+                        <!--<span class="arrow"></span>-->
+                    </th>
+                    <th class="text-center" style="border-bottom: 1px solid #ddd;width: 5em;position: relative;">
+                        类别
+                        <span class="glyphicon" style="color: red;"></span>
+                        <!--<span class="arrow"></span>-->
+                    </th>
+                    <th class="text-center" style="border-bottom: 1px solid #ddd;width: 5em;position: relative;">
+                        一票价
+                        <span class="glyphicon" style="color: red;"></span>
+                        <!--<span class="arrow"></span>-->
+                    </th>
+                    <th class="text-center" style="border-bottom: 1px solid #ddd;width: 5em;position: relative;">
+                        二票价
+                        <span class="glyphicon" style="color: red;"></span>
+                        <!--<span class="arrow"></span>-->
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <volist name="message" id="data">
+                    <volist name="data['content']" id="content">
+                        <empty name="content['kind_name']">
+                            <else/>
+                            <tr>
+                                <td class="text-center" style="border: none;">{$data['refinery_name']}</td>
+                                <td class="text-center" style="border: none;">{$data['area_name']}</td>
+                                <td class="text-center" style="border: none;">{$content['kind_name']}</td>
+                                <td class="text-center" style="border: none;">
+                                    <if condition="$content['price'] eq -1">
+                                        无货
+                                        <elseif condition="$content['price'] eq -2"/>
+                                        停产
+                                        <elseif condition="$content['price'] eq '0'"/>
+                                        &mdash;
+                                        <else/>
+                                        {$content['price']}
+                                    </if>
+                                </td>
+                                <td class="text-center" style="border: none;">
+                                    <empty name="content['tax']">
+                                        &mdash;
+                                        <else/>
+                                        {$content['tax']}
+                                    </empty>
+                                </td>
+                            </tr>
+                        </empty>
+                    </volist>
+                </volist>
+                </tbody>
+            </table>
+        </div>
+    </if>
+</div>
+</body>
+<!--表格排序-->
+<script>
+    //绑定排序按钮
+//    var th = $('thead').children('tr').children('th');
+//    th.click(function () {
+//        console.log($(this).index());
+//        var th_index = $(this).index();
+//        var sortBy = '';
+//        if (th_index < 4) {
+//            sortBy = 'chinese';
+//        } else {
+//            sortBy = 'number';
+//        }
+//        var sortAsc = '';
+//        if ($(this).children('span').hasClass('glyphicon-arrow-up')) {
+//            sortAsc = 1;
+//            $(this).children('span').removeClass('glyphicon-arrow-up');
+//            $(this).children('span').addClass('glyphicon-arrow-down');
+//            $(this).siblings().children('span').removeClass('glyphicon-arrow-down');
+//            $(this).siblings().children('span').removeClass('glyphicon-arrow-up');
+//        } else {
+//            sortAsc = 0;
+//            $(this).children('span').removeClass('glyphicon-arrow-down');
+//            $(this).children('span').addClass('glyphicon-arrow-up');
+//            $(this).siblings().children('span').removeClass('glyphicon-arrow-down');
+//            $(this).siblings().children('span').removeClass('glyphicon-arrow-up');
+//        }
+//        tableSort(th_index, sortBy, sortAsc);
+//    });
+//    function tableSort(sortKind, sortBy, sortAsc) {
+////    var reverse= arguments[2]?arguments[2]:0;
+////    var table = document.getElementById('detail_table');
+//        var table = $('tbody')[0];
+//        var row_len = table.rows.length;
+//        var cel_len = table.rows[0].cells.length;
+//        var arrs = [];
+//        for (var r = 0; r < row_len; r++) {
+//            arrs[r] = [];
+//            for (var c = 0; c < cel_len; c++) {
+//                arrs[r][c] = {};//二维数组里再创建一个对象;
+//                arrs[r][c].html = table.rows[r].cells[c].innerHTML;//取表格HTML放进一个关联数组里面，用于排序后显示在页面上;
+//                var text = table.rows[r].cells[c].innerText;//取得表格的文字内容用于下面的判断;
+//                //检测可能出现的内容如果不是正常的数据就变成负数，排在最后面;
+//                arrs[r][c].text = table.rows[r].cells[c].innerText;//取表格文字内容放进一个关联数组里面。用于下面的sort做排序。
+//            }
+//        }
+//        if (!sortAsc) {
+//            if (sortBy == 'chinese') {
+//                arrs.sort(function (x, y) {
+//                    return x[sortKind]['text'].localeCompare(y[sortKind]['text']);
+//                });
+//            } else if (sortBy == 'number') {
+//                arrs.sort(function (x, y) {
+//                    return x[sortKind]['text'] - (y[sortKind]['text']);
+//                });
+//            }
+//        } else {
+//            if (sortBy == 'chinese') {
+//                arrs.sort(function (x, y) {
+//                    return y[sortKind]['text'].localeCompare(x[sortKind]['text']);
+//                });
+//            } else if (sortBy == 'number') {
+//                arrs.sort(function (x, y) {
+//                    return y[sortKind]['text'] - x[sortKind]['text'];
+//                });
+//            }
+//        }
+//        //将排好的html内容放入表格里
+//        for (r = 0; r < row_len; r++) {
+//            for (c = 0; c < cel_len; c++) {
+//                table.rows[r].cells[c].innerHTML = arrs[r][c]['html']
+//            }
+//        }
+//    }
+</script>
+<!--页面跳转-->
+<script>
+    $('#jump_to_trade').click(function () {
+        cookie('search_tag','供应');
+    })
+</script>
+</html>

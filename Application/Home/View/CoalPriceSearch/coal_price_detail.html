@@ -9,7 +9,7 @@
     <title>煤价详情</title>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
-    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss-v1107.css?v=1"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
@@ -125,8 +125,13 @@
                     <thead>
                     <tr>
                         <th class="text-center" style="border-bottom: 1px solid #ddd;width: 5em">类别</th>
-                        <th class="text-center" style="border-bottom: 1px solid #ddd;width: 5em">一票价</th>
-                        <th class="text-center" style="border-bottom: 1px solid #ddd;width: 5em">二票价</th>
+                        <if condition="$data.area_name eq '山西'">
+                            <th class="text-center" style="border-bottom: 1px solid #ddd;width: 5em">不含税价</th>
+                            <th class="text-center" style="border-bottom: 1px solid #ddd;width: 5em">含税价</th>
+                            <else/>
+                            <th class="text-center" style="border-bottom: 1px solid #ddd;width: 5em">一票价</th>
+                            <th class="text-center" style="border-bottom: 1px solid #ddd;width: 5em">二票价</th>
+                        </if>
                         <volist name="data['content'][0]['detailed_index']" id="val">
                             <empty name="val.index_name">
                                 <else/>
@@ -196,7 +201,7 @@
             var arrowOffsetTop = 67 + ($('table').height() / 2);
             $('#down').css('top', arrowOffsetTop + 'px');
         }
-        $('.help-block').html('发布时间:' + new Date().toLocaleDateString());
+//        $('.help-block').html('发布时间:' + new Date().toLocaleDateString());
     });
 
 

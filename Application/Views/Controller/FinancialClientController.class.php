@@ -146,4 +146,16 @@ class FinancialClientController extends RestController
         $this->display();
     }
 
+    public function show_wl(){
+        vendor("jssdk.signPackage");
+        $this->assign("signPackage",getSignPackage());
+        $this->display();
+    }
+
+    public function show_tp(){
+        vendor("jssdk.signPackage");
+        $this->assign("signPackage",getSignPackage());
+        $this->display();
+    }
+
 }

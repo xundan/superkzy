@@ -27,29 +27,29 @@ class WxCarNeedMsgCard extends MsgCard
             $imageString = "<img src='__PUBLIC__/home/images/need.png' width='50px'>";
             $invalidImage = '';
         }
-        $li_str = "<li class=\"weui_panel weui_panel_access\" style=\"border-radius: 5px\">
-<div class='pic-layer' style=\"position: absolute;right: 0px;\">".$imageString."</div>
-<div class='pic-layer' style='position: absolute;right: 20px;bottom:20px;z-index:2'>" . $invalidImage . "</div>
-<div class=\"weui_media_box weui_media_appmsg\" style=\"margin: 0;padding-left: 0;padding-right: 0\">
-    <div class=\"weui_media_hd\">
-        <img src=\"__PUBLIC__/home/images/$img\" class=\"weui_media_appmsg_thumb\">
-    </div>
-    <div class=\"weui_media_bd\">
-        <div>
-            <h4 class=\"weui_media_title\">$name</h4>
+        $li_str =
+            "<li class='weui_panel weui_panel_access' style='border-radius: 5px'>
+    <div class='pic-layer' style='position: absolute;right: 0'>" . $imageString . "</div>
+    <div class='pic-layer' style='position: absolute;right: 20px;bottom:20px;z-index:2'>" . $invalidImage . "</div>
+    <div class='card-container'>
+        <div class='card-head'>
+            <div class='name text-center'>
+                $name
+            </div>
+            <div class='dial text-center'>
+                <a href='tel:{$message['phone_number']}' onclick=\"ck_log('dial', '{$dial_param}')\">
+                    <img src='__PUBLIC__/home/images/phone.png'>
+                    <span>拨打电话</span>
+                </a>
+            </div>
+            <div class='function_button collapse text-center'>
+                <button class='btn btn-xs btn-ck' style='width: 5.5em' onclick=\"collection_switch(this,{$message['id']})\">{$message['in_collection']}</button>
+            </div>
         </div>
+        <div class='highlight content brief_content'>{$message['content']}</div>
+        <div class='card-foot pull-right help-block'>发布时间:" . $publish_date . "</div>
     </div>
-    <div class=\"weui_media_bd\" style=\"\">
-        <a href=\"tel:{$message['phone_number']}\" onclick=\"ck_log('dial', '{$dial_param}')\" class=\"\" style='text-decoration: none;color: black'>
-            <h4><img src=\"__PUBLIC__/home/images/phone.png\" class=\"\" style=\"width: 20px\">
-            <span style=\"\">拨打电话</span></h4>
-        </a>
-        <div>
-            <button class=\"btn btn-xs btn-default\" style=\"width: 70%;border-color: #04bfc6;color: #04bfc6\" onclick='collection_switch(this,{$message['id']})'>{$message['in_collection']}</button>
-        </div>
-    </div>
-</div>
-<div class=\"highlight\">{$message['content']}</div><div class='pull-right'>发布时间:{$publish_date}</div>
+    <div class='collapse-switch'><span class='collapse-arrow'>+</span></div>
 </li>";
         return $this->replacePublicString($li_str);
     }

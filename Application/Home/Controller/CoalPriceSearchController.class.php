@@ -218,6 +218,8 @@ class CoalPriceSearchController extends ComController
      */
     public function search_method()
     {
+        vendor("jssdk.signPackage");
+        $this->assign("signPackage", getSignPackage());
         $this->display();
     }
 
@@ -429,6 +431,31 @@ class CoalPriceSearchController extends ComController
         }
         echo json_encode($returnArr);
     }
+
+    /**
+     * 煤价展示（所有煤矿）
+     */
+    public function coal_price_show(){
+        $cm =  D('Views/CoalPriceMessage')->query("SELECT * from `ck_coal_price_message` ORDER BY CONVERT(`refinery_name` USING gbk)");
+        foreach ($cm as &$item) {
+            $cc = D('Views/CoalPriceContent')->where(array('message_id' => $item['message_id']))->select();
+//            foreach ($cc as &$value) {
+//                $cdi = D('Views/CoalPriceDetailedIndex')->where(array('content_id' => $value['content_id']))->select();
+//                $value['detailed_index'] = $cdi;
+//            }
+            $item['content'] = $cc;
+        }
+//        dump($cm);
+        $this->assign('message',$cm);
+        $this->display();
+    }
+
+    public function coal_price_show_excel_eeds(){
+
+    }
+
+
+
 
     public function testArea()
     {

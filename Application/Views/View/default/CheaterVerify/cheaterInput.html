@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <title>信息查询</title>
+</head>
+<style>
+    .form-control{
+        margin-top: 2em;
+    }
+</style>
+<body>
+<ul class="nav nav-tabs nav-justified" id="myTabs">
+    <li role="presentation" class="active"><a href="#cheater_input" data-toggle="tab">录入</a></li>
+    <li role="presentation"><a href="#cheater_info" data-toggle="tab">查询</a></li>
+</ul>
+<div class="tab-content">
+    <div id="cheater_input" class="tab-pane active">
+        <div class="container">
+            <form id="cheater_form" method="post">
+                <input name="name" class="form-control" type="text" placeholder="姓名">
+                <input name="phone_number" class="form-control" type="text" placeholder="电话">
+                <input name="wx_id" class="form-control" type="text" placeholder="微信号">
+                <textarea rows="5" name="evidence" class="form-control" placeholder="呈堂证供"></textarea>
+                <textarea rows="3" name="informer_info" class="form-control" placeholder="受害人嘻嘻"></textarea>
+                <input class="btn btn-lg btn-primary pull-right" style="margin-top: 2em" type="button" id="cheater_input_submit" value="提交">
+                <input class="btn btn-lg btn-warning pull-right" style="margin-top: 2em;margin-right: 1em" type="reset" value="重置">
+            </form>
+        </div>
+    </div>
+    <div id="cheater_info" class="tab-pane">
+        <div class="container">
+            <button id="cheater_info_submit" class="btn btn-default">查询</button>
+            <div id="cheater_info_content">
+                <div>总条数:<span id="cheater_info_count"></span></div>
+                <table style="width: 100%" class="table table-striped">
+                    <thead>
+                    <th>用户名</th>
+                    <th>用户电话号码</th>
+                    <th>联系方式</th>
+                    <th>内容</th>
+                    <th>填写时间</th>
+                    </thead>
+                    <tbody id="feedback_insert">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    $('#myTabs a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show')
+    })
+</script>
+<!--用户关注-->
+<script>
+    $('#cheater_input_submit').click(function () {
+        var subData = $("#cheater_form").serialize();
+        console.log(subData);
+        $.ajax({
+            type: "post",
+            url: "{:U('CheaterVerify/cheaterSubmit')}",
+            data: subData,
+            success: function (data) {
+                if(data == 'success'){
+                    alert('OK');
+                }else{
+                    alert('Fail');
+                }
+            }
+        })
+    })
+</script>
+<!--用户反馈-->
+<script>
+    $('#feedback_submit').click(function () {
+        var time = new Date();
+        var start_time = $('#feedback_start_time').val();
+        var end_time = $('#feedback_end_time').val();
+        start_time = time_to_timestamp(start_time);
+        end_time = time_to_timestamp(end_time);
+        $.ajax({
+            type: "post",
+            url: "{:U('MessageStatistic/feedback_action')}",
+            data: {
+                start_time: start_time,
+                end_time: end_time
+            },
+            success: function (data) {
+                console.log('success');
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+                $('#feedback_insert').html('');
+                if (jsonObj) {
+                    $('#feedback_count').html(jsonObj.length);
+                    jQuery.each(jsonObj, function (k, val) {
+                        var li = document.createElement('tr');
+                        li.innerHTML = '<td>' + val.user_name + '</td>' + '<td>' + val.phone_number + '</td>' + '<td>' + val.contact + '</td>' + '<td>' + val.content + '</td>' + '<td>' + val.record_time + '</td>';
+                        document.getElementById('feedback_insert').appendChild(li);
+                    });
+                }
+            }
+        })
+    })
+</script>
+</html>

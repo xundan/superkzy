@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <title>用户配置</title>
+    <link href="__PUBLIC__/home/css/bootstrap.min.css" rel="stylesheet">
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+</head>
+<body>
+<p style="text-align: center;;background-color: #ccc;font-size:2em;font-weight: bold">用户配置</p>
+<div class="container">
+    <div>
+        <label for="user_name">
+            用户名
+        </label>
+        <input type="text" name="user_name" id="user_name" class="form-control" value="{$cur_user['user_name']}">
+    </div>
+    <div>
+        <label for="password">
+            密码
+        </label>
+        <input type="password" name="password" id="password" class="form-control" value="{$cur_user['password']}">
+    </div>
+    <div>
+        <label for="phone_number">
+            联系方式
+        </label>
+        <input type="text" name="phone_number" id="phone_number" class="form-control" value="{$cur_user['phone_number']}">
+    </div>
+    <div>
+        <label for="msg_step">
+            信息拉取长度
+        </label>
+        <input type="number" name="msg_step" id="msg_step" class="form-control" value="{$cur_user['msg_step']}">
+    </div>
+    <div class="text-center" style="margin-top: 2em">
+        <button class="btn btn-primary btn-modify">修改</button>
+    </div>
+</div>
+<div class="function text-center" style="margin-top: 2em">
+    <p style="background-color: #ccc;font-size: 2em;font-weight: bold">功能入口</p>
+    <div>
+        <button class="btn btn-default btn-check">信息审核</button>
+    </div>
+    <div style="margin-top: 2em">
+        <button class="btn btn-default btn-summary">周工作总结</button>
+    </div>
+</div>
+</body>
+</html>
+<script type="text/javascript">
+    $('.btn-modify').click(function(){
+        var user_name = $('#user_name').val();
+        var password = $('#password').val();
+        var phone_number = $('#phone_number').val();
+        var msg_step = $('#msg_step').val();
+        $.ajax({
+            type: "post",
+            url: "{:U('StaffsLogin/modify')}",
+            data: {
+                user_name: user_name,
+                password: password,
+                phone_number: phone_number,
+                msg_step: msg_step
+            },
+            success: function (data) {
+                alert('修改成功！');
+            }
+        });
+    });
+    $('.btn-check').click(function(){
+        window.location.href = "{:U('MsgCheck/show')}";
+    });
+    $('.btn-summary').click(function(){
+        window.location.href = "{:U('StaffsLogin/summary')}";
+    })
+</script>

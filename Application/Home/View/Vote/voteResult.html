@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <title>投票结果</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/sweet-alert.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/sweet-alert.min.js"></script>
+</head>
+<style>
+    body,html{
+        height: 100%;
+    }
+
+    body{
+        background: -webkit-linear-gradient(dodgerblue, #ffffff); /* Safari 5.1 - 6.0 */
+        background: -o-linear-gradient(dodgerblue, #ffffff); /* Opera 11.1 - 12.0 */
+        background: -moz-linear-gradient(dodgerblue, #ffffff); /* Firefox 3.6 - 15 */
+        background: linear-gradient(dodgerblue, #ffffff); /* 标准的语法 */
+        background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(dodgerblue), to(#ffffff));/*谷歌*/
+        font-family: "PingHei", "Helvetica Neue", "Helvetica", "Arial", "Verdana", "sans-serif";
+    }
+
+    .content_title_desc {
+        text-shadow: 1px 1px 5px #000;
+        font-size: 1.5em;
+        font-weight: bolder;
+        letter-spacing: 2px;
+        color: #fff;
+        padding: 0.8em;
+    }
+
+    p {
+        color: #525252;
+        font-size: 12px;
+    }
+
+    .skillbar {
+        margin-left: 2em;
+        position: relative;
+        display: block;
+        margin-bottom: 10px;
+        width: 100%;
+        background: #eee;
+        height: 1em;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        -webkit-transition: 0.4s linear;
+        -moz-transition: 0.4s linear;
+        -ms-transition: 0.4s linear;
+        -o-transition: 0.4s linear;
+        transition: 0.4s linear;
+        -webkit-transition-property: width, background-color;
+        -moz-transition-property: width, background-color;
+        -ms-transition-property: width, background-color;
+        -o-transition-property: width, background-color;
+        transition-property: width, background-color;
+    }
+
+    .skillbar-title {
+        position: absolute;
+        text-align: center;
+        top: 0;
+        left: -2.5em;
+        width: 2.5em;
+        font-weight: bold;
+        font-size: 13px;
+        color: #ffffff;
+        background: #6adcfa;
+        -webkit-border-top-left-radius: 3px;
+        -webkit-border-bottom-left-radius: 4px;
+        -moz-border-radius-topleft: 3px;
+        -moz-border-radius-bottomleft: 3px;
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+    }
+
+    .skillbar-title{
+        background-color: #00000a;
+    }
+
+    .skillbar-title span {
+        display: block;
+        background: #337ab7;
+        padding: 0;
+        height: 1em;
+        line-height: 1em;
+        -webkit-border-top-left-radius: 3px;
+        -webkit-border-bottom-left-radius: 3px;
+        -moz-border-radius-topleft: 3px;
+        -moz-border-radius-bottomleft: 3px;
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+    }
+
+    .skillbar-bar {
+        /*margin-left: 110px;*/
+        /*display: inline-block;*/
+        height: 1em;
+        width: 0;
+        background: #6adcfa;
+        border-radius: 3px;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+    }
+
+    .skillbar-bar{
+        /*background-color: rgba(123, 114, 123, 0.56);*/
+        background-color: #5cb85c;
+    }
+
+    .skill-bar-percent {
+        position: absolute;
+        right: 3em;
+        top: 0;
+        font-size: 11px;
+        height: 1em;
+        line-height: 1em;
+        color: #ffffff;
+        color: rgba(0, 0, 0, 0.4);
+    }
+
+    .hidden-string{
+        display: none;
+    }
+</style>
+<body>
+<div id="content_title" class="text-center clearfix">
+    <div class="content_title_desc">
+        投票结果
+    </div>
+</div>
+<div class="content" style="width: 90%;margin-left: 1%">
+    <div class="skillbar clearfix " data-percent="2%">
+        <div class="skillbar-title"><span>1号</span></div>
+        <div class="skillbar-bar"></div>
+        <div class="skill-bar-percent">20%</div>
+    </div>
+
+    <div class="skillbar clearfix " data-percent="25%">
+        <div class="skillbar-title"><span>2号</span></div>
+        <div class="skillbar-bar"></div>
+        <div class="skill-bar-percent">25%</div>
+    </div>
+
+    <div class="skillbar clearfix " data-percent="25%">
+        <div class="skillbar-title"><span>3号</span></div>
+        <div class="skillbar-bar"></div>
+        <div class="skill-bar-percent">25%</div>
+    </div>
+
+    <div class="skillbar clearfix " data-percent="25%">
+        <div class="skillbar-title"><span>4号</span></div>
+        <div class="skillbar-bar"></div>
+        <div class="skill-bar-percent">25%</div>
+    </div>
+
+    <div class="skillbar clearfix " data-percent="25%">
+        <div class="skillbar-title"><span>5号</span></div>
+        <div class="skillbar-bar"></div>
+        <div class="skill-bar-percent">25%</div>
+    </div>
+
+    <div class="skillbar clearfix " data-percent="25%">
+        <div class="skillbar-title"><span>6号</span></div>
+        <div class="skillbar-bar"></div>
+        <div class="skill-bar-percent">25%</div>
+    </div>
+
+    <div class="skillbar clearfix " data-percent="25%">
+        <div class="skillbar-title"><span>7号</span></div>
+        <div class="skillbar-bar"></div>
+        <div class="skill-bar-percent">25%</div>
+    </div>
+
+    <div class="skillbar clearfix " data-percent="25%">
+        <div class="skillbar-title"><span>8号</span></div>
+        <div class="skillbar-bar"></div>
+        <div class="skill-bar-percent">25%</div>
+    </div>
+
+    <div class="skillbar clearfix " data-percent="25%">
+        <div class="skillbar-title"><span>9号</span></div>
+        <div class="skillbar-bar"></div>
+        <div class="skill-bar-percent">25%</div>
+    </div>
+
+    <div class="skillbar clearfix " data-percent="25%">
+        <div class="skillbar-title"><span>10号</span></div>
+        <div class="skillbar-bar"></div>
+        <div class="skill-bar-percent">25%</div>
+    </div>
+
+    <div class="skillbar clearfix " data-percent="25%">
+        <div class="skillbar-title"><span>11号</span></div>
+        <div class="skillbar-bar"></div>
+        <div class="skill-bar-percent">25%</div>
+    </div>
+
+    <div class="skillbar clearfix " data-percent="25%">
+        <div class="skillbar-title"><span>12号</span></div>
+        <div class="skillbar-bar"></div>
+        <div class="skill-bar-percent">25%</div>
+    </div>
+
+    <div class="skillbar clearfix " data-percent="25%">
+        <div class="skillbar-title"><span>13号</span></div>
+        <div class="skillbar-bar"></div>
+        <div class="skill-bar-percent">25%</div>
+    </div>
+
+    <div class="skillbar clearfix " data-percent="25%">
+        <div class="skillbar-title"><span>14号</span></div>
+        <div class="skillbar-bar"></div>
+        <div class="skill-bar-percent">25%</div>
+    </div>
+
+    <div class="skillbar clearfix " data-percent="25%">
+        <div class="skillbar-title"><span>15号</span></div>
+        <div class="skillbar-bar"></div>
+        <div class="skill-bar-percent">25%</div>
+    </div>
+
+    <div class="skillbar clearfix " data-percent="25%">
+        <div class="skillbar-title"><span>16号</span></div>
+        <div class="skillbar-bar"></div>
+        <div class="skill-bar-percent">25%</div>
+    </div>
+
+    <div class="skillbar clearfix " data-percent="25%">
+        <div class="skillbar-title"><span>17号</span></div>
+        <div class="skillbar-bar"></div>
+        <div class="skill-bar-percent">25%</div>
+    </div>
+
+    <div class="skillbar clearfix " data-percent="25%">
+        <div class="skillbar-title"><span>18号</span></div>
+        <div class="skillbar-bar"></div>
+        <div class="skill-bar-percent">25%</div>
+    </div>
+
+    <div class="skillbar clearfix " data-percent="25%">
+        <div class="skillbar-title"><span>19号</span></div>
+        <div class="skillbar-bar"></div>
+        <div class="skill-bar-percent">25%</div>
+    </div>
+
+    <div class="skillbar clearfix " data-percent="25%">
+        <div class="skillbar-title"><span>20号</span></div>
+        <div class="skillbar-bar"></div>
+        <div class="skill-bar-percent">25%</div>
+    </div>
+
+    <div class="hidden-string">{$voteData}</div>
+</div>
+<div class="text-center">
+    <a class="btn btn-warning">返回投票</a>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        var voteJsonString = $('.hidden-string').text().trim();
+        var voteObj = JSON.parse(voteJsonString);
+        var voteArr = [];
+//        for(var index in voteObj){
+//            voteArr[index] = voteObj[index]['num'];
+//        }
+        $.each(voteObj,function(index,value){
+            voteArr[index] = value['num'];
+        });
+        var voteSum = voteArr.reduce(function(total,curVal){return total+curVal}, 0);
+        $('.skillbar').each(function (index) {
+            var width = parseInt((voteArr[index]?voteArr[index]:0)/voteSum*100)+'%';
+            $(this).attr('data-percent',width);
+            $(this).find('.skill-bar-percent').text((voteArr[index]?voteArr[index]:0)+'票 '+width);
+            $(this).find('.skillbar-bar').animate({
+                width: $(this).attr('data-percent')
+            }, 1000);
+        });
+    });
+    $('.btn-warning').click(function(){
+        location.href = "{:U('Vote/cheatedExp')}";
+    })
+</script>
+</body>
+</html>

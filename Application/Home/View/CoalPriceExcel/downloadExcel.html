@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <title>煤价表格下载</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+</head>
+<style>
+    a{
+        display: block !important;
+        text-align: center;
+        margin: 1% 20%;
+    }
+</style>
+<body>
+    <h1 class="text-center">下载</h1>
+    <a class="btn btn-success" target="_self">鄂尔多斯</a>
+    <a class="btn btn-success" target="_self">神木</a>
+    <a class="btn btn-success" target="_self">府谷</a>
+    <a class="btn btn-success" target="_self">山西</a>
+    <a class="btn btn-success" target="_self">榆阳</a>
+    <a class="btn btn-success" target="_self">横山</a>
+    <a class="btn btn-success" target="_self">其他</a>
+</body>
+<script>
+    $('a').click(function(){
+        var name = $(this).text();
+        console.log(name);
+        window.location.href = 'http://www.xuncl.com/Home/CoalPriceExcel/showExcel/area_name/'+ name;
+    });
+</script>
+</html>

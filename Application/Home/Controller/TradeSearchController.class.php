@@ -13,6 +13,10 @@ class TradeSearchController extends SearchController
 {
 
     public function trade_search(){
+
+        vendor("jssdk.signPackage");
+        $this->assign("signPackage", getSignPackage());
+
         $input = $this->fetchInput();
 
         $whereCond = $this->createNewWhereConditions($input);

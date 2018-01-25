@@ -77,64 +77,77 @@ class MessageModel extends Model
         '_pk' => "id",
     );
 
-    public function add_by_md5($data,$switch = false){
-        if($switch){
-            $md5 = $data['content_all_md5'];
-            $exist = $this->where("content_all_md5='%s' and invalid_id=0",$md5)->order("publish_time desc")->find();
-            if ($exist) {
-                if ($exist['publish_time']+(86400*3)<time()){ // 三天前的不考虑去重（会导致MD5重复）
-                    return $this->add($data);
-                }else{
-                    // 重复直接更新update_time
-                    return $this->update_time($exist);
-                }
-            }else{
+    public function add_by_md5($data, $switch = false)
+    {
+        $md5 = $data['content_all_md5'];
+        if ($switch) {
+            $exist = $this->where("content_all_md5='%s' and invalid_id=0", $md5)->order("publish_time desc")->find();
+        } else {
+            $exist = $this->where("content_all_md5='%s' and invalid_id=0", $md5)->order("publish_time desc")->find();
+        }
+        if ($exist) {
+            if ($exist['publish_time'] + (86400 * 3) < time()) { // 三天前的不考虑去重（会导致MD5重复）
                 return $this->add($data);
+            } else {
+                // 重复直接更新update_time
+                $exist['vip'] = $data['vip'];
+                return $this->update_time($exist);
             }
-        }else{
+        } else {
             return $this->add($data);
         }
     }
 
-    public function update_time($row){
+    public function update_time($row)
+    {
         $data['id'] = $row['id'];
         $now = time();
 //        $data['update_time'] = date('Y-m-d H:i:s', $now);
-        $data['deadline'] = date("Y-m-d H:i:s",strtotime("+7 day",$now));
+        $data['deadline'] = date("Y-m-d H:i:s", strtotime("+7 day", $now));
+        $data['vip'] = $row['vip'];
         $data['invalid_id'] = 0;
         return $this->save($data);
     }
 
     // 信息总量统计
-    public function statistics_by_day(){
+    public function statistics_by_day()
+    {
         return $this->field("substr(`record_time`,1,10) as a ,COUNT(*) as s")->group('a')->order('a desc')->select();
     }
-    public function all_statistics_by_day(){
+
+    public function all_statistics_by_day()
+    {
         return $this->field("substr(`record_time`,1,10) as a ,COUNT(*) as s")->group('a')->order('a')->select();
     }
 
-    public function web_statistics_by_day(){
+    public function web_statistics_by_day()
+    {
         return $this->field("substr(`record_time`,1,10) as a ,COUNT(*) as s")->where("type='web'")->group('a')->order('a')->select();
     }
 
-    public function wx_mp_statistics_by_day(){
+    public function wx_mp_statistics_by_day()
+    {
         return $this->field("substr(`record_time`,1,10) as a ,COUNT(*) as s")->where("type='wx_mp'")->group('a')->order('a')->select();
     }
 
-    public function plain_statistics_by_day(){
+    public function plain_statistics_by_day()
+    {
         return $this->field("substr(`record_time`,1,10) as a ,COUNT(*) as s")->where("type='plain'")->group('a')->order('a')->select();
     }
 
-    public function group_statistics_by_day(){
+    public function group_statistics_by_day()
+    {
         return $this->field("substr(`record_time`,1,10) as a ,COUNT(*) as s")->where("type='group'")->group('a')->order('a')->select();
     }
 
     // 信息过期提醒SMS发送
-    public function get_expiring_msg($date){
+    public function get_expiring_msg($date)
+    {
         return $this->field("id,publisher_rid,phone_number,category,content")->where("deadline like '$date%' and invalid_id=99 and type='web'")->select();
     }
 
-    public function del_all_group_msg(){
+    public function del_all_group_msg()
+    {
         $where_cond = array(
             "type" => "group",
             "status" => 0,
@@ -147,9 +160,10 @@ class MessageModel extends Model
         return $this->where($where_cond)->save($update_delete);
     }
 
-    public function get_all_history($kw, $category,$s_date, $e_date){
+    public function get_all_history($kw, $category, $s_date, $e_date)
+    {
         return $this->field("phone_number,content,type,sender,update_time")->where("content like '%$kw%' and content not like '%$kw"
-            ."元%' and content not like '%$kw"."吨%' and category='$category' and update_time>'$s_date' and update_time<'$e_date'")->order("id desc")->select();
+            . "元%' and content not like '%$kw" . "吨%' and category='$category' and update_time>'$s_date' and update_time<'$e_date'")->order("id desc")->select();
     }
 
     /**
@@ -161,22 +175,22 @@ class MessageModel extends Model
     {
         $res = array(); // 默认返回值
         $map = array(); // 如果没有map就不执行sql
-        if ($categoryArr) $map['category'] = array("IN",implode(",",$categoryArr));
-        if ($searchArr){
+        if ($categoryArr) $map['category'] = array("IN", implode(",", $categoryArr));
+        if ($searchArr) {
             $query = array();
-            array_push($query,'like');
+            array_push($query, 'like');
             // 为关键字数组$tempStr
             foreach ($searchArr as &$item) {
 //            $query[] = array('like', '%' . $item . '%');
-                $item = "%".$item."%";
+                $item = "%" . $item . "%";
             }
-            array_push($query,$searchArr);
-            array_push($query,"AND");
-            $map['content_all']=$query;
+            array_push($query, $searchArr);
+            array_push($query, "AND");
+            $map['content_all'] = $query;
         }
-        if ($map){
-            $map['invalid_id']=array("EQ",0);
-            $res=$this->where($map)->order('update_time desc')->page($page,5)->select();
+        if ($map) {
+            $map['invalid_id'] = array("EQ", 0);
+            $res = $this->where($map)->order('update_time desc')->page($page, 5)->select();
         }
 //        return $this->getLastSql();
         return $res;
@@ -189,30 +203,30 @@ class MessageModel extends Model
      * @param $digitsArr
      * @return array
      */
-    public function selectQuery($categoryArr,$granularityArr,$kindArr,$digitsArr)
+    public function selectQuery($categoryArr, $granularityArr, $kindArr, $digitsArr)
     {
         $res = array(); // 默认返回值
         $map = array(); // 如果没有map就不执行sql
-        if ($categoryArr) $map['category'] = array("IN",implode(",",$categoryArr));
-        if ($granularityArr) $map['granularity'] = array("IN",implode(",",$granularityArr));
-        if ($kindArr) $map['kind'] = array("IN",implode(",",$kindArr));
-        if ($digitsArr){
+        if ($categoryArr) $map['category'] = array("IN", implode(",", $categoryArr));
+        if ($granularityArr) $map['granularity'] = array("IN", implode(",", $granularityArr));
+        if ($kindArr) $map['kind'] = array("IN", implode(",", $kindArr));
+        if ($digitsArr) {
             // todo 这里的逻辑需要再考虑
-            $map['heat_value_max'] = array("IN",implode(",",$digitsArr));
-            $map['heat_value_min'] = array("IN",implode(",",$digitsArr));
-            $map['price_min'] = array("IN",implode(",",$digitsArr));
-            $map['price_max'] = array("IN",implode(",",$digitsArr));
+            $map['heat_value_max'] = array("IN", implode(",", $digitsArr));
+            $map['heat_value_min'] = array("IN", implode(",", $digitsArr));
+            $map['price_min'] = array("IN", implode(",", $digitsArr));
+            $map['price_max'] = array("IN", implode(",", $digitsArr));
         }
-        if ($map){
-            $map['invalid_id']=array("EQ",0);
-            $res=$this->where($map)->select();
+        if ($map) {
+            $map['invalid_id'] = array("EQ", 0);
+            $res = $this->where($map)->select();
         }
         return $res;
     }
 
     public function getById($id)
     {
-        $res=$this->where("id=".$id)->find();
+        $res = $this->where("id=" . $id)->find();
         return $res;
     }
 

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <!--<script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>-->
+    <title>起始地录入</title>
+</head>
+<style>
+    th {
+        text-align: center;
+    }
+
+    td {
+        text-align: center;
+        vertical-align: middle;
+        padding-bottom: 5px !important;
+    }
+</style>
+<body>
+<div class="container" style="margin-top: 1em">
+    <input type="number" class="form-control" id="group_id" style="display: inline;width: 49.5%" placeholder="组号">
+    <input type="text" class="form-control" id="group_name" style="display: inline;width: 49.5%" placeholder="组名">
+</div>
+<div style="margin-top: 1em">
+    <div class="row">
+        <div class="col-md-6 col-sm-6" style="text-align: end">
+            <button class="btn btn-info">运费条数(月)</button>
+        </div>
+        <div class="col-md-6 col-sm-6" style="line-height: 34px">
+            <span id="freight_count"></span>
+        </div>
+    </div>
+
+</div>
+<!--起止地信息-->
+<div class="container" style="margin-top: 2em">
+    <table class="table table-condensed table-hover">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>组号</th>
+            <th>组名</th>
+            <th>起始地</th>
+            <th>终止地</th>
+            <th>有效</th>
+            <th>操作</th>
+            <th>合并</th>
+        </tr>
+        </thead>
+        <tbody id="place">
+        </tbody>
+    </table>
+</div>
+<!--查看按钮-->
+<div style="text-align: center;margin: 40px 0;">
+    <button type="button" class="btn btn-default btn-refresh">刷新</button>
+</div>
+<div style="position: fixed;right: 1em;top: 40%;">
+    <button class="btn btn-default btn-warning btn-top" style="display: block">回到顶部</button>
+    <button class="btn btn-default btn-warning btn-merge" style="display: block">&emsp;合并&emsp;</button>
+    <button class="btn btn-default btn-warning btn-bottom" style="display: block">回到底部</button>
+</div>
+<!--起止地输入-->
+<div style="text-align: center;">
+    <span>起始地</span>
+    <input type="text" style="border: 1px solid #ddd;height: 25px;text-align:center;font-size:16px;margin-right: 120px;"
+           class="btn-start" id="origin">
+    <span>终止地</span>
+    <input type="text" style="border: 1px solid #ddd;height: 25px;text-align:center;font-size:16px;" class="btn-end"
+           id="endless">
+</div>
+<!--提交按钮-->
+<div style="text-align: center;margin: 40px 0;">
+    <button class="btn btn-primary btn-submit">提交</button>
+</div>
+</body>
+<script>
+    $('.btn-top').click(function () {
+        window.scrollTo(0, 0);
+    });
+    $('.btn-bottom').click(function () {
+        var dh = $(document).height();
+        var wh = $(window).height();
+        $(document).scrollTop(dh - wh);
+    })
+</script>
+<script>
+    //获取提交数据
+    $(".btn-submit").click(function () {
+        var origin = $("#origin").val();
+        var endless = $("#endless").val();
+        var a = areaCheck(origin);
+        var b = areaCheck(endless);
+        if (!a) {
+            alert('起始地址不合法！');
+            return false;
+        }
+        if (!b) {
+            alert('目的地址不合法！');
+            return false;
+        }
+        var start_id = a['id'];
+        var end_id = b['id'];
+        var group_id = $('#group_id').val();
+        var group_name = $('#group_name').val();
+        console.log(origin, endless, start_id, end_id);
+        $.ajax({
+            type: 'post',
+            url: "{:U('FittingSetting/infoInputAction')}",
+            data: {
+                origin: origin,
+                endless: endless,
+                start_id: start_id,
+                end_id: end_id,
+                group_id: group_id,
+                group_name: group_name
+            },
+            success: function (data) {
+                console.log(data);
+                if (data == 1) {
+                    alert('提交成功！');
+                    $('.btn-refresh').trigger('click');
+                } else if (data == -1) {
+                    alert('提交失败！')
+                } else if (data == 0) {
+                    alert('地址已存在！')
+                }
+            }
+        })
+    });
+</script>
+<script>
+    //地址检测函数
+    function areaCheck(area) {
+        var areaObj;
+        $.ajax({
+            type: "post",
+            url: "{:U('MsgCheck/area_check')}",
+            data: {area_name: area},
+            async: false,
+            success: function (data) {
+                console.log(data);
+                if (data != 0) {
+                    areaObj = eval('(' + data + ')');
+                } else {
+                    areaObj = false;
+                }
+            }
+        });
+        return areaObj;
+    }
+</script>
+<script>
+    //信息展示
+    $('.btn-refresh').click(function () {
+        var url = "{:U('FittingSetting/infoShowAction')}";
+        var group_id = $('#group_id').val();
+        console.log(group_id, typeof(group_id));
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: {
+                group_id: group_id
+            },
+            success: function (data) {
+                $('tbody').html('');
+//                return false;
+                console.log(data);
+                var obj = JSON.parse(data);
+                console.log(obj);
+                if (obj["msg"] == "yes") {
+                    var $recordString = '';
+                    $.each(obj['data'], function (k, val) {
+                        $recordString += "<tr>"
+                                + "<td>" + val['id'] + "</td>"
+                                + "<td>" + val['group_id'] + "</td>"
+                                + "<td>" + val['group_name'] + "</td>"
+                                + "<td>" + val['area_start'] + "</td>"
+                                + "<td>" + val['area_end'] + "</td>"
+                                + "<td>" + val['invalid_id'] + "</td>"
+                                + "<td>" + "<button class='btn btn-danger btn-sm btn-delete'>删除</button>" + "<button class='btn btn-info btn-sm btn-recovery'>恢复</button>" + "</td>"
+                                + "<td><input type='checkbox' name='merge_value' value='" + val['id'] + "'></td>"
+                                + "</tr>";
+                    });
+                    $('tbody').append($recordString);
+                }
+            }
+        })
+    });
+    $('body').on('click', '.btn-delete', function () {
+        var $this = $(this);
+        var id = $this.parent('td').parent('tr').children('td').eq(0).html().trim();
+        console.log(id);
+        $.ajax({
+            type: 'post',
+            url: "{:U('FittingSetting/infoDelAction')}",
+            data: {
+                id: id
+            },
+            success: function (data) {
+                if (data == 1) {
+                    $this.parent('td').parent('tr').children('td').eq(5).html(2);
+                    alert('删除成功！');
+                } else {
+                    alert('删除失败！');
+                }
+            }
+        })
+    }).on('click', '.btn-recovery', function () {
+        var $this = $(this);
+        var id = $this.parent('td').parent('tr').children('td').eq(0).html().trim();
+        console.log(id);
+        $.ajax({
+            type: 'post',
+            url: "{:U('FittingSetting/infoRecAction')}",
+            data: {
+                id: id
+            },
+            success: function (data) {
+                if (data == 1) {
+                    $this.parent('td').parent('tr').children('td').eq(5).html(0);
+                    alert('恢复成功！');
+                } else {
+                    alert('恢复失败！');
+                }
+            }
+        })
+    }).on('click', '.btn-info', function () {
+        var group_id = $('#group_id').val();
+        var url = "{:U('FittingSetting/freightCount')}";
+        $.ajax({
+            url: url,
+            type: 'post',
+            data: {
+                group_id: group_id
+            },
+            success: function (data) {
+                console.log(data);
+                if (data != -1) {
+                    $('#freight_count').html(data);
+                }else{
+                    $('#freight_count').html('无')
+                }
+            }
+        })
+
+    }).on('click', '.btn-merge', function () {
+        var resultArr = [];
+        var resultDom = $('input[name=merge_value]:checked');
+        resultDom.each(function () {
+            resultArr.push($(this).val());
+        });
+        var group_id = $('#group_id').val();
+        var group_name = $('#group_name').val();
+        console.log(resultArr);
+        $.ajax({
+            type: 'post',
+            url: "{:U('FittingSetting/areaMerge')}",
+            data: {
+                group_id: group_id,
+                group_name: group_name,
+                mergeArr: resultArr
+            },
+            success: function (data) {
+                if (data == 1) {
+                    alert('成功');
+                    $('.btn-refresh').trigger('click');
+                } else {
+                    alert('失败');
+                }
+            }
+        });
+    })
+</script>
+</html>

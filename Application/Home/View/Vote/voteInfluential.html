@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <title>风云人物评选</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css">
+</head>
+<style>
+    ul {
+        list-style-type: none;
+    }
+
+    ul li {
+        border-bottom: 1px solid #cacaca;
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 10px;
+        justify-content: space-between;
+    }
+
+    ul li:nth-last-child(1), ul li:nth-last-child(2) {
+        border: none;
+    }
+
+    .icon_check {
+        margin-right: .8em;
+    }
+
+    .vote_radio {
+        display: none;
+    }
+
+    .cut_line {
+        border-right: 1px solid #d6d6d6;
+        width: 1px;
+        align-self: stretch;
+        margin-right: .8em
+    }
+
+    .info {
+        flex: 1;
+    }
+
+    .name_title {
+        font-weight: 500;
+        font-size: 1.5em;
+        width: auto;
+        overflow: hidden;
+        white-space: nowrap;
+        word-wrap: break-word;
+        word-break: break-all
+    }
+
+    p {
+        margin: 0
+    }
+
+    .voted_name {
+        flex: 1 1 100%
+    }
+
+    .vote_progress {
+        background-color: #eaeaea;
+        height: 10px;
+        overflow: hidden;
+        width: 70%;
+    }
+
+    .vote_progress_bar {
+        background-color: #337ab7;
+        width: 30%;
+        height: 10px
+    }
+
+    .vote_result_percent {
+        margin-left: .8em
+    }
+</style>
+<body>
+<div style="display: none" id="voted">{$voted}</div>
+<div style="display: none" id="result">{$result}</div>
+<div class="well" style="width: 90%;margin: auto;padding: 0">
+    <div class="vote_title" style="padding: 10px 20px 0 20px;">
+        风云人物评选 (多选)
+    </div>
+    <ul style="list-style-type: none;padding: 0 10px;">
+        <li>
+            <div class="icon_check">
+                <i class="weui_icon_circle"></i>
+                <input type="radio" class="vote_radio" name="vote_id" value="1">
+            </div>
+            <div class="cut_line" style=""></div>
+            <div class="info">
+                <div class="name_title">
+                    崔家志
+                </div>
+                <div class="desc">
+                    <p>地区：广东</p>
+
+                    <p>公司部门：业务管理</p>
+
+                    <p>主要业务范围：煤炭</p>
+                </div>
+            </div>
+        </li>
+        <li style="display:none" data-result_id="1">
+            <div class="voted_name">崔家志</div>
+            <div class="vote_progress">
+                <div class="vote_progress_bar">
+                </div>
+            </div>
+            <div>
+                <span class="vote_result">123</span>
+                <span class="vote_result_percent">4%</span>
+            </div>
+
+        </li>
+        <li>
+            <div class="icon_check">
+                <i class="weui_icon_circle"></i>
+                <input type="radio" class="vote_radio" name="vote_id" value="2">
+            </div>
+            <div class="cut_line" style=""></div>
+            <div class="info">
+                <div class="name_title">
+                    崔家志2
+                </div>
+                <div class="desc">
+                    <p>地区：广东</p>
+
+                    <p>公司部门：业务管理</p>
+
+                    <p>主要业务范围：煤炭</p>
+                </div>
+            </div>
+        </li>
+        <li style="display:none" data-result_id="2">
+            <div class="voted_name">崔家志</div>
+            <div class="vote_progress">
+                <div class="vote_progress_bar">
+                </div>
+            </div>
+            <div>
+                <span class="vote_result">123</span>
+                <span class="vote_result_percent">4%</span>
+            </div>
+
+        </li>
+        <li>
+            <div class="icon_check">
+                <i class="weui_icon_circle"></i>
+                <input type="radio" class="vote_radio" name="vote_id" value="3">
+            </div>
+            <div class="cut_line" style=""></div>
+            <div class="info">
+                <div class="name_title">
+                    崔家志3
+                </div>
+                <div class="desc">
+                    <p>地区：广东</p>
+
+                    <p>公司部门：业务管理</p>
+
+                    <p>主要业务范围：煤炭</p>
+                </div>
+            </div>
+        </li>
+        <li style="display:none" data-result_id="3">
+            <div class="voted_name">崔家志</div>
+            <div class="vote_progress">
+                <div class="vote_progress_bar">
+                </div>
+            </div>
+            <div>
+                <span class="vote_result">123</span>
+                <span class="vote_result_percent">4%</span>
+            </div>
+        </li>
+    </ul>
+    <div class="vote_button" style="text-align: center;padding: 10px 0;border-top: 1px solid #cacaca;">
+        投票
+    </div>
+</div>
+</body>
+<script>
+    $(function () {
+        var voted = $('#voted').html().trim();
+        if (voted == '') {
+            console.log(1);
+            $('.vote_button').on('click', function () {
+                var checked = $('input[name=vote_id]:checked');
+                console.log(checked);
+                if (checked.length == 0) {
+                    alert('请先投票');
+                    return false;
+                } else {
+                    var checkedVal = checked.val();
+                    $.ajax({
+                        url: "{:U('vote/voteInfluentialAction')}",
+                        type: 'post',
+                        data: {
+                            vote: checkedVal
+                        },
+                        success: function (data) {
+                            if (data == 'yes') {
+                                alert('投票成功！');
+                                window.location.reload();
+                            } else {
+                                alert('投票失败！');
+                            }
+                        }
+                    })
+                }
+            });
+            $('li').on('click', function () {
+                var that = $(this);
+                var icon = that.find('.icon_check').children('i');
+                //隐藏选择按钮选中
+                that.find('.vote_radio').prop('checked', true);
+                //选中样式切换
+                icon.removeClass().addClass('weui_icon_success_circle');
+                //其他选中按钮切换成未选中
+                that.siblings().find('.icon_check').children('i').removeClass().addClass('weui_icon_circle');
+                //投票按钮解禁
+                $('.vote_button').css('color', '#09bb07')
+            });
+        } else {
+            console.log(2);
+            var votedObj = JSON.parse(voted);
+            var result = $('#result').html().trim();
+            console.log(result);
+            var resultObj = JSON.parse(result);
+            console.log(resultObj);
+            //设置投票进度
+            var chosen = votedObj['vote'];
+            console.log(chosen);
+            var sum = 0;
+            $.each(resultObj,function(index,value){
+                sum += parseInt(value['vote_count']);
+            });
+            console.log(sum);
+            $.each(resultObj,function(index,value){
+                var percent = parseFloat(parseInt(value['vote_count'])/sum*100).toFixed(2);
+                var thisDom = $("li[data-result_id="+value['id']+"]");
+                if(value['id'] == chosen){
+                    console.log('###');
+                    var oldStr = thisDom.find('.voted_name').html();
+                    console.log(oldStr);
+                    thisDom.find('.voted_name').html(oldStr+"（已选）");
+                }
+                thisDom.find('.vote_progress_bar').css('width',percent+'%');
+                thisDom.find('.vote_result').html(value['vote_count']+'票');
+                thisDom.find('.vote_result_percent').html(percent+'%');
+            });
+            //投票结果展示
+            $('li:even').css('display', 'none');
+            $('li:odd').css('display', '');
+            //禁止点击
+            $('.vote_button').html('你已投票');
+        }
+    });
+</script>
+</html>

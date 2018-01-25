@@ -12,6 +12,18 @@
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
 </head>
+<style>
+    html,body{
+        height: 100%;
+    }
+    body{
+        background: -webkit-linear-gradient(dodgerblue, #ffffff); /* Safari 5.1 - 6.0 */
+        background: -o-linear-gradient(dodgerblue, #ffffff); /* Opera 11.1 - 12.0 */
+        background: -moz-linear-gradient(dodgerblue, #ffffff); /* Firefox 3.6 - 15 */
+        background: linear-gradient(dodgerblue, #ffffff); /* 标准的语法 */
+        background:-webkit-gradient(linear, 0% 0%, 0% 100%,from(#2e84de), to(#ffffff));/*谷歌*/
+    }
+</style>
 <body style="background-color: #04bfc6">
 <div class="container">
     <img src="__PUBLIC__/home/images/ad_coal_search.png" style="width:100%;margin-top: 15%">
@@ -26,9 +38,9 @@
         <!--<img src="__PUBLIC__/home/images/detail_index_search.png" style="width: 46px;position: absolute;left: 0;top: 0;">-->
         选&emsp;择&emsp;指&emsp;标
     </button>
-    <div class="pull-right" style="margin-top: 10%;">
-        <p class="text-center" style="margin-bottom: 0;color: white">我是煤矿</p>
-        <button id="coal_cooperate" type="button" class="btn btn-default" style="font-size: 1.2em;color: white;background-color: red;border: none;border-radius: 200px">
+    <div class="pull-right" style="margin-top: 10%;margin-bottom: 2%">
+        <p class="text-center" style="margin-bottom: 0;color: red">我是煤矿</p>
+        <button id="coal_cooperate" type="button" class="btn btn-default" style="font-size: 1.2em;color: white;background-color: red;border: none;border-radius: 200px;box-shadow: 2px 2px 2px #7d7d7d">
             我要报价
         </button>
     </div>
@@ -56,6 +68,61 @@
         ck_log('click','选择合作');
         //地址跳转
         window.location.href = "{:U('CoalPriceSearch/coal_cooperate')}";
+    });
+</script>
+<!--微信分享-->
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    wx.config({
+        debug: false,
+        appId: '{$signPackage["appId"]}',
+        timestamp: {$signPackage["timestamp"]},
+        nonceStr: '{$signPackage["nonceStr"]}',
+        signature: '{$signPackage["signature"]}',
+        jsApiList: [
+            // 所有要调用的 API 都要加到这个列表中
+            'onMenuShareTimeline', 'onMenuShareAppMessage',
+            'hideOptionMenu',
+            'showOptionMenu',
+            'hideMenuItems',
+            'showMenuItems',
+            'hideAllNonBaseMenuItem',
+            'showAllNonBaseMenuItem'
+        ]
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+        // 分享到朋友圈
+        wx.onMenuShareTimeline({
+            title: '超矿平台煤价查询', // 分享标题
+            link: "http://www.xuncl.com/index.php/Home/CoalPriceSearch/search_method", // 分享链接
+            imgUrl: 'http://www.xuncl.com/cjkzy_icon.png', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                ck_log("share", '分享煤价查询系统至朋友圈');
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                ck_log("share", '取消分享煤价查询系统至朋友圈');
+            }
+        });
+        //分享给朋友
+        wx.onMenuShareAppMessage({
+            title: '超矿平台煤价查询', // 分享标题
+            desc: '超级矿资源官方认证的煤矿煤价查询系统，点击进入，畅享查询', // 分享描述
+            link: "http://www.xuncl.com/index.php/Home/CoalPriceSearch/search_method", // 分享链接
+            imgUrl: 'http://www.xuncl.com/cjkzy_icon.png', // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                ck_log("share", '分享煤价查询系统给好友');
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                ck_log("share", '取消分享煤价查询系统给好友');
+            }
+        });
     });
 </script>
 </html>

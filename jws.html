@@ -93,6 +93,13 @@
     var todayDate = new Date().toLocaleDateString();
     todayDate = todayDate.replace(/\//g, '-');
     console.log(todayDate);
+    var todayDateArr = todayDate.split('-');
+    if(parseInt(todayDateArr[2])<10){
+        console.log(todayDateArr[2]);
+        todayDateArr[2] = '0'+todayDateArr[2];
+        todayDate = todayDateArr.join('-');
+    }
+    console.log(todayDate);
     var temp = document.getElementsByClassName('url_input');
     //    var copyString = '';
     //    for (var i = 0; i < temp.length; i++) {
@@ -124,10 +131,9 @@
     //    }
     //    document.getElementById('copyObj').innerHTML = copyString;
 
-//    for (var i = 0; i < temp.length; i++) {
-//        temp[i].innerHTML = temp[i].innerHTML.replace('www.kuaimei56.com','120.76.134.7');
-//        temp[i].innerHTML += '?date=' + todayDate;
-//    }
+    for (var i = 0; i < temp.length; i++) {
+        temp[i].innerHTML += '?date=' + todayDate;
+    }
 
     function copyToClipboard() {
 //        var copySource = document.getElementById('container');

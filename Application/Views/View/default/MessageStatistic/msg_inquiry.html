@@ -147,6 +147,7 @@
                 <table style="width: 100%" class="table table-striped">
                     <thead>
                     <th>用户电话</th>
+                    <th>用户类型</th>
                     <th>填写时间</th>
                     </thead>
                     <tbody id="financial_client_insert">
@@ -314,7 +315,7 @@
                     $('#financial_client_count').html(jsonObj.length);
                     jQuery.each(jsonObj, function (k, val) {
                         var li = document.createElement('tr');
-                        li.innerHTML = '<td>' + val.phone_number + '</td>' + '<td>' + val.record_time + '</td>';
+                        li.innerHTML = '<td>' + val.phone_number + '</td>' +'<td>' + val.type + '</td>' + '<td>' + val.record_time + '</td>';
                         document.getElementById('financial_client_insert').appendChild(li);
                     });
                 }

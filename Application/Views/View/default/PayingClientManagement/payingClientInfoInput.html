@@ -21,6 +21,8 @@
     <li role="presentation" class="active"><a href="#info_input" data-toggle="tab">信息录入</a></li>
     <!--<li role="presentation"><a href="#info_show" data-toggle="tab">信息查看</a></li>-->
     <li role="presentation"><a href="#lottery" data-toggle="tab">中奖名单</a></li>
+    <li role="presentation"><a href="#pic_create" data-toggle="tab">图片生成</a></li>
+    <li role="presentation"><a href="#decode_table" data-toggle="tab">解密</a></li>
 </ul>
 <div class="tab-content">
     <div id="info_input" class="tab-pane active">
@@ -80,6 +82,9 @@
                     <option value="高磊">高磊</option>
                     <option value="耿帅">耿帅</option>
                     <option value="张旭">张旭</option>
+                    <option value="孟文平">孟文平</option>
+                    <option value="孟莉莉">孟莉莉</option>
+                    <option value="孙丹丹">孙丹丹</option>
                 </select>
             </div>
             <button id="info_search" class="btn btn-default text-center" type="button">刷新</button>
@@ -151,6 +156,29 @@
         <!--<button onclick="location.href='view-source:http://www.baidu.com';">ViewSource</button>-->
         <!--<input type="button" value="查看源文件" onclick= 'window.location.href = "view-source: http://hyfw.95306.cn/Hywsyyt/home/yfcx?fzhzzm=%E9%98%BF%E5%9F%8E&dzhzzm=%E9%9E%8D%E5%B1%B1&fz=ACB&fzljm=00001&dz=ADX&dzljm=00001&pm=1570004&fsmbj=0&dsmbj=0&fzcbj=1&dzcbj=1&fsmzxbj=0&dsmzxbj=0&hwpm=%E7%B2%89%E7%85%A4" '>-->
     </div>
+    <div id="pic_create" class="tab-pane">
+        <div class="container text-center">
+            <input name="phone_number" id="pic_seed" style="margin-top: 3em" class="form-control" type="text" placeholder="手机号">
+            <button class="btn btn-success text-center" id="pic_mix" style="margin-top: 1em">合成图片</button>
+            <!--<button class="btn btn-default text-center" id="canvas_to_img" style="margin-top: 1em">生成图片</button>-->
+        </div>
+        <div class="text-center" style="margin-top: 1em;display: none">
+            <canvas id="pic_canvas" width="780" height="1704"></canvas>
+        </div>
+        <div class="copy text-center" style="margin-top: 1em;"></div>
+
+        <!--<button onclick="location.href='view-source:http://www.baidu.com';">ViewSource</button>-->
+        <!--<input type="button" value="查看源文件" onclick= 'window.location.href = "view-source: http://hyfw.95306.cn/Hywsyyt/home/yfcx?fzhzzm=%E9%98%BF%E5%9F%8E&dzhzzm=%E9%9E%8D%E5%B1%B1&fz=ACB&fzljm=00001&dz=ADX&dzljm=00001&pm=1570004&fsmbj=0&dsmbj=0&fzcbj=1&dzcbj=1&fsmzxbj=0&dsmzxbj=0&hwpm=%E7%B2%89%E7%85%A4" '>-->
+    </div>
+    <div id="decode_table" class="tab-pane">
+        <div class="container text-center">
+            <input name="invite_code" id="invite_code" style="margin-top: 3em" class="form-control" type="text" placeholder="邀请码">
+            <button class="btn btn-default text-center" id="decode" style="margin-top: 1em">解密</button>
+            <p id="decode_phone_number" style="margin-top: 1em;font-size: 2em"></p>
+        </div>
+        <!--<button onclick="location.href='view-source:http://www.baidu.com';">ViewSource</button>-->
+        <!--<input type="button" value="查看源文件" onclick= 'window.location.href = "view-source: http://hyfw.95306.cn/Hywsyyt/home/yfcx?fzhzzm=%E9%98%BF%E5%9F%8E&dzhzzm=%E9%9E%8D%E5%B1%B1&fz=ACB&fzljm=00001&dz=ADX&dzljm=00001&pm=1570004&fsmbj=0&dsmbj=0&fzcbj=1&dzcbj=1&fsmzxbj=0&dsmzxbj=0&hwpm=%E7%B2%89%E7%85%A4" '>-->
+    </div>
 </div>
 </body>
 <script>
@@ -166,6 +194,12 @@
         var from = $('input[name=from]').val();
         var handler = $('input[name=handler]').val();
         var subData = $('#info_input_form').serialize();
+        var phone_number = $('input[name=phone_number]').val();
+        var time = $('input[name=payday]').val();
+        if(!phone_number || !time){
+            alert('输入有错误！');
+            return false;
+        }
         var url = "{:U('PayingClientManagement/infoInputAction')}";
         $.ajax({
             type: "post",
@@ -318,6 +352,7 @@
         var info_pay_type = $tds.eq(7).find('input').length ? $tds.eq(7).find('input').val():$tds.eq(7).html();
         var info_money = $tds.eq(8).find('input').length ? $tds.eq(8).find('input').val():$tds.eq(8).html();
         var info_out_of_service_time = $tds.eq(9).find('input').length ? $tds.eq(9).find('input').val():$tds.eq(9).html();
+        var info_invalid_id = $tds.eq(10).find('input').length ? $tds.eq(10).find('input').val():$tds.eq(10).html();
         $.ajax({
             type: "post",
             url: "{:U('PayingClientManagement/infoContentModifyAction')}",
@@ -331,7 +366,8 @@
                 info_payday: info_payday,
                 info_pay_type: info_pay_type,
                 info_money: info_money,
-                info_out_of_service_time: info_out_of_service_time
+                info_out_of_service_time: info_out_of_service_time,
+                info_invalid_id: info_invalid_id
             },
             success: function (data) {
                 var jsonObj = eval("(" + data + ")");
@@ -600,6 +636,86 @@
         })
     })
 </script>
+<!--图片生成-->
+<script>
+    $('#pic_seed').focus(function(){
+        $(this).val('');
+    });
+    $('#pic_mix').click(function(){
+        var phone_number = $('#pic_seed').val();
+        var invite_code = '';
+        var sucess_flag = false;
+        var name='';
+        invite_code = 'a3f4t5';
+        $.ajax({
+            type:"post",
+            url:"{:U('PayingClientManagement/queryByPhone')}",
+            data:{
+                phone_number:phone_number
+            },
+            success:function(data){
+                if(data == 'failure'){
+                    alert('不存在');
+                    return false;
+                }else{
+                    var userInfo = JSON.parse(data);
+                    sucess_flag = true;
+                    name = userInfo['wx_name'];
+                    invite_code = seed_encode(userInfo['id']);
+                }
+            },
+            error:function(XMLHttpRequest,textStatus,errorThrown){
+            }
+        });
+
+        setTimeout(function(){
+            if(sucess_flag){
+                var aa = document.getElementById('pic_canvas');
+                var bb = aa.getContext('2d');
+                var img = new Image;
+                img.src = '__PUBLIC__/home/images/payingClientLottery/bg.jpg';
+                img.onload = function () {
+                    bb.drawImage(img,0,0);
+
+                    bb.fillStyle = '#fdff00';   // 文字填充颜色
+                    bb.font = '35px Adobe Ming Std';
+                    bb.textAlign = 'center';
+                    bb.fillText(name,410,1365);
+                    bb.fillText('送您价值50元的VIP！',410,1405);
+
+                    bb.textAlign = 'start';
+                    bb.fillStyle = 'white';   // 文字填充颜色
+                    bb.font = '25px Adobe Ming Std';
+                    bb.fillText(invite_code,465,1448);
+
+
+                    var image = aa.toDataURL("image/jpg");
+                    $('.copy').html("<img src='"+image+"' alt='from canvas'/>");
+//                w.document.write("<img src='"+image+"' alt='from canvas'/>");
+                };
+//            bb.stroke();
+            }
+        },2000);
+    });
+    $('#canvas_to_img').click(function () {
+        var mycanvas = document.getElementById("pic_canvas");
+        var image    = mycanvas.toDataURL("image/jpg");
+        var w=window.open('about:blank','image from canvas');
+        w.document.write("<img src='"+image+"' alt='from canvas'/>");
+    });
+</script>
+<!--邀请码解密-->
+<script>
+    $('#invite_code').focus(function(){
+        $(this).val('');
+    });
+    $('#decode').click(function(){
+        var invite_code = $('#invite_code').val();
+        console.log(typeof (invite_code));
+        var phone_number = seed_decode(invite_code);
+        $('#decode_phone_number').html(phone_number);
+    })
+</script>
 <!--功能函数-->
 <script>
     function time_to_timestamp(strtime) {
@@ -611,6 +727,14 @@
         }
         strtime = Date.parse(new Date(strtime)) / 1000;
         return strtime;
+    }
+
+    function seed_encode(code){
+        return ('000'+(parseInt(code)*13+23)).slice(-4);
+    }
+
+    function seed_decode(code){
+        return ((parseInt(code)-23)/13);
     }
 </script>
 </html>

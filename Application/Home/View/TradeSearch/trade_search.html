@@ -9,13 +9,13 @@
     <title>买卖查询</title>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
-    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss-v1107.css?v=1?v=1"/>
     <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/scroll-initial.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/cookie.js"></script>
-    <script type="text/javascript" src="__PUBLIC__/home/js/common.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/common-v1030.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/ck_log.js"></script>
     <script type="text/javascript" src="__PUBLIC__/home/js/loading.js"></script>
 </head>
@@ -287,7 +287,7 @@
             $('#search_text').html(cookie('search_input'));
         }
         //自动刷新
-        setTimeout(pullDownAction2, 200);
+//        setTimeout(pullDownAction2, 200);
     });
     function pullDownAction2() {
         console.log('auto-down');
@@ -671,59 +671,6 @@
         }, 1000); // <-- Simulate network congestion, remove setTimeout from production!
     }
 </script>
-<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
-<script>
-    var urlPublic = "";
-    wx.config({
-        debug: false,
-        appId: '{$signPackage["appId"]}',
-        timestamp: {$signPackage["timestamp"]},
-        nonceStr: '{$signPackage["nonceStr"]}',
-        signature: '{$signPackage["signature"]}',
-        jsApiList: [
-            // 所有要调用的 API 都要加到这个列表中
-            'onMenuShareTimeline', 'onMenuShareAppMessage'
-        ]
-    });
-    wx.ready(function () {
-        // 在这里调用 API
-        // 分享到朋友圈
-
-        wx.onMenuShareTimeline({
-
-            title: '123', // 分享标题
-            link: "http://www.kuaimei56.com/index.php/Home/OwnerOrder/owner_order_trade_detail?id={$message['id']}", // 分享链接
-            imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
-            success: function () {
-                // 用户确认分享后执行的回调函数
-                ck_log("share", '分享{$message["category"]}消息{$message["id"]}至朋友圈');
-            },
-            cancel: function () {
-                // 用户取消分享后执行的回调函数
-                ck_log("share", '取消分享{$message["category"]}消息{$message["id"]}至朋友圈');
-            }
-        });
-
-        //分享给朋友
-        wx.onMenuShareAppMessage({
-//            title: '来自{$user["user_name"]}('+role+')的{$message["category"]}消息', // 分享标题
-            title: '123', // 分享标题
-            desc: '444', // 分享描述
-            link: 'https://www.baidu.com', // 分享链接
-            imgUrl: 'http://www.kuaimei56.com/cjkzy_icon.png', // 分享图标
-            type: '', // 分享类型,music、video或link，不填默认为link
-            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-            success: function () {
-                // 用户确认分享后执行的回调函数
-                alert(urlPublic);
-            },
-            cancel: function () {
-                // 用户取消分享后执行的回调函数
-            }
-        });
-    });
-</script>
-
 <!--撤销收藏-->
 <script>
     function collection_switch(obj, id) {
@@ -769,7 +716,6 @@
 </script>
 <!--搜索内容高亮-->
 <script>
-
     function refresh_hl() {
         var keywords = [];
         var str = cookie('trade_search_filter_kind');
@@ -828,38 +774,73 @@
 </script>
 <!--地址返回操作-->
 <script>
-//    $(function () {
-//        pushHistory();
-//        var bool = false;
-//        setTimeout(function () {
-//            bool = true;
-//        }, 500);
-//        if (navigator.userAgent.indexOf('Android') > 0) {
-//            pushHistory();
-//            window.addEventListener("popstate", function (e) {
-//                    window.location.href = "{:U('Homepage/homepage')}";
-//            }, false);
-//        } else {
-//            pushHistory();
-//            setTimeout(function(){
-//                window.addEventListener("popstate", function (e) {
-//                    if (bool) {
-//                        window.location.href = "{:U('Homepage/homepage')}";
-//                    } else {
-//                        return false;
-//                    }
-//                }, false);
-//            },100);
-//        }
-//
-//    });
-//    function pushHistory() {
-//        var state = {
-//            title: "title",
-//            url: "#"
-//        };
-//        window.history.pushState(state, "title", "#");
-//    }
+    window.onunload = function () {
+        sessionStorage.setItem('unload', '1');
+        leaveCurView();
+    };
+
+    function leaveCurView() {
+        window.sessionStorage.setItem('scrollX', myScroll.x);
+        window.sessionStorage.setItem('scrollY', myScroll.y);
+    }
+    $(function () {
+        console.log('userAgent', navigator.userAgent);
+        //手机系统类型
+//        alert('document.referrer:'+document.referrer);
+        if (navigator.userAgent.indexOf('Android') > 0 || true) {
+            //安卓手机
+            //判断跳转到该页面的来源
+            if (window.sessionStorage.getItem('order_detail')) {
+                window.sessionStorage.removeItem('order_detail');
+                //加载并定位
+
+            }
+            var x = parseFloat(window.sessionStorage.getItem('scrollX')) ? parseFloat(window.sessionStorage.getItem('scrollX')) : 0;
+            var y = parseFloat(window.sessionStorage.getItem('scrollY')) ? parseFloat(window.sessionStorage.getItem('scrollY')) : 0;
+            console.log('map', x, y);
+            setTimeout(function () {
+                myScroll.scrollTo(x, y);
+                console.log('scroll');
+            }, 300);
+        } else {
+            //苹果手机
+        }
+
+    });
+
+
+    //    $(function () {
+    //        pushHistory();
+    //        var bool = false;
+    //        setTimeout(function () {
+    //            bool = true;
+    //        }, 500);
+    //        if (navigator.userAgent.indexOf('Android') > 0) {
+    //            pushHistory();
+    //            window.addEventListener("popstate", function (e) {
+    //                    window.location.href = "{:U('Homepage/homepage')}";
+    //            }, false);
+    //        } else {
+    //            pushHistory();
+    //            setTimeout(function(){
+    //                window.addEventListener("popstate", function (e) {
+    //                    if (bool) {
+    //                        window.location.href = "{:U('Homepage/homepage')}";
+    //                    } else {
+    //                        return false;
+    //                    }
+    //                }, false);
+    //            },100);
+    //        }
+    //
+    //    });
+    //    function pushHistory() {
+    //        var state = {
+    //            title: "title",
+    //            url: "#"
+    //        };
+    //        window.history.pushState(state, "title", "#");
+    //    }
 
     //    $(function() {
     //        if (!window.history.pushState || !document.dispatchEvent) return;
@@ -918,20 +899,53 @@
         }
     }, 100)
 </script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
 <script>
-    $('.btn-trigger').click(function () {
-        var $this = $(this);
-        if ($this.css('right') == '-20px') {
-            $this.addClass('ready');
-            $this.closest('.float-btn-group').toggleClass('open');
-        } else if ($this.css('right') == '0px') {
-            $this.closest('.float-btn-group').toggleClass('open');
-            setTimeout(function () {
-                if (!$this.closest('.float-btn-group').hasClass('open')) {
-                    $this.removeClass('ready');
-                }
-            }, 3000);
-        }
+    var urlPublic = "";
+    wx.config({
+        debug: false,
+        appId: '{$signPackage["appId"]}',
+        timestamp: {$signPackage["timestamp"]},
+        nonceStr: '{$signPackage["nonceStr"]}',
+        signature: '{$signPackage["signature"]}',
+        jsApiList: [
+            // 所有要调用的 API 都要加到这个列表中
+            'onMenuShareTimeline', 'onMenuShareAppMessage'
+        ]
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+        // 分享到朋友圈
+        wx.onMenuShareTimeline({
+            title: '超矿平台买卖查询', // 分享标题
+//            link: "http://www.xuncl.com/index.php/Home/OwnerOrder/owner_order_trade_detail?id={$message['id']}", // 分享链接
+            link: "http://www.xuncl.com/index.php/Home/TradeSearch/trade_search", // 分享链接
+            imgUrl: 'http://www.xuncl.com/cjkzy_icon.png', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+                ck_log("share", '分享{$message["category"]}消息{$message["id"]}至朋友圈');
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+                ck_log("share", '取消分享{$message["category"]}消息{$message["id"]}至朋友圈');
+            }
+        });
+        //分享给朋友
+        wx.onMenuShareAppMessage({
+//            title: '来自{$user["user_name"]}('+role+')的{$message["category"]}消息', // 分享标题
+            title: '超矿平台买卖查询', // 分享标题
+            desc: '这里有每天上千条的煤炭买卖更新，这里有最周全的煤炭供求信息', // 分享描述
+            link: 'http://www.xuncl.com/index.php/Home/TradeSearch/trade_search', // 分享链接
+            imgUrl: 'http://www.xuncl.com/cjkzy_icon.png', // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
     });
 </script>
 </html>

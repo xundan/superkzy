@@ -21,7 +21,7 @@ class CoalPriceInputController extends Controller
 
     public function coal_price_message_show()
     {
-        $result = D('CoalPriceMessage')->field('message_id,area_name,refinery_name,supply_company,vip,invalid_id')->select();
+        $result = D('CoalPriceMessage')->field('message_id,area_name,area_detail,refinery_name,supply_company,vip,invalid_id')->select();
         echo json_encode($result);
     }
 
@@ -119,6 +119,7 @@ class CoalPriceInputController extends Controller
         $data = array();
         //构造信息数据
         $Msg['area_name'] = $subInfo['area_name'];
+        $Msg['area_detail'] = $subInfo['area_detail'];
         $Msg['refinery_name'] = $subInfo['refinery_name'];
         $Msg['supply_company'] = $subInfo['supply_company'];
         $Msg['supply_company_level'] = $subInfo['supply_company_level'];
@@ -171,6 +172,7 @@ class CoalPriceInputController extends Controller
         //信息表数据组成
         $Msg = array();
         $Msg['area_name'] = $subInfo['area_name'];
+        $Msg['area_detail'] = $subInfo['area_detail'];
         $Msg['refinery_name'] = $subInfo['refinery_name'];
         $Msg['supply_company'] = $subInfo['supply_company'];
         $Msg['supply_company_level'] = $subInfo['supply_company_level'];
