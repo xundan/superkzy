@@ -12,6 +12,7 @@ use Home\Model\RawMessagesModel;
 use Home\Model\UserModel;
 use Think\Controller;
 use Think\Log;
+use Org\Net\Http;
 
 header("Content-type: text/html; charset=utf-8");
 
@@ -55,6 +56,90 @@ class WxAccessController extends Controller
                     $this->getWeObj()->news($n)->reply();
                     exit;
                 }
+                if(preg_match('/^\d$/',$content) > 0){
+                    //选择1号模板
+                    //获取用户头像地址及用户微信昵称
+                    $resultOpenId = $this->getWeObj()->getRevFrom();
+                    $userInfo = $this->getWeObj()->getUserInfo($resultOpenId);
+                    $headUrl = $userInfo['headimgurl'];
+                    $nickname = $userInfo['nickname'];
+
+                    //下载用户头像至Public/upload/heka/文件夹下
+                    //所有用户每次回复头像都保存为同一名字:headimg.png
+                    //下载图片
+                    //实例化Upload控制器
+                    $up = A('Upload');
+                    //调用控制器downloadImage方法下载头像图片
+                    $up->downloadImage($headUrl, $resultOpenId);
+                    //利用背景图片合成
+                    $templetPath = './Public/upload/heka/1.jpg';
+                    $punchline = '狗年大吉！';
+                    switch ($content)
+                    {
+                        case '1':
+                            $templetPath = './Public/upload/heka/1.jpg';
+                            $punchline = '狗年大吉！';
+                            break;
+                        case '2':
+                            $templetPath = './Public/upload/heka/2.jpg';
+                            $punchline = '吉祥如意！';
+                            break;
+                        case '3':
+                            $templetPath = './Public/upload/heka/3.jpg';
+                            $punchline = '新春如意！';
+                            break;
+                        case '4':
+                            $templetPath = './Public/upload/heka/4.jpg';
+                            $punchline = '招财进宝！';
+                            break;
+                        case '5':
+                            $templetPath = './Public/upload/heka/5.jpg';
+                            $punchline = '富贵安康！';
+                            break;
+                        case '6':
+                            $templetPath = './Public/upload/heka/6.jpg';
+                            $punchline = '步步高升！';
+                            break;
+                        case '7':
+                            $templetPath = './Public/upload/heka/7.jpg';
+                            $punchline = '恭喜发财！';
+                            break;
+                        default:
+                            $templetPath = './Public/upload/heka/'.rand(1,7).'.jpg';
+                            $punchline = '新年快乐！';
+                    }
+                    $up->imageCompose($templetPath,$punchline,$nickname,$resultOpenId);
+//
+//                    //合成后的默认路径为Public/upload/heka/mediaTemp.jpg'
+//                    //调用微信接口上传至素材库并获取素材的media_id
+                    $result = $this->getWeObj()->uploadMedia(array('media'=>'@/alidata/www/superkzy/Public/upload/heka/ny_'.$resultOpenId.'.jpg'),'image');
+                    $media_id = $result['media_id'];
+//                    $this->getWeObj()->text(json_encode($result,JSON_UNESCAPED_UNICODE))->reply();
+//                    //利用media_id回复给用户贺卡图
+                    $this->getWeObj()->image($media_id)->reply();
+
+
+                    //test
+//                    $a = $up->downloadImage($headUrl);
+//                    $url = 'http://thirdwx.qlogo.cn/mmopen/VB1ubazPN1cUNOrawXFCQNDkeCgicN4eKUZg4udJYia0lCpmntCKQzOnWYXYQD24HxlMCzAxiceaIz3XcVygsrAxRpib2AIMjlLa/132';
+//                    $http = new \Org\Net\Http();
+//                    $http::curlDownload($url, "./Public/upload/heka/headimg.png");
+//                    $result = $this->getWeObj()->uploadImg(array('media'=>'./Public/home/images/heka/media1.jpg'));
+//
+//                    $image = new \Think\Image();
+//                    $image->open('./Public/upload/heka/1.jpg');
+//                    $tffPath = './Public/home/fonts/xgyj.ttf';
+//                    $str = '狗年大吉大吉大吉';
+//                    $image->text($str,$tffPath,14,'#ffffff',array(250,900))
+//                        ->text($str,$tffPath,14,'#ffffff',array(250,920))
+//                        ->save('./Public/upload/heka/media1.jpg');
+//                    $result = $this->getWeObj()->uploadImg(array('media'=>'@www.xuncl.com/Public/upload/heka\1.jpg'));
+//                    $result = $this->getWeObj()->uploadMedia(array('media'=>'@www.xuncl.com/Public/upload/heka/1.jpg'),'image');
+//
+//                    $this->getWeObj()->text(json_encode($result))->reply();
+//                    $shortUrl = $this->getWeObj()->getShortUrl("www.xuncl.com/Public/upload/heka/mediaTemp.jpg");
+                    $this->getWeObj()->text("<a href='http://www.xuncl.com/Public/upload/heka/mediaTemp.jpg'>贺卡</a>")->reply();
+                }
                 if ($content=="你好"){
                     $this->getWeObj()->text("你好，这里是超级矿资源，感谢您的支持！")->reply();
                     $this->getWeObj()->text("你好，这里是超级矿资源，感谢您的支持！")->reply();
@@ -82,7 +167,10 @@ class WxAccessController extends Controller
                     exit;
                 }
                 if ($content=="查看结构"){
-                    $str = json_encode($this->getWeObj()->getRevData());
+//                    $resultArr = $this->getWeObj()->getRevData();
+                    $resultOpenId = $this->getWeObj()->getRevFrom();
+                    $userInfo = $this->getWeObj()->getUserInfo($resultOpenId);
+                    $str = json_encode($userInfo,JSON_UNESCAPED_UNICODE);
                     $this->getWeObj()->text($str)->reply();
                     exit;
                 }
@@ -143,10 +231,12 @@ class WxAccessController extends Controller
 
 【付费推广业务】加大煤炭信息发布范围，请联系<a href='tel:17083425332'>17083425332(微信同号)</a>
 
-【高质量煤炭群】点击<a href='http://mp.weixin.qq.com/s/XM5OE7DgKN4mU4L0t4shnw'>全国高级煤炭圈</a>，共享资源你我他
+【高质量煤炭群】点击<a href='http://www.xuncl.com/index.php/Home/Upload/show'>全国高级煤炭圈</a>，共享资源你我他
 
 加全国煤炭、物流群
-☟☟☟☟";                        ;
+☟☟☟☟
+
+春节期间，回复数字1-7，获取您的专属贺卡！（也可以回复0，试试手气）";                        ;
                         if($activity_flag){
                             $welcome_str = "感谢关注【超级矿资源】微信公众平台！
 
@@ -324,7 +414,8 @@ class WxAccessController extends Controller
 //                        'type' => 'view',
 //                        'url' => 'http://mp.weixin.qq.com/s/LEZmYPX6LtNHVQUraiZpbg'
                         'sub_button' => array(
-                            array('type' => 'view', 'name' => '加煤炭群', 'url' => 'http://mp.weixin.qq.com/s/XM5OE7DgKN4mU4L0t4shnw'),
+//                            array('type' => 'view', 'name' => '加煤炭群', 'url' => 'http://mp.weixin.qq.com/s/XM5OE7DgKN4mU4L0t4shnw'),
+                            array('type' => 'view', 'name' => '加煤炭群', 'url' => 'http://www.xuncl.com/index.php/Home/Upload/show'),
                             array('type' => 'view', 'name' => '会员注册', 'url' => 'http://www.xuncl.com/index.php/Home/Login/register'),
                             array('type' => 'view', 'name' => '车主福利', 'url' => 'http://www.xuncl.com/index.php/Home/CooperatePage/WeChe'),
 //                            array('type' => 'view', 'name' => '超矿金融', 'url' => 'http://www.xuncl.com/index.php/Views/FinancialClient/show'),

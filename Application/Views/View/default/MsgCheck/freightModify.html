@@ -114,12 +114,12 @@
         })
     });
     //地址检测函数
-    function areaCheck(area) {
+    function areaCheck(area,type) {
         var areaObj;
         $.ajax({
             type: "post",
             url: "{:U('MsgCheck/area_check')}",
-            data: {area_name: area},
+            data: {area_name: area,type:type},
             async: false,
             success: function (data) {
                 console.log(data);
@@ -141,7 +141,7 @@
             }
             console.log('start_click', area_name);
             $('#freight_area_check_start_result').html('');
-            var result = areaCheck(area_name);
+            var result = areaCheck(area_name,str);
             if (result) {
                 $this.next().val(result['id']);
                 $('#freight_area_start_merger_name').val(result['merger_name']);
@@ -159,7 +159,7 @@
                 return false;
             }
             $('#freight_area_check_end_result').html('');
-            result = areaCheck(area_name);
+            result = areaCheck(area_name,str);
             if (result) {
                 $this.next().val(result['id']);
                 $('#freight_area_end_merger_name').val(result['merger_name']);
@@ -211,23 +211,17 @@
         } else {
             result_freight = freight;
         }
-        var message_id = $('#msg_id').val();
-        var phone_number = $('#phone_number').val();
 
         if (area_start == 0 || area_end == 0 || !result_freight) {
             alert('操作错误！');
             return false;
         }
-        var recorder = $('#user_id').val();
         var freight_id = $('#freight_id').val().trim();
         $.ajax({
             type: "post",
             url: "{:U('MsgCheck/freightSubmit')}",
             data: {
                 id: freight_id,
-                recorder: recorder,
-                message_id: message_id,
-                phone_number: phone_number,
                 area_start_id: area_start,
                 area_start_name: area_start_name,
                 area_start_detail: area_start_detail,

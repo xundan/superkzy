@@ -14,7 +14,7 @@ use Think\Image;
 
 //header('Content-type:text/html;charset=utf-8');
 
-class VoteController extends ComController
+class VoteController extends Controller
 {
     /**
      * 被骗经历展示并投票页面
@@ -25,6 +25,8 @@ class VoteController extends ComController
         if ($data) {
             $this->assign('voteData', $data);
         }
+        vendor("jssdk.signPackage");
+        $this->assign("signPackage", getSignPackage());
         $this->display();
     }
 
@@ -101,8 +103,15 @@ class VoteController extends ComController
 //        $a = mkdir($path."/13/",0777,true);
 //        dump($a);
 //        dump(is_dir($path."/13/"));
-
-
+//        $date = '2018-1-22';
+//        dump(date('Y-m-d', strtotime($date) + 24 * 3600));
+        dump(date("Y-m-d", time()-24*3600*30));
+//        $subInfo = I('post.', '', 'trim,strip_tags');
+//        $a = '';
+//        foreach($subInfo['vote'] as $item){
+//            $a .= '#'.$item;
+//        }
+//        echo json_encode($a);
     }
 
     /**
@@ -119,15 +128,18 @@ class VoteController extends ComController
 
     public function voteInfluential()
     {
+        vendor("jssdk.signPackage");
+        $this->assign("signPackage", getSignPackage());
         $uid = $_SESSION['user_info']['uid'];
-        $whereVoted['uid'] = $uid;
-        $resultVoted = M('fengyun_record_2018_01')->where($whereVoted)->find();
-        if ($resultVoted) {
-            $this->assign('voted', json_encode($resultVoted));
+//        $whereVoted['uid'] = $uid;
+//        $whereVoted['record_time'] = array('gt',date("Y-m-d", time()));
+//        $resultVoted = M('fengyun_record_2018_01')->where($whereVoted)->find();
+//        if ($resultVoted) {
+//            $this->assign('voted', json_encode($resultVoted));
+            $this->assign('voted', 'end');
             $voteResult = M('fengyun_2018_01')->select();
             $this->assign('result',json_encode($voteResult));
-        }
-
+//        }
 //        $resultVoted['vote'] = 2;
 //        $resultVoted = array();
 //        $this->assign('voted', json_encode($resultVoted));
@@ -137,14 +149,27 @@ class VoteController extends ComController
     public function voteInfluentialAction()
     {
         $subInfo = I('post.', '', 'trim,strip_tags');
-        $data['vote'] = $subInfo['vote'];
+        $voteArr = $subInfo['vote'];
+        $data['vote'] = implode(',',$voteArr);
         $data['uid'] = $_SESSION['user_info']['uid'];
-        $result = M('fengyun_record_2018_01')->add($data);
-        $resultUpdate = M('fengyun_2018_01')->where('id = %d',$subInfo['vote'])->setInc('vote_count',1);
-        if($result && $resultUpdate){
+        //解决短时间投多票问题
+        $whereVerify['uid'] = $_SESSION['user_info']['uid'];
+        $whereVerify['record_time'] = array('gt',date("Y-m-d", time()));
+        $temp  = M('fengyun_record_2018_01')->where($whereVerify)->find();
+        if($temp){
             echo 'yes';
+            exit;
+        }
+        $result = M('fengyun_record_2018_01')->add($data);
+        foreach($voteArr as $item){
+            $resultUpdate = M('fengyun_2018_01')->where('id = %d',$item)->setInc('vote_count',1);
+        }
+        if($result){
+            echo 'yes';
+            exit;
         }else{
             echo 'no';
+            exit;
         }
     }
 

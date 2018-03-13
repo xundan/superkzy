@@ -12,8 +12,14 @@
     <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css">
 </head>
 <style>
+    body{
+        background-color: #190801;
+    }
+
     ul {
         list-style-type: none;
+        margin-bottom: 0;
+        background-color: #fffcfc;
     }
 
     ul li {
@@ -59,7 +65,15 @@
     }
 
     p {
-        margin: 0
+        margin: 0;
+    }
+
+    .vote_title p{
+        font-size: 0.9em;
+        overflow: hidden;
+        word-wrap: break-word;
+        word-break: break-all;
+        line-height: 1.8em;
     }
 
     .voted_name {
@@ -70,7 +84,7 @@
         background-color: #eaeaea;
         height: 10px;
         overflow: hidden;
-        width: 70%;
+        width: 60%;
     }
 
     .vote_progress_bar {
@@ -79,39 +93,56 @@
         height: 10px
     }
 
-    .vote_result_percent {
-        margin-left: .8em
+    .vote_result {
+        display: inline-block;
+        width: 4em;
+        margin-right: .3em;
+        text-align: end;
+    }
+
+    .vote_result_percent{
+        display: inline-block;
+        width: 3.5em;
+        text-align: end;
+    }
+
+    a img{
+        display: none;
     }
 </style>
 <body>
 <div style="display: none" id="voted">{$voted}</div>
 <div style="display: none" id="result">{$result}</div>
-<div class="well" style="width: 90%;margin: auto;padding: 0">
-    <div class="vote_title" style="padding: 10px 20px 0 20px;">
-        风云人物评选 (多选)
+<img src="__PUBLIC__/home/images/voteInfluential.jpg" alt="VotePicture" style="width: 90%;margin:0 auto 0px;display: block">
+<div class="vote_title" style="width: 90%;margin: 13px auto;color: #fff;position: relative;" >
+    <p style="margin-right: 5px;margin-top: 11px">投票评选规则：每人每天最多投三票。</p>
+    <p style="">投票评选时间：2018年1月30日-2月6日</p>
+    <p>扫描超级矿资源二维码，获取更多煤炭信息</p>
+    <div style="position: absolute;top: -10px;right: 2px;">
+        <img src="__PUBLIC__/home/images/promotion/qrcode-gzh.jpg" style="width: 82px;height: 82px">
     </div>
+</div>
+<div class="well" style="width: 90%;margin:10px auto 20px;padding: 0">
     <ul style="list-style-type: none;padding: 0 10px;">
         <li>
             <div class="icon_check">
                 <i class="weui_icon_circle"></i>
-                <input type="radio" class="vote_radio" name="vote_id" value="1">
+                <input type="checkbox" class="vote_radio" name="vote_id" value="1">
             </div>
             <div class="cut_line" style=""></div>
             <div class="info">
                 <div class="name_title">
-                    崔家志
+                    1号：王军
                 </div>
                 <div class="desc">
-                    <p>地区：广东</p>
-
-                    <p>公司部门：业务管理</p>
-
-                    <p>主要业务范围：煤炭</p>
+                    <p>地区：榆林地区</p>
+                    <p>公司部门：榆林市浩博煤炭运销有限公司</p>
+                    <p>主要业务范围：杭来湾、金鸡滩、榆树湾、神树畔、二墩等。</p>
                 </div>
             </div>
         </li>
         <li style="display:none" data-result_id="1">
-            <div class="voted_name">崔家志</div>
+            <div class="voted_name">1号：王军</div>
             <div class="vote_progress">
                 <div class="vote_progress_bar">
                 </div>
@@ -125,24 +156,22 @@
         <li>
             <div class="icon_check">
                 <i class="weui_icon_circle"></i>
-                <input type="radio" class="vote_radio" name="vote_id" value="2">
+                <input type="checkbox" class="vote_radio" name="vote_id" value="2">
             </div>
             <div class="cut_line" style=""></div>
             <div class="info">
                 <div class="name_title">
-                    崔家志2
+                    2号：崔家志
                 </div>
                 <div class="desc">
                     <p>地区：广东</p>
-
-                    <p>公司部门：业务管理</p>
-
-                    <p>主要业务范围：煤炭</p>
+                    <p>公司部门：珠海市山河能源兴源兴贸易有限公司</p>
+                    <p>主要业务范围：煤炭销售。</p>
                 </div>
             </div>
         </li>
         <li style="display:none" data-result_id="2">
-            <div class="voted_name">崔家志</div>
+            <div class="voted_name">2号：崔家志</div>
             <div class="vote_progress">
                 <div class="vote_progress_bar">
                 </div>
@@ -156,24 +185,358 @@
         <li>
             <div class="icon_check">
                 <i class="weui_icon_circle"></i>
-                <input type="radio" class="vote_radio" name="vote_id" value="3">
+                <input type="checkbox" class="vote_radio" name="vote_id" value="3">
             </div>
             <div class="cut_line" style=""></div>
             <div class="info">
                 <div class="name_title">
-                    崔家志3
+                    3号：王军逵
                 </div>
                 <div class="desc">
-                    <p>地区：广东</p>
-
-                    <p>公司部门：业务管理</p>
-
-                    <p>主要业务范围：煤炭</p>
+                    <p>地区：神木</p>
+                    <p>公司部门：鼎盛煤业</p>
+                    <p>主要业务范围：沫煤、块煤、焦粉。</p>
                 </div>
             </div>
         </li>
         <li style="display:none" data-result_id="3">
-            <div class="voted_name">崔家志</div>
+            <div class="voted_name">3号：王军逵</div>
+            <div class="vote_progress">
+                <div class="vote_progress_bar">
+                </div>
+            </div>
+            <div>
+                <span class="vote_result">123</span>
+                <span class="vote_result_percent">4%</span>
+            </div>
+        </li>
+        <li>
+            <div class="icon_check">
+                <i class="weui_icon_circle"></i>
+                <input type="checkbox" class="vote_radio" name="vote_id" value="4">
+            </div>
+            <div class="cut_line" style=""></div>
+            <div class="info">
+                <div class="name_title">
+                    4号：李鹏
+                </div>
+                <div class="desc">
+                    <p>地区：山西</p>
+                    <p>公司部门：山西宏孚广业商贸公司</p>
+                    <p>主要业务范围：寿阳、榆次、阳泉、盂县、昔阳各矿直发。</p>
+                </div>
+            </div>
+        </li>
+        <li style="display:none" data-result_id="4">
+            <div class="voted_name">4号：李鹏</div>
+            <div class="vote_progress">
+                <div class="vote_progress_bar">
+                </div>
+            </div>
+            <div>
+                <span class="vote_result">123</span>
+                <span class="vote_result_percent">4%</span>
+            </div>
+        </li>
+        <li>
+            <div class="icon_check">
+                <i class="weui_icon_circle"></i>
+                <input type="checkbox" class="vote_radio" name="vote_id" value="5">
+            </div>
+            <div class="cut_line" style=""></div>
+            <div class="info">
+                <div class="name_title">
+                    5号：杨玉成
+                </div>
+                <div class="desc">
+                    <p>地区：内蒙古</p>
+                    <p>公司部门：乌澜煤炭集团公司销售部</p>
+                    <p>主要业务范围：温家塔煤矿大块，中块，四九块，三八块，三六块，八零块，沫煤，块煤。</p>
+                </div>
+            </div>
+        </li>
+        <li style="display:none" data-result_id="5">
+            <div class="voted_name">5号：杨玉成</div>
+            <div class="vote_progress">
+                <div class="vote_progress_bar">
+                </div>
+            </div>
+            <div>
+                <span class="vote_result">123</span>
+                <span class="vote_result_percent">4%</span>
+            </div>
+        </li>
+        <li>
+            <div class="icon_check">
+                <i class="weui_icon_circle"></i>
+                <input type="checkbox" class="vote_radio" name="vote_id" value="6">
+            </div>
+            <div class="cut_line" style=""></div>
+            <div class="info">
+                <div class="name_title">
+                    6号：李建飞
+                </div>
+                <div class="desc">
+                    <p>地区：内蒙古</p>
+                    <p>公司部门：赛蒙特煤矿销售部</p>
+                    <p>主要业务范围：赛蒙特煤矿、粉煤、二五籽、四九块。</p>
+                </div>
+            </div>
+        </li>
+        <li style="display:none" data-result_id="6">
+            <div class="voted_name">6号：李建飞</div>
+            <div class="vote_progress">
+                <div class="vote_progress_bar">
+                </div>
+            </div>
+            <div>
+                <span class="vote_result">123</span>
+                <span class="vote_result_percent">4%</span>
+            </div>
+        </li>
+        <li>
+            <div class="icon_check">
+                <i class="weui_icon_circle"></i>
+                <input type="checkbox" class="vote_radio" name="vote_id" value="7">
+            </div>
+            <div class="cut_line" style=""></div>
+            <div class="info">
+                <div class="name_title">
+                    7号：王文军
+                </div>
+                <div class="desc">
+                    <p>地区：榆林</p>
+                    <p>公司部门：祥邦工贸有限公司</p>
+                    <p>主要业务范围：煤炭运销。</p>
+                </div>
+            </div>
+        </li>
+        <li style="display:none" data-result_id="7">
+            <div class="voted_name">7号：王文军</div>
+            <div class="vote_progress">
+                <div class="vote_progress_bar">
+                </div>
+            </div>
+            <div>
+                <span class="vote_result">123</span>
+                <span class="vote_result_percent">4%</span>
+            </div>
+        </li>
+        <li>
+            <div class="icon_check">
+                <i class="weui_icon_circle"></i>
+                <input type="checkbox" class="vote_radio" name="vote_id" value="8">
+            </div>
+            <div class="cut_line" style=""></div>
+            <div class="info">
+                <div class="name_title">
+                    8号：郭军
+                </div>
+                <div class="desc">
+                    <p>地区：内蒙古</p>
+                    <p>公司部门：鑫海源煤碳运销公司</p>
+                    <p>主要业务范围：凯源洗煤厂、王家店洗煤厂、四道柳煤矿、致富煤矿。</p>
+                </div>
+            </div>
+        </li>
+        <li style="display:none" data-result_id="8">
+            <div class="voted_name">8号：郭军</div>
+            <div class="vote_progress">
+                <div class="vote_progress_bar">
+                </div>
+            </div>
+            <div>
+                <span class="vote_result">123</span>
+                <span class="vote_result_percent">4%</span>
+            </div>
+        </li>
+        <li>
+            <div class="icon_check">
+                <i class="weui_icon_circle"></i>
+                <input type="checkbox" class="vote_radio" name="vote_id" value="9">
+            </div>
+            <div class="cut_line" style=""></div>
+            <div class="info">
+                <div class="name_title">
+                    9号：白斌
+                </div>
+                <div class="desc">
+                    <p>地区：鄂尔多斯</p>
+                    <p>公司部门：个体销售</p>
+                    <p>主要业务范围：苏家沟煤矿、新鑫煤矿。</p>
+                </div>
+            </div>
+        </li>
+        <li style="display:none" data-result_id="9">
+            <div class="voted_name">9号：白斌</div>
+            <div class="vote_progress">
+                <div class="vote_progress_bar">
+                </div>
+            </div>
+            <div>
+                <span class="vote_result">123</span>
+                <span class="vote_result_percent">4%</span>
+            </div>
+        </li>
+        <li>
+            <div class="icon_check">
+                <i class="weui_icon_circle"></i>
+                <input type="checkbox" class="vote_radio" name="vote_id" value="10">
+            </div>
+            <div class="cut_line" style=""></div>
+            <div class="info">
+                <div class="name_title">
+                    10号：付锋
+                </div>
+                <div class="desc">
+                    <p>地区：榆林市榆阳区</p>
+                    <p>公司部门：永乐煤矿营销矿长</p>
+                    <p>主要业务范围：八一五，三八，三六籽，一三籽，沫煤。</p>
+                </div>
+            </div>
+        </li>
+        <li style="display:none" data-result_id="10">
+            <div class="voted_name">10号：付锋</div>
+            <div class="vote_progress">
+                <div class="vote_progress_bar">
+                </div>
+            </div>
+            <div>
+                <span class="vote_result">123</span>
+                <span class="vote_result_percent">4%</span>
+            </div>
+        </li>
+        <li>
+            <div class="icon_check">
+                <i class="weui_icon_circle"></i>
+                <input type="checkbox" class="vote_radio" name="vote_id" value="11">
+            </div>
+            <div class="cut_line" style=""></div>
+            <div class="info">
+                <div class="name_title">
+                    11号：刘晨
+                </div>
+                <div class="desc">
+                    <p>地区：晋中市</p>
+                    <p>公司部门：山西燊通供应链管理有限公司</p>
+                    <p>主要业务范围：榆次区紫金煤业矿，寿阳县开元煤矿、新元煤矿、平舒煤矿、景福煤矿、段王煤矿。长治市长治县首阳山矿、长子县南坡煤矿。襄垣各个煤矿，洗煤厂。晋城伯方煤矿。</p>
+                </div>
+            </div>
+        </li>
+        <li style="display:none" data-result_id="11">
+            <div class="voted_name">11号：刘晨</div>
+            <div class="vote_progress">
+                <div class="vote_progress_bar">
+                </div>
+            </div>
+            <div>
+                <span class="vote_result">123</span>
+                <span class="vote_result_percent">4%</span>
+            </div>
+        </li>
+        <li>
+            <div class="icon_check">
+                <i class="weui_icon_circle"></i>
+                <input type="checkbox" class="vote_radio" name="vote_id" value="12">
+            </div>
+            <div class="cut_line" style=""></div>
+            <div class="info">
+                <div class="name_title">
+                    12号：李铭伟
+                </div>
+                <div class="desc">
+                    <p>地区：朔州市</p>
+                    <p>公司部门：朔州市相钤科贸有限公司</p>
+                    <p>主要业务范围：朔州地区各大小煤矿电煤销售、煤炭发运、朔州地区火运站台承包中介。</p>
+                </div>
+            </div>
+        </li>
+        <li style="display:none" data-result_id="12">
+            <div class="voted_name">12号：李铭伟</div>
+            <div class="vote_progress">
+                <div class="vote_progress_bar">
+                </div>
+            </div>
+            <div>
+                <span class="vote_result">123</span>
+                <span class="vote_result_percent">4%</span>
+            </div>
+        </li>
+        <li>
+            <div class="icon_check">
+                <i class="weui_icon_circle"></i>
+                <input type="checkbox" class="vote_radio" name="vote_id" value="13">
+            </div>
+            <div class="cut_line" style=""></div>
+            <div class="info">
+                <div class="name_title">
+                    13号：李昂
+                </div>
+                <div class="desc">
+                    <p>地区：内蒙古乌海市</p>
+                    <p>公司部门：卡布其跳台销售部经理</p>
+                    <p>主要业务范围：低位3550，低位4550，低硫中煤。</p>
+                </div>
+            </div>
+        </li>
+        <li style="display:none" data-result_id="13">
+            <div class="voted_name">13号：李昂</div>
+            <div class="vote_progress">
+                <div class="vote_progress_bar">
+                </div>
+            </div>
+            <div>
+                <span class="vote_result">123</span>
+                <span class="vote_result_percent">4%</span>
+            </div>
+        </li>
+        <li>
+            <div class="icon_check">
+                <i class="weui_icon_circle"></i>
+                <input type="checkbox" class="vote_radio" name="vote_id" value="14">
+            </div>
+            <div class="cut_line" style=""></div>
+            <div class="info">
+                <div class="name_title">
+                    14号：谢寅钊
+                </div>
+                <div class="desc">
+                    <p>地区：新疆</p>
+                    <p>公司部门：新疆中傲创商贸有限公司销售部总经理</p>
+                    <p>主要业务范围：煤炭，焦炭，焦沫，焦煤，兰炭，民用煤块，铁路运输。</p>
+                </div>
+            </div>
+        </li>
+        <li style="display:none" data-result_id="14">
+            <div class="voted_name">14号：谢寅钊</div>
+            <div class="vote_progress">
+                <div class="vote_progress_bar">
+                </div>
+            </div>
+            <div>
+                <span class="vote_result">123</span>
+                <span class="vote_result_percent">4%</span>
+            </div>
+        </li>
+        <li>
+            <div class="icon_check">
+                <i class="weui_icon_circle"></i>
+                <input type="checkbox" class="vote_radio" name="vote_id" value="15">
+            </div>
+            <div class="cut_line" style=""></div>
+            <div class="info">
+                <div class="name_title">
+                    15号：燕文凯
+                </div>
+                <div class="desc">
+                    <p>地区：内蒙古</p>
+                    <p>公司部门：鑫泽森煤炭贸易有限公司</p>
+                    <p>主要业务范围：煤炭洗选、仓储，运输，电子商务。</p>
+                </div>
+            </div>
+        </li>
+        <li style="display:none" data-result_id="15">
+            <div class="voted_name">15号：燕文凯</div>
             <div class="vote_progress">
                 <div class="vote_progress_bar">
                 </div>
@@ -184,24 +547,59 @@
             </div>
         </li>
     </ul>
-    <div class="vote_button" style="text-align: center;padding: 10px 0;border-top: 1px solid #cacaca;">
+    <div class="vote_button" style="text-align: center;padding: 10px 0;border-top: 1px solid #cacaca;font-size: 1.5em">
         投票
     </div>
 </div>
+<div style="width: 85%;margin: auto;color: #fff;font-size: .9em;">
+    <p style="margin: 5px 0;">本次投票活动奖励:</p>
+    <p>第一名：“诚信天下”荣誉证书+超级矿资源平台3个月VIP会员煤炭信息推广；</p>
+    <p>第二名：“诚信天下”荣誉证书+超级矿资源平台2个月VIP会员煤炭信息推广；</p>
+    <p>第三名：“诚信天下”荣誉证书+超级矿资源平台1个月VIP会员煤炭信息推广；</p>
+    <p style="margin-bottom: 2em;">第四到十名：“诚信天下”电子奖状+超级矿资源平台春节期间煤炭信息优先推广。</p>
+</div>
+<div id="myModal" class="modal" role="dialog" style="top: 50%;transform: translateY(-50%);">
+    <div class="modal-dialog" role="document" style="width: 80%;margin: auto">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom: none;padding: 15px 0 0 0">
+                <h4 class="modal-title text-center" style="font-size: 1.2em;color: #44c644;">投票成功！</h4>
+            </div>
+            <div class="modal-body text-center" style="padding: 0 15px">
+                <img src="__PUBLIC__/home/images/promotion/qrcode-gzh.jpg" style="width: 50%">
+                <p style="font-size: 0.8em">扫描即可关注超矿公众号，获取更多煤炭信息</p>
+            </div>
+            <div class="modal-footer" style="border-top: none">
+                <button id="close_button" type="button" class="btn btn-default" style="color: #44c644;border: none;font-size: 1.2em" data-dismiss="modal">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1272873480'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1272873480%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
 </body>
 <script>
     $(function () {
+        var vote_flag = true;
         var voted = $('#voted').html().trim();
         if (voted == '') {
             console.log(1);
             $('.vote_button').on('click', function () {
+                if(vote_flag == false){
+                    return false;
+                }
+                vote_flag = false;
                 var checked = $('input[name=vote_id]:checked');
-                console.log(checked);
+                console.log(checked,checked.length);
+                var checkedVal = new Array();
+                checked.each(function(k,v){
+                    console.log(k,v);
+                    checkedVal.push($(v).val());
+                });
+                console.log(checkedVal);
                 if (checked.length == 0) {
                     alert('请先投票');
+                    vote_flag = true;
                     return false;
                 } else {
-                    var checkedVal = checked.val();
                     $.ajax({
                         url: "{:U('vote/voteInfluentialAction')}",
                         type: 'post',
@@ -210,8 +608,9 @@
                         },
                         success: function (data) {
                             if (data == 'yes') {
-                                alert('投票成功！');
-                                window.location.reload();
+//                                alert('投票成功！');
+                                $('#myModal').modal('show');
+//                                window.location.reload();
                             } else {
                                 alert('投票失败！');
                             }
@@ -219,52 +618,145 @@
                     })
                 }
             });
+            $('#myModal').on('hidden.bs.modal', function (e) {
+                window.location.reload();
+            });
             $('li').on('click', function () {
                 var that = $(this);
                 var icon = that.find('.icon_check').children('i');
-                //隐藏选择按钮选中
-                that.find('.vote_radio').prop('checked', true);
-                //选中样式切换
-                icon.removeClass().addClass('weui_icon_success_circle');
+                var checked = $('input[name=vote_id]:checked');
+                if(icon.hasClass('weui_icon_success_circle')){
+                    //已选中，置为未选中
+                    icon.removeClass().addClass('weui_icon_circle');
+                    that.find('.vote_radio').prop('checked', false);
+                    checked = $('input[name=vote_id]:checked');
+                    if(checked.length == 0){
+                        $('.vote_button').css('color', '#333')
+                    }
+                }else{
+                    if(checked.length == 3){
+                        alert('最多只能投3个人哦！');
+                        return false;
+                    }
+                    icon.removeClass().addClass('weui_icon_success_circle');
+                    that.find('.vote_radio').prop('checked', true);
+                    $('.vote_button').css('color', '#09bb07')
+                }
                 //其他选中按钮切换成未选中
-                that.siblings().find('.icon_check').children('i').removeClass().addClass('weui_icon_circle');
+//                that.siblings().find('.icon_check').children('i').removeClass().addClass('weui_icon_circle');
                 //投票按钮解禁
-                $('.vote_button').css('color', '#09bb07')
             });
-        } else {
-            console.log(2);
-            var votedObj = JSON.parse(voted);
+        }
+        else if(voted == 'end'){
+            alert('活动已经结束啦！');
             var result = $('#result').html().trim();
             console.log(result);
             var resultObj = JSON.parse(result);
             console.log(resultObj);
             //设置投票进度
-            var chosen = votedObj['vote'];
-            console.log(chosen);
             var sum = 0;
-            $.each(resultObj,function(index,value){
+            $.each(resultObj, function (index, value) {
                 sum += parseInt(value['vote_count']);
             });
             console.log(sum);
-            $.each(resultObj,function(index,value){
-                var percent = parseFloat(parseInt(value['vote_count'])/sum*100).toFixed(2);
-                var thisDom = $("li[data-result_id="+value['id']+"]");
-                if(value['id'] == chosen){
-                    console.log('###');
-                    var oldStr = thisDom.find('.voted_name').html();
-                    console.log(oldStr);
-                    thisDom.find('.voted_name').html(oldStr+"（已选）");
-                }
-                thisDom.find('.vote_progress_bar').css('width',percent+'%');
-                thisDom.find('.vote_result').html(value['vote_count']+'票');
-                thisDom.find('.vote_result_percent').html(percent+'%');
+            $.each(resultObj, function (index, value) {
+                var percent = parseFloat(parseInt(value['vote_count']) / sum * 100).toFixed(2);
+                var thisDom = $("li[data-result_id=" + value['id'] + "]");
+                thisDom.find('.vote_progress_bar').css('width', percent + '%');
+                thisDom.find('.vote_result').html(value['vote_count'] + '票');
+                thisDom.find('.vote_result_percent').html(percent + '%');
             });
             //投票结果展示
             $('li:even').css('display', 'none');
             $('li:odd').css('display', '');
             //禁止点击
-            $('.vote_button').html('你已投票');
+            $('.vote_button').html('活动已结束！');
+        }else {
+            console.log(2);
+            var votedObj = JSON.parse(voted);
+            result = $('#result').html().trim();
+            console.log(result);
+            resultObj = JSON.parse(result);
+            console.log(resultObj);
+            //设置投票进度
+            var chosen = votedObj['vote'];
+            console.log(chosen);
+            var chosenArr = chosen.split(',');
+            console.log(chosenArr);
+            sum = 0;
+            $.each(resultObj, function (index, value) {
+                sum += parseInt(value['vote_count']);
+            });
+            console.log(sum);
+            $.each(resultObj, function (index, value) {
+                var percent = parseFloat(parseInt(value['vote_count']) / sum * 100).toFixed(2);
+                var thisDom = $("li[data-result_id=" + value['id'] + "]");
+                if ($.inArray(value['id'],chosenArr) != -1) {
+                    console.log('###');
+                    var oldStr = thisDom.find('.voted_name').html();
+                    console.log(oldStr);
+                    thisDom.find('.voted_name').html(oldStr + "（已选）");
+                }
+                thisDom.find('.vote_progress_bar').css('width', percent + '%');
+                thisDom.find('.vote_result').html(value['vote_count'] + '票');
+                thisDom.find('.vote_result_percent').html(percent + '%');
+            });
+            //投票结果展示
+            $('li:even').css('display', 'none');
+            $('li:odd').css('display', '');
+            //禁止点击
+            $('.vote_button').html('您已投票');
         }
+    });
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    wx.config({
+        debug: false,
+        appId: '{$signPackage["appId"]}',
+        timestamp: {$signPackage["timestamp"]},
+        nonceStr: '{$signPackage["nonceStr"]}',
+        signature: '{$signPackage["signature"]}',
+        jsApiList: [
+            // 所有要调用的 API 都要加到这个列表中
+            'onMenuShareTimeline', 'onMenuShareAppMessage',
+            'hideOptionMenu',
+            'showOptionMenu',
+            'hideMenuItems',
+            'showMenuItems',
+            'hideAllNonBaseMenuItem',
+            'showAllNonBaseMenuItem'
+        ]
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+        // 分享到朋友圈
+        wx.onMenuShareTimeline({
+            title: '超矿风云人物评选', // 分享标题
+            link: "http://www.xuncl.com/index.php/Home/Vote/voteInfluential", // 分享链接
+            imgUrl: 'http://www.xuncl.com/voteInfluential_2.jpg', // 分享图标
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
+        //分享给朋友
+        wx.onMenuShareAppMessage({
+            title: '超矿风云人物评选', // 分享标题
+            desc: '2017年度超矿“诚信天下”煤炭风云人物评选活动，快来投票吧！', // 分享描述
+            link: 'http://www.xuncl.com/index.php/Home/Vote/voteInfluential', // 分享链接
+            imgUrl: 'http://www.xuncl.com/voteInfluential_2.jpg', // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+                // 用户确认分享后执行的回调函数
+            },
+            cancel: function () {
+                // 用户取消分享后执行的回调函数
+            }
+        });
     });
 </script>
 </html>

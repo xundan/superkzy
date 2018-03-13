@@ -91,6 +91,8 @@ class DistributeController extends RestController
             }
             $insert_trans['origin'] = $origin;
             $insert_trans['phone_number'] = $origin;
+            $filter_ad_pattern = '/(资格证|冷柜|二维码|从业资格证|增值税|苯|转让|饮料|钢材|双驱|发票)/';
+            $is_ad = preg_match($filter_ad_pattern, $content);
             if ($insert_trans['type'] == "wx_mp") {
                 $insert_trans['vip'] = "3";
             } elseif ($insert_trans['type'] == "plain") {
@@ -98,20 +100,23 @@ class DistributeController extends RestController
             } else {
                 $insert_trans['vip'] = "1";
             }
-            // 从vip微信号上接收的都是vip
-            if ($insert_trans['sender_wx'] == "cjkzywl") {
-                $insert_trans['vip'] = $this->vipSet($origin);
-                $check = $Message->add_by_md5($insert_trans, true);
+            if ($is_ad) {
+                //广告信息
             } else {
-                $check = $Message->add_by_md5($insert_trans, false);
-            }
-//            var_dump($insert_trans);
-            if ($check === false) {
-                Log::record("DistributeController: Add Messages false: sql->" . $Message->getLastSql(), Log::ERR);
-            } elseif ($check === 0) {
-                Log::record("DistributeController: duplicate message: md5->" . $insert_trans['content_all_md5'], Log::INFO);
-            } else {
+                // 从vip微信号上接收的都是vip
+                if ($insert_trans['sender_wx'] == "cjkzywl") {
+                    $insert_trans['vip'] = $this->vipSet($origin);
+                    $check = $Message->add_by_md5($insert_trans, true);
+                } else {
+                    $check = $Message->add_by_md5($insert_trans, false);
+                }
+                if ($check === false) {
+                    Log::record("DistributeController: Add Messages false: sql->" . $Message->getLastSql(), Log::ERR);
+                } elseif ($check === 0) {
+                    Log::record("DistributeController: duplicate message: md5->" . $insert_trans['content_all_md5'], Log::INFO);
+                } else {
 
+                }
             }
         }
         // 只有转移数量大于0时，才记录

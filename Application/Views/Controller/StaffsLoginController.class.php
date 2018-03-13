@@ -22,11 +22,7 @@ class StaffsLoginController extends Controller
 
     public function test()
     {
-        $where = [];
-        $subInfo['name']='gaolei';
-        $where['user_name'] = $subInfo['name'];
-        $result_name = M('ck_staffs')->where($where)->find();
-        dump($result_name);
+
     }
 
     public function doRegister()
@@ -122,15 +118,13 @@ class StaffsLoginController extends Controller
     }
 
     //登出
-    public
-    function logout()
+    public function logout()
     {
         unset($_SESSION['cur_user']);
         $this->redirect('StaffsLogin/Login');
     }
 
-    public
-    function after_success()
+    public function after_success()
     {
         header("Location: UserProfile.html"); /* 跳转 */
         exit;/* 确保其他php代码不会执行. */
@@ -142,19 +136,22 @@ class StaffsLoginController extends Controller
     {
         $subInfo = I('post.', '', 'trim');
         $where = [];
-        if ($subInfo['record_time'] == NULL) {
-            if ($subInfo['name'] == NULL & $subInfo['name'] == '全部') {
-            } else {
+        if ($subInfo['date']!=NULL) {
+            if ($subInfo['name'] != NULL && $subInfo['name'] != '全部') {
                 $where['name'] = $subInfo['name'];
+                $where['record_time'] = array('between', array($subInfo['time_start'],$subInfo['time_end']));
+            } else {
+                $where['record_time'] = array('between', array($subInfo['time_start'],$subInfo['time_end']));
             }
-        } else {
-            if ($subInfo['name'] == NULL & $subInfo['name'] == '全部') {
-                $where['record_time'] = array('like', $subInfo['record_time'] . "%");
-            } else {
+        }else{
+            if ($subInfo['name'] != NULL && $subInfo['name'] != '全部'){
                 $where['name'] = $subInfo['name'];
-                $where['record_time'] = array('like', $subInfo['record_time'] . "%");
+                $where['record_time'] = array('between', array($subInfo['time_start'],$subInfo['time_end']));
+            }else{
+                $where['record_time'] = array('between', array($subInfo['time_start'],$subInfo['time_end']));
             }
         }
+        $where['invalid_id']=0;
         $result = M('ck_summary')->where($where)->select();
         $returnArr = array();
         if ($result) {
@@ -183,4 +180,16 @@ class StaffsLoginController extends Controller
 
     }
 
+    //信息删除
+    public function summaryDel(){
+        $subInfo = I('post.', '', 'trim,strip_tags');
+        $where['id']=$subInfo['id'];
+        $data['invalid_id']=2;
+        $result=M('ck_summary')->where($where)->save($data);
+        if($result=== false){
+            echo self::FAIL;
+        }else{
+            echo self::SUCCESS;
+        }
+    }
 }

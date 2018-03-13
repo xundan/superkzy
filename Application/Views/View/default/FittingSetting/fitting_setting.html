@@ -30,7 +30,8 @@
 <div style="margin-top: 1em">
     <div class="row">
         <div class="col-md-6 col-sm-6" style="text-align: end">
-            <button class="btn btn-info">运费条数(月)</button>
+            <input type="text" class="form-control" id="group_id_array" style="display: inline;width: 49.5%" placeholder="组号">
+            <button class="btn btn-info" style="vertical-align: bottom">运费条数(月)</button>
         </div>
         <div class="col-md-6 col-sm-6" style="line-height: 34px">
             <span id="freight_count"></span>
@@ -95,8 +96,8 @@
     $(".btn-submit").click(function () {
         var origin = $("#origin").val();
         var endless = $("#endless").val();
-        var a = areaCheck(origin);
-        var b = areaCheck(endless);
+        var a = areaCheck(origin,'start');
+        var b = areaCheck(endless,'end');
         if (!a) {
             alert('起始地址不合法！');
             return false;
@@ -137,12 +138,12 @@
 </script>
 <script>
     //地址检测函数
-    function areaCheck(area) {
+    function areaCheck(area,type) {
         var areaObj;
         $.ajax({
             type: "post",
             url: "{:U('MsgCheck/area_check')}",
-            data: {area_name: area},
+            data: {area_name: area,type:type},
             async: false,
             success: function (data) {
                 console.log(data);
@@ -232,7 +233,8 @@
             }
         })
     }).on('click', '.btn-info', function () {
-        var group_id = $('#group_id').val();
+        var group_id = $('#group_id_array').val().trim();
+        console.log(group_id);
         var url = "{:U('FittingSetting/freightCount')}";
         $.ajax({
             url: url,
@@ -249,7 +251,8 @@
                 }
             }
         })
-
+    }).on('input','#group_id',function(){
+        $('#group_id_array').val($(this).val());
     }).on('click', '.btn-merge', function () {
         var resultArr = [];
         var resultDom = $('input[name=merge_value]:checked');

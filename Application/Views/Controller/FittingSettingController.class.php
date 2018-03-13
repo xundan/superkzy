@@ -23,11 +23,8 @@ class FittingSettingController extends Controller
     }
 
     public function test(){
-        if(''){
-            dump(1);
-        }else{
-            dump(2);
-        }
+        $a = '1,2,3,5';
+        $b = explode(',',$a);
     }
 
     /**
@@ -92,27 +89,51 @@ class FittingSettingController extends Controller
     public function freightCount(){
         $subInfo = I('post.', '', 'trim,strip_tags');
         if($subInfo['group_id']){
-            $where['group_id'] = $subInfo['group_id'];
+            if($subInfo['group_id'] == '#'){
+                $where['group_id'] = array('exp','is not null');
+            }else if(strpos($subInfo['group_id'],',')){
+                $groupArr = explode(',',$subInfo['group_id']);
+                $where['group_id'] = array('in',$groupArr);
+            }else{
+                $where['group_id'] = $subInfo['group_id'];
+            }
             $records = M('ck_fitting_setting')->where($where)->select();
             if($records){
-                $whereFreight['area_start_id'] = array();
-                $whereFreight['area_end_id'] = array();
-                foreach($records as $record){
-                    array_push($whereFreight['area_start_id'],array('like',substr($record['area_start_id'],0,4)."%"));
-                    array_push($whereFreight['area_end_id'],array('like',substr($record['area_end_id'],0,4)."%"));
-                }
-                array_push($whereFreight['area_start_id'],'OR');
-                array_push($whereFreight['area_end_id'],'OR');
+//                $whereFreight['area_start_id'] = array();
+//                $whereFreight['area_end_id'] = array();
                 $month = date('Y-m-d',(time()-24*3600*30));
-                $whereFreight['record_time'] = array('gt',$month);
-                $whereFreight['invalid_id'] = 0;
-                $result = M('ck_freight')->where($whereFreight)->count();
-                echo $result;
+                $sum = 0;
+                foreach($records as $record){
+                    $startLevel = M('ck_districts')->field('level_type')->where(array('id'=>$record['area_start_id']))->find();
+                    $endLevel = M('ck_districts')->field('level_type')->where(array('id'=>$record['area_end_id']))->find();
+//                    array_push($whereFreight['area_start_id'],array('like',substr($record['area_start_id'],0,$startLevel['level_type']*2)."%"));
+//                    array_push($whereFreight['area_end_id'],array('like',substr($record['area_end_id'],0,$endLevel['level_type']*2)."%"));
+                    $whereFreight['area_start_id'] = array('like',substr($record['area_start_id'],0,$startLevel['level_type']*2)."%");
+                    $whereFreight['area_end_id'] = array('like',substr($record['area_end_id'],0,$endLevel['level_type']*2)."%");
+                    $whereFreight['record_time'] = array('gt',$month);
+                    $whereFreight['invalid_id'] = 0;
+                    $count = M('ck_freight')->where($whereFreight)->count();
+                    $sum += $count;
+                }
+//                array_push($whereFreight['area_start_id'],'OR');
+//                array_push($whereFreight['area_end_id'],'OR');
+//                $month = date('Y-m-d',(time()-24*3600*30));
+//                $whereFreight['record_time'] = array('gt',$month);
+//                $whereFreight['invalid_id'] = 0;
+//                $result = M('ck_freight')->where($whereFreight)->count();
+//                $sql = M()->getLastSql();
+//                echo $sql;
+//                echo $result;
+                echo $sum;
             }else{
                 echo self::FAIL;
             }
         }else{
-            echo self::FAIL;
+            $month = date('Y-m-d',(time()-24*3600*30));
+            $whereFreight['record_time'] = array('gt',$month);
+            $whereFreight['invalid_id'] = 0;
+            $result = M('ck_freight')->where($whereFreight)->count();
+            echo $result;
         }
     }
 
@@ -122,8 +143,8 @@ class FittingSettingController extends Controller
     public function infoDelAction(){
         $subInfo = I('post.', '', 'trim,strip_tags');
         $where['id'] = $subInfo['id'];
-        $data['invalid_id']=2;
-        $result=M('ck_fitting_setting')->where($where)->save($data);
+//        $data['invalid_id']=2;
+        $result=M('ck_fitting_setting')->where($where)->delete();
         if($result=== false){
             echo self::FAIL;
         }else{
@@ -146,6 +167,9 @@ class FittingSettingController extends Controller
         }
     }
 
+    /**
+     * 合并组
+     */
     public function areaMerge(){
         $subInfo = I('post.', '', 'trim,strip_tags');
         $where['id'] = array('in',$subInfo['mergeArr']);
@@ -170,6 +194,92 @@ class FittingSettingController extends Controller
             echo self::FAIL;
         }else{
             echo self::SUCCESS;
+        }
+    }
+
+    /**
+     * 省到省信息条数展示
+     */
+    public function P2P(){
+        $proArr = M('ck_districts_for_freight')->where('level_type = 1')->select();
+        foreach($proArr as $itemS){
+            foreach($proArr as $itemE){
+                $where['area_start_id'] = array('like',substr($itemS['id'],0,2)."%");
+                $where['area_end_id'] = array('like',substr($itemE['id'],0,2)."%");
+                $month = date('Y-m-d',(time()-24*3600*30));
+                $whereFreight['record_time'] = array('gt',$month);
+                $whereFreight['invalid_id'] = 0;
+                $count = M('ck_freight')->where($where)->count('id');
+                dump($itemS['name']."=>".$itemE['name'].":   ".$count);
+            }
+        }
+    }
+
+    /**
+     * 临时条数
+     */
+    public function sx2sx(){
+        //14
+        $sArr = M('ck_districts_for_freight')->where('level_type = 2 and id like "14%"')->select();
+        foreach($sArr as $itemS){
+            foreach($sArr as $itemE){
+                $where['area_start_id'] = array('like',substr($itemS['id'],0,4)."%");
+                $where['area_end_id'] = array('like',substr($itemE['id'],0,4)."%");
+                $month = date('Y-m-d',(time()-24*3600*30));
+                $where['record_time'] = array('gt',$month);
+                $where['invalid_id'] = 0;
+                $count = M('ck_freight')->where($where)->count('id');
+                dump($itemS['name']."=>".$itemE['name'].":   ".$count);
+            }
+        }
+    }
+
+    public function sx2hb(){
+        //14 13
+        $s1Arr = M('ck_districts_for_freight')->where('level_type = 2 and id like "14%"')->select();
+        $s2Arr = M('ck_districts_for_freight')->where('level_type = 2 and id like "13%"')->select();
+        foreach($s1Arr as $itemS){
+            foreach($s2Arr as $itemE){
+                $where['area_start_id'] = array('like',substr($itemS['id'],0,4)."%");
+                $where['area_end_id'] = array('like',substr($itemE['id'],0,4)."%");
+                $month = date('Y-m-d',(time()-24*3600*30));
+                $where['record_time'] = array('gt',$month);
+                $where['invalid_id'] = 0;
+                $count = M('ck_freight')->where($where)->count();
+                dump($itemS['name']."=>".$itemE['name'].":   ".$count);
+            }
+        }
+    }
+
+    public function sx2sd(){
+        //14 13
+        $s1Arr = M('ck_districts_for_freight')->where('level_type = 2 and id like "14%"')->select();
+        $s2Arr = M('ck_districts_for_freight')->where('level_type = 2 and id like "37%"')->select();
+        foreach($s1Arr as $itemS){
+            foreach($s2Arr as $itemE){
+                $where['area_start_id'] = array('like',substr($itemS['id'],0,4)."%");
+                $where['area_end_id'] = array('like',substr($itemE['id'],0,4)."%");
+                $month = date('Y-m-d',(time()-24*3600*30));
+                $where['record_time'] = array('gt',$month);
+                $where['invalid_id'] = 0;
+                $count = M('ck_freight')->where($where)->count();
+                dump($itemS['name']."=>".$itemE['name'].":   ".$count);
+            }
+        }
+    }
+
+    public function deleteNear(){
+        $result = M('ck_fitting_setting')->select();
+        $FC = A('FC');
+        foreach($result as $item){
+            $whereS['id'] = $item['area_start_id'];
+            $s = M('ck_districts_for_freight')->where($whereS)->find();
+            $whereE['id'] = $item['area_end_id'];
+            $e = M('ck_districts_for_freight')->where($whereE)->find();
+            $distance = $FC->getDistanceByAddress($s['merger_name'], $e['merger_name']);
+            if($distance>100000){
+                dump($item['area_start']."=>".$item['area_end'].":  ".$distance);
+            }
         }
     }
 }

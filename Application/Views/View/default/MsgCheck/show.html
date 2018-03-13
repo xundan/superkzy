@@ -527,12 +527,12 @@
 <!--细分审核-->
 <script>
     //地址检测函数
-    function areaCheck(area) {
+    function areaCheck(area,type) {
         var areaObj;
         $.ajax({
             type: "post",
             url: "{:U('MsgCheck/area_check')}",
-            data: {area_name: area},
+            data: {area_name: area,type:type},
             async: false,
             success: function (data) {
                 console.log(data);
@@ -622,7 +622,7 @@
             }
             console.log('start_click', area_name);
             $('#freight_area_check_start_result').html('');
-            var result = areaCheck(area_name);
+            var result = areaCheck(area_name,str);
             if (result) {
                 $this.next().val(result['id']);
                 $('#freight_area_start_merger_name').val(result['merger_name']);
@@ -639,7 +639,7 @@
                 return false;
             }
             $('#freight_area_check_end_result').html('');
-            result = areaCheck(area_name);
+            result = areaCheck(area_name,str);
             if (result) {
                 $this.next().val(result['id']);
                 $('#freight_area_end_merger_name').val(result['merger_name']);

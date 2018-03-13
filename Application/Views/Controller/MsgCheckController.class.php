@@ -285,10 +285,15 @@ class MsgCheckController extends Controller
     public function freightSubmit()
     {
         $subInfo = I('post.', '', 'strip_tags,trim');
-
-        $data['recorder'] = $subInfo['recorder'];
-        $data['message_id'] = $subInfo['message_id'];
-        $data['phone_number'] = $subInfo['phone_number'];
+        if ($subInfo['recorder']) {
+            $data['recorder'] = $subInfo['recorder'];
+        }
+        if ($subInfo['message_id']) {
+            $data['message_id'] = $subInfo['message_id'];
+        }
+        if ($subInfo['phone_number']) {
+            $data['phone_number'] = $subInfo['phone_number'];
+        }
         $data['area_start_id'] = $subInfo['area_start_id'];
         $data['area_start_name'] = $subInfo['area_start_name'];
         $data['area_start_detail'] = $subInfo['area_start_detail'];
@@ -304,7 +309,7 @@ class MsgCheckController extends Controller
         $data['distance'] = $FC->getDistanceByAddress($subInfo['area_start_merger_name'], $subInfo['area_end_merger_name']);
 
         //运费估算
-        $returnArr['freight_forecast'] = $this->freightForecast($subInfo['area_start_id'],$subInfo['area_end_id'],$data['distance']);
+        $returnArr['freight_forecast'] = $this->freightForecast($subInfo['area_start_id'], $subInfo['area_end_id'], $data['distance']);
 
         if ($subInfo['id']) {
             $data['id'] = $subInfo['id'];
@@ -380,32 +385,67 @@ class MsgCheckController extends Controller
     public function area_check()
     {
         $area_name = I('post.area_name', '', 'trim');
-        if ($area_name == '天津') {
-            $area_name = '天津市';
-        }
+        $type = I('post.type', '', 'trim');
         $where['name|short_name'] = $area_name;
-        $result = M('ck_districts')->where($where)->find();
+        $result = M('ck_districts_for_freight')->where($where)->order('level_type desc')->select();
         if ($result) {
-            echo json_encode($result);
-            exit;
+            if ($type == 'start') {
+                //如果是起始地地址，尽量详细，故选level_type最大的
+                //如果是省名冲突，优先选省
+                if (count($result) == 1) {
+                    echo json_encode($result[0]);
+                    exit;
+                } else {
+                    if ($result[count($result) - 1]['level_type'] == 1){
+                        echo json_encode($result[count($result) - 1]);
+                        exit;
+                    } else {
+                        echo json_encode($result[0]);
+                        exit;
+                    }
+                }
+            } else if ($type == 'end') {
+                //如果是终止地地址，尽量选2级(市)
+                if (count($result) == 1) {
+                    echo json_encode($result[0]);
+                    exit;
+                } else {
+                    if ($result[count($result) - 1]['level_type'] < 3) {
+                        echo json_encode($result[count($result) - 1]);
+                        exit();
+                    } else {
+                        if ($result[count($result) - 1]['level_type'] == 3 || $result[count($result) - 2]['level_type'] == 3) {
+                            echo 0;
+                            exit();
+                        } else {
+                            echo json_encode($result[count($result) - 1]);
+                            exit();
+                        }
+                    }
+                }
+            } else {
+                echo 0;
+                exit;
+            }
         } else {
             echo 0;
             exit;
         }
     }
 
-    public function freightForecast($start_id,$end_id,$distance,$level_type = 3){
+    public function freightForecast($start_id, $end_id, $distance, $level_type = 3)
+    {
         $forecast = null;
         //起止地所属组数
-        $whereFit['area_start_id'] = array('like',substr($start_id,0,$level_type*2)."%");
-        $whereFit['area_end_id'] = array('like',substr($end_id,0,$level_type*2)."%");
+        $whereFit['area_start_id'] = array('like', substr($start_id, 0, $level_type * 2) . "%");
+        $whereFit['area_end_id'] = array('like', substr($end_id, 0, $level_type * 2) . "%");
         $group_id = M('ck_fitting_setting')->where($whereFit)->field('group_id')->find();
-        if($group_id){
+        if ($group_id) {
             //取当前时间公式
             $whereFormula['group_id'] = $group_id;
             $resultFormula = M('ck_freight_fitting')->where($whereFormula)->order('record_time desc')->find();
-            if($resultFormula){
-                $forcast = $resultFormula['a']*$distance+$resultFormula['b'];
+            if ($resultFormula) {
+                $forcast = $resultFormula['a'] * $distance + $resultFormula['b'];
             }
         }
         return $forecast;

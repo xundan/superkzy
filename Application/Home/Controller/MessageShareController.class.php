@@ -408,6 +408,69 @@ class MessageShareController extends Controller
         }
     }
 
+    public function allMore(){
+        //获取Ajax数据
+        $subInfo = I('get.', '', 'trim,strip_tags');
+        //确定消息模型
+        $date = $subInfo['date'];
+        $msg = $this->msgModelCreator($date);
+        //设置条件
+        $where = $this->setWhere('all', $subInfo['date'], $subInfo['page']);
+        if ($subInfo['isAjax'] == 1) {
+            //AssembleData
+            $result['data'] = $msg->findWhere($where);
+            if (count($result['data']) < self::COUNT_ROW) {
+                $result['end_tag'] = 'end';
+            } else {
+                $result['end_tag'] = 'continue';
+            }
+            echo json_encode($result);
+            return;
+        }
+    }
+
+    public function carMore(){
+        //获取Ajax数据
+        $subInfo = I('get.', '', 'trim,strip_tags');
+        //确定消息模型
+        $date = $subInfo['date'];
+        $msg = $this->msgModelCreator($date);
+        //设置条件
+        $where = $this->setWhere('car', $subInfo['date'], $subInfo['page']);
+        if ($subInfo['isAjax'] == 1) {
+            //AssembleData
+            $result['data'] = $msg->findWhere($where);
+            if (count($result['data']) < self::COUNT_ROW) {
+                $result['end_tag'] = 'end';
+            } else {
+                $result['end_tag'] = 'continue';
+            }
+            echo json_encode($result);
+            return;
+        }
+    }
+
+    public function vipAllMore(){
+        //获取Ajax数据
+        $subInfo = I('get.', '', 'trim,strip_tags');
+        //确定消息模型
+        $date = $subInfo['date'];
+        $msg = $this->msgModelCreator($date);
+        //设置条件
+        $where = $this->setWhere('vipAll', $subInfo['date'], $subInfo['page']);
+        if ($subInfo['isAjax'] == 1) {
+            //AssembleData
+            $result['data'] = $msg->findWhere($where);
+            if (count($result['data']) < self::COUNT_ROW) {
+                $result['end_tag'] = 'end';
+            } else {
+                $result['end_tag'] = 'continue';
+            }
+            echo json_encode($result);
+            return;
+        }
+    }
+
     private function msgModelCreator($date)
     {
         if ($date) {
@@ -467,6 +530,16 @@ class MessageShareController extends Controller
                 case 'vipMonth':
                     $where->pushCond('vip', 'EQ', '5');
                     $where->pushCond('type', 'in', array('plain', 'wx_mp'));
+                    break;
+                case 'all':
+                    break;
+                case 'car':
+                    $where->pushCond('category', 'in', array('车源', '找车'));
+                    $where->pushCond('type', 'in', array('plain', 'wx_mp', 'group'));
+                    break;
+                case 'vipAll':
+                    $where->pushCond('vip', 'in', array('8', '7', '6', '5'));
+                    $where->pushCond('type', 'in', array('plain', 'wx_mp', 'group'));
                     break;
                 default:
                     return null;

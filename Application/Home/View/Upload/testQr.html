@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <title>加煤炭群</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+</head>
+<style>
+    .qrcodeBox {
+        width: 100%;
+        margin: 4% auto;
+        z-index: 2;
+        height: 100%;
+        position: relative;
+    }
+
+    .qrcode {
+        position: relative;
+        z-index: 2;
+        margin: 50px auto;
+    }
+
+    .realQrcode {
+        width: 100%;
+        position: absolute;
+        opacity: 0.1;
+        z-index: -1;
+        left: 50%;
+        top: 50px;
+        transform: translateX(-50%);
+    }
+</style>
+<body style="background: url('__PUBLIC__/upload/group_qrcode/bg.jpg') no-repeat;background-size: cover">
+<!--<div>-->
+<!--每日更新-->
+<!--</div>-->
+<div class="qrcodeBox clearfix">
+    <img src="__PUBLIC__/upload/group_qrcode/qrcode.jpg" style="display: block;width: 20%" class="qrcode qrcode1 fl" />
+    <img src="__PUBLIC__/upload/group_qrcode/kefu.jpg" style="display: block;width: 20%" class="qrcode qrcode2 fl" />
+
+    <img src="__PUBLIC__/upload/group_qrcode/qrcode.jpg" class="realQrcode" style="width: 20%" />
+</div>
+
+</body>
+<script>
+    $(function(){
+        qrcode();
+    });
+    function qrcode() {
+        $(document).on('touchstart', '.qrcode1', function () {
+            $('.realQrcode').attr('src', $(this).attr('src'));
+            $('.realQrcode').css('z-index', '10');
+        }).on('touchstart', '.qrcode2', function () {
+            $('.realQrcode').attr('src', $(this).attr('src'));
+            $('.realQrcode').css('z-index', '10');
+        }).on('touchend', '.qrcode', function () {
+            $('.realQrcode').css('z-index', '-1');
+        }).on('touchcancel', '.qrcode', function () {
+            $('.realQrcode').css('z-index', '-1');
+        })
+    }
+</script>
+</html>
