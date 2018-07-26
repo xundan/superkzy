@@ -41,15 +41,17 @@
 <h1>信息审核记录</h1>
 <!--条件-->
 <div style="text-align: center">
-    <span>日期</span>
-    <input type="date" name="user_date" style="margin-right:300px;width: 150px;" id="date_start">
-    <!--<span>截止日期</span>-->
-    <!--<input type="date" name="user_date" style="margin-right:145px;width: 119px;" id="date_end">-->
+    <span>开始日期</span>
+    <input type="date" name="user_date" style="margin-right:145px;width: 150px;" id="date_start">
+    <span>截止日期</span>
+    <input type="date" name="user_date" style="margin-right:145px;width: 150px;" id="date_end">
     <span>姓名</span>
-    <select style=" width: 150px;" id="name">
+    <select style=" width: 119px;" id="name">
         <option></option>
+        <option>全部</option>
         <option>gaolei</option>
         <option>gls</option>
+        <option>hq</option>
         <option>jws</option>
         <option>liuxuan</option>
         <option>lx</option>
@@ -61,7 +63,6 @@
         <option>wangpeng</option>
         <option>xunchenlong</option>
         <option>zhangxu</option>
-        <option>全部</option>
     </select>
 </div>
 <!--内容-->
@@ -74,6 +75,7 @@
             <th>运费审核条数</th>
             <th>总条数</th>
             <th>审核时间</th>
+            <th>效率值（条/分钟）</th>
         </tr>
         </thead>
         <tbody>
@@ -92,10 +94,16 @@
     //单人查询
     $('#selection').click(function () {
         var date_start = $('#date_start').val();
+        var date_num = $('#date_end').val();
         var name = $('#name').val();
-        console.log(date_start, name);
+        var time_num = (new Date(date_num)).valueOf() + 57599999;
+        var time_aa = new Date(time_num);
+        var date_end = time_aa.getFullYear() + '-' + (time_aa.getMonth() + 1 < 10 ? '0' + (time_aa.getMonth() + 1) : time_aa.getMonth() + 1) + '-' + time_aa.getDate() + ' ' + '' + time_aa.getHours() + ':' + time_aa.getMinutes() + ':' + time_aa.getSeconds();
+        console.log(date_start,date_num ,name, date_start, date_end);
         if (!date_start) {
-            alert('请输入时间！');
+            alert('请输入开始时间！');
+        } else if(!date_num){
+            alert('请输入截止时间！');
         } else if (!name) {
             alert('请输入名称！');
         } else {
@@ -104,6 +112,7 @@
                 url: "{:U('RecordInformation/infoShowAction')}",
                 data: {
                     date_start: date_start,
+                    date_end:date_end,
                     name: name
                 },
                 success: function (data) {
@@ -114,14 +123,15 @@
                         console.log(data);
                         var obj = JSON.parse(data);
                         console.log(obj);
-                        if (obj["msg"] == 1 ||obj["msg"] == 0) {
+                        if (obj["msg"] == 1 || obj["msg"] == 0) {
                             var $recordString = '';
                             $.each(obj['data'], function (index, val) {
                                 $recordString += "<tr class='place_add'><td style='border: 1px solid #ddd;background-color: #fff;text-align: center;'>" + val['user_name'] + "</td>"
                                         + "<td style='border: 1px solid #ddd;background-color: #fff;text-align: center;'>" + val['msg_count'] + "</td>"
                                         + "<td style='border: 1px solid #ddd;background-color: #fff;text-align: center;'>" + val['freight_count'] + "</td>"
                                         + "<td style='border: 1px solid #ddd;background-color: #fff;text-align: center;'>" + val['msg_count_all'] + "</td>"
-                                        + "<td style='border: 1px solid #ddd;background-color: #fff;text-align: center;'>" + val['time_count'] + "</td>";
+                                        + "<td style='border: 1px solid #ddd;background-color: #fff;text-align: center;'>" + val['time_count'] + "</td>"
+                                        + "<td style='border: 1px solid #ddd;background-color: #fff;text-align: center;'>" + val['efficiency'] + "</td>";
                                 $recordString += "</tr>";
                                 console.log(val['user_name']);
                             });

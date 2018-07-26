@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <title>车辆运营数据查询</title>
+</head>
+<style>
+    #result div {
+        font-size: 1.5em;
+        color: red;;
+        margin: 0.5em 0;
+    }
+</style>
+<body>
+<div class="page-header text-center" style="font-size: 2em">
+    车辆运营数据查询
+</div>
+
+<div class="container">
+    <form id="form_search">
+        <div class="form-group">
+            <label for="vclN">车牌号码</label>
+            <input class="form-control" type="text" id="vclN" name="vclN" placeholder="车牌号码">
+        </div>
+        <div class="form-group">
+            <label>车牌颜色</label>
+
+            <div class="radio">
+                <label>
+                    <input type="radio" name="vco" id="vco_1" value="1" checked>
+                    蓝色
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" name="vco" id="vco_2" value="2">
+                    黄色
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <!--<label for="qryBtm">开始时间</label>-->
+            <label for="month">查询日期</label>
+            <input class="form-control" type="month" id="month" name="month">
+        </div>
+        <div class="form-group" style="text-align: end">
+            <button type="reset" class="btn btn-default">重置</button>
+            <button id="submit" class="btn btn-default">提交</button>
+        </div>
+    </form>
+</div>
+
+<div class="page-header text-center" style="font-size: 2em">
+    结果
+</div>
+<div class="container text-center" id="result">
+
+</div>
+
+</body>
+<script>
+    $('#submit').click(function (e) {
+        e.preventDefault();
+        var vclN = $('#vclN').val();
+        var vco = $('input[name=vco]').val();
+        var month = $('#month').val();
+        if (vclN && vco && month) {
+            var subData = $("#form_search").serialize();
+            $.ajax({
+                type: 'post',
+                url: "{:U('carLocation/carOperationDataAction')}",
+                data: subData,
+                success: function (data) {
+                    var resultNode = $('#result');
+                    resultNode.html('');
+                    var resultStr = '';
+                    if (data) {
+                        var jsonObj = JSON.parse(data);
+                        console.log(jsonObj);
+                        //operationDay:运营天数,查询月份中车辆的运营天数之和。单位：天；当天行驶里程超过两公里，视为“运营”
+                        //operationRate:运营率,查询月份中车辆的运营率，运营率=运营天数/车机报点天数。百分数显示，支持 1位小数
+                        //totalMileage:累计行驶里程,查询月份中车辆的总行驶里程数。单位：公里，支持 1位小数
+                        //dayAvgMileage:日均行驶里程,平均每天的行驶里程数。单位：公里，支持 1 位小数
+                        //totalTime:累计运营时长,查询月份中车辆的总运行时长。单位：小时，支持 1 位小数
+                        //dayAvgTime:日均运营时长,平均每天的运营时长。单位：公里，支持 1 位小数
+                        resultStr = '<div>运营天数：' + jsonObj['operationDay'] + ' 天</div>' +
+                                '<div>运营率：' + jsonObj['operationRate'] + ' </div>' +
+                                '<div>累计行驶里程：' + jsonObj['totalMileage'] + ' km</div>' +
+                                '<div>日均行驶里程：' + jsonObj['dayAvgMileage'] + ' km</div>' +
+                                '<div>累计运营时长：' + jsonObj['totalTime'] + ' 小时</div>' +
+                                '<div>日均运营时长：' + jsonObj['dayAvgTime'] + ' 小时</div>';
+                        resultNode.append(resultStr);
+                    } else {
+                        //查无结果
+                        resultStr = '<div>查无结果</div>';
+                        resultNode.append(resultStr);
+                    }
+                }
+            })
+        } else {
+            alert('输入内容不能为空！');
+            return false;
+        }
+    });
+</script>
+</html>

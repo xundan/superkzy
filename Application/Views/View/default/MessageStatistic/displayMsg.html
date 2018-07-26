@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/mycss-v1107.css?v=1"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/iscroll4.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/scroll-initial.js"></script>
+    <title>思考社群实验室</title>
+</head>
+<style>
+    /** {*/
+    /*background: #000 !important;*/
+    /*color: #0f0 !important;*/
+    /*outline: solid #f00 1px !important;*/
+    /*}*/
+
+    body, html {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        overflow: hidden;
+    }
+
+    h3 {
+        text-align: center;
+        background-color: #2e84de;
+        color: white;
+        margin: 0 auto;
+        line-height: 2.5em;
+        position: fixed;
+        top: 0;
+        width: 100%;
+    }
+
+    #search_cancel {
+        color: grey;
+    }
+</style>
+<body>
+<input type="hidden" id="page" name="page" value="1">
+
+<div>
+    <h3>思考社群实验室</h3>
+    <!--搜索框-->
+    <div class="bd" style="width: 100%;z-index: 2;position: fixed;top: 4.3em">
+        <div class="weui_search_bar" id="search_bar" style="background-color: #efeff4;">
+            <form id="form_search" name="form_search" class="weui_search_outer">
+                <div class="weui_search_inner">
+                    <i class="weui_icon_search"></i>
+                    <input type="search" class="weui_search_input" name="search_input" id="search_input"
+                           placeholder="搜索">
+                    <a href="javascript:" class="weui_icon_clear" id="search_clear"></a>
+                </div>
+                <label for="search_input" class="weui_search_text" id="search_text">
+                    <i class="weui_icon_search"></i>
+                    <span>搜索</span>
+                </label>
+                <input type="text" style="display: none;">
+            </form>
+            <a href="javascript:" class="weui_search_cancel" id="search_cancel">取消</a>
+        </div>
+    </div>
+    <div id="wrapper" style="margin-left: 2.5%">
+        <div id="scroller">
+            <div id="pullDown">
+                <span class="pullDownIcon" style="float: left"></span>
+                <span class="pullDownLabel" style="margin-left: -48px">下拉刷新...</span>
+            </div>
+            <ul id="content" style="-webkit-margin-before:0.5em;">
+                <volist name="data" id="item">
+                    <div class='panel panel-info' style='margin-bottom: 0.3em;'>
+                        <div class='panel-heading'>第{$item['id']}条</div>
+                        <div class='panel-body'>{$item['content']}</div>
+                        <div class='panel-footer'>
+                            <div class="user_name" style='display: inline-block;width: 49%;text-align: start;'>
+                                {$item['user_name']}
+                            </div>
+                            <div class="remark" style='display: inline-block;width: 49%;text-align: end'>
+                                {$item['remark']}
+                            </div>
+                        </div>
+                    </div>
+                </volist>
+            </ul>
+            <div id="pullUp">
+                <span class="pullUpIcon"></span>
+                <span class="pullUpLabel" style="margin-left: -48px">上拉加载更多...</span>
+            </div>
+        </div>
+    </div>
+    <div id="cloneItem" style="display: none">
+        <div class='panel panel-info' style='margin-bottom: 0.3em;'>
+            <div class='panel-heading'></div>
+            <div class='panel-body'></div>
+            <div class='panel-footer'>
+                <div class="user_name" style='display: inline-block;width: 49%;text-align: start;'></div>
+                <div class="remark" style='display: inline-block;width: 49%;text-align: end'></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<!--搜索框功能-->
+<script>
+    $(function () {
+        var $searchBar = $('#search_bar'),
+                $searchText = $('#search_text'),
+                $searchInput = $('#search_input'),
+                $searchClear = $('#search_clear'),
+                $searchCancel = $('#search_cancel');
+
+        function hideSearchResult() {
+            $searchInput.val('');
+        }
+
+        function cancelSearch() {
+            hideSearchResult();
+            $searchBar.removeClass('weui_search_focusing');
+            $searchText.show();
+        }
+
+        function completeSearch() {
+            $searchInput.blur();
+        }
+
+        $searchText.on('click', function () {
+            $searchBar.addClass('weui_search_focusing');
+            $searchInput.focus();
+        });
+        $searchInput
+                .on('blur', function () {
+                    if (!this.value.length) cancelSearch();
+                })
+                .on('keyup', function (event) {
+                    event = event || window.event;
+                    if (event.keyCode == 13) {
+                        if ($(this).val().trim() == '') {
+                            cancelSearch();
+                            $searchInput.blur();
+                        } else {
+                            //ajax提交
+                            $.ajax({
+                                type: "get",
+                                url: "{:U('MessageStatistic/displayMsg')}",
+                                data: {
+                                    isAjax: 1,
+                                    page: 1,
+                                    searchInput: $searchInput.val()
+                                },
+                                success: function (data) {
+                                    console.log('search');
+                                    $('#content').html('');
+                                    var msgObj = JSON.parse(data);
+                                    console.log(msgObj);
+                                    if (msgObj.data.length == 0) {
+                                        //没有符合条件的信息
+                                        $('#content').html("<div class='text-center'><div><img src='__PUBLIC__/home/images/cry.png' style='margin-right: 5px;'></div><p style='color: #888;margin-top: 10px;'>没有找到符合条件的信息！</p></div>");
+                                    } else {
+                                        renderMsg(msgObj.data);
+                                    }
+                                    $('#page').val(1);
+                                    completeSearch();
+                                    myScroll.scrollTo(0, 0);
+                                    myScroll.refresh();
+                                }
+                            })
+                        }
+                    }
+                });
+        $searchClear.on('click', function () {
+            hideSearchResult();
+            $searchInput.focus();
+        });
+        $searchCancel.on('click', function () {
+            cancelSearch();
+            $searchInput.blur();
+            //清空搜索栏并提交
+            $('input[name=search_input]').val('');
+            $.ajax({
+                type: "get",
+                url: "{:U('MessageStatistic/displayMsg')}",
+                data: {
+                    isAjax: 1,
+                    page: 1,
+                    searchInput: $searchInput.val()
+                },
+                success: function (data) {
+                    console.log('search');
+                    $('#content').html('');
+                    var msgObj = JSON.parse(data);
+                    console.log(msgObj);
+                    renderMsg(msgObj.data);
+                    $('#page').val(1);
+                    completeSearch();
+                    myScroll.scrollTo(0, 0);
+                }
+
+            })
+        });
+    });
+    function renderMsg(data) {
+        if (typeof(data) != 'object') {
+            return false;
+        } else {
+            var searchInputText = $('#search_input').val();
+            if (searchInputText) {
+                var pattern = new RegExp(searchInputText, 'gim');
+            }
+            $.each(data, function (k, val) {
+                var tempObj = $("#cloneItem").children("div").clone(true);
+                tempObj.find('.panel-heading').html('第' + val['id'] + '条');
+                tempObj.find('.panel-body').html(searchInputText ? val['content'].replace(pattern, "<span style='background-color: orange'>" + searchInputText + "</span>") : val['content']);
+                tempObj.find('.user_name').html(val['user_name']);
+                tempObj.find('.remark').html(val['remark']);
+                tempObj.appendTo("#content");
+            });
+        }
+    }
+</script>
+<!--滚动功能-->
+<script>
+    var load_state = 0;
+    var flag = true;
+    /**下拉刷新 （自定义实现此方法）
+     *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
+     */
+    function pullDownAction() {
+        $.ajax({
+            type: "get",
+            url: "{:U('MessageStatistic/displayMsg')}",
+            data: {
+                isAjax: 1,
+                page: 1,
+                searchInput: $('#search_input').val()
+            },
+            success: function (data) {
+                $('#content').html('');
+                console.log('down');
+                var jsonObj = JSON.parse(data);
+                console.log(jsonObj);
+                if (jsonObj.data.length == 0) {
+                    //没有符合条件的信息
+                    $('#content').html("<div class='text-center'><div><img src='__PUBLIC__/home/images/cry.png' style='margin-right: 5px;'></div><p style='color: #888;margin-top: 10px;'>没有找到符合条件的信息！</p></div>");
+                } else {
+                    renderMsg(jsonObj.data);
+                }
+                $('#page').val(1);
+                myScroll.refresh();
+            }
+        });
+        myScroll.refresh();
+    }
+    /**滚动翻页 （自定义实现此方法）
+     *myScroll.refresh(); // 数据加载完成后，调用界面更新方法
+     */
+    function pullUpAction() {
+        if (load_state == 1) {
+            return false
+        } else {
+            load_state = 1;
+            var page = $('#page').val();
+            var request_page = parseInt(page) + 1;
+            console.log(page, request_page);
+            $.ajax({
+                type: "get",
+                url: "{:U('MessageStatistic/displayMsgMore')}",
+                data: {
+                    isAjax: 1,
+                    page: request_page,
+                    searchInput: $('#search_input').val()
+                },
+                success: function (data) {
+                    var jsonObj = JSON.parse(data);
+                    console.log(jsonObj);
+                    renderMsg(jsonObj.data);
+                    if (jsonObj.end_tag == 'end') {
+                        if (flag) {
+                            var div = document.createElement('div');
+                            div.style.cssText = 'margin-top:2.5%;color:red;text-align:center';
+                            div.innerHTML = '没有更多内容啦!';
+                            document.getElementById('content').appendChild(div);
+                            flag = false;
+                            $('#page').val(request_page);
+                        }
+                    } else if (jsonObj.end_tag == 'continue') {
+                        $('#page').val(request_page);
+                    }
+                    load_state = 0;
+                    myScroll.refresh();
+                }
+            });
+            myScroll.refresh();
+        }
+    }
+</script>
+<!--微信分享-->
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    wx.config({
+        debug: false,
+        appId: '{$signPackage["appId"]}',
+        timestamp: {$signPackage["timestamp"]},
+        nonceStr: '{$signPackage["nonceStr"]}',
+        signature: '{$signPackage["signature"]}',
+        jsApiList: [
+            // 所有要调用的 API 都要加到这个列表中
+            'onMenuShareTimeline', 'onMenuShareAppMessage'
+        ]
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+        // 分享到朋友圈
+        var url = window.location.href;
+        wx.onMenuShareTimeline({
+            title: '思考社群实验室', // 分享标题
+            link: url, // 分享链接
+            imgUrl: 'http://www.xuncl.com/wx_logo2.jpg', // 分享图标
+            success: function () {
+            },
+            cancel: function () {
+            }
+        });
+        //分享给朋友
+        wx.onMenuShareAppMessage({
+            title: '思考社群实验室', // 分享标题
+            desc: '测试版V0.1', // 分享描述
+            link: url, // 分享链接
+            imgUrl: 'http://www.xuncl.com/wx_logo2.jpg', // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+            },
+            cancel: function () {
+            }
+        });
+    });
+</script>
+</html>

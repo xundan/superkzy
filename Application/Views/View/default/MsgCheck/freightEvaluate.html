@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <title>运费评估界面</title>
+</head>
+<body>
+<div class="container">
+    <div id="feedback_form" style="margin: 5%">
+        <label for="feedback_start_time">
+            起始时间
+        </label>
+        <input id="feedback_start_time" class="form-control" type="date" style="width: 40%;display: inline">
+        <label for="feedback_end_time">
+            终止时间
+        </label>
+        <input id="feedback_end_time" class="form-control" type="date" style="width: 40%;display: inline">
+
+        <div>
+            <label for="range">
+                偏差值啊
+            </label>
+            <input id="range" class="form-control" type="number" placeholder="偏差值" value="0.3"
+                   style="width: 40%;margin: 1em auto;display: inline;">
+            <label for="distance">
+                最小距离
+            </label>
+            <input id="distance" class="form-control" type="number" placeholder="最小距离" value="1"
+                   style="width: 40%;;margin: 1em auto;;display: inline;">
+        </div>
+        <button id="feedback_submit" class="btn btn-default">确定</button>
+    </div>
+    <div id="feedback_content">
+        <div>总条数:<span id="feedback_count"></span></div>
+        <table style="width: 100%" class="table table-striped">
+            <thead>
+            <th>id</th>
+            <th>起始地</th>
+            <th>目的地</th>
+            <th>运费</th>
+            <th>运费估值</th>
+            <th>偏差值</th>
+            <th>操作</th>
+            </thead>
+            <tbody id="feedback_insert">
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+<script>
+    $('#myTabs a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show')
+    })
+</script>
+<!--用户反馈-->
+<script>
+    $('#feedback_submit').click(function () {
+        var time = new Date();
+        var start_time = $('#feedback_start_time').val();
+        var end_time = $('#feedback_end_time').val();
+        var range = $('#range').val();
+        if (!range) {
+            alert('请输入偏差范围值！');
+            return false;
+        }
+        var distance = $('#distance').val();
+        if (!distance) {
+            alert('请输入最小距离值！');
+            return false;
+        }
+        $.ajax({
+            type: "post",
+            url: "{:U('MsgCheck/freightErrSearch')}",
+            data: {
+                start_time: start_time,
+                end_time: end_time,
+                range: range,
+                distance: distance
+            },
+            success: function (data) {
+                console.log('success');
+                console.log(data);
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+                $('#feedback_insert').html('');
+                if (jsonObj) {
+                    $('#feedback_count').html(jsonObj.length);
+                    jQuery.each(jsonObj, function (k, val) {
+                        var tr = document.createElement('tr');
+                        var a = (Math.abs(val.freight_price-val.freight_forecast)/val.freight_forecast).toFixed(2);
+                        tr.innerHTML = '<td>' + val.id + '</td>'
+                                +'<td>'+ val.area_start_merger_name + '</td>'
+                                +'<td>'+ val.area_end_merger_name + '</td>'
+                                +'<td>'+ val.freight_price + '</td>'
+                                +'<td>'+ val.freight_forecast + '</td>'
+                                +'<td>'+ a + '</td>'
+                                +'<td><button class="btn btn-default btn_modify" data-id="' + val.id + '">修改</button></td>';
+                        document.getElementById('feedback_insert').appendChild(tr);
+                    });
+                }
+            }
+        })
+    })
+</script>
+<script>
+    $('body').on('click', '.btn_modify', function () {
+        window.localStorage.setItem('freight_modify_id', $(this).data('id'));
+        window.location.href = "{:U('MsgCheck/freightModify')}";
+    })
+</script>
+<script>
+    function time_to_timestamp(strtime) {
+        var time = new Date();
+        if (strtime) {
+            strtime = strtime.replace(/-/g, "/")
+        } else {
+            strtime = time.toLocaleDateString();
+        }
+        strtime = Date.parse(new Date(strtime)) / 1000;
+        return strtime;
+    }
+</script>
+</html>

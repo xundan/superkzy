@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <title>思考社群记录查询</title>
+    <style>
+        body {
+            width: 100%;
+            margin-top: 50px;
+            background-color: #f0f5f6;
+        }
+
+        div {
+            margin-top: 50px;
+        }
+
+        table {
+            width: 1000px;
+        }
+
+        th {
+            height: 32px;
+            text-align: center;
+            font-size: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        input {
+            display: inline !important;
+        }
+
+        .part {
+            text-align: center;
+        }
+
+        #search_input {
+            width: 200px !important;
+            margin-right: 100px;
+            text-align: center;
+        }
+
+        #date_start, #date_end {
+            margin-right: 110px;
+            width: 160px !important;
+        }
+
+        .btn-primary {
+            margin-right: 80px;
+        }
+
+        #content {
+            text-align: justify;
+            background-color: #f7f7f9;
+        }
+
+        p {
+            padding: 2%;
+            line-height: 32px;
+            font-size: 16px;
+            letter-spacing: 2px;
+        }
+
+        p>span {
+            margin-left: 60px;
+        }
+
+    </style>
+</head>
+<body>
+<h1>思考社群记录查询</h1>
+<div class="part">
+    <span>开始日期</span>
+    <input type="date" name="user_date" id="date_start" class="form-control">
+    <span>截止日期</span>
+    <input type="date" name="user_date" id="date_end" class="form-control">
+    <span>搜索关键字</span>
+    <input type="search" class="weui_search_input form-control" name="search_input" id="search_input"
+           placeholder="搜&nbsp;&nbsp;索">
+    <button type="submit" class="btn btn-primary">查询</button>
+    <button type="submit" class="btn btn-warning">刷新</button>
+</div>
+<div id="content" class="container"></div>
+</body>
+<script>
+    //关键字查询
+    $('.btn-primary').click(function () {
+        var da = $('#date_start').val();
+        var db = $('#date_end').val();
+        var search = $('#search_input').val();
+        var date_start = da.replace(/-/g, "");
+        var date_end = db.replace(/-/g, "");
+        console.log(da, db, search, date_start, date_end);
+        if (!da) {
+            alert('请输入开始时间！');
+        } else if (!db) {
+            alert('请输入截止时间！');
+        } else if (!search) {
+            alert('请输入查询关键字！');
+        } else {
+            $.ajax({
+                type: 'post',
+                url: "{:U('MessageStatistic/displayNo')}",
+                data: {
+                    date_start: date_start,
+                    date_end: date_end,
+                    search: search
+                },
+                success: function (data) {
+                    $('#content').html('');
+                    var msgObj = JSON.parse(data);
+                    console.log(msgObj);
+                    if (msgObj.data.length == 0) {
+                        //没有符合条件的信息
+                        $('#content').html("<div class='text-center'><div><img src='__PUBLIC__/home/images/cry.png' style='margin-right: 5px;'></div><p style='color: #888;margin-top: 10px;'>没有找到符合条件的信息！</p></div>");
+                    } else {
+                        var $recordString = '';
+                        $.each(msgObj['data'], function (index, val) {
+                            $recordString += "<p>" + val['content'] + "<span>" + "————"+val['remark'] +"&nbsp;&nbsp;"+val['user_name'] + "</span>" + "</p>";
+                        });
+                        $('#content').append($recordString)
+                    }
+                }
+            })
+        }
+    });
+    //刷新
+    $('.btn-warning').click(function () {
+        window.location.reload();
+    });
+</script>
+</html>

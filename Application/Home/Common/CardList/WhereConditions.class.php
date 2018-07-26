@@ -400,7 +400,7 @@ class WhereConditions
     private function arrange_input($str)
     {
         $tempStr = trim($str);
-        $tempStr = preg_replace("/[\\s,，]{1,}/", " ", $tempStr);
+        $tempStr = preg_replace("/[\\s]{1,}/", " ", $tempStr);
         return $tempStr;
     }
 }

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <title>车辆信息查询</title>
+</head>
+<style>
+    html, body {
+        width: 100%;
+        height: 100%;
+    }
+
+    #result div {
+        font-size: 1em;
+        color: white;
+        margin: 0.5em 0;
+    }
+
+    #result div span {
+        color: pink;
+    }
+
+    #result_container {
+        border: 1px dashed white;
+        padding-top: 0.5em;
+        padding-bottom: 0.5em;
+    }
+</style>
+<body style="background: url('__PUBLIC__/home/images/tools/bg3.png') no-repeat center center fixed;background-size: cover;">
+
+<!--<img width="100%" height="100%" src="__PUBLIC__/home/images/tools/bg.jpg" style="z-index: -1;position: absolute;left: 0;top:0;">-->
+
+<div class="container" style="position: absolute;top: 48%;width: 100%">
+    <form id="form_search">
+        <div class="form-group">
+            <input class="form-control" type="text" id="vclN" name="vclN" placeholder="在此处填写车牌号码如晋M88888">
+            <input type="text" style="display: none">
+        </div>
+        <div class="form-group">
+            <button type="button" id="btn_last_location" class="form-control btn btn-success">车 辆 最 新 位 置 查 询</button>
+            <button type="button" id="btn_operation_data" class="form-control btn btn-success"
+                    style="margin-top: 0.6em">车 辆 运 营 数 据 查 询
+            </button>
+        </div>
+        <div style="margin-top: 2em;padding: 0 5%;text-align: center">
+            <img src="__PUBLIC__/home/images/tools/kefu.jpg" width="35%">
+            <img src="__PUBLIC__/home/images/tools/tips.png" width="60%">
+
+            <!--<div style="display: inline-block;text-align:center;vertical-align: middle;margin-left: 0.5em;color: white;font-size: 1em">-->
+                <!--<div>扫描左侧二维码添加客服</div>-->
+                <!--<div>查询车辆全部信息</div>-->
+            <!--</div>-->
+        </div>
+    </form>
+    <div id="result_container" class="container" style="display: none">
+        <div id="result">
+        </div>
+        <div class="text-center">
+            <button type="button" id="btn_back" class="form-control btn btn-warning" style="width: 50%">返 回</button>
+        </div>
+    </div>
+</div>
+<div id="loadingToast" class="weui_loading_toast" style="display:none;">
+    <div class="weui_mask_transparent"></div>
+    <div class="weui_toast">
+        <div class="weui_loading">
+            <div class="weui_loading_leaf weui_loading_leaf_0"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_1"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_2"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_3"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_4"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_5"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_6"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_7"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_8"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_9"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_10"></div>
+            <div class="weui_loading_leaf weui_loading_leaf_11"></div>
+        </div>
+        <p class="weui_toast_content">查询中</p>
+    </div>
+</div>
+</body>
+<script>
+    $('#btn_last_location').click(function () {
+        var vclN = $('#vclN').val();
+        if (vclN) {
+            var vclNs = vclN.trim() + '_2';
+            $.ajax({
+                type: 'post',
+                url: "{:U('carLocation/carsLastLocationMultiAction')}",
+                data: {
+                    vclNs: vclNs
+                },
+                beforeSend: function () {
+                    $('#loadingToast').show();
+                },
+                success: function (data) {
+                    $('#form_search').css('display', 'none');
+                    $('#result_container').css('display', 'block');
+                    var resultNode = $('#result');
+                    resultNode.html('');
+                    var resultStr = '';
+                    if (data) {
+                        var jsonObj = JSON.parse(data);
+                        console.log(jsonObj);
+                        //vno:车牌号;vco:车牌颜色;drc:角度;spd:速度;utc:时间戳;adr:地址
+                        $.each(jsonObj, function (k, v) {
+                            if (v.utc) {
+                                var time = new Date(parseInt(v.utc));
+                                time = time.toLocaleString();
+                            }
+                            resultStr += '<div class="text-center">' + v.vno + '查询结果:</div>' +
+                                    '<div><span>*</span>最后定位位置：' + v.adr + '</div>' +
+                                    '<div><span>*</span>速度：' + v.spd + 'km/h</div>' +
+                                    '<div><span>*</span>定位时间：' + time + '</div>';
+                        });
+                        resultNode.append(resultStr);
+                    } else {
+                        //查无结果
+                        resultStr = '<div class="text-center">查无结果！</div>';
+                        resultNode.append(resultStr);
+                    }
+                },
+                complete: function () {
+                    $('#loadingToast').hide();
+                }
+            })
+        } else {
+            alert('输入内容不能为空！');
+            return false;
+        }
+    });
+    $('#btn_operation_data').click(function () {
+        var vclN = $('#vclN').val().trim();
+        if (vclN) {
+            var vco = 2;
+            var date = new Date();
+            var month = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).substr(-2);
+            $.ajax({
+                type: 'post',
+                url: "{:U('carLocation/carOperationDataAction')}",
+                data: {
+                    vclN: vclN,
+                    vco: vco,
+                    month: month
+                },
+                beforeSend: function () {
+                    $('#loadingToast').show();
+                },
+                success: function (data) {
+                    $('#form_search').css('display', 'none');
+                    $('#result_container').css('display', 'block');
+                    var resultNode = $('#result');
+                    resultNode.html('');
+                    var resultStr = '';
+                    if (data) {
+                        var jsonObj = JSON.parse(data);
+                        console.log(jsonObj);
+                        //operationDay:运营天数,查询月份中车辆的运营天数之和。单位：天；当天行驶里程超过两公里，视为“运营”
+                        //operationRate:运营率,查询月份中车辆的运营率，运营率=运营天数/车机报点天数。百分数显示，支持 1位小数
+                        //totalMileage:累计行驶里程,查询月份中车辆的总行驶里程数。单位：公里，支持 1位小数
+                        //dayAvgMileage:日均行驶里程,平均每天的行驶里程数。单位：公里，支持 1 位小数
+                        //totalTime:累计运营时长,查询月份中车辆的总运行时长。单位：小时，支持 1 位小数
+                        //dayAvgTime:日均运营时长,平均每天的运营时长。单位：公里，支持 1 位小数
+                        resultStr = '<div class="text-center">查询月份：' + month + '</div>' +
+                                '<div><span>*</span>运营天数：' + jsonObj['operationDay'] + ' 天</div>' +
+                                '<div><span>*</span>运营率：' + jsonObj['operationRate'] + ' </div>' +
+                                '<div><span>*</span>累计行驶里程：' + jsonObj['totalMileage'] + ' km</div>' +
+                                '<div><span>*</span>日均行驶里程：' + jsonObj['dayAvgMileage'] + ' km</div>' +
+                                '<div><span>*</span>累计运营时长：' + jsonObj['totalTime'] + ' 小时</div>' +
+                                '<div><span>*</span>日均运营时长：' + jsonObj['dayAvgTime'] + ' 小时</div>';
+                        resultNode.append(resultStr);
+                    } else {
+                        //查无结果
+                        resultStr = '<div class="text-center">查无结果！</div>';
+                        resultNode.append(resultStr);
+                    }
+                },
+                complete: function () {
+                    $('#loadingToast').hide();
+                }
+            })
+        } else {
+            alert('输入内容不能为空！');
+            return false;
+        }
+    });
+    $('#btn_back').click(function () {
+        $('#form_search').css('display', 'block');
+        $('#result_container').css('display', 'none');
+    })
+</script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script>
+    wx.config({
+        debug: false,
+        appId: '{$signPackage["appId"]}',
+        timestamp: {$signPackage["timestamp"]},
+        nonceStr: '{$signPackage["nonceStr"]}',
+        signature: '{$signPackage["signature"]}',
+        jsApiList: [
+            // 所有要调用的 API 都要加到这个列表中
+            'onMenuShareTimeline', 'onMenuShareAppMessage',
+            'hideOptionMenu',
+            'showOptionMenu',
+            'hideMenuItems',
+            'showMenuItems',
+            'hideAllNonBaseMenuItem',
+            'showAllNonBaseMenuItem'
+        ]
+    });
+    wx.ready(function () {
+        // 在这里调用 API
+        // 分享到朋友圈
+        var url = window.location.href;
+        wx.onMenuShareTimeline({
+            title: '超矿平台车辆信息查询', // 分享标题
+            link: url, // 分享链接
+            imgUrl: 'http://www.xuncl.com/car_search_icon.png', // 分享图标
+            success: function () {
+            },
+            cancel: function () {
+            }
+        });
+
+        //分享给朋友
+        wx.onMenuShareAppMessage({
+            title: '超矿平台车辆信息查询', // 分享标题
+            desc: '超级矿资源官方认证的车辆信息查询系统，数据精确可靠', // 分享描述
+            link: url, // 分享链接
+            imgUrl: 'http://www.xuncl.com/car_search_icon.png', // 分享图标
+            type: '', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
+            },
+            cancel: function () {
+            }
+        });
+    });
+</script>
+<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1272873480'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1272873480%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));</script>
+</html>

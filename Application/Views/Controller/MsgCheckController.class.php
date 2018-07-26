@@ -3,6 +3,7 @@ namespace Views\Controller;
 
 use Think\Controller;
 use Views\Model\MessageModel;
+use Think\Log;
 
 class MsgCheckController extends Controller
 {
@@ -12,10 +13,22 @@ class MsgCheckController extends Controller
     const STATE_ABORTED = 3;
     const STATE_CHECKING_EX_GROUP = 4;
     const STATE_CHECKED_EX_GROUP = 5;
+    const STATE_ABORTED_EX_GROUP = 6;
 
     public function test()
     {
         header("Content-Type:text/html; charset=utf-8");
+//        $result = M('ck_messages')->where('id=167')->find();
+        $str = '<span class="emoji emoji1f4b5"></span><span class="emoji emoji1f34f"></span>[抱拳]鑫顺达[抱拳]<span class="emoji emoji1f34f"></span><span class="emoji emoji1f4b5"></span><span class="emoji emoji1f353"></span>[玫瑰]三露天<span class="emoji emoji1f353"></span>[玫瑰]三露天发一下花园115水洗 <span class="emoji emoji1f339"></span>长滩<span class="emoji emoji1f339"></span>长滩发一唐山榛子镇180大量长滩发一下花园120三八块直发澳盛24小时卸车[玫瑰]长滩发一赤峰平庄210中块三八块长滩发一化消营98面大量长滩发一蔚县105面限量103中块长滩发一曹妃甸200块<span class="emoji emoji1f339"></span>青春塔<span class="emoji emoji1f339"></span>青春塔发一北水峪137青春塔发一八里庄137青春塔发一水堡115一200青春塔发一顺永二站115大量<span class="emoji emoji1f339"></span>串草<span class="emoji emoji1f339"></span>串草发一蔚县93块好装串草发一岱马路62三八，五0块串草发一水堡110串草发一曹妃甸197一200面限量<span class="emoji emoji1f339"></span>灌子沟<span class="emoji emoji1f339"></span>灌子沟一赤峰南215灌子沟一曹妃甸200面灌子沟一西韩岭70灌子沟一高阳150不排队<span class="emoji emoji1f339"></span>雄臼沟<span class="emoji emoji1f339"></span>碓臼沟发一化消营90面煤检站西50米路右边鑫顺达<span class="emoji emoji1f40e"></span>15384776345张<span class="emoji emoji1f40e"></span>13354778157';
+        dump($str);
+//        $str = preg_replace('/\s+/','',$str);
+//        $str = preg_replace('/<span[\w]<\/span>/','',$str);
+        $str = strip_tags($str);
+        $str = preg_replace('/\s+/','',$str);
+        dump(md5($str));
+        $this->assign('content', $str);
+        $this->display();
+
 //        dump(time());
 //        dump(Date('Y-m-d H:i:s'));
 //        M('ck_check_flow')->order('id desc')->find();
@@ -46,8 +59,15 @@ class MsgCheckController extends Controller
 //            'stop_time' => 0
 //        );
 //        M('ck_check_flow')->add($checkFlow);
-        $FC = A('FC');
-        dump($FC->getDistanceByAddress('中国,陕西省,榆林市,榆阳区,金鸡滩煤矿', '中国,山东省,济宁市,微山县'));
+//        $FC = A('FC');
+//        dump($FC->getDistanceByAddress('中国,陕西省,榆林市,榆阳区,金鸡滩煤矿', '中国,山东省,济宁市,微山县'));
+    }
+
+    public function testAction()
+    {
+        dump($_POST);
+        $data['content'] = $_POST['content'];
+        M('ck_messages')->add($data);
     }
 
     /**
@@ -80,21 +100,23 @@ class MsgCheckController extends Controller
             $where['uid'] = session('cur_user')['id'];
             $checkRecord = M('ck_check_flow')->where($where)->order('id desc')->find();
             //去ck_check_flow表里取上一次拉取的位置
-            if ($subInfo['id']) {
-                //如果前台传id进来，说明是手动点击拉取
-                if ($subInfo['group'] == 'on') {
-                    //前台正常拉取所有信息
-                    $whereLast['status'] = array('in', array($this::STATE_CHECKING, $this::STATE_CHECKED));
-                } else {
-                    //前台需要拉取非群消息
-                    $whereLast['status'] = array('in', array($this::STATE_CHECKING_EX_GROUP, $this::STATE_CHECKED_EX_GROUP));
-                }
-                $checkLast = M('ck_check_flow')->where($whereLast)->order('id desc')->find();
-                $lastMsgId = $checkLast['msg_end_id'];
+            $lastMsgId = '';
+//            if ($subInfo['id']) {
+            //如果前台传id进来，说明是手动点击拉取
+            if ($subInfo['group'] == 'on') {
+                //前台只拉取群信息
+                $whereLast['status'] = array('in', array($this::STATE_CHECKING, $this::STATE_CHECKED));
             } else {
-                //前台没传id进来，则为第一次拉取/清除数据后的第一次拉取/换号登陆拉取
-                $lastMsgId = '';
+                //前台只拉取非群消息
+                $whereLast['status'] = array('in', array($this::STATE_CHECKING_EX_GROUP, $this::STATE_CHECKED_EX_GROUP));
             }
+            $checkLast = M('ck_check_flow')->where($whereLast)->order('id desc')->find();
+            if ($checkLast) {
+                $lastMsgId = $checkLast['msg_end_id'];
+            }
+//            } else {
+            //前台没传id进来，则为第一次拉取/清除数据后的第一次拉取/换号登陆拉取
+//            }
             //拉取信息
             $msgData = $this->fetchMsg($lastMsgId, session('cur_user')['msg_step'], $subInfo['group']);
             $returnArr['msgCount'] = count($msgData);
@@ -107,7 +129,9 @@ class MsgCheckController extends Controller
                     'status' => ($subInfo['group'] == 'off') ? $this::STATE_CHECKING_EX_GROUP : $this::STATE_CHECKING,
 //                    'record_time' => Date('Y-m-d H:i:s'),
                     'abort_id' => 0,
-                    'stop_time' => 0
+                    'stop_time' => 0,
+                    'count_check' => 0,
+                    'count_all' => $returnArr['msgCount']
                 );
                 M('ck_check_flow')->add($checkFlow);
                 $returnArr['feedback'] = '信息拉取成功';
@@ -117,9 +141,9 @@ class MsgCheckController extends Controller
                 $returnArr['feedback'] = '数据库已经没有信息啦！';
             }
             //将上次审核状态设为结束，并更新stop_time,如果有的话
-            if ($checkRecord && $checkRecord['status'] != $this::STATE_ABORTED) {
+            if ($checkRecord && ($checkRecord['status'] == $this::STATE_CHECKING || $checkRecord['status'] == $this::STATE_CHECKING_EX_GROUP)) {
                 if ($checkRecord['status'] == $this::STATE_CHECKING) {
-                    //上次拉取的是所有信息
+                    //上次拉取的是群信息
                     $checkRecordUpdate['status'] = $this::STATE_CHECKED;
                 } else {
                     //上次拉取的是非群消息
@@ -127,6 +151,10 @@ class MsgCheckController extends Controller
                 }
                 if ($subInfo['stop_time']) {
                     $checkRecordUpdate['stop_time'] = $subInfo['stop_time'];
+                }
+                if ($subInfo['count_check']) {
+                    $checkRecordUpdate['count_check'] = $subInfo['count_check'];
+                    $checkRecordUpdate['end_time'] = date('Y-m-d H:i:s', time());
                 }
                 $checkRecordUpdate['id'] = $checkRecord['id'];
                 M('ck_check_flow')->save($checkRecordUpdate);
@@ -155,21 +183,35 @@ class MsgCheckController extends Controller
         //拉取条件
         $where['status'] = 0;
         $where['invalid_id'] = 0;
+        if ($group == 'off') {
+            //只拉取非群信息
+            $where['type'] = array('in', array('plain', 'wx_mp'));
+            $whereAbort['status'] = $this::STATE_ABORTED_EX_GROUP;
+        } else {
+            //只拉取群信息
+            $where['type'] = 'group';
+            $whereAbort['status'] = $this::STATE_ABORTED;
+        }
         //id条件
         if ($id) {
             $where['id'] = array('gt', $id);
         }
         //释放后的id加入id条件
-        $whereAbort['status'] = $this::STATE_ABORTED;
         $checkRecord = M('ck_check_flow')->where($whereAbort)->order('update_time desc')->select();
         if ($checkRecord) {
             $idCond = array();
+            $limit = 0;
             foreach ($checkRecord as $item) {
                 //将释放的id加入id条件
+                $remainMsgNum = $item['count_all'] - $item['count_check'];
+                $limit += $remainMsgNum;
+                if ($limit > $count) {
+                    break;
+                }
                 array_push($idCond, array('between', array($item['abort_id'], $item['msg_end_id'])));
                 //将该item的status字段设为完成
                 $itemUpdate['id'] = $item['id'];
-                $itemUpdate['status'] = $this::STATE_CHECKED;
+                $itemUpdate['status'] = ($item['status'] == $this::STATE_ABORTED) ? $this::STATE_CHECKED : $this::STATE_CHECKED_EX_GROUP;
                 M('ck_check_flow')->save($itemUpdate);
             }
             if ($id) {
@@ -178,14 +220,7 @@ class MsgCheckController extends Controller
             array_push($idCond, 'or');
             $where['id'] = $idCond;
         }
-        if ($group == 'off') {
-            //只拉取非群信息
-            $where['type'] = array('in', array('plain', 'wx_mp'));
-        } else {
-            //拉取所有信息
-            $where['type'] = array('in', array('plain', 'group', 'wx_mp'));
-        }
-        $resultMsg = M('ck_messages')->where($where)->order('id asc')->limit($count)->select();
+        $resultMsg = D('message')->where($where)->order('id asc')->limit($count)->select();
         return $resultMsg;
     }
 
@@ -249,10 +284,17 @@ class MsgCheckController extends Controller
     {
         $subInfo = I('post.', '', 'trim,strip_tags');
         $where['uid'] = session('cur_user')['id'];
-        $checkRecord = M('ck_check_flow')->where($where)->order('update_time desc')->find();
-        $checkRecord['status'] = $this::STATE_ABORTED;
+        $checkRecord = M('ck_check_flow')->where($where)->order('id desc')->find();
+        if ($checkRecord['status'] == $this::STATE_CHECKING) {
+            $checkRecord['status'] = $this::STATE_ABORTED;
+        } elseif ($checkRecord['status'] == $this::STATE_CHECKING_EX_GROUP) {
+            $checkRecord['status'] = $this::STATE_ABORTED_EX_GROUP;
+        }
         $checkRecord['abort_id'] = $subInfo['id'];
         $checkRecord['stop_time'] = $subInfo['stop_time'];
+        $checkRecord['count_check'] = $subInfo['count_check'];
+        $checkRecord['end_time'] = date('Y-m-d H:i:s', time());
+
         $result = M('ck_check_flow')->save($checkRecord);
         if ($result) {
             echo 'success';
@@ -310,7 +352,17 @@ class MsgCheckController extends Controller
 
         //运费估算
         $returnArr['freight_forecast'] = $this->freightForecast($subInfo['area_start_id'], $subInfo['area_end_id'], $data['distance']);
-
+        if ($subInfo['pass']) {
+            //确定无视偏差值
+        } else {
+            if ($this->deviationValueCheck($data['freight_price'], $returnArr['freight_forecast'])) {
+                $returnArr['alarm'] = true;
+                $returnArr['msg'] = "price error!";
+                echo json_encode($returnArr);
+                exit;
+            }
+        }
+        $data['freight_forecast'] = $returnArr['freight_forecast'];
         if ($subInfo['id']) {
             $data['id'] = $subInfo['id'];
             $result = M('ck_freight')->save($data);
@@ -323,6 +375,26 @@ class MsgCheckController extends Controller
             $returnArr['id'] = $result;
             echo json_encode($returnArr);
         }
+    }
+
+    public function freightEvaluate()
+    {
+        $this->display();
+    }
+
+    public function freightErrSearch()
+    {
+        $subInfo = I('post.', '', 'strip_tags,trim');
+        $start = $subInfo['start_time'];
+        $end = $subInfo['end_time'];
+        $range = $subInfo['range'];
+        $where['record_time'] = array("BETWEEN", array($start, $end));
+        $where['distance'] = array('egt', (int)$subInfo['distance']);
+        $where['freight_forecast'] = array('neq', 0);
+        $where['freight_price'] = array('exp', "NOT BETWEEN " . (1 - $range) . "*`freight_forecast` AND " . (1 + $range) . "*`freight_forecast`");
+        $result['freight_data'] = M('ck_freight')->where($where)->select();
+        echo json_encode($result['freight_data']);
+
     }
 
     /**
@@ -396,7 +468,7 @@ class MsgCheckController extends Controller
                     echo json_encode($result[0]);
                     exit;
                 } else {
-                    if ($result[count($result) - 1]['level_type'] == 1){
+                    if ($result[count($result) - 1]['level_type'] == 1) {
                         echo json_encode($result[count($result) - 1]);
                         exit;
                     } else {
@@ -433,22 +505,36 @@ class MsgCheckController extends Controller
         }
     }
 
-    public function freightForecast($start_id, $end_id, $distance, $level_type = 3)
+    public function freightForecast($start_id, $end_id, $distance, $level_type = 2)
     {
-        $forecast = null;
+        $forecast = 0;
         //起止地所属组数
         $whereFit['area_start_id'] = array('like', substr($start_id, 0, $level_type * 2) . "%");
         $whereFit['area_end_id'] = array('like', substr($end_id, 0, $level_type * 2) . "%");
         $group_id = M('ck_fitting_setting')->where($whereFit)->field('group_id')->find();
-        if ($group_id) {
+        if ($group_id['group_id']) {
             //取当前时间公式
-            $whereFormula['group_id'] = $group_id;
+            $whereFormula['group_id'] = $group_id['group_id'];
             $resultFormula = M('ck_freight_fitting')->where($whereFormula)->order('record_time desc')->find();
             if ($resultFormula) {
-                $forcast = $resultFormula['a'] * $distance + $resultFormula['b'];
+                $forecast = $resultFormula['a'] * $distance + $resultFormula['b'];
             }
         }
-        return $forecast;
+        return (int)$forecast;
+    }
+
+    private function deviationValueCheck($input, $standard, $range = 0.3)
+    {
+        if ($input && $standard) {
+            if (abs($input - $standard) / $standard > $range) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+
     }
 
     /**

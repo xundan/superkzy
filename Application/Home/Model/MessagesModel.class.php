@@ -14,9 +14,10 @@ use Think\Model;
 
 class MessagesModel extends Model
 {
+    protected $tablePrefix = 'ck_';
+    protected $tableName = "messages";
 
     private $_message = null;
-
 
     //自动验证
     protected $_validate = array(
@@ -32,6 +33,29 @@ class MessagesModel extends Model
 //        array('area_start', 'get_area_id', '1', 'function'),
 //        array('area_end', 'get_area_id', '1', 'function'),
     );
+
+    public function __construct()
+    {
+        $tableSuffix = date('Ym', time());
+        $tableTo = $this->tablePrefix . $this->tableName . '_' . $tableSuffix;
+        $day = (int)substr(date('Ymd',time()),6,2);
+        if($day == 1){
+            $result = M()->query('show tables like "' . $tableTo . '"');
+            if ($result) {
+                $this->tableName = $this->tableName . '_' . $tableSuffix;
+            } else {
+                $tableFromSuffix = date('Ym', strtotime('-1 month'));
+                $tableFrom = $this->tablePrefix . $this->tableName . '_' . $tableFromSuffix;
+                $whereUpdateTime = date('Y-m-d', strtotime('-1 week'));
+                M()->execute('create table ' . $tableTo . ' like ' . $tableFrom);
+                M()->execute('insert into ' . $tableTo . ' select * from ' . $tableFrom . ' where update_time > "' . $whereUpdateTime . '"');
+                $this->tableName = $this->tableName . '_' . $tableSuffix;
+            }
+        }else{
+            $this->tableName = $this->tableName . '_' . $tableSuffix;
+        }
+        parent::__construct();
+    }
 
     public function join_content()
     {

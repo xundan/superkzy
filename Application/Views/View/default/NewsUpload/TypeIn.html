@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <title>新闻录入</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css">
+</head>
+<style>
+    button {
+        width: 8em;
+        height: 3em;
+        font-size: 1em;
+    }
+
+    label {
+        font-size: 25px;
+        margin: 20px 0;;
+    }
+
+    #submit button {
+        margin: 10px 9% 0 12%;
+    }
+</style>
+<body>
+<div class="container-fluid" style="padding-left: 15%;padding-right: 15%;">
+    <div style="text-align: center;">
+        <h1 style="text-align: center;margin-top: 3px;">新闻录入</h1>
+    </div>
+    <div>
+        <div>
+            <input type="email" class="form-control" id="title" placeholder="录入标题" style="height: 30px;">
+        </div>
+        <div>
+            <input type="email" class="form-control" id="author" placeholder="录入作者"
+                   style="height: 30px;margin-top: 15px;">
+        </div>
+        <div style="width: 100%;margin-top:10px;">
+            <span style="font-size: 25px;font-weight: 700;">选择关键字模块：</span>
+            <select id="sel" style="width: 15%;">
+                <option></option>
+                <option>content_1</option>
+                <option>content_2</option>
+                <option>content_3</option>
+                <option>content_4</option>
+                <option>content_5</option>
+            </select>
+        </div>
+        <form id="form_1" class="form" action="{:U('NewsUpload/testAction')}" method="post"
+              enctype="multipart/form-data"
+              style="height: 120px;">
+            <div class="weui_uploader_input_wrp"
+                 style="transform: translateX(0) translateY(125%);width: 100%;height: 50px">
+                <img id="img_1" class="weui_uploader_input img" style="opacity: 1;width: 7%;">
+                <span style="display: block;font-size: 25px;margin-top: -50px;font-weight: 700;">上传封面</span>
+                <input class="weui_uploader_input upload_image" type="file" name="file" id="pic_1" accept="image/*">
+                <input style="display:none" mce_style="display:none">
+                <p id="status_1" class="status"></p>
+            </div>
+        </form>
+        <form id="form_2" class="form" action="{:U('NewsUpload/testAction')}" method="post"
+              enctype="multipart/form-data"
+              style="height: 120px;">
+            <div class="weui_uploader_input_wrp"
+                 style="transform: translateX(0) translateY(125%);width: 100%;height: 50px">
+                <img id="img_2" class="weui_uploader_input img" style="opacity: 1;width: 7%;">
+                <span style="display: block;font-size: 25px;margin-top: -50px;font-weight: 700;">上传图片一</span>
+                <input class="weui_uploader_input upload_image" type="file" name="file" id="pic_2" accept="image/*">
+                <input style="display:none" mce_style="display:none">
+                <p id="status_2" class="status"></p>
+            </div>
+        </form>
+        <div>
+            <textarea class="form-control" rows="10" id="content_1" placeholder="录入内容一"></textarea>
+        </div>
+        <form id="form_3" class="form" action="{:U('NewsUpload/testAction')}" method="post"
+              enctype="multipart/form-data"
+              style="height: 120px;">
+            <div class="weui_uploader_input_wrp"
+                 style="transform: translateX(0) translateY(125%);width: 100%;height: 50px">
+                <img id="img_3" class="weui_uploader_input img" style="opacity: 1;width: 7%;">
+                <span style="display: block;font-size: 25px;margin-top: -50px;font-weight: 700;">上传图片二</span>
+                <input class="weui_uploader_input upload_image" type="file" name="file" id="pic_3" accept="image/*">
+                <input style="display:none" mce_style="display:none">
+                <p id="status_3" class="status"></p>
+            </div>
+        </form>
+        <div>
+            <textarea class="form-control" rows="10" id="content_2" placeholder="录入内容二"></textarea>
+        </div>
+        <form id="form_4" class="form" action="{:U('NewsUpload/testAction')}" method="post"
+              enctype="multipart/form-data"
+              style="height:  120px;">
+            <div class="weui_uploader_input_wrp"
+                 style="transform: translateX(0) translateY(125%);width: 100%;height: 50px">
+                <img id="img_4" class="weui_uploader_input img" style="opacity: 1;width: 7%;">
+                <span style="display: block;font-size: 25px;margin-top: -50px;font-weight: 700;">上传图片三</span>
+                <input class="weui_uploader_input upload_image" type="file" name="file" id="pic_4" accept="image/*">
+                <input style="display:none" mce_style="display:none">
+                <p id="status_4" class="status"></p>
+            </div>
+        </form>
+        <div>
+            <textarea class="form-control" rows="10" id="content_3" placeholder="录入内容三"></textarea>
+        </div>
+        <form id="form_5" class="form" action="{:U('NewsUpload/testAction')}" method="post"
+              enctype="multipart/form-data"
+              style="height:  120px;">
+            <div class="weui_uploader_input_wrp"
+                 style="transform: translateX(0) translateY(125%);width: 100%;height: 50px">
+                <img id="img_5" class="weui_uploader_input img" style="opacity: 1;width: 7%;">
+                <span style="display: block;font-size: 25px;margin-top: -50px;font-weight: 700;">上传图片四</span>
+                <input class="weui_uploader_input upload_image" type="file" name="file" id="pic_5" accept="image/*">
+                <input style="display:none" mce_style="display:none">
+                <p id="status_5" class="status"></p>
+            </div>
+        </form>
+        <div>
+            <textarea class="form-control" rows="10" id="content_4" placeholder="录入内容四"></textarea>
+        </div>
+        <form id="form_6" class="form" action="{:U('NewsUpload/testAction')}" method="post"
+              enctype="multipart/form-data"
+              style="height: 120px;">
+            <div class="weui_uploader_input_wrp"
+                 style="transform: translateX(0) translateY(125%);width: 100%;height: 50px">
+                <img id="img_6" class="weui_uploader_input img" style="opacity: 1;width: 7%;">
+                <span style="display: block;font-size: 25px;margin-top: -50px;font-weight: 700;">上传图片五</span>
+                <input class="weui_uploader_input upload_image" type="file" name="file" id="pic_6" accept="image/*">
+                <input style="display:none" mce_style="display:none">
+                <p id="status_6" class="status"></p>
+            </div>
+        </form>
+        <div>
+            <textarea class="form-control" rows="10" id="content_5" placeholder="录入内容五"></textarea>
+        </div>
+        <div id="submit" style="text-align: center;margin: 40px 0">
+            <button type="submit" class="btn btn-primary">提交</button>
+            <button type="submit" class="btn btn-warning">刷新</button>
+            <button class="btn btn-info" style="color: #fff;">新闻录入记录</button>
+        </div>
+    </div>
+</div>
+<script>
+    //    提交
+    $('.btn-primary').click(function () {
+        //获取表单数据
+        var $this = $(this);
+        var title = $('#title').val();
+        var author = $('#author').val();
+        var keywords = $('#sel').val();
+        var content_1 = $('#content_1 ').val();
+        var content_2 = $('#content_2').val();
+        var content_3 = $('#content_3').val();
+        var content_4 = $('#content_4').val();
+        var content_5 = $('#content_5').val();
+        var img_1 = $('#img_1').attr("src");
+        var img_2 = $('#img_2').attr("src");
+        var img_3 = $('#img_3').attr("src");
+        var img_4 = $('#img_4').attr("src");
+        var img_5 = $('#img_5').attr("src");
+        var img_6 = $('#img_6').attr("src");
+        console.log(title, author, keywords, content_1, content_2, content_3, content_4, content_5, img_1, img_2, img_3, img_4, img_5, img_6);
+//        return false;
+        $.ajax({
+            type: 'post',
+            url: "{:U('NewsUpload/news_submit')}",
+            data: {
+                title: title,
+                name: author,
+                keywords: keywords,
+                content_1: content_1,
+                content_2: content_2,
+                content_3: content_3,
+                content_4: content_4,
+                content_5: content_5,
+                img_1: img_1,
+                img_2: img_2,
+                img_3: img_3,
+                img_4: img_4,
+                img_5: img_5,
+                img_6: img_6
+            },
+            success: function (data) {
+                console.log(data);
+                if (data == 'success') {
+                    alert('提交成功！');
+                    $this.addClass('disabled');
+                    $this.attr('disabled', 'disabled');
+                } else {
+                    alert('提交失败！')
+                }
+            }
+        })
+    });
+    //刷新
+    $('.btn-warning').click(function () {
+        window.location.reload();
+    });
+    //跳转界面
+    $('.btn-info').click(function () {
+        window.location.href = "{:U('NewsUpload/TypeIn_history')}";
+    });
+    //图片上传
+    var uploading_flag = false;
+    $('.upload_image').on('change', function () {
+        var att = $(this).prev().prev().attr('id');
+        console.log(att);
+        console.log($(this).val());
+        console.log($(this));
+        console.log($(this)[0]);
+        console.log($(this)[0].files[0]);
+//        var formData = new FormData($('#form')[0]);
+        var formData = new FormData();
+        formData.append('file', $(this)[0].files[0]);
+        console.log(formData);
+        console.log($('.form')[0]);
+        $.ajax({
+            type: 'post',
+            url: "{:U('NewsUpload/testAction')}",
+            processData: false,
+            contentType: false,
+            data: formData,
+            beforeSend: function () {
+                $('.status').html('上传中');
+//                $('.img').attr('src', '')
+            },
+            success: function (data) {
+                $('.status').html('');
+                console.log(data);
+//                alert(data);
+//                data = JSON.parse(data)['url'];
+                var a = data.replace('./Public', 'http://www.xuncl.com/Public');
+                console.log(a);
+                console.log(a + Math.random());
+                $("img[id='" + att + "']").attr('src', a + '?v=' + Math.random());
+                console.log($("img[id='" + att + "']"));
+            }
+        })
+    });
+</script>
+</body>
+</html>

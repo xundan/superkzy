@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <title>手动插入数据</title>
+</head>
+<style>
+    #result div {
+        font-size: 1.5em;
+        color: red;;
+        margin: 0.5em 0;
+    }
+</style>
+<body>
+<div class="page-header text-center" style="font-size: 2em">
+    手动插入数据
+</div>
+
+<div class="container">
+    <form id="form_search">
+        <div class="form-group">
+            <label for="uid">uid</label>
+            <input class="form-control" type="text" id="uid" name="uid" placeholder="uid">
+        </div>
+        <div class="form-group">
+            <label for="content">内容</label>
+            <textarea name="content" id="content" class="form-control" rows="10"></textarea>
+        </div>
+        <div class="form-group" style="text-align: end">
+            <button id="reset" type="reset" class="btn btn-default">重置</button>
+            <button id="submit" class="btn btn-default">提交</button>
+        </div>
+    </form>
+</div>
+
+<div class="page-header text-center" style="font-size: 2em">
+    结果
+</div>
+<div class="container text-center" id="result">
+
+</div>
+</body>
+<script>
+    $('#submit').click(function (e) {
+        e.preventDefault();
+        var uid = $('#uid').val();
+        var content = $('#content').val();
+        if (uid && content) {
+            var subData = $("#form_search").serialize();
+            $.ajax({
+                type: 'post',
+                url: "{:U('MessageStatistic/pushMsgAction')}",
+                data: subData,
+                success: function (data) {
+                    var resultNode = $('#result');
+                    resultNode.html('');
+                    var resultStr = '';
+                    if (data) {
+                        if(data == 1){
+                            resultStr = '<div>插入成功</div>';
+                            resultNode.append(resultStr);
+                        }else{
+                            resultStr = '<div>插入失败</div>';
+                            resultNode.append(resultStr);
+                        }
+                    } else {
+                        //查无结果
+                        resultStr = '<div>插入失败</div>';
+                        resultNode.append(resultStr);
+                    }
+                    $('#reset').click();
+                }
+            })
+        } else {
+            alert('输入内容不能为空！');
+            return false;
+        }
+    });
+</script>
+</html>

@@ -44,6 +44,51 @@ class ChatRecordController extends RestController
         echo "ChatRecord api works";
     }
 
+    public function pushMsg2Display(){
+        $res = $this->defaultResponse();
+        switch ($this->_method) {
+            case 'get': // get请求处理代码
+                $this->defaultGetAction();
+                break;
+            case 'post': // post请求处理代码
+                $data = $this->decodeJSONFromBody();
+
+                if ($data) {
+                    $uid = $data['uid'];
+                    $content = $data['content'];
+                    $remark = $data['remark'];
+                    $where['uid'] = $uid;
+                    $user = M('ck_display_user')->where($where)->find();
+                    if($user){
+                        $msg['user_name'] = $user['user_name'];
+                    }else{
+                        //找不到用户
+                        $msg['user_name'] = 'Unknown';
+                    }
+                    $msg['uid'] = $uid;
+                    $msg['content'] = $content;
+                    $msg['content_md5'] = md5($content);
+                    $msg['remark'] = $remark;
+                    $add = M('ck_display')->add($msg);
+                    if($add){
+                        $res['result_code'] = "201";
+                        $res['reason'] = "新建或修改数据成功";
+                        $res['error_code'] = "0";
+                        $res['message_id'] = '';
+                        $res['result'] = '';
+                    }else{
+                        //插入数据库失败
+                        $res = $this->dbErrorResponse($res);
+                    }
+                } else {
+                    $res = $this->internalErrorResponse($res);
+                }
+
+                $this->response($res, 'json');
+                break;
+        }
+    }
+
     //　记录一条历史消息
     Public function record()
     {
@@ -588,4 +633,6 @@ class ChatRecordController extends RestController
         $data['result'] = "";
         return $data;
     }
+
+
 }

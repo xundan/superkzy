@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <title>多车最新位置查询</title>
+</head>
+<style>
+    #result div {
+        font-size: 1.5em;
+        color: red;;
+        margin: 0.5em 0;
+    }
+</style>
+<body>
+<div class="page-header text-center" style="font-size: 2em">
+    多车最新位置查询
+</div>
+
+<div class="container">
+    <form id="form_search">
+        <div class="form-group">
+            <label for="vclNs">车牌号_车牌颜色,列表（以半角逗号连接）车牌颜色，1：蓝色；2：黄色</label>
+            <input class="form-control" type="text" id="vclNs" name="vclNs" placeholder="车牌号码">
+        </div>
+        <div class="form-group" style="text-align: end">
+            <button type="reset" class="btn btn-default">重置</button>
+            <button id="submit" class="btn btn-default">提交</button>
+        </div>
+    </form>
+</div>
+
+<div class="page-header text-center" style="font-size: 2em">
+    结果
+</div>
+<div class="container" id="result">
+
+</div>
+</body>
+<script>
+    $('#submit').click(function (e) {
+        e.preventDefault();
+        var vclNs = $('#vclNs').val();
+        if (vclNs) {
+            var subData = $("#form_search").serialize();
+            $.ajax({
+                type: 'post',
+                url: "{:U('carLocation/carsLastLocationMultiAction')}",
+                data: subData,
+                success: function (data) {
+                    var resultNode = $('#result');
+                    resultNode.html('');
+                    var resultStr = '';
+                    if (data) {
+                        var jsonObj = JSON.parse(data);
+                        console.log(jsonObj);
+                        //vno:车牌号;vco:车牌颜色;drc:角度;spd:速度;utc:时间戳;adr:地址
+                        $.each(jsonObj, function (k, v) {
+                            if (v.utc) {
+                                var time = new Date(parseInt(v.utc));
+                                time = time.toLocaleString();
+                            }
+                            resultStr += '<div>' + v.vno + '_' + v.vco + ':</div>' +
+                                    '<div>&emsp;&emsp;最后停靠位置：' + v.adr + '</div>' +
+                                    '<div>&emsp;&emsp;速度：' + v.spd + 'km/h</div>' +
+                                    '<div>&emsp;&emsp;定位时间：' + time + '</div>';
+                        });
+                        resultNode.append(resultStr);
+                    } else {
+                        //查无结果
+                        resultStr = '<div>查无结果</div>';
+                        resultNode.append(resultStr);
+                    }
+                }
+            })
+        } else {
+            alert('输入内容不能为空！');
+            return false;
+        }
+    });
+</script>
+</html>

@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新闻录入记录</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css">
+</head>
+<style>
+    th {
+        text-align: center;;
+    }
+
+    td {
+        text-align: center;;
+    }
+
+    .box {
+        width: 70%;
+        padding: 20px;
+        height: 700px;
+        border: 1px #111 solid;
+        position: absolute;
+        top: 6%;
+        left: 15%;
+        margin-bottom: 50px;
+        background-color: whitesmoke;
+        display: none; /* 默认对话框隐藏 */
+    }
+
+    .box.show {
+        display: block;
+    }
+
+    .box .x {
+        font-size: 18px;
+        text-align: right;
+        display: block;
+    }
+
+    .box input {
+        width: 80%;
+        font-size: 18px;
+        margin-top: 10px;
+    }
+
+    label{
+        margin-top: 5px;
+    }
+
+    h3{
+        margin-top: 10px;
+    }
+</style>
+<body>
+<div style="text-align: center;">
+    <h1 style="text-align: center;margin-top: 3px;display: inline-block;">新闻录入记录</h1>
+</div>
+<div id="submit" style="text-align: center;margin: 40px 0">
+    <button type="submit" id="btn-primary" class="btn btn-primary" style="margin-right: 30%;">查询</button>
+    <button class="btn btn-danger" style="color: #fff;">返回</button>
+</div>
+<!--展示信息-->
+<div class="container">
+    <div id="lottery_content">
+        <table style="width: 100%" class="table table-bordered">
+            <thead>
+            <th>序号</th>
+            <th>标题</th>
+            <th>作者</th>
+            <th>时间</th>
+            <th>操作</th>
+            </thead>
+            <tbody id="lottery_insert">
+            </tbody>
+        </table>
+    </div>
+</div>
+<!--弹出框-->
+<div id='inputbox' class="box">
+    <a class='x' href='' ; onclick="change(); return false;">关闭</a>
+    <div>
+        <h3>修改序号：<span></span></h3>
+    </div>
+    <div style="width: 100%;margin-top:10px;">
+        <span style="font-size: 24px;">选择修改文字模块：</span>
+        <select id="sel" style="width: 15%;">
+            <option></option>
+            <option>title</option>
+            <option>name</option>
+            <option>content_1</option>
+            <option>content_2</option>
+            <option>content_3</option>
+            <option>content_4</option>
+            <option>content_5</option>
+        </select>
+        <textarea class="form-control" rows="10" id="content" placeholder="录入内容" style="margin-top: 10px;"></textarea>
+        <div style="text-align: center;">
+            <input type="button" value="确定" onclick="update(this)">
+        </div>
+    </div>
+    <div style="width: 100%;margin-top:10px;">
+        <span style="font-size: 24px;">修改关键字模块：</span>
+        <select id="sel_key" style="width: 15%;">
+            <option></option>
+            <option>content_1</option>
+            <option>content_2</option>
+            <option>content_3</option>
+            <option>content_4</option>
+            <option>content_5</option>
+        </select>
+        <input type="button" value="确定" onclick="update_key(this)" style="width: 20%;margin-left: 20%;">
+    </div>
+    <div style="width: 100%;margin-top:10px;">
+        <span style="font-size: 24px;">选择修改图片模块：</span>
+        <select id="sel_img" style="width: 15%;">
+            <option></option>
+            <option>img_1</option>
+            <option>img_2</option>
+            <option>img_3</option>
+            <option>img_4</option>
+            <option>img_5</option>
+            <option>img_6</option>
+        </select>
+        <form id="form" class="form" action="{:U('NewsUpload/testAction')}" method="post"
+              enctype="multipart/form-data"
+              style="height: 120px;">
+            <div class="weui_uploader_input_wrp"
+                 style="transform: translateX(0) translateY(80%);width: 100%;height: 50px">
+                <img id="img" class="weui_uploader_input img" style="opacity: 1;width: 7%;">
+                <input class="weui_uploader_input upload_image" type="file" name="file" id="pic" accept="image/*">
+                <input style="display:none" mce_style="display:none">
+                <p id="status" class="status"></p>
+            </div>
+        </form>
+        <div style="text-align: center;">
+            <input type="button" value="确定" onclick="update_img(this)">
+        </div>
+    </div>
+</div>
+<script>
+    //查询
+    $('#btn-primary').click(function (e) {
+        $.ajax({
+            type: "post",
+            url: "{:U('NewsUpload/news_action')}",
+            data: {},
+            success: function (data) {
+                var obj = JSON.parse(data);
+                $('#lottery_insert').html('');
+                console.log(data);
+                if (obj['msg'] == 'yes') {
+                    var $recordString = '';
+                    $.each(obj['data'], function (k, y) {
+                        $recordString += "<tr class='place_add'><td>" + y['id'] + "</td>"
+                                + "<td>" + y['title'] + "</td>"
+                                + "<td>" + y['name'] + "</td>"
+                                + "<td>" + y['record_time'] + "</td>"
+                                + "<td>" + "<input type='button' class='btn btn_revise' value='修改'  onclick='btn_revise(this)' style='margin: 5px 5%;' data-num='" + y['id'] + "'>" + "<input type='button' class='btn btn_delete' value='删除' onclick='btn_delete(this)' style='margin: 5px 5%;' data-num='" + y['id'] + "'>" + "</td>";
+                        $recordString += "</tr>";
+                    });
+                    $('#lottery_insert').append($recordString);
+                } else {
+                }
+            }
+        })
+    });
+    //    返回
+    $('.btn-danger').click(function () {
+        window.location.href = "{:U('NewsUpload/TypeIn')}";
+    });
+    //点击修改
+    var a;
+    var ipt;
+    function btn_revise(obj) {
+        var id = obj.getAttribute("data-num");
+        var div = document.getElementById('inputbox');
+        div.style.display = obj ? 'block' : 'none';
+        /* 点击按钮打开/关闭 对话框 */
+        if (obj) {
+            ipt = div.getElementsByTagName('span');
+            ipt[0].innerHTML = id;
+            console.log(ipt);
+        }
+    }
+    //点击修改文字板块确认
+    function update() {
+        var id = document.getElementById('inputbox').getElementsByTagName('span')['0'].innerHTML;
+        var sel = $('#sel').val();
+        var content = $('#content').val();
+        console.log(id, sel, content);
+//        return false;
+        if(!sel){
+            alert('请选择修改文字模块！')
+            console.log(1);
+        }else {
+            $.ajax({
+                type: 'post',
+                url: "{:U('NewsUpload/revise_action')}",
+                data: {
+                    id: id,
+                    sel:sel,
+                    content: content
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data == 'success') {
+                        alert('提交成功！');
+                    } else {
+                        alert('提交失败！')
+                    }
+                }
+            })
+        }
+    }
+    //点击修改关键字板块确认
+    function update_key() {
+        var id = document.getElementById('inputbox').getElementsByTagName('span')['0'].innerHTML;
+        var sel_key = $('#sel_key').val();
+        console.log(id, sel_key);
+//        return false;
+            $.ajax({
+                type: 'post',
+                url: "{:U('NewsUpload/key_action')}",
+                data: {
+                    id: id,
+                    sel_key:sel_key,
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data == 'success') {
+                        alert('提交成功！');
+                    } else {
+                        alert('提交失败！')
+                    }
+                }
+            })
+    }
+    //删除
+    function btn_delete(obj) {
+        var id = obj.getAttribute("data-num");
+        console.log(id);
+        $.ajax({
+            type: 'post',
+            url: "{:U('NewsUpload/del_action')}",
+            data: {
+                id: id
+            },
+            success: function (data) {
+                console.log(data);
+                if (data == 'success') {
+                    alert('删除成功！');
+                } else {
+                    alert('删除失败！')
+                }
+            }
+        })
+    }
+    //图片修改上传
+    var uploading_flag = false;
+    $('.upload_image').on('change', function () {
+        var att=$(this).prev().attr('id');
+        console.log(att);
+        console.log($(this).val());
+        console.log($(this));
+        console.log($(this)[0]);
+        console.log($(this)[0].files[0]);
+//        var formData = new FormData($('#form')[0]);
+        var formData = new FormData();
+        formData.append('file', $(this)[0].files[0]);
+        console.log(formData);
+        console.log($('.form')[0]);
+        $.ajax({
+            type: 'post',
+            url: "{:U('NewsUpload/testAction')}",
+            processData: false,
+            contentType: false,
+            data: formData,
+            beforeSend: function () {
+                $('.status').html('上传中');
+//                $('.img').attr('src', '')
+            },
+            success: function (data) {
+                $('.status').html('');
+                console.log(data);
+//                alert(data);
+//                data = JSON.parse(data)['url'];
+                var a = data.replace('./Public', 'http://www.xuncl.com/Public');
+                console.log(a);
+                console.log(a + Math.random());
+                $("img[id='"+att+"']").attr('src', a + '?v=' + Math.random());
+                console.log($("img[id='"+att+"']"));
+            }
+        })
+    });
+    //点击修改图片板块确认
+    function update_img() {
+        var id = document.getElementById('inputbox').getElementsByTagName('span')['0'].innerHTML;
+        var sel_img = $('#sel_img').val();
+        var img=$('#img').attr("src");
+        console.log(id, sel_img, img);
+//        return false;
+        if(!sel_img){
+            alert('请选择修改图片模块！')
+            console.log(2);
+        }else {
+            $.ajax({
+                type: 'post',
+                url: "{:U('NewsUpload/reviseImg_action')}",
+                data: {
+                    id: id,
+                    sel_img:sel_img,
+                    img: img
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data == 'success') {
+                        alert('提交成功！');
+                    } else {
+                        alert('提交失败！')
+                    }
+                }
+            })
+        }
+    }
+</script>
+</body>
+</html>

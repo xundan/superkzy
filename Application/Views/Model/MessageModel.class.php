@@ -12,7 +12,8 @@ use Think\Model;
 
 class MessageModel extends Model
 {
-    protected $tableName = "ck_messages";
+    protected $tablePrefix = 'ck_';
+    protected $tableName = "messages";
 
     protected $fields = array( //辅助模型识别字段，不会影响查询，会影响增改
         "id",
@@ -77,6 +78,29 @@ class MessageModel extends Model
         '_pk' => "id",
     );
 
+    public function __construct()
+    {
+        $tableSuffix = date('Ym', time());
+        $tableTo = $this->tablePrefix . $this->tableName . '_' . $tableSuffix;
+        $day = (int)substr(date('Ymd',time()),6,2);
+        if($day == 1){
+            $result = M()->query('show tables like "' . $tableTo . '"');
+            if ($result) {
+                $this->tableName = $this->tableName . '_' . $tableSuffix;
+            } else {
+                $tableFromSuffix = date('Ym', strtotime('-1 month'));
+                $tableFrom = $this->tablePrefix . $this->tableName . '_' . $tableFromSuffix;
+                $whereUpdateTime = date('Y-m-d', strtotime('-1 week'));
+                M()->execute('create table ' . $tableTo . ' like ' . $tableFrom);
+                M()->execute('insert into ' . $tableTo . ' select * from ' . $tableFrom . ' where update_time > "' . $whereUpdateTime . '"');
+                $this->tableName = $this->tableName . '_' . $tableSuffix;
+            }
+        }else{
+            $this->tableName = $this->tableName . '_' . $tableSuffix;
+        }
+        parent::__construct();
+    }
+
     public function add_by_md5($data, $switch = false)
     {
         $md5 = $data['content_all_md5'];
@@ -91,6 +115,7 @@ class MessageModel extends Model
             } else {
                 // 重复直接更新update_time
                 $exist['vip'] = $data['vip'];
+                $exist['type'] = $data['type'];
                 return $this->update_time($exist);
             }
         } else {
@@ -102,9 +127,10 @@ class MessageModel extends Model
     {
         $data['id'] = $row['id'];
         $now = time();
-//        $data['update_time'] = date('Y-m-d H:i:s', $now);
+        $data['update_time'] = date('Y-m-d H:i:s', $now);
         $data['deadline'] = date("Y-m-d H:i:s", strtotime("+7 day", $now));
         $data['vip'] = $row['vip'];
+        $data['type'] = $row['type'];
         $data['invalid_id'] = 0;
         return $this->save($data);
     }

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>过年啦！</title>
+    <!--<link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>-->
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <style>
+        body{
+            width: 100%;
+            text-align: center;
+            color: #060606;
+            background-image: url("__PUBLIC__/home/images/Newyear.png");
+            background-size: 100% 98%;
+            background-repeat: repeat-y;
+        }
+
+        li {
+            display: inline-block;
+            margin-right: 7em;
+        }
+
+        a{
+            font-size: 3em;
+            font-weight: bold;
+            text-decoration: none;
+            color: #00000a;
+        }
+
+    </style>
+</head>
+<body>
+<h1 style="font-size: 6em;margin: 1em 0 0;">新年寄语</h1>
+<div>
+    <ul >
+        <li role="presentation" class="active"><a href="#info_input" data-toggle="tab">自己</a></li>
+        <li role="presentation"><a href="#lottery" data-toggle="tab">家人</a></li>
+        <li role="presentation"><a href="#pic_create" data-toggle="tab">朋友</a></li>
+        <li role="presentation"><a href="#decode_table" data-toggle="tab">事业</a></li>
+    </ul>
+</div>
+<div>
+    <img id="#info_input" src="__PUBLIC__/home/images/ican.jpg" alt="VotePicture" style="width: 80%;margin:6em auto 6em;display: block">
+</div>
+<p style="text-align: left;margin: 0.5em 3em;font-size: 3em;">写出你的祝福！</p>
+<div class="typ">
+   <input type="text" style="width:75%;height:6em;font-size: 2em;background-color: #7e040d;color: #d8cf9e" >
+</div>
+<div style="margin: 12em 0 9em;">
+<span style="font-size: 4em;">生成</span>
+</div>
+</body>
+<!--图片生成-->
+<script>
+    $('#pic_seed').focus(function(){
+        $(this).val('');
+    });
+    $('#pic_mix').click(function(){
+        var phone_number = $('#pic_seed').val();
+        var invite_code = '';
+        var sucess_flag = false;
+        var name='';
+        invite_code = 'a3f4t5';
+        $.ajax({
+            type:"post",
+            url:"{:U('PayingClientManagement/queryByPhone')}",
+            data:{
+                phone_number:phone_number
+            },
+            success:function(data){
+                if(data == 'failure'){
+                    alert('不存在');
+                    return false;
+                }else{
+                    var userInfo = JSON.parse(data);
+                    sucess_flag = true;
+                    name = userInfo['wx_name'];
+                    invite_code = seed_encode(userInfo['id']);
+                }
+            },
+            error:function(XMLHttpRequest,textStatus,errorThrown){
+            }
+        });
+
+        setTimeout(function(){
+            if(sucess_flag){
+                var aa = document.getElementById('pic_canvas');
+                var bb = aa.getContext('2d');
+                var img = new Image;
+                img.src = '__PUBLIC__/home/images/payingClientLottery/bg.jpg';
+                img.onload = function () {
+                    bb.drawImage(img,0,0);
+
+                    bb.fillStyle = '#fdff00';   // 文字填充颜色
+                    bb.font = '35px Adobe Ming Std';
+                    bb.textAlign = 'center';
+                    bb.fillText(name,410,1365);
+                    bb.fillText('送您价值50元的VIP！',410,1405);
+
+                    bb.textAlign = 'start';
+                    bb.fillStyle = 'white';   // 文字填充颜色
+                    bb.font = '25px Adobe Ming Std';
+                    bb.fillText(invite_code,465,1448);
+
+
+                    var image = aa.toDataURL("image/jpg");
+                    $('.copy').html("<img src='"+image+"' alt='from canvas'/>");
+//                w.document.write("<img src='"+image+"' alt='from canvas'/>");
+                };
+//            bb.stroke();
+            }
+        },2000);
+    });
+    $('#canvas_to_img').click(function () {
+        var mycanvas = document.getElementById("pic_canvas");
+        var image    = mycanvas.toDataURL("image/jpg");
+        var w=window.open('about:blank','image from canvas');
+        w.document.write("<img src='"+image+"' alt='from canvas'/>");
+    });
+</script>
+</html>

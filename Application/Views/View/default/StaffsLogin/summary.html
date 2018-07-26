@@ -21,10 +21,11 @@
 
     label {
         display: inline-block;
-        width: 10em;
-        padding-bottom: .5em;
+        width: 5em;
+        padding-bottom: 0.5em;
         font-size: 1.5em;
         font-weight: bold;
+        vertical-align: middle;
     }
 
     textarea {
@@ -39,19 +40,20 @@
 
 </style>
 <body>
-<div class="title" style="text-align: center;line-height: 9em">
+<div class="title" style="text-align: center;line-height: 9em;margin: 50px 0 60px">
     <h1>周工作总结</h1>
 </div>
-<div style="position: absolute;top: 30px;right: 288px;">
+<div style="position: absolute;top: 50px;right: 110px;">
     <span>时间</span>
     <input type="date" style="width: 140px;" id="time">
 </div>
-<div style="position: absolute;top: 80px;right: 288px;">
+<div style="position: absolute;top: 110px;right: 110px;">
     <span>姓名</span>
     <select id="name" style='width: 140px'>
         <option></option>
         <option>gaolei</option>
         <option>gls</option>
+        <option>hq</option>
         <option>jws</option>
         <option>liuxuan</option>
         <option>lx</option>
@@ -67,24 +69,24 @@
     </select>
 </div>
 <div id="content">
-    <div class="container">
+    <div class="container" style="margin: auto;width: 1005px;">
         <!--<input type="hidden" id="user_id" value="{$cur_user['id']}">-->
         <!--<input type="hidden" id="user_name" value="{$cur_user['user_name']}">-->
         <div class="typ">
             <label for="process">上周进展</label>
-            <textarea cols="139" rows="4" name="textarea" id="process"></textarea>
+            <textarea cols="110" rows="4" name="textarea" id="process"></textarea>
         </div>
         <div class="typ">
             <label for="project">本周计划</label>
-            <textarea cols="139" rows="4" name="textarea" id="project"></textarea>
+            <textarea cols="110" rows="4" name="textarea" id="project"></textarea>
         </div>
         <div class="typ">
             <label for="problem">问题</label>
-            <textarea cols="139" rows="3" name="textarea" id="problem"></textarea>
+            <textarea cols="110" rows="4" name="textarea" id="problem"></textarea>
         </div>
         <div class="typ">
             <label for="propose">建议</label>
-            <textarea cols="139" rows="3" name="textarea" id="propose"></textarea>
+            <textarea cols="110" rows="4" name="textarea" id="propose"></textarea>
         </div>
     </div>
 </div>

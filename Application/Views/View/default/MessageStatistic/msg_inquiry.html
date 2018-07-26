@@ -17,7 +17,7 @@
     <li role="presentation"><a href="#feedback" data-toggle="tab">用户反馈</a></li>
     <li role="presentation"><a href="#message_add" data-toggle="tab">平台网站信息增量</a></li>
     <li role="presentation"><a href="#financial_client" data-toggle="tab">超矿金融</a></li>
-    <li role="presentation"><a href="#lottery" data-toggle="tab">中奖名单</a></li>
+    <li role="presentation"><a href="#lottery" data-toggle="tab">煤炭合作</a></li>
 </ul>
 <div class="tab-content">
     <div id="user_add" class="tab-pane">
@@ -26,7 +26,8 @@
                 <label for="user_add_start_time">
                     起始时间
                 </label>
-                <input id="user_add_start_time" class="form-control" type="date" value="2016-05-01" style="width: 40%;display: inline">
+                <input id="user_add_start_time" class="form-control" type="date" value="2016-05-01"
+                       style="width: 40%;display: inline">
                 <label for="user_add_end_time">
                     终止时间
                 </label>
@@ -158,15 +159,18 @@
     </div>
     <div id="lottery" class="tab-pane">
         <div class="container">
+            <div style="text-align: center;margin: 1em 0;">
             <button class="btn btn-default text-center" id="lottery_query">查询</button>
+            </div>
             <div id="lottery_content">
                 <table style="width: 100%" class="table table-striped">
                     <thead>
-                    <th>用户名</th>
-                    <th>联系方式</th>
-                    <th>用户在平台的电话号码</th>
-                    <th>中奖名</th>
-                    <th>时间</th>
+                    <th style="text-align: center;">序号</th>
+                    <th style="text-align: center;">头像</th>
+                    <th style="text-align: center;">名字</th>
+                    <th style="text-align: center;">电话</th>
+                    <th style="text-align: center;">时间</th>
+                    <th style="text-align: center;">内容</th>
                     </thead>
                     <tbody id="lottery_insert">
                     </tbody>
@@ -315,7 +319,7 @@
                     $('#financial_client_count').html(jsonObj.length);
                     jQuery.each(jsonObj, function (k, val) {
                         var li = document.createElement('tr');
-                        li.innerHTML = '<td>' + val.phone_number + '</td>' +'<td>' + val.type + '</td>' + '<td>' + val.record_time + '</td>';
+                        li.innerHTML = '<td>' + val.phone_number + '</td>' + '<td>' + val.type + '</td>' + '<td>' + val.record_time + '</td>';
                         document.getElementById('financial_client_insert').appendChild(li);
                     });
                 }
@@ -330,21 +334,23 @@
             type: "post",
             url: "{:U('MessageStatistic/lottery_action')}",
             data: {
-                isAjax: 1
             },
             success: function (data) {
-                console.log('success');
-                var jsonObj = eval("(" + data + ")");
-                console.log(jsonObj);
+                var obj = JSON.parse(data);
                 $('#lottery_insert').html('');
-                if (jsonObj) {
-                    $('#financial_client_count').html(jsonObj.length);
-                    jQuery.each(jsonObj, function (k, val) {
-                        var li = document.createElement('tr');
-                        li.innerHTML = '<td>' + val.user_name + '</td><td>' + val.contact + '</td><td>' + val.phone_number + '</td><td>' + val.prize_name + '</td><td>' + val.record_time + '</td>';
-                        document.getElementById('lottery_insert').appendChild(li);
+                console.log(data);
+                if (obj['msg'] == 'yes') {
+                    var $recordString = '';
+                    $.each(obj['data'], function (k, y) {
+                        $recordString += "<tr class='place_add'><td style='border: 1px solid #ddd;background-color: #fff;text-align: center;width: 60px;'>" + y['id'] + "</td>" + "<td style='border: 1px solid #ddd;background-color: #fff;text-align: center;width: 160px;'>" +"<a href='"+y['heading_url']+ "' target='_blank'>"+"查看头像" +"</a>"+ "</td>"
+                                + "<td style='border: 1px solid #ddd;background-color: #fff;text-align: center;width: 160px;'>" + y['user_name'] + "</td>"
+                                + "<td style='border: 1px solid #ddd;background-color: #fff;text-align: center;width: 160px;'>" + y['phone_number'] + "</td>"
+                                + "<td style='border: 1px solid #ddd;background-color: #fff;text-align: center;width: 160px;'>" + y['record_time'] + "</td>"
+                                + "<td style='border: 1px solid #ddd;background-color: #fff;text-align: center;width: 450px;'>" + y['content'] + "</td>";
+                        $recordString += "</tr>";
                     });
-                }
+                    $('#lottery_insert').append($recordString);
+                }else {}
             }
         })
     })

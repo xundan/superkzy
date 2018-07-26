@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <title>充值记录</title>
+</head>
+<body>
+<div class="page-header text-center" style="font-size: 1.5em">
+    充值记录
+</div>
+<div class="container">
+    <volist name="record_data" id="item">
+        <div class="panel panel-success">
+            <div class="panel-heading">
+                交易单号：{$item['transaction_id']}
+            </div>
+            <div class="panel-body">
+                <div>
+                    商品类型：{$item['goods']}
+                </div>
+                <div>
+                    充值号码：{$item['phone_number']}
+                </div>
+            </div>
+            <div class="panel-footer panel-success">
+                充值时间：{$item['update_time']}
+            </div>
+        </div>
+
+    </volist>
+</div>
+
+</body>
+</html>

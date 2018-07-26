@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <title>车辆轨迹查询</title>
+</head>
+<style>
+    #result div {
+        font-size: 1.5em;
+        color: red;;
+        margin: 0.5em 0;
+    }
+</style>
+<body>
+<div class="page-header text-center" style="font-size: 2em">
+    车辆轨迹查询
+</div>
+
+<div class="container">
+    <form id="form_search">
+        <div class="form-group">
+            <label for="vclN">车牌号码</label>
+            <input class="form-control" type="text" id="vclN" name="vclN" placeholder="车牌号码">
+        </div>
+        <div class="form-group">
+            <label for="qryBtm">开始时间</label>
+            <input class="form-control" type="datetime-local" id="qryBtm" name="qryBtm">
+        </div>
+        <div class="form-group">
+            <label for="qryEtm">结束时间</label>
+            <input class="form-control" type="datetime-local" id="qryEtm" name="qryEtm">
+        </div>
+        <div class="form-group" style="text-align: end">
+            <button type="reset" class="btn btn-default">重置</button>
+            <button id="submit" class="btn btn-default">提交</button>
+        </div>
+    </form>
+</div>
+
+<div class="page-header text-center" style="font-size: 2em">
+    结果
+</div>
+<div class="container" id="result">
+
+</div>
+</body>
+<script>
+    $('#submit').click(function (e) {
+        e.preventDefault();
+        var vclN = $('#vclN').val();
+        var qryBtm = $('#qryBtm').val();
+        qryBtm = qryBtm.replace('T', ' ') + ':00';
+        var qryEtm = $('#qryEtm').val();
+        qryEtm = qryEtm.replace('T', ' ') + ':00';
+        if (vclN && qryBtm && qryEtm) {
+            var btm = new Date(qryBtm);
+            var etm = new Date(qryEtm);
+            if ((etm - btm) / 1000 / 3600 > 24) {
+                alert('查询时间间隔不能超过24小时');
+                return false;
+            }
+//            var subData = $("#form_search").serialize();
+//            console.log(subData);
+            $.ajax({
+                type: 'post',
+                url: "{:U('carLocation/carTrackAction')}",
+                data: {
+                    vclN: vclN,
+                    qryBtm: qryBtm,
+                    qryEtm: qryEtm
+                },
+                success: function (data) {
+                    var resultNode = $('#result');
+                    resultNode.html('');
+                    var resultStr = '';
+                    if (data) {
+                        var jsonObj = JSON.parse(data);
+                        console.log(jsonObj);
+                        //lat:纬度(/600000.0);lon:经度(/600000.0);
+                        //gtm:gps时间(yyyyMMdd/HHmmss);spd:(1/10.0km/h);mlg:里程(1/10km)
+                        //hgt:海拔(m);agl:正北方向夹角(正北为0,顺时针)
+                        $.each(jsonObj, function (k, v) {
+                            //经纬度计算
+                            var lat = (parseFloat(v.lat) / 600000.0).toFixed(6);
+                            var lon = (parseFloat(v.lon) / 600000.0).toFixed(6);
+                            //时间格式化
+                            var timeStr = v.gtm;
+                            timeStr = timeStr.replace(/(\d{4})(\d{2})(\d{2})\/(\d{2})(\d{2})(\d{2})/, '$1-$2-$3 $4:$5:$6');
+                            //速度格式化
+                            var spd = parseInt(v.spd) * 0.1;
+                            //里程格式化
+                            var mlg = parseInt(v.mlg) * 0.1;
+                            //角度格式化
+                            var agl = parseInt(v.agl);
+                            var aglStr = '';
+                            if (agl == 0) {
+                                aglStr = '正北';
+                            } else if (agl > 0 && agl < 90) {
+                                aglStr = '东北';
+                            } else if (agl == 90) {
+                                aglStr = '正北、东';
+                            } else if (agl > 90 && agl < 180) {
+                                aglStr = '东南';
+                            } else if (agl == 180) {
+                                aglStr = '正南';
+                            } else if (agl > 180 && agl < 270) {
+                                aglStr = '西南';
+                            } else if (agl == 270) {
+                                aglStr = '正西';
+                            } else {
+                                aglStr = '西北';
+                            }
+                            resultStr += '<div>' + k + ':</div>' +
+                                    '<div>&emsp;&emsp;纬度：' + lat + ' 经度：' + lon + ' 方向：' + aglStr + '</div>' +
+                                    '<div>&emsp;&emsp;gps时间：' + timeStr + '</div>' +
+                                    '<div>&emsp;&emsp;速度：' + spd + 'km/h</div>' +
+                                    '<div>&emsp;&emsp;里程：' + mlg + 'km</div>' +
+                                    '<div>&emsp;&emsp;海拔：' + v.hgt + 'm</div>';
+                        });
+                        resultNode.append(resultStr);
+                    } else {
+                        //查无结果
+                        resultStr = '<div>查无结果</div>';
+                        resultNode.append(resultStr);
+                    }
+                }
+            })
+        } else {
+            alert('输入内容不能为空！');
+            return false;
+        }
+    });
+</script>
+</html>

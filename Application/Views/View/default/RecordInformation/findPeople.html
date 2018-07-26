@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <title>微信会员记录</title>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css">
+</head>
+<style>
+    h3 {
+        font-weight: bold;
+    }
+
+    .aa span {
+        font-size: 1em;
+        font-weight: bold;
+        width: 37%;
+        display: inline-block;
+        text-align: center;
+    }
+
+    button {
+        width: 4em;
+    }
+
+    th, td {
+        text-align: center;
+    }
+
+    td {
+        line-height: 34px !important;
+    }
+
+    .form-control {
+        display: inline;
+    }
+
+    .content_1 {
+        float: left;
+        width: 50%;
+    }
+
+    .content_2 {
+        float: right;
+        width: 50%;
+    }
+
+    .content_1, .content_2 {
+        height: 540px;
+        border: 1px solid black;
+        text-align: center;;
+    }
+
+    #weix_name, #weix_user, #weix_tel, #weix_comp, #weix_qun, #weixsel, #choc {
+        width: 60%;
+    }
+
+    .part_1 div {
+        margin-top: 3em;
+    }
+
+    .part_1 {
+        margin: 0 5%;
+    }
+
+    .btn-warning {
+        margin-left: 20%;
+    }
+
+    .box {
+        width: 30%;
+        padding: 20px;
+        height: 60%;
+        border: 1px #111 solid;
+        position: absolute;
+        top: 5%;
+        left: 35%;
+        display: none; /* 默认对话框隐藏 */
+    }
+
+    .box.show {
+        display: block;
+    }
+
+    .box .x {
+        font-size: 18px;
+        text-align: right;
+        display: block;
+    }
+
+    .box input {
+        width: 80%;
+        margin-top: 10px;
+    }
+
+    #inputbox div {
+        margin-bottom: 5%;
+    }
+
+</style>
+<body>
+<div class="aa">
+    <div class="content_1">
+        <h3>添加会员入群</h3>
+        <div class="part_1">
+            <div>
+                <span>输入微信号</span>
+                <input id="weix_name" type="text" class="form-control">
+            </div>
+            <div>
+                <span>输入群名</span>
+                <input id="weix_qun" type="text" class="form-control">
+            </div>
+            <div>
+                <span>输入姓名</span>
+                <input id="weix_user" type="text" class="form-control">
+            </div>
+            <div>
+                <span>输入电话</span>
+                <input id="weix_tel" type="text" class="form-control">
+            </div>
+            <div>
+                <span>输入公司</span>
+                <input id="weix_comp" type="text" class="form-control">
+            </div>
+            <div>
+                <button id="preview" class="btn btn-primary">预览</button>
+                <button type="submit" class="btn btn-warning">刷新</button>
+            </div>
+        </div>
+    </div>
+    <div class="content_2">
+        <div class="part_1">
+            <h3>查询会员入群记录</h3>
+            <div>
+                <div>
+                    <span>选择查询类型</span>
+                    <select id="choc" class="form-control">
+                        <option></option>
+                        <option>微信号</option>
+                        <option>姓名</option>
+                        <option>电话</option>
+                        <option>公司</option>
+                        <option>群名</option>
+                    </select>
+                </div>
+                <div>
+                    <span>输入信息</span>
+                    <input id="weixsel" type="text" class="form-control">
+                </div>
+                <div>
+                    <button id="sel" class="btn btn-primary">确定</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--展示信息-->
+    <div>
+        <div id="lottery_content">
+            <table style="width: 100%" class="table table-bordered">
+                <thead>
+                <th>编号</th>
+                <th>微信号</th>
+                <th>姓名</th>
+                <th>电话</th>
+                <th>公司</th>
+                <th>群名</th>
+                <th>入群时间</th>
+                <th>状态</th>
+                <th>操作</th>
+                </thead>
+                <tbody id="lottery_insert">
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<!--弹出框-->
+<div id='inputbox' class="box panel">
+    <a class='x' href='' ; onclick="change(); return false;">关闭</a>
+    <div>
+        <span>修改编号：</span><span></span>
+    </div>
+    <div>
+        <span>修改微信号：</span><span></span>
+    </div>
+    <div>
+        <span>修改群名</span>
+        <input id="re_qun" type="text" class="form-control">
+    </div>
+    <div>
+        <span>修改姓名</span>
+        <input id="re_user" type="text" class="form-control">
+    </div>
+    <div>
+        <span>修改电话</span>
+        <input id="re_tel" type="text" class="form-control">
+    </div>
+    <div>
+        <span>修改公司</span>
+        <input id="re_comp" type="text" class="form-control">
+    </div>
+    <div style="text-align: center;">
+        <button id="renew" class="btn btn-primary">确定</button>
+    </div>
+</div>
+<script>
+    //预览
+    $('#preview').click(function () {
+        var weix_name = $('#weix_name').val();
+        var weix_user = $('#weix_user').val();
+        var weix_tel = $('#weix_tel').val();
+        var weix_comp = $('#weix_comp').val();
+        var weix_qun = $('#weix_qun').val();
+        console.log(weix_name, weix_user, weix_tel, weix_comp, weix_qun);
+        if (!weix_name || !weix_qun) {
+            alert("微信号与群名不能为空！")
+        } else {
+            $.ajax({
+                type: 'post',
+                url: "{:U('RecordInformation/findIn')}",
+                data: {
+                    weix_name: weix_name,
+                    weix_user: weix_user,
+                    weix_tel: weix_tel,
+                    weix_comp: weix_comp,
+                    weix_qun: weix_qun
+                },
+                success: function (data) {
+                    console.log(data);
+                    var obj = JSON.parse(data);
+                    $('#lottery_insert').html('');
+                    if (obj['msg'] == 'yes') {
+                        var $recordString = '';
+                        $.each(obj['data'], function (k, y) {
+                            if (y['invalid_id'] == '在群内') {
+                                $recordString += "<tr data-id='" + y['id'] + "'><td>" + y['id'] + "</td>"
+                                        + "<td>" + y['weix_name'] + "</td>"
+                                        + "<td>" + y['weix_user'] + "</td>"
+                                        + "<td>" + y['weix_tel'] + "</td>"
+                                        + "<td>" + y['weix_comp'] + "</td>"
+                                        + "<td>" + y['weix_qun'] + "</td>"
+                                        + "<td>" + y['record_time'] + "</td>"
+                                        + "<td>" + y['invalid_id'] + "</td>"
+                                        + "<td>" + "<input type='button' class='btn btn-danger' value='删除'  onclick='btn_del(this)' style='margin-right: 20px;'>" + "<input type='button' class='btn btn-danger' value='修改'  onclick='btn_rev(this)'>" + "</td>";
+                                $recordString += "</tr>";
+                            } else {
+                                $recordString += "<tr data-id='" + y['id'] + "'><td>" + y['id'] + "</td>"
+                                        + "<td>" + y['weix_name'] + "</td>"
+                                        + "<td>" + y['weix_user'] + "</td>"
+                                        + "<td>" + y['weix_tel'] + "</td>"
+                                        + "<td>" + y['weix_comp'] + "</td>"
+                                        + "<td>" + y['weix_qun'] + "</td>"
+                                        + "<td>" + y['record_time'] + "</td>"
+                                        + "<td>" + y['invalid_id'] + "</td>"
+                                        + "<td>" + "<input type='button' class='btn btn-danger' value='恢复'  onclick='btn_renew(this)'>" + "</td>";
+                                $recordString += "</tr>";
+                            }
+                        });
+                        $('#lottery_insert').append($recordString);
+                    } else if (obj['msg'] == 'differ') {
+                        var $recordString = '';
+                        var $addString = '';
+                        $.each(obj['data'], function (k, y) {
+                            if (y['invalid_id'] == '在群内') {
+                                $recordString += "<tr data-id='" + y['id'] + "'><td>" + y['id'] + "</td>"
+                                        + "<td>" + y['weix_name'] + "</td>"
+                                        + "<td>" + y['weix_user'] + "</td>"
+                                        + "<td>" + y['weix_tel'] + "</td>"
+                                        + "<td>" + y['weix_comp'] + "</td>"
+                                        + "<td>" + y['weix_qun'] + "</td>"
+                                        + "<td>" + y['record_time'] + "</td>"
+                                        + "<td>" + y['invalid_id'] + "</td>"
+                                        + "<td>" + "<input type='button' class='btn btn-danger' value='删除'  onclick='btn_del(this)' style='margin-right: 20px;'>" + "<input type='button' class='btn btn-danger' value='修改'  onclick='btn_rev(this)'>" + "</td>";
+                                $recordString += "</tr>";
+                            } else {
+                                $recordString += "<tr data-id='" + y['id'] + "'><td>" + y['id'] + "</td>"
+                                        + "<td>" + y['weix_name'] + "</td>"
+                                        + "<td>" + y['weix_user'] + "</td>"
+                                        + "<td>" + y['weix_tel'] + "</td>"
+                                        + "<td>" + y['weix_comp'] + "</td>"
+                                        + "<td>" + y['weix_qun'] + "</td>"
+                                        + "<td>" + y['record_time'] + "</td>"
+                                        + "<td>" + y['invalid_id'] + "</td>"
+                                        + "<td>" + "<input type='button' class='btn btn-danger' value='恢复'  onclick='btn_renew(this)'>" + "</td>";
+                                $recordString += "</tr>";
+                            }
+                        });
+                        var $addString = "<tr class='place_add'><td style='color: red;'>" + "无" + "</td>"
+                                + "<td>" + weix_name + "</td>"
+                                + "<td>" + weix_user + "</td>"
+                                + "<td>" + weix_tel + "</td>"
+                                + "<td>" + weix_comp + "</td>"
+                                + "<td>" + weix_qun + "</td>"
+                                + "<td style='color: red;'>" + "当前" + "</td>"
+                                + "<td>" + "预览" + "</td>"
+                                + "<td>" + "<input type='button' class='btn btn-primary' value='增加'  onclick='btn_typ(this)'>" + "</td>" + "</tr>";
+                        $('#lottery_insert').append($recordString, $addString);
+                    }
+                    else {
+                        var $recordString = "<tr class='place_add'><td style='color: red;'>" + "无" + "</td>"
+                                + "<td>" + weix_name + "</td>"
+                                + "<td>" + weix_user + "</td>"
+                                + "<td>" + weix_tel + "</td>"
+                                + "<td>" + weix_comp + "</td>"
+                                + "<td>" + weix_qun + "</td>"
+                                + "<td style='color: red;'>" + "当前" + "</td>"
+                                + "<td>" + "预览" + "</td>"
+                                + "<td>" + "<input type='button' class='btn btn-primary' value='增加'  onclick='btn_typ(this)'>" + "</td>" + "</tr>";
+                        $('#lottery_insert').append($recordString);
+                    }
+                }
+            })
+        }
+    });
+    //刷新
+    $('.btn-warning').click(function () {
+        window.location.reload();
+    });
+    //删除
+    function btn_del(obj) {
+        var del = obj.parentNode.parentNode.children[1].innerHTML;
+        var qun = obj.parentNode.parentNode.children[5].innerHTML;
+        console.log(obj, del, qun);
+        $.ajax({
+            type: 'post',
+            url: "{:U('RecordInformation/findDel')}",
+            data: {
+                weix_name: del,
+                weix_qun: qun
+            },
+            success: function (data) {
+                console.log(data);
+                if (data == 'success') {
+                    alert('删除成功！');
+                } else {
+                    alert('删除失败！')
+                }
+            }
+        })
+    }
+    //弹出框
+    function btn_rev(obj) {
+        var a;
+        var ipt;
+        var id = obj.parentNode.parentNode.children[0].innerHTML;
+        var wei = obj.parentNode.parentNode.children[1].innerHTML;
+        var div = document.getElementById('inputbox');
+        div.style.display = obj ? 'block' : 'none';
+        /* 点击按钮打开/关闭 对话框 */
+        if (obj) {
+            ipt = div.getElementsByTagName('span');
+            ipt[1].innerHTML = id;
+            ipt[3].innerHTML = wei;
+            console.log(ipt);
+        }
+    }
+    //确认修改
+    $('#renew').click(function () {
+        var id = document.getElementById('inputbox').getElementsByTagName('span')['1'].innerHTML;
+        var wei = document.getElementById('inputbox').getElementsByTagName('span')['3'].innerHTML;
+        var weix_qun = $('#re_qun').val();
+        var weix_user = $('#re_user').val();
+        var weix_tel = $('#re_tel').val();
+        var weix_comp = $('#re_comp').val();
+        var sel = $('#sel').val();
+        var content = $('#content').val();
+        console.log(id, wei, weix_user, weix_tel, weix_comp, weix_qun);
+//        return false;
+        if (!weix_qun) {
+            alert('微信群修改内容不能为空！')
+            console.log(1);
+        } else {
+            $.ajax({
+                type: 'post',
+                url: "{:U('RecordInformation/findChange')}",
+                data: {
+                    id: id,
+                    weix_name: wei,
+                    weix_user: weix_user,
+                    weix_tel: weix_tel,
+                    weix_comp: weix_comp,
+                    weix_qun: weix_qun
+                },
+                success: function (data) {
+                    console.log(data);
+                    if (data == 'success') {
+                        alert('提交成功！');
+                    } else {
+                        alert('提交失败！')
+                    }
+                }
+            })
+        }
+    });
+    //恢复
+    function btn_renew(obj) {
+        var del = obj.parentNode.parentNode.children[1].innerHTML;
+        var qun = obj.parentNode.parentNode.children[5].innerHTML;
+        console.log(obj, del, qun);
+        $.ajax({
+            type: 'post',
+            url: "{:U('RecordInformation/findRenew')}",
+            data: {
+                weix_name: del,
+                weix_qun: qun
+            },
+            success: function (data) {
+                console.log(data);
+                if (data == 'success') {
+                    alert('恢复成功！');
+                } else {
+                    alert('恢复失败！')
+                }
+            }
+        })
+    }
+    //增加
+    function btn_typ(obj) {
+        var weix_name = obj.parentNode.parentNode.children[1].innerHTML;
+        var weix_user = obj.parentNode.parentNode.children[2].innerHTML;
+        var weix_tel = obj.parentNode.parentNode.children[3].innerHTML;
+        var weix_comp = obj.parentNode.parentNode.children[4].innerHTML;
+        var weix_qun = obj.parentNode.parentNode.children[5].innerHTML;
+        console.log(weix_name, weix_user, weix_tel, weix_comp, weix_qun);
+        $.ajax({
+            type: 'post',
+            url: "{:U('RecordInformation/findTyp')}",
+            data: {
+                weix_name: weix_name,
+                weix_user: weix_user,
+                weix_tel: weix_tel,
+                weix_comp: weix_comp,
+                weix_qun: weix_qun
+            },
+            success: function (data) {
+                console.log(data);
+                if (data == 'success') {
+                    alert('增加成功！');
+                } else {
+                    alert('增加失败！')
+                }
+            }
+        })
+    }
+    //查询
+    $('#sel').click(function () {
+        var mas = $('#choc').val();
+        var num = $('#weixsel').val();
+        console.log(mas, num);
+        if (!mas || !num) {
+            alert("请输入查询信息！");
+        } else {
+            $.ajax({
+                type: 'post',
+                url: "{:U('RecordInformation/findSel')}",
+                data: {
+                    mas: mas,
+                    num: num
+                },
+                success: function (data) {
+                    console.log(data);
+                    var obj = JSON.parse(data);
+                    $('#lottery_insert').html('');
+                    if (obj['msg'] == 'yes') {
+                        var $recordString = '';
+                        $.each(obj['data'], function (k, y) {
+                            if (y['invalid_id'] == '在群内') {
+                                $recordString += "<tr data-id='" + y['id'] + "'><td>" + y['id'] + "</td>"
+                                        + "<td>" + y['weix_name'] + "</td>"
+                                        + "<td>" + y['weix_user'] + "</td>"
+                                        + "<td>" + y['weix_tel'] + "</td>"
+                                        + "<td>" + y['weix_comp'] + "</td>"
+                                        + "<td>" + y['weix_qun'] + "</td>"
+                                        + "<td>" + y['record_time'] + "</td>"
+                                        + "<td>" + y['invalid_id'] + "</td>"
+                                        + "<td>" + "<input type='button' class='btn btn-danger' value='删除'  onclick='btn_del(this)' style='margin-right: 20px;'>" + "<input type='button' class='btn btn-danger' value='修改'  onclick='btn_rev(this)'>" + "</td>";
+                                $recordString += "</tr>";
+                            } else {
+                                $recordString += "<tr data-id='" + y['id'] + "'><td>" + y['id'] + "</td>"
+                                        + "<td>" + y['weix_name'] + "</td>"
+                                        + "<td>" + y['weix_user'] + "</td>"
+                                        + "<td>" + y['weix_tel'] + "</td>"
+                                        + "<td>" + y['weix_comp'] + "</td>"
+                                        + "<td>" + y['weix_qun'] + "</td>"
+                                        + "<td>" + y['record_time'] + "</td>"
+                                        + "<td>" + y['invalid_id'] + "</td>"
+                                        + "<td>" + "<input type='button' class='btn btn-danger' value='恢复'  onclick='btn_renew(this)'>" + "</td>";
+                                $recordString += "</tr>";
+                            }
+                        });
+                        $('#lottery_insert').append($recordString);
+                    } else {
+                        alert("未查询到相关信息！");
+                    }
+                }
+            })
+        }
+    })
+</script>
+</body>
+</html>

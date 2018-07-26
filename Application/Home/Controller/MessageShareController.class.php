@@ -281,12 +281,12 @@ class MessageShareController extends Controller
         //下拉刷新
         if ($subInfo && $subInfo['isAjax'] == 1) {
             //AssembleData
-            $result['data'] = $msg->findWhere($where);
+            $result['data'] = $this->msgSort($msg->findWhere($where));
             echo json_encode($result);
             return;
         } else {
             //AssembleData
-            $result = $msg->findWhere($where);
+            $result = $this->msgSort($msg->findWhere($where));
             $this->assign('resultMsg', $result);
         }
         $this->display();
@@ -303,7 +303,7 @@ class MessageShareController extends Controller
         $where = $this->setWhere('vipYear', $subInfo['date'], $subInfo['page']);
         if ($subInfo['isAjax'] == 1) {
             //AssembleData
-            $result['data'] = $msg->findWhere($where);
+            $result['data'] = $this->msgSort($msg->findWhere($where));
             if (count($result['data']) < self::COUNT_ROW) {
                 $result['end_tag'] = 'end';
             } else {
@@ -328,12 +328,12 @@ class MessageShareController extends Controller
         //下拉刷新
         if ($subInfo && $subInfo['isAjax'] == 1) {
             //AssembleData
-            $result['data'] = $msg->findWhere($where);
+            $result['data'] = $this->msgSort($msg->findWhere($where));
             echo json_encode($result);
             return;
         } else {
             //AssembleData
-            $result = $msg->findWhere($where);
+            $result = $this->msgSort($msg->findWhere($where));
             $this->assign('resultMsg', $result);
         }
         $this->display();
@@ -350,7 +350,7 @@ class MessageShareController extends Controller
         $where = $this->setWhere('vipSeason', $subInfo['date'], $subInfo['page']);
         if ($subInfo['isAjax'] == 1) {
             //AssembleData
-            $result['data'] = $msg->findWhere($where);
+            $result['data'] = $this->msgSort($msg->findWhere($where));
             if (count($result['data']) < self::COUNT_ROW) {
                 $result['end_tag'] = 'end';
             } else {
@@ -375,12 +375,12 @@ class MessageShareController extends Controller
         //下拉刷新
         if ($subInfo && $subInfo['isAjax'] == 1) {
             //AssembleData
-            $result['data'] = $msg->findWhere($where);
+            $result['data'] = $this->msgSort($msg->findWhere($where));
             echo json_encode($result);
             return;
         } else {
             //AssembleData
-            $result = $msg->findWhere($where);
+            $result = $this->msgSort($msg->findWhere($where));
             $this->assign('resultMsg', $result);
         }
         $this->display();
@@ -397,7 +397,7 @@ class MessageShareController extends Controller
         $where = $this->setWhere('vipMonth', $subInfo['date'], $subInfo['page']);
         if ($subInfo['isAjax'] == 1) {
             //AssembleData
-            $result['data'] = $msg->findWhere($where);
+            $result['data'] = $this->msgSort($msg->findWhere($where));
             if (count($result['data']) < self::COUNT_ROW) {
                 $result['end_tag'] = 'end';
             } else {
@@ -408,7 +408,8 @@ class MessageShareController extends Controller
         }
     }
 
-    public function allMore(){
+    public function allMore()
+    {
         //获取Ajax数据
         $subInfo = I('get.', '', 'trim,strip_tags');
         //确定消息模型
@@ -429,7 +430,8 @@ class MessageShareController extends Controller
         }
     }
 
-    public function carMore(){
+    public function carMore()
+    {
         //获取Ajax数据
         $subInfo = I('get.', '', 'trim,strip_tags');
         //确定消息模型
@@ -450,7 +452,8 @@ class MessageShareController extends Controller
         }
     }
 
-    public function vipAllMore(){
+    public function vipAllMore()
+    {
         //获取Ajax数据
         $subInfo = I('get.', '', 'trim,strip_tags');
         //确定消息模型
@@ -548,6 +551,22 @@ class MessageShareController extends Controller
         } else {
             return null;
         }
+    }
+
+    private function msgSort($result)
+    {
+        if (!$result) return array();
+        $whereClient['invalid_id'] = 0;
+        $client = M('paying_client')->where($whereClient)->group('phone_number')->order('payday desc')->select();
+        foreach ($client as $item) {
+            foreach ($result as $key => &$msg) {
+                if ($msg['phone_number'] == $item['phone_number']) {
+                    $msg['payday'] = $item['payday'];
+                }
+            }
+        }
+        array_multisort(array_column($result, 'payday'), SORT_ASC, $result);
+        return $result;
     }
 
     public function vipSet()
@@ -678,6 +697,5 @@ class MessageShareController extends Controller
 
         echo '----end----<br/>';
     }
-
 
 }

@@ -327,6 +327,7 @@
 <!--修改消息-->
 <script>
     $('body').on("dblclick", "td", function () {
+        return false;
         var $this = $(this);
         if($this.find('a').length > 0){
             return false;
@@ -339,6 +340,7 @@
         }
     });
     $('body').on("click", ".modify", function () {
+        return false;
         var $this = $(this);
         var $tds = $this.parent('td').parent('tr').children('td');
 //        var info_id = $this.parent('td').parent('tr').children('td').eq(0).html();

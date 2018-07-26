@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <title>付费客户信息录入</title>
+</head>
+<style>
+    td {
+        vertical-align: middle !important;
+    }
+</style>
+<body style="background-color: #f0f5f6;">
+<ul class="nav nav-tabs nav-justified" id="myTabs">
+    <li role="presentation" class="active"><a href="#info_input" data-toggle="tab">临时月费客户信息</a></li>
+</ul>
+<div class="tab-content">
+    <div id="info_input" class="tab-pane active">
+        <div class="container text-center">
+            <form name="info_input" id="info_input_form" style="margin: 5%">
+                <input name="from" type="text" class="form-control" placeholder="几部">
+                <input name="wx_name" type="text" class="form-control" placeholder="微信名">
+                <input name="wx_id" type="text" class="form-control" placeholder="微信号">
+                <input name="phone_number" type="text" class="form-control" placeholder="电话号码">
+                <button id="info_input_submit" type="button" class="btn btn-default pull-right" style="margin-top: 1%">
+                    确定
+                </button>
+            </form>
+            <div class="input-group">
+                <span class="input-group-addon">来源</span>
+                <select name="from_search" id="from_search" class="form-control">
+                    <option value="全部">全部</option>
+                    <option value="一部">一部</option>
+                    <option value="三部">三部</option>
+                    <option value="五部">五部</option>
+                    <option value="六部">六部</option>
+                    <option value="八部">八部</option>
+                    <option value="东北">东北</option>
+                    <option value="南方">南方</option>
+                    <option value="京津冀">京津冀</option>
+                    <option value="客服">客服</option>
+                </select>
+            </div>
+            <button id="info_search" class="btn btn-default text-center" type="button">刷新</button>
+            <div id="user_add_content">
+                <table style="width: 100%;table-layout: fixed;margin: auto" class="table table-condensed table-bordered">
+                    <thead id="info_table_head">
+                    <tr>
+                        <th class="text-center" style="width: 3.5em;"><span class="glyphicon"
+                                                                            style="color: red;"></span>序号
+                        </th>
+                        <th class="text-center" style="width: 3.5em;"><span class="glyphicon"
+                                                                            style="color: red;"></span>来源
+                        </th>
+                        <th class="text-center" style="width: 7.5em;"><span class="glyphicon"
+                                                                            style="color: red;"></span>微信名
+                        </th>
+                        <th class="text-center" style="width: 10.5em;"><span class="glyphicon"
+                                                                             style="color: red;"></span>微信号
+                        </th>
+                        <th class="text-center" style="width: 7.5em;"><span class="glyphicon"
+                                                                            style="color: red;"></span>电话
+                        </th>
+                        <th class="text-center" style="width: 7.5em;"><span class="glyphicon"
+                                                                            style="color: red;"></span>付款时间
+                        </th>
+                        <th class="text-center" style="width: 7.5em;"><span class="glyphicon"
+                                                                            style="color: red;"></span>到期时间
+                        </th>
+                        <th class="text-center" style="width: 3.5em;"><span class="glyphicon"
+                                                                            style="color: red;"></span>失效
+                        </th>
+                        <th class="text-center" style="width: 10.5em;"><span class="glyphicon"
+                                                                             style="color: red;"></span>操作
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody id="info_insert">
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+    $('#myTabs a').click(function (e) {
+        e.preventDefault();
+        $(this).tab('show');
+    })
+</script>
+<!--信息提交-->
+<script>
+    $('#info_input_submit').click(function () {
+        //提交完保存几部
+        var from = $('input[name=from]').val();
+        var subData = $('#info_input_form').serialize();
+        var phone_number = $('input[name=phone_number]').val();
+        if(!phone_number){
+            alert('输入有错误！');
+            return false;
+        }
+        var url = "{:U('TempVip/infoInputAction')}";
+        $.ajax({
+            type: "post",
+            url: url,
+            data: subData,
+            success: function (data) {
+                if (data) {
+                    alert('成功');
+                    $('#info_input_form')[0].reset();
+                    $('input[name=from]').val(from);
+                } else {
+                    alert('失败');
+                }
+            }
+        });
+    })
+</script>
+<!--信息查询-->
+<script>
+    $('#info_search').click(function () {
+        var from = $('#from_search').val();
+        var url = "{:U('TempVip/infoShowAction')}";
+        $.ajax({
+            type: "post",
+            url: url,
+            data: {
+                isAjax: 1,
+                from: from
+            },
+            success: function (data) {
+                $('#info_insert').html('');
+//                return false;
+                var jsonObj = eval("(" + data + ")");
+                //赋值数据
+                if($('.count').length != 0){
+                    $('.count')[0].outerHTML = '';
+                }
+                var $countClient = "<div class='count'>过期人数:"+jsonObj['count']['invalid']+"有效人数:"+jsonObj['count']['valid']+"</div>";
+                $('#info_search').after($countClient);
+                $.each(jsonObj['data'], function (k, val) {
+                    var $tr = "";
+                    //计算过期时间并标红
+                    var time_to_check = time_to_timestamp(val.out_of_service_time);
+                    var time_now = new Date();
+                    if (val.invalid_id == 2) {
+                        $tr = "<tr style='background-color: #d1aeae'>";
+                    } else if ((time_to_check * 1000 < time_now.getTime()) && (val.invalid_id == 99)) {
+                        $tr = "<tr style='background-color: pink'>";
+                    } else if (time_to_check * 1000 < time_now.getTime()) {
+                        overdue(val.id);
+                        val.invalid_id = 99;
+                        $tr = "<tr style='background-color: pink'>";
+                    } else if ( (time_to_check * 1000 > time_now.getTime()) && (val.invalid_id == 99)){
+                        refill(val.id);
+                        val.invalid_id = 0;
+                        $tr = "<tr>";
+                    }
+                    else {
+                        $tr = "<tr>";
+                    }
+                    $tr += '<td>' + val.id + '</td>'
+                            + '<td>' + val.from + '</td>'
+                            + '<td>' + val.wx_name + '</td>'
+                            + '<td>' + val.wx_id + '</td>'
+                            + '<td>' + val.phone_number + '</td>'
+                            + '<td>' + val.payday + '</td>'
+                            + '<td>' + val.out_of_service_time + '</td>'
+                            + '<td>' + val.invalid_id + '</td>'
+//                            + '<td><a class="modify btn btn-sm btn-default">修改</a><a class="delete btn btn-sm btn-default">删除</a><a class="recovery btn btn-sm btn-default">恢复</a></td>';
+                            + '<td><a class="record btn btn-sm btn-default">历史</a></td>';
+                    $tr += "</tr>";
+                    $('#info_insert').prepend($tr);
+//                    $('#info_insert').append(li);
+                });
+            }
+        })
+    })
+</script>
+<!--消息置为过期消息-->
+<script>
+    function overdue(info_id) {
+        $.ajax({
+            type: "post",
+            url: "{:U('TempVip/infoModifyAction')}",
+            data: {
+                modify_flag: 99,
+                info_id: info_id
+            },
+            success: function (data) {
+            },
+            error: function () {
+            }
+        });
+    }
+</script>
+<!--消息置为有效消息-->
+<script>
+    function refill(info_id) {
+        $.ajax({
+            type: "post",
+            url: "{:U('TempVip/infoModifyAction')}",
+            data: {
+                modify_flag: 1,
+                info_id: info_id
+            },
+            success: function (data) {
+            },
+            error: function () {
+            }
+        });
+    }
+</script>
+<!--历史消息-->
+<script>
+    $('body').on("click", ".record", function () {
+        var $this = $(this);
+        var $parentTr = $this.parent('td').parent('tr');
+        if($parentTr.next().hasClass('history')){
+            while ($parentTr.next().hasClass('history')){
+                var $temp = $parentTr.next();
+                $temp.prop('outerHTML','');
+            }
+            return false;
+        }
+
+        var info_phone_number = $this.parent('td').parent('tr').children('td').eq(4).html();
+        $.ajax({
+            type: "post",
+            url: "{:U('TempVip/payingRecord')}",
+            data: {
+                info_phone_number: info_phone_number
+            },
+            success: function (data) {
+                var jsonObj = eval("(" + data + ")");
+                console.log(jsonObj);
+                if(jsonObj.msg == 1){
+                    var $recordString = '';
+                    $.each(jsonObj['data'], function (k, val) {
+                        if(k == 0){
+                        }else{
+                            $recordString += "<tr class='history' style='background-color: green;color: white'><td style='width: 3.5em'>" + val.id + "</td>"
+                                    + "<td style='width: 3.5em'>" + val.from + "</td>"
+                                    + "<td style='width: 7.5em'>" + val.wx_name + "</td>"
+                                    + "<td style='width: 10.5em'>" + val.wx_id + "</td>"
+                                    + "<td style='width: 7.5em'>" + val.phone_number + "</td>"
+                                    + "<td style='width: 7.5em'>" + val.payday + "</td>"
+                                    + "<td style='width: 7.5em'>" + val.out_of_service_time + "</td>"
+                                    + "<td style='width: 3.5em'>" + val.invalid_id +"</td>";
+                            $recordString += "</tr>";
+                        }
+                    });
+                    $this.parent('td').parent('tr').after($recordString);
+                }
+            },
+            error: function () {
+
+            }
+        });
+    })
+</script>
+<!--表格排序-->
+<script>
+    //绑定排序按钮
+    var th = $('#info_table_head').children('tr').children('th');
+    th.click(function () {
+        console.log($(this).index());
+        var th_index = $(this).index();
+        var sortBy = '';
+        if (th_index != 0 && th_index != 8 && th_index != 10) {
+            sortBy = 'chinese';
+        } else {
+            sortBy = 'number';
+        }
+        var sortAsc = '';
+//        if ($(this).children('span').hasClass('open')) {
+//            sortAsc = 1;
+//            $(this).children('span').removeClass('open');
+//        } else {
+//            sortAsc = 0;
+//            $(this).children('span').addClass('open');
+//        }
+        if ($(this).children('span').hasClass('glyphicon-arrow-up')) {
+            sortAsc = 1;
+            $(this).children('span').removeClass('glyphicon-arrow-up');
+            $(this).children('span').addClass('glyphicon-arrow-down');
+            $(this).siblings().children('span').removeClass('glyphicon-arrow-down');
+            $(this).siblings().children('span').removeClass('glyphicon-arrow-up');
+        } else {
+            sortAsc = 0;
+            $(this).children('span').removeClass('glyphicon-arrow-down');
+            $(this).children('span').addClass('glyphicon-arrow-up');
+            $(this).siblings().children('span').removeClass('glyphicon-arrow-down');
+            $(this).siblings().children('span').removeClass('glyphicon-arrow-up');
+        }
+        tableSort(th_index, sortBy, sortAsc);
+        refreshTable();
+    });
+    function tableSort(sortKind, sortBy, sortAsc) {
+//    var reverse= arguments[2]?arguments[2]:0;
+//    var table = document.getElementById('detail_table');
+        var table = $('tbody')[0];
+        var row_len = table.rows.length;
+        var cel_len = table.rows[0].cells.length;
+        var arrs = [];
+        for (var r = 0; r < row_len; r++) {
+            arrs[r] = [];
+            for (var c = 0; c < cel_len; c++) {
+                arrs[r][c] = {};//二维数组里再创建一个对象;
+                arrs[r][c].html = table.rows[r].cells[c].innerHTML;//取表格HTML放进一个关联数组里面，用于排序后显示在页面上;
+                var text = table.rows[r].cells[c].innerText;//取得表格的文字内容用于下面的判断;
+                //检测可能出现的内容如果不是正常的数据就变成负数，排在最后面;
+                arrs[r][c].text = table.rows[r].cells[c].innerText;//取表格文字内容放进一个关联数组里面。用于下面的sort做排序。
+            }
+        }
+        if (!sortAsc) {
+            if (sortBy == 'chinese') {
+                arrs.sort(function (x, y) {
+                    return x[sortKind]['text'].localeCompare(y[sortKind]['text']);
+                });
+            } else if (sortBy == 'number') {
+                arrs.sort(function (x, y) {
+                    return x[sortKind]['text'] - (y[sortKind]['text']);
+                });
+            }
+        } else {
+            if (sortBy == 'chinese') {
+                arrs.sort(function (x, y) {
+                    return y[sortKind]['text'].localeCompare(x[sortKind]['text']);
+                });
+            } else if (sortBy == 'number') {
+                arrs.sort(function (x, y) {
+                    return y[sortKind]['text'] - x[sortKind]['text'];
+                });
+            }
+        }
+        //将排好的html内容放入表格里
+        for (r = 0; r < row_len; r++) {
+            for (c = 0; c < cel_len; c++) {
+                table.rows[r].cells[c].innerHTML = arrs[r][c]['html']
+            }
+        }
+    }
+</script>
+<!--刷新表以适应失效字段-->
+<script>
+    function refreshTable() {
+        $('#info_insert').children('tr').each(function (k, val) {
+            var invalidId = $(val).children('td').eq(7).html();
+            var time_to_check = time_to_timestamp($(val).children('td').eq(6).html());
+            var time_now = new Date();
+            if (invalidId == 99) {
+                $(val).css('background-color', 'pink');
+            } else if (invalidId == 2) {
+                $(val).css('background-color', '#d1aeae');
+            } else if ((invalidId == 0) && (time_to_check * 1000 - time_now.getTime() < 3600 * 24 * 3 * 1000)) {
+                $(val).css('background-color', 'orange');
+            } else {
+                $(val).css('background-color', 'white');
+            }
+        })
+    }
+</script>
+<!--功能函数-->
+<script>
+    function time_to_timestamp(strtime) {
+        var time = new Date();
+        if (strtime) {
+            strtime = strtime.replace(/-/g, "/")
+        } else {
+            strtime = time.toLocaleDateString();
+        }
+        strtime = Date.parse(new Date(strtime)) / 1000;
+        return strtime;
+    }
+</script>
+</html>

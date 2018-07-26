@@ -40,7 +40,7 @@ class LoginController extends Controller
         $str = substr($randStr, 0, 4);
         session(md5($phone), $str);
         vendor("DialPhone");
-        sendCode($phone, "'" . $str . "'");
+        sendCode($phone, $str);
     }
 
     //清空session

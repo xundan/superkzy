@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <title>未留言名单</title>
+</head>
+<style>
+    body {
+        margin: 0;
+    }
+
+    .btn:active {
+        background-color: #C0C0C0 !important;
+    }
+
+    h3 {
+        text-align: center;
+        background-color: #2e84de;
+        color: white;
+        margin: 0 auto;
+        line-height: 2.5em;
+        position: fixed;
+        top: 0;
+        width: 100%;
+    }
+
+    h4 {
+        text-align: center;
+        margin: 0 auto;
+        font-weight: bold;
+    }
+
+</style>
+<body>
+<div>
+    <h3>思考社群实验室</h3>
+    <div style="margin-top: 5em;">
+        <h4>未留言人名单</h4>
+    </div>
+    <div class="container">
+        <div>
+            <form>
+                <div class="form-group">
+                    <label for="date_start">开始日期</label>
+                    <input type="date" name="user_date" id="date_start" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="date_end">截止日期</label>
+                    <input type="date" name="user_date" id="date_end" class="form-control">
+                </div>
+            </form>
+            <button id="selection" class="btn btn-primary" style="width: 100%;">查询</button>
+        </div>
+        <table class="table table-bordered">
+            <thead>
+            <tr>
+                <th style="text-align: center;">uid</th>
+                <th style="text-align: center;">昵称</th>
+            </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+</div>
+</body>
+<script>
+    //查询
+    $('#selection').click(function () {
+//        var date_nam = $('#date_start').val();//开始时间
+//        var date_num = $('#date_end').val();//结束时间
+//        console.log(date_nam,date_num);
+////        return false;
+//        var time_nam = (new Date(date_nam)).valueOf() - 28800001;//开始时间戳
+//        var time_num = (new Date(date_num)).valueOf() + 57599999;//结束时间戳
+//        var time_aa = new Date(time_num);//转化结束时间年月日时分秒；
+//        var time_bb = new Date(time_nam);//转化开始时间年月日时分秒；
+//        var date_start = time_bb.getFullYear() + '-' + (time_bb.getMonth() + 1 < 10 ? '0' + (time_bb.getMonth() + 1) : time_bb.getMonth() + 1) + '-' + time_bb.getDate() + ' ' + '' + time_bb.getHours() + ':' + time_bb.getMinutes() + ':' + time_bb.getSeconds();
+//        var date_end = time_aa.getFullYear() + '-' + (time_aa.getMonth() + 1 < 10 ? '0' + (time_aa.getMonth() + 1) : time_aa.getMonth() + 1) + '-' + time_aa.getDate() + ' ' + '' + time_aa.getHours() + ':' + time_aa.getMinutes() + ':' + time_aa.getSeconds();
+//        console.log(date_nam, date_num, time_nam, time_num, date_start, time_aa, time_bb, date_start, date_end);
+
+        var date_start = $('#date_start').val();
+        var date_end = $('#date_end').val();
+        if (!date_start) {
+            alert('请输入开始时间！');
+        } else if (!date_end) {
+            alert('请输入截止时间！');
+        } else {
+            $.ajax({
+                type: 'post',
+                url: "{:U('MessageStatistic/displayDelAction')}",
+                data: {
+                    date_start: date_start,
+                    date_end: date_end
+                },
+                success: function (data) {
+                    if (data == 0) {
+                        alert('未查询到结果！');
+                    } else {
+                        $('tbody').html('');
+                        console.log(data);
+                        var obj = JSON.parse(data);
+                        console.log(obj);
+                        if (obj["msg"] == 1 || obj["msg"] == 0) {
+                            var $recordString = '';
+                            $.each(obj['data'], function (index, val) {
+                                $recordString += "<tr class='place_add'><td style='border: 1px solid #ddd;background-color: #fff;text-align: center;'>" + val['uid'] + "</td>"
+                                        + "<td style='border: 1px solid #ddd;background-color: #fff;text-align: center;'>" + val['user_name'] + "</td>";
+                                $recordString += "</tr>";
+                                console.log(val['user_name']);
+                            });
+                            $('tbody').append($recordString)
+                        }
+                    }
+                }
+            })
+        }
+    });
+</script>
+</html>

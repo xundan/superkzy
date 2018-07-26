@@ -94,6 +94,11 @@
     todayDate = todayDate.replace(/\//g, '-');
     console.log(todayDate);
     var todayDateArr = todayDate.split('-');
+    if(parseInt(todayDateArr[1])<10){
+        console.log(todayDateArr[1]);
+        todayDateArr[1] = '0'+todayDateArr[1];
+        todayDate = todayDateArr.join('-');
+    }
     if(parseInt(todayDateArr[2])<10){
         console.log(todayDateArr[2]);
         todayDateArr[2] = '0'+todayDateArr[2];

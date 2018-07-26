@@ -40,6 +40,7 @@
     <div style="margin-top: 1em">
         <input class="form-control" type="number" name="freight" id="freight_text" placeholder="运费">
         <p id="distance" style="color:red;margin-top: 1em;text-align: center"></p>
+        <p id="freight_forecast" style="color:red;margin-top: 1em;text-align: center"></p>
     </div>
 </div>
 <div style="margin-top: 1em;text-align: center">
@@ -51,6 +52,14 @@
 <div style="margin: 3em 3em 0 3em" class="msg_content" id="msg_content"></div>
 </body>
 <script>
+    $(function(){
+        var freight_id = window.localStorage.getItem('freight_modify_id');
+        if(freight_id){
+            $('#freight_id').val(freight_id);
+            $('.btn-search').click();
+            window.localStorage.setItem('freight_modify_id','');
+        }
+    });
     $('.btn-search').click(function () {
         var id = $('#freight_id').val().trim();
         $.ajax({
@@ -80,6 +89,7 @@
                     $('#freight_text').val(dataObj['freight_data']['freight_price']);
 
                     $('#distance').html(parseFloat(dataObj['freight_data']['distance'])/1000+'km');
+                    $('#freight_forecast').html('估值:'+dataObj['freight_data']['freight_forecast']);
                     $('#msg_content').html(dataObj['content']);
                 } else {
                     return false;

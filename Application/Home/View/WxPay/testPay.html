@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/weui.min.css"/>
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <title>会员购买</title>
+</head>
+<style>
+    .radio-style {
+        /*margin-left: 1em;*/
+        /*font-size: 1.5em;*/
+        padding: 6px 12px;
+        width: 48%;
+        text-align: center;
+        border: 1px solid #08b0f0;
+        border-radius: 5px;
+        color: #08b0f0;
+    }
+
+    .radio-style input {
+        display: none;
+    }
+
+    .radio-style.selected {
+        background-color: #08b0f0;
+        color: white
+    }
+
+    .price {
+        color: red
+    }
+
+    .btn_pay, .btn_pay:hover, .btn_pay:active {
+        background-color: #08b0f0;
+        color: white
+    }
+</style>
+<body>
+<div class="page-header text-center" style="font-size: 1.5em">
+    输入手机号码
+    <input class="form-control" type="number" name="phone_number" style="text-align: center">
+</div>
+<div class="page-header text-center" style="font-size: 1.5em">
+    选择会员类型
+</div>
+<div class="openid" style="display: none">{$openid}</div>
+<div class="container">
+    <div style="display: flex;justify-content: space-around">
+        <label class="radio-style">
+            <input type="radio" class="btn btn-default" name="payType" value="5">月 费
+        </label>
+        <label class="radio-style">
+            <input type="radio" class="btn btn-default" name="payType" value="6">季 费
+        </label>
+        <!--<button class="btn btn-default" style="width: 48%" value="6">季费</button>-->
+    </div>
+    <div style="display: flex;justify-content: space-around;margin-top: 0.6em">
+        <label class="radio-style">
+            <input type="radio" class="btn btn-default" name="payType" value="7">半 年 费
+        </label>
+        <label class="radio-style">
+            <input type="radio" class="btn btn-default" name="payType" value="8">年 费
+        </label>
+        <!--<button class="btn btn-default" style="width: 48%" value="7">半年费</button>-->
+        <!--<button class="btn btn-default" style="width: 48%" value="8">年费</button>-->
+    </div>
+    <div class="page-header" style="margin-top: 1em"></div>
+    <div>售价：<span class="price"></span></div>
+    <div class="text-center" style="margin-top: 1em">
+        <button class="btn btn_pay btn-default" style="width: 100%">立 即 支 付</button>
+    </div>
+</div>
+</body>
+<script>
+    $('input[type=radio]').click(function () {
+        var $this = $(this).parent('label');
+        $(this).children('input').prop('checked', 'checked');
+        $this.addClass('selected');
+        $this.siblings().removeClass('selected');
+        $this.parent('div').siblings().children('label').removeClass('selected');
+
+        var price = '';
+        console.log($(this).val());
+        switch ($(this).val().trim()) {
+            case '5':
+                price = 0.01;
+                break;
+            case '6':
+                price = 0.02;
+                break;
+            case '7':
+                price = 0.03;
+                break;
+            case '8':
+                price = 0.04;
+                break;
+        }
+        console.log(price);
+        $('.price').html('¥' + price + '元');
+//        return false;
+    });
+</script>
+<script type="text/javascript">
+    //调用微信JS api 支付
+    function jsApiCall(payType) {
+//        alert('jiapicall_payType:'+payType);
+//        var data = {$data};
+//        return false;
+//        alert(1);
+
+        var openId = $('.openid').html();
+        if(!openId){
+            alert('网络超时，请重新进入该页面！')
+        }
+
+        var phone_number = $('input[name=phone_number]').val();
+//        alert(phone_number);
+//        return false;
+//        alert(openId);
+//        return false;
+        $.ajax({
+            type: 'post',
+            url: "{:U('WxPay/setOrder')}",
+            async: false,
+            data: {
+                payType: payType,
+                openId: openId,
+                phone_number: phone_number
+            },
+            success: function (data) {
+//                alert('success:'+data);
+                console.log(data);
+//                return false;
+                data = JSON.parse(data);
+//                alert(data['appId']);
+                WeixinJSBridge.invoke(
+                        'getBrandWCPayRequest', data,
+                        function (res) {
+                            WeixinJSBridge.log(res.err_msg);
+//                            alert(res.err_code + '###' + res.err_desc + '###' + res.err_msg);
+//                            alert(JSON.stringify(res));
+                            if(res.err_msg == 'get_brand_wcpay_request:ok'){
+                                alert('充值成功!点击确定查看充值记录');
+//                                window.location.href = "{:U('WxPay/payRecord')}";
+                                window.location.href = "https://www.xuncl.com/Home/WxPay/payRecord?openId="+openId;
+                            }else{
+                                alert('支付已取消！');
+                                return false;
+                            }
+                        }
+                );
+            }
+        });
+//        var data = {$data};
+//        alert(data);
+//        alert(typeof data);
+//        alert(data['appId']);
+//            WeixinJSBridge.invoke('getBrandWCPayRequest',data,function(res){
+//                WeixinJSBridge.log(res.err_msg);
+//                alert(res.err_code+res.err_desc+res.err_msg);
+//            })
+
+    }
+
+    $('.btn_pay').click(function () {
+        var payType = $('input[name=payType]:checked').val();
+//        alert('click payType:'+payType);
+        if (!payType) {
+            alert('请选择一种会员类型进行支付！');
+            return false;
+        }
+        var phone_number = $('input[name=phone_number]').val();
+        if(!phone_number){
+            alert('请输入手机号码！');
+            return false;
+        }else{
+            phone_number = phone_number.trim();
+            if(phone_number.length != 11){
+                alert('请检查手机号码位数！');
+                return false;
+            }
+        }
+        if (typeof WeixinJSBridge == "undefined") {
+            if (document.addEventListener) {
+                document.addEventListener('WeixinJSBridgeReady', function () {
+                    jsApiCall(payType)
+                }, false);
+            } else if (document.attachEvent) {
+                document.attachEvent('WeixinJSBridgeReady', function () {
+                    jsApiCall(payType)
+                });
+                document.attachEvent('onWeixinJSBridgeReady', function () {
+                    jsApiCall(payType)
+                });
+            }
+        } else {
+            jsApiCall(payType);
+        }
+    })
+</script>
+</html>

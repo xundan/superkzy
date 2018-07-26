@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+    <!--<link rel="icon" href="../../favicon.ico">-->
+    <link type="text/css" rel="stylesheet" href="__PUBLIC__/home/css/bootstrap.min.css"/>
+    <script type="text/javascript" src="__PUBLIC__/home/js/jquery-2.2.4.min.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/home/js/bootstrap.min.js"></script>
+    <title>车主真实性验证</title>
+</head>
+<style>
+    #result div {
+        font-size: 1.5em;
+        color: red;;
+        margin: 0.5em 0;
+    }
+</style>
+<body>
+<div class="page-header text-center" style="font-size: 2em">
+    车主真实性验证
+</div>
+
+<div class="container">
+    <form id="form_search">
+        <div class="form-group">
+            <label for="vclN">车牌号码</label>
+            <input class="form-control" type="text" id="vclN" name="vclN" placeholder="车牌号码">
+        </div>
+        <div class="form-group">
+            <label for="ownerName">车主姓名</label>
+            <input class="form-control" type="text" id="ownerName" name="ownerName" placeholder="车主姓名">
+        </div>
+        <div class="form-group">
+            <label for="ownerPhone">车主电话</label>
+            <input class="form-control" type="text" id="ownerPhone" name="ownerPhone" placeholder="车主电话">
+        </div>
+        <div class="form-group" style="text-align: end">
+            <button type="reset" class="btn btn-default">重置</button>
+            <button id="submit" class="btn btn-default">提交</button>
+        </div>
+    </form>
+</div>
+
+<div class="page-header text-center" style="font-size: 2em">
+    结果
+</div>
+<div class="container text-center" id="result">
+
+</div>
+
+</body>
+<script>
+    $('#submit').click(function (e) {
+        e.preventDefault();
+        var vclN = $('#vclN').val();
+        var ownerName = $('#ownerName').val();
+        var ownerPhone = $('#ownerPhone').val();
+        if (vclN && ownerName && ownerPhone) {
+            var subData = $("#form_search").serialize();
+            $.ajax({
+                type: 'post',
+                url: "{:U('carLocation/carOwnerCheckAction')}",
+                data: subData,
+                success: function (data) {
+                    var resultNode = $('#result');
+                    resultNode.html('');
+                    var resultStr = '';
+                    if (data) {
+                        //data:yes(验证通过)name(车主姓名不正确)phone(手机号不正确)
+                        if (data == 'yes') {
+                            resultStr = '<div>验证通过</div>';
+                        } else if (data == 'name') {
+                            resultStr = '<div>车主姓名不正确</div>';
+                        } else if (data == 'phone') {
+                            resultStr = '<div>手机号不正确</div>';
+                        }
+                        resultNode.append(resultStr);
+                    } else {
+                        //查无结果
+                        resultStr = '<div>查无结果</div>';
+                        resultNode.append(resultStr);
+                    }
+                }
+            })
+        } else {
+            alert('输入内容不能为空！');
+            return false;
+        }
+    });
+</script>
+<!--多彩字-->
+<script>
+    var box = document.querySelector('.box').textContent,
+            rs = document.querySelector('.render'),
+            f = [
+                'arial', 'verdana', 'monospace',
+                'consolas', 'impact', 'helveltica'
+            ],
+            c = [
+                '1ABC9C', '3498DB', '34495E', 'E67E22',
+                'E74C3C', '2ECC71', 'E74C3C', '95A5A6', 'D35400'
+            ];
+    var out = '';
+    for (var i = 0; i < box.length; i++) {
+        // Random array fonts
+        var r = f[Math.floor(Math.random() * f.length)],
+        // Random array colors
+                sh = c[Math.floor(Math.random() * c.length)],
+                st = 'color:#' + sh +
+                        ';font-family: ' + r +
+                        ';text-shadow:0px 1px 0px #' + sh + ',0px 2px 0px #' + sh + ',0px 3px 0px #' + sh + ',0px 4px 0px #' + sh + ', 0px 5px 0px  #' + sh + ',0px 6px 0px #' + sh + ', 0px 7px 0px #' + sh + ',0px 8px 7px #' + sh;
+        out += '<span style="' + st + '">' + box[i] + '</span>';
+    }
+    rs.innerHTML = out;
+</script>
+</html>

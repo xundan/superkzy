@@ -55,17 +55,21 @@
 
         input#tel_input{
             width: 60%;
-            height: 20px;
+            height: 30px;
             margin: 0;
+            line-height: 30px;
+            border-radius: .3em;
         }
 
-        input#btn{
-            width: 20%;
-            height: 24px;
-            margin: 0;
-            background-color: orange;
+        #btn{
+            vertical-align: bottom;
+            border-radius: .3em;
+            background-color: #ffa500;
+            border-color: #ffa500;
             color: white;
-            border: 0;
+            font-size: 1.3em;
+            line-height: 28px;
+            padding: 2px 14px
         }
 
         p{
@@ -78,15 +82,15 @@
     </style>
 </head>
 
-<body style="background: url('__PUBLIC__/home/images/financial_tp_1.jpg') no-repeat;background-size: cover">
+<body style="background: url('__PUBLIC__/home/images/financial_tp_2.jpg') no-repeat;background-size: cover">
 <!--<div id="top"><img src="__PUBLIC__/home/images/financial_wl.jpg" style="width: 100%;"></div>-->
-<div style="margin-top: 107%;">
+<div style="margin-top: 100%;">
     <div id="div2">
         <div id="first_line">
-            <input id="tel_input" type="tel" placeholder="&nbsp;&nbsp;请输入联系方式" required pattern="^(0|86|17951)?(13[0-9]|15[012356789]|17[0678]|18[0-9]|14[57])[0-9]{8}">
-            <input id="btn" type="button" onclick="submit_tel()" value="确定">
+            <input id="tel_input" type="tel" style="font-size: 1.1em;" placeholder="&nbsp;请输入联系方式" required pattern="^(0|86|17951)?(13[0-9]|15[012356789]|17[0678]|18[0-9]|14[57])[0-9]{8}">
+            <button id="btn" type="button" onclick="submit_tel()">确定</button>
         </div>
-        <p id="p_text">留下您的联系方式，我们的客服人员会及时联系您，为你服务。</p>
+        <p id="p_text" style="margin-top: .4em;text-align: start">留下您的联系方式，我们的客服人员会及时联系您，为你服务。</p>
     </div>
 </div>
 </body>

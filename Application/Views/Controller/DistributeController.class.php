@@ -73,7 +73,9 @@ class DistributeController extends RestController
             $insert_trans["title"] = $trans1["rid"];
             $insert_trans["content"] = $trans1["content"];
             $insert_trans["content_all"] = $trans1["content"];
-            $insert_trans["content_all_md5"] = md5($trans1["content"]);
+            $tempContent = strip_tags($trans1["content"]);
+            $tempContent = preg_replace('/\s+/','',$tempContent);
+            $insert_trans["content_all_md5"] = md5($tempContent);
             $insert_trans["sender"] = $trans1["sender"];
             $insert_trans["type"] = $trans1["type"];
             $insert_trans["owner"] = $trans1["owner"];
@@ -100,23 +102,25 @@ class DistributeController extends RestController
             } else {
                 $insert_trans['vip'] = "1";
             }
-            if ($is_ad) {
-                //广告信息
+            // 从vip微信号上接收的都是vip
+            if ($insert_trans['sender_wx'] == "cjkzywl") {
+                $insert_trans['vip'] = $this->vipSet($origin);
+                $insert_trans['type'] = 'plain';
+                $check = $Message->add_by_md5($insert_trans, true);
             } else {
-                // 从vip微信号上接收的都是vip
-                if ($insert_trans['sender_wx'] == "cjkzywl") {
-                    $insert_trans['vip'] = $this->vipSet($origin);
-                    $check = $Message->add_by_md5($insert_trans, true);
-                } else {
+                if($is_ad){
+                    $check = false;
+                    Log::record("###ad###", Log::INFO);
+                }else{
                     $check = $Message->add_by_md5($insert_trans, false);
                 }
-                if ($check === false) {
-                    Log::record("DistributeController: Add Messages false: sql->" . $Message->getLastSql(), Log::ERR);
-                } elseif ($check === 0) {
-                    Log::record("DistributeController: duplicate message: md5->" . $insert_trans['content_all_md5'], Log::INFO);
-                } else {
+            }
+            if ($check === false) {
+                Log::record("DistributeController: Add Messages false: sql->" . $Message->getLastSql(), Log::ERR);
+            } elseif ($check === 0) {
+                Log::record("DistributeController: duplicate message: md5->" . $insert_trans['content_all_md5'], Log::INFO);
+            } else {
 
-                }
             }
         }
         // 只有转移数量大于0时，才记录
@@ -165,7 +169,12 @@ class DistributeController extends RestController
                     break;
             }
         } else {
-            $vip = '3';
+            $tempVip = M('ck_temp_vip')->where($whereClient)->order('update_time desc')->find();
+            if ($tempVip) {
+                $vip = '5';
+            } else {
+                $vip = '3';
+            }
         }
         return $vip;
     }

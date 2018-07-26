@@ -91,7 +91,7 @@ class PullMessagesController extends RestController
     private function get_message_by_interval_category($date1, $date2, $category)
     {
         $where['invalid_id'] = 0;
-        $where['type'] = array("IN",array('plain','wx_mp')); // 拉取朋友圈和公众号的消息，此处不拉group
+        $where['type'] = array("IN",array('plain','wx_mp','group')); // 拉取朋友圈和公众号的消息，此处不拉group
         $where['status'] = 102;
         $where['category']=$category;
         $where['update_time'] = array("BETWEEN", array($date1, $date2));

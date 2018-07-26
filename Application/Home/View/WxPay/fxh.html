@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang=zh-cn>
+<head>
+    <title>非小号_专注数字货币行业大数据分析</title>
+    <meta name=keywords content=coinmarket,数字货币数据分析,数字货币行业大数据,虚拟币数据分析,Coinmarketcap,中文版Coinmarketcap,区块链>
+    <meta name=description content="非小号  (www.feixiaohao.com)  是最专业的数字货币行业大数据平台之一，专注于为数字货币用户提供数据分析，数据挖掘服务。我们拥有全球1000多个数字货币，150多家交易平台，5千多个交易对的数据资源，提供最专业的数字货币趋势分析，行情分析等多维度，全方位的分析服务">
+    <meta charset=utf-8>
+    <meta name=applicable-device content=pc>
+    <meta http-equiv=X-UA-Compatible content="IE=11">
+    <!--<meta http-equiv=mobile-agent content="format=html5; url=//m.feixiaohao.com/">-->
+    <!--<link rel=alternate media="only screen and(max-width: 640px)" href="//m.feixiaohao.com/">-->
+    <!--<link rel=canonical href="//www.feixiaohao.com/">-->
+    <!--<link href="//static.feixiaohao.com/themes/default/css/stylesheet_nav.css?v=1.95" rel=stylesheet>-->
+    <!--<link href="//static.feixiaohao.com/themes/default/css/style-2.0.css?v=1.95" rel=stylesheet>-->
+    <!--<link href=//static.feixiaohao.com/themes/default/css/tablesort.css rel=stylesheet>-->
+    <!--<script src=//static.feixiaohao.com/Scripts/jquery-2.1.1.js></script>-->
+    <link href="./css/stylesheet_nav.css?v=1.95" rel=stylesheet>
+    <link href="./css/style-2.0.css?v=1.95" rel=stylesheet>
+    <link href="./css/tablesort.css" rel=stylesheet>
+    <script src="./js/jquery-2.1.1.js"></script>
+<body style=background:#fff>
+<div class=new-nav>
+    <div class=new-total>
+        <div class=new-row id=globalinfo></div>
+    </div>
+    <div class=new-main-nav>
+        <div class=new-row>
+            <div class=new-left-side>
+                <a href="/" class=new-logo>
+                    <img src=//static.feixiaohao.com/themes/default/images/logo.png alt=非小号的Logo>
+                </a>
+                <div class=new-hot-pair></div>
+            </div>
+            <div class=new-right-size>
+                <div class=searchForm>
+                    <input id=input-sm placeholder=输入关键词... autocomplete=off>
+                    <i class=icon-search onclick="search(document.getElementById('input-sm').value)">
+                        <i class="fxh fxh-search"></i>
+                    </i>
+                </div>
+            </div>
+            <div class=new-statement>
+                <ul>
+                    <li>
+                        <a href=/notice/fxh2.html target=_blank>关于近期网络众筹ICO出现非小号名称的声明</a>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class=new-nav-menu>
+        <div class=new-row>
+            <div class="new-nav-slide active show-sub">
+                <a href="/">
+                    <i class="fxh fxh-market"></i>
+                    行情数据
+                </a>
+                <div class=sub>
+                    <div class=new-row>
+                        <a href="/" class=active>所有</a>
+                        <a href="/newcoin/">新币上市</a>
+                        <a href="/charts/">市值趋势</a>
+                    </div>
+                </div>
+            </div>
+            <div class=new-nav-slide>
+                <a href="/exchange/?mineable=1">
+                    <i class="fxh fxh-exchange" style=color:#0291d6></i>
+                    交易平台
+                </a>
+                <div class=sub>
+                    <div class=new-row>
+                        <a href="/exchange/?mineable=1">非交易挖矿</a>
+                        <a href="/exchange/?mineable=2">交易挖矿</a>
+                    </div>
+                </div>
+            </div>
+            <div class=new-nav-slide>
+                <a href="/maxchange/">
+                    <i class="fxh fxh-rank" style=color:#0291d6></i>
+                    排行榜
+                </a>
+                <div class=sub>
+                    <div class=new-row>
+                        <a href="/maxchange/">涨跌幅排行榜</a>
+                        <a href="/vol/">24小时成交额排行(币种)</a>
+                        <a href="/vol/exchange/">24小时成交额排行(交易平台)</a>
+                        <a href="/vol/monthrank/">月成交额排行</a>
+                    </div>
+                </div>
+            </div>
+            <div class=new-nav-slide>
+                <a href="/concept/">
+                    <i class="fxh fxh-concet" style=color:#0291d6></i>
+                    概念行情
+                </a>
+                <div class=sub>
+                    <div class=new-row>
+                        <a href="/concept/">所有</a>
+                        <a href="/conceptcoin/5/">IFO概念</a>
+                        <a href="/conceptcoin/4/">平台币</a>
+                        <a href="/conceptcoin/18/">物联网</a>
+                        <a href="/conceptcoin/6/">游戏概念</a>
+                        <a href="/conceptcoin/9/">智能合约</a>
+                    </div>
+                </div>
+            </div>
+            <div class=new-nav-slide>
+                <a href="/daohanglist/">
+                    <i class="fxh-login fxh-webnav" style=color:#0291d6></i>
+                    区块链导航
+                </a>
+            </div>
+            <div class=new-hot-search style=float:right;width:380px></div>
+        </div>
+    </div>
+</div>
+<div class=m120></div>
+<div class=new-wrapper>
+    <div class=new-main-box>
+        <div class="new-box-tit new-tab-tit">
+            <h1 class="new-cell-tit active">所有货币</h1>
+            <a class=new-cell-tit href="/userticker/">自选库</a>
+            <div class=new-box-tools>
+                <div class=new-slide-btn>
+                    <button>货币</button>
+                    <ul class=new-slide-sub>
+                        <li>
+                            <a href="/currencies/">前100</a>
+                        <li>
+                            <a href="/">全部</a>
+                        <li class=sline>
+                        <li>
+                            <a href="/currencies/">根据流通市值排序</a>
+                        <li>
+                            <a href="/currencies/marketcap-by-totalsupply/">根据总市值排序</a>
+                    </ul>
+                </div>
+                <div class=new-slide-btn>
+                    <button>代币</button>
+                    <ul class=new-slide-sub>
+                        <li>
+                            <a href="/assets/">前100</a>
+                        <li>
+                            <a href="/">全部</a>
+                        <li class=sline>
+                        <li>
+                            <a href="/assets/">根据流通市值排序</a>
+                        <li>
+                            <a href="/assets/marketcap-by-totalsupply/">根据总市值排序</a>
+                    </ul>
+                </div>
+                <div class="new-slide-btn unit">
+                    <button>人民币(CNY)</button>
+                    <ul class="new-slide-sub float-list">
+                        <li>
+                            <a href=#CNY class=price-toggle data-currency=cny>人民币(CNY)</a>
+                        <li>
+                            <a href=#USD class=price-toggle data-currency=usd>美元(USD)</a>
+                        <li>
+                            <a href=#BTC class=price-toggle data-currency=btc>比特币(BTC)</a>
+                        <li>
+                            <a href=#ETH class=price-toggle data-currency=eth>以太坊(ETH)</a>
+                        <li>
+                            <a href=#JPY class=price-toggle data-currency=jpy>日元(JPY)</a>
+                        <li>
+                            <a href=#KRW class=price-toggle data-currency=krw>韩币(KRW)</a>
+                        <li>
+                            <a href=#HKD class=price-toggle data-currency=hkd>港币(HKD)</a>
+                        <li>
+                            <a href=#AUD class=price-toggle data-currency=aud>澳元(AUD)</a>
+                        <li>
+                            <a href=#INR class=price-toggle data-currency=inr>卢比(INR)</a>
+                        <li>
+                            <a href=#RUB class=price-toggle data-currency=rub>卢布(RUB)</a>
+                        <li>
+                            <a href=#EUR class=price-toggle data-currency=eur>欧元(EUR)</a>
+                        <li>
+                            <a href=#CHF class=price-toggle data-currency=chf>法郎(CHF)</a>
+                        <li>
+                            <a href=#GBP class=price-toggle data-currency=gbp>英镑(GBP)</a>
+                        <li>
+                            <a href=#CAD class=price-toggle data-currency=cad>加元(CAD)</a>
+                        <li>
+                            <a href=#IDR class=price-toggle data-currency=idr>印尼盾(IDR)</a>
+                        <li>
+                            <a href=#BRL class=price-toggle data-currency=brl>巴西雷亚尔(BRL)</a>
+                        <li>
+                            <a href=#TWD class=price-toggle data-currency=twd>新台币(TWD)</a>
+                        <li>
+                            <a href=#MXN class=price-toggle data-currency=mxn>比索(MXN)</a>
+                    </ul>
+                </div>
+                <div style="display:none" id="currency-exchange-rates" data-cny=0.149999000000000 data-usd=1.000000000000000 data-btc=6596.660000000000000 data-eth=475.386000000000000 data-jpy=0.009021900000000 data-krw=0.000893336000000 data-hkd=0.127471000000000 data-aud=0.733826000000000 data-inr=0.014552900000000 data-rub=0.015703000000000 data-eur=1.163960000000000 data-chf=1.006360000000000 data-gbp=1.314170000000000 data-cad=0.758344000000000 data-idr=0.000070254300000 data-brl=0.255493000000000 data-twd=0.032734300000000 data-mxn=0.050043900000000></div>
+                <a class=new-link-btn href="//api.feixiaohao.com/coins/download/" target=_blank>
+                    下载<i class="fxh fxh-download"></i>
+                </a>
+            </div>
+            <div class=new-page-list>
+                <a href=# class="btn btn-white">&lt;</a>
+                <a href=# class="btn btn-white active">1</a>
+                <a class="btn btn-white" href=/list_2.html>2</a>
+                <a class="btn btn-white" href=/list_3.html>3</a>
+                <a class="btn btn-white" href=/list_4.html>4</a>
+                <a class="btn btn-white" href=/list_5.html>5</a>
+                <a href=# class="btn btn-white">...</a>
+                <a class="btn btn-white" href=/list_22.html>22</a>
+                <a class="btn btn-white" href=/list_2.html>&gt;</a>
+            </div>
+        </div>
+        <table class="new-table new-coin-list" id=table>
+            <thead>
+            <tr>
+                <th class=th-num>#
+                <th class=th-coin-name data-sort-method=none>名称
+                <th class=th-marketcap>流通市值
+                <th class=th-price>价格
+                <th class=th-turnover>流通数量
+                <th class=th-vol>成交额(24h)
+                <th class=th-rank>涨幅(24h)
+                <th class=th-coin-char data-sort-method=none>
+                    价格趋势(7d)
+            <tbody>
+        </table>
+        <div class=new-table-bar>
+            <div class=new-page-list>
+                <a href=# class="btn btn-white">&lt;</a>
+                <a href=# class="btn btn-white active">1</a>
+                <a class="btn btn-white" href=/list_2.html>2</a>
+                <a class="btn btn-white" href=/list_3.html>3</a>
+                <a class="btn btn-white" href=/list_4.html>4</a>
+                <a class="btn btn-white" href=/list_5.html>5</a>
+                <a href=# class="btn btn-white">...</a>
+                <a class="btn btn-white" href=/list_22.html>22</a>
+                <a class="btn btn-white" href=/list_2.html>&gt;</a>
+            </div>
+            <span>备注：* 不可挖矿&nbsp;&nbsp;&nbsp;&nbsp;** 有预挖矿&nbsp;&nbsp;&nbsp;&nbsp;IFO表示该币由其它币分叉而来。</span>
+        </div>
+    </div>
+    <div class=new-side-box>
+        <div class=new-box-tit>
+            <h2>各大交易所最新公告</h2>
+            <a href="/notice/" target=_blank class=new-more title=更多></a>
+        </div>
+        <ul class="new-artList new-artList-scroll new-artList-index">
+            <li>
+                <a href=/notice/3599368.html target=_blank rel=nofollow title="【比特儿海外版】gate.io全球首家开启Tezos Betanet资产充提与交易">
+                                <span class=tit>
+                                    <img src=//static.feixiaohao.com/platimages/20180519/49b1c52af7614fd8a4c11026bf67cdb8_15_15.png alt="gate.io全球首家开启Tezos Betanet资产充提与交易">gate.io全球首家开启Tezos Betanet资产充提与交易
+                                </span>
+                    <span class=time>07-03 03:26</span>
+                </a>
+            <li>
+                <a href=/notice/3599367.html target=_blank rel=nofollow title="【BigOne】BigONE 钱包维护完成通知">
+                                <span class=tit>
+                                    <img src=//static.feixiaohao.com/platimages/20180607/3d839103f7784847bfd1e82a261d5079_16_16.png alt="BigONE 钱包维护完成通知">BigONE 钱包维护完成通知
+                                </span>
+                    <span class=time>07-03 00:25</span>
+                </a>
+            <li>
+                <a href=/notice/3599366.html target=_blank rel=nofollow title=【BigOne】关于ONE“早鸟挖矿”阶段的情况说明>
+                                <span class=tit>
+                                    <img src=//static.feixiaohao.com/platimages/20180607/3d839103f7784847bfd1e82a261d5079_16_16.png alt=关于ONE“早鸟挖矿”阶段的情况说明>关于ONE“早鸟挖矿”阶段的情况说明
+                                </span>
+                    <span class=time>07-02 23:32</span>
+                </a>
+            <li>
+                <a href=/notice/3599365.html target=_blank rel=nofollow title=【DragonEx】DragonEx超级上币月活动—DCR、WAN、MKR获奖名单>
+                                <span class=tit>
+                                    <img src=//static.feixiaohao.com/platimages/20180628/2dcc7da0cae34ecfacb12f841b474d0e_16_16.jpg alt=DragonEx超级上币月活动—DCR、WAN、MKR获奖名单>DragonEx超级上币月活动—DCR、WAN、MKR获奖名单
+                                </span>
+                    <span class=time>07-02 21:15</span>
+                </a>
+            <li>
+                <a href=/notice/3599364.html target=_blank rel=nofollow title=【币易】币易Coinyee.io最新奖励规则和分红公告>
+                                <span class=tit>
+                                    <img src=//static.feixiaohao.com/platimages/20180519/a1dad7ed1c2140fe94dbcf8ea8afd815_15_15.png alt=币易Coinyee.io最新奖励规则和分红公告>币易Coinyee.io最新奖励规则和分红公告
+                                </span>
+                    <span class=time>07-02 20:00</span>
+                </a>
+            <li>
+                <a href=/notice/3599363.html target=_blank rel=nofollow title=【DragonEx】关于DragonEx完成第一期LRC快照公告>
+                                <span class=tit>
+                                    <img src=//static.feixiaohao.com/platimages/20180628/2dcc7da0cae34ecfacb12f841b474d0e_16_16.jpg alt=关于DragonEx完成第一期LRC快照公告>关于DragonEx完成第一期LRC快照公告
+                                </span>
+                    <span class=time>07-02 19:52</span>
+                </a>
+            <li>
+                <a href=/notice/3599361.html target=_blank rel=nofollow title=【BCEX】【系统】BCEX關於暫停ETH和ERC20代幣提幣的公告>
+                                <span class=tit>
+                                    <img src=//static.feixiaohao.com/platimages/20171020/303fc2c621fd48e7b7b1233a0a7a943c_15_15.png alt=【系统】BCEX關於暫停ETH和ERC20代幣提幣的公告>【系统】BCEX關於暫停ETH和ERC20代幣提幣的公告
+                                </span>
+                    <span class=time>07-02 18:55</span>
+                </a>
+            <li>
+                <a href=/notice/3599362.html target=_blank rel=nofollow title="【Bit-Z】Bit-Z APP 安卓版2.0.0上线">
+                                <span class=tit>
+                                    <img src=//static.feixiaohao.com/platimages/20180403/495e0b8137ef45c5800c5af575362e6c_15_15.png alt="Bit-Z APP 安卓版2.0.0上线">Bit-Z APP 安卓版2.0.0上线
+                                </span>
+                    <span class=time>07-02 17:43</span>
+                </a>
+            <li>
+                <a href=/notice/3599358.html target=_blank rel=nofollow title=【DigiFinex】​关于ETH网络拥堵的公告>
+                                <span class=tit>
+                                    <img src=//static.feixiaohao.com/platimages/20180612/daee46db31444f7296a1f947fac18270_16_16.png alt=​关于ETH网络拥堵的公告>​关于ETH网络拥堵的公告
+                                </span>
+                    <span class=time>07-02 17:26</span>
+                </a>
+            <li>
+                <a href=/notice/3599360.html target=_blank rel=nofollow title="【DigiFinex】CPS World First Launch is on DigiFinex. 8 million CPS free airdr">
+                                <span class=tit>
+                                    <img src=//static.feixiaohao.com/platimages/20180612/daee46db31444f7296a1f947fac18270_16_16.png alt="CPS World First Launch is on DigiFinex. 8 million CPS free airdr">CPS World First Launch is on DigiFinex. 8 million CPS free airdr
+                                </span>
+                    <span class=time>07-02 17:09</span>
+                </a>
+        </ul>
+    </div>
+    <div class="new-side-box new-tab-box">
+        <div class="new-box-tit new-tab-tit">
+            <div class="new-cell-tit active">涨幅榜</div>
+            <div class=new-cell-tit>跌幅榜</div>
+            <a href="/maxchange/" class=new-more title=更多 target=_blank></a>
+        </div>
+        <div class="new-tab-cell new-tab-box">
+            <div class=new-tab-tit>
+                <div class=new-tab-subtit>1小时</div>
+                <div class="new-tab-subtit active">24小时</div>
+                <div class=new-tab-subtit>1周</div>
+            </div>
+            <div class=new-tab-cell style=display:none>
+                <table class="new-side-table range-table">
+                    <thead>
+                    <tr>
+                        <th>#
+                        <th>名称
+                        <th>价格
+                        <th>
+                            % 1小时
+                    <tbody>
+                </table>
+            </div>
+            <div class=new-tab-cell>
+                <table class="new-side-table range-table">
+                    <thead>
+                    <tr>
+                        <th>#
+                        <th>名称
+                        <th>价格
+                        <th>
+                            % 24小时
+                    <tbody>
+                </table>
+            </div>
+            <div class=new-tab-cell style=display:none>
+                <table class="new-side-table range-table">
+                    <thead>
+                    <tr>
+                        <th>#
+                        <th>名称
+                        <th>价格
+                        <th>
+                            % 1周
+                    <tbody>
+                </table>
+            </div>
+        </div>
+        <div class="new-tab-cell new-tab-box" style=display:none>
+            <div class=new-tab-tit>
+                <div class=new-tab-subtit>1小时</div>
+                <div class="new-tab-subtit active">24小时</div>
+                <div class=new-tab-subtit>1周</div>
+            </div>
+            <div class=new-tab-cell style=display:none>
+                <table class="new-side-table range-table">
+                    <thead>
+                    <tr>
+                        <th>#
+                        <th>名称
+                        <th>价格
+                        <th>
+                            % 1小时
+                    <tbody>
+                </table>
+            </div>
+            <div class=new-tab-cell>
+                <table class="new-side-table range-table">
+                    <thead>
+                    <tr>
+                        <th>#
+                        <th>名称
+                        <th>价格
+                        <th>
+                            % 24小时
+                    <tbody>
+                </table>
+            </div>
+            <div class=new-tab-cell style=display:none>
+                <table class="new-side-table range-table">
+                    <thead>
+                    <tr>
+                        <th>#
+                        <th>名称
+                        <th>价格
+                        <th>
+                            % 1周
+                    <tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class=new-side-box>
+        <div class=new-box-tit>
+            <h2>热门概念</h2>
+            <a class=new-more href="/concept/" target=_blank></a>
+        </div>
+        <div class=new-tab-box>
+            <div class=new-tab-tit id=hotnewconcept></div>
+            <div class=new-tab-cell>
+                <table class="new-side-table concept-table">
+                    <thead>
+                    <tr>
+                        <th>名称
+                        <th>价格
+                        <th>
+                            涨跌幅<tbody id=hotnewconceptCoinTable>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class=new-side-box>
+        <div class=new-box-tit>
+            <h2>成交量排行榜</h2>
+            <a href="/vol/" target=_blank class=new-more title=更多></a>
+        </div>
+        <div class="new-tab-cell new-tab-box">
+            <div class=new-tab-tit>
+                <div class="new-tab-subtit active">交易所</div>
+                <div class=new-tab-subtit>币种</div>
+            </div>
+            <div class=new-tab-cell>
+                <table class="new-side-table range-table" id=vol_exchange>
+                    <thead>
+                    <tr>
+                        <th>#
+                        <th>名称
+                        <th>
+                            成交额
+                    <tbody>
+                    <tr>
+                </table>
+            </div>
+            <div class=new-tab-cell style=display:none>
+                <table class="new-side-table range-table" id=vol_coin>
+                    <thead>
+                    <tr>
+                        <th>#
+                        <th>名称
+                        <th>
+                            成交额
+                    <tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class=new-side-box>
+        <div class=new-box-tit>
+            <h2 class=new-cell-tit>最近上市</h2>
+            <a href="/newcoin/" target=_blank class=new-more title=更多></a>
+        </div>
+        <table class=new-side-table>
+            <thead>
+            <tr>
+                <th>名称
+                <th>价格
+                <th>涨幅
+                <th>
+                    时间
+            <tbody>
+        </table>
+    </div>
+    <div class=new-side-box>
+        <div class=new-box-tit>
+            <h2>网址导航</h2>
+            <a href="/daohanglist/" target=_blank class=new-more title=更多></a>
+        </div>
+        <ul class=new-linksList></ul>
+    </div>
+</div>
+<div class=totop>
+    <div class=top></div>
+</div>
+</body>
+<!--<script src=//static.feixiaohao.com/Scripts/layer/layer.js></script>-->
+<!--<script src=//static.feixiaohao.com/Scripts/jquery.signalR-2.2.1.min.js></script>-->
+<!--<script src=//static.feixiaohao.com/Scripts/jquery.peity.min.js></script>-->
+<!--<script src=//static.feixiaohao.com/Scripts/autocomplete.js></script>-->
+<!--<script src="//static.feixiaohao.com/Scripts/common-1.1.js?v=1.56"></script>-->
+<!--<script src=/lcc/js></script>-->
+<script src="./js/jquery.signalR-2.2.1.min.js"></script>
+<script src="./js/jquery.peity.min.js"></script>
+<script src="./js/autocomplete.js"></script>
+<script src="./js/common-1.1.js?v=1.56"></script>
+<script src="./js/js"></script>
+<script>
+    $('.line').peity("line", {
+        width: 50,
+        height: 15,
+        fill: '#f5f5f5',
+        min: 99999,
+        strokeWidth: 1
+    });
+    loadglobalinfo_new();
+    startSocketHub(true);
+    $('body').on('click', '.showmarket a', function() {
+        var thiscode = $(this).attr("id");
+        $.ajax({
+            url: apiHots + 'sitestat/?code=' + thiscode,
+            type: "GET",
+            success: function(data) {
+                return;
+            },
+            error: function() {
+                return;
+            }
+        })
+    });
+</script>
+<script>
+    getCoin(function(e) {
+        if ($('#search2').length > 0) {
+            autoComplete($('#search2'), e);
+        }
+        autoComplete($('#input-sm'), e);
+    })
+    loadHotCoin();
+</script>
+
+<!--<script src=//static.feixiaohao.com/Scripts/jquery.color.js></script>-->
+<!--<script src=//static.feixiaohao.com/Scripts/tablesort.js></script>-->
+<!--<script src="//static.feixiaohao.com/Scripts/fxh3.js?v=1.6">-->
+</script><script src="./js/jquery.color.js"></script>
+<script src="./js/tablesort.js"></script>
+<script src="./js/fxh3.js?v=1.6"></script>
+<script>
+    new Tablesort(document.getElementById('table'));
+    $('.line2').peity('line', {
+        width: 80,
+        height: 20,
+        fill: 'none',
+        strokeWidth: 1,
+        min: 10000,
+        stroke: '#3499da'
+    })
+</script>
+<script>
+    loadindexdaohang();
+    loadnewconcept(0);
+</script>
+</html>
